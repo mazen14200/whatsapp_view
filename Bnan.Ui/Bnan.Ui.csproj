@@ -1,0 +1,85 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\pages\**" />
+    <Content Remove="wwwroot\pages\**" />
+    <EmbeddedResource Remove="wwwroot\pages\**" />
+    <None Remove="wwwroot\pages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Areas\MAS\Views\Shared\_ExpirationModalMAS.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\CAS\Views\Branches\Branches.cshtml" />
+    <None Include="Areas\CAS\Views\Branches\_DataTableBranches.cshtml" />
+    <None Include="Areas\CAS\Views\Home\Index.cshtml" />
+    <None Include="Areas\CAS\Views\Shared\_ExpirationModal.cshtml" />
+    <None Include="Areas\CAS\Views\Shared\_Layout.cshtml" />
+    <None Include="Areas\CAS\Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\CAS\Views\_ViewImports.cshtml" />
+    <None Include="Areas\CAS\Views\_ViewStart.cshtml" />
+    <None Include="Areas\Identity\Views\Account\Login.cshtml" />
+    <None Include="Areas\Identity\Views\Account\Systems.cshtml" />
+    <None Include="Areas\Identity\Views\Shared\_Layout.cshtml" />
+    <None Include="Areas\Identity\Views\Shared\_LoginPartial.cshtml" />
+    <None Include="Areas\Identity\Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\Identity\Views\_ViewImports.cshtml" />
+    <None Include="Areas\Identity\Views\_ViewStart.cshtml" />
+    <None Include="Areas\MAS\Views\Bank\AddBank.cshtml" />
+    <None Include="Areas\MAS\Views\Bank\Edit.cshtml" />
+    <None Include="Areas\MAS\Views\Bank\Index.cshtml" />
+    <None Include="Areas\MAS\Views\Bank\_DataTableBank.cshtml" />
+    <None Include="Areas\MAS\Views\Home\Index.cshtml" />
+    <None Include="Areas\MAS\Views\LessorsKSA\AddLessorKSA.cshtml" />
+    <None Include="Areas\MAS\Views\LessorsKSA\Edit.cshtml" />
+    <None Include="Areas\MAS\Views\LessorsKSA\Index.cshtml" />
+    <None Include="Areas\MAS\Views\LessorsKSA\_DataTablelessors.cshtml" />
+    <None Include="Areas\MAS\Views\Procedures\Add.cshtml" />
+    <None Include="Areas\MAS\Views\Procedures\Edit.cshtml" />
+    <None Include="Areas\MAS\Views\Procedures\GetProcedures.cshtml" />
+    <None Include="Areas\MAS\Views\Procedures\_DataTableProcedures.cshtml" />
+    <None Include="Areas\MAS\Views\Shared\_ExpirationModalMAS.cshtml" />
+    <None Include="Areas\MAS\Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\MAS\Views\Users\AddUser.cshtml" />
+    <None Include="Areas\MAS\Views\Users\Edit.cshtml" />
+    <None Include="Areas\MAS\Views\Users\EditSystemValiditions.cshtml" />
+    <None Include="Areas\MAS\Views\Users\SystemValiditions.cshtml" />
+    <None Include="Areas\MAS\Views\Users\Users.cshtml" />
+    <None Include="Areas\MAS\Views\Users\_DataTableUsers.cshtml" />
+    <None Include="Areas\MAS\Views\_ViewImports.cshtml" />
+    <None Include="Areas\MAS\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bnan.Core\Bnan.Core.csproj" />
+    <ProjectReference Include="..\Bnan.Inferastructure\Bnan.Inferastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="NToastNotify" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\BS\" />
+    <Folder Include="wwwroot\images\Bnan\Models\" />
+    <Folder Include="wwwroot\images\Company\" />
+    <Folder Include="wwwroot\images\CAS\" />
+  </ItemGroup>
+
+</Project>

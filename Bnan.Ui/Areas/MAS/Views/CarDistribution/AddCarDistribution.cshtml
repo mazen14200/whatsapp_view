@@ -1,0 +1,400 @@
+﻿@using Bnan.Ui.ViewModels.MAS
+@model CrMasSupCarDistributionVM
+
+@inject IViewLocalizer localizer
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = localizer["Add Distribtion Data"];
+    ViewData["Page-Hint"] = localizer["Add Distribtion Hint"];
+}
+
+<title>@ViewData["Title"]</title>
+
+<style>
+
+
+    #signaturePreview, #imagePreview {
+        display: block;
+        margin-top: -5px;
+        float: right;
+        margin-right: 20px;
+        height: 100px;
+        width: auto;
+        object-fit: cover;
+        border: .5px solid rgb(231, 231, 231);
+        position: relative;
+    }
+
+    #spanInput {
+        height: 35px;
+    }
+
+    .sub-container form .row > div:nth-child(odd):nth-child(-n+5), .sub-container-form form .row > div:nth-child(odd):nth-child(-n+5) {
+        margin: 0;
+    }
+
+    .file-upload {
+        width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .file-upload-btn {
+        width: 200px;
+        max-height: 200px;
+        max-width: 200px;
+        margin: 0;
+        color: #fff;
+        background: #727cf5;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        border-bottom: 4px solid #727cf5;
+        transition: all .2s ease;
+        outline: none;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+        .file-upload-btn:hover {
+            background: #5661e3;
+            color: #ffffff;
+            transition: all .2s ease;
+            cursor: pointer;
+        }
+
+    .file-upload-input-picture, .file-upload-input-signature {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        width: 200px;
+        height: 200px;
+        max-height: 200px;
+        max-width: 200px;
+        outline: none;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .image-upload-wrap {
+        max-height: 200px;
+        max-width: 200px;
+        margin-top: 5px;
+        border: 4px dashed rgb(231, 231, 231);
+        position: relative;
+        display: none;
+    }
+
+        .image-dropping,
+        .image-upload-wrap:hover {
+            background-color: rgb(231, 231, 231);
+            border: 4px dashed #ffffff;
+        }
+
+    .image-title-wrap {
+        color: #222;
+    }
+
+    .drag-text {
+        text-align: center;
+    }
+
+        .drag-text h3 {
+            font-weight: 100;
+            text-transform: uppercase;
+            padding: 60px 0;
+            font-size:17px
+        }
+
+    .file-upload-image {
+        height: 200px;
+        max-width: 200px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 20px;
+        border: .5px solid rgb(231, 231, 231);
+    }
+
+    .remove-image {
+        margin: 0;
+        max-height: 200px;
+        max-width: 200px;
+        width: 100%;
+        color: #fff;
+        background: #fa5c7c;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        border-bottom: 4px solid #fa5c7c;
+        transition: all .2s ease;
+        outline: none;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .image-upload-wrap {
+        display: block
+    }
+
+    .file-upload-content {
+        display: none
+    }
+
+    .remove-image:hover {
+        background: #f35474;
+        color: #ffffff;
+        transition: all .2s ease;
+        cursor: pointer;
+    }
+
+    #CrMasSupCarDistributionYear,
+    #CrMasSupCarDistributionPassengers,
+    #CrMasSupCarDistributionDoor,
+    #CrMasSupCarDistributionBagBags,
+    #CrMasSupCarDistributionSmallBags {
+        width: 50%
+    }
+
+    .text-danger{
+        white-space:nowrap
+    }
+
+    @@media (max-width: 600px) {
+        #CarDisImage {
+            position: absolute;
+            top: 70%;
+            right: 75%;
+            width: 243px;
+        }
+    }
+</style>
+
+
+
+<div class="sub-container-form">
+    <form class="needs-validation" novalidate asp-area="MAS" asp-controller="CarDistribution" asp-action="AddCarDistribution" enctype="multipart/form-data">
+        <div class="form-contain" style="position:relative">
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label">@localizer["DistributionNumber"]</label>
+                </div>
+                <div class="col-md-2">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.35em">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" asp-for="CrMasSupCarDistributionModel">@localizer["BrandCategory"]</label>
+                </div>
+                <div class="col-md-2">
+                    @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                    {
+                        <select class="form-select" asp-for="@Model.CrMasSupCarDistributionModel" style="width: 110%    ;">
+                            @foreach (var callingKey in (List<SelectListItem>)ViewData["ModelAr"])
+                            {
+                                <option value="@callingKey.Value" selected="@(callingKey.Value.Trim() == "" ? "selected" : null)">@callingKey.Text</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <select class="form-select" asp-for="@Model.CrMasSupCarDistributionModel" style="width: 110%;">
+                            @foreach (var callingKey in (List<SelectListItem>)ViewData["ModelEn"])
+                            {
+                                <option value="@callingKey.Value" selected="@(callingKey.Value.Trim() == ""  ? "selected" : null)">@callingKey.Text</option>
+                            }
+                        </select>
+                    }
+                    <div style="margin-top:2px">
+                        <div style="height: 1.35em">
+                            <span asp-validation-for="@Model.CrMasSupCarDistributionModel" class="text-danger"></span>
+                            @Html.ValidationMessage("IsExist", null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 text-center">
+                    <label class="form-label" asp-for="CrMasSupCarDistributionYear">@localizer["ManufacturingYear"]</label>
+                </div>
+                <div class="col-md-2">
+                    <select id="yearDropdown" class="form-select" asp-for="@Model.CrMasSupCarDistributionYear">
+                        <option value=""></option>
+                        @for (int year = 2000; year <= DateTime.Now.Year + 1; year++)
+                        {
+                            <option value="@year">@year</option>
+                        }
+                    </select>
+                    <div style="margin-top:2px">
+                        <div style="height: 1.35em">
+                            <span asp-validation-for="@Model.CrMasSupCarDistributionYear" class="text-danger"></span>
+                            @Html.ValidationMessage("IsExist", null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 text-center">
+                    <label class="form-label">@localizer["Category"]</label>
+                </div>
+                <div class="col-md-2">
+                    @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                    {
+                        <select class="form-select" asp-for="@Model.CrMasSupCarDistributionCategory" style="width: 100%;">
+                            @foreach (var callingKey in (List<SelectListItem>)ViewData["categoryAr"])
+                            {
+                                <option value="@callingKey.Value" selected="@(callingKey.Value.Trim() == "" ? "selected" : null)">@callingKey.Text</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <select class="form-select" asp-for="@Model.CrMasSupCarDistributionCategory" style="width: 100%;">
+                            @foreach (var callingKey in (List<SelectListItem>)ViewData["categoryEn"])
+                            {
+                                <option value="@callingKey.Value" selected="@(callingKey.Value.Trim() == ""  ? "selected" : null)">@callingKey.Text</option>
+                            }
+                        </select>
+                    }
+                    <div style="margin-top:2px">
+                        <div style="height: 1.35em">
+                            <span asp-validation-for="@Model.CrMasSupCarDistributionCategory" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" asp-for="CrMasSupCarDistributionPassengers">@localizer["Passengers"]</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" asp-for="CrMasSupCarDistributionPassengers" maxlength="100" width="80%">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.35em">
+                            <span asp-validation-for="@Model.CrMasSupCarDistributionPassengers" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 text-center">
+                    <label class="form-label" asp-for="CrMasSupCarDistributionDoor">@localizer["doors"]</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" asp-for="CrMasSupCarDistributionDoor">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.35em">
+                            <span asp-validation-for="@Model.CrMasSupCarDistributionDoor" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" asp-for="CrMasSupCarDistributionBagBags">@localizer["BigBags"] </label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" asp-for="CrMasSupCarDistributionBagBags" maxlength="100" width="80%">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.35em">
+                            <span asp-validation-for="@Model.CrMasSupCarDistributionBagBags" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 text-center">
+                    <label class="form-label" asp-for="CrMasSupCarDistributionSmallBags">@localizer["SmallBags"]</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" asp-for="CrMasSupCarDistributionSmallBags">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.35em">
+                            <span asp-validation-for="@Model.CrMasSupCarDistributionSmallBags" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" asp-for="CrMasSupCarDistributionReasons">@localizer["reasons"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrMasSupCarDistributionReasons" maxlength="100" id="LessorInfoEmailCont" width="105%">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.35em">
+                            <span asp-validation-for="@Model.CrMasSupCarDistributionReasons" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="CarDisImage">
+                <div class="file-upload">
+                    <button class="file-upload-btn" type="button" onclick="$('.file-upload-input-signature').trigger('click')">@localizer["DistribtionPhoto"]</button>
+                    <div class="image-upload-wrap">
+                        <input class="file-upload-input-signature" type="file" onchange="readURL(this, 'signature');" accept="image/*" id="CarDistributionFile" name="CarDistributionFile" />
+                        <div class="drag-text">
+                            <h3>@localizer["DragAndDrop"]</h3>
+                        </div>
+                    </div>
+                    <div class="file-upload-content signature">
+                        <img class="file-upload-image signature" src="#" />
+                        <div class="image-title-wrap">
+                            <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-primary" type="submit">@localizer["Save"]</button>
+            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="MAS" asp-controller="CarDistribution" asp-action="CarDistribution">
+                @localizer["Back"]
+            </a>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function readURL(input, type) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var container = $(input).closest('.file-upload');
+                    container.find('.file-upload-image.' + type).attr('src', e.target.result);
+                    container.find('.file-upload-content.' + type).show();
+                    container.find('.image-title.' + type).html(input.files[0].name);
+                    container.find('.image-upload-wrap').hide();
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                removeUpload(input);
+            }
+        }
+
+        function removeUpload(button) {
+            var container = $(button).closest('.file-upload');
+            var type = container.find('.file-upload-content').hasClass('signature') ? 'signature' : 'picture';
+            container.find('.file-upload-input-' + type).val('');
+            container.find('.file-upload-image.' + type).attr('src', '#');
+            container.find('.file-upload-content.' + type).hide();
+            container.find('.image-upload-wrap').show();
+        }
+
+        $('.image-upload-wrap').bind('dragover', function () {
+            $(this).addClass('image-dropping');
+        });
+        $('.image-upload-wrap').bind('dragleave', function () {
+            $(this).removeClass('image-dropping');
+        });
+    </script>
+
+}

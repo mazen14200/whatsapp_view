@@ -1,0 +1,141 @@
+﻿@model IEnumerable<CrMasUserInformation>
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = @localizer["SystemValiditions Data"];
+    ViewData["Page-Hint"] = @localizer["SystemValiditions Hint"];
+}
+
+
+<style>
+    body {
+        overflow: hidden
+    }
+
+    @@media (max-width: 600px) {
+        #basic-datatable1_wrapper .row:first-child > div {
+            text-align: center;
+        }
+
+            #basic-datatable1_wrapper .row:first-child > div:last-child > * {
+                text-align: center;
+            }
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+
+    .email {
+        text-align: end;
+    }
+
+</style>
+
+<div class="sub-container">
+    <div class="container-fluid">
+        <div class="row">
+            @*filter*@
+            <div class="col-sm-12 col-md-9">
+                <div class="col-sm-12 col-md-4 p-0">
+                    <a type="button" class="btn btn-danger" asp-area="CAS" asp-controller="Home" asp-action="Index">
+                        <i class="mdi mdi-window-close"></i>
+                    </a>
+                </div>
+            </div>
+
+            @*search*@
+            <div class="col-sm-12 col-md-3 p-0">
+                <input class="form-control" type="search" id="top-search" style="width: 96%;" placeholder="@localizer["search"]...">
+            </div>
+        </div>
+        <div class="dataTable">
+            @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+            {
+                <div class="col-sm-12">
+                    <table id="basic-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" style="width:100%">
+                        <thead>
+                            <tr role="row">
+                                <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                                <th aria-label="Position: activate to sort column ascending">@localizer["UserNo"]</th>
+                                <th aria-label="Position: activate to sort column ascending">@localizer["UserName"]</th>
+                                <th aria-label="Position: activate to sort column ascending">@localizer["Email"]</th>
+                                <th aria-label="Office: activate to sort column ascending">@localizer["Employement"]</th>
+                                <th aria-label="Age: activate to sort column ascending">@localizer["MobilePhone"]</th>
+                                <th aria-label="Age: activate to sort column ascending">@localizer["LastExitDate"]</th>
+                                <th aria-label="Age: activate to sort column ascending">@localizer["LastChangePassword"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{
+                                int no = 1;
+                            }
+                            @foreach (var item in Model)
+                            {
+                                <tr onclick="location.href='@Url.Action("EditEmployeeSystemValiditions", "Employees", new { id = item.CrMasUserInformationCode })'" style="cursor:pointer; ">
+                                    <td>@no</td>
+                                    <td>@item.CrMasUserInformationCode</td>
+                                    <td>@item.CrMasUserInformationEnName</td>
+                                    <td>@item.CrMasUserInformationEmail</td>
+                                    <td>@item.CrMasUserInformationTasksEnName</td>
+                                    <td>@item.CrMasUserInformationCallingKey@item.CrMasUserInformationMobileNo</td>
+                                    <td>@item.CrMasUserInformationExitLastDate?.ToString("dd/MM/yyyy")</td>
+                                    <td>@item.CrMasUserInformationChangePassWordLastDate?.ToString("dd/MM/yyyy")</td>
+                                </tr>
+
+                                no++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+
+                <div class="col-sm-12">
+                    <table id="basic-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline  table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+                        <thead>
+                            <tr role="row">
+                                <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                                <th aria-label="Position: activate to sort column ascending">@localizer["UserNo"]</th>
+                                <th aria-label="Position: activate to sort column ascending">@localizer["UserName"]</th>
+                                <th aria-label="Position: activate to sort column ascending">@localizer["Email"]</th>
+                                <th aria-label="Office: activate to sort column ascending">@localizer["Employement"]</th>
+                                <th aria-label="Age: activate to sort column ascending">@localizer["MobilePhone"]</th>
+                                <th aria-label="Age: activate to sort column ascending">@localizer["LastExitDate"]</th>
+                                <th aria-label="Age: activate to sort column ascending">@localizer["LastChangePassword"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int no = 1;
+                            }
+                            @if (Model != null)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr onclick="location.href='@Url.Action("EditEmployeeSystemValiditions", "Employees", new { id = item.CrMasUserInformationCode })'" style="cursor:pointer; ">
+                                        <td>@no</td>
+                                        <td>@item.CrMasUserInformationCode</td>
+                                        <td>@item.CrMasUserInformationArName</td>
+                                        <td class="email">@item.CrMasUserInformationEmail</td>
+                                        <td>@item.CrMasUserInformationTasksArName</td>
+                                        <td>@item.CrMasUserInformationCallingKey@item.CrMasUserInformationMobileNo</td>
+                                        <td>@item.CrMasUserInformationExitLastDate?.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.CrMasUserInformationChangePassWordLastDate?.ToString("dd/MM/yyyy")</td>
+                                    </tr>
+
+                                    no++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

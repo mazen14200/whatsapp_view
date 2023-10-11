@@ -1,0 +1,303 @@
+﻿@using Bnan.Core.Extensions
+@model Bnan.Ui.ViewModels.MAS.PostRegionVM
+
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+@{
+    ViewData["Page-title"] = localizer["Edit PostRegion Data"];
+    ViewData["Page-Hint"] = localizer["Edit PostRegion Hint"];
+}
+
+<title>@ViewData["Title"]</title>
+
+<style>
+    .row {
+        align-items: center;
+    }
+</style>
+
+
+<div class="sub-container-form">
+    <form class="needs-validation" novalidate asp-area="MAS" asp-controller="PostRegion" asp-action="Edit" method="post" enctype="multipart/form-data">
+        <div class="form-contain">
+            @*PostRegion Code*@
+            <div class="row mt-2">
+                <div class="col-md-2">
+                    <label class="form-label" for="PostRegionCode">@localizer["PostRegionCode"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrMasSupPostRegionsCode" id="PostRegionCode" maxlength="100" width="80%" readonly />
+                    <input type="text" class="form-control" asp-for="CrMasSupPostRegionsStatus" id="PostRegionStatus" maxlength="100" width="80%" hidden />
+                    <input type="text" class="form-control" asp-for="CrMasSupPostRegionsEnName" id="CrMasSupPostRegionsEnName" maxlength="100" width="80%" hidden />
+                    <input type="text" class="form-control" asp-for="CrMasSupPostRegionsArName" id="CrMasSupPostRegionsArName" maxlength="100" width="80%" hidden />
+
+                </div>
+            </div>
+
+            @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+            {
+                @*PostRegion name arabic*@
+                <div class="row mt-2">
+                    <div class="col-md-2">
+                        <label class="form-label" for="PostRegionNameAr">@localizer["PostRegionNameAr"]</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" asp-for="CrMasSupPostRegionsArName" id="PostRegionNameAr" maxlength="50" width="80%" data-val-required="@localizer["requiredFiled"]" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" readonly />
+                        <div style="margin-top:2px">
+                            <div style="height: 1.0em">
+                                <span asp-validation-for="@Model.CrMasSupPostRegionsArName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+            {
+                @*PostRegion name English*@
+                <div class="row mt-2">
+                    <div class="col-md-2">
+                        <label class="form-label" for="PostRegionNameEn">@localizer["PostRegionNameEn"]</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" asp-for="CrMasSupPostRegionsEnName" data-val-required="@localizer["requiredFiled"]" maxlength="50" id="PostRegionNameEn" width="80%" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')" readonly />
+                        <div style="margin-top:2px">
+                            <div style="height: 1.0em">
+                                <span asp-validation-for="@Model.CrMasSupPostRegionsEnName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+            @*PostRegion Location*@
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="PostRegionLocation">@localizer["PostRegionLocation"]</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" asp-for="CrMasSupPostRegionsLocation" id="PostRegionLocation" width="80%" />
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSupPostRegionsLocation" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @*PostRegion Longitude and Latiude*@
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="PostRegionLong">@localizer["PostRegionLong"]</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" asp-for="CrMasSupPostRegionsLongitude" maxlength="50" id="PostRegionLong" width="80%" oninput="this.value = this.value.replace(/[^0-9.,]/g, '')">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSupPostRegionsLongitude" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label" for="PostRegionLat">@localizer["PostRegionLat"]</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" asp-for="CrMasSupPostRegionsLatitude" maxlength="50" id="PostRegionLat" width="80%" oninput="this.value = this.value.replace(/[^0-9.,]/g, '')">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSupPostRegionsLatitude" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*reasons*@
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="Reasons">@localizer["reasons"]</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" asp-for="CrMasSupPostRegionsReasons" maxlength="120" id="PostRegionReasons" width="80%">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSupPostRegionsReasons" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+        @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
+
+        <div class="mt-4" id="buttonContainer">
+
+            <button type="submit" id="saveEdit" class="btn btn-primary ms-1">@localizer["Save"]</button>
+
+            @if (Model.CrMasSupPostRegionsStatus == "A")
+            {
+                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Hold" data-bs-targett="#centermodalhold">
+                    @localizer["Hold"]
+                </a>
+                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Deleted" data-bs-targett="#centermodalDelete">
+                    @localizer["Delete"]
+                </a>
+            }
+            else if (Model.CrMasSupPostRegionsStatus == "H")
+            {
+                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.UnHold" data-bs-targett="#centermodalRHold">
+                    @localizer["ReactiveHold"]
+                </a>
+                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Deleted" data-bs-targett="#centermodalDelete">
+                    @localizer["Delete"]
+                </a>
+            }
+            else if (Model.CrMasSupPostRegionsStatus == "D")
+            {
+                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Hold" data-bs-targett="#centermodalhold">
+                    @localizer["Hold"]
+                </a>
+                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.UnDeleted" data-bs-targett="#centermodalRDelete">
+                    @localizer["ReactiveDelete"]
+                </a>
+            }
+
+            <a type="button" class="btn btn-danger ms-2" asp-area="MAS" asp-controller="PostRegion" asp-action="Index">
+                @localizer["Back"]
+            </a>
+        </div>
+    </form>
+</div>
+
+
+<!-- MOdel-->
+<!-- Reactive Hold PostRegion MOdel-->
+<div class="modal fade" id="centermodalRHold" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>@localizer["SureToRetriveHold"]</h4>
+                <p>@localizer["HintSureToRetriveHPostRegion"]</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                <button type="button" id="retriveUserButtonH" class="btn btn-primary">@localizer["Okay"]</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Reactive Delete PostRegion MOdel-->
+<div class="modal fade" id="centermodalRDelete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h4>@localizer["SureToRetriveDelete"]</h4>
+                <p>@localizer["HintSureToRetriveDPostRegion"]</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                <button type="button" id="retriveUserButtonD" class="btn btn-primary">@localizer["Okay"]</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Delete PostRegion Modal-->
+<div class="modal fade" id="centermodalDelete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h4>@localizer["SureTodelete"]</h4>
+                <p> @localizer["HintSureTodeletePostRegion"]</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                <button type="button" id="deleteUserButton" class="btn btn-primary">@localizer["Okay"]</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Hold PostRegion MOdel-->
+<div class="modal fade" id="centermodalhold" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h4>@localizer["SureToHold"]</h4>
+                <p> @localizer["HintSureToHoldPostRegion"]</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                <button type="button" id="holdUserButton" class="btn btn-primary">@localizer["Okay"]</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function updatePostRegionStatus(status) {
+            var code = document.getElementById("PostRegionCode").value;
+            $.ajax({
+                type: "POST",
+                url: "/MAS/PostRegion/EditStatus",
+                data: { status: status, code: code },
+                success: function (result) {
+                    $('.modal').modal('hide');
+                    window.location.href = "/MAS/PostRegion/Index";
+                    console.log(result);
+
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        // Event listener for delete Lessor button
+        $('#deleteUserButton').click(function () {
+            updatePostRegionStatus('D');
+        });
+
+        // Event listener for hold Lessor button
+        $('#holdUserButton').click(function () {
+            updatePostRegionStatus('H');
+        });
+
+        // Event listener for retrieve Lessor button
+        $('#retriveUserButtonD').click(function () {
+            updatePostRegionStatus('Reactivate');
+        });
+
+        $('#retriveUserButtonH').click(function () {
+            updatePostRegionStatus('Reactivate');
+        });
+
+        $("#buttonContainer a").on("click", function (event) {
+            var status = $(this).attr("data-error")
+            var Modal = $(this).attr("data-bs-targett")
+            CheckValidation('1108001', status).done(function (data) {
+                if (data) $(Modal).modal('show');
+            });
+        })
+
+        $("#saveEdit").on("click", function (event) {
+            event.preventDefault();
+            CheckValidation('1108001', '@Status.Insert').done(function (data) {
+                if (data) {
+                    $('form').submit();
+                }
+            });
+        })
+    </script>
+
+}
+

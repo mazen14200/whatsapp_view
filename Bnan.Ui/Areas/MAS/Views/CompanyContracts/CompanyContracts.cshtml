@@ -1,0 +1,127 @@
+﻿@using Bnan.Core.Extensions
+@model IEnumerable<CrMasContractCompany>
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = @localizer["ContractCompany Data"];
+    ViewData["Page-Hint"] = @localizer["ContractCompany Hint"];
+    ViewData["id"] = ViewBag.id;
+    ViewData["no"] = ViewBag.no;
+}
+<style>
+    body {
+        overflow: hidden
+    }
+
+    @@media (max-width: 600px) {
+        #basic-datatable1_wrapper .row:first-child > div {
+            text-align: center;
+        }
+
+            #basic-datatable1_wrapper .row:first-child > div:last-child > * {
+                text-align: center;
+            }
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+
+</style>
+
+<div class="sub-container">
+    <div class="container-fluid">
+        <div class="row">
+            @*filter*@
+            <div class="col-sm-12 col-md-9">
+                <div class="col-sm-12 col-md-4 p-0">
+                    <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="MAS" asp-controller="Home" asp-action="Index">
+                        <i class="mdi mdi-window-close"></i>
+                    </a>
+                </div>
+            </div>
+
+            @*search And Fitler Radio Button*@
+            <div class="col-sm-12 col-md-3 p-0">
+                <input class="form-control" type="search" id="top-search" style="width: 96%;" placeholder="@localizer["search"]...">
+            </div>
+            <div class="col-sm-12 col-md-12 mt-3" id="status-filter">
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadioAll" name="customRadio" value="All" class="form-check-input">
+                    <label class="form-check-label" for="customRadioAll">@localizer["All"]</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadioActive" name="customRadio" value="A" class="form-check-input">
+                    <label class="form-check-label" for="customRadioActive">@localizer["CActive"]</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadioRemoved" name="customRadio" value="X" class="form-check-input">
+                    <label class="form-check-label" for="customRadioRemoved">@localizer["OnExpired"]</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadioStoped" name="customRadio" value="E" class="form-check-input">
+                    <label class="form-check-label" for="customRadioStoped">@localizer["Expired"]</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadioStoped" name="customRadio" value="N" class="form-check-input">
+                    <label class="form-check-label" for="customRadioStoped">@localizer["NotRegister"]</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadioStoped" name="customRadio" value="D" class="form-check-input">
+                    <label class="form-check-label" for="customRadioStoped">@localizer["Deleted"]</label>
+                </div>
+            </div>
+        </div>
+        <div class=dataTable>
+            <partial name="_DataTableCompanyContracts" />
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @*Get Lessor Using filter*@
+    <script>
+        //get Company contract By Status function
+        function GetCompanyContractFitler(status) {
+            $.ajax({
+                type: "GET",
+                data: {
+                    status: status
+                },
+                url: "@Url.Action("GetCompanyContractsByStatus", "CompanyContracts", new { Area = "MAS" })",
+                success: function (response) {
+                    $(".dataTable").html(response);
+                    set_basic_datatable();
+                },
+            })
+        }
+
+        //on Click Filter Radio Button GetLessorsByStatus
+        $("input[name='customRadio']").on("click", function () {
+            GetCompanyContractFitler($(this).val())
+        })
+    </script>
+}
+
+
+<style>
+    .wrapper {
+        margin-bottom: 60px;
+        overflow: hidden;
+        background-image: url("~/Pictures/bg.jpg") !important;
+    }
+
+    .table-bordered td,
+    .table-bordered th {
+        border: none;
+    }
+</style>
+
+

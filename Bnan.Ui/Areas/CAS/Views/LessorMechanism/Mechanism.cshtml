@@ -1,0 +1,485 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.CAS;
+@model IEnumerable<MechanismVM>
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = @localizer["Mecanism Data"];
+    ViewData["Page-Hint"] = @localizer["Mecanism Hint"];
+}
+<style>
+    .row {
+        align-items: baseline;
+    }
+</style>
+<style>
+    .plus-icon {
+        cursor: pointer
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    .sub-container-form form .form-contain {
+        height: 50vh;
+        margin-top: 10px
+    }
+</style>
+
+<div class="sub-container-form">
+    <div class="collapsible">
+        <form>
+           
+            <div class="form-contain mb-2" style="margin-right: 50px; margin-top:20px">
+                <div class="mt-2">
+                    <h4 style="font-size: 20px;">
+                        <label for="Branches" class="mb-1">
+                            @localizer["ContractCompany"]
+                        </label>
+                        <a class="plus-icon" onclick="showContractValidition()">
+                            <i class="dripicons-plus"></i>
+                        </a>
+                    </h4>
+                    <div id="ContractsValiditions" style="display: none;">
+                        @foreach(var item in Model.Where(x=>x.CrCasLessorMechanismProceduresClassification=="10"))
+                        {
+
+                            @if (item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresSubjectAlert == true)
+                            {
+                                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                {
+                                    <ul class="list mt-2" style="font-size: 17px;">
+                                        <li>
+                                            <h4 class="mb-1">
+                                                <input type="checkbox" class="ContractValiditionCheckBox" data-id="@item.CrCasLessorMechanismProcedures" style="height: 15px;width: 30px;" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
+                                                <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresArName</label>
+                                                <input type="text" class="form-control ContractValiditionCheckInput" data-id="@item.CrCasLessorMechanismProcedures" style="width: 65px; display: inline;" asp-for="@item.CrCasLessorMechanismDaysAlertAboutExpire" maxlength="3" />
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul class="list mt-2" style="font-size: 17px;">
+                                        <li>
+                                            <h4 class="mb-1">
+                                                <input type="checkbox" class="ContractValidition" data-id="@item.CrCasLessorMechanismProcedures" style="height: 15px;width: 30px;" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
+                                                <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresEnName</label>
+                                                <input type="text" class="form-control ContractValiditionCheckInput" data-id="@item.CrCasLessorMechanismProcedures" style="width: 65px; display: inline;" asp-for="@item.CrCasLessorMechanismDaysAlertAboutExpire" maxlength="3" />
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                }
+
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <h4 style="font-size: 20px;">
+                        <label for="CarsDocuments" class="mb-1">
+                            @localizer["CarsDocuments"]
+                        </label>
+                        <a class="plus-icon" onclick="showCarsDocuments()">
+                            <i class="dripicons-plus"></i>
+                        </a>
+                    </h4>
+                    <div id="CarsDocuments" style="display: none;">
+                        @foreach (var item in Model.Where(x => x.CrCasLessorMechanismProceduresClassification == "11"))
+                        {
+
+                            @if (item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresSubjectAlert == true)
+                            {
+                                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                {
+                                    <ul class="list mt-2" style="font-size: 17px;">
+                                        <li>
+                                            <h4 class="mb-1">
+                                                <input type="checkbox" style="height: 15px;width: 30px;" data-id="@item.CrCasLessorMechanismProcedures" class="CarsDocumentsCheckBox" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
+                                                <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresArName</label>
+                                                <input type="text" class="form-control CarsDocumentsCheckInput" data-id="@item.CrCasLessorMechanismProcedures" style="width: 65px; display: inline;" asp-for="@item.CrCasLessorMechanismDaysAlertAboutExpire" maxlength="3" />
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul class="list mt-2" style="font-size: 17px;">
+                                        <li>
+                                            <h4 class="mb-1">
+                                                <input type="checkbox" style="height: 15px;width: 30px;" data-id="@item.CrCasLessorMechanismProcedures" class="CarsDocumentsCheckBox" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
+                                                <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresEnName</label>
+                                                <input type="text" class="form-control CarsDocumentsCheckInput" data-id="@item.CrCasLessorMechanismProcedures" style="width: 65px; display: inline;" asp-for="@item.CrCasLessorMechanismDaysAlertAboutExpire" maxlength="3" />
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                }
+
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <h4 style="font-size: 20px;">
+                        <label for="CarsFixed" class="mb-1">
+                            @localizer["CarsFixed"]
+                        </label>
+                        <a class="plus-icon" onclick="showCarsFixed()">
+                            <i class="dripicons-plus"></i>
+                        </a>
+                    </h4>
+                    <div id="CarsFixed" style="display: none;">
+                        @foreach (var item in Model.Where(x => x.CrCasLessorMechanismProceduresClassification == "12"))
+                        {
+
+                            @if (item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresSubjectAlert == true)
+                            {
+                                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                {
+                                    <ul class="list mt-2" style="font-size: 17px;">
+                                        <li>
+                                            <h4 class="mb-1">
+                                                <input type="checkbox" class="CarsFixedCheckBox" data-id="@item.CrCasLessorMechanismProcedures" style="height: 15px;width: 30px;" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
+                                                <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresArName</label>
+                                                <input type="text" class="form-control CarsFixedCheckInput" data-id="@item.CrCasLessorMechanismProcedures" style="width: 65px; display: inline;" asp-for="@item.CrCasLessorMechanismDaysAlertAboutExpire" maxlength="3" />
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul class="list mt-2" style="font-size: 17px;">
+                                        <li>
+                                            <h4 class="mb-1">
+                                                <input type="checkbox" class="CarsFixedCheckBox" data-id="@item.CrCasLessorMechanismProcedures" style="height: 15px;width: 30px;" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
+                                                <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresEnName</label>
+                                                <input type="text" class="form-control CarsFixedCheckInput" data-id="@item.CrCasLessorMechanismProcedures" style="width: 65px; display: inline;" asp-for="@item.CrCasLessorMechanismDaysAlertAboutExpire" maxlength="3" />
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                }
+
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <h4 style="font-size: 20px;">
+                        <label for="RenterAndDriver" class="mb-1">
+                            @localizer["RenterAndDriver"]
+                        </label>
+                        <a class="plus-icon" onclick="showRenterAndDriver()">
+                            <i class="dripicons-plus"></i>
+                        </a>
+                    </h4>
+                    <div id="RenterAndDriver" style="display: none;">
+                        @foreach (var item in Model.Where(x => x.CrCasLessorMechanismProceduresClassification == "13"))
+                        {
+
+                            @if (item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresSubjectAlert == true)
+                            {
+                                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                {
+                                    <ul class="list mt-2" style="font-size: 17px;">
+                                        <li>
+                                            <h4 class="mb-1">
+                                                <input type="checkbox" class="RenterAndDriverCheckBox" style="height: 15px;width: 30px;" data-id="@item.CrCasLessorMechanismProcedures" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
+                                                <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresArName</label>
+                                                <input type="text" class="form-control RenterAndDriverCheckInput" style="width: 65px; display: inline;" data-id="@item.CrCasLessorMechanismProcedures" asp-for="@item.CrCasLessorMechanismDaysAlertAboutExpire" maxlength="3" />
+                                                <input type="text" class="form-control RenterAndDriverCheckInputKm" style="width: 100px; display: inline;" data-id="@item.CrCasLessorMechanismProcedures" asp-for="@item.CrCasLessorMechanismKmAlertAboutExpire" maxlength="5" />
+
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul class="list mt-2" style="font-size: 17px;">
+                                        <li>
+                                            <h4 class="mb-1">
+                                                <input type="checkbox" class="RenterAndDriverCheckBox" style="height: 15px;width: 30px;" data-id="@item.CrCasLessorMechanismProcedures" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
+                                                <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresEnName</label>
+                                                <input type="text" class="form-control RenterAndDriverCheckInput" style="width: 65px; display: inline;" data-id="@item.CrCasLessorMechanismProcedures" asp-for="@item.CrCasLessorMechanismDaysAlertAboutExpire" maxlength="3" />
+                                                <input type="text" class="form-control RenterAndDriverCheckInputKm" data-id="@item.CrCasLessorMechanismProcedures" style="width: 100px; display: inline;" asp-for="@item.CrCasLessorMechanismKmAlertAboutExpire" maxlength="5" />
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                }
+
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <h4 style="font-size: 20px;">
+                        <label for="Additional" class="mb-1">
+                            @localizer["Additional"]
+                        </label>
+                        <a class="plus-icon" onclick="showAdditional()">
+                            <i class="dripicons-plus"></i>
+                        </a>
+                    </h4>
+                    <div id="Additional" style="display: none;">
+                        @foreach (var item in Model.Where(x => x.CrCasLessorMechanismProceduresClassification == "20"))
+                        {
+
+                            @if (item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresSubjectAlert == true)
+                            {
+                                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                {
+                                    <ul class="list mt-2" style="font-size: 17px;">
+                                        <li>
+                                            <h4 class="mb-1">
+                                                <input type="checkbox" class="AdditionalCheckBox" data-id="@item.CrCasLessorMechanismProcedures" style="height: 15px;width: 30px;" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
+                                                <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresArName</label>
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul class="list mt-2" style="font-size: 17px;">
+                                        <li>
+                                            <h4 class="mb-1">
+                                                <input type="checkbox" class="AdditionalCheckBox" data-id="@item.CrCasLessorMechanismProcedures" style="height: 15px;width: 30px;" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
+                                                <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresEnName</label>
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                }
+
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3">
+                <a class="btn btn-primary ms-2" onclick="getValues()">@localizer["Save"]</a>
+                <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="Employees" asp-action="EmployeeContractValiditions">
+                    @localizer["Back"]
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+@section scripts {
+
+    <script>
+        function showContractValidition() {
+            var list = document.getElementById("ContractsValiditions");
+            var plusIcon = document.getElementById("plus-icon");
+            if (list.style.display === "block") {
+                list.style.display = "none";
+            } else {
+                list.style.display = "block";
+            }
+            // checkbox.addEventListener("change", function () {
+            //     showContractValidition();
+            // })
+        }
+        function showCarsDocuments() {
+            var list = document.getElementById("CarsDocuments");
+            var plusIcon = document.getElementById("plus-icon");
+            if (list.style.display === "block") {
+                list.style.display = "none";
+            } else {
+                list.style.display = "block";
+            }
+            // checkbox.addEventListener("change", function () {
+            //     showCarsDocuments();
+            // })
+        }
+        function showCarsFixed() {
+            var list = document.getElementById("CarsFixed");
+            var plusIcon = document.getElementById("plus-icon");
+            if (list.style.display === "block") {
+                list.style.display = "none";
+            } else {
+                list.style.display = "block";
+            }
+            // checkbox.addEventListener("change", function () {
+            //     showCarsFixed();
+            // })
+        }
+        function showRenterAndDriver() {
+            var list = document.getElementById("RenterAndDriver");
+            var plusIcon = document.getElementById("plus-icon");
+            if (list.style.display === "block") {
+                list.style.display = "none";
+            } else {
+                list.style.display = "block";
+            }
+            // checkbox.addEventListener("change", function () {
+            //     showRenterAndDriver();
+            // })
+        }
+        function showContracts() {
+            var list = document.getElementById("Contracts");
+            var plusIcon = document.getElementById("plus-icon");
+            if (list.style.display === "block") {
+                list.style.display = "none";
+            } else {
+                list.style.display = "block";
+            }
+            // checkbox.addEventListener("change", function () {
+            //     showContracts();
+            // })
+        }
+
+        function showAdditional() {
+            var list = document.getElementById("Additional");
+            var plusIcon = document.getElementById("plus-icon");
+            if (list.style.display === "block") {
+                list.style.display = "none";
+            } else {
+                list.style.display = "block";
+            }
+            // checkbox.addEventListener("change", function () {
+            //     showAdditional();
+            // })
+        }
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            var checkboxs = document.querySelectorAll("input[type='checkbox']")
+            checkboxs.forEach(function (checkbox) {
+                checkbox.checked = checkbox.checked !== null ? checkbox.checked : false;
+            });
+        });
+
+        $(document).on("click", "[type='checkbox']", function (e) {
+            if (this.checked) {
+                $(this).attr("value", "true");
+            } else {
+                $(this).attr("value", "false");
+            }
+        });
+
+    </script>
+    <script>
+
+        function getValues() {
+            // ContractValidition
+            var checkBoxesContractValidition = document.getElementsByClassName("ContractValiditionCheckBox");
+            var inputsContractValidition = document.getElementsByClassName("ContractValiditionCheckInput");
+            var ContractValiditions = [];
+            for (var i = 0; i < checkBoxesContractValidition.length; i++) {
+                var checkbox = checkBoxesContractValidition[i];
+                var valueCheckBox = checkbox.checked;
+                var idCheckBox = checkbox.getAttribute("data-id");
+                for (var b = 0; b < inputsContractValidition.length; b++) {
+                    var input = inputsContractValidition[b];
+                    var valueInput = input.value;
+                    var idInput = input.getAttribute("data-id");
+                    if (idInput == idCheckBox) {
+                        ContractValiditions.push({ id: idCheckBox, valueCheckBox: valueCheckBox, Days: valueInput });
+                    }
+                }
+            }
+            console.log(ContractValiditions)
+
+            // CarsDocuments
+            var checkBoxesCarsDocuments = document.getElementsByClassName("CarsDocumentsCheckBox");
+            var inputsCarsDocuments = document.getElementsByClassName("CarsDocumentsCheckInput");
+            var CarsDocuments = [];
+            for (var i = 0; i < checkBoxesCarsDocuments.length; i++) {
+                var checkbox = checkBoxesCarsDocuments[i];
+                var valueCheckBox = checkbox.checked;
+                var idCheckBox = checkbox.getAttribute("data-id");
+                for (var b = 0; b < inputsCarsDocuments.length; b++) {
+                    var input = inputsCarsDocuments[b];
+                    var valueInput = input.value;
+                    var idInput = input.getAttribute("data-id");
+                    if (idInput == idCheckBox) {
+                        CarsDocuments.push({ id: idCheckBox, valueCheckBox: valueCheckBox, Days: valueInput });
+                    }
+                }
+            }
+            console.log(CarsDocuments)
+
+            // CarsFixed
+            var checkBoxesCarsFixed = document.getElementsByClassName("CarsFixedCheckBox");
+            var inputsCarsFixed = document.getElementsByClassName("CarsFixedCheckInput");
+            var CarsFixed = [];
+            for (var i = 0; i < checkBoxesCarsFixed.length; i++) {
+                var checkbox = checkBoxesCarsFixed[i];
+                var valueCheckBox = checkbox.checked;
+                var idCheckBox = checkbox.getAttribute("data-id");
+                for (var b = 0; b < inputsCarsFixed.length; b++) {
+                    var input = inputsCarsFixed[b];
+                    var valueInput = input.value;
+                    var idInput = input.getAttribute("data-id");
+                    if (idInput == idCheckBox) {
+                        CarsFixed.push({ id: idCheckBox, valueCheckBox: valueCheckBox, Days: valueInput });
+                    }
+                }
+            }
+            console.log(CarsFixed)
+
+            //RenterAndDriver
+            var checkBoxesRenterAndDriver = document.getElementsByClassName("RenterAndDriverCheckBox");
+            var inputsDaysRenterAndDriver = document.getElementsByClassName("RenterAndDriverCheckInput");
+            var inputsKmRenterAndDriver = document.getElementsByClassName("RenterAndDriverCheckInputKm");
+            var RenterAndDriver = [];
+            for (var i = 0; i < checkBoxesRenterAndDriver.length; i++) {
+                var checkbox = checkBoxesRenterAndDriver[i];
+                var valueCheckBox = checkbox.checked;
+                var idCheckBox = checkbox.getAttribute("data-id");
+
+                var inputDays = inputsDaysRenterAndDriver[i];
+                var valueInput = inputDays.value;
+                var idInput = inputDays.getAttribute("data-id");
+
+                var inputKm = inputsKmRenterAndDriver[i];
+                var valueInputKm = inputKm.value;
+                var idInputKm = inputKm.getAttribute("data-id");
+
+                if (idInputKm == idInput) {
+                    RenterAndDriver.push({ id: idInputKm, valueCheckBox: valueCheckBox, Days: valueInput, Km: valueInputKm });
+                }
+            }
+            console.log(RenterAndDriver)
+
+
+            // Additional
+            var checkBoxesAdditional = document.getElementsByClassName("AdditionalCheckBox");
+            var Additional = [];
+            for (var i = 0; i < checkBoxesAdditional.length; i++) {
+                var checkbox = checkBoxesAdditional[i];
+                var valueCheckBox = checkbox.checked;
+                var idCheckBox = checkbox.getAttribute("data-id");
+                Additional.push({ id: idCheckBox, valueCheckBox: valueCheckBox });
+                    
+            }
+            console.log(Additional)
+            $.ajax({
+                url: "@Url.Action("EditMechanism", "LessorMechanism", new { Area = "CAS" })",
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    ContractValiditions: ContractValiditions,
+                    CarsDocuments: CarsDocuments,
+                    CarsFixed: CarsFixed,
+                    RenterAndDriver: RenterAndDriver,
+                    Additional: Additional
+                }),
+                success: function (response) {
+                    window.location.href = '@Url.Action("EmployeeSystemValiditions", "Employees", new { Area = "CAS" })';
+                },
+                error: function (xhr, status, error) {
+                    alert(status + xhr + error)
+                }
+            });
+
+
+
+        }
+    </script>
+}

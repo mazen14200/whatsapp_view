@@ -1,0 +1,173 @@
+﻿@using System.Globalization;
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@model IEnumerable<CrCasOwner>
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = @localizer["Users Data"];
+    ViewData["Page-Hint"] = @localizer["Users Hint"];
+}
+
+<style>
+    .email {
+        text-align: end;
+    }
+</style>
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" style="width:100%">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Id"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Owner"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Commercial_No"]</th>
+                    <th aria-label="Office: activate to sort column ascending">@localizer["NumberOfCars"]</th>
+                    <th aria-label="Start date: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrCasOwnersStatus == "D" || item.CrCasOwnersStatus == "H")
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "Owners", new { id = item.CrCasOwnersCode })'" style="cursor:pointer;color:red">
+                            <td>@no</td>
+                            <td>@item.CrCasOwnersCode</td>
+                            <td>@item.CrCasOwnersEnName</td>
+                            <td>@item.CrCasOwnersCommercialNo</td>
+                            <td>0</td>
+                            <td>
+                                @if (@item.CrCasOwnersStatus == "H")
+                                {
+                                    @localizer["Stoped"]
+                                }
+                                else if (@item.CrCasOwnersStatus == "D")
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else
+                                {
+                                    @localizer["Active"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "Owners", new { id = item.CrCasOwnersCode })'">
+                            <td>@no</td>
+                            <td>@item.CrCasOwnersCode</td>
+                            <td>@item.CrCasOwnersEnName</td>
+                            <td>@item.CrCasOwnersCommercialNo</td>
+                            <td>0</td>
+                            <td>
+                                @if (@item.CrCasOwnersStatus == "H")
+                                {
+                                    @localizer["Stoped"]
+                                }
+                                else if (@item.CrCasOwnersStatus == "D")
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else
+                                {
+                                    @localizer["Active"]
+
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+
+                }
+
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Id"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Owner"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Commercial_No"]</th>
+                    <th aria-label="Office: activate to sort column ascending">@localizer["NumberOfCars"]</th>
+                    <th aria-label="Start date: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrCasOwnersStatus == "D" || item.CrCasOwnersStatus == "H")
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "Owners", new { id = item.CrCasOwnersCode })'" style="cursor:pointer; color:red ">
+                            <td>@no</td>
+                            <td>@item.CrCasOwnersCode</td>
+                            <td>@item.CrCasOwnersArName</td>
+                            <td>@item.CrCasOwnersCommercialNo</td>
+                            <td>0</td>
+                            <td>
+                                @if (@item.CrCasOwnersStatus == "H")
+                                {
+                                    @localizer["Stoped"]
+                                }
+                                else if (@item.CrCasOwnersStatus == "D")
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else
+                                {
+                                    @localizer["Active"]
+
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "Owners", new { id = item.CrCasOwnersCode })'" style="cursor:pointer; ">
+                            <td>@no</td>
+                            <td>@item.CrCasOwnersCode</td>
+                            <td>@item.CrCasOwnersArName</td>
+                            <td>@item.CrCasOwnersCommercialNo</td>
+                            <td>0</td>
+                            <td>
+                                @if (@item.CrCasOwnersStatus == "H")
+                                {
+                                    @localizer["Stoped"]
+                                }
+                                else if (@item.CrCasOwnersStatus == "D")
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else
+                                {
+                                    @localizer["Active"]
+
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,262 @@
+﻿@using Bnan.Ui.ViewModels.CAS
+@model Bnan.Ui.ViewModels.CAS.SalesPointsVM
+@inject IViewLocalizer localizer
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = localizer["Add SalesPoint Data"];
+    ViewData["Page-Hint"] = localizer["Add SalesPoint Hint"];
+}
+<style>
+
+    .row {
+        align-items: center;
+    }
+
+    .col-md-1 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 auto;
+        flex: 0 0 auto;
+        width: 10% !important;
+    }
+</style>
+<title>@ViewData["Title"]</title>
+
+
+
+<div class="sub-container-form">
+    <form class="needs-validation" novalidate asp-area="CAS" asp-controller="SalesPoints" asp-action="AddSalesPoint" enctype="multipart/form-data">
+        <input type="hidden" asp-for="CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankCode" />
+        <input type="hidden" asp-for="CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankCode" />
+        <input type="hidden" asp-for="CrCasAccountSalesPointLessor" />
+        <div class="form-contain">
+
+            <div class="row mt-2">
+
+                @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                {
+                    <div class="col-md-1">
+                        <label class="form-label" for="LessorClass">@localizer["Branch"]</label>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" asp-for="CrCasAccountSalesPointBrn" style="width: 100%;" dir="rtl" required>
+                            <option value="" selected></option> <!-- Add an empty option as the first option -->
+                            @foreach (var branchName in (List<SelectListItem>)ViewData["BranchesAr"])
+                            {
+                                <option value="@branchName.Value" selected="@(branchName.Value.Trim() == "" ? "selected" : null)">@branchName.Text</option>
+                            }
+                        </select>
+
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="CrCasAccountSalesPointBrn" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="col-md-1">
+                        <label class="form-label" for="LessorClass">@localizer["Branch"]</label>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" asp-for="CrCasAccountSalesPointBrn" style="width: 100%;" required>
+                            <option value="" selected></option> <!-- Add an empty option as the first option -->
+                            @foreach (var branchName in (List<SelectListItem>)ViewData["BranchesEn"])
+                            {
+                                <option value="@branchName.Value" selected="@(branchName.Value.Trim() == ""  ? "selected" : null)">@branchName.Text</option>
+                            }
+                        </select>
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="CrCasAccountSalesPointBrn" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+
+            </div>
+
+
+            <div class="row mt-2">
+                @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                {
+                    <div class="col-md-1">
+                        <label class="form-label" for="LessorClass">@localizer["AccountBank"]</label>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" asp-for="CrCasAccountSalesPointAccountBank" style="width: 100%;" dir="rtl" required>
+                            <option value="" selected></option> <!-- Add an empty option as the first option -->
+                            @foreach (var accountBank in (List<SelectListItem>)ViewData["AccountBanksAr"])
+                            {
+                                <option value="@accountBank.Value" selected="@(accountBank.Value.Trim() == "" ? "selected" : null)">@accountBank.Text</option>
+                            }
+                        </select>
+
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="CrCasAccountSalesPointAccountBank" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="col-md-1">
+                        <label class="form-label" for="LessorClass">@localizer["AccountBank"]</label>
+                    </div>
+                    <div class="col-md-2">
+
+                        <select class="form-select" asp-for="CrCasAccountSalesPointAccountBank" style="width: 100%;" required>
+                            <option value="" selected></option> <!-- Add an empty option as the first option -->
+                            @foreach (var accountBank in (List<SelectListItem>)ViewData["AccountBanksEn"])
+                            {
+                                <option value="@accountBank.Value" selected="@(accountBank.Value.Trim() == ""  ? "selected" : null)">@accountBank.Text</option>
+                            }
+                        </select>
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="CrCasAccountSalesPointAccountBank" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label">@localizer["AccountBankCode"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankIban" readonly width="80%" />
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label">@localizer["BankName"]</label>
+                </div>
+                @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                {
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" asp-for="CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankArName" readonly width="80%" />
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" asp-for="CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankEnName" readonly width="80%" />
+                    </div>
+                }
+
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="AccountBankNameAr">@localizer["SalesPointCode"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrCasAccountSalesPointNo" maxlength="50" width="80%" required />
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrCasAccountSalesPointNo" class="text-danger"></span>
+                            @Html.ValidationMessage("IsSalesPointNo", null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="AccountBankNameAr">@localizer["SalesPointNameAr"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrCasAccountSalesPointArName" maxlength="50" width="80%" required />
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrCasAccountSalesPointNo" class="text-danger"></span>
+                            @Html.ValidationMessage("IsSalesPointArName", null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="AccountBankNameAr">@localizer["SalesPointNameEn"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrCasAccountSalesPointEnName" maxlength="50" width="80%" required />
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrCasAccountSalesPointNo" class="text-danger"></span>
+                            @Html.ValidationMessage("IsSalesPointEnName", null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="CrCasAccountBankReasons">@localizer["reasons"]</label>
+                </div>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" asp-for="CrCasAccountSalesPointReasons" maxlength="100" width="80%" />
+                </div>
+            </div>  
+        </div>
+        
+
+
+       
+        <div class="mt-3">
+            <button class="btn btn-primary" type="submit">@localizer["Save"]</button>
+            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="SalesPoints" asp-action="SalesPoints">
+                @localizer["Back"]
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function () {
+            $("#CrCasAccountSalesPointAccountBank").change(function () {
+                var code = $("#CrCasAccountSalesPointAccountBank").val();
+                $("#CrCasAccountSalesPointAccountBankNavigation_CrCasAccountBankIban").empty();
+                $("#CrCasAccountSalesPointBankNavigation_CrMasSupAccountBankArName").empty();
+                $("#CrCasAccountSalesPointBankNavigation_CrMasSupAccountBankEnName").empty();
+
+                    $.ajax({
+                        type: "GET",
+                        data: {
+                        code: code
+                        },
+                        url: "@Url.Action("GetBankInfo", "SalesPoints", new { Area = "CAS" })",
+                        success: function (resonse) {
+                            if (resonse[0] == "true") {
+                                $('#CrCasAccountSalesPointAccountBankNavigation_CrCasAccountBankIban').val(resonse[1]);
+                                $('#CrCasAccountSalesPointBankNavigation_CrMasSupAccountBankArName').val(resonse[2]);
+                                $('#CrCasAccountSalesPointBankNavigation_CrMasSupAccountBankEnName').val(resonse[3]);
+                            }
+                            else {
+                            $("#CrCasAccountSalesPointAccountBankNavigation_CrCasAccountBankIban").val("");
+                            $("#CrCasAccountSalesPointBankNavigation_CrMasSupAccountBankArName").val("");
+                            $("#CrCasAccountSalesPointBankNavigation_CrMasSupAccountBankEnName").val("");
+                            console.log(55555555);
+
+                            }
+                       
+                        console.log(resonse);
+                        },
+                    })
+                
+            })
+        
+        
+        })
+    </script>
+}

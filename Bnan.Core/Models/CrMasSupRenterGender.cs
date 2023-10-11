@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Bnan.Core.Models
+{
+    public partial class CrMasSupRenterGender
+    {
+        public CrMasSupRenterGender()
+        {
+            CrCasRenterPrivateDriverInformations = new HashSet<CrCasRenterPrivateDriverInformation>();
+        }
+
+        public string CrMasSupRenterGenderCode { get; set; } = null!;
+        public string? CrMasSupRenterGenderGroupCode { get; set; }
+        public string? CrMasSupRenterGenderArName { get; set; }
+        public string? CrMasSupRenterGenderEnName { get; set; }
+        public string? CrMasSupRenterGenderStatus { get; set; }
+        public string? CrMasSupRenterGenderReasons { get; set; }
+
+        public virtual CrMasSysGroup? CrMasSupRenterGenderGroupCodeNavigation { get; set; }
+        public virtual ICollection<CrCasRenterPrivateDriverInformation> CrCasRenterPrivateDriverInformations { get; set; }
+    }
+}

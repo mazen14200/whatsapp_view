@@ -1,0 +1,165 @@
+﻿@model CrMasSysProcedureVM
+@inject IViewLocalizer localizer
+
+@{
+    ViewData["Page-title"] = localizer["Add Procdure Data"];
+    ViewData["Page-Hint"] = localizer["Add Procdure Hint"];
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+<style>
+
+    .row {
+        align-items: center;
+    }
+
+    #signaturePreview, #imagePreview {
+        display: none;
+        margin-top: -5px;
+        float: right;
+        margin-right: 20px;
+        height: 100px;
+        position: relative;
+        object-fit: cover;
+        border: 1px solid rgb(231, 231, 231);
+    }
+
+    #spanInput {
+        width: 100%;
+        height: 35px;
+        width: 65%;
+        line-height: 20px;
+    }
+
+</style>
+<title>@ViewData["Title"]</title>
+
+
+
+<div class="sub-container-form">
+    <form class="needs-validation" novalidate asp-area="MAS" asp-controller="Procedures" asp-action="Add" enctype="multipart/form-data">
+        <div class="form-contain">
+            @*lessor name arabic*@
+            <div class="row mt-2" hidden>
+                <div class="col-md-1">
+                    <label class="form-label" for="ProcdureCode">@localizer["ProcdureCode"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrMasSysProceduresCode" id="ProcdureCode" maxlength="100" width="80%" value="@ViewBag.ProcduresCode" />
+                </div>
+            </div>
+
+            @*Classification and Alert*@
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="Classification">@localizer["Classification"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrMasSysProceduresClassification" id="Classification" maxlength="100" width="80%" data-val-required="@localizer["requiredFiled"]" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required />
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSysProceduresClassification" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <label class="form-label" for="Alert">@localizer["Alert"]</label>
+                </div>
+                <div class="col-md-2">
+                    <select type="text" class="form-select valid" asp-for="CrMasSysProceduresSubjectAlert" id="Alert">
+                        <option value=True>ON</option>
+                        <option value=False>OFF</option>
+                    </select>
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSysProceduresSubjectAlert" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*ProceduresArName And ProcduresEnName*@
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="ProcduresEnName">@localizer["ProcduresEnName"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrMasSysProceduresEnName" data-val-required="@localizer["requiredFiled"]" maxlength="100" id="ProcduresEnName" width="80%" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSysProceduresEnName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <label class="form-label" for="ProcduresArName">@localizer["ProcduresArName"]</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" asp-for="CrMasSysProceduresArName" data-val-required="@localizer["requiredFiled"]" id="ProcduresArName" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSysProceduresArName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*DaysAlertAboutExpire and KmAlertAboutExpire*@
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="DaysAlertAboutExpire">@localizer["DaysAlertAboutExpire"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrMasSysProceduresDaysAlertAboutExpire" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="100" id="DaysAlertAboutExpire" width="80%">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSysProceduresDaysAlertAboutExpire" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <label class="form-label" for="KmAlertAboutExpire">@localizer["KmAlertAboutExpire"]</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" asp-for="CrMasSysProceduresKmAlertAboutExpire" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="100" id="KmAlertAboutExpire" width="80%">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSysProceduresKmAlertAboutExpire" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*DaysAlertAboutExpire and KmAlertAboutExpire*@
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="Reasons">@localizer["reasons"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrMasSysProceduresReasons" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="100" id="Reasons" width="80%">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSysProceduresReasons" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-primary" type="submit">@localizer["Save"]</button>
+            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="MAS" asp-controller="Procdures" asp-action="GetProcedures">
+                @localizer["Back"]
+            </a>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

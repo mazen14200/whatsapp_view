@@ -1,0 +1,122 @@
+﻿@using Bnan.Core.Extensions
+@model IEnumerable<CrMasSupContractOption>
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";  
+}
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["ContractOptionsCode"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["ContractOptionsNameEn"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrMasSupContractOptionsStatus == @Status.Deleted || item.CrMasSupContractOptionsStatus == @Status.Hold)
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "ContractOptions", new { id = item.CrMasSupContractOptionsCode })'" style="cursor:pointer;color:red">
+                            <td>@no</td>
+                            <td>@item.CrMasSupContractOptionsCode</td>
+                            <td>@item.CrMasSupContractOptionsEnName</td>
+                            <td>
+                                @if (@item.CrMasSupContractOptionsStatus == Status.Deleted)
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else if (@item.CrMasSupContractOptionsStatus == Status.Hold)
+                                {
+                                    @localizer["Hold"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "ContractOptions", new { id = item.CrMasSupContractOptionsCode })'">
+                            <td>@no</td>
+                            <td>@item.CrMasSupContractOptionsCode</td>
+                            <td>@item.CrMasSupContractOptionsEnName</td>
+                            <td>
+                                @if (@item.CrMasSupContractOptionsStatus == Status.Acive)
+                                {
+                                    @localizer["Active"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["ContractOptionsCode"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["ContractOptionsNameAr"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrMasSupContractOptionsStatus == @Status.Deleted || item.CrMasSupContractOptionsStatus == @Status.Hold)
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "ContractOptions", new { id = item.CrMasSupContractOptionsCode })'" style="cursor:pointer;color:red">
+                            <td>@no</td>
+                            <td>@item.CrMasSupContractOptionsCode</td>
+                            <td>@item.CrMasSupContractOptionsArName</td>
+                            <td>
+                                @if (@item.CrMasSupContractOptionsStatus == Status.Deleted)
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else if (@item.CrMasSupContractOptionsStatus == Status.Hold)
+                                {
+                                    @localizer["Hold"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "ContractOptions", new { id = item.CrMasSupContractOptionsCode })'">
+                            <td>@no</td>
+                            <td>@item.CrMasSupContractOptionsCode</td>
+                            <td>@item.CrMasSupContractOptionsArName</td>
+                            <td>
+                                @if (@item.CrMasSupContractOptionsStatus == Status.Acive)
+                                {
+                                    @localizer["Active"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}

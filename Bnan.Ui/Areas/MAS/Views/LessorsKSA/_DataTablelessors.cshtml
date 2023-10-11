@@ -1,0 +1,130 @@
+﻿@using Bnan.Core.Extensions
+@model IEnumerable<CrMasLessorInformation>
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
+}
+
+
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["LessorNo"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["LessorName"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Email"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrMasLessorInformationStatus == @Status.Deleted || item.CrMasLessorInformationStatus == @Status.Hold)
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "LessorsKSA", new { id = item.CrMasLessorInformationCode })'" style="cursor:pointer;color:red">
+                            <td>@no</td>
+                            <td>@item.CrMasLessorInformationCode</td>
+                            <td>@item.CrMasLessorInformationEnLongName</td>
+                            <td>@item.CrMasLessorInformationEmail</td>
+
+                            <td>
+                                @if (@item.CrMasLessorInformationStatus == @Status.Hold)
+                                {
+                                    @localizer["Stoped"]
+                                }
+                                else if (@item.CrMasLessorInformationStatus == @Status.Deleted)
+                                {
+                                    @localizer["Deleted"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "LessorsKSA", new { id = item.CrMasLessorInformationCode })'">
+                            <td>@no</td>
+                            <td>@item.CrMasLessorInformationCode</td>
+                            <td>@item.CrMasLessorInformationEnLongName</td>
+                            <td>@item.CrMasLessorInformationEmail</td>
+                            <td>
+                                @if (@item.CrMasLessorInformationStatus == @Status.Acive)
+                                {
+                                    @localizer["Active"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["LessorNo"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["LessorName"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Email"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrMasLessorInformationStatus == @Status.Deleted || item.CrMasLessorInformationStatus == "H")
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "LessorsKSA", new { id = item.CrMasLessorInformationCode })'" style="cursor:pointer; color:red ">
+                            <td>@no</td>
+                            <td>@item.CrMasLessorInformationCode</td>
+                            <td>@item.CrMasLessorInformationArLongName</td>
+                            <td>@item.CrMasLessorInformationEmail</td>
+                            <td>
+                                @if (@item.CrMasLessorInformationStatus == @Status.Hold)
+                                {
+                                    @localizer["Stoped"]
+                                }
+                                else if (@item.CrMasLessorInformationStatus == @Status.Deleted)
+                                {
+                                    @localizer["Deleted"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "LessorsKSA", new { id = item.CrMasLessorInformationCode })'" style="cursor:pointer; ">
+                            <td>@no</td>
+                            <td>@item.CrMasLessorInformationCode</td>
+                            <td>@item.CrMasLessorInformationArLongName</td>
+                            <td>@item.CrMasLessorInformationEmail</td>
+                            <td>
+                                @if (@item.CrMasLessorInformationStatus == @Status.Acive)
+                                {
+                                    @localizer["Active"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}

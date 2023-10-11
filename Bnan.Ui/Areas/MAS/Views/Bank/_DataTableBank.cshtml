@@ -1,0 +1,122 @@
+﻿@using Bnan.Core.Extensions
+@model IEnumerable<CrMasSupAccountBank>
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
+}
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["BankNo"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["BankNameEn"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrMasSupAccountBankStatus == @Status.Deleted || item.CrMasSupAccountBankStatus == @Status.Hold)
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "Bank", new { id = item.CrMasSupAccountBankCode })'" style="cursor:pointer;color:red">
+                            <td>@no</td>
+                            <td>@item.CrMasSupAccountBankCode</td>
+                            <td>@item.CrMasSupAccountBankEnName</td>
+                            <td>
+                                @if (@item.CrMasSupAccountBankStatus == Status.Deleted)
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else if (@item.CrMasSupAccountBankStatus == Status.Hold)
+                                {
+                                    @localizer["Hold"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "Bank", new { id = item.CrMasSupAccountBankCode })'">
+                            <td>@no</td>
+                            <td>@item.CrMasSupAccountBankCode</td>
+                            <td>@item.CrMasSupAccountBankEnName</td>
+                            <td>
+                                @if (@item.CrMasSupAccountBankStatus == Status.Acive)
+                                {
+                                    @localizer["Active"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["BankNo"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["BankNameAr"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrMasSupAccountBankStatus == @Status.Deleted || item.CrMasSupAccountBankStatus == @Status.Hold)
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "Bank", new { id = item.CrMasSupAccountBankCode })'" style="cursor:pointer;color:red">
+                            <td>@no</td>
+                            <td>@item.CrMasSupAccountBankCode</td>
+                            <td>@item.CrMasSupAccountBankArName</td>
+                            <td>
+                                @if (@item.CrMasSupAccountBankStatus == Status.Deleted)
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else if (@item.CrMasSupAccountBankStatus == Status.Hold)
+                                {
+                                    @localizer["Hold"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "Bank", new { id = item.CrMasSupAccountBankCode })'">
+                            <td>@no</td>
+                            <td>@item.CrMasSupAccountBankCode</td>
+                            <td>@item.CrMasSupAccountBankArName</td>
+                            <td>
+                                @if (@item.CrMasSupAccountBankStatus == Status.Acive)
+                                {
+                                    @localizer["Active"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,337 @@
+﻿@using Bnan.Core.Extensions
+@using Bnan.Ui.ViewModels.MAS
+@model Bnan.Ui.ViewModels.MAS.PostCityVM
+
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
+}
+
+@{
+    ViewData["Page-title"] = localizer["Add PostCity Data"];
+    ViewData["Page-Hint"] = localizer["Add PostCity Hint"];
+}
+<style>
+
+    .row {
+        align-items: center;
+    }
+
+</style>
+<title>@ViewData["Title"]</title>
+
+
+
+<div class="sub-container-form">
+    <form class="needs-validation" novalidate asp-area="MAS" asp-controller="PostCity" asp-action="AddPostCity" enctype="multipart/form-data">
+        <div class="form-contain">
+            @*PostCity code*@
+            <div class="row mt-2">
+                <div class="col-md-2">
+                    <label class="form-label" for="PostCityCode">@localizer["PostCityCode"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrMasSupPostCityCode" id="PostCitycode" maxlength="100" width="80%" value="@ViewBag.PostCityCode" readonly />
+                    <input type="text" class="form-control" asp-for="CrMasSupPostCityRegionsCode" id="CrMasSupPostCityRegionsCode" maxlength="100" width="80%" value="@ViewBag.PostCityRegionCode" readonly  hidden />
+                    <input type="text" class="form-control" asp-for="CrMasSupPostCityRegionsStatus" id="PostCityRegionStatus" maxlength="100" width="80%" value="@ViewBag.PostCityRegionStatus" readonly hidden />
+                    <input type="text" class="form-control" asp-for="CrMasSupPostCityConcatenateArName" id="PostCityConcateAr" maxlength="50" width="80%" value="@ViewBag.PostCityConcateAr" readonly hidden />
+                    <input type="text" class="form-control" asp-for="CrMasSupPostCityConcatenateEnName" maxlength="50" id="PostCityConcateEn" width="80%" value="@ViewBag.PostCityConcateEn" readonly hidden />
+                
+                </div>
+
+            </div>
+
+            @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+            {
+                @*PostCity Region code  PostCityRegionName*@
+                <div class="row mt-2">
+                    <div class="col-md-2">
+                        <label class="form-label" for="PostCityRegionNameAr">@localizer["PostCityRegionNameAr"]</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="PostCityRegionNameAr" maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+                </div>
+            }
+            @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+            {
+                @*PostCity Region code  PostCityRegionName*@
+                <div class="row mt-2">
+                    <div class="col-md-2">
+                        <label class="form-label" for="PostCityRegionNameEn">@localizer["PostCityRegionNameEn"]</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="PostCityRegionNameEn" maxlength="100" width="80%" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')" />
+                    </div>
+                </div>
+            }
+            @*PostCity name arabic*@
+            <div class="row mt-2">
+                <div class="col-md-2">
+                    <label class="form-label" for="PostCityNameAr">@localizer["PostCityNameAr"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrMasSupPostCityArName" id="PostCityNameAr" maxlength="50" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" required />
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSupPostCityArName" class="text-danger"></span>
+                            @Html.ValidationMessage("ExistAr", null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+         
+            </div>
+
+
+            @*PostCity name English*@
+            <div class="row mt-2">
+                <div class="col-md-2">
+                    <label class="form-label" for="PostCityNameEn">@localizer["PostCityNameEn"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="CrMasSupPostCityEnName" maxlength="50" id="PostCityNameEn" width="80%" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')" required>
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSupPostCityEnName" class="text-danger"></span>
+                            @Html.ValidationMessage("ExistEn", null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+     
+
+
+            @*PostCity Location*@
+            <div class="row mt-2">
+                <div class="col-md-2">
+                    <label class="form-label" for="PostCityLocation">@localizer["PostCityLocation"]</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" asp-for="CrMasSupPostCityLocation" id="PostCityLocation" width="80%" />
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSupPostCityLocation" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @*PostCity Longitude and Latiude*@
+            <div class="row mt-2">
+                <div class="col-md-2">
+                    <label class="form-label" for="PostCityLong">@localizer["PostCityLong"]</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" asp-for="CrMasSupPostCityLongitude" maxlength="25" id="PostCityLong" width="80%" oninput="this.value = this.value.replace(/[^0-9.,]/g, '')">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSupPostCityLongitude" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label" for="PostCityLat">@localizer["PostCityLat"]</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" asp-for="CrMasSupPostCityLatitude" maxlength="25" id="PostCityLat" width="80%" oninput="this.value = this.value.replace(/[^0-9.,]/g, '')">
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSupPostCityLatitude" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+     
+
+
+            @*PostCity reasons*@
+            <div class="row mt-2">
+                <div class="col-md-2">
+                    <label class="form-label" for="PostCityReasons">@localizer["reasons"]</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" asp-for="CrMasSupPostCityReasons" maxlength="100" id="PostCityReasons" width="80%" />
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasSupPostCityReasons" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-primary" type="submit">@localizer["Save"]</button>
+            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="MAS" asp-controller="PostCity" asp-action="Index">
+                @localizer["Back"]
+            </a>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function validateInput(event, inId, InEr, No) {
+            event.target.value = event.target.value.replace(/[^0-9]/g, '');
+
+            const inputElement = document.getElementById(inId);
+            const errorMessageElement = document.getElementById(InEr);
+
+            const inputValue = inputElement.value;
+            const isValid = inputValue.startsWith(No);
+
+            if (!isValid) {
+                errorMessageElement.textContent = errorMessageElement.getAttribute('data-val-err');
+                inputElement.value = "";
+            } else {
+                errorMessageElement.textContent = '';
+            }
+
+
+        }
+
+
+    </script>
+
+    <script>
+
+        $(function () {
+            $("#PostCityRegionNameAr").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "@Url.Action("GetPostCityRegionNameAr", "PostCity")",
+                        type: "GET",
+                        dataType: "json",
+                        data: { prefix: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.label,
+                                    value: item.val
+                                };
+                            }));
+                        },
+                        error: function (xhr, status, error) {
+                            alert("Error");
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    var selectedChoice = ui.item.value;
+                    $.ajax({
+                        url: "@Url.Action("GetCode", "PostCity")",
+                        dataType: "json",
+                        type: "Get",
+                        data: { selectedOption: selectedChoice },
+                        success: function (data) {
+                            $('#CrMasSupPostCityRegionsCode').val(data.data1);
+                            $('#PostCityRegionStatus').val(data.data2);
+
+                        },
+                        error: function (xhr, status, error) {
+                        }
+                    });
+                }
+            });
+        });
+
+        $(function () {
+            $("#PostCityRegionNameEn").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "@Url.Action("GetPostCityRegionNameEn", "PostCity")",
+                        type: "GET",
+                        dataType: "json",
+                        data: { prefix: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.label,
+                                    value: item.val
+                                };
+                            }));
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    var selectedChoice = ui.item.value;
+                    $.ajax({
+                        url: "@Url.Action("GetCode", "PostCity")",
+                        dataType: "json",
+                        type: "Get",
+                        data: { selectedOption: selectedChoice },
+                        success: function (data) {
+                            $('#CrMasSupPostCityRegionsCode').val(data.data1);
+                            $('#PostCityRegionStatus').val(data.data2);
+                         
+                        },
+                        error: function (xhr, status, error) {
+                        }
+                    });
+                }
+            });
+        });
+
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#PostCityNameAr').on('input', function () {
+                var inputVal = $(this).val();
+                var codeData = $('#CrMasSupPostCityRegionsCode').val();
+                $.ajax({
+                    url: "@Url.Action("GetData", "PostCity")",
+                    dataType: "json",
+                    type: 'Get',
+                    data: { code: codeData, CitynameAr: inputVal },
+                    success: function (data) {
+                        $('#PostCityConcateAr').val(data.data1);
+
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle any errors
+                    }
+                });
+            });
+        });
+
+
+        $(document).ready(function () {
+            $('#PostCityNameEn').on('input', function () {
+                var inputVal = $(this).val();
+                var codeData = $('#CrMasSupPostCityRegionsCode').val();
+                $.ajax({
+                    url: "@Url.Action("GetDataEn", "PostCity")",
+                    dataType: "json",
+                    type: 'GET',
+                    data: { code: codeData, CitynameEn: inputVal },
+                    success: function (data) {
+                        $('#PostCityConcateEn').val(data.data1);
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle any errors
+                    }
+                });
+            });
+        });
+
+    </script>
+}

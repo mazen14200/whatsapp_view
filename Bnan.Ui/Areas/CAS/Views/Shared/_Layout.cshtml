@@ -1,0 +1,1095 @@
+﻿@using Bnan.Core.Extensions;
+﻿@using Microsoft.AspNetCore.Builder;
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Http.Features;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.Extensions.Options;
+
+@inject UserManager<CrMasUserInformation> userManager
+@inject SignInManager<CrMasUserInformation> signinManager
+
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var user = await userManager.GetUserAsync(User);
+    var lessorInfo = await userManager.Users.Include(l => l.CrMasUserInformationLessorNavigation).ThenInclude(l => l.CrMasLessorImage).FirstOrDefaultAsync(x => x.UserName == user.UserName);
+    var lessorCompanyContract = await userManager.Users.Include(l => l.CrMasUserInformationLessorNavigation).ThenInclude(l => l.CrMasContractCompanies).FirstOrDefaultAsync(x => x.UserName == user.UserName);
+    var userInfo = await userManager.Users
+          .Include(l => l.CrMasUserMainValidations)
+          .Include(l => l.CrMasUserSubValidations)
+          .Include(l => l.CrMasUserInformationLessorNavigation)
+          .FirstOrDefaultAsync(l => l.UserName == user.UserName);
+    string url = Context.Request.Path;
+    string urlhost = Context.Request.Host.Value;
+    string full = urlhost + url;
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var returnUrl = ViewData["returnUrl"];
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- third party css -->
+    <link href="~/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css">
+    <link href="~/css/vendor/responsive.bootstrap5.css" rel="stylesheet" type="text/css">
+    <link href="~/css/vendor/buttons.bootstrap5.css" rel="stylesheet" type="text/css">
+    <link href="~/css/vendor/select.bootstrap5.css" rel="stylesheet" type="text/css">
+    <title>@ViewData["Title"]</title>
+    <link rel="shortcut icon" href="~/images/common/Bnan.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    @*  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css"> *@
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+
+
+    @*select2*@
+    <link rel="stylesheet" href="~/css/select2.min.css" />
+    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+    {
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500&family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+    }
+    <link rel="stylesheet" href="~/css/app.min.css" />
+    <link rel="stylesheet" href="~/css/icons.min.css" />
+    <link rel="stylesheet" href="~/css/select2.min.css" />
+    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+    {
+        <link rel="stylesheet" href="~/css/ar.css" />
+    }
+    <link rel="stylesheet" href="~/css/toastr.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+
+</head>
+<body class="show" data-layout-config="{&quot;leftSideBarTheme&quot;:&quot;dark&quot;,&quot;layoutBoxed&quot;:false, &quot;leftSidebarCondensed&quot;:false, &quot;leftSidebarScrollable&quot;:false,&quot;darkMode&quot;:false, &quot;showRightSidebarOnStart&quot;: true}" data-leftbar-theme="dark" style="visibility: visible;">
+
+    <div class="wrapper">
+        <div class="leftside-menu menuitem-active">
+
+            <!-- LOGO -->
+            <a href="index.html" class="logo text-center logo-light">
+                <span class="logo-sm">
+                    <img src="~/images/Company/5003/Logo/Logo-2.png" alt="" height="80">
+                </span>
+            </a>
+
+            <!-- LOGO -->
+            <a href="index.html" class="logo text-center logo-dark">
+                <span class="logo-lg">
+                    <img src="~/images/logo-dark.png" alt="" height="16">
+                </span>
+                <span class="logo-sm">
+                    <img src="~/images/logo_sm_dark.png" alt="" height="16">
+                </span>
+            </a>
+
+            <div class="h-100 show" id="leftside-menu-container" data-simplebar="init">
+                <div class="simplebar-wrapper" style="margin: 0px;">
+                    <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
+                        <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                            <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden;">
+                                <div class="simplebar-content" style="padding: 0px;">
+
+                                    <!--- Sidemenu -->
+                                    <ul class="side-nav">
+                                        <li class="side-nav-title side-nav-item"></li>
+                                        @if (userInfo?.CrMasUserMainValidations != null)
+                                        {
+                                            @if (userInfo.CrMasUserMainValidations.FirstOrDefault(l => l.CrMasUserMainValidationMainTasks == "201")?.CrMasUserMainValidationAuthorization == true)
+                                            {
+                                                @*Company*@
+                                                <li b-9ts1qywrdg="" class="side-nav-item">
+                                                    <a b-9ts1qywrdg="" data-bs-toggle="collapse" href="#sidebarCompany" aria-expanded="false" aria-controls="sidebarCompany" class="side-nav-link collapsed">
+                                                        <i b-9ts1qywrdg="" class="uil-home-alt"></i>
+                                                        <span b-9ts1qywrdg=""> @localizer["Company"]</span>
+                                                        <span b-9ts1qywrdg="" class="menu-arrow"></span>
+                                                    </a>
+                                                    <div b-9ts1qywrdg="" class="collapse" id="sidebarCompany" style="">
+                                                        <ul b-9ts1qywrdg="" class="side-nav-second-level">
+                                                            @if (userInfo?.CrMasUserSubValidations != null)
+                                                            {
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2201001")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="Branches" asp-action="Branches">@localizer["Branches"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2201002")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="Documents" asp-action="Documents">@localizer["Documents"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2201003")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="CompanyContracts" asp-action="CompanyContracts">@localizer["Contracts"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2201004")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="Owners" asp-action="Owners">@localizer["Owner"]</a>
+                                                                    </li>
+                                                                }
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+
+                                        @if (userInfo?.CrMasUserMainValidations != null)
+                                        {
+                                            @if (userInfo.CrMasUserMainValidations.FirstOrDefault(l => l.CrMasUserMainValidationMainTasks == "202")?.CrMasUserMainValidationAuthorization == true)
+                                            {
+                                                @*السيارات*@
+                                                <li b-9ts1qywrdg="" class="side-nav-item">
+                                                    <a b-9ts1qywrdg="" data-bs-toggle="collapse" href="#sidebarcars" aria-expanded="false" aria-controls="sidebarcars" class="side-nav-link collapsed">
+                                                        <i class="mdi mdi-bus-multiple"></i>
+                                                        <span b-9ts1qywrdg=""> @localizer["Cars"]</span>
+                                                        <span b-9ts1qywrdg="" class="menu-arrow"></span>
+                                                    </a>
+                                                    <div class="collapse" id="sidebarcars">
+                                                        <ul b-9ts1qywrdg="" class="side-nav-second-level">
+                                                            @if (userInfo?.CrMasUserSubValidations != null)
+                                                            {
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202001")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg=""> @localizer["Data Car"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202002")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["Documents Cars"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202003")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg=""> @localizer["Maintenance"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202004")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg=""> @localizer["Repair Car"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202005")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["Car Transfer"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202006")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["Owner Change"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202007")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["Prices"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202008")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["Sales Product"]</a>
+                                                                    </li>
+                                                                }
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                        @if (userInfo?.CrMasUserMainValidations != null)
+                                        {
+                                            @if (userInfo.CrMasUserMainValidations.FirstOrDefault(l => l.CrMasUserMainValidationMainTasks == "203")?.CrMasUserMainValidationAuthorization == true)
+                                            {
+                                                @*المستاجرين*@
+                                                <li b-9ts1qywrdg="" class="side-nav-item">
+                                                    <a b-9ts1qywrdg="" data-bs-toggle="collapse" href="#sidebarRenter" aria-expanded="false" aria-controls="sidebarRenter" class="side-nav-link collapsed">
+                                                        <i class="mdi mdi-account-supervisor"></i>
+                                                        <span b-9ts1qywrdg=""> @localizer["Renter"]</span>
+                                                        <span b-9ts1qywrdg="" class="menu-arrow"></span>
+                                                    </a>
+                                                    <div b-9ts1qywrdg="" class="collapse" id="sidebarRenter" style="">
+                                                        <ul b-9ts1qywrdg="" class="side-nav-second-level">
+                                                            @if (userInfo?.CrMasUserSubValidations != null)
+                                                            {
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2203001")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-products.html"> @localizer["Renter Data"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2203002")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-products-details.html">@localizer["Renter Contract"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2203003")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Renter Balances"]</a>
+                                                                    </li>
+                                                                }
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            }
+
+                                        }
+                                        @if (userInfo?.CrMasUserMainValidations != null)
+                                        {
+                                            @if (userInfo.CrMasUserMainValidations.FirstOrDefault(l => l.CrMasUserMainValidationMainTasks == "204")?.CrMasUserMainValidationAuthorization == true)
+                                            {
+                                                @*الحسابات*@
+                                                <li b-9ts1qywrdg="" class="side-nav-item">
+                                                    <a b-9ts1qywrdg="" data-bs-toggle="collapse" href="#sidebarAcount" aria-expanded="false" aria-controls="sidebarAcount" class="side-nav-link collapsed">
+                                                        <i class="mdi mdi-grease-pencil"></i>
+                                                        <span b-9ts1qywrdg=""> @localizer["Accounts"]</span>
+                                                        <span b-9ts1qywrdg="" class="menu-arrow"></span>
+                                                    </a>
+                                                    <div b-9ts1qywrdg="" class="collapse" id="sidebarAcount" style="">
+                                                        <ul b-9ts1qywrdg="" class="side-nav-second-level">
+                                                            @if (userInfo?.CrMasUserSubValidations != null)
+                                                            {
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2204001")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-products.html"> @localizer["Cash Feeding"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2204002")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-products-details.html">@localizer["Receipt Confirmation"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2204003")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Transfer To Renter"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2204004")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Transfer From Renter"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2204005")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Tax Dues"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2204006")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Pay Taxes"]</a>
+                                                                    </li>
+                                                                }
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                        @if (userInfo?.CrMasUserMainValidations != null)
+                                        {
+                                            @if (userInfo.CrMasUserMainValidations.FirstOrDefault(l => l.CrMasUserMainValidationMainTasks == "205")?.CrMasUserMainValidationAuthorization == true)
+                                            {
+                                                @*التقارير*@
+                                                <li b-9ts1qywrdg="" class="side-nav-item">
+                                                    <a b-9ts1qywrdg="" data-bs-toggle="collapse" href="#sidebarReport" aria-expanded="false" aria-controls="sidebarReport" class="side-nav-link collapsed">
+                                                        <i class="mdi mdi-notebook-edit"></i>
+                                                        <span b-9ts1qywrdg=""> @localizer["Reports"]</span>
+                                                        <span b-9ts1qywrdg="" class="menu-arrow"></span>
+                                                    </a>
+                                                    <div b-9ts1qywrdg="" class="collapse" id="sidebarReport" style="">
+                                                        <ul b-9ts1qywrdg="" class="side-nav-second-level">
+                                                            @if (userInfo?.CrMasUserSubValidations != null)
+                                                            {
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205001")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-products.html"> @localizer["Administrative Procedures"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205002")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                <li b-9ts1qywrdg="">
+                                                                    <a b-9ts1qywrdg="" href="apps-ecommerce-products-details.html">@localizer["Finacial Procedures"]</a>
+                                                                </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205003")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Contracts Report"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205004")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                <li b-9ts1qywrdg="">
+                                                                    <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Financial Transaction Of Renter"]</a>
+                                                                </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205005")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Financial Transaction Of Sales Point"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205006")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Financial Transaction Of Employees"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205007")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Contract Statistics"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205008")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Car Stats"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205009")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Renter Statistics"]</a>
+                                                                    </li>
+                                                                }
+                                                            }
+
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                         @if (userInfo?.CrMasUserMainValidations != null)
+                                        {
+                                            @if (userInfo.CrMasUserMainValidations.FirstOrDefault(l => l.CrMasUserMainValidationMainTasks == "206")?.CrMasUserMainValidationAuthorization == true)
+                                            {
+                                                @*المستخدمين*@
+                                                <li b-9ts1qywrdg="" class="side-nav-item">
+                                                    <a b-9ts1qywrdg="" data-bs-toggle="collapse" href="#sidebarUsers" aria-expanded="false" aria-controls="sidebarUsers" class="side-nav-link collapsed">
+                                                        <i class="mdi mdi-shield-account"></i>
+                                                        <span b-9ts1qywrdg=""> @localizer["Users"]</span>
+                                                        <span b-9ts1qywrdg="" class="menu-arrow"></span>
+                                                    </a>
+                                                    <div b-9ts1qywrdg="" class="collapse" id="sidebarUsers" style="">
+                                                        <ul b-9ts1qywrdg="" class="side-nav-second-level">
+                                                            @if (userInfo?.CrMasUserSubValidations != null)
+                                                            {
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2206001")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="Employees" asp-controller="Employees"> @localizer["Users"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2206002")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="EmployeeSystemValiditions" asp-controller="Employees"> @localizer["Users' Responsibilities System"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2206003")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="EmployeeContractValiditions" asp-controller="Employees">@localizer["Contract Authorization"]</a>
+                                                                    </li>
+                                                                }
+                                                                
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                           @*الخدمات*@
+                                                <li b-9ts1qywrdg="" class="side-nav-item">
+                                                    <a b-9ts1qywrdg="" data-bs-toggle="collapse" href="#sidebarServices" aria-expanded="false" aria-controls="sidebarServices" class="side-nav-link collapsed">
+                                                        <i b-9ts1qywrdg="" class="uil-store"></i>
+                                                        <span b-9ts1qywrdg=""> @localizer["Services"]</span>
+                                                        <span b-9ts1qywrdg="" class="menu-arrow"></span>
+                                                    </a>
+                                                    <div b-9ts1qywrdg="" class="collapse" id="sidebarServices" style="">
+                                                        <ul b-9ts1qywrdg="" class="side-nav-second-level">
+                                                            @if (userInfo?.CrMasUserSubValidations != null)
+                                                            {
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207001")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                <a b-9ts1qywrdg="" asp-area="CAS" asp-action="Mechanism" asp-controller="LessorMechanism"> @localizer["Alerts"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207002")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-products-details.html">@localizer["Membership"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207003")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="Index" asp-controller="AccountBank">@localizer["Banks"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207004")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="SalesPoints" asp-controller="SalesPoints">@localizer["Sales Point"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207005")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                <a b-9ts1qywrdg="" asp-area="CAS" asp-action="Index" asp-controller="RenterDriver">@localizer["Drivers"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207006")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Messages For Tenants"]</a>
+                                                                    </li>
+                                                                }
+                                                                
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Messages To Users"]</a>
+                                                                    </li>
+                                                                
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207008")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Offer"]</a>
+                                                                    </li>
+                                                                }
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            
+                                        
+                                    </ul>
+
+
+                                    <!-- End Sidebar -->
+
+                                    <div class="clearfix"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div><div class="simplebar-placeholder" style="width: 70px; height: 1150px;"></div>
+                </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="height: 0px; transform: translate3d(0px, 0px, 0px); display: none;"></div></div>
+            </div>
+            <!-- Sidebar -left -->
+
+        </div>
+        <div class="content-page">
+            <div class="content">
+                <div class="navbar-custom">
+                    <ul class="list-unstyled topbar-menu float-end mb-0">
+                        <li class="dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="true">
+                                @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+                                {
+                                    <a class="dropdown-item notify-item-lang" asp-area="CAS" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="ar-EG">
+                                        <span class="align-middle">Ar</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item notify-item-lang" asp-area="CAS" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="en-US">
+                                        <span class="align-middle">En</span>
+                                    </a>
+                                }
+
+                            </a>
+
+                        </li>
+
+                        <li class="dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="true">
+                                <i class="dripicons-bell noti-icon"></i>
+                                <span class="noti-icon-badge"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(-278px, 72px);" data-popper-placement="bottom-end">
+
+                                <!-- item-->
+                                <div class="dropdown-item noti-title">
+                                    <h5 class="m-0">
+                                        <span class="float-end">
+                                            <a href="javascript: void(0);" class="text-dark">
+                                                <small>Clear All</small>
+                                            </a>
+                                        </span>Notification
+                                    </h5>
+                                </div>
+
+                                <div style="max-height: 230px;" data-simplebar="init">
+                                    <div class="simplebar-wrapper" style="margin: 0px;">
+                                        <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
+                                            <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
+                                                    <div class="simplebar-content" style="padding: 0px;">
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                            <div class="notify-icon bg-primary">
+                                                                <i class="mdi mdi-comment-account-outline"></i>
+                                                            </div>
+                                                            <p class="notify-details">
+                                                                Caleb Flakelar commented on Admin
+                                                                <small class="text-muted">1 min ago</small>
+                                                            </p>
+                                                        </a>
+
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                            <div class="notify-icon bg-info">
+                                                                <i class="mdi mdi-account-plus"></i>
+                                                            </div>
+                                                            <p class="notify-details">
+                                                                New user registered.
+                                                                <small class="text-muted">5 hours ago</small>
+                                                            </p>
+                                                        </a>
+
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                            <div class="notify-icon">
+                                                                <img src="assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="">
+                                                            </div>
+                                                            <p class="notify-details">Cristina Pride</p>
+                                                            <p class="text-muted mb-0 user-msg">
+                                                                <small>Hi, How are you? What about our next meeting</small>
+                                                            </p>
+                                                        </a>
+
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                            <div class="notify-icon bg-primary">
+                                                                <i class="mdi mdi-comment-account-outline"></i>
+                                                            </div>
+                                                            <p class="notify-details">
+                                                                Caleb Flakelar commented on Admin
+                                                                <small class="text-muted">4 days ago</small>
+                                                            </p>
+                                                        </a>
+
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                            <div class="notify-icon">
+                                                                <img src="assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="">
+                                                            </div>
+                                                            <p class="notify-details">Karen Robinson</p>
+                                                            <p class="text-muted mb-0 user-msg">
+                                                                <small>Wow ! this admin looks good and awesome design</small>
+                                                            </p>
+                                                        </a>
+
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                            <div class="notify-icon bg-info">
+                                                                <i class="mdi mdi-heart"></i>
+                                                            </div>
+                                                            <p class="notify-details">
+                                                                Carlos Crouch liked
+                                                                <b>Admin</b>
+                                                                <small class="text-muted">13 days ago</small>
+                                                            </p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><div class="simplebar-placeholder" style="width: 318px; height: 389px;"></div>
+                                    </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 135px; display: block; transform: translate3d(0px, 94px, 0px);"></div></div>
+                                </div>
+
+                                <!-- All-->
+                                <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                                    View All
+                                </a>
+
+                            </div>
+                        </li>
+
+                        <li class="dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="true">
+                                <i class="dripicons-message noti-icon"></i>
+                                <span class="noti-icon-badge-message"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(-278px, 72px);" data-popper-placement="bottom-end">
+
+                                <!-- item-->
+                                <div class="dropdown-item noti-title">
+                                    <h5 class="m-0">
+                                        <span class="float-end">
+                                            <a href="javascript: void(0);" class="text-dark">
+                                                <small>Clear All</small>
+                                            </a>
+                                        </span>Notification
+                                    </h5>
+                                </div>
+
+                                <div style="max-height: 230px;" data-simplebar="init">
+                                    <div class="simplebar-wrapper" style="margin: 0px;">
+                                        <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
+                                            <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
+                                                    <div class="simplebar-content" style="padding: 0px;">
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                            <div class="notify-icon bg-primary">
+                                                                <i class="mdi mdi-comment-account-outline"></i>
+                                                            </div>
+                                                            <p class="notify-details">
+                                                                Caleb Flakelar commented on Admin
+                                                                <small class="text-muted">1 min ago</small>
+                                                            </p>
+                                                        </a>
+
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                            <div class="notify-icon bg-info">
+                                                                <i class="mdi mdi-account-plus"></i>
+                                                            </div>
+                                                            <p class="notify-details">
+                                                                New user registered.
+                                                                <small class="text-muted">5 hours ago</small>
+                                                            </p>
+                                                        </a>
+
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                            <div class="notify-icon">
+                                                                <img src="assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="">
+                                                            </div>
+                                                            <p class="notify-details">Cristina Pride</p>
+                                                            <p class="text-muted mb-0 user-msg">
+                                                                <small>Hi, How are you? What about our next meeting</small>
+                                                            </p>
+                                                        </a>
+
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                            <div class="notify-icon bg-primary">
+                                                                <i class="mdi mdi-comment-account-outline"></i>
+                                                            </div>
+                                                            <p class="notify-details">
+                                                                Caleb Flakelar commented on Admin
+                                                                <small class="text-muted">4 days ago</small>
+                                                            </p>
+                                                        </a>
+
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                            <div class="notify-icon">
+                                                                <img src="assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="">
+                                                            </div>
+                                                            <p class="notify-details">Karen Robinson</p>
+                                                            <p class="text-muted mb-0 user-msg">
+                                                                <small>Wow ! this admin looks good and awesome design</small>
+                                                            </p>
+                                                        </a>
+
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                            <div class="notify-icon bg-info">
+                                                                <i class="mdi mdi-heart"></i>
+                                                            </div>
+                                                            <p class="notify-details">
+                                                                Carlos Crouch liked
+                                                                <b>Admin</b>
+                                                                <small class="text-muted">13 days ago</small>
+                                                            </p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><div class="simplebar-placeholder" style="width: 318px; height: 389px;"></div>
+                                    </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 135px; display: block; transform: translate3d(0px, 94px, 0px);"></div></div>
+                                </div>
+
+                                <!-- All-->
+                                <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                                    View All
+                                </a>
+
+                            </div>
+                        </li>
+
+                        <li class="dropdown notification-list">
+                            <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <span class="account-user-avatar">
+                                    <img src="@Url.Content(user.CrMasUserInformationPicture?.ToString())" class="rounded-circle">
+                                </span>
+                                <span>
+                                    @if (signinManager.IsSignedIn(User))
+                                    {
+                                        @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+                                        {
+                                            <span class="account-user-name">@((await userManager.GetUserAsync(User)).CrMasUserInformationArName)</span>
+                                            <span class="account-position">@((await userManager.GetUserAsync(User)).CrMasUserInformationTasksArName)</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="account-user-name">@((await userManager.GetUserAsync(User)).CrMasUserInformationEnName)</span>
+                                            <span class="account-position">@((await userManager.GetUserAsync(User)).CrMasUserInformationTasksEnName)</span>
+                                        }
+
+                                    }
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
+                                <!-- item-->
+                                <div class=" dropdown-header noti-title">
+                                    <h6 class="text-overflow m-0">@localizer["Welcome"]</h6>
+                                </div>
+
+                                <!-- item-->
+                                <a asp-area="CAS" asp-controller="Employees" asp-action="MyAccount" class="dropdown-item notify-item" id="myAcc">
+                                    <i class="mdi mdi-account-circle me-1"></i>
+                                    <span>@localizer["My Account"]</span>
+                                </a>
+                                <a asp-area="CAS" asp-controller="Employees" asp-action="ChangePassword" class="dropdown-item notify-item" id="changePass">
+                                    <i class="mdi mdi-onepassword me-1"></i>
+                                    <span>@localizer["ChangePassword"]</span>
+                                </a>
+                                <!-- item-->
+                                <a asp-area="Identity" asp-controller="Account" asp-action="Logout" class="dropdown-item notify-item" id="logout">
+                                    <i class="mdi mdi-logout me-1"></i>
+                                    <span>@localizer["logout"]</span>
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+                    <button class="button-menu-mobile open-left" style="height: 85px;">
+                        <i class="mdi mdi-menu"></i>
+                    </button>
+                    <button class="button-menu-mobile button-menu-mobile-logo open-left">
+                        <img src="@Url.Content(lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo)" alt="" style="height: 80px;width: 140px;">
+                    </button>
+                    <button class="button-menu-mobile open-left lessor-title" style="font-size:19px;font-weight:800;margin-right: 55px; white-space: nowrap;">
+                        @if (signinManager.IsSignedIn(User))
+                        {
+                            @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+                            {
+                                @Html.Raw(lessorInfo.CrMasUserInformationLessorNavigation?.CrMasLessorInformationArLongName)
+                            }
+                            else
+                            {
+                                @Html.Raw(lessorInfo.CrMasUserInformationLessorNavigation?.CrMasLessorInformationEnLongName)
+
+                            }
+                        }
+                    </button>
+                    <div class="list-unstyled topbar-menu float-end mb-0" >
+                     @if (lessorCompanyContract.CrMasUserInformationLessorNavigation.CrMasLessorInformationStatus == Status.Hold)
+                    {
+                    <div class="text-danger" id="dangerMessage">@localizer["CompanyHoldedDanger"]</div>
+
+                    }
+                    else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.Renewed)
+                    {
+                    <div   class="text-danger" id="dangerMessage">@localizer["ContractNewDanger"]</div>
+
+                    }
+                    else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.Expire)
+                    {
+                    <div  class="text-danger" id="dangerMessage">@localizer["ContractExpireDanger"]</div>
+
+                    }
+                    else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.AboutToExpire)
+                    {
+                    <div  class="text-danger" id="dangerMessage">@localizer["ContractAboutExpireDanger"]</div>
+                    }
+                    </div>
+
+                </div>
+                <!-- Expiration Modal -->
+                <partial name="_ExpirationModal" />
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="page-title-box me-2">
+                            <div class="page-title-left">
+                                <h4 class="page-title">@ViewData["Page-Title"]</h4>
+                            </div>
+                            <div class="page-title-left me-2">
+                                <h5 class="page-title-hint">@ViewData["Page-Hint"]</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    @RenderBody()
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/vendor/jquery.dataTables.min.js"></script>
+    <script src="~/js/vendor/dataTables.bootstrap5.js"></script>
+    <script src="~/js/vendor/dataTables.responsive.min.js"></script>
+    <script src="~/js/vendor/responsive.bootstrap5.min.js"></script>
+    <script src="~/js/vendor/dataTables.buttons.min.js"></script>
+    <script src="~/js/vendor/dataTables.keyTable.min.js"></script>
+    <script src="~/js/vendor/dataTables.select.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="~/js/toastr.js"></script>
+    <script src="~/js/select2.min.js"></script>
+    <script src="~/js/site.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+
+
+    <script src="~/js/site.js"></script>
+
+
+    @*Intialize DataTable*@
+    <script>
+        function set_basic_datatable() {
+            var table = $("#basic-datatable").DataTable({
+                scrollY: "48vh",
+                pageLength: 7,
+                scrollCollapse: true,
+                paging: false,
+                paginate: false,
+                language: {
+                    search: `@localizer["search"]`
+                }
+            });
+
+            $('#top-search').on('keyup', function () {
+                table.search(this.value).draw();
+            });
+        }
+        set_basic_datatable();
+    </script>
+
+    <script>
+        function CheckValidation(subTaskCodeProcdure, status, url) {
+            return $.ajax({
+                type: "GET",
+                async: false,
+                data: {
+                    subTaskCodeProcdure: subTaskCodeProcdure,
+                    status: status
+                },
+                url: "@Url.Action("CheckUserSubValidationProcdures", "Employees")",
+                success: function (response) {
+                    if (response == true) {
+                        if (url != null) {
+                            window.location.href = url;
+                        }
+                    } else {
+                        toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                        toastr.error('@localizer["toastMessage"]');
+                    }
+                },
+            })
+        }
+    </script>
+    @*Expireation pop up modal*@
+    <script>
+        $(document).ready(function () {
+            // Set an initial timeout of 60 seconds (in milliseconds)
+            let timeout = 300000;
+            let timer;
+
+            // Function to start the countdown
+            function startCountdown() {
+                timer = setInterval(updateCountdown, 1000);
+            }
+            function clearCountdown() {
+                clearInterval(timer);
+            }
+
+            // Function to update the countdown display
+            function updateCountdown() {
+                let countdownElem = $('#countdown');
+                let timeLeft = parseInt(countdownElem.text());
+
+                if (timeLeft > 1) {
+                    countdownElem.text(timeLeft - 1);
+                } else {
+                    clearInterval(timer);
+                    logout();
+                }
+            }
+
+            // Function to logout the user
+            function logout() {
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("Logout", "Account", new { Area = "Identity" })",
+                    success: function (response) {
+                        window.location.href = "@Url.Action("Index", "Account", new { Area = "Identity" })";
+                    },
+                })
+            }
+
+            // Add event listener to detect no activity
+            let idleTimeout = null;
+
+            $(document).on('click keydown mousemove', function () {
+                clearTimeout(idleTimeout);
+                idleTimeout = setTimeout(function () {
+                    if ($('#popup').is(':visible')) {
+                        return; // Popup already displayed, so ignore this event
+                    }
+
+                    $('#popup').modal("show");
+                    startCountdown();
+                }, timeout);
+            });
+
+            // Add event listener to continue button
+            $('#continueBtn').click(function () {
+                $('#countdown').text("60");
+                clearCountdown();
+                clearTimeout(idleTimeout);
+                $('#popup').modal("hide");
+            });
+
+            // Add event listener to logout button
+            $('#logoutBtn').click(function () {
+                clearTimeout(idleTimeout);
+                logout();
+            });
+        });
+    </script>
+
+    @*Enhance Template*@
+    <script>
+        $(document).ready(function () {
+            if (window.location.href == "https://" + "@urlhost" + "/MAS/Home/Index") {
+                localStorage.removeItem("li");
+                localStorage.removeItem("lino");
+            }
+
+            localStorage.setItem("li", $("@ViewData["id"]").attr("id"));
+            localStorage.setItem("lino", "@ViewData["no"]");
+
+            var ParentNode = localStorage.getItem("li");
+            var NoNode = (parseInt(localStorage.getItem("lino")) + 1).toString();
+
+            $(`#${ParentNode}`).addClass("show");
+            $(`#${ParentNode}`).siblings("a").attr("aria-expanded", "true");
+            $(`#${ParentNode}`).parent().addClass("menuitem-active");
+            $(`#${ParentNode}`).find(`.side-nav-second-level li:nth-child(${NoNode})`).addClass("active");
+            $(".dropdown.notification-list > a").on("click", function () {
+                $(this).find(".dropdown-menu").toggleClass("show");
+                // $(this).siblings().find(".dropdown-menu").removeClass("show");
+            });
+        });
+
+        $('.button-menu-mobile.open-left').click(function () {
+            if ($('body').attr('data-leftbar-compact-mode')) {
+                $('body').removeAttr('data-leftbar-compact-mode');
+            } else {
+                $('body').attr('data-leftbar-compact-mode', 'condensed');
+            }
+            $(".side-nav-item").on("click", function () {
+                console.log($(this).find(" > a").attr('aria-expanded'));
+                if ($(this).find(" > a").attr('aria-expanded') === "false") {
+                    $(this).find(" > a").attr('aria-expanded', "true");
+                    console.log("if false => true");
+                } else {
+                    $(this).find(" > a").attr('aria-expanded', "false");
+                    console.log("if true => false");
+                }
+            });
+        });
+
+        $(".side-nav-item").on("click", function () {
+            $(this).toggleClass("menuitem-active");
+            $(this).find(".side-nav-link").toggleClass("collapsed");
+            if (!$(this).find(".collapse").hasClass("show")) {
+                $(this).find(".collapse").removeClass("collapse").addClass("collapsing").animate({
+                    height: $(this).find(".side-nav-second-level").height()
+                }, 400).removeClass("collapsing").addClass("collapse").addClass("show");
+                $(this).siblings().find(" > a").attr('aria-expanded', false);
+            } else {
+                $(this).find(".show").animate({
+                    height: "0"
+                }, 400).addClass("collapse").removeClass("show");
+            }
+            $(this).siblings().find(".collapse").removeClass("show");
+            $(this).siblings().removeClass("menuitem-active");
+        });
+
+        //$(".side-nav-second-level li").on("click", function(event) {
+        //  localStorage.setItem("li", $(this).parent().parent().attr("id"));
+        // localStorage.setItem("lino", $(this).index());
+        //event.stopPropagation();
+        //});
+
+
+
+        $("#logout, #myAcc, #changePass").on("click", function () {
+            localStorage.removeItem("li");
+            localStorage.removeItem("lino");
+        });
+        // this script to set number and length input type number
+        function validateInputNumber(input) {
+            // Remove any non-numeric characters
+            input.value = input.value.replace(/[^0-9.]/g, '');
+            // Remove multiple decimal points
+            input.value = input.value.replace(/(\..*)\./g, '$1');
+            // // Limit input length to 10 characters
+            // if (input.value.length > 10) {
+            //     input.value = input.value.slice(0, 10);
+            // }
+        }
+        function validateInputNumberRate(input) {
+            const regex = /^(\d{1,2}(\.\d{1,2})?|100(\.0{1,2})?)$/;
+            if (!regex.test(input.value)) {
+                // Input value is not valid, reset to empty string
+                input.value = '';
+            }
+        }
+                        // auto complete off in all input
+                        //document.addEventListener("DOMContentLoaded", function () {
+                        //    // Get all input fields in the document
+                        //    var inputFields = document.querySelectorAll("input");
+
+                        //    // Loop through each input field
+                        //    inputFields.forEach(function (input) {
+                        //        // Set the autocomplete attribute to "off"
+                        //        input.setAttribute("autocomplete", "off");
+                        //    });
+                        //});
+    </script>
+
+</body>
+</html>
+

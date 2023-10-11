@@ -1,0 +1,868 @@
+{
+  // CAS System SideBar
+
+  //company
+  "Company": "Company",
+  "Branches": "Branches",
+  "Documents": "Documents",
+  "Contracts": "Contracts",
+  "Owner": "Owner",
+
+  //cars
+  "Cars": "Cars",
+  "Data Car": "Data Car",
+  "Documents Cars": "Documents Cars",
+  "Maintenance": "Maintenance",
+  "Repair Car": "Repair Car",
+  "Car Transfer": "Car Transfer",
+  "Owner Change": "Owner Change",
+  "Prices": "Prices",
+  "Sales Product": "Sales Product",
+
+  //Renter
+  "Renter": "Renter",
+  "Renter Data": "Renter Data",
+  "Renter Contract": "Renter Contract",
+  "Renter Balances": "Renter Balances",
+  //Accounts
+  "Accounts": "Accounts",
+  "Cash Feeding": "Cash Feeding",
+  "Receipt Confirmation": "Receipt Confirmation",
+  "Transfer To Renter": "Transfer To Renter",
+  "Transfer From Renter": "Transfer From Renter",
+  "Tax Dues": "Tax Dues",
+  "Pay Taxes": "Pay Taxes",
+  //Reports
+  "Reports": "Reports",
+  "Administrative Procedures": "Administrative Procedures",
+  "Finacial Procedures": "Finacial Procedures",
+  "Contracts Report": "Contracts",
+  "Financial Transaction Of Renter": "Financial Transaction Of Renter",
+  "Financial Transaction Of Sales Point": "Financial Transaction Of Sales Point",
+  "Financial Transaction Of Employees": "Financial Transaction Of Employees",
+  "Contract Statistics": "Contract Statistics",
+  "Car Stats": "Car Stats",
+  "Renter Statistics": "Renter Statistics",
+  // Users
+  "Users": "Employees",
+  "UsersInfo": "Employees Information",
+
+  "Users' Responsibilities System": "Employees' Responsibilities System",
+  "Contract Authorization": "Contract Authorization",
+  //Services
+  "Services": "Services",
+  "Alerts": "Alerts",
+  "Membership": "Membership",
+  "Banks": "Banks",
+  "Sales Point": "Sales Point",
+  "Messages For Tenants": "Messages For Tenants",
+  "Messages To Users": "Messages To Users",
+  "Offer": "Offer",
+
+
+  //CAS System NavBar
+  "Welcome": "Welcome",
+  "Logout": "Logout",
+  "My Account": "My Account",
+  //login
+  "CompanyDeleted": "Sorry, you cannot log in. The company has been deleted",
+  "AccountHold": "User Holded",
+  "AccountDelete": " User Deleted",
+  "PasswordInvalid": "Password Is Invalid",
+  "UserNameInvalid": "UserName is Invalid",
+  "PleaseEnterUserName": "Please Enter User Name",
+  "PleaseEnterPassword": "Please Enter Password",
+  "Password": "Password",
+
+
+
+
+  //CAS  Datatable
+  "Branch": "Branch",
+  "City": "City",
+  "Manager": "Manager",
+  "MobilePhone": "Mobile Phone",
+  "TelePhone": "TelePhone",
+  "Status": "Status",
+  "search": "search",
+  "photo": "Pohto",
+  "Documentphoto": "Document photo",
+  "pdf": "Contract",
+  "notfound": "not found",
+
+
+  //CAS Add Branch
+  "Add Branch Hint": "The page allows you to  add Branch data.",
+  "Add Branch Data": "Add Branch",
+  "BranchNameAr": "Branch Name Arabic",
+  "BranchNameArShort": "Branch Name Short",
+  "BranchNameEn": "Branch Name English",
+  "BranchNameEnShort": "Branch Name Short",
+
+  //CAS Edit Branch
+  "Edit Branch Hint": "The page allows you to  Edit Branch data.",
+  "Edit Branch Data": "Edit Branch",
+
+  //CAS Branch Doucment
+  "Document Data": "Document",
+  "Document Hint": "The page allows you to  Edit Documents Data .",
+  "Document Type": "Document Type",
+  "TheNumber": "The Number",
+  "Date": "Document Date",
+  "StartDate": "Start Date",
+  "EndDate": "End Date",
+  "Document Edit Data": "Edit Document",
+  "Document Edit Hint": "The page allows you to Edit Document .",
+
+
+
+  //table filter
+  "All": "All",
+  "Active": "Active",
+  "Deleted": "Deleted",
+  "Stoped": "Hold",
+  "Renew": "ReNew",
+  "AboutToExpire": "About To Expire",
+  "Expire": "Expire",
+
+  // component title
+  "Branch Data": "Branch Data",
+  "Branch Hint": "The page allows you to  Display Branch data",
+  "Users Data": "Employees Data",
+
+
+  // Mas System SideBar >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  "Mas System": "Mas System",
+  "BnanJo": "Bnan-Bnan",
+  //companies
+  "Companies": "Companies",
+  "CompaniesInformations": "Informations",
+  "Supportphotos": "Support Photos",
+  "Dues": "Dues",
+  "Clearingdues": "Clearing Dues",
+  //Bnan
+  "Bnan": "Bnan",
+  //Reports
+  "Report1": "Report 1",
+  "Report2": "Report 2",
+  "Report3": "Report 3",
+  "Report4": "Report 4",
+  "Report5": "Report 5",
+  "Report6": "Report 6",
+  "Report7": "Report 7",
+  "Report8": "Report 8",
+  //UsersServices
+  "RentersServices": "Renters Services",
+  "UserIdType": "User Id Type",
+  "DrivingLicenseType": "Driving License Type",
+  "Nationalities": "Nationalities",
+  "Professions": "Professions",
+  "Employers": "Employers",
+  "Sectors": "Sectors",
+  //CarsServices
+  "CarsServices": "Cars Services",
+  "RegistrationType": "Registration Type",
+  "FuelType": "Fuel Type",
+  "Brands": "Brands",
+  "Models": "Models",
+  "Categories": "Categories",
+  "CategoriesDistribution": "Categories Distribution",
+  "Features": "Features",
+  "Colors": "Colors",
+  //MailsServices
+  "MailsServices": "MailsServices",
+  "Regions": "Regions",
+  "Cities": "Cities",
+  //AccountsServices
+  "AccountsServices": "Accounts Services",
+  "PaymentMethods": "Payment Methods",
+  "Reference": "Reference",
+  //RentalContracts
+  "RentalContracts": "Rental Contracts",
+  "Additionals": "Additionals",
+  "Choices": "Choices",
+  "VirtualInspection": "Virtual Inspection",
+  //Services
+  "Systems": "Systems",
+  "MainTasks": "Main Tasks",
+  "SubTasks": "Sub Tasks",
+  "Groups": "Groups",
+  "Procedures": "Procedures",
+  "RegistrationStatus": "Registration Status",
+  "MembershipConditions": "Membership Terms",
+  "Evaluation": "Evaluation",
+  "ClassifyCompanies": "Classify Companies",
+  "Drivers": "Drivers",
+  //UsersPage
+  "No": "Serial",
+  "UserNo": "Employee Id",
+  "UserName": "Employee Name",
+  "Email": "Email",
+  "TaskName": "Task",
+  "Add User": "Add Employee",
+  "Back": "Back",
+  "Users Hint": "The page allows you to display, add, and modify Employee data.",
+  "LastEntryDate": "Last Entry Date",
+  "LastExitDate": "Last Exit",
+  "LastChangePassword": "Change Password",
+
+  //Add User
+  "Add User Hint": "The page allows you to add Employee",
+  "Add User Data": "Add Employee",
+  "User Code": "Employee Code",
+  "UserNameAr": "Arabic Name",
+  "UserNameEn": "English Name",
+  "User Phone": "Employee Phone",
+  "User Is Exists": "Employee Is Exists",
+  "TasksArName": "Arabic Task",
+  "TasksEnName": "English Task",
+  "Edit User Hint": "The page allows you to Edit Employee data ",
+  "Edit User Data": "Update",
+  "Picture": "Picture",
+  "Signture": "Signture",
+
+  //lessor page
+  "Lessors Data": "Lessors Data",
+  "Lessors Hint": "The page allows you to display, add, and modify lessor data.",
+  "LessorNo": "Lessor Id",
+  "LessorName": "Lessor Name",
+  "Add Lessor": "Add Lessor",
+  //Add-Lessor
+  "Add Lessor Hint": "The page allows you to add Lessor data",
+  "Add Lessor Data": "Add Lessor",
+  "LessorCode": "lessor Code",
+  "LessorNameAr": "Name Arabic",
+  "LessosorNameEn": "Name English",
+  "LessorNameArShort": "Name Arabic Short",
+  "LessosorNameEnShort": "Name English Short",
+  "governmentNo": "gov Number",
+  "TaxNo": "Tax Number",
+  "DirNameAr": "DirName Arabic",
+  "DirNameEn": "Dir Name English",
+  "LessorPhone": "Mobile",
+  "LessorPhone2": "Phone 2",
+  "LessorEmail": "Email",
+  "LessorTwitter": "Twitter",
+  "LessorFacebook": "Facebook",
+  "LessorInstagram": "Instagram",
+  "LessorWhats": "Whats App",
+  "LessorContractEmail": "Contract Email",
+  "Edit Lessor Hint": "The page allows you to Edit Lessor data ",
+  "Edit Lessor Data": "Update",
+  "Classification": "Classification",
+  "reasons": "reasons",
+  "lessorCityPost": "Region/City",
+  "region": "region",
+  "DistrictNameAr": "District Name Arabic",
+  "DistrictNameEn": "District Name English",
+  "StreetNameAr": "Street Name Arabic",
+  "StreetNameEn": "Street Name English",
+  "BulidingNumber": "Buliding Number",
+  "UnitNumber": "Unit Number",
+  "symbolMailAr": "Zip Code",
+  "AdditionalNumber": "Additional Number",
+  "IsTaken": "This Name Is Taken",
+  "IsTakenTax": "The Tax Number Is Taken",
+  "IsTakenGov": "The Government Number Is Taken",
+  "IsNotValidCity": "The City Is Not Valid",
+
+  //Procedure Page
+  "Procedures Data": "Procedures Data",
+  "Procedures Hint": "The page allows you to display, add, and modify Procedures data.",
+  "ProcedureNo": "Procedure Code",
+  "ProcedureName": "Procedure Name",
+  "AddProcedure": "Add Procdure",
+  "ProcedureAlert": "Alert",
+  "ProceduresOn": "ON",
+  "ProceduresOff": "Off",
+  "Add Procdure Hint": "The page allows you to add procdure",
+  "Add Procdure Data": "Add Procedure",
+
+  //Add Procdure
+  "ProcdureCode": "Procdure Code",
+  "Alert": "Alert",
+  "ProcduresEnName": "Procdures English Name",
+  "ProcduresArName": "Procdures arabic Name",
+  "DaysAlertAboutExpire": "Alert Days About To Expire",
+  "KmAlertAboutExpire": "Alert KM About To Expire",
+
+
+  //Car Distribution
+  "ClassifyCategory": "Classify Category",
+  "DistributionNumber": "Distribution Number",
+  "Category": "Category",
+  "ManufacturingYear": "Year",
+  "doors": "doors",
+  "Passengers": "Passengers",
+  "BigBags": "Big Bags",
+  "SmallBags": "Small Bags",
+  "CarDistribution Data": "Cars Distribution",
+  "CarDistribution Hint": "The page allows you to display, add, and modify Cars Distribution data.",
+  "AddCarDistribution": "Add Distribution",
+  "BrandCategory": "Brand/Model",
+  "DistribtionPhoto": "Car Photo",
+  "Add Distribtion Hint": "The page allows you to Add Distribtion Car data ",
+  "Add Distribtion Data": "Add Distribtion Car",
+  "Edit Distribtion Hint": "The page allows you to Edit Distribtion Car data",
+  "Edit Distribtion Data": "Edit Distribtion Car",
+  "Car": "Car",
+
+
+  // buttons
+  "Hold": "Hold",
+  "Delete": "Delete",
+  "ReactiveHold": "Activate",
+  "ReactiveDelete": "Retrieve",
+  "Okay": "Ok",
+  "Cancel": "Cancel",
+  "Save": "Save",
+  // Modal
+  "SureToRetriveHold": "Confirmation of the retrieval process of the Holded",
+  "SureToRetriveDelete": "Confirmation of the retrieval process of the deleted.",
+  "HintSureToRetriveH": "The retrieval of Employee data will result in the system login being restored.",
+  "HintSureToRetriveD": "The retrieval of Employee data will result in the system login being restored.",
+  "HintSureTodelete": "Deleting Employee data will result in the Employee not being able to access the system, while retaining all administrative, financial, and previous contract procedures.",
+  "SureTodelete": "Confirmation of deletion",
+  "HintSureToHold": "Employee data will be holded, which results in the login access to the system being holded as well.",
+  "SureToHold": "Confirmation of Hold",
+  "HintSureTodeleteContractsCompany": "Deleting the company contract will result in the suspension of this contract and all its details",
+
+  // modal for Branch
+  "SureToRetriveHoldBranch": "Confirmation of the retrieval process of the Holded",
+  "HintSureToRetriveHBranch": "The retrieval of Branch data will Retriev All The Document And Sales Point Of Branch.",
+  "SureToRetriveDeleteBranch": "Confirmation of the retrieval process of the deleted",
+  "HintSureToRetriveDBranch": "The retrieval of Branch data will Retriev All The Document And Sales Point Of Branch.",
+  "SureTodeleteBranch": "Confirmation of deletion....",
+  "HintSureTodeleteBranch": "Deleting Branch data will Delete All The Document And Sales Point Of Branch...",
+  "SureToHoldBranch": "Confirmation of Hold....",
+  "HintSureToHoldBranch": "Branch data will be Holed, Which All The Document And Sales Point Of Branch...",
+
+  //validation on input
+  "requiredFiled": "This Field Is Required",
+  "requiredNoLengthFiled": "Please enter exactly {0} numbers.",
+  "requiredNoLengthFiled15": "Please enter exactly 15 numbers.",
+  "requiredNoStartWithFiled": "Input Must Start With  Number {0}.",
+  "requiredNoStartWithFiled7": "Field Is Required And Must Start With Number 7",
+  "requiredNoStartWithFiled15": "Field Is Required And Must Start With Number 15",
+  "requiredNoLengthFiled10": "Field Is Required And Must Start With Number 10",
+  "requiredNoStartWithFiled1": "Field Is Required And Must Start With Number 1",
+  "requiredNoStartWithFiled5": "Field Is Required And Must Start With Number 5",
+  "requiredGreaterThan": "Mush be greater than input To",
+  "requiredGreaterThan0": "Must be greater than input To 0",
+  "requiredNumber": "The filed Must be Number",
+
+
+
+
+  "Reactive": "Reactive",
+  "Confirm": "Confirm",
+
+  //expiration Session
+  "expiration": "Your session will expire in",
+  "seconds": "seconds",
+  "continue": "continue",
+  "logout": "logout",
+
+
+  //system Validitions
+
+  "SystemValiditions Data": "System Validitions",
+  "SystemValiditions Hint": "The page allows you to display Employee data , and modify system validitions",
+  "Edit ValiditionsSystem Data": "Edit in system validitions",
+  "Edit ValiditionsSystem Hint": "The page allows you to modify system validitions",
+  // Edit system Validitions
+  "MainValiditions": "Main Validitions",
+  "SubValiditions": "Sub Validitions",
+  "ProcedureValiditions": "Procedure Validitions",
+  //My Account and change Password
+  "ChangePassword": "Change Password",
+  "ChangePassword Data": "Change Password",
+  "ChangePassword Hint": "The page allows you to Change Your Password",
+  "CurrentPassword": "Current Password",
+  "NewPassword": "New Password",
+  "ConfirmNewPassword": "Confirm New Password",
+  "MyAccount Data": "My Account",
+  "MyAccount Hint": "The page allows you to change your information",
+  "minLengthField": "The field must be at least 3 characters long",
+  "minLengthPhone": "The mobile number must be at least 11 number long",
+  "AutoLogout": "Exit Timer",
+  "Remove": "Remove",
+  "DragAndDrop": "Drag and drop a image or select add Image",
+  "DragAndDropFile": "Drag and drop a file or select add file",
+
+
+
+  //taostr 
+  "toastMessage": "You do not have the authority",
+  "toastRequiredField": "Please fill in all the required fields.",
+  "toastPostion": "toast-top-right",
+  "ToastSave": "Saved successfully",
+  "ToastEdit": "Edit successfully",
+  "ToastDelete": "Deleted successfully",
+  "ToastFailed": "Operation Failed",
+  "toastMessageMainBranchDelete": "Can't Delete The Main Branch",
+  "toastMessagebranchHaveSalesPoint": "A branch with a sales points cannot be deleted",
+  "toastMessageMainBranchHold": "Can't Hold The Main Branch",
+  "toastMessagebranchHaveBalance": "A branch with a balance cannot be deleted",
+  "toastMessageAccountHaveSalesPoint": "A account bank with a sales point cannot be deleted",
+  "toastMessageSalesPointHaveBalance": "A sales point with a balance cannot be deleted",
+  "toastMessageEmployeeHaveBalance": "A employee with a balance cannot be deleted",
+
+
+
+
+
+  // LessorImages
+  "LessorsImages Hint": "The page allows you to display lessors data , and modify lessors images",
+  "Edit Lessor Images Data": "Edit",
+  "Edit Lessor Images Hint": "The page allows you to add or modify in lessor images",
+  "DirName": "Director Name",
+  "logo1": "Logo",
+  "logoPrint": "Logo Print",
+  "stamp": "Stamp",
+  "StampOutsideCity": "Stamp Outside City",
+  "StampOutsideCountry": "Stamp Outside Country",
+  "StampFullAmountPaid": "Stamp Full Amount Paid",
+  "SignatureDirector": "Signature Director",
+  "CreateContractEmail": "Create Contract Email",
+  "CreateContractWhatUp": "Create Contract WhatsUp",
+  "TomorrowContractEmail": "Tomorrow Contract Email",
+  "TomorrowContractWhatUp": "Tomorrow Contract WhatsUp",
+  "HourContractEmail": "Hour Contract Email",
+  "HourContractWhatUp": "Hour Contract WhatsUp",
+  "EndContractEmail": "End Contract Email",
+  "EndContractWhatUp": "End Contract WhatsUp",
+  "CloseContractEmail": "Close Contract Email",
+  "CloseContractWhatUp": "Close Contract WhatUp",
+  "ContArConditions1": " Contract Ar Conditions1",
+  "ContArConditions2": " Contract Ar Conditions2",
+  "ContArConditions3": " Contract Ar Conditions3",
+  "ContEnConditions1": " Contract En Conditions1",
+  "ContEnConditions2": " Contract En Conditions2",
+  "ContEnConditions3": " Contract En Conditions3",
+
+  //Contract Company
+  "ContractCompany Data": "Contract Company",
+  "ContractCompany Hint": "The page allows you to display contract company data , and modify it",
+  "CActive": "Active",
+  "OnExpired": "About to expire",
+  "Expired": "Expired",
+  "NotRegister": "New",
+  "CompanyContractNo": "Contract No",
+  "EditContractCompany Data": "Contract",
+  "EditContractCompany Hint": "The page allows you to update contract company",
+  "CompanyContractType": "Contract Type",
+  "ContractCompanyActivation": "Type",
+  "Subscribtion": "Subscribtion",
+  "Value": "Value",
+  "Rate": "Rate",
+  "Select": "Select",
+  "ContractCompanyAnnualFees": "Annual Fees",
+  "DiscountRate": "Discount",
+  "TaxRate": "Tax",
+  "From": "From",
+  "To": "To",
+  "ServiceValue": "Value",
+  "ServiceRate": "Rate",
+
+
+
+  //Banks Services
+  "Banks Data": "Banks Data",
+  "Banks Hint": "The page allows you to display, add, and modify Bank data.",
+  "BankNo": "Bank Id",
+  "BankName": "Bank Name",
+  "Add Bank": "Add Bank",
+
+
+  //Add Bank
+  "Add Bank Hint": "The page allows you to add Bank data",
+  "Add Bank Data": "Add Bank",
+  "BankCode": "Bank Code",
+  "BankNameAr": "Arabic Bank Name",
+  "BankNameEn": "English Bank Name",
+
+  //Edit Bank
+
+  "Edit Bank Hint": "The page allows you to edit Bank data",
+  "Edit Bank Data": "Edit",
+
+  "HintSureToRetriveHBank": "The retrieval of Bank data will result to be restored in the system.",
+  "HintSureToRetriveDBank": "The retrieval of Bank data will result to be restored in the system.",
+
+  "HintSureTodeleteBank": "Deleting Bank data will result not being able to accessed in the system.",
+  "HintSureToHoldBank": "Bank data will be holded, which results in the system being holded as well.",
+
+  //Payment Methods
+  "Payment Data": "Payment Data",
+  "Payment Hint": "The page allows you to display, add, and modify Payment methods data.",
+  "PaymentCode": "Payment Method Code",
+  "PaymentNameEn": "English Payment Method Name",
+  "PaymentNameAr": "Arabic Payment Method Name",
+  "AcceptImg": "Accepted Image",
+  "RejectImg": "Rejected Image",
+
+  //Edit Payment
+
+  "Edit Payment Hint": "The page allows you to edit Payment data",
+  "Edit Payment Data": "Edit",
+  "Add Payment Method": "Add Payment Method",
+  "Add Payment Hint": "The page allows you to add Payment Method data",
+  "Add Payment Data": "Add Payment Method",
+
+  "HintSureToRetriveHPayment": "The retrieval of Payment Method data will result to be restored in the system.",
+  "HintSureToRetriveDPayment": "The retrieval of Payment Method data will result to be restored in the system.",
+
+  "HintSureTodeletePayment": "Deleting Payment Method data will result not being able to accessed in the system.",
+  "HintSureToHoldPayment": "Payment Method data will be holded, which results in the system being holded as well.",
+
+
+  //Account Reference
+  "Account Refrence Data": "Account Refrence Data",
+  "Account Refrence Hint": "The page allows you to display, add, and modify Account Reference data.",
+  "RefrenceCode": "Account Reference Code",
+  "RefrenceNameEn": "English Account Reference Name",
+  "RefrenceNameAr": "Arabic Account Reference Name",
+
+  "Add Account Refrence": "Add Account Reference",
+  "Add Refrence Method": "Add Account Reference",
+  "Add Refrence Hint": "The page allows you to add Account Reference data",
+  "Add Refrence Data": "Add Account Reference",
+
+  "Edit Refrence Hint": "The page allows you to edit Account Reference data",
+  "Edit Refrence Data": "Edit",
+
+
+  "HintSureToRetriveHRefrence": "The retrieval of Account Reference data will result to be restored in the system.",
+  "HintSureToRetriveDRefrence": "The retrieval of Account Reference data will result to be restored in the system.",
+
+  "HintSureTodeleteRefrence": "Deleting Account Reference data will result not being able to accessed in the system.",
+  "HintSureToHoldRefrence": "Account Reference data will be holded, which results in the system being holded as well.",
+
+  //ContractAdditional Services
+  "ContractAdditional Data": "Contract Additional Data",
+  "ContractAdditional Hint": "The page allows you to display, add, and modify Contract Additional data.",
+  "ContractAdditionalCode": "Contract Additional Code",
+  "ContractAdditionalNameEn": "English Contract Additional Name",
+  "ContractAdditionalNameAr": "Arabic Contract Additional Name",
+
+  "Add ContractAdditional": "Add Contract Additional",
+  "Add ContractAdditional Method": "Add Contract Additional",
+  "Add ContractAdditional Hint": "The page allows you to add Contract Additional data.",
+  "Add ContractAdditional Data": "Add Contract Additional",
+
+  "ContractAdditionalRejectImg": "Rejected Image",
+  "ContractAdditionalAcceptImg": "Accepted Image",
+  "ContractAdditionalBlockImg": "Canceled Image",
+
+  "Edit ContractAdditional Hint": "The page allows you to edit Contract Additional data.",
+  "Edit ContractAdditional Data": "Edit",
+
+  "HintSureToRetriveHContractAdditional": "The retrieval of Contract Additional data will result to be restored in the system.",
+  "HintSureToRetriveDContractAdditional": "The retrieval of Contract Additional data will result to be restored in the system.",
+
+  "HintSureTodeleteContractAdditional": "Deleting Contract Additional data will result not being able to accessed in the system.",
+  "HintSureToHoldContractAdditional": "Contract Additional data will be holded, which results in the system being holded as well.",
+
+
+  //ContractOptions Services  
+  "ContractOptions Data": "Contract Options Data",
+  "ContractOptions Hint": "The page allows you to display, add, and modify Contract Options data.",
+  "ContractOptionsCode": "Contract Options Code",
+  "ContractOptionsNameEn": "English Contract Options Name",
+  "ContractOptionsNameAr": "Arabic Contract Options Name",
+
+  "Add ContractOptions": "Add Contract Options",
+  "Add ContractOptions Method": "Add Contract Options",
+  "Add ContractOptions Hint": "The page allows you to add Contract Options data.",
+  "Add ContractOptions Data": "Add Contract Options",
+
+  "ContractOptionsRejectImg": "Rejected Image",
+  "ContractOptionsAcceptImg": "Accepted Image",
+  "ContractOptionsBlockImg": "Canceled Image",
+
+  "Edit ContractOptions Hint": "The page allows you to edit Contract Options data.",
+  "Edit ContractOptions Data": "Edit",
+
+  "HintSureToRetriveHContractOptions": "The retrieval of Contract Options data will result to be restored in the system.",
+  "HintSureToRetriveDContractOptions": "The retrieval of Contract Options data will result to be restored in the system.",
+
+  "HintSureTodeleteContractOptions": "Deleting Contract Options data will result not being able to accessed in the system.",
+  "HintSureToHoldContractOptions": "Contract Options data will be holded, which results in the system being holded as well.",
+
+
+
+  //PostCity Services  
+  "PostCity Data": "Post City Data",
+  "PostCity Hint": "The page allows you to display, add, and modify Post City data.",
+  "PostCityCode": "Post City Code",
+  "PostCityNameEn": "English Post City Name",
+  "PostCityNameAr": "Arabic Post City Name",
+
+  "Add PostCity": "AddPost City",
+  "Add PostCity Method": "AddPost City",
+  "Add PostCity Hint": "The page allows you to add Post City data.",
+  "Add PostCity Data": "AddPost City",
+
+  "PostCityRegionStatus": "Region Status",
+  "PostCityCityCounter": "City Counter",
+  "PostCityLat": "City latitude",
+  "PostCityLong": "City longitude",
+  "PostCityLocation": "City Location",
+  "PostCityConcateAr": "City / Region",
+  "PostCityConcateEn": "City / Region",
+  "PostCityRegionNameAr": "Arabic Region Name",
+  "PostCityRegionNameEn": "English Region Name",
+
+
+  "Edit PostCity Hint": "The page allows you to edit Post City data.",
+  "Edit PostCity Data": "Edit",
+
+  "HintSureToRetriveHPostCity": "The retrieval of Post City data will result to be restored in the system.",
+  "HintSureToRetriveDPostCity": "The retrieval of Post City data will result to be restored in the system.",
+
+  "HintSureTodeletePostCity": "Deleting Post City data will result not being able to accessed in the system.",
+  "HintSureToHoldPostCity": "Post City data will be holded, which results in the system being holded as well.",
+
+
+
+  //CarCheckup Services  
+  "CarCheckup Data": "Car Checkup Data",
+  "CarCheckup Hint": "The page allows you to display, add, and modify Car Checkup data.",
+  "CarCheckupCode": "Car Checkup Code",
+  "CarCheckupNameEn": "English Car Checkup Name",
+  "CarCheckupNameAr": "Arabic Car Checkup Name",
+
+  "Add CarCheckup": "Add Car Checkup",
+  "Add CarCheckup Method": "Add Car Checkup",
+  "Add CarCheckup Hint": "The page allows you to add Car Checkup data.",
+  "Add CarCheckup Data": "Add Car Checkup",
+
+  "CarCheckupRejectImg": "Rejected Image",
+  "CarCheckupAcceptImg": "Accepted Image",
+  "CarCheckupBlockImg": "Canceled Image",
+
+  "Edit CarCheckup Hint": "The page allows you to edit Car Checkup data.",
+  "Edit CarCheckup Data": "Edit",
+
+  "HintSureToRetriveHCarCheckup": "The retrieval of Car Checkup data will result to be restored in the system.",
+  "HintSureToRetriveDCarCheckup": "The retrieval of Car Checkup data will result to be restored in the system.",
+
+  "HintSureTodeleteCarCheckup": "Deleting Car Checkup data will result not being able to accessed in the system.",
+  "HintSureToHoldCarCheckup": "Car Checkup data will be holded, which results in the system being holded as well.",
+
+
+  //Cas Message COmpany Danger
+  "CompanyHoldedDanger": "The company's services have been suspended. Please contact the developing company",
+  "ContractNewDanger": "The contract has not been registered yet. Please register the contract to activate all powers",
+  "ContractExpireDanger": "The contract has expired, please check with the developing company",
+  "ContractAboutExpireDanger": "The contract is about to expire, please check with the developer company",
+
+
+  //PostRegion Services  
+  "PostRegion Data": "Post Region Data",
+  "PostRegion Hint": "The page allows you to display, add, and modify Post Region data.",
+  "PostRegionCode": "Post Region Code",
+  "PostRegionNameEn": "English Post Region Name",
+  "PostRegionNameAr": "Arabic Post Region Name",
+
+  "Add PostRegion": "Add Post Region",
+  "Add PostRegion Method": "Add Post Region",
+  "Add PostRegion Hint": "The page allows you to add Post Region data.",
+  "Add PostRegion Data": "AddPost Region",
+
+
+  "PostRegionLat": "City latitude",
+  "PostRegionLong": "City longitude",
+  "PostRegionLocation": "City Location",
+
+
+
+  "Edit PostRegion Hint": "The page allows you to edit PostRegion data.",
+  "Edit PostRegion Data": "Edit",
+
+  "HintSureToRetriveHPostRegion": "The retrieval of Post Region data will result to be restored in the system.",
+  "HintSureToRetriveDPostRegion": "The retrieval of Post Region data will result to be restored in the system.",
+
+  "HintSureTodeletePostRegion": "Deleting Post Region data will result not being able to accessed in the system.",
+  "HintSureToHoldPostRegion": "Post Region data will be holded, which results in the system being holded as well.",
+  "PostLongRequired": "Max length must be 25.",
+  "PostLatRequired": "Max length must be 25.",
+
+
+  //AccountBank Services  
+  "AccountBank Data": "Account Bank Data",
+  "AccountBank Hint": "The page allows you to display, add, and modify Account Bank data.",
+  "AccountBankNameEn": "English Account Bank Name",
+  "AccountBankNameAr": "Arabic Account Bank Name",
+  "AccountBankName": "Account Bank Name",
+
+  "Add AccountBank": "Add Account Bank",
+  "Add AccountBank Method": "Add Account Bank",
+  "Add AccountBank Hint": "The page allows you to add Account Bank data.",
+  "Add AccountBank Data": "Add Account Bank",
+
+
+  "AccountBankLessorCode": "Lessor Code",
+  "AccountBankCode": "IBank Number",
+
+
+
+  "Edit AccountBank Hint": "The page allows you to edit Account Bank data.",
+  "Edit AccountBank Data": "Edit",
+
+  "HintSureToRetriveHAccountBank": "The retrieval of Account Bank data will result to be restored in the system.",
+  "HintSureToRetriveDAccountBank": "The retrieval of Account Bank data will result to be restored in the system.",
+
+  "HintSureTodeleteAccountBank": "Deleting Account Bank data will result not being able to accessed in the system.",
+  "HintSureToHoldAccountBank": "Account Bank data will be holded, which results in the system being holded as well.",
+  "BankNameArAccount": "Bank Name",
+  "BankNameEnAccount": "Bank Name",
+
+  // CAS employee
+  "EmployementEn": "Job title in Arabic",
+  "EmployementAr": "Job title in English",
+  "Employement": "Job title",
+  "CreditLimit": "Credit Limit",
+  "BranchesAuth": "Authority of branches",
+  "Owners": "Authority Of Owners ",
+  "AdminAuth": "Authority Of Admin ",
+
+
+
+  //RenterDriver Services  
+  "RenterDriver Data": "Renter Driver Data",
+  "RenterDriver Hint": "The page allows you to display, add, and modify Renter Driver data.",
+  "RenterDriverNameEn": "English Driver Name",
+  "RenterDriverNameAr": "Arabic Driver Name",
+
+  "RenterDriverName": "Driver Name",
+
+  "Add RenterDriver": "Add Renter Driver",
+  "Add RenterDriver Method": "Add Renter Driver",
+  "Add RenterDriver Hint": "The page allows you to add Renter Driver data.",
+  "Add RenterDriver Data": "Add Renter Driver",
+
+
+  "RenterDriverLessorCode": "Lessor Code",
+  "RenterDriverID": "National Number",
+  "RenterDriverType": "National ID Type",
+  "RenterDriverBirthday": "Birthday date",
+  "RenterDriverIssueDate": "National ID Issue Date",
+  "RenterDriverExpireDate": "National ID Expire Date",
+  "RenterDriverLicenseNO": "License Number",
+  "RenterDriverLicenseType": "License Type",
+  "LicenseIssueDate": "License Issue Date",
+  "LicenseExpireDate": "License Expire Date",
+
+  "RenterDriverNationality": "Nationality",
+  "RenterDriverGender": "Gender",
+  "RenterDriverMobile": "Mobile Number",
+  "RenterDriverEmail": "Email",
+  "RenterDriverLastContract": "Last Contract Date",
+  "RenterDriverContractsCount": "Contract Count",
+  "RenterDriverDaysCount": "Days Count",
+  "RenterDriverDistance": "Travel Distance",
+  "RenterDriverEvalTotal": "Total Evaluation",
+  "RenterDriverEvalVal": "Evaluation Value",
+  "RenterDriverSignature": "Driver Signature",
+  "RenterDriverIDImg": "National ID Image",
+  "RenterDriverLicenseImg": "License Image",
+
+
+
+
+
+  "Edit RenterDriver Hint": "The page allows you to edit Renter Driver data.",
+  "Edit RenterDriver Data": "Edit",
+
+  "HintSureToRetriveHRenterDriver": "The retrieval of Renter Driver data will result to be restored in the system.",
+  "HintSureToRetriveDRenterDriver": "The retrieval of Renter Driver data will result to be restored in the system.",
+
+  "HintSureTodeleteRenterDriver": "Deleting Renter Driver data will result not being able to accessed in the system.",
+  "HintSureToHoldRenterDriver": "Renter Driver data will be holded, which results in the system being holded as well.",
+  "ValiditySystem": "Validity System",
+  "ContractValiditions Data": "Contract Validitions",
+  "ContractValiditions Hint": "The page allows you to display Employee data , and modify contract validitions",
+  "Edit ValiditionsContract Data": "Edit in contracr validitions",
+  "Edit ValiditionsContract Hint": "The page allows you to modify contract validitions",
+  //CAS Add Branch
+  "BranchCode": "Branch Code",
+  //COntract Valitions
+  "ContractCompany": "Company Contracts",
+  "ContractValidityRegister": "Contract Validity Register",
+  "ContractValidityChamber": "Contract Validity Chamber",
+  "ValidityTransferPermission": "Validity Transfer Permission",
+  "ContractValidityLicenceMunicipale": "Contract Validity Licence Municipale",
+  "ValidityCompanyAddress": "Validity Company Address",
+  "CarsDocuments": "Cars Documents",
+  "CrMasUserContractValidityTrafficLicense": "Validity Traffic License",
+  "CrMasUserContractValidityInsurance": "Validity Insurance",
+  "CrMasUserContractValidityOperatingCard": "Validity Operating Card",
+  "CrMasUserContractValidityChkecUp": "Validity ChkecUp",
+  "CarsFixed": "Car Maintenance",
+  "CrMasUserContractValidityTires": "Validity Tires",
+  "CrMasUserContractValidityOil": "Validity Oil",
+  "CrMasUserContractValidityMaintenance": "Validity Maintenance",
+  "CrMasUserContractValidityFbrake": "Front brake maintenance",
+  "CrMasUserContractValidityBbrake": "Rear Brake Maintenance",
+  "RenterAndDriver": "Renter",
+  "CrMasUserContractValidityId": "Validity Id",
+  "CrMasUserContractValidityDrivingLicense": "Validity Driving License",
+  "CrMasUserContractValidityRenterAddress": "Validity Renter Address",
+  "CrMasUserContractValidityEmployer": "Validity Employer",
+  "CrMasUserContractValidityAge": "Validity Renter Age",
+  "CrMasUserContractValidityExtension": "Contract Validity Extension",
+  "CrMasUserContractValidityCancel": "Contract Validity Cancel",
+  "CrMasUserContractValidityEnd": "Contract Validity End",
+  "CrMasUserContractValidityLessContractValue": "The payment is less than the contract value",
+  "CrMasUserContractValidityDiscountRate": "Discount Rate",
+  "CrMasUserContractValidityKm": "Free Km",
+  "CrMasUserContractValidityHour": "Free Hours",
+  "RemindMe": "Hind Password",
+  "Language": "Default Language",
+  "Contractss": "Rent Contract",
+  //SalesPoint
+  "SalesPoint Hint": "The page allows you to display, add, and modify SalesPoints.",
+  "SalesPoint Data": "SalesPoints",
+  "Add SalesPoint": "Add SalesPoint",
+  "Edit SalesPoint Hint": "The page allows you to modify SalesPoints.",
+  "Add SalesPoint Hint": "The page allows you to Add SalesPoints.",
+  "Add SalesPoint Data": " SalesPoints.",
+  "AccountBank": "Account Bank",
+  "SalesPointName": "SalesPoint Name",
+  "SalesPointCode": "SalesPoint Code",
+  "SalesPointNameEn": "SalePoint English Name",
+  "SalesPointNameAr": "SalePoint Arabic Name",
+  "IsSalesPointNo": "SalesPoint Number is exists",
+  "HintSureToHoldSalesPoint": "Deleting point-of-sale data will result in payment operations not being carried out, while all previous administrative and financial procedures will be maintained",
+  "HintSureToDeleteSalesPoint": "Deleting point-of-sale data will result in payment operations not being carried out, while all previous administrative and financial procedures will be maintained",
+  "HintSureToRetriveHSalesPoint": "Restoring the point-of-sale data stop will result in restoring the point-of-sale payment process",
+  "HintSureToRetriveDSalesPoint": "Do you want to recover point-of-sale data?",
+  "IsExistModel": "This model is exist",
+  //Owners
+  "Owners Data": "Owners",
+  "Owners Hint": "The page allows you to display, add, and modify Owners.",
+  "Add Owner": "Add Owner",
+  "Id": "Type ID",
+  "Commercial_No": "Commercial No",
+  "NumberOfCars": "Cars No",
+  "OwnersArName": "Owner Arabic Name",
+  "OwnersEnName": "Owner English Name",
+  "Add Owners Data": "Add Owner Data",
+  "Add Owners Hint": "The page allows you to add Owners.",
+  "OwnerIsExist": "Owner Is Exist",
+  "NameOwnerIsExist": "Owner Name Is Exist",
+  "Edit Owners Data": "Edit Owner Data",
+  "Edit Owners Hint": "The page allows you to Edit Owner Data.",
+  "Mecanism Data": "Alerts",
+  "Mecanism Hint": "The page allows you to Edit Alert. ",
+  "Additional": "Additional",
+  "UserNumber": "User Id",
+  "IsExist": "Name Is Exists",
+  "IBanIsExist": "I Ban Is exists",
+  "FieldIsExist": "Field Is Exists"
+
+}
+
+
