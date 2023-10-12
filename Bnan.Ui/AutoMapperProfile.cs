@@ -88,6 +88,8 @@ namespace Bnan.Inferastructure
             CreateMap<MechanismVM, CrCasLessorMechanism>();
             CreateMap<CrCasOwner, OwnersVM>();
             CreateMap<OwnersVM, CrCasOwner>();
+            CreateMap<AdminstritiveProceduresVM, CrCasSysAdministrativeProcedure>();
+            CreateMap<CrCasSysAdministrativeProcedure, AdminstritiveProceduresVM>();
 
         }
 

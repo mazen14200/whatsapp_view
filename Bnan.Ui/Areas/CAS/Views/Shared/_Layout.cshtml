@@ -331,7 +331,7 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205001")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-products.html"> @localizer["Administrative Procedures"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="AdminstritiveProcedures" asp-controller="AdminstritiveProcedures"> @localizer["Administrative Procedures"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205002")?.CrMasUserSubValidationAuthorization == true)

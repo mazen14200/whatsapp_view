@@ -1,0 +1,101 @@
+﻿using AutoMapper;
+using Bnan.Core.Interfaces;
+using Bnan.Core.Models;
+using Bnan.Inferastructure.Extensions;
+using Bnan.Ui.Areas.Base.Controllers;
+using Bnan.Ui.ViewModels.CAS;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Bnan.Ui.Areas.CAS.Controllers
+{
+    [Area("CAS")]
+    [Authorize(Roles = "CAS")]
+    public class AdminstritiveProceduresController : BaseController
+    {
+        public AdminstritiveProceduresController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork, IMapper mapper) : base(userManager, unitOfWork, mapper)
+        {
+        }
+
+        public async Task<IActionResult> AdminstritiveProcedures()
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var titles = await setTitle("205", "2205001", "2");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
+
+            var AdminstritiveProcedures = _unitOfWork.CrCasSysAdministrativeProcedure.FindAll(x => x.CrCasSysAdministrativeProceduresClassification != "30" && x.CrCasSysAdministrativeProceduresClassification != "40"&&
+                                                                                                   x.CrCasSysAdministrativeProceduresLessor==userLogin.CrMasUserInformationLessor,
+                                                                                                    new[] { "CrCasSysAdministrativeProceduresCodeNavigation", "CrCasSysAdministrativeProcedures", "CrCasSysAdministrativeProceduresUserInsertNavigation" }).OrderByDescending(x => x.CrCasSysAdministrativeProceduresDate).ToList();
+            var model = _mapper.Map<List<AdminstritiveProceduresVM>>(AdminstritiveProcedures);
+
+            foreach (var item in model)
+            {
+                if (item.CrCasSysAdministrativeProceduresCode == "201")
+                {
+                    // if 201 then it is branch
+                    item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({item.CrCasSysAdministrativeProcedures.CrCasBranchInformationArShortName})";
+                    item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({item.CrCasSysAdministrativeProcedures.CrCasBranchInformationEnShortName})";
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "202")
+                { 
+                    // if 202 then it is Doc of branch
+                    item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({item.CrCasSysAdministrativeProcedures.CrCasBranchInformationArShortName})";
+                    item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({item.CrCasSysAdministrativeProcedures.CrCasBranchInformationEnShortName})";
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "203")
+                {
+                    // if 202 then it is Contract Company
+                    var Contract = _unitOfWork.CrMasContractCompany.Find(x => x.CrMasContractCompanyNo == item.CrCasSysAdministrativeProceduresTargeted, new[] { "CrMasContractCompanyProceduresNavigation" });
+                    item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({Contract.CrMasContractCompanyProceduresNavigation.CrMasSysProceduresArName})";
+                    item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({Contract.CrMasContractCompanyProceduresNavigation.CrMasSysProceduresEnName})";
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "204")
+                {
+                    // if 204 then it is Owners
+                    var owner = _unitOfWork.CrCasOwner.Find(x => x.CrCasOwnersCode == item.CrCasSysAdministrativeProceduresTargeted);
+                    item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({owner.CrCasOwnersArName})";
+                    item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({owner.CrCasOwnersEnName})";
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "205")
+                {
+                    // if 204 then it is Benficity
+                    var Benficity = _unitOfWork.CrCasBeneficiary.Find(x => x.CrCasBeneficiaryCode == item.CrCasSysAdministrativeProceduresTargeted);
+                    item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({Benficity.CrCasBeneficiaryArName})";
+                    item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({Benficity.CrCasBeneficiaryEnName})";
+                }
+
+                if (item.CrCasSysAdministrativeProceduresCode == "231")
+                {
+                    // if 231 then it is Employee
+                    var user = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted);
+                    item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({user.CrMasUserInformationArName})";
+                    item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({user.CrMasUserInformationEnName})";
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "232")
+                {
+                    // if 231 then it is Employee
+                    var user = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted);
+                    item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({user.CrMasUserInformationArName})";
+                    item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({user.CrMasUserInformationEnName})";
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "233")
+                {
+                    // if 231 then it is Employee
+                    var user = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted);
+                    item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({user.CrMasUserInformationArName})";
+                    item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({user.CrMasUserInformationEnName})";
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "234")
+                {
+                    // if 231 then it is Employee
+                    var user = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted);
+                    item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({user.CrMasUserInformationArName})";
+                    item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({user.CrMasUserInformationEnName})";
+                }
+            };
+
+            return View(model);
+        }
+    }
+}

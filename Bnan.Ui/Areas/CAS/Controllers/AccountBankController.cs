@@ -45,19 +45,21 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var userLogin = await _userManager.GetUserAsync(User);
             var titles = await setTitle("207", "2207003", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
-            var AccountBanks =  _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankStatus == "A" && x.CrCasAccountBankNo != "00", new[] { "CrCasAccountBankNoNavigation" });
+            var AccountBanks =  _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankStatus == "A" && x.CrCasAccountBankNo != "00" && x.CrCasAccountBankLessor==userLogin.CrMasUserInformationLessor, new[] { "CrCasAccountBankNoNavigation" });
             return View(AccountBanks);
         }
 
 
         [HttpGet]
-        public PartialViewResult GetAccountBanksByStatus(string status)
+        public async Task<PartialViewResult> GetAccountBanksByStatus(string status)
         {
+            var userLogin = await _userManager.GetUserAsync(User);
             if (!string.IsNullOrEmpty(status))
             {
-                var AccountBankbyStatusAll = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankNo != "00", new[] { "CrCasAccountBankNoNavigation" });
+                var AccountBankbyStatusAll = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankNo != "00" && x.CrCasAccountBankLessor == userLogin.CrMasUserInformationLessor, new[] { "CrCasAccountBankNoNavigation" });
                 if (status == Status.All) return PartialView("_DataTableAccountBank", AccountBankbyStatusAll);
                 return PartialView("_DataTableAccountBank", AccountBankbyStatusAll.Where(l => l.CrCasAccountBankStatus == status));
             }
@@ -244,7 +246,6 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     bank2.CrCasAccountBankReasons = model.CrCasAccountBankReasons;
                     //_unitOfWork.CrCasAccountBank.Update(bank);
                     _unitOfWork.Complete();
-
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("207", "2207003", "2");
 

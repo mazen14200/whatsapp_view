@@ -224,7 +224,7 @@
                     <label class="form-label" for="RenterDriverID">@localizer["RenterDriverID"]</label>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationId" id="RenterDriverCode" maxlength="50" width="80%" readonly />
+                    <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationId" id="RenterDriverCode" maxlength="20" width="80%" readonly />
                    
                     <div style="margin-top:2px">
                         <div style="height: 1.0em">
@@ -347,7 +347,7 @@
                             <label class="form-label" for="RenterDriverLicenseNO">@localizer["RenterDriverLicenseNO"]</label>
                         </div>
                         <div class="col-md-7">
-                            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationLicenseNo" id="RenterDriverLicenseNO" maxlength="100" width="70%" oninput="this.value = this.value.replace(/\D/g, '')" required />
+                            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationLicenseNo" id="RenterDriverLicenseNO" maxlength="20" width="70%" oninput="this.value = this.value.replace(/\D/g, '')" required />
                             <div style="margin-top:2px">
                                 <div style="height: 1.0em">
                                     <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationLicenseNo" class="text-danger"></span>
@@ -788,6 +788,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+           
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
@@ -796,18 +797,16 @@
 
             var birthdate = $("#CrCasRenterPrivateDriverInformationBirthDate").val();
             var formattedbirthdate = new Date(birthdate);
-
             var IssueIdDate = $("CrCasRenterPrivateDriverInformationIssueIdDate").val();
             var IssueIdformattedDate = new Date(IssueIdDate);
-
             var ExpiryIdDate = $("CrCasRenterPrivateDriverInformationExpiryIdDate").val();
             var ExpiryIdformattedDate = new Date(ExpiryIdDate);
-
-
             var LicenseDate = $("CrCasRenterPrivateDriverInformationLicenseDate").val();
             var LicenseformattedDate = new Date(LicenseDate);
 
-
+            console.log(IssueIdformattedDate)
+            console.log(ExpiryIdformattedDate)
+            console.log(LicenseformattedDate)
 
             var LicenseExpiryIdDate = $("CrCasRenterPrivateDriverInformationLicenseExpiry").val();
             var LicenseExpiryIdformattedDate = new Date(LicenseExpiryIdDate);
@@ -821,8 +820,6 @@
             if (!ExpiryIdformattedDate || ExpiryIdformattedDate === "") {
                 ExpiryIdformattedDate = today; // Set date to today if it's empty or null
             }
-
-
             if (!LicenseformattedDate || LicenseformattedDate === "") {
                 LicenseformattedDate = today; // Set date to today if it's empty or null
             }

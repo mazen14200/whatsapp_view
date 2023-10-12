@@ -222,14 +222,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             RenterDrivermodel.CrCasRenterPrivateDriverInformationLessor = lessorCode;
             ViewBag.LessorID = lessorCode;
             string currentCulture = CultureInfo.CurrentCulture.Name;
-            var RenterDrivers = await _unitOfWork.CrCasRenterPrivateDriverInformation.GetAllAsync();
-            var existingIDriverLessor = RenterDrivers.FirstOrDefault(x => x.CrCasRenterPrivateDriverInformationId == RenterDrivermodel.CrCasRenterPrivateDriverInformationId);
-            var existingIDriverLecinceNo = RenterDrivers.FirstOrDefault(x => x.CrCasRenterPrivateDriverInformationLicenseNo == RenterDrivermodel.CrCasRenterPrivateDriverInformationLicenseNo);
-            var existingIDriverArNameLessor = RenterDrivers.FirstOrDefault(x => x.CrCasRenterPrivateDriverInformationArName == RenterDrivermodel.CrCasRenterPrivateDriverInformationArName && x.CrCasRenterPrivateDriverInformationLessor == lessorCode);
-            var existingIDriverEnNameLessor = RenterDrivers.FirstOrDefault(x => x.CrCasRenterPrivateDriverInformationEnName == RenterDrivermodel.CrCasRenterPrivateDriverInformationEnName && x.CrCasRenterPrivateDriverInformationLessor == lessorCode);
+            var RenterDrivers = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x=>x.CrCasRenterPrivateDriverInformationLessor == lessorCode);
+            var existingIDriverLessor = RenterDrivers.FirstOrDefault(x => x.CrCasRenterPrivateDriverInformationId == RenterDrivermodel.CrCasRenterPrivateDriverInformationId );
+            //var existingIDriverLecinceNo = RenterDrivers.FirstOrDefault(x => x.CrCasRenterPrivateDriverInformationLicenseNo == RenterDrivermodel.CrCasRenterPrivateDriverInformationLicenseNo);
+            var existingIDriverArNameLessor = RenterDrivers.FirstOrDefault(x => x.CrCasRenterPrivateDriverInformationArName == RenterDrivermodel.CrCasRenterPrivateDriverInformationArName );
+            var existingIDriverEnNameLessor = RenterDrivers.FirstOrDefault(x => x.CrCasRenterPrivateDriverInformationEnName == RenterDrivermodel.CrCasRenterPrivateDriverInformationEnName );
 
             if (existingIDriverLessor != null) ModelState.AddModelError("CrCasRenterPrivateDriverInformationId", _localizer["DriverIdIsExist"]);
-            if (existingIDriverLecinceNo != null) ModelState.AddModelError("CrCasRenterPrivateDriverInformationLicenseNo", _localizer["LicenseNoIsExist"]);
+            //if (existingIDriverLecinceNo != null) ModelState.AddModelError("CrCasRenterPrivateDriverInformationLicenseNo", _localizer["LicenseNoIsExist"]);
             if (existingIDriverArNameLessor != null) ModelState.AddModelError("CrCasRenterPrivateDriverInformationArName", _localizer["IsExist"]);
             if (existingIDriverEnNameLessor != null) ModelState.AddModelError("CrCasRenterPrivateDriverInformationEnName", _localizer["IsExist"]);
 
@@ -320,17 +320,18 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var GenderEn = Gender.Where(x => x.CrMasSupRenterGenderCode == driver.CrCasRenterPrivateDriverInformationGender).FirstOrDefault().CrMasSupRenterGenderEnName;
             ViewData["RenterDriverGenderAr"] = GenderAr;
             ViewData["RenterDriverGenderEn"] = GenderEn;
+            // View the date
+            ViewData["ExpiryIdDate"] = driver.CrCasRenterPrivateDriverInformationExpiryIdDate;
+            ViewData["IssueIdDate"] = driver.CrCasRenterPrivateDriverInformationIssueIdDate;
+            ViewData["LicenseDate"] = driver.CrCasRenterPrivateDriverInformationLicenseDate;
+            ViewData["LicenseExpiry"] = driver.CrCasRenterPrivateDriverInformationLicenseExpiry;
 
 
             // Get Lessor Code
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             driver.CrCasRenterPrivateDriverInformationLessor = lessorCode;
-            //ViewBag.LessorID = lessorCode;
-
-
             var model = _mapper.Map<RenterDriverVM>(driver);
-
             return View(model);
         }
 
@@ -345,12 +346,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var user = await _userService.GetUserByUserNameAsync(HttpContext.User.Identity.Name);
 
 
-            var driver = _unitOfWork.CrCasRenterPrivateDriverInformation.Find(x => x.CrCasRenterPrivateDriverInformationId == model.CrCasRenterPrivateDriverInformationId);
+            var driver = _unitOfWork.CrCasRenterPrivateDriverInformation.Find(x => x.CrCasRenterPrivateDriverInformationId == model.CrCasRenterPrivateDriverInformationId&&x.CrCasRenterPrivateDriverInformationLessor==user.CrMasUserInformationLessor);
             if (driver != null)
             {
                 if (ModelState.IsValid)
                 {
-
                     if (IDImg != null)
                     {
                         string fileNameImg = model.CrCasRenterPrivateDriverInformationEnName + "_ID_" + model.CrCasRenterPrivateDriverInformationId.ToString().Substring(model.CrCasRenterPrivateDriverInformationId.ToString().Length - 3);
@@ -370,9 +370,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         model.CrCasRenterPrivateDriverInformationSignature = filePathImageSignature;
                     }
                     var RenterDriver = _mapper.Map<CrCasRenterPrivateDriverInformation>(model);
-                    _unitOfWork.CrCasRenterPrivateDriverInformation.Update(RenterDriver);
-                     await  _unitOfWork.CompleteAsync();
-
+                    await _renterDriver.UpdateRenterDriver(RenterDriver);
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("207", "2207005", "2");
 

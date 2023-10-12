@@ -152,7 +152,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
-                await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "202", "20", currentUser.CrMasUserInformationLessor, "100",
+                await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "203", "20", currentUser.CrMasUserInformationLessor, "100",
                        doc.CrMasContractCompanyNo, null, null, doc.CrMasContractCompanyNumber, doc.CrMasContractCompanyDate, doc.CrMasContractCompanyStartDate, doc.CrMasContractCompanyEndDate, null, null, "اضافة",
                        "Insert", "I", null);
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });

@@ -58,5 +58,32 @@ namespace Bnan.Inferastructure.Repository
             }
             return false;
         }
+
+        public async Task<bool> UpdateRenterDriver(CrCasRenterPrivateDriverInformation model)
+        {
+            var driver = _unitOfWork.CrCasRenterPrivateDriverInformation.Find(x=>x.CrCasRenterPrivateDriverInformationId==model.CrCasRenterPrivateDriverInformationId&&
+                                                                                 x.CrCasRenterPrivateDriverInformationLessor==model.CrCasRenterPrivateDriverInformationLessor);
+
+            if (driver!=null)
+            {
+                driver.CrCasRenterPrivateDriverInformationArName = model.CrCasRenterPrivateDriverInformationArName;
+                driver.CrCasRenterPrivateDriverInformationEnName = model.CrCasRenterPrivateDriverInformationEnName;
+                driver.CrCasRenterPrivateDriverInformationLicenseNo = model.CrCasRenterPrivateDriverInformationLicenseNo;
+                driver.CrCasRenterPrivateDriverInformationMobile = model.CrCasRenterPrivateDriverInformationMobile;
+                driver.CrCasRenterPrivateDriverInformationExpiryIdDate = model.CrCasRenterPrivateDriverInformationExpiryIdDate;
+                driver.CrCasRenterPrivateDriverInformationIdImage = model.CrCasRenterPrivateDriverInformationIdImage;
+                driver.CrCasRenterPrivateDriverInformationIssueIdDate = model.CrCasRenterPrivateDriverInformationIssueIdDate;
+                driver.CrCasRenterPrivateDriverInformationLicenseDate = model.CrCasRenterPrivateDriverInformationLicenseDate;
+                driver.CrCasRenterPrivateDriverInformationKeyMobile = model.CrCasRenterPrivateDriverInformationKeyMobile;
+                driver.CrCasRenterPrivateDriverInformationLicenseExpiry = model.CrCasRenterPrivateDriverInformationLicenseExpiry;
+                driver.CrCasRenterPrivateDriverInformationLicenseImage = model.CrCasRenterPrivateDriverInformationLicenseImage;
+                driver.CrCasRenterPrivateDriverInformationSignature = model.CrCasRenterPrivateDriverInformationSignature;
+                driver.CrCasRenterPrivateDriverInformationReasons = model.CrCasRenterPrivateDriverInformationReasons;
+                _unitOfWork.CrCasRenterPrivateDriverInformation.Update(driver);
+                await _unitOfWork.CompleteAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }

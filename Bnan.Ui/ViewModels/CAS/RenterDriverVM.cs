@@ -22,8 +22,6 @@ namespace Bnan.Ui.ViewModels.CAS
 
         [Required(ErrorMessage = "requiredFiled")]
         public DateTime? CrCasRenterPrivateDriverInformationExpiryIdDate { get; set; }
-
-        [Required(ErrorMessage = "requiredFiled")]
         public string? CrCasRenterPrivateDriverInformationLicenseNo { get; set; }
 
         public string? CrCasRenterPrivateDriverInformationLicenseType { get; set; }
