@@ -89,7 +89,7 @@ namespace Bnan.Inferastructure.Repository
         public async Task<bool> UpdateCompanyContract(string CompanyContractCode, string Date,string StartDate,string EndDate,string ContractCompanyAnnualFees ,
             string ContractCompanyTaxRate, string ContractCompanyDiscountRate, string Activiation)
         {
-            var companyContract = _unitOfWork.CrMasContractCompany.Find(x=>x.CrMasContractCompanyNo == CompanyContractCode);
+            var companyContract = await _unitOfWork.CrMasContractCompany.FindAsync(x=>x.CrMasContractCompanyNo == CompanyContractCode);
             var mecanizm = _unitOfWork.CrCasLessorMechanism.Find(x => x.CrCasLessorMechanismProcedures == "112");
             double aboutExp =(double) mecanizm.CrCasLessorMechanismDaysAlertAboutExpire;
             companyContract.CrMasContractCompanyDate= DateTime.Parse(Date).Date;
@@ -102,9 +102,8 @@ namespace Bnan.Inferastructure.Repository
             companyContract.CrMasContractCompanyActivation = Activiation;
             companyContract.CrMasContractCompanyTaxRate = decimal.Parse(ContractCompanyTaxRate);
             companyContract.CrMasContractCompanyNumber = companyContract.CrMasContractCompanyNo;
-
-            _unitOfWork.CrMasContractCompany.Update(companyContract);
-             await _unitOfWork.CompleteAsync();
+             _unitOfWork.CrMasContractCompany.Update(companyContract);
+            await _unitOfWork.CompleteAsync();
 
             return true;
         }
@@ -152,6 +151,7 @@ namespace Bnan.Inferastructure.Repository
 
             await _unitOfWork.CrMasContractCompanyDetailed.AddAsync(crMasContractCompanyDetailed);
             await _unitOfWork.CompleteAsync();
+
             return true;
         }
     }

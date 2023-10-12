@@ -120,7 +120,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
 
 
-            var update = await _compnayContract.UpdateCompanyContract(CompanyContractCode, DateContract, StartDateContract, EndDateContract, ContractCompanyAnnualFees, ContractCompanyTaxRate, ContractCompanyDiscountRate, activiation);
+            var update = _compnayContract.UpdateCompanyContract(CompanyContractCode, DateContract, StartDateContract, EndDateContract, ContractCompanyAnnualFees, ContractCompanyTaxRate, ContractCompanyDiscountRate, activiation);
             if (SelectedOption!= "Subscribtion" && data!=null)
             {
                 foreach (var item in data)

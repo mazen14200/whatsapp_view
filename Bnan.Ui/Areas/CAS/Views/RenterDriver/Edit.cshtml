@@ -224,7 +224,7 @@
                     <label class="form-label" for="RenterDriverID">@localizer["RenterDriverID"]</label>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationId" id="RenterDriverCode" maxlength="20" width="80%" readonly />
+                    <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationId" maxlength="20" width="80%" readonly />
                    
                     <div style="margin-top:2px">
                         <div style="height: 1.0em">
@@ -289,12 +289,7 @@
                             <label class="form-label" for="RenterDriverBirthday">@localizer["RenterDriverBirthday"]</label>
                         </div>
                         <div class="col-md-6 dateRelative">
-                            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationBirthDate" readonly />
-                            <div style="margin-top:2px">
-                                <div style="height: 1.0em">
-                                    <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationBirthDate" class="text-danger"></span>
-                                </div>
-                            </div>
+                            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationBirthDate" value="@ViewData["BirthDate"]" readonly />
                         </div>
                     </div>
                 </div>
@@ -631,7 +626,7 @@
                     <div class="file-upload">
                         <button class="file-upload-btn" type="button" onclick="$('.file-upload-input-picture1').trigger('click')">@localizer["RenterDriverSignature"]</button>
                         <div class="image-upload-wrap">
-                            <input class="file-upload-input-picture1" type="file" onchange="readURL(this, 'picture1');" accept="image/*" id="RenterDriverSignature" name="RenterDriverSignature" />
+                            <input class="file-upload-input-picture1" type="file" onchange="readURL(this, 'picture1');" accept="image/*" id="RenterDriverSignature" name="SignatureImg" />
                             <div class="drag-text">
                                 <h3>@localizer["DragAndDrop"]</h3>
                             </div>
@@ -648,7 +643,7 @@
                     <div class="file-upload">
                         <button class="file-upload-btn2" type="button" onclick="$('.file-upload-input-picture2').trigger('click')">@localizer["RenterDriverIDImg"]</button>
                         <div class="image-upload-wrap">
-                            <input class="file-upload-input-picture2" type="file" onchange="readURL(this, 'picture2');" accept="image/*" id="RenterDriverIDImg" name="RenterDriverIDImg" />
+                            <input class="file-upload-input-picture2" type="file" onchange="readURL(this, 'picture2');" accept="image/*" id="RenterDriverIDImg" name="IDImg" />
                             <div class="drag-text">
                                 <h3>@localizer["DragAndDrop"]</h3>
                             </div>
@@ -665,7 +660,7 @@
                     <div class="file-upload">
                         <button class="file-upload-btn3" type="button" onclick="$('.file-upload-input-picture3').trigger('click')">@localizer["RenterDriverLicenseImg"]</button>
                         <div class="image-upload-wrap">
-                            <input class="file-upload-input-picture3" type="file" onchange="readURL(this, 'picture3');" accept="image/*" id="RenterDriverLicenseImg" name="RenterDriverLicenseImg" />
+                            <input class="file-upload-input-picture3" type="file" onchange="readURL(this, 'picture3');" accept="image/*" id="RenterDriverLicenseImg" name="LicenseImg" />
                             <div class="drag-text">
                                 <h3>@localizer["DragAndDrop"]</h3>
                             </div>
@@ -795,25 +790,20 @@
         $(document).ready(function () {
             var today = new Date();
 
-            var birthdate = $("#CrCasRenterPrivateDriverInformationBirthDate").val();
-            var formattedbirthdate = new Date(birthdate);
+            //var birthdate = $("#CrCasRenterPrivateDriverInformationBirthDate").val();
+            //var formattedbirthdate = new Date(birthdate);
             var IssueIdDate = $("CrCasRenterPrivateDriverInformationIssueIdDate").val();
             var IssueIdformattedDate = new Date(IssueIdDate);
             var ExpiryIdDate = $("CrCasRenterPrivateDriverInformationExpiryIdDate").val();
             var ExpiryIdformattedDate = new Date(ExpiryIdDate);
             var LicenseDate = $("CrCasRenterPrivateDriverInformationLicenseDate").val();
             var LicenseformattedDate = new Date(LicenseDate);
-
-            console.log(IssueIdformattedDate)
-            console.log(ExpiryIdformattedDate)
-            console.log(LicenseformattedDate)
-
             var LicenseExpiryIdDate = $("CrCasRenterPrivateDriverInformationLicenseExpiry").val();
             var LicenseExpiryIdformattedDate = new Date(LicenseExpiryIdDate);
 
-            if (!formattedbirthdate || formattedbirthdate === "") {
-                formattedbirthdate = today; // Set date to today if it's empty or null
-            }
+            //if (!formattedbirthdate || formattedbirthdate === "") {
+            //    formattedbirthdate = today; // Set date to today if it's empty or null
+            //}
             if (!IssueIdformattedDate || IssueIdformattedDate === "") {
                 IssueIdformattedDate = today; // Set date to today if it's empty or null
             }
@@ -827,15 +817,15 @@
                 LicenseExpiryIdformattedDate = today; // Set date to today if it's empty or null
             }
 
-            $("#CrCasRenterPrivateDriverInformationBirthDate").datepicker({
-                dateFormat: 'yy/mm/dd',
-                maxDate: today,
-                defaultDate: formattedbirthdate// Set the minimum date to today
-            }).datepicker("widget").addClass("datepicker-widget");
-            $("#CrCasRenterPrivateDriverInformationBirthDate").datepicker("setDate", formattedbirthdate);
-            $("#CrCasRenterPrivateDriverInformationBirthDate").click(function () {
-                $(this).datepicker("show");
-            });
+            //$("#CrCasRenterPrivateDriverInformationBirthDate").datepicker({
+            //    dateFormat: 'yy/mm/dd',
+            //    maxDate: today,
+            //    defaultDate: formattedbirthdate// Set the minimum date to today
+            //}).datepicker("widget").addClass("datepicker-widget");
+            //$("#CrCasRenterPrivateDriverInformationBirthDate").datepicker("setDate", formattedbirthdate);
+            //$("#CrCasRenterPrivateDriverInformationBirthDate").click(function () {
+            //    $(this).datepicker("show");
+            //});
 
             $("#CrCasRenterPrivateDriverInformationIssueIdDate").datepicker({
                 dateFormat: 'yy/mm/dd',
@@ -905,12 +895,12 @@
     </script>
     <script>
         function updateRenterDriverStatus(status) {
-            var code = document.getElementById("RenterDriverCode").value;
-            var lessor = document.getElementById("LessorID").value;
+            var code = $("#CrCasRenterPrivateDriverInformationId").val();
+            var lessor = $("#CrCasRenterPrivateDriverInformationLessor").val();
             $.ajax({
                 type: "POST",
                 url: "/CAS/RenterDriver/EditStatus",
-                data: { status: status, code: code, id: lessor },
+                data: { status: status, code: code, lessor: lessor },
                 success: function (result) {
                     $('.modal').modal('hide');
                     window.location.href = "/CAS/RenterDriver/Index";
@@ -950,7 +940,7 @@
 
         $("#saveEdit").on("click", function (event) {
             event.preventDefault();
-            CheckValidation('2207005', '@Status.Insert').done(function (data) {
+            CheckValidation('2207005', '@Status.Save').done(function (data) {
                 if (data) {
                     $('form').submit();
                 }

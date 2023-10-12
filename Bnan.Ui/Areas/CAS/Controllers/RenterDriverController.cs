@@ -59,27 +59,29 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            // Get Lessor Code
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
             var titles = await setTitle("207", "2207005", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var RenterDriver = await _unitOfWork.CrCasRenterPrivateDriverInformation.GetAllAsync();
-            var RenterDrivers = RenterDriver.Where(x => x.CrCasRenterPrivateDriverInformationStatus == "A").ToList();
+            //var RenterDriver = await _unitOfWork.CrCasRenterPrivateDriverInformation.GetAllAsync();
+            var RenterDrivers = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x => x.CrCasRenterPrivateDriverInformationStatus == "A" && x.CrCasRenterPrivateDriverInformationLessor==lessorCode).ToList();
             return View(RenterDrivers);
         }
 
         [HttpGet]
-        public PartialViewResult GetRenterDriversByStatus(string status)
+        public async Task<PartialViewResult> GetRenterDriversByStatus(string status)
         {
+            // Get Lessor Code
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
             if (!string.IsNullOrEmpty(status))
             {
-                if (status == Status.All)
-                {
-                    var RenterDriverbyStatusAll = _unitOfWork.CrCasRenterPrivateDriverInformation.GetAll();
-
-                    return PartialView("_DataTableRenterDriver", RenterDriverbyStatusAll);
-                }
-                var RenterDriverbyStatus = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(l => l.CrCasRenterPrivateDriverInformationStatus == status).ToList();
-                return PartialView("_DataTableRenterDriver", RenterDriverbyStatus);
+                var RenterDriverbyStatusAll = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x => x.CrCasRenterPrivateDriverInformationLessor == lessorCode).ToList();
+                if (status == Status.All) return PartialView("_DataTableRenterDriver", RenterDriverbyStatusAll);
+                 RenterDriverbyStatusAll = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(l => l.CrCasRenterPrivateDriverInformationStatus == status && l.CrCasRenterPrivateDriverInformationLessor == lessorCode).ToList();
+                return PartialView("_DataTableRenterDriver", RenterDriverbyStatusAll.Where(x=>x.CrCasRenterPrivateDriverInformationStatus==status));
             }
             return PartialView();
         }
@@ -187,7 +189,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRenterDriver(RenterDriverVM RenterDrivermodel, IFormFile? SignatureImg, IFormFile? IDImg, IFormFile? LicenseImg)
         {
-            string foldername = $"{"images\\common"}";
+            string foldername = $"{"images\\common\\Drivers"}";
             string filePathImageSignature = null;
             string filePathImageID = null;
             string filePathImageLicense = null;
@@ -325,6 +327,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewData["IssueIdDate"] = driver.CrCasRenterPrivateDriverInformationIssueIdDate;
             ViewData["LicenseDate"] = driver.CrCasRenterPrivateDriverInformationLicenseDate;
             ViewData["LicenseExpiry"] = driver.CrCasRenterPrivateDriverInformationLicenseExpiry;
+            ViewData["BirthDate"] = driver.CrCasRenterPrivateDriverInformationBirthDate?.ToString("dd/MM/yyyy");
 
 
             // Get Lessor Code
@@ -339,7 +342,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(RenterDriverVM model, IFormFile? SignatureImg, IFormFile? IDImg, IFormFile? LicenseImg)
         {
-            string foldername = $"{"images\\Common"}";
+            string foldername = $"{"images\\common\\Drivers"}";
             string filePathImageSignature = "";
             string filePathImageID = "";
             string filePathImageLicense = "";
@@ -419,12 +422,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> EditStatus(string code, string id, string status)
+        public async Task<IActionResult> EditStatus(string code, string lessor, string status)
         {
             string sAr = "";
             string sEn = "";
             var renterdriver = _unitOfWork.CrCasRenterPrivateDriverInformation.GetAll();
-            var RenterDriver = renterdriver.Where(x => x.CrCasRenterPrivateDriverInformationLessor == id && x.CrCasRenterPrivateDriverInformationId == code).FirstOrDefault();
+            var RenterDriver = renterdriver.Where(x => x.CrCasRenterPrivateDriverInformationLessor == lessor && x.CrCasRenterPrivateDriverInformationId == code).FirstOrDefault();
 
             if (RenterDriver != null)
             {

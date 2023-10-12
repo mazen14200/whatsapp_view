@@ -11,7 +11,7 @@ namespace Bnan.Core.Interfaces
     {
         Task<bool> AddSalesPointDefault(string LessorCode);
         Task<bool> AddSalesPoint(CrCasBranchInformation crCasBranchInformation);
-        Task<bool> CreateSalesPoint(CrCasAccountSalesPoint crCasAccountSalesPoint, string userCode);
+        Task<CrCasAccountSalesPoint> CreateSalesPoint(CrCasAccountSalesPoint crCasAccountSalesPoint, string userCode);
 
 
     }

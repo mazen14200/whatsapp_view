@@ -79,7 +79,7 @@ namespace Bnan.Inferastructure.Repository
             return true;
         }
 
-        public async Task<bool> CreateSalesPoint(CrCasAccountSalesPoint model,string userCode)
+        public async Task<CrCasAccountSalesPoint> CreateSalesPoint(CrCasAccountSalesPoint model,string userCode)
         {
             var currentUser = await _userManager.FindByNameAsync(userCode);
 
@@ -116,7 +116,7 @@ namespace Bnan.Inferastructure.Repository
                 CrCasAccountSalesPointReasons = model.CrCasAccountSalesPointReasons,
             };
             await _unitOfWork.CrCasAccountSalesPoint.AddAsync(crCasAccountSalesPoint);
-            return true;
+            return crCasAccountSalesPoint;
         }
 
        

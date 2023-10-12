@@ -128,7 +128,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 var SalesPoint = _mapper.Map<CrCasAccountSalesPoint>(salesPointsVM);
                 SalesPoint.CrCasAccountSalesPointBank = bank.CrMasSupAccountBankCode;
                 SalesPoint.CrCasAccountSalesPointLessor = currentUser.CrMasUserInformationLessor;
-                if (await _salesPoint.CreateSalesPoint(SalesPoint, currentUser.CrMasUserInformationCode)) await _unitOfWork.CompleteAsync();
+                var createdSalesPoint = await _salesPoint.CreateSalesPoint(SalesPoint, currentUser.CrMasUserInformationCode);
+                if (createdSalesPoint != null) await _unitOfWork.CompleteAsync();
                 // SaveTracing
                 var (mainTask, subTask, system, currentUserr) = await SetTrace("207", "2207004", "2");
                 await _userLoginsService.SaveTracing(currentUserr.CrMasUserInformationCode, "اضافة", "Add", mainTask.CrMasSysMainTasksCode,
@@ -136,7 +137,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 // Save Adminstrive Procedures
                 await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "244", "20", currentUser.CrMasUserInformationLessor, "100",
-                    SalesPoint.CrCasAccountSalesPointCode, null, null, null, null, null, null, null, null, "اضافة", "Add", "I", null);
+                    createdSalesPoint.CrCasAccountSalesPointCode, null, null, null, null, null, null, null, null, "اضافة", "Add", "I", null);
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 return RedirectToAction("SalesPoints", "SalesPoints");
             }
