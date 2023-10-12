@@ -3,7 +3,7 @@
 
 @inject IViewLocalizer localizer
 @{
-    var requestCulture= Context.Features.Get<IRequestCultureFeature>();
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     var requestCulture1 = Context.Features.Get<IRequestCultureFeature>();
     var requestCulture2 = Context.Features.Get<IRequestCultureFeature>();
 
@@ -74,9 +74,9 @@
         }
 
     /* .file-upload-btn:active {
-                                border: 0;
-                                transition: all .2s ease;
-                            }*/
+                                        border: 0;
+                                        transition: all .2s ease;
+                                    }*/
 
     .file-upload-content {
     }
@@ -158,11 +158,66 @@
         }
 
 </style>
+<style>
+
+    .datepicker-widget {
+        display: none;
+    }
+
+
+    .datepicker-icon i {
+        font-size: 18px;
+        color: #999;
+    }
+
+    .dateRelative {
+        position: relative;
+    }
+
+    .form-contain {
+        position: relative;
+    }
+
+</style>
+@if (requestCulture.RequestCulture.UICulture.Name == "ar-EG")
+{
+    <style>
+        .datepicker-icon {
+            cursor: pointer;
+            top: 8%;
+            right: 77%;
+        }
+    </style>
+}
+
+@if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+{
+    <style>
+        .datepicker-icon {
+            position: absolute;
+            display: inline-block;
+            top: 1px;
+            left: 178px;
+        }
+    </style>
+}
 <title>@ViewData["Title"]</title>
 
 <div class="sub-container-form">
     <form class="needs-validation" novalidate asp-area="CAS" asp-controller="RenterDriver" asp-action="Edit" method="post" enctype="multipart/form-data">
         <div class="form-contain">
+            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationLessor"  hidden /> 
+            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationStatus"  hidden /> 
+            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationEvaluationTotal"   hidden />
+            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationIdtrype" hidden />
+            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationNationality" hidden />
+            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationLicenseType" hidden />
+            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationGender" hidden />
+            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationArName" hidden />
+            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationEnName" hidden />
+            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationIdImage" hidden />
+            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationLicenseImage" hidden />
+            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationSignature" hidden />
             @*ID and Type*@
             <div class="row mt-2">
                 <div class="col-md-1">
@@ -170,9 +225,7 @@
                 </div>
                 <div class="col-md-2">
                     <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationId" id="RenterDriverCode" maxlength="50" width="80%" readonly />
-                    <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationLessor" id="LessorID" maxlength="20" width="80%" readonly hidden />  @*hiddden*@
-                    <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationStatus" id="status" maxlength="20" width="80%" readonly hidden />  @*hiddden*@
-                    <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationEvaluationTotal" id="RenterDriverEvalTotal" maxlength="100" width="80%" readonly hidden/>
+                   
                     <div style="margin-top:2px">
                         <div style="height: 1.0em">
                             <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationId" class="text-danger"></span>
@@ -186,31 +239,19 @@
                 <div class="col-md-1">
                     @if (requestCulture1?.RequestCulture.UICulture.Name == "ar-EG")
                     {
-                        <input type="text" class="form-control" asp-for="RenterDriverTypeAr" id="RenterDriverTypeAr" maxlength="50" width="80%" readonly />
-
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span asp-validation-for="@Model.RenterDriverTypeAr" class="text-danger"></span>
-                            </div>
-                        </div>
+                        <input type="text" class="form-control" value="@ViewData["RenterDriverIDTypeAr"]" readonly />
                     }
                     else
                     {
-                        <input type="text" class="form-control" asp-for="RenterDriverTypeEn" id="RenterDriverTypeEn" maxlength="50" width="80%" readonly />
-
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span asp-validation-for="@Model.RenterDriverTypeEn" class="text-danger"></span>
-                            </div>
-                        </div>
+                        <input type="text" class="form-control" value="@ViewData["RenterDriverIDTypeEn"]" readonly />
                     }
-                </div>          
-           </div>
+                </div>
+            </div>
 
             <div class="row mt-2">
-            @if (requestCulture2.RequestCulture.UICulture.Name != "en-US")
-            {
-                @*RenterDriverNameAr arabic*@
+                @if (requestCulture2.RequestCulture.UICulture.Name != "en-US")
+                {
+                    @*RenterDriverNameAr arabic*@
                     <div class="col-md-1">
                         <label class="form-label" for="RenterDriverNameAr">@localizer["RenterDriverName"]</label>
                     </div>
@@ -222,10 +263,10 @@
                             </div>
                         </div>
                     </div>
-            }
-            else
-            {
-                @*RenterDriverNameEn English*@
+                }
+                else
+                {
+                    @*RenterDriverNameEn English*@
                     <div class="col-md-1">
                         <label class="form-label" for="RenterDriverNameEn">@localizer["RenterDriverName"]</label>
                     </div>
@@ -237,109 +278,132 @@
                             </div>
                         </div>
                     </div>
-            }
+                }
             </div>
-            @*RenterDriver Birthday and ID Issue and ID Expire *@
+            @*RenterDriver dates Birthday *@
             <div class="row mt-2">
-                <div class="col-md-1">
-                    <label class="form-label" for="RenterDriverBirthday">@localizer["RenterDriverBirthday"]</label>
-                </div>
-                <div class="col-md-2">
-                    <input type="date" class="form-control" asp-for="CrCasRenterPrivateDriverInformationBirthDate" id="RenterDriverBirthday"  dir ="ltr" readonly  />
-                    <div style="margin-top:2px">
-                        <div style="height: 1.0em">
-                            <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationBirthDate" class="text-danger"></span>
+                @*RenterDriver Birthday *@
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" for="RenterDriverBirthday">@localizer["RenterDriverBirthday"]</label>
+                        </div>
+                        <div class="col-md-6 dateRelative">
+                            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationBirthDate" readonly />
+                            <div style="margin-top:2px">
+                                <div style="height: 1.0em">
+                                    <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationBirthDate" class="text-danger"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                @*RenterDriver Issuedate *@
+                <div class="col-md-3">
+                    <div class="row">
 
-                <div class="col-md-1">
-                    <label class="form-label" for="RenterDriverIssueDate">@localizer["RenterDriverIssueDate"]</label>
-                </div>
-                <div class="col-md-2">
-                    <input type="date" class="form-control" asp-for="CrCasRenterPrivateDriverInformationIssueIdDate" id="RenterDriverIssueDate" width="50%"  required/>
-                    <div style="margin-top:2px">
-                        <div style="height: 1.0em">
-                            <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationIssueIdDate" class="text-danger"></span>
+                        <div class="col-md-5">
+                            <label class="form-label" for="RenterDriverIssueDate">@localizer["RenterDriverIssueDate"]</label>
+                        </div>
+                        <div class="col-md-7 dateRelative">
+                            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationIssueIdDate" />
+                            <div style="margin-top:2px">
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.0em">
+                                        <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationIssueIdDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-1">
-                    <label class="form-label" for="RenterDriverExpireDate">@localizer["RenterDriverExpireDate"]</label>
-                </div>
-                <div class="col-md-2">
-                    <input type="date" class="form-control" asp-for="CrCasRenterPrivateDriverInformationExpiryIdDate" id="RenterDriverExpireDate" width="50%" required />
-                    <div style="margin-top:2px">
-                        <div style="height: 1.0em">
-                            <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationExpiryIdDate" class="text-danger"></span>
+                @*RenterDriver ExpireDate *@
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" for="RenterDriverExpireDate">@localizer["RenterDriverExpireDate"]</label>
+                        </div>
+                        <div class="col-md-7 dateRelative">
+                            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationExpiryIdDate" />
+                            <div style="margin-top:2px">
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.0em">
+                                        <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationExpiryIdDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
 
 
             @*LicenseID and Type*@
             <div class="row mt-2">
-                <div class="col-md-1">
-                    <label class="form-label" for="RenterDriverLicenseNO">@localizer["RenterDriverLicenseNO"]</label>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationLicenseNo" id="RenterDriverLicenseNO" maxlength="100" width="70%" oninput="this.value = this.value.replace(/\D/g, '')" required />
-                    <div style="margin-top:2px">
-                        <div style="height: 1.0em">
-                            <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationLicenseNo" class="text-danger"></span>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" for="RenterDriverLicenseNO">@localizer["RenterDriverLicenseNO"]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationLicenseNo" id="RenterDriverLicenseNO" maxlength="100" width="70%" oninput="this.value = this.value.replace(/\D/g, '')" required />
+                            <div style="margin-top:2px">
+                                <div style="height: 1.0em">
+                                    <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationLicenseNo" class="text-danger"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-1">
-                    <label class="form-label" for="RenterDriverLicenseType">@localizer["RenterDriverLicenseType"]</label>
-                </div>
-                <div class="col-md-2">
-                    @if (requestCulture2?.RequestCulture.UICulture.Name == "ar-EG")
-                    {
-                        <select class="form-select" asp-for="@Model.RenterDriverLicenseTypeAr" style="width: 100%;" dir="rtl">
-                            @foreach (var RenterDriverLicenseTypeAr in (List<SelectListItem>)ViewData["RenterDriverLicenseTypeAr"])
-                            {
-                                <option value="@RenterDriverLicenseTypeAr.Value" selected="@(RenterDriverLicenseTypeAr.Value == Model.RenterDriverLicenseTypeAr ? "selected" : null)">@RenterDriverLicenseTypeAr.Text</option>
-                            }
-                        </select>
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span asp-validation-for="@Model.RenterDriverLicenseTypeAr" class="text-danger"></span>
-                            </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label class="form-label" for="RenterDriverLicenseType">@localizer["RenterDriverLicenseType"]</label>
                         </div>
-                    }
-                    else
-                    {
-                        <select class="form-select" asp-for="@Model.RenterDriverLicenseTypeEn" style="width: 100%;" dir="rtl">
-                            @foreach (var RenterDriverLicenseTypeEn in (List<SelectListItem>)ViewData["RenterDriverLicenseTypeEn"])
+                        <div class="col-md-7">
+                            @if (requestCulture2?.RequestCulture.UICulture.Name == "ar-EG")
                             {
-                                <option value="@RenterDriverLicenseTypeEn.Value" selected="@(RenterDriverLicenseTypeEn.Value == Model.RenterDriverLicenseTypeEn ? "selected" : null)">@RenterDriverLicenseTypeEn.Text</option>
-                            }
-                        </select>
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span asp-validation-for="@Model.RenterDriverGenderEn" class="text-danger"></span>
-                            </div>
-                        </div>
-                    }
+                                <input type="text" class="form-control" value="@ViewData["RenterDriverLicenseTypeAr"]" readonly />
 
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationLicenseType" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" value="@ViewData["RenterDriverLicenseTypeEn"]" readonly />
+
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationLicenseType" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
                 </div>
-                </div>
-            <div class="row mt-2">
+            </div>
+
+
             @*RenterDriver LicenseDate *@
-                <div class="col-md-1">
-                    <label class="form-label" for="LicenseIssueDate">@localizer["LicenseIssueDate"]</label>
-                </div>
-                <div class="col-md-2">
-                    <input type="date" class="form-control" asp-for="CrCasRenterPrivateDriverInformationLicenseDate" id="LicenseIssueDate" width="70%" required />
-                    <div style="margin-top:2px">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.0em">
-                                <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationLicenseDate" class="text-danger"></span>
+            <div class="row mt-2">
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" for="LicenseIssueDate">@localizer["LicenseIssueDate"]</label>
+                        </div>
+                        <div class="col-md-7 dateRelative">
+                            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationLicenseDate" />
+                            <div style="margin-top:2px">
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.0em">
+                                        <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationLicenseDate" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -347,15 +411,19 @@
 
 
                 @*RenterDriver LicenseDate End *@
-                <div class="col-md-2">
-                    <label class="form-label" for="LicenseExpireDate">@localizer["LicenseExpireDate"]</label>
-                </div>
-                <div class="col-md-2">
-                    <input type="date" class="form-control" asp-for="CrCasRenterPrivateDriverInformationLicenseExpiry" id="LicenseExpireDate" width="70%" required />
-                    <div style="margin-top:2px">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.0em">
-                                <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationLicenseExpiry" class="text-danger"></span>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label class="form-label" for="LicenseExpireDate">@localizer["LicenseExpireDate"]</label>
+                        </div>
+                        <div class="col-md-7 dateRelative">
+                            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationLicenseExpiry" />
+                            <div style="margin-top:2px">
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.0em">
+                                        <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationLicenseExpiry" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -363,109 +431,116 @@
 
             </div>
 
-
-
             @*RenterDriver Nationality and Gender *@
             <div class="row mt-2">
-                <div class="col-md-1">
-                    <label class="form-label" for="RenterDriverNationality">@localizer["RenterDriverNationality"]</label>
-                </div>
-                <div class="col-md-1">
-                    @if (requestCulture3?.RequestCulture.UICulture.Name == "ar-EG")
-                    {
-                        <input type="text" class="form-control" asp-for="RenterDriverNationalityAr" maxlength="50" id="RenterDriverNationalityAr" width="80%" readonly/>
-
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span asp-validation-for="@Model.RenterDriverNationalityAr" class="text-danger"></span>
-                            </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" for="RenterDriverNationality">@localizer["RenterDriverNationality"]</label>
                         </div>
-                    }
-                    else
-                    {
-                        <input type="text" class="form-control" asp-for="RenterDriverNationalityEn" maxlength="50" id="RenterDriverNationalityEn" width="80%" readonly/>
+                        <div class="col-md-6">
+                            @if (requestCulture3?.RequestCulture.UICulture.Name == "ar-EG")
+                            {
+                                <input type="text" class="form-control" value="@ViewData["RenterDriverNationalityAr"]" readonly />
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationNationality" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" value="@ViewData["RenterDriverNationalityEn"]" readonly />
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationNationality" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            }
 
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span asp-validation-for="@Model.RenterDriverNationalityEn" class="text-danger"></span>
-                            </div>
                         </div>
-                    }
-
-                </div>
-
-                <div class="col-md-1">
-                    <label class="form-label" for="RenterDriverGender">@localizer["RenterDriverGender"]</label>
-                </div>
-                <div class="col-md-1">
-                    @if (requestCulture4?.RequestCulture.UICulture.Name == "ar-EG")
-                    {
-                        <input type="text" class="form-control" asp-for="RenterDriverGenderAr" maxlength="50" id="RenterDriverGenderAr" width="80%" readonly/>
-
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span asp-validation-for="@Model.RenterDriverGenderAr" class="text-danger"></span>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <input type="text" class="form-control" asp-for="RenterDriverGenderEn" maxlength="50" id="RenterDriverGenderAr" width="80%" />
-
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span asp-validation-for="@Model.RenterDriverGenderEn" class="text-danger"></span>
-                            </div>
-                        </div>
-                    }
-
+                    </div>
                 </div>
 
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label class="form-label" for="RenterDriverGender">@localizer["RenterDriverGender"]</label>
+                        </div>
+                        <div class="col-md-7">
+                            @if (requestCulture4?.RequestCulture.UICulture.Name == "ar-EG")
+                            {
+                                <input type="text" class="form-control" value="@ViewData["RenterDriverGenderAr"]" readonly />
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationGender" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" value="@ViewData["RenterDriverGenderEn"]" readonly />
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationGender" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            }
 
+                        </div>
+                    </div>
+                </div>
             </div>
-
 
 
             @*telephone and email*@
             <div class="row mt-2">
-                <div class="col-md-1">
-                    <label class="form-label" for="RenterDriverMobile">@localizer["RenterDriverMobile"]</label>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationMobile" id="RenterDriverMobile" maxlength="10" oninput="this.value = this.value.replace(/\D/g, '')" required/>
-                    <div style="margin-top:2px">
-                        <div style="height: 1.35em">
-                            <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationMobile" class="text-danger" id="RenterDriverMobile"></span>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" for="RenterDriverMobile">@localizer["RenterDriverMobile"]</label>
                         </div>
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationMobile" id="RenterDriverMobile" maxlength="10" oninput="this.value = this.value.replace(/\D/g, '')" required>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                            <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationMobile" class="text-danger" id="RenterDriverMobile"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select" asp-for="CrCasRenterPrivateDriverInformationKeyMobile" id="callingKey" style="width: 86px; margin-right: -25px;">
+                                        @foreach (var callingKey in (List<SelectListItem>)ViewData["CallingKeys"])
+                                        {
+                                            <option value="@callingKey.Text">@callingKey.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+
+                        </div>
+
                     </div>
                 </div>
-                <div class="col-md-1">
-                    <select class="form-select" asp-for="callingKey" id="callingKey" style="width: 90px;">
-                        @foreach (var callingKey in (List<SelectListItem>)ViewData["CallingKeys"])
-                        {
-                            <option value="@callingKey.Text" selected="@(callingKey.Value == Model.callingKey ? "selected" : null)">@callingKey.Text</option>
-                        }
-                    </select>
-                    <div style="margin-top:2px">
-                        <div style="height: 1.35em">
-                            <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationMobile" class="text-danger" id="RenterDriverMobile"></span>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="form-label" for="RenterDriverEmail">@localizer["RenterDriverEmail"]</label>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <label class="form-label" for="RenterDriverEmail">@localizer["RenterDriverEmail"]</label>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationEmail" maxlength="100" id="RenterDriverEmail" width="80%" readonly/>
-                    <div style="margin-top:2px">
-                        <div style="height: 1.0em">
-                            <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationEmail" class="text-danger"></span>
+                        <div class="col-md-7" style="margin-right: -15px;width: 606px;">
+                            <input type="text" class="form-control" asp-for="CrCasRenterPrivateDriverInformationEmail" maxlength="100" id="RenterDriverEmail" width="80%" readonly oninput="this.value = this.value.replace(/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDCF\uFDF0-\uFDFF\uFE70-\uFEFF]/g, '')">
+                            <div style="margin-top:2px">
+                                <div style="height: 1.0em">
+                                    <span asp-validation-for="@Model.CrCasRenterPrivateDriverInformationEmail" class="text-danger"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
 
             @*RenterDriver LastContract and counter and days *@
             <div class="row mt-2">
@@ -507,8 +582,6 @@
 
             </div>
 
-
-
             @*RenterDriver Killos and TotalEval and EvalVal *@
             <div class="row mt-2">
                 <div class="col-md-1">
@@ -538,7 +611,7 @@
 
             @*reasons*@
             <div class="row mt-2">
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <label class="form-label" for="RenterDriverReasons">@localizer["reasons"]</label>
                 </div>
                 <div class="col-md-7">
@@ -717,15 +790,130 @@
 </div><!-- /.modal -->
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            var today = new Date();
 
+            var birthdate = $("#CrCasRenterPrivateDriverInformationBirthDate").val();
+            var formattedbirthdate = new Date(birthdate);
+
+            var IssueIdDate = $("CrCasRenterPrivateDriverInformationIssueIdDate").val();
+            var IssueIdformattedDate = new Date(IssueIdDate);
+
+            var ExpiryIdDate = $("CrCasRenterPrivateDriverInformationExpiryIdDate").val();
+            var ExpiryIdformattedDate = new Date(ExpiryIdDate);
+
+
+            var LicenseDate = $("CrCasRenterPrivateDriverInformationLicenseDate").val();
+            var LicenseformattedDate = new Date(LicenseDate);
+
+
+
+            var LicenseExpiryIdDate = $("CrCasRenterPrivateDriverInformationLicenseExpiry").val();
+            var LicenseExpiryIdformattedDate = new Date(LicenseExpiryIdDate);
+
+            if (!formattedbirthdate || formattedbirthdate === "") {
+                formattedbirthdate = today; // Set date to today if it's empty or null
+            }
+            if (!IssueIdformattedDate || IssueIdformattedDate === "") {
+                IssueIdformattedDate = today; // Set date to today if it's empty or null
+            }
+            if (!ExpiryIdformattedDate || ExpiryIdformattedDate === "") {
+                ExpiryIdformattedDate = today; // Set date to today if it's empty or null
+            }
+
+
+            if (!LicenseformattedDate || LicenseformattedDate === "") {
+                LicenseformattedDate = today; // Set date to today if it's empty or null
+            }
+            if (!LicenseExpiryIdformattedDate || LicenseExpiryIdformattedDate === "") {
+                LicenseExpiryIdformattedDate = today; // Set date to today if it's empty or null
+            }
+
+            $("#CrCasRenterPrivateDriverInformationBirthDate").datepicker({
+                dateFormat: 'yy/mm/dd',
+                maxDate: today,
+                defaultDate: formattedbirthdate// Set the minimum date to today
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#CrCasRenterPrivateDriverInformationBirthDate").datepicker("setDate", formattedbirthdate);
+            $("#CrCasRenterPrivateDriverInformationBirthDate").click(function () {
+                $(this).datepicker("show");
+            });
+
+            $("#CrCasRenterPrivateDriverInformationIssueIdDate").datepicker({
+                dateFormat: 'yy/mm/dd',
+                //minDate: today,
+                defaultDate: IssueIdformattedDate// Set the minimum date to today
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#CrCasRenterPrivateDriverInformationIssueIdDate").datepicker("setDate", IssueIdformattedDate);
+            $("#CrCasRenterPrivateDriverInformationIssueIdDate").click(function () {
+                $(this).datepicker("show");
+            });
+
+            $("#CrCasRenterPrivateDriverInformationExpiryIdDate").datepicker({
+                dateFormat: 'yy/mm/dd',
+                minDate: today,
+                defaultDate: ExpiryIdformattedDate// Set the minimum date to today
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#CrCasRenterPrivateDriverInformationExpiryIdDate").datepicker("setDate", ExpiryIdformattedDate);
+            $("#CrCasRenterPrivateDriverInformationExpiryIdDate").click(function () {
+                $(this).datepicker("show");
+            });
+
+
+            $("#CrCasRenterPrivateDriverInformationLicenseDate").datepicker({
+                dateFormat: 'yy/mm/dd',
+                //minDate: today,
+                defaultDate: LicenseformattedDate// Set the minimum date to today
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#CrCasRenterPrivateDriverInformationLicenseDate").datepicker("setDate", LicenseformattedDate);
+            $("#CrCasRenterPrivateDriverInformationLicenseDate").click(function () {
+                $(this).datepicker("show");
+            });
+
+            $("#CrCasRenterPrivateDriverInformationLicenseExpiry").datepicker({
+                dateFormat: 'yy/mm/dd',
+                minDate: today,
+                defaultDate: LicenseExpiryIdformattedDate// Set the minimum date to today
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#CrCasRenterPrivateDriverInformationLicenseExpiry").datepicker("setDate", LicenseExpiryIdformattedDate);
+            $("#CrCasRenterPrivateDriverInformationLicenseExpiry").click(function () {
+                $(this).datepicker("show");
+            });
+
+
+
+            //$("#CrCasRenterPrivateDriverInformationBirthDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+            $("#CrCasRenterPrivateDriverInformationIssueIdDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+            $("#CrCasRenterPrivateDriverInformationExpiryIdDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+            $("#CrCasRenterPrivateDriverInformationLicenseDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+            $("#CrCasRenterPrivateDriverInformationLicenseExpiry").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+
+
+
+            $(".datepicker-icon").click(function () {
+                $(this).prevAll('input').datepicker("show");
+            });
+
+            //$("#saveEdit").on("click", function (event) {
+            //    event.preventDefault();
+            //    CheckValidation('2201002', '@Status.Save').done(function (data) {
+            //        if (data) {
+            //            $('form').submit();
+            //        }
+            //    });
+            //})
+        })
+
+    </script>
     <script>
         function updateRenterDriverStatus(status) {
             var code = document.getElementById("RenterDriverCode").value;
-            var lessor = document.getElementById("LessorID").value;            
+            var lessor = document.getElementById("LessorID").value;
             $.ajax({
                 type: "POST",
                 url: "/CAS/RenterDriver/EditStatus",
-                data: { status: status, code: code, id:lessor },
+                data: { status: status, code: code, id: lessor },
                 success: function (result) {
                     $('.modal').modal('hide');
                     window.location.href = "/CAS/RenterDriver/Index";

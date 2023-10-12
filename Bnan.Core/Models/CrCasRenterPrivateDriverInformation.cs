@@ -6,30 +6,7 @@ namespace Bnan.Core.Models
 {
     public partial class CrCasRenterPrivateDriverInformation
     {
-        [NotMapped]
-        public string RenterDriverTypeEn { get; set; }
-        [NotMapped]
-        public string RenterDriverTypeAr { get; set; }
-
-        [NotMapped]
-        public string RenterDriverLicenseTypeEn { get; set; }
-        [NotMapped]
-        public string RenterDriverLicenseTypeAr { get; set; }
-
-        [NotMapped]
-        public string countryCode { get; set; }
-        [NotMapped]
-        public string callingKey { get; set; }
-
-        [NotMapped]
-        public string RenterDriverNationalityEn { get; set; }
-        [NotMapped]
-        public string RenterDriverNationalityAr { get; set; }
-
-        [NotMapped]
-        public string RenterDriverGenderEn { get; set; }
-        [NotMapped]
-        public string RenterDriverGenderAr { get; set; }
+        
         public string CrCasRenterPrivateDriverInformationId { get; set; } = null!;
         public string CrCasRenterPrivateDriverInformationLessor { get; set; } = null!;
         public string? CrCasRenterPrivateDriverInformationIdtrype { get; set; }
@@ -44,6 +21,7 @@ namespace Bnan.Core.Models
         public DateTime? CrCasRenterPrivateDriverInformationLicenseExpiry { get; set; }
         public string? CrCasRenterPrivateDriverInformationNationality { get; set; }
         public string? CrCasRenterPrivateDriverInformationGender { get; set; }
+        public string? CrCasRenterPrivateDriverInformationKeyMobile { get; set; }
         public string? CrCasRenterPrivateDriverInformationMobile { get; set; }
         public string? CrCasRenterPrivateDriverInformationEmail { get; set; }
         public DateTime? CrCasRenterPrivateDriverInformationLastContract { get; set; }

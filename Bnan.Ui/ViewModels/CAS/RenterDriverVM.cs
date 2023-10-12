@@ -6,34 +6,7 @@ namespace Bnan.Ui.ViewModels.CAS
 {
     public class RenterDriverVM 
     {
-        [NotMapped]
-        public string RenterDriverTypeEn { get; set; }
-
-        [NotMapped]
-        public string RenterDriverTypeAr { get; set; }
-
-        [NotMapped]
-        public string RenterDriverLicenseTypeEn { get; set; }
-        [NotMapped]
-        public string RenterDriverLicenseTypeAr { get; set; }
-
-        [NotMapped]
-        public string countryCode { get; set; }
-
-        [NotMapped]
-        public string callingKey { get; set; }
-
-        [NotMapped]
-        public string RenterDriverNationalityEn { get; set; }
-        [NotMapped]
-        public string RenterDriverNationalityAr { get; set; }
-
-        [NotMapped]
-        public string RenterDriverGenderEn { get; set; }
-        [NotMapped]
-        public string RenterDriverGenderAr { get; set; }
-
-
+       
         [Required(ErrorMessage = "requiredFiled")]
         public string CrCasRenterPrivateDriverInformationId { get; set; } = null!;
         public string CrCasRenterPrivateDriverInformationLessor { get; set; } = null!;
@@ -60,9 +33,12 @@ namespace Bnan.Ui.ViewModels.CAS
 
         [Required(ErrorMessage = "requiredFiled")]
         public DateTime? CrCasRenterPrivateDriverInformationLicenseExpiry { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public string? CrCasRenterPrivateDriverInformationNationality { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public string? CrCasRenterPrivateDriverInformationGender { get; set; }
-        
+        public string? CrCasRenterPrivateDriverInformationKeyMobile { get; set; }
+
         [Required(ErrorMessage = "requiredFiled")]
         public string? CrCasRenterPrivateDriverInformationMobile { get; set; }
         public string? CrCasRenterPrivateDriverInformationEmail { get; set; }

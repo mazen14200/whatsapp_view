@@ -280,8 +280,8 @@ span.search-icon {
     right: 135px;
 }
 #dangerMessage {
-    margin-left: 300px;
-    margin-top: 25px;
+    /*margin-left: 300px;
+    margin-top: 25px;*/
     cursor: default
 }
 

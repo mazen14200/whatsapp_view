@@ -167,10 +167,19 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 return RedirectToAction("Branches");
             }
+
+
+
             // Pass the KSA callingKeys to the view 
             var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive && x.CrMasSysCallingKeysNo == "966");
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList;
+            var lessornumber = user.CrMasUserInformationLessorNavigation.CrMasLessorInformationCode;
+            var branch = _unitOfWork.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationLessor == lessornumber).LastOrDefault();
+            var branchNumber = (Int32.Parse(branch?.CrCasBranchInformationCode) + 1).ToString();
+            ViewBag.branchnumber = branchNumber;
+            ViewBag.lessornumber = lessornumber;
+
             return View(branchVM);
         }
 

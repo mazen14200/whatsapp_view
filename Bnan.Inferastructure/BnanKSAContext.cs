@@ -1004,7 +1004,10 @@ namespace Bnan.Core.Models
                     .IsUnicode(false)
                     .HasColumnName("CR_Cas_Renter_Private_Driver_Information_License_Type")
                     .IsFixedLength();
-
+                entity.Property(e => e.CrCasRenterPrivateDriverInformationKeyMobile)
+                   .HasMaxLength(10)
+                   .IsUnicode(false)
+                   .HasColumnName("CR_Cas_Renter_Private_Driver_Information_Key_Mobile");
                 entity.Property(e => e.CrCasRenterPrivateDriverInformationMobile)
                     .HasMaxLength(20)
                     .IsUnicode(false)

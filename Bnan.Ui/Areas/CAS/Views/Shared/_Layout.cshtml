@@ -336,9 +336,9 @@
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205002")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
-                                                                <li b-9ts1qywrdg="">
-                                                                    <a b-9ts1qywrdg="" href="apps-ecommerce-products-details.html">@localizer["Finacial Procedures"]</a>
-                                                                </li>
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-products-details.html">@localizer["Finacial Procedures"]</a>
+                                                                    </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205003")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
@@ -348,9 +348,9 @@
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205004")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
-                                                                <li b-9ts1qywrdg="">
-                                                                    <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Financial Transaction Of Renter"]</a>
-                                                                </li>
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Financial Transaction Of Renter"]</a>
+                                                                    </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205005")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
@@ -389,7 +389,7 @@
                                                 </li>
                                             }
                                         }
-                                         @if (userInfo?.CrMasUserMainValidations != null)
+                                        @if (userInfo?.CrMasUserMainValidations != null)
                                         {
                                             @if (userInfo.CrMasUserMainValidations.FirstOrDefault(l => l.CrMasUserMainValidationMainTasks == "206")?.CrMasUserMainValidationAuthorization == true)
                                             {
@@ -422,77 +422,77 @@
                                                                         <a b-9ts1qywrdg="" asp-area="CAS" asp-action="EmployeeContractValiditions" asp-controller="Employees">@localizer["Contract Authorization"]</a>
                                                                     </li>
                                                                 }
-                                                                
+
                                                             }
                                                         </ul>
                                                     </div>
                                                 </li>
                                             }
                                         }
-                                           @*الخدمات*@
-                                                <li b-9ts1qywrdg="" class="side-nav-item">
-                                                    <a b-9ts1qywrdg="" data-bs-toggle="collapse" href="#sidebarServices" aria-expanded="false" aria-controls="sidebarServices" class="side-nav-link collapsed">
-                                                        <i b-9ts1qywrdg="" class="uil-store"></i>
-                                                        <span b-9ts1qywrdg=""> @localizer["Services"]</span>
-                                                        <span b-9ts1qywrdg="" class="menu-arrow"></span>
-                                                    </a>
-                                                    <div b-9ts1qywrdg="" class="collapse" id="sidebarServices" style="">
-                                                        <ul b-9ts1qywrdg="" class="side-nav-second-level">
-                                                            @if (userInfo?.CrMasUserSubValidations != null)
-                                                            {
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207001")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    <li b-9ts1qywrdg="">
+                                        @*الخدمات*@
+                                        <li b-9ts1qywrdg="" class="side-nav-item">
+                                            <a b-9ts1qywrdg="" data-bs-toggle="collapse" href="#sidebarServices" aria-expanded="false" aria-controls="sidebarServices" class="side-nav-link collapsed">
+                                                <i b-9ts1qywrdg="" class="uil-store"></i>
+                                                <span b-9ts1qywrdg=""> @localizer["Services"]</span>
+                                                <span b-9ts1qywrdg="" class="menu-arrow"></span>
+                                            </a>
+                                            <div b-9ts1qywrdg="" class="collapse" id="sidebarServices" style="">
+                                                <ul b-9ts1qywrdg="" class="side-nav-second-level">
+                                                    @if (userInfo?.CrMasUserSubValidations != null)
+                                                    {
+                                                        @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207001")?.CrMasUserSubValidationAuthorization == true)
+                                                        {
+                                                            <li b-9ts1qywrdg="">
                                                                 <a b-9ts1qywrdg="" asp-area="CAS" asp-action="Mechanism" asp-controller="LessorMechanism"> @localizer["Alerts"]</a>
-                                                                    </li>
-                                                                }
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207002")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-products-details.html">@localizer["Membership"]</a>
-                                                                    </li>
-                                                                }
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207003")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="Index" asp-controller="AccountBank">@localizer["Banks"]</a>
-                                                                    </li>
-                                                                }
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207004")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="SalesPoints" asp-controller="SalesPoints">@localizer["Sales Point"]</a>
-                                                                    </li>
-                                                                }
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207005")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    <li b-9ts1qywrdg="">
+                                                            </li>
+                                                        }
+                                                        @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207002")?.CrMasUserSubValidationAuthorization == true)
+                                                        {
+                                                            <li b-9ts1qywrdg="">
+                                                                <a b-9ts1qywrdg="" href="apps-ecommerce-products-details.html">@localizer["Membership"]</a>
+                                                            </li>
+                                                        }
+                                                        @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207003")?.CrMasUserSubValidationAuthorization == true)
+                                                        {
+                                                            <li b-9ts1qywrdg="">
+                                                                <a b-9ts1qywrdg="" asp-area="CAS" asp-action="Index" asp-controller="AccountBank">@localizer["Banks"]</a>
+                                                            </li>
+                                                        }
+                                                        @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207004")?.CrMasUserSubValidationAuthorization == true)
+                                                        {
+                                                            <li b-9ts1qywrdg="">
+                                                                <a b-9ts1qywrdg="" asp-area="CAS" asp-action="SalesPoints" asp-controller="SalesPoints">@localizer["Sales Point"]</a>
+                                                            </li>
+                                                        }
+                                                        @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207005")?.CrMasUserSubValidationAuthorization == true)
+                                                        {
+                                                            <li b-9ts1qywrdg="">
                                                                 <a b-9ts1qywrdg="" asp-area="CAS" asp-action="Index" asp-controller="RenterDriver">@localizer["Drivers"]</a>
-                                                                    </li>
-                                                                }
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207006")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Messages For Tenants"]</a>
-                                                                    </li>
-                                                                }
-                                                                
-                                                                    <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Messages To Users"]</a>
-                                                                    </li>
-                                                                
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207008")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Offer"]</a>
-                                                                    </li>
-                                                                }
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                                            
-                                        
+                                                            </li>
+                                                        }
+                                                        @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207006")?.CrMasUserSubValidationAuthorization == true)
+                                                        {
+                                                            <li b-9ts1qywrdg="">
+                                                                <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Messages For Tenants"]</a>
+                                                            </li>
+                                                        }
+
+                                                        <li b-9ts1qywrdg="">
+                                                            <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Messages To Users"]</a>
+                                                        </li>
+
+                                                        @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2207008")?.CrMasUserSubValidationAuthorization == true)
+                                                        {
+                                                            <li b-9ts1qywrdg="">
+                                                                <a b-9ts1qywrdg="" href="apps-ecommerce-orders.html">@localizer["Offer"]</a>
+                                                            </li>
+                                                        }
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </li>
+
+
                                     </ul>
 
 
@@ -511,7 +511,7 @@
         </div>
         <div class="content-page">
             <div class="content">
-                <div class="navbar-custom">
+                <div class="navbar-custom" style="position:absolute">
                     <ul class="list-unstyled topbar-menu float-end mb-0">
                         <li class="dropdown notification-list">
                             <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="true">
@@ -808,26 +808,26 @@
                             }
                         }
                     </button>
-                    <div class="list-unstyled topbar-menu float-end mb-0" >
-                     @if (lessorCompanyContract.CrMasUserInformationLessorNavigation.CrMasLessorInformationStatus == Status.Hold)
-                    {
-                    <div class="text-danger" id="dangerMessage">@localizer["CompanyHoldedDanger"]</div>
+                    <div class="list-unstyled topbar-menu float-end mb-0" style="top: 40px;right: 620px; position: fixed;height: 6%; width:30%">
+                        @if (lessorCompanyContract.CrMasUserInformationLessorNavigation.CrMasLessorInformationStatus == Status.Hold)
+                        {
+                            <div class="text-danger" id="dangerMessage">@localizer["CompanyHoldedDanger"]</div>
 
-                    }
-                    else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.Renewed)
-                    {
-                    <div   class="text-danger" id="dangerMessage">@localizer["ContractNewDanger"]</div>
+                        }
+                        else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.Renewed)
+                        {
+                            <div class="text-danger" id="dangerMessage">@localizer["ContractNewDanger"]</div>
 
-                    }
-                    else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.Expire)
-                    {
-                    <div  class="text-danger" id="dangerMessage">@localizer["ContractExpireDanger"]</div>
+                        }
+                        else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.Expire)
+                        {
+                            <div class="text-danger" id="dangerMessage">@localizer["ContractExpireDanger"]</div>
 
-                    }
-                    else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.AboutToExpire)
-                    {
-                    <div  class="text-danger" id="dangerMessage">@localizer["ContractAboutExpireDanger"]</div>
-                    }
+                        }
+                        else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.AboutToExpire)
+                        {
+                            <div class="text-danger" id="dangerMessage">@localizer["ContractAboutExpireDanger"]</div>
+                        }
                     </div>
 
                 </div>
@@ -1077,17 +1077,17 @@
                 input.value = '';
             }
         }
-                        // auto complete off in all input
-                        //document.addEventListener("DOMContentLoaded", function () {
-                        //    // Get all input fields in the document
-                        //    var inputFields = document.querySelectorAll("input");
+                                // auto complete off in all input
+                                //document.addEventListener("DOMContentLoaded", function () {
+                                //    // Get all input fields in the document
+                                //    var inputFields = document.querySelectorAll("input");
 
-                        //    // Loop through each input field
-                        //    inputFields.forEach(function (input) {
-                        //        // Set the autocomplete attribute to "off"
-                        //        input.setAttribute("autocomplete", "off");
-                        //    });
-                        //});
+                                //    // Loop through each input field
+                                //    inputFields.forEach(function (input) {
+                                //        // Set the autocomplete attribute to "off"
+                                //        input.setAttribute("autocomplete", "off");
+                                //    });
+                                //});
     </script>
 
 </body>

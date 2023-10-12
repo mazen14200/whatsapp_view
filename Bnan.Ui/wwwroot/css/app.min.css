@@ -22358,8 +22358,8 @@ span.search-icon {
     left: 135px;
 }
 #dangerMessage {
-    margin-left: -1170px;
-    margin-top: 50px;
+   /* margin-left: -1170px;
+    margin-top: 50px;*/
     cursor: default
 }
 
