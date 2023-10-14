@@ -189,10 +189,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRenterDriver(RenterDriverVM RenterDrivermodel, IFormFile? SignatureImg, IFormFile? IDImg, IFormFile? LicenseImg)
         {
-            string foldername = $"{"images\\common\\Drivers"}";
-            string filePathImageSignature = null;
-            string filePathImageID = null;
-            string filePathImageLicense = null;
+
+          
 
             // Pass the KSA callingKeys to the view 
             var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive);
@@ -226,18 +224,20 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             string currentCulture = CultureInfo.CurrentCulture.Name;
             var RenterDrivers = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x=>x.CrCasRenterPrivateDriverInformationLessor == lessorCode);
             var existingIDriverLessor = RenterDrivers.FirstOrDefault(x => x.CrCasRenterPrivateDriverInformationId == RenterDrivermodel.CrCasRenterPrivateDriverInformationId );
-            //var existingIDriverLecinceNo = RenterDrivers.FirstOrDefault(x => x.CrCasRenterPrivateDriverInformationLicenseNo == RenterDrivermodel.CrCasRenterPrivateDriverInformationLicenseNo);
             var existingIDriverArNameLessor = RenterDrivers.FirstOrDefault(x => x.CrCasRenterPrivateDriverInformationArName == RenterDrivermodel.CrCasRenterPrivateDriverInformationArName );
             var existingIDriverEnNameLessor = RenterDrivers.FirstOrDefault(x => x.CrCasRenterPrivateDriverInformationEnName == RenterDrivermodel.CrCasRenterPrivateDriverInformationEnName );
 
             if (existingIDriverLessor != null) ModelState.AddModelError("CrCasRenterPrivateDriverInformationId", _localizer["DriverIdIsExist"]);
-            //if (existingIDriverLecinceNo != null) ModelState.AddModelError("CrCasRenterPrivateDriverInformationLicenseNo", _localizer["LicenseNoIsExist"]);
             if (existingIDriverArNameLessor != null) ModelState.AddModelError("CrCasRenterPrivateDriverInformationArName", _localizer["IsExist"]);
             if (existingIDriverEnNameLessor != null) ModelState.AddModelError("CrCasRenterPrivateDriverInformationEnName", _localizer["IsExist"]);
 
 
             if (ModelState.IsValid)
             {
+                string foldername = $"{"images\\Company"}\\{lessorCode}\\{"Drivers"}\\{RenterDrivermodel.CrCasRenterPrivateDriverInformationId}";
+                string filePathImageSignature = null;
+                string filePathImageID = null;
+                string filePathImageLicense = null;
                 if (IDImg != null)
                 {
                     string fileNameImg = RenterDrivermodel.CrCasRenterPrivateDriverInformationEnName + "_ID_" + RenterDrivermodel.CrCasRenterPrivateDriverInformationId.ToString().Substring(RenterDrivermodel.CrCasRenterPrivateDriverInformationId.ToString().Length - 3);
@@ -261,6 +261,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 var RenterDriverModel = _mapper.Map<CrCasRenterPrivateDriverInformation>(RenterDrivermodel);
                 await _renterDriver.AddRenterDriver(RenterDriverModel);
 
+               
+               
                 var (mainTask, subTask, system, currentUser) = await SetTrace("207", "2207005", "2");
                 await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "اضافة سائق", "Add Driver", mainTask.CrMasSysMainTasksCode,
                 subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
@@ -328,8 +330,6 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewData["LicenseDate"] = driver.CrCasRenterPrivateDriverInformationLicenseDate;
             ViewData["LicenseExpiry"] = driver.CrCasRenterPrivateDriverInformationLicenseExpiry;
             ViewData["BirthDate"] = driver.CrCasRenterPrivateDriverInformationBirthDate?.ToString("dd/MM/yyyy");
-
-
             // Get Lessor Code
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -342,10 +342,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(RenterDriverVM model, IFormFile? SignatureImg, IFormFile? IDImg, IFormFile? LicenseImg)
         {
-            string foldername = $"{"images\\common\\Drivers"}";
-            string filePathImageSignature = "";
-            string filePathImageID = "";
-            string filePathImageLicense = "";
+           
             var user = await _userService.GetUserByUserNameAsync(HttpContext.User.Identity.Name);
 
 
@@ -354,6 +351,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    string foldername = $"{"images\\Company"}\\{user.CrMasUserInformationLessor}\\{"Drivers"}\\{model.CrCasRenterPrivateDriverInformationId}";
+                    string filePathImageSignature = null;
+                    string filePathImageID = null;
+                    string filePathImageLicense = null;
                     if (IDImg != null)
                     {
                         string fileNameImg = model.CrCasRenterPrivateDriverInformationEnName + "_ID_" + model.CrCasRenterPrivateDriverInformationId.ToString().Substring(model.CrCasRenterPrivateDriverInformationId.ToString().Length - 3);

@@ -420,11 +420,8 @@
                     userId: userId
                 }),
                 success: function (response) {
-                    window.location.href = '@Url.Action("EmployeeSystemValiditions", "Employees", new { Area = "CAS" })';
+                    window.location.href = '@Url.Action("SuccessToast", "Employees", new { Area = "CAS" })';
                 },
-                error: function (xhr, status, error) {
-                    alert(status + xhr + error)
-                }
             });
         }
 

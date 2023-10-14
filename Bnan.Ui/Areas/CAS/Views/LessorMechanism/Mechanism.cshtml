@@ -32,7 +32,7 @@
 <div class="sub-container-form">
     <div class="collapsible">
         <form>
-           
+
             <div class="form-contain mb-2" style="margin-right: 50px; margin-top:20px">
                 <div class="mt-2">
                     <h4 style="font-size: 20px;">
@@ -44,7 +44,7 @@
                         </a>
                     </h4>
                     <div id="ContractsValiditions" style="display: none;">
-                        @foreach(var item in Model.Where(x=>x.CrCasLessorMechanismProceduresClassification=="10"))
+                        @foreach (var item in Model.Where(x => x.CrCasLessorMechanismProceduresClassification == "10"))
                         {
 
                             @if (item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresSubjectAlert == true)
@@ -66,7 +66,7 @@
                                     <ul class="list mt-2" style="font-size: 17px;">
                                         <li>
                                             <h4 class="mb-1">
-                                                <input type="checkbox" class="ContractValidition" data-id="@item.CrCasLessorMechanismProcedures" style="height: 15px;width: 30px;" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
+                                                <input type="checkbox" class="ContractValiditionCheckBox" data-id="@item.CrCasLessorMechanismProcedures" style="height: 15px;width: 30px;" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
                                                 <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresEnName</label>
                                                 <input type="text" class="form-control ContractValiditionCheckInput" data-id="@item.CrCasLessorMechanismProcedures" style="width: 65px; display: inline;" asp-for="@item.CrCasLessorMechanismDaysAlertAboutExpire" maxlength="3" />
                                             </h4>
@@ -81,7 +81,7 @@
                 <div class="mt-2">
                     <h4 style="font-size: 20px;">
                         <label for="CarsDocuments" class="mb-1">
-                            @localizer["CarsDocuments"]
+                            @localizer["CompanyContracts"]
                         </label>
                         <a class="plus-icon" onclick="showCarsDocuments()">
                             <i class="dripicons-plus"></i>
@@ -125,7 +125,7 @@
                 <div class="mt-2">
                     <h4 style="font-size: 20px;">
                         <label for="CarsFixed" class="mb-1">
-                            @localizer["CarsFixed"]
+                            @localizer["CarsDocuments"]
                         </label>
                         <a class="plus-icon" onclick="showCarsFixed()">
                             <i class="dripicons-plus"></i>
@@ -169,7 +169,7 @@
                 <div class="mt-2">
                     <h4 style="font-size: 20px;">
                         <label for="RenterAndDriver" class="mb-1">
-                            @localizer["RenterAndDriver"]
+                            @localizer["CarsFixed"]
                         </label>
                         <a class="plus-icon" onclick="showRenterAndDriver()">
                             <i class="dripicons-plus"></i>
@@ -278,9 +278,6 @@
             } else {
                 list.style.display = "block";
             }
-            // checkbox.addEventListener("change", function () {
-            //     showContractValidition();
-            // })
         }
         function showCarsDocuments() {
             var list = document.getElementById("CarsDocuments");
@@ -290,9 +287,6 @@
             } else {
                 list.style.display = "block";
             }
-            // checkbox.addEventListener("change", function () {
-            //     showCarsDocuments();
-            // })
         }
         function showCarsFixed() {
             var list = document.getElementById("CarsFixed");
@@ -302,9 +296,6 @@
             } else {
                 list.style.display = "block";
             }
-            // checkbox.addEventListener("change", function () {
-            //     showCarsFixed();
-            // })
         }
         function showRenterAndDriver() {
             var list = document.getElementById("RenterAndDriver");
@@ -314,9 +305,6 @@
             } else {
                 list.style.display = "block";
             }
-            // checkbox.addEventListener("change", function () {
-            //     showRenterAndDriver();
-            // })
         }
         function showContracts() {
             var list = document.getElementById("Contracts");
@@ -326,9 +314,6 @@
             } else {
                 list.style.display = "block";
             }
-            // checkbox.addEventListener("change", function () {
-            //     showContracts();
-            // })
         }
 
         function showAdditional() {
@@ -339,9 +324,6 @@
             } else {
                 list.style.display = "block";
             }
-            // checkbox.addEventListener("change", function () {
-            //     showAdditional();
-            // })
         }
 
     </script>
@@ -455,9 +437,10 @@
                 var valueCheckBox = checkbox.checked;
                 var idCheckBox = checkbox.getAttribute("data-id");
                 Additional.push({ id: idCheckBox, valueCheckBox: valueCheckBox });
-                    
+
             }
             console.log(Additional)
+
             $.ajax({
                 url: "@Url.Action("EditMechanism", "LessorMechanism", new { Area = "CAS" })",
                 type: 'POST',
@@ -471,10 +454,7 @@
                     Additional: Additional
                 }),
                 success: function (response) {
-                    window.location.href = '@Url.Action("EmployeeSystemValiditions", "Employees", new { Area = "CAS" })';
-                },
-                error: function (xhr, status, error) {
-                    alert(status + xhr + error)
+                    window.location.href = '@Url.Action("SuccessToast", "LessorMechanism", new { Area = "CAS" })';
                 }
             });
 
@@ -482,4 +462,23 @@
 
         }
     </script>
+  @*  <script>
+        $('.ContractValiditionCheckInput').each(function () {
+            // Store the initial value as the old value for each input element
+            $(this).data('old-value', $(this).val());
+        });
+        $('.ContractValiditionCheckInput').on('input change', function () {
+            var newValue = $(this).val();
+            var oldValue = $(this).data('old-value');
+            console.log(oldValue);
+            console.log(newValue);
+
+            if (newValue !== oldValue) {
+                console.log('Value has changed!');
+            }
+            $(this).data('old-value', newValue);
+        });
+
+       
+    </script>*@
 }

@@ -242,7 +242,6 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         await _userBranchValidity.AddUserBranchValidity(newUser.CrMasUserInformationCode, userLogin.CrMasUserInformationLessor, id, Status.Deleted);
 
                     }
-
                 }
                 // SaveTracing
                 var (mainTask, subTask, system, currentUserr) = await SetTrace("206", "2206001", "2");
@@ -255,11 +254,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     "Insert", "I", null);
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 return RedirectToAction("Employees", "Employees");
-
             }
-
-
-
             return View(model);
         }
 
@@ -383,6 +378,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 // Save Adminstrive Procedures
                 await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "234", "20", currentUser.CrMasUserInformationLessor, "100",
                     user.CrMasUserInformationCode, null, null, null, null, null, null, null, null, sAr,sEn, "U", null);
+                _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 return RedirectToAction("Employees", "Employees");
             }
             return View(user);
@@ -682,6 +678,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult SuccessToast()
+        {
+            _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("EmployeeSystemValiditions", "Employees");
         }
     }
 }
