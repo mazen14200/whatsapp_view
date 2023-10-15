@@ -36,8 +36,6 @@ namespace Bnan.Ui.ViewModels.CAS
         [Required(ErrorMessage = "requiredFiled")]
         public string? CrCasRenterPrivateDriverInformationGender { get; set; }
         public string? CrCasRenterPrivateDriverInformationKeyMobile { get; set; }
-
-        [Required(ErrorMessage = "requiredFiled")]
         public string? CrCasRenterPrivateDriverInformationMobile { get; set; }
         public string? CrCasRenterPrivateDriverInformationEmail { get; set; }
         public DateTime? CrCasRenterPrivateDriverInformationLastContract { get; set; }

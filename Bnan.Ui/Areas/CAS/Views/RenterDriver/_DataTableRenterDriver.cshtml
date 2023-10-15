@@ -14,7 +14,11 @@
                 <tr role="row">
                     <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterDriverID"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterDriverType"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterDriverName"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterDriverNationality"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterDriverLicenseNO"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterDriverLicenseType"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
             </thead>
@@ -28,10 +32,13 @@
                     @if (item.CrCasRenterPrivateDriverInformationStatus == @Status.Deleted || item.CrCasRenterPrivateDriverInformationStatus == @Status.Hold)
                     {
                         <tr onclick="location.href='@Url.Action("Edit", "RenterDriver", new { id = item.CrCasRenterPrivateDriverInformationId ,lessor= item.CrCasRenterPrivateDriverInformationLessor})'" style="cursor:pointer;color:red">
-                            <td>@no</td>
+                           <td>@no</td>
                             <td>@item.CrCasRenterPrivateDriverInformationId</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationIdtrypeNavigation.CrMasSupRenterIdtypeEnName</td>
                             <td>@item.CrCasRenterPrivateDriverInformationEnName</td>
-
+                            <td>@item.CrCasRenterPrivateDriverInformationNationalityNavigation.CrMasSupRenterNationalitiesEnName</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationLicenseNo</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationLicenseTypeNavigation.CrMasSupRenterDrivingLicenseEnName</td>
                             <td>
                                 @if (@item.CrCasRenterPrivateDriverInformationStatus == Status.Deleted)
                                 {
@@ -49,7 +56,11 @@
                         <tr onclick="location.href='@Url.Action("Edit", "RenterDriver", new { id = item.CrCasRenterPrivateDriverInformationId ,lessor= item.CrCasRenterPrivateDriverInformationLessor })'">
                             <td>@no</td>
                             <td>@item.CrCasRenterPrivateDriverInformationId</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationIdtrypeNavigation.CrMasSupRenterIdtypeEnName</td>
                             <td>@item.CrCasRenterPrivateDriverInformationEnName</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationNationalityNavigation.CrMasSupRenterNationalitiesEnName</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationLicenseNo</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationLicenseTypeNavigation.CrMasSupRenterDrivingLicenseEnName</td>
                             <td>
                                 @if (@item.CrCasRenterPrivateDriverInformationStatus == Status.Acive)
                                 {
@@ -72,7 +83,11 @@ else
                 <tr role="row">
                     <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterDriverID"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterDriverType"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterDriverName"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterDriverNationality"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterDriverLicenseNO"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterDriverLicenseType"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
             </thead>
@@ -88,7 +103,11 @@ else
                         <tr onclick="location.href='@Url.Action("Edit", "RenterDriver", new { id = item.CrCasRenterPrivateDriverInformationId ,lessor= item.CrCasRenterPrivateDriverInformationLessor})'" style="cursor:pointer;color:red">
                             <td>@no</td>
                             <td>@item.CrCasRenterPrivateDriverInformationId</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationIdtrypeNavigation.CrMasSupRenterIdtypeArName</td>
                             <td>@item.CrCasRenterPrivateDriverInformationArName</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationNationalityNavigation.CrMasSupRenterNationalitiesArName</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationLicenseNo</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationLicenseTypeNavigation.CrMasSupRenterDrivingLicenseArName</td>
                             <td>
                                 @if (@item.CrCasRenterPrivateDriverInformationStatus == Status.Deleted)
                                 {
@@ -104,9 +123,13 @@ else
                     else
                     {
                         <tr onclick="location.href='@Url.Action("Edit", "RenterDriver", new { id = item.CrCasRenterPrivateDriverInformationId,lessor= item.CrCasRenterPrivateDriverInformationLessor })'">
-                            <td>@no</td>
+                             <td>@no</td>
                             <td>@item.CrCasRenterPrivateDriverInformationId</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationIdtrypeNavigation.CrMasSupRenterIdtypeArName</td>
                             <td>@item.CrCasRenterPrivateDriverInformationArName</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationNationalityNavigation.CrMasSupRenterNationalitiesArName</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationLicenseNo</td>
+                            <td>@item.CrCasRenterPrivateDriverInformationLicenseTypeNavigation.CrMasSupRenterDrivingLicenseArName</td>
                             <td>
                                 @if (@item.CrCasRenterPrivateDriverInformationStatus == Status.Acive)
                                 {

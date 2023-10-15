@@ -66,7 +66,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
             //var RenterDriver = await _unitOfWork.CrCasRenterPrivateDriverInformation.GetAllAsync();
-            var RenterDrivers = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x => x.CrCasRenterPrivateDriverInformationStatus == "A" && x.CrCasRenterPrivateDriverInformationLessor==lessorCode).ToList();
+            var RenterDrivers = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x => x.CrCasRenterPrivateDriverInformationStatus == "A" && x.CrCasRenterPrivateDriverInformationLessor==lessorCode,
+                new[] { "CrCasRenterPrivateDriverInformationGenderNavigation", "CrCasRenterPrivateDriverInformationIdtrypeNavigation", "CrCasRenterPrivateDriverInformationLicenseTypeNavigation", "CrCasRenterPrivateDriverInformationNationalityNavigation" } ).ToList();
             return View(RenterDrivers);
         }
 
@@ -78,7 +79,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var lessorCode = userLogin.CrMasUserInformationLessor;
             if (!string.IsNullOrEmpty(status))
             {
-                var RenterDriverbyStatusAll = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x => x.CrCasRenterPrivateDriverInformationLessor == lessorCode).ToList();
+                var RenterDriverbyStatusAll = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x => x.CrCasRenterPrivateDriverInformationLessor == lessorCode,
+                new[] { "CrCasRenterPrivateDriverInformationGenderNavigation", "CrCasRenterPrivateDriverInformationIdtrypeNavigation", "CrCasRenterPrivateDriverInformationLicenseTypeNavigation", "CrCasRenterPrivateDriverInformationNationalityNavigation" }).ToList();
                 if (status == Status.All) return PartialView("_DataTableRenterDriver", RenterDriverbyStatusAll);
                  RenterDriverbyStatusAll = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(l => l.CrCasRenterPrivateDriverInformationStatus == status && l.CrCasRenterPrivateDriverInformationLessor == lessorCode).ToList();
                 return PartialView("_DataTableRenterDriver", RenterDriverbyStatusAll.Where(x=>x.CrCasRenterPrivateDriverInformationStatus==status));

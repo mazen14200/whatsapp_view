@@ -200,7 +200,7 @@
                                     <td></td>
                                 }
                             }
-                            @if (Url.Content(item.CrCasBranchDocumentsImage) == "/images/common/DefaultCar.png")
+                            @if (item.CrCasBranchDocumentsImage == "" || item.CrCasBranchDocumentsImage == null)
                             {
                                 <td> @localizer["notfound"] </td>
 
@@ -406,7 +406,7 @@ else
                                 }
                             }
 
-                            @if (Url.Content(item.CrCasBranchDocumentsImage) == "/images/common/DefaultCar.png")
+                            @if (item.CrCasBranchDocumentsImage == "" || item.CrCasBranchDocumentsImage == null)
                             {
                                 <td> @localizer["notfound"] </td>
 

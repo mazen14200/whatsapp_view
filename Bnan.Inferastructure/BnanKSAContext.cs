@@ -1265,7 +1265,7 @@ namespace Bnan.Core.Models
                     .IsFixedLength();
 
                 entity.Property(e => e.CrMasContractCompanyNumber)
-                    .HasMaxLength(20)
+                    .HasMaxLength(22)
                     .IsUnicode(false)
                     .HasColumnName("CR_Mas_Contract_Company_Number");
 

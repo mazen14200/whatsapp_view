@@ -32,42 +32,77 @@
         background-color: #f5f5f5;
         cursor: pointer;
     }
+
+    .datepicker-widget {
+        display: none;
+    }
+
+
+    .datepicker-icon i {
+        font-size: 18px;
+        color: #999;
+    }
+
+    .dateRelative {
+        position: relative;
+    }
 </style>
+@if (requestCulture.RequestCulture.UICulture.Name == "ar-EG")
+{
+    <style>
+        .datepicker-icon {
+            cursor: pointer;
+            top: 8%;
+            right: 77%;
+        }
+    </style>
+}
+
+@if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+{
+    <style>
+        .datepicker-icon {
+            position: absolute;
+            display: inline-block;
+            top: 1px;
+            left: 178px;
+        }
+    </style>
+}
+
 
 <div class="sub-container">
     <div class="container-fluid">
         <div class="row">
             @*filter*@
-            <div class="col-sm-12 col-md-9">
+            <div class="col-sm-12 col-md-1">
                 <div class="col-sm-12 col-md-4 p-0">
                     <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="CAS" asp-controller="Home" asp-action="Index">
                         <i class="mdi mdi-window-close"></i>
                     </a>
                 </div>
             </div>
+            <div class="col-sm-12 col-md-8">
+                <div class="row">
+                    <div class="col-md-3 dateRelative">
+                        <input type="text" class="form-control dateInput" id="startDate">
+                    </div>
+                    <div class="col-md-3 dateRelative">
+                        <input type="text" class="form-control dateInput" id="endDate">
+                    </div>
+                    <div class="col-md-1">
+                        <a class="btn btn-primary" onclick="GetAdminstritiveFitlerDate()">
+                            <i class="mdi mdi-search-web"></i>
+                        </a>
+                    </div>
+                </div>
 
+            </div>
             @*search And Fitler Radio Button*@
             <div class="col-sm-12 col-md-3 p-0">
                 <input class="form-control" type="search" id="top-search" style="width: 96%;" placeholder="@localizer["search"]...">
             </div>
-          @*  <div class="col-sm-12 col-md-12 mt-3" id="status-filter">
-                <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadioAll" name="customRadio" value="All" class="form-check-input">
-                    <label class="form-check-label" for="customRadioAll">@localizer["All"]</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadioActive" name="customRadio" value="A" class="form-check-input">
-                    <label class="form-check-label" for="customRadioActive">@localizer["Active"]</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadioRemoved" name="customRadio" value="D" class="form-check-input">
-                    <label class="form-check-label" for="customRadioRemoved">@localizer["Deleted"]</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadioStoped" name="customRadio" value="H" class="form-check-input">
-                    <label class="form-check-label" for="customRadioStoped">@localizer["Stoped"]</label>
-                </div>
-            </div>*@
+
         </div>
         <div class=dataTable>
             <partial name="_DataTableAdminstritiveProcedures" />
@@ -77,15 +112,77 @@
 
 @section scripts {
     @*Get AccountBank Using filter*@
-    @*<script>
+    <script>
+        $(document).ready(function () {
+            var today = new Date();
+            var startDate = new Date();
+            var EndDate = new Date();
+            startDate.setDate(today.getDate() - 30);
+
+
+            var startDates = $("startDate").val();
+            var StartformattedDate = new Date(startDates);
+
+            var EndDates = $("endDate").val();
+            var EndformattedDate = new Date(EndDates);
+
+            
+            if (!StartformattedDate || StartformattedDate === "") {
+                StartformattedDate = today; // Set date to today if it's empty or null
+            }
+            if (!EndformattedDate || EndformattedDate === "") {
+                EndformattedDate = today; // Set date to today if it's empty or null
+            }
+
+
+           
+
+            $("#startDate").datepicker({
+                dateFormat: 'yy/mm/dd',
+                defaultDate: startDate// Set the minimum date to today
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#startDate").datepicker("setDate", startDate);
+            $("#startDate").click(function () {
+                $(this).datepicker("show");
+            });
+
+            $("#endDate").datepicker({
+                dateFormat: 'yy/mm/dd',
+                defaultDate: today,// Set the minimum date to today
+                maxDate: today,
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#endDate").datepicker("setDate", today);
+            $("#endDate").click(function () {
+                $(this).datepicker("show");
+            });
+
+
+            $("#startDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+            $("#endDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+
+
+
+            $(".datepicker-icon").click(function () {
+                $(this).prevAll('input').datepicker("show");
+            });
+        })
+    </script>
+    <script>
         //get AccountBank By Status function
-        function GetSalesPointsFitler(status) {
+        function GetAdminstritiveFitlerDate() {
+
+            var startDate = $("#startDate").val();
+            var endDate = $("#endDate").val();
+
+            console.log(startDate)
+            console.log(endDate)
             $.ajax({
                 type: "GET",
                 data: {
-                    status: status
+                    startDate: startDate,
+                    EndDate: endDate,
                 },
-                url: "@Url.Action("GetSalesPointsByStatus", "SalesPoints", new { Area = "CAS" })",
+                url: "@Url.Action("AdminstritiveProceduresFilterDate", "AdminstritiveProcedures", new { Area = "CAS" })",
                 success: function (response) {
                     $(".dataTable").html(response);
                     set_basic_datatable();
@@ -93,11 +190,9 @@
             })
         }
 
-        //on Click Filter Radio Button GetAccountBankByStatus
-        $("input[name='customRadio']").on("click", function () {
-            GetSalesPointsFitler($(this).val())
-        })
-    </script>*@
+        
+    </script>
+
 }
 
 

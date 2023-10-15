@@ -170,6 +170,11 @@ namespace Bnan.Ui.Areas.Identity.Controllers
                     {
                         return RedirectToAction("Index", "Home", new { area = "BS" });
                     }
+                    else
+                    {
+                        ModelState.AddModelError("Stat", _localizer["AuthEmplpoyee"]);
+                        return View(model);
+                    }
                 }
                 if (result.IsLockedOut)
                 {

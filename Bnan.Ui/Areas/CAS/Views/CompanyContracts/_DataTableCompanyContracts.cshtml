@@ -80,7 +80,14 @@
                                     @localizer["CActive"]
                                 }
                             </td>
-                            <td onclick="window.open('@Url.Content(item.CrMasContractCompanyImage)' , '_blank');"> <i class="dripicons-document-new"></i> </td>
+                            @if (item.CrMasContractCompanyImage == "" || item.CrMasContractCompanyImage == null)
+                            {
+                                <td> @localizer["notfound"] </td>
+                            }
+                            else
+                            {
+                                <td onclick="window.open('@Url.Content(item.CrMasContractCompanyImage)' , '_blank');"> <i class="dripicons-document-new"></i> </td>
+                            }
                         </tr>
                     }
                     no++;
@@ -160,7 +167,14 @@ else
                                     @localizer["CActive"]
                                 }
                             </td>
-                            <td onclick="window.open('@Url.Content(item.CrMasContractCompanyImage)' , '_blank');"> <i class="dripicons-document-new"></i></td>
+                            @if (item.CrMasContractCompanyImage == "" || item.CrMasContractCompanyImage == null)
+                            {
+                                <td> @localizer["notfound"] </td>
+                            }
+                            else
+                            {
+                                <td onclick="window.open('@Url.Content(item.CrMasContractCompanyImage)' , '_blank');"> <i class="dripicons-document-new"></i> </td>
+                            }
                         </tr>
                     }
                     no++;

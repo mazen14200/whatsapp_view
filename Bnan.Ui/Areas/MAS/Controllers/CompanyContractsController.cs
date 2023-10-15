@@ -118,19 +118,28 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             if (SelectedOption == "Value") activiation = "2";
             if (SelectedOption == "Rate") activiation = "3";
 
-
-
-            var update = _compnayContract.UpdateCompanyContract(CompanyContractCode, DateContract, StartDateContract, EndDateContract, ContractCompanyAnnualFees, ContractCompanyTaxRate, ContractCompanyDiscountRate, activiation);
-            if (SelectedOption!= "Subscribtion" && data!=null)
+            try
             {
-                foreach (var item in data)
+                await _compnayContract.UpdateCompanyContract(CompanyContractCode, DateContract, StartDateContract, EndDateContract, ContractCompanyAnnualFees, ContractCompanyTaxRate, ContractCompanyDiscountRate, activiation);
+                if (SelectedOption != "Subscribtion" && data != null)
                 {
-                    if (item.To!=null && item.To != ""&& item.Value != null && item.Value != "")
+                    foreach (var item in data)
                     {
-                        await _compnayContract.AddCompanyContractDetailed(CompanyContractCode, item.From, item.To, item.Value);
+                        if (item.To != null && item.To != "" && item.Value != null && item.Value != "")
+                        {
+                            await _compnayContract.AddCompanyContractDetailed(CompanyContractCode, item.From, item.To, item.Value);
+                        }
                     }
                 }
+                _unitOfWork.Complete();
+
             }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+           
             // SaveTracing
             var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101003", "1");
             await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
