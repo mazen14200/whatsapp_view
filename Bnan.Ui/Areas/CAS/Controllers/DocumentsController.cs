@@ -82,6 +82,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 ViewBag.branch = BranchDocument.CrCasBranchDocuments.CrCasBranchInformationEnShortName;
                 ViewBag.type = BranchDocument.CrCasBranchDocumentsProceduresNavigation.CrMasSysProceduresEnName;
             }
+            ViewBag.date = BranchDocument.CrCasBranchDocumentsDate?.ToString("dd/MM/yyyy");
+            ViewBag.startDate = BranchDocument.CrCasBranchDocumentsStartDate?.ToString("dd/MM/yyyy");
+            ViewBag.endDate = BranchDocument.CrCasBranchDocumentsEndDate?.ToString("dd/MM/yyyy"); 
 
             var BranchDocumentVM = _mapper.Map<BranchDocumentVM>(BranchDocument);
             return View(BranchDocumentVM);

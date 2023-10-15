@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Bnan.Core.Extensions;
 using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using Bnan.Inferastructure.Extensions;
@@ -112,8 +113,43 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 }
             }
             await _unitOfWork.CompleteAsync();
+            UpdateMechanism();
             return Json(new { success = true });
         }
+        public async Task<bool> UpdateMechanism()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var lessorCode = currentUser.CrMasUserInformationLessor;
+            // Docments 
+            var Documents = _unitOfWork.CrCasBranchDocument.FindAll(x => x.CrCasBranchDocumentsLessor == lessorCode && x.CrCasBranchDocumentsStatus == Status.Acive);
+            if (Documents != null)
+            {
+                foreach (var item in Documents)
+                {
+                    var AboutToExpire =  _unitOfWork.CrCasLessorMechanism.FindAsync(l => l.CrCasLessorMechanismCode == item.CrCasBranchDocumentsLessor
+                                                                                     && l.CrCasLessorMechanismProcedures == item.CrCasBranchDocumentsProcedures
+                                                                                     && l.CrCasLessorMechanismProceduresClassification == item.CrCasBranchDocumentsProceduresClassification).Result.CrCasLessorMechanismDaysAlertAboutExpire;
+                    item.CrCasBranchDocumentsDateAboutToFinish = item.CrCasBranchDocumentsEndDate?.AddDays(-(double)AboutToExpire);
+                    _unitOfWork.CrCasBranchDocument.Update(item);
+                }
+            }
+            // CompanyContract 
+            var CompanyContracts = _unitOfWork.CrMasContractCompany.FindAll(x => x.CrMasContractCompanyLessor == lessorCode && x.CrMasContractCompanyStatus == Status.Acive);
+            if (CompanyContracts != null)
+            {
+                foreach (var item in CompanyContracts)
+                {
+                    var AboutToExpire = _unitOfWork.CrCasLessorMechanism.FindAsync(l => l.CrCasLessorMechanismCode == item.CrMasContractCompanyLessor
+                                                                                     && l.CrCasLessorMechanismProcedures == item.CrMasContractCompanyProcedures
+                                                                                     && l.CrCasLessorMechanismProceduresClassification == item.CrMasContractCompanyProceduresClassification).Result.CrCasLessorMechanismDaysAlertAboutExpire;
+                    item.CrMasContractCompanyAboutToExpire = item.CrMasContractCompanyEndDate?.AddDays(-(double)AboutToExpire);
+                    _unitOfWork.CrMasContractCompany.Update(item);
+                }
+            }
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
+
         public  IActionResult SuccessToast()
         {
            _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });

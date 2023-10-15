@@ -27,12 +27,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var today = DateTime.Today;
             var startDate = today.AddDays(-30).Date;
             var endDate = today.Date;
-
+            var lessorCode = userLogin.CrMasUserInformationLessor;
             DateTime sd = Convert.ToDateTime(startDate);
             DateTime ed = Convert.ToDateTime(endDate);
             var AdminstritiveProcedures = _unitOfWork.CrCasSysAdministrativeProcedure.FindAll(x => x.CrCasSysAdministrativeProceduresClassification != "30" && x.CrCasSysAdministrativeProceduresClassification != "40" &&
                                                                                                    x.CrCasSysAdministrativeProceduresLessor == userLogin.CrMasUserInformationLessor&&
-                                                                                                   x.CrCasSysAdministrativeProceduresDate >= sd && x.CrCasSysAdministrativeProceduresDate < ed,
+                                                                                                   x.CrCasSysAdministrativeProceduresDate >= sd && x.CrCasSysAdministrativeProceduresDate <= ed,
                                                                                                     new[] { "CrCasSysAdministrativeProceduresCodeNavigation", "CrCasSysAdministrativeProcedures", "CrCasSysAdministrativeProceduresUserInsertNavigation" })
                                                                                                    .OrderByDescending(x => x.CrCasSysAdministrativeProceduresDate).ThenByDescending(x => x.CrCasSysAdministrativeProceduresTime).ToList();
             var model = _mapper.Map<List<AdminstritiveProceduresVM>>(AdminstritiveProcedures);
@@ -54,7 +54,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (item.CrCasSysAdministrativeProceduresCode == "203")
                 {
                     // if 202 then it is Contract Company
-                    var Contract = _unitOfWork.CrMasContractCompany.Find(x => x.CrMasContractCompanyNo == item.CrCasSysAdministrativeProceduresTargeted, new[] { "CrMasContractCompanyProceduresNavigation" });
+                    var Contract = _unitOfWork.CrMasContractCompany.Find(x => x.CrMasContractCompanyNo == item.CrCasSysAdministrativeProceduresTargeted && x.CrMasContractCompanyLessor == lessorCode, new[] { "CrMasContractCompanyProceduresNavigation" });
                     if (Contract!=null)
                     {
                         item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({Contract.CrMasContractCompanyProceduresNavigation.CrMasSysProceduresArName})";
@@ -65,7 +65,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (item.CrCasSysAdministrativeProceduresCode == "204")
                 {
                     // if 204 then it is Owners
-                    var owner = _unitOfWork.CrCasOwner.Find(x => x.CrCasOwnersCode == item.CrCasSysAdministrativeProceduresTargeted);
+                    var owner = _unitOfWork.CrCasOwner.Find(x => x.CrCasOwnersCode == item.CrCasSysAdministrativeProceduresTargeted && x.CrCasOwnersLessorCode == lessorCode);
                     if (owner != null)
                     {
                         item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({owner.CrCasOwnersArName})";
@@ -76,7 +76,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (item.CrCasSysAdministrativeProceduresCode == "205")
                 {
                     // if 204 then it is Benficity
-                    var Benficity = _unitOfWork.CrCasBeneficiary.Find(x => x.CrCasBeneficiaryCode == item.CrCasSysAdministrativeProceduresTargeted);
+                    var Benficity = _unitOfWork.CrCasBeneficiary.Find(x => x.CrCasBeneficiaryCode == item.CrCasSysAdministrativeProceduresTargeted && x.CrCasBeneficiaryLessorCode == lessorCode);
                     if (Benficity != null)
                     {
                         item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({Benficity.CrCasBeneficiaryArName})";
@@ -88,7 +88,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (item.CrCasSysAdministrativeProceduresCode == "231")
                 {
                     // if 231 then it is Employee
-                    var user = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted);
+                    var user = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted && x.CrMasUserInformationLessor == lessorCode);
                     if (user != null)
                     {
                         item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({user.CrMasUserInformationArName})";
@@ -99,7 +99,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (item.CrCasSysAdministrativeProceduresCode == "232")
                 {
                     // if 231 then it is Employee
-                    var user = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted);
+                    var user = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted && x.CrMasUserInformationLessor == lessorCode);
                     if (user != null)
                     {
                         item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({user.CrMasUserInformationArName})";
@@ -110,7 +110,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (item.CrCasSysAdministrativeProceduresCode == "233")
                 {
                     // if 231 then it is Employee
-                    var user = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted);
+                    var user = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted && x.CrMasUserInformationLessor == lessorCode);
                     if (user != null)
                     {
                         item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({user.CrMasUserInformationArName})";
@@ -131,8 +131,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 }
                 if (item.CrCasSysAdministrativeProceduresCode == "246")
                 {
-                    // if 231 then it is Driver
-                    var Driver = _unitOfWork.CrCasRenterPrivateDriverInformation.Find(x => x.CrCasRenterPrivateDriverInformationId == item.CrCasSysAdministrativeProceduresTargeted);
+                    // if 246 then it is Driver
+                    var Driver = _unitOfWork.CrCasRenterPrivateDriverInformation.Find(x => x.CrCasRenterPrivateDriverInformationId == item.CrCasSysAdministrativeProceduresTargeted&&x.CrCasRenterPrivateDriverInformationLessor== lessorCode);
                     if (Driver != null)
                     {
                         item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({Driver.CrCasRenterPrivateDriverInformationArName})";
@@ -144,7 +144,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (item.CrCasSysAdministrativeProceduresCode == "243")
                 {
                     // if 231 then it is Bank
-                    var Bank = _unitOfWork.CrCasAccountBank.Find(x => x.CrCasAccountBankCode == item.CrCasSysAdministrativeProceduresTargeted);
+                    var Bank = _unitOfWork.CrCasAccountBank.Find(x => x.CrCasAccountBankCode == item.CrCasSysAdministrativeProceduresTargeted && x.CrCasAccountBankLessor == lessorCode);
                     if (Bank != null)
                     {
                         item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({Bank.CrCasAccountBankArName})";
@@ -155,7 +155,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (item.CrCasSysAdministrativeProceduresCode == "244")
                 {
                     // if 244 then it is SalesPoint
-                    var SalesPoint = _unitOfWork.CrCasAccountSalesPoint.Find(x => x.CrCasAccountSalesPointCode.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim());
+                    var SalesPoint = _unitOfWork.CrCasAccountSalesPoint.Find(x => x.CrCasAccountSalesPointCode.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasAccountSalesPointLessor == lessorCode);
                     if (SalesPoint != null)
                     {
                         item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({SalesPoint.CrCasAccountSalesPointArName})";
@@ -176,7 +176,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             DateTime ed = Convert.ToDateTime(endDate);
             var AdminstritiveProcedures = _unitOfWork.CrCasSysAdministrativeProcedure.FindAll(x => x.CrCasSysAdministrativeProceduresClassification != "30" && x.CrCasSysAdministrativeProceduresClassification != "40" &&
                                                                                                    x.CrCasSysAdministrativeProceduresLessor == userLogin.CrMasUserInformationLessor &&
-                                                                                                   x.CrCasSysAdministrativeProceduresDate>=sd&&x.CrCasSysAdministrativeProceduresDate<ed,
+                                                                                                   x.CrCasSysAdministrativeProceduresDate>=sd&&x.CrCasSysAdministrativeProceduresDate<=ed,
                                                                                                     new[] { "CrCasSysAdministrativeProceduresCodeNavigation", "CrCasSysAdministrativeProcedures", "CrCasSysAdministrativeProceduresUserInsertNavigation" })
                                                                                                    .OrderByDescending(x => x.CrCasSysAdministrativeProceduresDate).ThenByDescending(x => x.CrCasSysAdministrativeProceduresTime).ToList();
             var model = _mapper.Map<List<AdminstritiveProceduresVM>>(AdminstritiveProcedures);

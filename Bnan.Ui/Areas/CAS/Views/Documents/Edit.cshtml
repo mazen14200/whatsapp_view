@@ -294,17 +294,17 @@
                 @*Date of Documnet*@
                 <div class="row mt-2">
                     <div class="col-md-1 formlabel">
-                        <label class="form-label" asp-for="CrCasBranchDocumentsDate">@localizer["Date"]</label>
+                        <label class="form-label" >@localizer["Date"]</label>
                     </div>
-                    <div class="col-md-2 col-8">
-                        <input type="text" class="form-control" asp-for="CrCasBranchDocumentsDate" readonly>
+                    <div class="col-md-2 col-11 ">
+                        <input type="text" class="form-control" value="@ViewBag.date" readonly>
                     </div>
                 </div>
 
                 @*Start and End Date*@
                 <div class="row mt-2">
                     <div class="col-md-1 formlabel">
-                        <label class="form-label" asp-for="CrCasBranchDocumentsStartDate">@localizer["StartDate"]</label>
+                        <label class="form-label" value="@ViewBag.startDate">@localizer["StartDate"]</label>
                     </div>
                     <div class="col-md-2 col-11 ">
                         <input type="text" class="form-control" asp-for="CrCasBranchDocumentsStartDate" readonly>
@@ -314,7 +314,7 @@
                         <label class="form-label" for="LessorDirNameEn">@localizer["EndDate"]</label>
                     </div>
                     <div class="col-md-2 col-11">
-                        <input type="text" class="form-control" asp-for="CrCasBranchDocumentsEndDate" readonly>
+                        <input type="text" class="form-control" value="@ViewBag.endDate" readonly>
                     </div>
                 </div>
 
@@ -541,7 +541,7 @@
 
             var EndDates = $("CrCasBranchDocumentsEndDate").val();
             var EndformattedDate = new Date(EndDates);
-
+            console.log(EndformattedDate);
             if (!formattedDate || formattedDate === "") {
                 formattedDate = today; // Set date to today if it's empty or null
             }
