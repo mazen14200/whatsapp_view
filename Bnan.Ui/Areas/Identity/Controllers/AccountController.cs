@@ -3,6 +3,7 @@ using Bnan.Core.Extensions;
 using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using Bnan.Inferastructure;
+using Bnan.Inferastructure.Extensions;
 using Bnan.Inferastructure.Repository;
 using Bnan.Ui.Areas.Base.Controllers;
 using Bnan.Ui.Areas.CAS.Controllers;
@@ -15,31 +16,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using static StackExchange.Redis.Role;
 
 namespace Bnan.Ui.Areas.Identity.Controllers
 {
 
     [Area("Identity")]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
         private readonly IStringLocalizer<AccountController> _localizer;
-        private readonly UserManager<CrMasUserInformation> _userManager;
         private readonly SignInManager<CrMasUserInformation> _signInManager;
-        private readonly IUnitOfWork _unitOfWork;
 
 
-        public AccountController(IAuthService authService, IUserService userService, UserManager<CrMasUserInformation> userManager, SignInManager<CrMasUserInformation> signInManager, IStringLocalizer<AccountController> localizer, IUnitOfWork unitOfWork)
+        public AccountController(IAuthService authService, IUserService userService, UserManager<CrMasUserInformation> userManager, SignInManager<CrMasUserInformation> signInManager, IStringLocalizer<AccountController> localizer, IUnitOfWork unitOfWork, IMapper mapper) : base(userManager, unitOfWork, mapper)
         {
             _authService = authService;
             _userService = userService;
-            _userManager = userManager;
             _signInManager = signInManager;
             _localizer = localizer;
-            _unitOfWork = unitOfWork;
         }
-
 
         public async Task<IActionResult> Login()
         {
@@ -211,8 +208,12 @@ namespace Bnan.Ui.Areas.Identity.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult Systems()
+        public async Task< IActionResult> Systems()
         {
+            var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
+
+            await ViewData.SetPageTitleAsync("Systems", "", "", "", "", user.CrMasUserInformationEnName);
+
             return View();
         }
 

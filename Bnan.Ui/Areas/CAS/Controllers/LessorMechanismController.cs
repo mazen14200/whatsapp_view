@@ -146,6 +146,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     _unitOfWork.CrMasContractCompany.Update(item);
                 }
             }
+
             await _unitOfWork.CompleteAsync();
             return true;
         }
