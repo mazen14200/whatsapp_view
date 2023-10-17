@@ -38,7 +38,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             var UserValidation = await CheckUserSubValidation("1101002");
             if (UserValidation == false) return RedirectToAction("Index", "Home", new { area = "MAS" });
 
-            var Lessors = _unitOfWork.CrMasLessorInformation.FindAll(l => l.CrMasLessorInformationCode != "0000" && l.CrMasLessorInformationStatus == Status.Acive);
+            var Lessors = _unitOfWork.CrMasLessorInformation.FindAll(l => l.CrMasLessorInformationCode != "0000" && l.CrMasLessorInformationStatus == Status.Active);
             return View(Lessors);
         }
 

@@ -103,7 +103,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             //To Set Title;
             var titles = await setTitle("105", "1105001", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "اضافة", "Create", titles[3]);
-            var callingKeys=_unitOfWork.CrMasSysCallingKeys.FindAll(x=>x.CrMasSysCallingKeysStatus==Status.Acive);
+            var callingKeys=_unitOfWork.CrMasSysCallingKeys.FindAll(x=>x.CrMasSysCallingKeysStatus==Status.Active);
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList; // Pass the callingKeys to the view
 
@@ -258,11 +258,11 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                         sEn = "Remove Employee";
                         user.CrMasUserInformationStatus = Status.Deleted;
                     }
-                    else if (status == Status.Acive)
+                    else if (status == Status.Active)
                     {
                         sAr = "استرجاع موظف";
                         sEn = "Retrive Employee";
-                        user.CrMasUserInformationStatus = Status.Acive;
+                        user.CrMasUserInformationStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();
@@ -302,7 +302,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             // Exclude the current user from the list
             var usersByLessor = await _userService.GetAllUsersByLessor(userLessor.CrMasUserInformationLessor);
 
-            return View(usersByLessor.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode && x.CrMasUserInformationStatus == Status.Acive).ToList());
+            return View(usersByLessor.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode && x.CrMasUserInformationStatus == Status.Active).ToList());
         }
 
 
@@ -329,14 +329,14 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
             RegisterViewModel viewModel = new RegisterViewModel
             {
-                CrMasSysMainTasks = (List<CrMasSysMainTask>)_unitOfWork.CrMasSysMainTasks.FindAll(x=>x.CrMasSysMainTasksStatus==Status.Acive),
+                CrMasSysMainTasks = (List<CrMasSysMainTask>)_unitOfWork.CrMasSysMainTasks.FindAll(x=>x.CrMasSysMainTasksStatus==Status.Active),
                 CrMasUserMainValidations = (List<CrMasUserMainValidation>)mainValidition,
 
                 CrMasUserInformationCode= user.CrMasUserInformationCode,
                 CrMasUserInformationArName= user.CrMasUserInformationArName,
                 CrMasUserInformationEnName = user.CrMasUserInformationEnName,
 
-                CrMasSysSubTasks =(List<CrMasSysSubTask>)_unitOfWork.CrMasSysSubTasks.FindAll(x=>x.CrMasSysSubTasksStatus== Status.Acive),
+                CrMasSysSubTasks =(List<CrMasSysSubTask>)_unitOfWork.CrMasSysSubTasks.FindAll(x=>x.CrMasSysSubTasksStatus== Status.Active),
                 CrMasUserSubValidations= (List<CrMasUserSubValidation>)subValition,
                 CrMasSysProceduresTasks = (List<CrMasSysProceduresTask>)procedureTasks,
                 ProceduresValidations = (List<CrMasUserProceduresValidation>)procedureValidition,
@@ -406,7 +406,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             var titles = await setTitle("105", "1105001", "1");
             await ViewData.SetPageTitleAsync(titles[0],"", titles[2], "تعديل", "Edit", titles[3]);
             var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive);
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active);
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList; // Pass the callingKeys to the view
             var crMasUserInformation = _mapper.Map<RegisterViewModel>(user);

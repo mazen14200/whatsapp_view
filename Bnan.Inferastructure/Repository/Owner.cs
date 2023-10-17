@@ -27,7 +27,7 @@ namespace Bnan.Inferastructure.Repository
                 CrCasOwnersSector = "2",
                 CrCasOwnersArName = lessor.CrMasLessorInformationArLongName,
                 CrCasOwnersEnName = lessor.CrMasLessorInformationEnLongName,
-                CrCasOwnersStatus = Status.Acive
+                CrCasOwnersStatus = Status.Active
             };
             await _unitOfWork.CrCasOwner.AddAsync(lessorOwner);
             return true;
@@ -43,7 +43,7 @@ namespace Bnan.Inferastructure.Repository
                 CrCasOwnersLessorCode = model.CrCasOwnersLessorCode,
                 CrCasOwnersArName = model.CrCasOwnersArName,
                 CrCasOwnersEnName=model.CrCasOwnersEnName,
-                CrCasOwnersStatus=Status.Acive,
+                CrCasOwnersStatus=Status.Active,
                 CrCasOwnersSector = "2",
                 CrCasOwnersReasons= model.CrCasOwnersReasons
             };

@@ -50,7 +50,7 @@ namespace Bnan.Inferastructure.Repository
                     CrCasRenterPrivateDriverInformationEvaluationTotal= 0,
                     CrCasRenterPrivateDriverInformationTraveledDistance=0,
                     CrCasRenterPrivateDriverInformationEvaluationValue= 0,
-                    CrCasRenterPrivateDriverInformationStatus=Status.Acive
+                    CrCasRenterPrivateDriverInformationStatus=Status.Active
                 };
                 await _unitOfWork.CrCasRenterPrivateDriverInformation.AddAsync(crCasRenterPrivateDriverInformation);
                 await _unitOfWork.CompleteAsync();

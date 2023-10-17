@@ -56,8 +56,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             if (UserValidation == false) return RedirectToAction("Index", "Home", new { area = "CAS" });
             // get all contracts bnan of companies and show it
             var companyContractBnan = _unitOfWork.CrMasContractCompany.FindAll(x => 
-                                                                                    x.CrMasContractCompanyLessorNavigation.CrMasLessorInformationStatus == Status.Acive &&
-                                                                                    (x.CrMasContractCompanyStatus == Status.Renewed || x.CrMasContractCompanyStatus==Status.Acive)&&
+                                                                                    x.CrMasContractCompanyLessorNavigation.CrMasLessorInformationStatus == Status.Active &&
+                                                                                    (x.CrMasContractCompanyStatus == Status.Renewed || x.CrMasContractCompanyStatus==Status.Active)&&
                                                                                     x.CrMasContractCompanyLessor== userLessor.CrMasUserInformationLessor
                                                                                     , new[] { "CrMasContractCompanyLessorNavigation", "CrMasContractCompanyProceduresNavigation" }).ToList();
             return View(companyContractBnan);
@@ -74,13 +74,13 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (status == Status.All)
                 {
                     var companyContractsAll = _unitOfWork.CrMasContractCompany.FindAll(l => 
-                                                                                            l.CrMasContractCompanyLessorNavigation.CrMasLessorInformationStatus == Status.Acive &&
+                                                                                            l.CrMasContractCompanyLessorNavigation.CrMasLessorInformationStatus == Status.Active &&
                                                                                             l.CrMasContractCompanyLessor== user.CrMasUserInformationLessor
                                                                                             , new[] { "CrMasContractCompanyLessorNavigation", "CrMasContractCompanyProceduresNavigation" });
                     return PartialView("_DataTableCompanyContracts", companyContractsAll);
                 }
                 var companyContractsbyStatus = _unitOfWork.CrMasContractCompany.FindAll(l => l.CrMasContractCompanyStatus == status &&
-                                                                                             l.CrMasContractCompanyLessorNavigation.CrMasLessorInformationStatus == Status.Acive &&
+                                                                                             l.CrMasContractCompanyLessorNavigation.CrMasLessorInformationStatus == Status.Active &&
                                                                                              l.CrMasContractCompanyLessor == user.CrMasUserInformationLessor
                                                                                              , new[] { "CrMasContractCompanyLessorNavigation", "CrMasContractCompanyProceduresNavigation" }).ToList();
                 return PartialView("_DataTableCompanyContracts", companyContractsbyStatus);

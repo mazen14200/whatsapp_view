@@ -868,7 +868,29 @@
   "AdministrativeProcedure Hint": "The page enables you to view and search for all administrative procedures that took place during the specified period",
   "Target": "Target",
   "Operation": "Type",
-  "UserInsert": "User Insert"
+  "UserInsert": "User Insert",
+  // Cars 
+  "Cars Data": "Cars",
+  "Cars Hint": "The page allows you to display, add, and modify Cars information.",
+  "SerialNumber": "Serial Number",
+  "Add Car": "Add Car",
+  "Rented": "Rented",
+  "Maintaince": "Maintaince",
+  "ForSale": "For Sale",
+  "Sold": "Sold",
+  "Add Car Data": "Add Car",
+  "Add Car Hint": "The page allows you to Add Car information.",
+  "StructureNo": "Structure Number",
+  "CVTtype": "CVT Type",
+  "BoardNumber": "Board Number",
+  "MainColor": "Main Color",
+  "SecondryColor": "Secondry Color",
+  "MattressColor": "Mattress Color",
+  "FloorColor": "Floor Color",
+  "JoinedFleetDate": "Joined Fleet Date",
+  "CurrentMeter": "Current Meter"
+
+
 }
 
 

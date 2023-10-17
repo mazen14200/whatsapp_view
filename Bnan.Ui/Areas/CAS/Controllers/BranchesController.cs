@@ -101,7 +101,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
             // Pass the KSA callingKeys to the view 
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive && x.CrMasSysCallingKeysNo == "966");
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active && x.CrMasSysCallingKeysNo == "966");
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList;
 
@@ -171,7 +171,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
 
             // Pass the KSA callingKeys to the view 
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive && x.CrMasSysCallingKeysNo == "966");
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active && x.CrMasSysCallingKeysNo == "966");
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList;
             var lessornumber = user.CrMasUserInformationLessorNavigation.CrMasLessorInformationCode;
@@ -197,7 +197,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             /*            var IsValidCity = _unitOfWork.CrMasSupPostCity.FindAll(l => l.CrMasSupPostCityConcatenateArName == branchVM.BranchPostVM.CrCasBranchPostCity || l.CrMasSupPostCityConcatenateEnName == branchVM.BranchPostVM.CrCasBranchPostCity).FirstOrDefault();
             */
             // Pass the KSA callingKeys to the view 
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive && x.CrMasSysCallingKeysNo == "966");
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active && x.CrMasSysCallingKeysNo == "966");
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList;
             var lessor = await _UserService.GetUserLessor(User);
@@ -273,7 +273,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewBag.no = "0";
 
             // Pass the KSA callingKeys to the view 
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive && x.CrMasSysCallingKeysNo == "966");
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active && x.CrMasSysCallingKeysNo == "966");
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList;
 
@@ -325,13 +325,13 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                             foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Deleted;
 
                     }
-                    else if (status == Status.Acive)
+                    else if (status == Status.Active)
                     {
                         sAr = "استرجاع فرع";
                         sEn = "Retrive Branch";
-                        branch.CrCasBranchInformationStatus = Status.Acive;
-                        foreach (var doc in docs) doc.CrCasBranchDocumentsBranchStatus = Status.Acive;
-                        foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Acive;
+                        branch.CrCasBranchInformationStatus = Status.Active;
+                        foreach (var doc in docs) doc.CrCasBranchDocumentsBranchStatus = Status.Active;
+                        foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Active;
 
                     }
 

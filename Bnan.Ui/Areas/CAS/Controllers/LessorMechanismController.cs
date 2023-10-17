@@ -121,7 +121,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
             var lessorCode = currentUser.CrMasUserInformationLessor;
             // Docments 
-            var Documents = _unitOfWork.CrCasBranchDocument.FindAll(x => x.CrCasBranchDocumentsLessor == lessorCode && x.CrCasBranchDocumentsStatus == Status.Acive);
+            var Documents = _unitOfWork.CrCasBranchDocument.FindAll(x => x.CrCasBranchDocumentsLessor == lessorCode && x.CrCasBranchDocumentsStatus == Status.Active);
             if (Documents != null)
             {
                 foreach (var item in Documents)
@@ -134,7 +134,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 }
             }
             // CompanyContract 
-            var CompanyContracts = _unitOfWork.CrMasContractCompany.FindAll(x => x.CrMasContractCompanyLessor == lessorCode && x.CrMasContractCompanyStatus == Status.Acive);
+            var CompanyContracts = _unitOfWork.CrMasContractCompany.FindAll(x => x.CrMasContractCompanyLessor == lessorCode && x.CrMasContractCompanyStatus == Status.Active);
             if (CompanyContracts != null)
             {
                 foreach (var item in CompanyContracts)

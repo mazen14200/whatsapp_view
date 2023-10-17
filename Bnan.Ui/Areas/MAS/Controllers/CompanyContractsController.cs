@@ -39,7 +39,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             if (UserValidation == false) return RedirectToAction("Index", "Home", new { area = "MAS" });
             // get all contracts bnan of companies and show it
             var companyContractBnan = _unitOfWork.CrMasContractCompany.FindAll(x => x.CrMasContractCompanyProcedures == "112" &&
-                                                                                    x.CrMasContractCompanyLessorNavigation.CrMasLessorInformationStatus == Status.Acive, new[] { "CrMasContractCompanyLessorNavigation" }).ToList();
+                                                                                    x.CrMasContractCompanyLessorNavigation.CrMasLessorInformationStatus == Status.Active, new[] { "CrMasContractCompanyLessorNavigation" }).ToList();
             return View(companyContractBnan);
         }
 
@@ -52,11 +52,11 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 if (status == Status.All)
                 {
                     var companyContractsAll = _unitOfWork.CrMasContractCompany.FindAll(l => l.CrMasContractCompanyProcedures == "112" &&
-                                                                                            l.CrMasContractCompanyLessorNavigation.CrMasLessorInformationStatus == Status.Acive, new[] { "CrMasContractCompanyLessorNavigation" });
+                                                                                            l.CrMasContractCompanyLessorNavigation.CrMasLessorInformationStatus == Status.Active, new[] { "CrMasContractCompanyLessorNavigation" });
                     return PartialView("_DataTableCompanyContracts", companyContractsAll);
                 }
                 var companyContractsbyStatus = _unitOfWork.CrMasContractCompany.FindAll(l => l.CrMasContractCompanyStatus == status && l.CrMasContractCompanyProcedures == "112" &&
-                                                                                             l.CrMasContractCompanyLessorNavigation.CrMasLessorInformationStatus == Status.Acive
+                                                                                             l.CrMasContractCompanyLessorNavigation.CrMasLessorInformationStatus == Status.Active
                                                                                              , new[] { "CrMasContractCompanyLessorNavigation" }).ToList();
                 return PartialView("_DataTableCompanyContracts", companyContractsbyStatus);
             }

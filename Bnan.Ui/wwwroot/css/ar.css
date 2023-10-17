@@ -320,3 +320,21 @@ span.search-icon {
 #pass {
     margin-left: 30px;
 }
+.colorMarginCar {
+    width: 100px;
+    margin-right: -25px;
+}
+.colorMarginCar2 {
+    width: 100px;
+    margin-right: 0;
+}
+.colSecondaryColor {
+    margin-right: -55px;
+}
+.colMattressColor {
+    margin-right: 2%
+}
+
+.colFloorColor {
+    margin-right:-4.5%
+}

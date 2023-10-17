@@ -257,7 +257,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     {
                         sAr = "استرجاع";
                         sEn = "Retrive";
-                        CarDistribution.CrMasSupCarDistributionStatus = Status.Acive;
+                        CarDistribution.CrMasSupCarDistributionStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();

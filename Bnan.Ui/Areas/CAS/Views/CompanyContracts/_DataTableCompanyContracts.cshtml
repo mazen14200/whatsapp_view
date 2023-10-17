@@ -75,7 +75,7 @@
                             <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@item.CrMasContractCompanyStartDate?.ToString("dd/MM/yyyy")</td>
                             <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@item.CrMasContractCompanyEndDate?.ToString("dd/MM/yyyy")</td>
                             <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">
-                                @if (@item.CrMasContractCompanyStatus == @Status.Acive)
+                                @if (@item.CrMasContractCompanyStatus == @Status.Active)
                                 {
                                     @localizer["CActive"]
                                 }
@@ -162,7 +162,7 @@ else
                             <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@item.CrMasContractCompanyStartDate?.ToString("dd/MM/yyyy")</td>
                             <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@item.CrMasContractCompanyEndDate?.ToString("dd/MM/yyyy")</td>
                             <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">
-                                @if (@item.CrMasContractCompanyStatus == @Status.Acive)
+                                @if (@item.CrMasContractCompanyStatus == @Status.Active)
                                 {
                                     @localizer["CActive"]
                                 }

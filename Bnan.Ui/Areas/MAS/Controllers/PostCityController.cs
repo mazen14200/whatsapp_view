@@ -354,7 +354,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     {
                         sAr = "استرجاع";
                         sEn = "PostCity";
-                        PostCity.CrMasSupPostCityStatus = Status.Acive;
+                        PostCity.CrMasSupPostCityStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();

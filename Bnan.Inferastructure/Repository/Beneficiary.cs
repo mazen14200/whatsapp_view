@@ -28,7 +28,7 @@ namespace Bnan.Inferastructure.Repository
                 CrCasBeneficiarySector = "2",
                 CrCasBeneficiaryArName = lessor.CrMasLessorInformationArLongName,
                 CrCasBeneficiaryEnName = lessor.CrMasLessorInformationEnLongName,
-                CrCasBeneficiaryStatus = Status.Acive
+                CrCasBeneficiaryStatus = Status.Active
             };
             await _unitOfWork.CrCasBeneficiary.AddAsync(lessorBeneficiary);
             return true;

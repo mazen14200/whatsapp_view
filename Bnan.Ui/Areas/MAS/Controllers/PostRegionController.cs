@@ -262,7 +262,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     {
                         sAr = "استرجاع";
                         sEn = "PostRegion";
-                        PostRegion.CrMasSupPostRegionsStatus = Status.Acive;
+                        PostRegion.CrMasSupPostRegionsStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();

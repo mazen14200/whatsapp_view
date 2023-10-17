@@ -169,7 +169,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     {
                         sAr = "استرجاع";
                         sEn = "Retrive";
-                        Payment.CrMasSupAccountPaymentMethodStatus = Status.Acive;
+                        Payment.CrMasSupAccountPaymentMethodStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();

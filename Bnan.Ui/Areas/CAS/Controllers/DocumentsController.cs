@@ -115,7 +115,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
                     branchDocument.CrCasBranchDocumentsImage = null;
                 }
-                branchDocument.CrCasBranchDocumentsStatus = Status.Acive;
+                branchDocument.CrCasBranchDocumentsStatus = Status.Active;
                 await _BranchDocument.UpdateBranchDocument(branchDocument);
 
                 //SaveTracing

@@ -306,7 +306,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 {
                     sAr = "استرجاع";
                     sEn = "Retrive";
-                    Contract.CrMasSupContractOptionsStatus = Status.Acive;
+                    Contract.CrMasSupContractOptionsStatus = Status.Active;
                 }
 
                 await _unitOfWork.CompleteAsync();

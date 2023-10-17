@@ -856,5 +856,25 @@
   "AdministrativeProcedure Hint": "تمكنك الصفحة من الاطلاع و البحث عن جميع الإجراءات الإدارية التي تمت خلال الفترة المحددة",
   "Target": "الاجراء",
   "Operation": "نوع الاجراء",
-  "UserInsert": "منقذ العملية"
+  "UserInsert": "منقذ العملية",
+  // Cars 
+  "Cars Data": "السيارات",
+  "Cars Hint": ".تمكنك الصفحة من البحث و اضافة و تعديل بيانات السيارات",
+  "SerialNumber": "الرقم التسلسلي",
+  "Add Car": "اضافة سيارة",
+  "Rented": "مؤجرة",
+  "Maintaince": "صيانة",
+  "ForSale": "للبيع",
+  "Sold": "مباعه",
+  "Add Car Data": "اضافة سيارة",
+  "Add Car Hint": "تمكنك هذه الصفحة من اضافة بيانات سيارة",
+  "StructureNo": "رقم الهيكل",
+  "CVTtype": "نوع الناقل",
+  "BoardNumber": "رقم اللوحة",
+  "MainColor": "اللون الاساسي",
+  "SecondryColor": "اللون الثانوي",
+  "MattressColor": "لون المرتبة",
+  "FloorColor": "لون الارضية",
+  "CurrentMeter": "القراءة الحالية",
+  "JoinedFleetDate": "تاريخ دخولها"
 }

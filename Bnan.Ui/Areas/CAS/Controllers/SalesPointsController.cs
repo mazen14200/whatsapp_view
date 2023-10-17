@@ -45,7 +45,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("207", "2207004", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var salesPointByLessor = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == currentUser.CrMasUserInformationLessor && x.CrCasAccountSalesPointBankStatus == Status.Acive && x.CrCasAccountSalesPointBank != "00",
+            var salesPointByLessor = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == currentUser.CrMasUserInformationLessor && x.CrCasAccountSalesPointBankStatus == Status.Active && x.CrCasAccountSalesPointBank != "00",
                 new[] { "CrCasAccountSalesPointAccountBankNavigation", "CrCasAccountSalesPointBankNavigation", "CrCasAccountSalesPointNavigation" });
 
             return View(salesPointByLessor);
@@ -81,10 +81,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             //To Set Title;
             var titles = await setTitle("207", "2207004", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "اضافة", "Create", titles[3]);
-            var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationStatus == Status.Acive && x.CrCasBranchInformationLessor == currentUser.CrMasUserInformationLessor).ToList();
+            var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationStatus == Status.Active && x.CrCasBranchInformationLessor == currentUser.CrMasUserInformationLessor).ToList();
             ViewData["BranchesAr"] = branches.Select(x => new SelectListItem { Value = x.CrCasBranchInformationCode.ToString(), Text = x.CrCasBranchInformationArShortName }).ToList();
             ViewData["BranchesEn"] = branches.Select(x => new SelectListItem { Value = x.CrCasBranchInformationCode.ToString(), Text = x.CrCasBranchInformationEnShortName }).ToList();
-            var accountBanks = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankStatus == Status.Acive && x.CrCasAccountBankLessor == currentUser.CrMasUserInformationLessor && x.CrCasAccountBankNo != "00").ToList();
+            var accountBanks = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankStatus == Status.Active && x.CrCasAccountBankLessor == currentUser.CrMasUserInformationLessor && x.CrCasAccountBankNo != "00").ToList();
             ViewData["AccountBanksAr"] = accountBanks.Select(x => new SelectListItem { Value = x.CrCasAccountBankCode.ToString(), Text = x.CrCasAccountBankArName }).ToList();
             ViewData["AccountBanksEn"] = accountBanks.Select(x => new SelectListItem { Value = x.CrCasAccountBankCode.ToString(), Text = x.CrCasAccountBankEnName }).ToList();
 
@@ -142,10 +142,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 return RedirectToAction("SalesPoints", "SalesPoints");
             }
 
-            var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationStatus == Status.Acive && x.CrCasBranchInformationLessor == currentUser.CrMasUserInformationLessor).ToList();
+            var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationStatus == Status.Active && x.CrCasBranchInformationLessor == currentUser.CrMasUserInformationLessor).ToList();
             ViewData["BranchesAr"] = branches.Select(x => new SelectListItem { Value = x.CrCasBranchInformationCode.ToString(), Text = x.CrCasBranchInformationArShortName }).ToList();
             ViewData["BranchesEn"] = branches.Select(x => new SelectListItem { Value = x.CrCasBranchInformationCode.ToString(), Text = x.CrCasBranchInformationEnShortName }).ToList();
-            var accountBanks = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankStatus == Status.Acive && x.CrCasAccountBankLessor == currentUser.CrMasUserInformationLessor && x.CrCasAccountBankNo != "00").ToList();
+            var accountBanks = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankStatus == Status.Active && x.CrCasAccountBankLessor == currentUser.CrMasUserInformationLessor && x.CrCasAccountBankNo != "00").ToList();
             ViewData["AccountBanksAr"] = accountBanks.Select(x => new SelectListItem { Value = x.CrCasAccountBankCode.ToString(), Text = x.CrCasAccountBankArName }).ToList();
             ViewData["AccountBanksEn"] = accountBanks.Select(x => new SelectListItem { Value = x.CrCasAccountBankCode.ToString(), Text = x.CrCasAccountBankEnName }).ToList();
             return View(salesPointsVM);
@@ -170,7 +170,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 ModelState.AddModelError("Exist", "SomeThing Wrong is happened");
                 return View("Index");
             }
-            var SalesPointData = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointStatus == Status.Acive && x.CrCasAccountSalesPointCode == salesPoint.CrCasAccountSalesPointCode);
+            var SalesPointData = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointStatus == Status.Active && x.CrCasAccountSalesPointCode == salesPoint.CrCasAccountSalesPointCode);
             var model = _mapper.Map<SalesPointsVM>(salesPoint);
 
             return View(model);
@@ -238,7 +238,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     {
                         sAr = "استرجاع";
                         sEn = "Retrieve";
-                        salesPoint.CrCasAccountSalesPointStatus = Status.Acive;
+                        salesPoint.CrCasAccountSalesPointStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();

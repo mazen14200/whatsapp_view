@@ -69,7 +69,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             {
                 if (crMasSysProcedureVM != null)
                 {
-                    crMasSysProcedureVM.CrMasSysProceduresStatus = Status.Acive;
+                    crMasSysProcedureVM.CrMasSysProceduresStatus = Status.Active;
                     var LessorVMTlessor = _mapper.Map<CrMasSysProcedure>(crMasSysProcedureVM);
 
                     await _unitOfWork.CrMasSysProcedure.AddAsync(LessorVMTlessor);

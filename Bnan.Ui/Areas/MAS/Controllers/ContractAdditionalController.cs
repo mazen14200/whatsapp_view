@@ -312,7 +312,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 {
                     sAr = "استرجاع";
                     sEn = "Retrive";
-                    Contract.CrMasSupContractAdditionalStatus = Status.Acive;
+                    Contract.CrMasSupContractAdditionalStatus = Status.Active;
                 }
 
                 await _unitOfWork.CompleteAsync();

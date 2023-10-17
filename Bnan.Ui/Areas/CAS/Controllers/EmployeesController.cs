@@ -109,12 +109,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             //To Set Title;
             var titles = await setTitle("206", "2206001", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "اضافة", "Create", titles[3]);
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive);
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active);
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList; // Pass the callingKeys to the view
             var currentUser = await _userManager.GetUserAsync(User);
             var lastUser = _userManager.Users.ToList().LastOrDefault(x => x.CrMasUserInformationLessor == currentUser.CrMasUserInformationLessor);
-            ViewBag.Branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == currentUser.CrMasUserInformationLessor&&x.CrCasBranchInformationStatus==Status.Acive);
+            ViewBag.Branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == currentUser.CrMasUserInformationLessor&&x.CrCasBranchInformationStatus==Status.Active);
 
             return View();
         }
@@ -124,7 +124,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         public async Task<IActionResult> AddEmployee(RegisterViewModel model, IFormFile? UserSignatureFile, IFormFile? UserImgFile, List<string> CheckboxBranchesWithData,
             bool CrMasUserInformationAuthorizationAdmin, bool CrMasUserInformationAuthorizationOwner, bool CrMasUserInformationAuthorizationBranch)
         {
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive);
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active);
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList; // Pass the callingKeys to the view
             var currentUser = await _userManager.GetUserAsync(User);
@@ -230,7 +230,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     {
                         if (value.ToLower() == "true")
                         {
-                            await _userBranchValidity.AddUserBranchValidity(newUser.CrMasUserInformationCode, userLogin.CrMasUserInformationLessor, id, Status.Acive);
+                            await _userBranchValidity.AddUserBranchValidity(newUser.CrMasUserInformationCode, userLogin.CrMasUserInformationLessor, id, Status.Active);
                         }
                         else
                         {
@@ -316,7 +316,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         var value = item.Value;
                         if (user.CrMasUserInformationAuthorizationBranch == true)
                         {
-                            if (value.ToLower() == "on" || value.ToLower() == "true") await _userBranchValidity.UpdateUserBranchValidity(user.CrMasUserInformationCode, user.CrMasUserInformationLessor, id, Status.Acive);
+                            if (value.ToLower() == "on" || value.ToLower() == "true") await _userBranchValidity.UpdateUserBranchValidity(user.CrMasUserInformationCode, user.CrMasUserInformationLessor, id, Status.Active);
                             else await _userBranchValidity.UpdateUserBranchValidity(user.CrMasUserInformationCode, user.CrMasUserInformationLessor, id, Status.Deleted);
                         }
                         else
@@ -363,11 +363,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     sEn = "Remove Employee";
                     user.CrMasUserInformationStatus = Status.Deleted;
                 }
-                else if (status == Status.Acive)
+                else if (status == Status.Active)
                 {
                     sAr = "استرجاع موظف";
                     sEn = "Retrive Employee";
-                    user.CrMasUserInformationStatus = Status.Acive;
+                    user.CrMasUserInformationStatus = Status.Active;
                 }
                 await _unitOfWork.CompleteAsync();
                 // SaveTracing
@@ -405,7 +405,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             // Exclude the current user from the list
             var usersByLessor = await _userService.GetAllUsersByLessor(userLessor.CrMasUserInformationLessor);
             var userWithOutManger = usersByLessor.Where(x => x.CrMasUserInformationCode != ("CAS" + userLessor.CrMasUserInformationLessor));
-            return View(userWithOutManger.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode && x.CrMasUserInformationStatus == Status.Acive&&x.CrMasUserInformationAuthorizationAdmin==true).ToList());
+            return View(userWithOutManger.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode && x.CrMasUserInformationStatus == Status.Active&&x.CrMasUserInformationAuthorizationAdmin==true).ToList());
         }
 
         [HttpGet]
@@ -431,14 +431,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             RegisterViewModel viewModel = new RegisterViewModel
             {
-                CrMasSysMainTasks = (List<CrMasSysMainTask>)_unitOfWork.CrMasSysMainTasks.FindAll(x => x.CrMasSysMainTasksStatus == Status.Acive),
+                CrMasSysMainTasks = (List<CrMasSysMainTask>)_unitOfWork.CrMasSysMainTasks.FindAll(x => x.CrMasSysMainTasksStatus == Status.Active),
                 CrMasUserMainValidations = (List<CrMasUserMainValidation>)mainValidition,
 
                 CrMasUserInformationCode = user.CrMasUserInformationCode,
                 CrMasUserInformationArName = user.CrMasUserInformationArName,
                 CrMasUserInformationEnName = user.CrMasUserInformationEnName,
 
-                CrMasSysSubTasks = (List<CrMasSysSubTask>)_unitOfWork.CrMasSysSubTasks.FindAll(x => x.CrMasSysSubTasksStatus == Status.Acive),
+                CrMasSysSubTasks = (List<CrMasSysSubTask>)_unitOfWork.CrMasSysSubTasks.FindAll(x => x.CrMasSysSubTasksStatus == Status.Active),
                 CrMasUserSubValidations = (List<CrMasUserSubValidation>)subValition,
                 CrMasSysProceduresTasks = (List<CrMasSysProceduresTask>)procedureTasks,
                 ProceduresValidations = (List<CrMasUserProceduresValidation>)procedureValidition,
@@ -528,7 +528,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             // Exclude the current user from the list
             var usersByLessor = await _userService.GetAllUsersByLessor(userLessor.CrMasUserInformationLessor);
             var userWithOutManger = usersByLessor.Where(x => x.CrMasUserInformationCode != ("CAS" + userLessor.CrMasUserInformationLessor));
-            return View(userWithOutManger.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode && x.CrMasUserInformationStatus == Status.Acive && x.CrMasUserInformationAuthorizationBranch == true).ToList());
+            return View(userWithOutManger.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode && x.CrMasUserInformationStatus == Status.Active && x.CrMasUserInformationAuthorizationBranch == true).ToList());
         }
         [HttpGet]
         public async Task<IActionResult> EditEmployeeContractValiditions(string id)
@@ -555,7 +555,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             var model = _mapper.Map<ContractValiditionsVM>(contractValidtion);
             model.CrMasUserContractValidityUser = user;
-            model.CrMasSysProcedure = _unitOfWork.CrMasSysProcedure.FindAll(x=>x.CrMasSysProceduresStatus==Status.Acive&&( x.CrMasSysProceduresClassification=="10"|| x.CrMasSysProceduresClassification == "11" || x.CrMasSysProceduresClassification == "12" || x.CrMasSysProceduresClassification == "13")).ToList();
+            model.CrMasSysProcedure = _unitOfWork.CrMasSysProcedure.FindAll(x=>x.CrMasSysProceduresStatus==Status.Active&&( x.CrMasSysProceduresClassification=="10"|| x.CrMasSysProceduresClassification == "11" || x.CrMasSysProceduresClassification == "12" || x.CrMasSysProceduresClassification == "13")).ToList();
             model.CrCasLessorMechanism = _unitOfWork.CrCasLessorMechanism.FindAll(x=>x.CrCasLessorMechanismCode==user.CrMasUserInformationLessor && (x.CrCasLessorMechanismProceduresClassification == "10" || x.CrCasLessorMechanismProceduresClassification == "11" || x.CrCasLessorMechanismProceduresClassification == "12" || x.CrCasLessorMechanismProceduresClassification == "13")).ToList();
 
             return View(model);
@@ -582,7 +582,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("206", "2206001", "2");
             await ViewData.SetPageTitleAsync(titles[0], "", titles[2], "تعديل", "Edit", titles[3]);
             var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive);
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active);
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList; // Pass the callingKeys to the view
             var crMasUserInformation = _mapper.Map<RegisterViewModel>(user);

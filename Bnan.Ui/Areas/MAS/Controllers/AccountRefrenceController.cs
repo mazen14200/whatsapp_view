@@ -257,7 +257,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     {
                         sAr = "استرجاع مرجع";
                         sEn = "Retrive Reference";
-                        refrence.CrMasSupAccountPaymentMethodStatus = Status.Acive;
+                        refrence.CrMasSupAccountPaymentMethodStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();

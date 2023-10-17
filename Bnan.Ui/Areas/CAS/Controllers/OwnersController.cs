@@ -184,11 +184,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         sEn = "Delete";
                         owner.CrCasOwnersStatus = Status.Deleted;
                     }
-                    else if (status == Status.Acive)
+                    else if (status == Status.Active)
                     {
                         sAr = "استرجاع";
                         sEn = "Retrieve";
-                        owner.CrCasOwnersStatus = Status.Acive;
+                        owner.CrCasOwnersStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();

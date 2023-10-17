@@ -265,7 +265,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     {
                         sAr = "استرجاع";
                         sEn = "Bank";
-                        bank.CrMasSupAccountBankStatus = Status.Acive;
+                        bank.CrMasSupAccountBankStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();

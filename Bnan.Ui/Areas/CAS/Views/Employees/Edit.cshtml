@@ -176,7 +176,7 @@
                     <div id="Branch" style="display: none;">
                         @foreach (var branch in Model.CrCasBranchInformations)
                         {
-                            bool isChecked = Model.CrMasUserBranchValidities.Any(v => v.CrMasUserBranchValidityBranch == branch.CrCasBranchInformationCode && v.CrMasUserBranchValidityBranchStatus == Status.Acive);
+                            bool isChecked = Model.CrMasUserBranchValidities.Any(v => v.CrMasUserBranchValidityBranch == branch.CrCasBranchInformationCode && v.CrMasUserBranchValidityBranchStatus == Status.Active);
 
                             <ul class="list mt-2" style="font-size: 17px;">
                                 <li>

@@ -152,13 +152,13 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var Drivers = await _unitOfWork.CrCasRenterPrivateDriverInformation.GetAllAsync();
 
             // Pass the KSA callingKeys to the view 
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive);
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active);
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList;
 
 
             // View the License
-            var LicenseType = _unitOfWork.CrMasSupRenterDrivingLicense.FindAll(x => x.CrMasSupRenterDrivingLicenseStatus == Status.Acive);
+            var LicenseType = _unitOfWork.CrMasSupRenterDrivingLicense.FindAll(x => x.CrMasSupRenterDrivingLicenseStatus == Status.Active);
             var LicenseTypeAr = LicenseType.Select(c => new SelectListItem { Value = c.CrMasSupRenterDrivingLicenseCode.ToString(), Text = c.CrMasSupRenterDrivingLicenseArName }).ToList();
             var LicenseTypeEn = LicenseType.Select(c => new SelectListItem { Value = c.CrMasSupRenterDrivingLicenseCode.ToString(), Text = c.CrMasSupRenterDrivingLicenseEnName }).ToList();
 
@@ -167,14 +167,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
 
             // View the License
-            var IDType = _unitOfWork.CrMasSupRenterIdtype.FindAll(x => x.CrMasSupRenterIdtypeStatus == Status.Acive);
+            var IDType = _unitOfWork.CrMasSupRenterIdtype.FindAll(x => x.CrMasSupRenterIdtypeStatus == Status.Active);
             var IDTypeAr = IDType.Select(c => new SelectListItem { Value = c.CrMasSupRenterIdtypeCode.ToString(), Text = c.CrMasSupRenterIdtypeArName }).ToList();
             var IDTypeEn = IDType.Select(c => new SelectListItem { Value = c.CrMasSupRenterIdtypeCode.ToString(), Text = c.CrMasSupRenterIdtypeEnName }).ToList();
 
             ViewData["RenterDriverTypeAr"] = IDTypeAr;
             ViewData["RenterDriverTypeEn"] = IDTypeEn;
             // View the Gender
-            var Gender = _unitOfWork.CrMasSupRenterGender.FindAll(x => x.CrMasSupRenterGenderStatus == Status.Acive && x.CrMasSupRenterGenderCode != "1100000001" && x.CrMasSupRenterGenderCode != "1100000002");
+            var Gender = _unitOfWork.CrMasSupRenterGender.FindAll(x => x.CrMasSupRenterGenderStatus == Status.Active && x.CrMasSupRenterGenderCode != "1100000001" && x.CrMasSupRenterGenderCode != "1100000002");
             var GenderAr = Gender.Select(c => new SelectListItem { Value = c.CrMasSupRenterGenderCode.ToString(), Text = c.CrMasSupRenterGenderArName }).ToList();
             var GenderEn = Gender.Select(c => new SelectListItem { Value = c.CrMasSupRenterGenderCode.ToString(), Text = c.CrMasSupRenterGenderEnName }).ToList();
             ViewData["RenterDriverGenderAr"] = GenderAr;
@@ -195,23 +195,23 @@ namespace Bnan.Ui.Areas.CAS.Controllers
           
 
             // Pass the KSA callingKeys to the view 
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive);
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active);
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList;
             // View the License
-            var LicenseType = _unitOfWork.CrMasSupRenterDrivingLicense.FindAll(x => x.CrMasSupRenterDrivingLicenseStatus == Status.Acive);
+            var LicenseType = _unitOfWork.CrMasSupRenterDrivingLicense.FindAll(x => x.CrMasSupRenterDrivingLicenseStatus == Status.Active);
             var LicenseTypeAr = LicenseType.Select(c => new SelectListItem { Value = c.CrMasSupRenterDrivingLicenseArName.ToString(), Text = c.CrMasSupRenterDrivingLicenseArName }).ToList();
             var LicenseTypeEn = LicenseType.Select(c => new SelectListItem { Value = c.CrMasSupRenterDrivingLicenseEnName.ToString(), Text = c.CrMasSupRenterDrivingLicenseEnName }).ToList();
             ViewData["RenterDriverLicenseTypeAr"] = LicenseTypeAr;
             ViewData["RenterDriverLicenseTypeEn"] = LicenseTypeEn;
             // View the License
-            var IDType = _unitOfWork.CrMasSupRenterIdtype.FindAll(x => x.CrMasSupRenterIdtypeStatus == Status.Acive);
+            var IDType = _unitOfWork.CrMasSupRenterIdtype.FindAll(x => x.CrMasSupRenterIdtypeStatus == Status.Active);
             var IDTypeAr = IDType.Select(c => new SelectListItem { Value = c.CrMasSupRenterIdtypeArName.ToString(), Text = c.CrMasSupRenterIdtypeArName }).ToList();
             var IDTypeEn = IDType.Select(c => new SelectListItem { Value = c.CrMasSupRenterIdtypeEnName.ToString(), Text = c.CrMasSupRenterIdtypeEnName }).ToList();
             ViewData["RenterDriverTypeAr"] = IDTypeAr;
             ViewData["RenterDriverTypeEn"] = IDTypeEn;
             // View the Gender
-            var Gender = _unitOfWork.CrMasSupRenterGender.FindAll(x => x.CrMasSupRenterGenderStatus == Status.Acive && x.CrMasSupRenterGenderCode != "1100000001" && x.CrMasSupRenterGenderCode != "1100000001");
+            var Gender = _unitOfWork.CrMasSupRenterGender.FindAll(x => x.CrMasSupRenterGenderStatus == Status.Active && x.CrMasSupRenterGenderCode != "1100000001" && x.CrMasSupRenterGenderCode != "1100000001");
             var GenderAr = Gender.Select(c => new SelectListItem { Value = c.CrMasSupRenterGenderArName.ToString(), Text = c.CrMasSupRenterGenderArName }).ToList();
             var GenderEn = Gender.Select(c => new SelectListItem { Value = c.CrMasSupRenterGenderEnName.ToString(), Text = c.CrMasSupRenterGenderEnName }).ToList();
 
@@ -299,29 +299,29 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             }
 
             // Pass the KSA callingKeys to the view 
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive);
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active);
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList;
-            var LicenseType = _unitOfWork.CrMasSupRenterDrivingLicense.FindAll(x => x.CrMasSupRenterDrivingLicenseStatus == Status.Acive);
+            var LicenseType = _unitOfWork.CrMasSupRenterDrivingLicense.FindAll(x => x.CrMasSupRenterDrivingLicenseStatus == Status.Active);
             // View the License
             var LicenseTypeAr = LicenseType.FirstOrDefault(c => c.CrMasSupRenterDrivingLicenseCode == driver.CrCasRenterPrivateDriverInformationLicenseType).CrMasSupRenterDrivingLicenseArName;
             var LicenseTypeEn = LicenseType.FirstOrDefault(c => c.CrMasSupRenterDrivingLicenseCode == driver.CrCasRenterPrivateDriverInformationLicenseType).CrMasSupRenterDrivingLicenseEnName;
             ViewData["RenterDriverLicenseTypeAr"] = LicenseTypeAr;
             ViewData["RenterDriverLicenseTypeEn"] = LicenseTypeEn;
             // View the ID
-            var IDType = _unitOfWork.CrMasSupRenterIdtype.FindAll(x => x.CrMasSupRenterIdtypeStatus == Status.Acive);
+            var IDType = _unitOfWork.CrMasSupRenterIdtype.FindAll(x => x.CrMasSupRenterIdtypeStatus == Status.Active);
             var IDTypeAr = IDType.Where(x => x.CrMasSupRenterIdtypeCode == driver.CrCasRenterPrivateDriverInformationIdtrype).FirstOrDefault().CrMasSupRenterIdtypeArName;
             var IDTypeEn = IDType.Where(x => x.CrMasSupRenterIdtypeCode == driver.CrCasRenterPrivateDriverInformationIdtrype).FirstOrDefault().CrMasSupRenterIdtypeEnName;
             ViewData["RenterDriverIDTypeAr"] = IDTypeAr;
             ViewData["RenterDriverIDTypeEn"] = IDTypeEn;
             // View the Nationality
-            var Nationality = _unitOfWork.CrMasSupRenterNationality.FindAll(x => x.CrMasSupRenterNationalitiesStatus == Status.Acive && x.CrMasSupRenterNationalitiesCode != "1000000001" && x.CrMasSupRenterNationalitiesCode != "1000000002");
+            var Nationality = _unitOfWork.CrMasSupRenterNationality.FindAll(x => x.CrMasSupRenterNationalitiesStatus == Status.Active && x.CrMasSupRenterNationalitiesCode != "1000000001" && x.CrMasSupRenterNationalitiesCode != "1000000002");
             var NationalityAr = Nationality.Where(x => x.CrMasSupRenterNationalitiesCode == driver.CrCasRenterPrivateDriverInformationNationality).FirstOrDefault().CrMasSupRenterNationalitiesArName;
             var NationalityEn = Nationality.Where(x => x.CrMasSupRenterNationalitiesCode == driver.CrCasRenterPrivateDriverInformationNationality).FirstOrDefault().CrMasSupRenterNationalitiesEnName;
             ViewData["RenterDriverNationalityAr"] = NationalityAr;
             ViewData["RenterDriverNationalityEn"] = NationalityEn;
             // View the Gender
-            var Gender = _unitOfWork.CrMasSupRenterGender.FindAll(x => x.CrMasSupRenterGenderStatus == Status.Acive && x.CrMasSupRenterGenderCode != "1100000001" && x.CrMasSupRenterGenderCode != "1100000001");
+            var Gender = _unitOfWork.CrMasSupRenterGender.FindAll(x => x.CrMasSupRenterGenderStatus == Status.Active && x.CrMasSupRenterGenderCode != "1100000001" && x.CrMasSupRenterGenderCode != "1100000001");
             var GenderAr = Gender.Where(x => x.CrMasSupRenterGenderCode == driver.CrCasRenterPrivateDriverInformationGender).FirstOrDefault().CrMasSupRenterGenderArName;
             var GenderEn = Gender.Where(x => x.CrMasSupRenterGenderCode == driver.CrCasRenterPrivateDriverInformationGender).FirstOrDefault().CrMasSupRenterGenderEnName;
             ViewData["RenterDriverGenderAr"] = GenderAr;
@@ -391,29 +391,29 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 }
             }
             // Pass the KSA callingKeys to the view 
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Acive);
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active);
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList;
-            var LicenseType = _unitOfWork.CrMasSupRenterDrivingLicense.FindAll(x => x.CrMasSupRenterDrivingLicenseStatus == Status.Acive);
+            var LicenseType = _unitOfWork.CrMasSupRenterDrivingLicense.FindAll(x => x.CrMasSupRenterDrivingLicenseStatus == Status.Active);
             // View the License
             var LicenseTypeAr = LicenseType.FirstOrDefault(c => c.CrMasSupRenterDrivingLicenseCode == driver.CrCasRenterPrivateDriverInformationLicenseType).CrMasSupRenterDrivingLicenseArName;
             var LicenseTypeEn = LicenseType.FirstOrDefault(c => c.CrMasSupRenterDrivingLicenseCode == driver.CrCasRenterPrivateDriverInformationLicenseType).CrMasSupRenterDrivingLicenseEnName;
             ViewData["RenterDriverLicenseTypeAr"] = LicenseTypeAr;
             ViewData["RenterDriverLicenseTypeEn"] = LicenseTypeEn;
             // View the ID
-            var IDType = _unitOfWork.CrMasSupRenterIdtype.FindAll(x => x.CrMasSupRenterIdtypeStatus == Status.Acive);
+            var IDType = _unitOfWork.CrMasSupRenterIdtype.FindAll(x => x.CrMasSupRenterIdtypeStatus == Status.Active);
             var IDTypeAr = IDType.Where(x => x.CrMasSupRenterIdtypeCode == driver.CrCasRenterPrivateDriverInformationIdtrype).FirstOrDefault().CrMasSupRenterIdtypeArName;
             var IDTypeEn = IDType.Where(x => x.CrMasSupRenterIdtypeCode == driver.CrCasRenterPrivateDriverInformationIdtrype).FirstOrDefault().CrMasSupRenterIdtypeEnName;
             ViewData["RenterDriverIDTypeAr"] = IDTypeAr;
             ViewData["RenterDriverIDTypeEn"] = IDTypeEn;
             // View the Nationality
-            var Nationality = _unitOfWork.CrMasSupRenterNationality.FindAll(x => x.CrMasSupRenterNationalitiesStatus == Status.Acive && x.CrMasSupRenterNationalitiesCode != "1000000001" && x.CrMasSupRenterNationalitiesCode != "1000000002");
+            var Nationality = _unitOfWork.CrMasSupRenterNationality.FindAll(x => x.CrMasSupRenterNationalitiesStatus == Status.Active && x.CrMasSupRenterNationalitiesCode != "1000000001" && x.CrMasSupRenterNationalitiesCode != "1000000002");
             var NationalityAr = Nationality.Where(x => x.CrMasSupRenterNationalitiesCode == driver.CrCasRenterPrivateDriverInformationNationality).FirstOrDefault().CrMasSupRenterNationalitiesArName;
             var NationalityEn = Nationality.Where(x => x.CrMasSupRenterNationalitiesCode == driver.CrCasRenterPrivateDriverInformationNationality).FirstOrDefault().CrMasSupRenterNationalitiesEnName;
             ViewData["RenterDriverNationalityAr"] = NationalityAr;
             ViewData["RenterDriverNationalityEn"] = NationalityEn;
             // View the Gender
-            var Gender = _unitOfWork.CrMasSupRenterGender.FindAll(x => x.CrMasSupRenterGenderStatus == Status.Acive && x.CrMasSupRenterGenderCode != "1100000001" && x.CrMasSupRenterGenderCode != "1100000001");
+            var Gender = _unitOfWork.CrMasSupRenterGender.FindAll(x => x.CrMasSupRenterGenderStatus == Status.Active && x.CrMasSupRenterGenderCode != "1100000001" && x.CrMasSupRenterGenderCode != "1100000001");
             var GenderAr = Gender.Where(x => x.CrMasSupRenterGenderCode == driver.CrCasRenterPrivateDriverInformationGender).FirstOrDefault().CrMasSupRenterGenderArName;
             var GenderEn = Gender.Where(x => x.CrMasSupRenterGenderCode == driver.CrCasRenterPrivateDriverInformationGender).FirstOrDefault().CrMasSupRenterGenderEnName;
             ViewData["RenterDriverGenderAr"] = GenderAr;
@@ -452,7 +452,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     {
                         sAr = "استرجاع";
                         sEn = "Retrieve";
-                        RenterDriver.CrCasRenterPrivateDriverInformationStatus = Status.Acive;
+                        RenterDriver.CrCasRenterPrivateDriverInformationStatus = Status.Active;
                     }
 
                     _unitOfWork.CrCasRenterPrivateDriverInformation.Update(RenterDriver);

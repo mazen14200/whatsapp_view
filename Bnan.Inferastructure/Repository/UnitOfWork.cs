@@ -71,6 +71,11 @@ namespace Bnan.Inferastructure.Repository
         public IGenric<CrMasSupRenterNationality> CrMasSupRenterNationality { get; private set; }
         public IGenric<CrMasUserContractValidity> CrMasUserContractValidity { get; private set; }
         public IGenric<CrCasSysAdministrativeProcedure> CrCasSysAdministrativeProcedure { get; private set; }
+        public IGenric<CrCasCarInformation> CrCasCarInformation { get; private set; }
+        public IGenric<CrMasSupCarRegistration> CrMasSupCarRegistration { get; private set; }
+        public IGenric<CrMasSupCarCvt> CrMasSupCarCvt { get; private set; }
+        public IGenric<CrMasSupCarFuel> CrMasSupCarFuel { get; private set; }
+        public IGenric<CrMasSupCarColor> CrMasSupCarColor { get; private set; }
 
 
         public UnitOfWork(BnanKSAContext context)
@@ -133,6 +138,11 @@ namespace Bnan.Inferastructure.Repository
             CrMasSupRenterNationality = new BaseRepository<CrMasSupRenterNationality>(_context);
             CrMasUserContractValidity = new BaseRepository<CrMasUserContractValidity>(_context);
             CrCasSysAdministrativeProcedure = new BaseRepository<CrCasSysAdministrativeProcedure>(_context);
+            CrCasCarInformation = new BaseRepository<CrCasCarInformation>(_context);
+            CrMasSupCarRegistration = new BaseRepository<CrMasSupCarRegistration>(_context);
+            CrMasSupCarFuel = new BaseRepository<CrMasSupCarFuel>(_context);
+            CrMasSupCarCvt = new BaseRepository<CrMasSupCarCvt>(_context);
+            CrMasSupCarColor = new BaseRepository<CrMasSupCarColor>(_context);
 
 
         }

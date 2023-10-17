@@ -59,7 +59,7 @@ namespace Bnan.Inferastructure.Repository
 
         public async Task<bool> AddSubValiditionsForEachUser(string userCode, string systemCode)
         {
-            var subTasks = _unitOfWork.CrMasSysSubTasks.FindAll(x => x.CrMasSysSubTasksSystemCode == systemCode && x.CrMasSysSubTasksStatus == Status.Acive);
+            var subTasks = _unitOfWork.CrMasSysSubTasks.FindAll(x => x.CrMasSysSubTasksSystemCode == systemCode && x.CrMasSysSubTasksStatus == Status.Active);
             foreach (var item in subTasks)
             {
                 if (item.CrMasSysSubTasksCode != "2206001" || item.CrMasSysSubTasksCode != "2206002" || item.CrMasSysSubTasksCode != "2206003")

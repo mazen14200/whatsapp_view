@@ -77,7 +77,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             var AccountBanks = await _unitOfWork.CrCasAccountBank.GetAllAsync();
             // View the Banks
-            var BanksData = _unitOfWork.CrMasSupAccountBanks.FindAll(x => x.CrMasSupAccountBankStatus == Status.Acive && x.CrMasSupAccountBankCode!="00");
+            var BanksData = _unitOfWork.CrMasSupAccountBanks.FindAll(x => x.CrMasSupAccountBankStatus == Status.Active && x.CrMasSupAccountBankCode!="00");
             var BanksDatasAr = BanksData.Select(c => new SelectListItem { Value = c.CrMasSupAccountBankArName.ToString(), Text = c.CrMasSupAccountBankArName  }).ToList();
             var BanksDatasEn = BanksData.Select(c => new SelectListItem { Value = c.CrMasSupAccountBankEnName.ToString(), Text = c.CrMasSupAccountBankEnName }).ToList();
 
@@ -89,7 +89,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAccountBank(AccountBankVM AccountBankmodel)
         {
-            var BanksData = _unitOfWork.CrMasSupAccountBanks.FindAll(x => x.CrMasSupAccountBankStatus == Status.Acive);
+            var BanksData = _unitOfWork.CrMasSupAccountBanks.FindAll(x => x.CrMasSupAccountBankStatus == Status.Active);
             var BanksDatasAr = BanksData.Select(c => new SelectListItem { Value = c.CrMasSupAccountBankArName.ToString(), Text = c.CrMasSupAccountBankArName }).ToList();
             var BanksDatasEn = BanksData.Select(c => new SelectListItem { Value = c.CrMasSupAccountBankEnName.ToString(), Text = c.CrMasSupAccountBankEnName }).ToList();
 
@@ -217,7 +217,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 ModelState.AddModelError("Exist", "SomeThing Wrong is happened");
                 return View("Index");
             }
-            var BanksData = _unitOfWork.CrMasSupAccountBanks.FindAll(x => x.CrMasSupAccountBankStatus == Status.Acive && x.CrMasSupAccountBankCode==bank.CrCasAccountBankNo);
+            var BanksData = _unitOfWork.CrMasSupAccountBanks.FindAll(x => x.CrMasSupAccountBankStatus == Status.Active && x.CrMasSupAccountBankCode==bank.CrCasAccountBankNo);
             var BanksDatasAr = BanksData.FirstOrDefault().CrMasSupAccountBankArName.ToString();
             var BanksDatasEn = BanksData.FirstOrDefault().CrMasSupAccountBankEnName.ToString();
             var SalesPointCount = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointAccountBank==bank.CrCasAccountBankCode&&x.CrCasAccountSalesPointStatus!=Status.Deleted).Count();
@@ -291,7 +291,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     {
                         sAr = "استرجاع";
                         sEn = "Retrieve";
-                        bank.CrCasAccountBankStatus = Status.Acive;
+                        bank.CrCasAccountBankStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();
