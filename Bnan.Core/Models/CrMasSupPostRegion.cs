@@ -8,6 +8,7 @@ namespace Bnan.Core.Models
         public CrMasSupPostRegion()
         {
             CrCasBranchPosts = new HashSet<CrCasBranchPost>();
+            CrCasCarInformations = new HashSet<CrCasCarInformation>();
             CrMasSupPostCities = new HashSet<CrMasSupPostCity>();
         }
 
@@ -21,6 +22,7 @@ namespace Bnan.Core.Models
         public string? CrMasSupPostRegionsReasons { get; set; }
 
         public virtual ICollection<CrCasBranchPost> CrCasBranchPosts { get; set; }
+        public virtual ICollection<CrCasCarInformation> CrCasCarInformations { get; set; }
         public virtual ICollection<CrMasSupPostCity> CrMasSupPostCities { get; set; }
     }
 }

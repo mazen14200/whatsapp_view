@@ -5,6 +5,11 @@ namespace Bnan.Core.Models
 {
     public partial class CrCasOwner
     {
+        public CrCasOwner()
+        {
+            CrCasCarInformations = new HashSet<CrCasCarInformation>();
+        }
+
         public string CrCasOwnersCode { get; set; } = null!;
         public string CrCasOwnersLessorCode { get; set; } = null!;
         public string? CrCasOwnersCommercialNo { get; set; }
@@ -16,5 +21,6 @@ namespace Bnan.Core.Models
 
         public virtual CrMasLessorInformation CrCasOwnersLessorCodeNavigation { get; set; } = null!;
         public virtual CrMasSupRenterSector? CrCasOwnersSectorNavigation { get; set; }
+        public virtual ICollection<CrCasCarInformation> CrCasCarInformations { get; set; }
     }
 }

@@ -9,6 +9,8 @@ namespace Bnan.Core.Models
         {
             CrCasAccountSalesPoints = new HashSet<CrCasAccountSalesPoint>();
             CrCasBranchDocuments = new HashSet<CrCasBranchDocument>();
+            CrCasCarDocumentsMaintenances = new HashSet<CrCasCarDocumentsMaintenance>();
+            CrCasCarInformations = new HashSet<CrCasCarInformation>();
             CrCasSysAdministrativeProcedures = new HashSet<CrCasSysAdministrativeProcedure>();
             CrMasUserBranchValidities = new HashSet<CrMasUserBranchValidity>();
         }
@@ -40,6 +42,8 @@ namespace Bnan.Core.Models
         public virtual CrCasBranchPost CrCasBranchPost { get; set; } = null!;
         public virtual ICollection<CrCasAccountSalesPoint> CrCasAccountSalesPoints { get; set; }
         public virtual ICollection<CrCasBranchDocument> CrCasBranchDocuments { get; set; }
+        public virtual ICollection<CrCasCarDocumentsMaintenance> CrCasCarDocumentsMaintenances { get; set; }
+        public virtual ICollection<CrCasCarInformation> CrCasCarInformations { get; set; }
         public virtual ICollection<CrCasSysAdministrativeProcedure> CrCasSysAdministrativeProcedures { get; set; }
         public virtual ICollection<CrMasUserBranchValidity> CrMasUserBranchValidities { get; set; }
     }

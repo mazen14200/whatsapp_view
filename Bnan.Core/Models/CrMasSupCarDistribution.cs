@@ -5,6 +5,11 @@ namespace Bnan.Core.Models
 {
     public partial class CrMasSupCarDistribution
     {
+        public CrMasSupCarDistribution()
+        {
+            CrCasCarInformations = new HashSet<CrCasCarInformation>();
+        }
+
         public string CrMasSupCarDistributionCode { get; set; } = null!;
         public string CrMasSupCarDistributionBrand { get; set; } = null!;
         public string CrMasSupCarDistributionModel { get; set; } = null!;
@@ -24,5 +29,6 @@ namespace Bnan.Core.Models
         public virtual CrMasSupCarBrand CrMasSupCarDistributionBrandNavigation { get; set; } = null!;
         public virtual CrMasSupCarCategory CrMasSupCarDistributionCategoryNavigation { get; set; } = null!;
         public virtual CrMasSupCarModel CrMasSupCarDistributionModelNavigation { get; set; } = null!;
+        public virtual ICollection<CrCasCarInformation> CrCasCarInformations { get; set; }
     }
 }

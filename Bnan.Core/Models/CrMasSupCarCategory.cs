@@ -7,6 +7,8 @@ namespace Bnan.Core.Models
     {
         public CrMasSupCarCategory()
         {
+            CrCasCarAdvantages = new HashSet<CrCasCarAdvantage>();
+            CrCasCarInformations = new HashSet<CrCasCarInformation>();
             CrMasSupCarDistributions = new HashSet<CrMasSupCarDistribution>();
         }
 
@@ -18,6 +20,8 @@ namespace Bnan.Core.Models
         public string? CrMasSupCarCategoryReasons { get; set; }
 
         public virtual CrMasSysGroup? CrMasSupCarCategoryGroupNavigation { get; set; }
+        public virtual ICollection<CrCasCarAdvantage> CrCasCarAdvantages { get; set; }
+        public virtual ICollection<CrCasCarInformation> CrCasCarInformations { get; set; }
         public virtual ICollection<CrMasSupCarDistribution> CrMasSupCarDistributions { get; set; }
     }
 }

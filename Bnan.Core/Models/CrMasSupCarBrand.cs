@@ -7,6 +7,8 @@ namespace Bnan.Core.Models
     {
         public CrMasSupCarBrand()
         {
+            CrCasCarAdvantages = new HashSet<CrCasCarAdvantage>();
+            CrCasCarInformations = new HashSet<CrCasCarInformation>();
             CrMasSupCarDistributions = new HashSet<CrMasSupCarDistribution>();
             CrMasSupCarModels = new HashSet<CrMasSupCarModel>();
         }
@@ -14,9 +16,12 @@ namespace Bnan.Core.Models
         public string CrMasSupCarBrandCode { get; set; } = null!;
         public string? CrMasSupCarBrandArName { get; set; }
         public string? CrMasSupCarBrandEnName { get; set; }
+        public string? CrMasSupCarBrandImage { get; set; }
         public string? CrMasSupCarBrandStatus { get; set; }
         public string? CrMasSupCarBrandReasons { get; set; }
 
+        public virtual ICollection<CrCasCarAdvantage> CrCasCarAdvantages { get; set; }
+        public virtual ICollection<CrCasCarInformation> CrCasCarInformations { get; set; }
         public virtual ICollection<CrMasSupCarDistribution> CrMasSupCarDistributions { get; set; }
         public virtual ICollection<CrMasSupCarModel> CrMasSupCarModels { get; set; }
     }

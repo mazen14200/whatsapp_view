@@ -18,6 +18,7 @@ namespace Bnan.Core.Models
         public decimal? CrMasUserBranchValidityBranchTransferReserved { get; set; }
         public decimal? CrMasUserBranchValidityBranchTransferAvailable { get; set; }
         public string? CrMasUserBranchValidityBranchStatus { get; set; }
+        public string? CrMasUserBranchValidityBranchRecStatus { get; set; }
 
         public virtual CrCasBranchInformation CrMasUserBranchValidity1 { get; set; } = null!;
         public virtual CrMasUserInformation CrMasUserBranchValidityNavigation { get; set; } = null!;

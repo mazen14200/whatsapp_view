@@ -24,6 +24,9 @@ namespace Bnan.Core.Models
         public virtual DbSet<CrCasBranchDocument> CrCasBranchDocuments { get; set; } = null!;
         public virtual DbSet<CrCasBranchInformation> CrCasBranchInformations { get; set; } = null!;
         public virtual DbSet<CrCasBranchPost> CrCasBranchPosts { get; set; } = null!;
+        public virtual DbSet<CrCasCarAdvantage> CrCasCarAdvantages { get; set; } = null!;
+        public virtual DbSet<CrCasCarDocumentsMaintenance> CrCasCarDocumentsMaintenances { get; set; } = null!;
+        public virtual DbSet<CrCasCarInformation> CrCasCarInformations { get; set; } = null!;
         public virtual DbSet<CrCasLessorClassification> CrCasLessorClassifications { get; set; } = null!;
         public virtual DbSet<CrCasLessorMechanism> CrCasLessorMechanisms { get; set; } = null!;
         public virtual DbSet<CrCasLessorMembership> CrCasLessorMemberships { get; set; } = null!;
@@ -84,7 +87,7 @@ namespace Bnan.Core.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=BnanKSA;Trusted_Connection=True;TrustServerCertificate=true;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-8QGFLQ3\\SQLEXPRESS;Database=BnanKSA;Trusted_Connection=True;TrustServerCertificate=true;");
             }
         }
 
@@ -678,6 +681,480 @@ namespace Bnan.Core.Models
                     .HasConstraintName("CR_Cas_Branch_Post_CR_Mas_Lessor_Branch_Information_Code");
             });
 
+            modelBuilder.Entity<CrCasCarAdvantage>(entity =>
+            {
+                entity.HasKey(e => new { e.CrCasCarAdvantagesSerialNo, e.CrCasCarAdvantagesCode });
+
+                entity.ToTable("CR_Cas_Car_Advantages");
+
+                entity.Property(e => e.CrCasCarAdvantagesSerialNo)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Car_Advantages_Serial_No");
+
+                entity.Property(e => e.CrCasCarAdvantagesCode)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Advantages_Code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarAdvantagesBrand)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Advantages_Brand")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarAdvantagesCarYear)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Advantages_Car_Year")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarAdvantagesCategory)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Advantages_Category")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarAdvantagesLessor)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Advantages_Lessor")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarAdvantagesModel)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Advantages_Model")
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.CrCasCarAdvantagesBrandNavigation)
+                    .WithMany(p => p.CrCasCarAdvantages)
+                    .HasForeignKey(d => d.CrCasCarAdvantagesBrand)
+                    .HasConstraintName("FK_CR_Cas_Car_Advantages_CR_Mas_Sup_Car_Brand");
+
+                entity.HasOne(d => d.CrCasCarAdvantagesCategoryNavigation)
+                    .WithMany(p => p.CrCasCarAdvantages)
+                    .HasForeignKey(d => d.CrCasCarAdvantagesCategory)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CR_Cas_Car_Advantages_CR_Mas_Sup_Car_Category");
+
+                entity.HasOne(d => d.CrCasCarAdvantagesCodeNavigation)
+                    .WithMany(p => p.CrCasCarAdvantages)
+                    .HasForeignKey(d => d.CrCasCarAdvantagesCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CR_Cas_Car_Advantages_CR_Mas_Sup_Car_Advantages");
+
+                entity.HasOne(d => d.CrCasCarAdvantagesLessorNavigation)
+                    .WithMany(p => p.CrCasCarAdvantages)
+                    .HasForeignKey(d => d.CrCasCarAdvantagesLessor)
+                    .HasConstraintName("FK_CR_Cas_Car_Advantages_CR_Mas_Lessor_Information");
+
+                entity.HasOne(d => d.CrCasCarAdvantagesModelNavigation)
+                    .WithMany(p => p.CrCasCarAdvantages)
+                    .HasForeignKey(d => d.CrCasCarAdvantagesModel)
+                    .HasConstraintName("FK_CR_Cas_Car_Advantages_CR_Mas_Sup_Car_Model");
+
+                entity.HasOne(d => d.CrCasCarAdvantagesSerialNoNavigation)
+                    .WithMany(p => p.CrCasCarAdvantages)
+                    .HasForeignKey(d => d.CrCasCarAdvantagesSerialNo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CR_Cas_Car_Advantages_CR_Cas_Car_Information");
+            });
+
+            modelBuilder.Entity<CrCasCarDocumentsMaintenance>(entity =>
+            {
+                entity.HasKey(e => new { e.CrCasCarDocumentsMaintenanceSerailNo, e.CrCasCarDocumentsMaintenanceProcedures });
+
+                entity.ToTable("CR_Cas_Car_Documents_Maintenance");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceSerailNo)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_Serail_No");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceProcedures)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_Procedures")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceBranch)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_Branch")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceConsumptionKm).HasColumnName("CR_Cas_Car_Documents_Maintenance_Consumption_KM");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceCurrentMeter).HasColumnName("CR_Cas_Car_Documents_Maintenance_Current_Meter");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_Date");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceDateAboutToFinish)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_Date_About_To_Finish");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceEndDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_End_Date");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceImage)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance _Image");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceIsActivation).HasColumnName("CR_Cas_Car_Documents_Maintenance_IS_Activation");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceKmAboutToFinish).HasColumnName("CR_Cas_Car_Documents_Maintenance_KM_About_To_Finish");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceKmEndsAt).HasColumnName("CR_Cas_Car_Documents_Maintenance_KM_Ends_At");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceLessor)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_Lessor")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_No");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceProceduresClassification)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_Procedures_Classification")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceReadKm).HasColumnName("CR_Cas_Car_Documents_Maintenance_Read_KM");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceReasons)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_Reasons");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceStartDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_Start_Date");
+
+                entity.Property(e => e.CrCasCarDocumentsMaintenanceStatus)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_Status")
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.CrCasCarDocumentsMaintenanceProceduresNavigation)
+                    .WithMany(p => p.CrCasCarDocumentsMaintenances)
+                    .HasForeignKey(d => d.CrCasCarDocumentsMaintenanceProcedures)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CR_Cas_Car_Documents_Maintenance_CR_Mas_Sys_Procedures");
+
+                entity.HasOne(d => d.CrCasCarDocumentsMaintenanceSerailNoNavigation)
+                    .WithMany(p => p.CrCasCarDocumentsMaintenances)
+                    .HasForeignKey(d => d.CrCasCarDocumentsMaintenanceSerailNo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CR_Cas_Car_Documents_Maintenance_CR_Cas_Car_Information");
+
+                entity.HasOne(d => d.CrCasCarDocumentsMaintenanceNavigation)
+                    .WithMany(p => p.CrCasCarDocumentsMaintenances)
+                    .HasForeignKey(d => new { d.CrCasCarDocumentsMaintenanceLessor, d.CrCasCarDocumentsMaintenanceBranch })
+                    .HasConstraintName("FK_CR_Cas_Car_Documents_Maintenance_CR_Cas_Branch_Information");
+            });
+
+            modelBuilder.Entity<CrCasCarInformation>(entity =>
+            {
+                entity.HasKey(e => e.CrCasCarInformationSerailNo)
+                    .HasName("PK_CR_Cas_Car_Information_1");
+
+                entity.ToTable("CR_Cas_Car_Information");
+
+                entity.Property(e => e.CrCasCarInformationSerailNo)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Car_Information_Serail_No");
+
+                entity.Property(e => e.CrCasCarInformationBeneficiary)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Beneficiary");
+
+                entity.Property(e => e.CrCasCarInformationBranch)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Branch")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationBranchStatus)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Branch_Status")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationBrand)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Brand")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationCategory)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Category")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationCity)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_City")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationConcatenateArName)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Car_Information_Concatenate_Ar_Name");
+
+                entity.Property(e => e.CrCasCarInformationConcatenateEnName)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Car_Information_Concatenate_En_Name");
+
+                entity.Property(e => e.CrCasCarInformationConractCount).HasColumnName("CR_Cas_Car_Information_Conract_Count");
+
+                entity.Property(e => e.CrCasCarInformationConractDaysNo).HasColumnName("CR_Cas_Car_Information_Conract_Days_No");
+
+                entity.Property(e => e.CrCasCarInformationCurrentMeter).HasColumnName("CR_Cas_Car_Information_Current_Meter");
+
+                entity.Property(e => e.CrCasCarInformationCustomsNo)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Car_Information_Customs_No");
+
+                entity.Property(e => e.CrCasCarInformationCvt)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_CVT")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationDistribution)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Distribution")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationDocumentationStatus).HasColumnName("CR_Cas_Car_Information_Documentation_Status");
+
+                entity.Property(e => e.CrCasCarInformationFloorColor)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Floor_Color")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationForSaleStatus)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_ForSale_Status")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationFuel)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Fuel")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationJoinedFleetDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Car_Information_Joined_Fleet_Date");
+
+                entity.Property(e => e.CrCasCarInformationLastContractDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Car_Information_Last_Contract_Date");
+
+                entity.Property(e => e.CrCasCarInformationLastPictures)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Car_Information_Last_Pictures");
+
+                entity.Property(e => e.CrCasCarInformationLessor)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Lessor")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationLocation)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Location")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationMainColor)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Main_Color")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationMaintenanceStatus).HasColumnName("CR_Cas_Car_Information_Maintenance_Status");
+
+                entity.Property(e => e.CrCasCarInformationModel)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Model")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationOfferValueSale)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Car_Information_Offer_Value_Sale");
+
+                entity.Property(e => e.CrCasCarInformationOfferedSaleDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Car_Information_offered_Sale_Date");
+
+                entity.Property(e => e.CrCasCarInformationOwner)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Owner");
+
+                entity.Property(e => e.CrCasCarInformationOwnerStatus)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Owner_Status")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationPlateArNo)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Car_Information_Plate_Ar_No");
+
+                entity.Property(e => e.CrCasCarInformationPlateEnNo)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Car_Information_Plate_En_No");
+
+                entity.Property(e => e.CrCasCarInformationPriceNo)
+                    .HasMaxLength(22)
+                    .HasColumnName("CR_Cas_Car_Information_Price_No");
+
+                entity.Property(e => e.CrCasCarInformationPriceStatus).HasColumnName("CR_Cas_Car_Information_Price_Status");
+
+                entity.Property(e => e.CrCasCarInformationReasons)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Car_Information_Reasons");
+
+                entity.Property(e => e.CrCasCarInformationRegion)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Region")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationRegistration)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Registration")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationSeatColor)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Seat_Color")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationSecondaryColor)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Secondary_Color")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationSoldDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Car_Information_Sold_Date");
+
+                entity.Property(e => e.CrCasCarInformationStatus)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Status")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasCarInformationStructureNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("CR_Cas_Car_Information_Structure_No");
+
+                entity.Property(e => e.CrCasCarInformationYear)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Car_Information_Year")
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.CrCasCarInformationBrandNavigation)
+                    .WithMany(p => p.CrCasCarInformations)
+                    .HasForeignKey(d => d.CrCasCarInformationBrand)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Car_Brand");
+
+                entity.HasOne(d => d.CrCasCarInformationCategoryNavigation)
+                    .WithMany(p => p.CrCasCarInformations)
+                    .HasForeignKey(d => d.CrCasCarInformationCategory)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Car_Category");
+
+                entity.HasOne(d => d.CrCasCarInformationCityNavigation)
+                    .WithMany(p => p.CrCasCarInformations)
+                    .HasForeignKey(d => d.CrCasCarInformationCity)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Post_City");
+
+                entity.HasOne(d => d.CrCasCarInformationCvtNavigation)
+                    .WithMany(p => p.CrCasCarInformations)
+                    .HasForeignKey(d => d.CrCasCarInformationCvt)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Car_CVT");
+
+                entity.HasOne(d => d.CrCasCarInformationDistributionNavigation)
+                    .WithMany(p => p.CrCasCarInformations)
+                    .HasForeignKey(d => d.CrCasCarInformationDistribution)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Car_Distribution");
+
+                entity.HasOne(d => d.CrCasCarInformationFloorColorNavigation)
+                    .WithMany(p => p.CrCasCarInformationCrCasCarInformationFloorColorNavigations)
+                    .HasForeignKey(d => d.CrCasCarInformationFloorColor)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Car_Floor_Color");
+
+                entity.HasOne(d => d.CrCasCarInformationFuelNavigation)
+                    .WithMany(p => p.CrCasCarInformations)
+                    .HasForeignKey(d => d.CrCasCarInformationFuel)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Car_Fuel");
+
+                entity.HasOne(d => d.CrCasCarInformationMainColorNavigation)
+                    .WithMany(p => p.CrCasCarInformationCrCasCarInformationMainColorNavigations)
+                    .HasForeignKey(d => d.CrCasCarInformationMainColor)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Car_Color");
+
+                entity.HasOne(d => d.CrCasCarInformationModelNavigation)
+                    .WithMany(p => p.CrCasCarInformations)
+                    .HasForeignKey(d => d.CrCasCarInformationModel)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Car_Model");
+
+                entity.HasOne(d => d.CrCasCarInformationRegionNavigation)
+                    .WithMany(p => p.CrCasCarInformations)
+                    .HasForeignKey(d => d.CrCasCarInformationRegion)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Post_Regions");
+
+                entity.HasOne(d => d.CrCasCarInformationRegistrationNavigation)
+                    .WithMany(p => p.CrCasCarInformations)
+                    .HasForeignKey(d => d.CrCasCarInformationRegistration)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Car_Registration");
+
+                entity.HasOne(d => d.CrCasCarInformationSeatColorNavigation)
+                    .WithMany(p => p.CrCasCarInformationCrCasCarInformationSeatColorNavigations)
+                    .HasForeignKey(d => d.CrCasCarInformationSeatColor)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Car_Seat_Color");
+
+                entity.HasOne(d => d.CrCasCarInformationSecondaryColorNavigation)
+                    .WithMany(p => p.CrCasCarInformationCrCasCarInformationSecondaryColorNavigations)
+                    .HasForeignKey(d => d.CrCasCarInformationSecondaryColor)
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Mas_Sup_Car_Secondary_Color");
+
+                entity.HasOne(d => d.CrCasCarInformationNavigation)
+                    .WithMany(p => p.CrCasCarInformations)
+                    .HasForeignKey(d => new { d.CrCasCarInformationBeneficiary, d.CrCasCarInformationLessor })
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Cas_Beneficiary");
+
+                entity.HasOne(d => d.CrCasCarInformation1)
+                    .WithMany(p => p.CrCasCarInformations)
+                    .HasForeignKey(d => new { d.CrCasCarInformationLessor, d.CrCasCarInformationBranch })
+                    .HasConstraintName("FK_CR_Cas_Car_Information_Branch_lessor");
+
+                entity.HasOne(d => d.CrCasCarInformation2)
+                    .WithMany(p => p.CrCasCarInformations)
+                    .HasForeignKey(d => new { d.CrCasCarInformationOwner, d.CrCasCarInformationLessor })
+                    .HasConstraintName("FK_CR_Cas_Car_Information_CR_Cas_Owners");
+            });
+
             modelBuilder.Entity<CrCasLessorClassification>(entity =>
             {
                 entity.HasKey(e => e.CrCasLessorClassificationCode);
@@ -979,6 +1456,11 @@ namespace Bnan.Core.Models
                     .HasColumnType("date")
                     .HasColumnName("CR_Cas_Renter_Private_Driver_Information_Issue_Id_Date");
 
+                entity.Property(e => e.CrCasRenterPrivateDriverInformationKeyMobile)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Private_Driver_Information_Key_Mobile");
+
                 entity.Property(e => e.CrCasRenterPrivateDriverInformationLastContract)
                     .HasColumnType("date")
                     .HasColumnName("CR_Cas_Renter_Private_Driver_Information_Last_Contract");
@@ -1004,10 +1486,7 @@ namespace Bnan.Core.Models
                     .IsUnicode(false)
                     .HasColumnName("CR_Cas_Renter_Private_Driver_Information_License_Type")
                     .IsFixedLength();
-                entity.Property(e => e.CrCasRenterPrivateDriverInformationKeyMobile)
-                   .HasMaxLength(10)
-                   .IsUnicode(false)
-                   .HasColumnName("CR_Cas_Renter_Private_Driver_Information_Key_Mobile");
+
                 entity.Property(e => e.CrCasRenterPrivateDriverInformationMobile)
                     .HasMaxLength(20)
                     .IsUnicode(false)
@@ -1741,6 +2220,10 @@ namespace Bnan.Core.Models
                     .HasMaxLength(30)
                     .HasColumnName("CR_Mas_Sup_Car_Advantages_En_Name");
 
+                entity.Property(e => e.CrMasSupCarAdvantagesImage)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Mas_Sup_Car_Advantages_Image");
+
                 entity.Property(e => e.CrMasSupCarAdvantagesReasons)
                     .HasMaxLength(100)
                     .HasColumnName("CR_Mas_Sup_Car_Advantages_Reasons");
@@ -1771,6 +2254,10 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrMasSupCarBrandEnName)
                     .HasMaxLength(30)
                     .HasColumnName("CR_Mas_Sup_Car_Brand_En_Name");
+
+                entity.Property(e => e.CrMasSupCarBrandImage)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Mas_Sup_Car_Brand_Image");
 
                 entity.Property(e => e.CrMasSupCarBrandReasons)
                     .HasMaxLength(100)
@@ -2006,11 +2493,11 @@ namespace Bnan.Core.Models
                     .IsFixedLength();
 
                 entity.Property(e => e.CrMasSupCarFuelArName)
-                    .HasMaxLength(30)
+                    .HasMaxLength(40)
                     .HasColumnName("CR_Mas_Sup_Car_Fuel_Ar_Name");
 
                 entity.Property(e => e.CrMasSupCarFuelEnName)
-                    .HasMaxLength(30)
+                    .HasMaxLength(40)
                     .HasColumnName("CR_Mas_Sup_Car_Fuel_En_Name");
 
                 entity.Property(e => e.CrMasSupCarFuelImage)
@@ -3299,6 +3786,12 @@ namespace Bnan.Core.Models
                     .HasColumnType("decimal(13, 2)")
                     .HasColumnName("CR_Mas_User_Branch_Validity_Branch_Cash_Reserved");
 
+                entity.Property(e => e.CrMasUserBranchValidityBranchRecStatus)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Mas_User_Branch_Validity_Branch_Rec_Status")
+                    .IsFixedLength();
+
                 entity.Property(e => e.CrMasUserBranchValidityBranchSalesPointAvailable)
                     .HasColumnType("decimal(13, 2)")
                     .HasColumnName("CR_Mas_User_Branch_Validity_Branch_SalesPoint_Available");
@@ -3347,6 +3840,8 @@ namespace Bnan.Core.Models
                 entity.HasKey(e => e.CrMasUserContractValidityUserId);
 
                 entity.ToTable("CR_Mas_User_Contract_Validity");
+
+                entity.HasIndex(e => e.CrMasUserContractValidityAdmin, "IX_CR_Mas_User_Contract_Validity_CR_Mas_User_Contract_Validity_Admin");
 
                 entity.Property(e => e.CrMasUserContractValidityUserId)
                     .HasMaxLength(10)
@@ -3919,7 +4414,6 @@ namespace Bnan.Core.Models
 
             OnModelCreatingPartial(modelBuilder);
         }
-
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

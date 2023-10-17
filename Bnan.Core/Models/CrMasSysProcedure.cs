@@ -8,6 +8,7 @@ namespace Bnan.Core.Models
         public CrMasSysProcedure()
         {
             CrCasBranchDocuments = new HashSet<CrCasBranchDocument>();
+            CrCasCarDocumentsMaintenances = new HashSet<CrCasCarDocumentsMaintenance>();
             CrCasLessorMechanisms = new HashSet<CrCasLessorMechanism>();
             CrCasSysAdministrativeProcedures = new HashSet<CrCasSysAdministrativeProcedure>();
             CrMasContractCompanies = new HashSet<CrMasContractCompany>();
@@ -24,6 +25,7 @@ namespace Bnan.Core.Models
         public string? CrMasSysProceduresReasons { get; set; }
 
         public virtual ICollection<CrCasBranchDocument> CrCasBranchDocuments { get; set; }
+        public virtual ICollection<CrCasCarDocumentsMaintenance> CrCasCarDocumentsMaintenances { get; set; }
         public virtual ICollection<CrCasLessorMechanism> CrCasLessorMechanisms { get; set; }
         public virtual ICollection<CrCasSysAdministrativeProcedure> CrCasSysAdministrativeProcedures { get; set; }
         public virtual ICollection<CrMasContractCompany> CrMasContractCompanies { get; set; }

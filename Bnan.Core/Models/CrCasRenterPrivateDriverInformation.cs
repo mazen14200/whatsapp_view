@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bnan.Core.Models
 {
     public partial class CrCasRenterPrivateDriverInformation
     {
-        
         public string CrCasRenterPrivateDriverInformationId { get; set; } = null!;
         public string CrCasRenterPrivateDriverInformationLessor { get; set; } = null!;
         public string? CrCasRenterPrivateDriverInformationIdtrype { get; set; }
