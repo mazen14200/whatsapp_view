@@ -124,6 +124,8 @@
   "Renew": "ReNew",
   "AboutToExpire": "About To Expire",
   "Expire": "Expire",
+  "Avaliable": "متاح",
+  "UnAvaliable": "غير متاح",
 
   // component title
   "Branch Data": "Branch Data",
@@ -888,7 +890,10 @@
   "MattressColor": "Mattress Color",
   "FloorColor": "Floor Color",
   "JoinedFleetDate": "Joined Fleet Date",
-  "CurrentMeter": "Current Meter"
+  "CurrentMeter": "Current Meter",
+  "LastDateContract": "Last Contract",
+  "IsExists": "This Exists Before",
+  "RessureFromNameCar": "Please Choose the correct car name from the list"
 
 
 }

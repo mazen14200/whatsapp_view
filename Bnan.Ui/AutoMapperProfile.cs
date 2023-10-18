@@ -90,6 +90,8 @@ namespace Bnan.Inferastructure
             CreateMap<OwnersVM, CrCasOwner>();
             CreateMap<AdminstritiveProceduresVM, CrCasSysAdministrativeProcedure>();
             CreateMap<CrCasSysAdministrativeProcedure, AdminstritiveProceduresVM>();
+            CreateMap<CarsInforamtionVM, CrCasCarInformation>();
+            CreateMap<CrCasCarInformation, CarsInforamtionVM>();
 
         }
 

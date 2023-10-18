@@ -108,6 +108,8 @@
   "Renew": "لم يسجل",
   "AboutToExpire": "على وشك الإنتهاء",
   "Expire": "منتهي",
+  "Avaliable": "متاح",
+  "UnAvaliable": "غير متاح",
 
   // component title
   "Branch Data": "بيانات الفرع",
@@ -876,5 +878,11 @@
   "MattressColor": "لون المرتبة",
   "FloorColor": "لون الارضية",
   "CurrentMeter": "القراءة الحالية",
-  "JoinedFleetDate": "تاريخ دخولها"
+  "JoinedFleetDate": "تاريخ دخولها",
+  "LastDateContract": "اخر عقد",
+  "serialNoExist": "الرقم التسلسلي موجود من قبل",
+  "PlateNoExist": "رقم اللوحة موجود من قبل",
+  "SturctureNoExist": "رقم الهيكل موجود من قبل",
+  "IsExists": "موجود من قبل",
+  "RessureFromNameCar": "يرجي اختيار اسم السيارة الصحيح من القائمة"
 }

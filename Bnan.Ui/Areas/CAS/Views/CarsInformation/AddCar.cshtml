@@ -75,10 +75,11 @@
                         <label class="form-label" for="CrCasCarInformationSerailNo">@localizer["SerialNumber"]</label>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" asp-for="CrCasCarInformationSerailNo" required maxlength="22" />
+                        <input type="text" class="form-control" asp-for="CrCasCarInformationSerailNo" required maxlength="20" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
                         <div style="margin-top:2px">
                             <div style="height: 1.35em">
                                 <span asp-validation-for="CrCasCarInformationSerailNo" class="text-danger"></span>
+                                @Html.ValidationMessage("IsExists", null, new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -88,7 +89,9 @@
                         <label class="form-label" for="CrCasCarInformationDistribution">@localizer["Car"]</label>
                     </div>
                     <div class="col-md-3">
-                        <select class="form-select" asp-for="CrCasCarInformationDistribution" style="width: 100%;" dir="rtl" required>
+                        <input type="text" class="form-control" asp-for="CrCasCarInformationDistribution" autocomplete="off">
+
+                       @* <select class="form-select" asp-for="CrCasCarInformationDistribution" style="width: 100%;" dir="rtl" required>
                             <option value="" selected></option> <!-- Add an empty option as the first option -->
                             @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                             {
@@ -105,11 +108,12 @@
                                 }
                             }
 
-                        </select>
+                        </select>*@
 
                         <div style="margin-top:2px">
                             <div style="height: 1.35em">
                                 <span asp-validation-for="CrCasCarInformationDistribution" class="text-danger"></span>
+                                @Html.ValidationMessage("CrMasSupCarDistributionConcatenateName", null, new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -117,10 +121,11 @@
                         <label class="form-label" for="CrCasCarInformationStructureNo">@localizer["StructureNo"]</label>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" asp-for="CrCasCarInformationStructureNo" required maxlength="50" />
+                        <input type="text" class="form-control" asp-for="CrCasCarInformationStructureNo" required maxlength="50" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')" />
                         <div style="margin-top:2px">
                             <div style="height: 1.35em">
                                 <span asp-validation-for="CrCasCarInformationStructureNo" class="text-danger"></span>
+                                @Html.ValidationMessage("IsExists", null, new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -224,50 +229,152 @@
                     <div class="col-md-2">
                         <div class="row">
                             <div class="col-md-4" style="width: 100px;">
-                                <select class="form-select" name="firstChar">
+                                <select class="form-select" name="firstChar" required data-val="true" data-val-required="@localizer["requiredFiled"]">
                                     <option value=""></option>
-                                    <option value="أ">أ</option>
-                                    <option value="ب">ب</option>
-                                    <option value="ت">ت</option>
-                                    <option value="ث">ث</option>
-                                    <option value="ج">ج</option>
-                                    <option value="ح">ح</option>
-                                    <option value="خ">خ</option>
-                                    <option value="د">د</option>
+                                    @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                    {
+                                        <option value="Aأ">أ</option>
+                                        <option value="Bب">ب</option>
+                                        <option value="Jح">ح</option>
+                                        <option value="Dد">د</option>
+                                        <option value="Rر">ر</option>
+                                        <option value="Sس">س</option>
+                                        <option value="Xص">ص</option>
+                                        <option value="Tط">ط</option>
+                                        <option value="Eع">ع</option>
+                                        <option value="Gق">ق</option>
+                                        <option value="Kك">ك</option>
+                                        <option value="Lل">ل</option>
+                                        <option value="Zم">م</option>
+                                        <option value="Nن">ن</option>
+                                        <option value="Hهـ">هـ</option>
+                                        <option value="Uو">و</option>
+                                        <option value="Vي">ي</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="Aأ">A</option>
+                                        <option value="Bب">B</option>
+                                        <option value="Jح">J</option>
+                                        <option value="Dد">D</option>
+                                        <option value="Rر">R</option>
+                                        <option value="Sس">S</option>
+                                        <option value="Xص">X</option>
+                                        <option value="Tط">T</option>
+                                        <option value="Eع">E</option>
+                                        <option value="Gق">G</option>
+                                        <option value="Kك">K</option>
+                                        <option value="Lل">L</option>
+                                        <option value="Zم">Z</option>
+                                        <option value="Nن">N</option>
+                                        <option value="Hهـ">H</option>
+                                        <option value="Uو">U</option>
+                                        <option value="Vي">V</option>
+                                    }
+
                                 </select>
                             </div>
                             <div class="col-md-4 colorMarginCar" >
-                                <select class="form-select" name="secondChar">
+                                <select class="form-select" name="secondChar" required data-val="true" data-val-required="@localizer["requiredFiled"]">
                                     <option value=""></option>
-                                    <option value="أ">أ</option>
-                                    <option value="ب">ب</option>
-                                    <option value="ت">ت</option>
-                                    <option value="ث">ث</option>
-                                    <option value="ج">ج</option>
-                                    <option value="ح">ح</option>
-                                    <option value="خ">خ</option>
-                                    <option value="د">د</option>
+                                    @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                    {
+                                        <option value="Aأ">أ</option>
+                                        <option value="Bب">ب</option>
+                                        <option value="Jح">ح</option>
+                                        <option value="Dد">د</option>
+                                        <option value="Rر">ر</option>
+                                        <option value="Sس">س</option>
+                                        <option value="Xص">ص</option>
+                                        <option value="Tط">ط</option>
+                                        <option value="Eع">ع</option>
+                                        <option value="Gق">ق</option>
+                                        <option value="Kك">ك</option>
+                                        <option value="Lل">ل</option>
+                                        <option value="Zم">م</option>
+                                        <option value="Nن">ن</option>
+                                        <option value="Hهـ">هـ</option>
+                                        <option value="Uو">و</option>
+                                        <option value="Vي">ي</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="Aأ">A</option>
+                                        <option value="Bب">B</option>
+                                        <option value="Jح">J</option>
+                                        <option value="Dد">D</option>
+                                        <option value="Rر">R</option>
+                                        <option value="Sس">S</option>
+                                        <option value="Xص">X</option>
+                                        <option value="Tط">T</option>
+                                        <option value="Eع">E</option>
+                                        <option value="Gق">G</option>
+                                        <option value="Kك">K</option>
+                                        <option value="Lل">L</option>
+                                        <option value="Zم">Z</option>
+                                        <option value="Nن">N</option>
+                                        <option value="Hهـ">H</option>
+                                        <option value="Uو">U</option>
+                                        <option value="Vي">V</option>
+                                    }
+
                                 </select>
                             </div>
                             <div class="col-md-4 colorMarginCar2">
-                                <select class="form-select" name="ThirdChar">
+                                <select class="form-select" name="thirdChar" required data-val="true" data-val-required="@localizer["requiredFiled"]">
                                     <option value=""></option>
-                                    <option value="أ">أ</option>
-                                    <option value="ب">ب</option>
-                                    <option value="ت">ت</option>
-                                    <option value="ث">ث</option>
-                                    <option value="ج">ج</option>
-                                    <option value="ح">ح</option>
-                                    <option value="خ">خ</option>
-                                    <option value="د">د</option>
+                                    @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                    {
+                                        <option value="Aأ">أ</option>
+                                        <option value="Bب">ب</option>
+                                        <option value="Jح">ح</option>
+                                        <option value="Dد">د</option>
+                                        <option value="Rر">ر</option>
+                                        <option value="Sس">س</option>
+                                        <option value="Xص">ص</option>
+                                        <option value="Tط">ط</option>
+                                        <option value="Eع">ع</option>
+                                        <option value="Gق">ق</option>
+                                        <option value="Kك">ك</option>
+                                        <option value="Lل">ل</option>
+                                        <option value="Zم">م</option>
+                                        <option value="Nن">ن</option>
+                                        <option value="Hهـ">هـ</option>
+                                        <option value="Uو">و</option>
+                                        <option value="Vي">ي</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="Aأ">A</option>
+                                        <option value="Bب">B</option>
+                                        <option value="Jح">J</option>
+                                        <option value="Dد">D</option>
+                                        <option value="Rر">R</option>
+                                        <option value="Sس">S</option>
+                                        <option value="Xص">X</option>
+                                        <option value="Tط">T</option>
+                                        <option value="Eع">E</option>
+                                        <option value="Gق">G</option>
+                                        <option value="Kك">K</option>
+                                        <option value="Lل">L</option>
+                                        <option value="Zم">Z</option>
+                                        <option value="Nن">N</option>
+                                        <option value="Hهـ">H</option>
+                                        <option value="Uو">U</option>
+                                        <option value="Vي">V</option>
+                                    }
+
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" style="width: 45%;" name="BoardNumber" required maxlength="4" />
+                        <input type="text" class="form-control" style="width: 45%;" name="BoardNumber" required maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                               data-val="true"
+                               data-val-required="@localizer["requiredFiled"]" />
                         <div style="margin-top:2px">
                             <div style="height: 1.35em">
+                                @Html.ValidationMessage("BoardNumber", null, new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -399,7 +506,7 @@
                         <label class="form-label" for="CrCasCarInformationJoinedFleetDate">@localizer["JoinedFleetDate"]</label>
                     </div>
                     <div class="col-md-3 dateRelative">
-                        <input type="text" class="form-control" asp-for="CrCasCarInformationJoinedFleetDate"/>
+                        <input type="text" class="form-control" asp-for="CrCasCarInformationJoinedFleetDate" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
                         <div style="margin-top:2px">
                             <div style="height: 1.0em">
                                 <span asp-validation-for="@Model.CrCasCarInformationJoinedFleetDate" class="text-danger"></span>
@@ -410,10 +517,23 @@
                         <label class="form-label" for="CrCasCarInformationCurrentMeter">@localizer["CurrentMeter"]</label>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" asp-for="CrCasCarInformationCurrentMeter"/>
+                        <input type="text" class="form-control" asp-for="CrCasCarInformationCurrentMeter" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
                         <div style="margin-top:2px">
                             <div style="height: 1.0em">
                                 <span asp-validation-for="@Model.CrCasCarInformationCurrentMeter" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-1">
+                        <label class="form-label" for="CrCasCarInformationReasons">@localizer["reasons"]</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" asp-for="CrCasCarInformationReasons" style="width: 103%;" />
+                        <div style="margin-top:2px">
+                            <div style="height: 1.0em">
+                                <span asp-validation-for="@Model.CrCasCarInformationReasons" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -447,6 +567,25 @@
                 $(this).prevAll('input').datepicker("show");
             });
         })
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetCarsName", "CarsInformation", new { Area = "CAS" })",
+                success: function (response) {
+                    console.log(response)
+                    const newArray = response.map(obj => obj.text);
+                    $("#CrCasCarInformationDistribution").autocomplete({
+                        source: newArray,
+                    });
+
+                },
+            })
+
+        });
+
 
     </script>
 }

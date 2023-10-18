@@ -15,8 +15,9 @@
                     <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["SerialNumber"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Branch"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Category"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["CurrentMeter"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
             </thead>
@@ -33,8 +34,9 @@
                             <td>@no</td>
                             <td>@item.CrCasCarInformationSerailNo</td>
                             <td>@item.CrCasCarInformation1.CrCasBranchInformationEnShortName</td>
-                            <td>@item.CrCasCarInformationCategoryNavigation.CrMasSupCarCategoryEnName</td>
                             <td>@item.CrCasCarInformationConcatenateEnName</td>
+                            <td>@item.CrCasCarInformationCurrentMeter</td>
+                            <td>@item.CrCasCarInformationLastContractDate</td>
                             <td>
                                 @if (@item.CrCasCarInformationStatus == Status.Deleted)
                                 {
@@ -53,8 +55,9 @@
                            <td>@no</td>
                             <td>@item.CrCasCarInformationSerailNo</td>
                             <td>@item.CrCasCarInformation1.CrCasBranchInformationEnShortName</td>
-                            <td>@item.CrCasCarInformationCategoryNavigation.CrMasSupCarCategoryEnName</td>
                             <td>@item.CrCasCarInformationConcatenateEnName</td>
+                            <td>@item.CrCasCarInformationCurrentMeter</td>
+                            <td>@item.CrCasCarInformationLastContractDate</td>
                             <td>
                                 @if (@item.CrCasCarInformationStatus == Status.Active)
                                 {
@@ -94,8 +97,9 @@ else
                      <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["SerialNumber"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Branch"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Category"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["CurrentMeter"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
             </thead>
@@ -112,8 +116,9 @@ else
                             <td>@no</td>
                             <td>@item.CrCasCarInformationSerailNo</td>
                             <td>@item.CrCasCarInformation1.CrCasBranchInformationArShortName</td>
-                            <td>@item.CrCasCarInformationCategoryNavigation.CrMasSupCarCategoryArName</td>
                             <td>@item.CrCasCarInformationConcatenateArName</td>
+                            <td>@item.CrCasCarInformationCurrentMeter</td>
+                            <td>@item.CrCasCarInformationLastContractDate</td>
                             <td>
                                 @if (@item.CrCasCarInformationStatus == Status.Deleted)
                                 {
@@ -132,8 +137,9 @@ else
                             <td>@no</td>
                             <td>@item.CrCasCarInformationSerailNo</td>
                             <td>@item.CrCasCarInformation1.CrCasBranchInformationArShortName</td>
-                            <td>@item.CrCasCarInformationCategoryNavigation.CrMasSupCarCategoryArName</td>
                             <td>@item.CrCasCarInformationConcatenateArName</td>
+                            <td>@item.CrCasCarInformationCurrentMeter</td>
+                            <td>@item.CrCasCarInformationLastContractDate</td>
                             <td>
                                 @if (@item.CrCasCarInformationStatus == Status.Active)
                                 {

@@ -220,7 +220,9 @@ namespace Bnan.Ui.Areas.Identity.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
+            var user = await _userManager.GetUserAsync(User);
+
+            //var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
             user.CrMasUserInformationOperationStatus = false;
             user.CrMasUserInformationExitLastDate = DateTime.Now.Date;
             user.CrMasUserInformationExitLastTime = DateTime.Now.TimeOfDay;

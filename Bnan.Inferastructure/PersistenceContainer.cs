@@ -126,6 +126,8 @@ namespace Bnan.Inferastructure
             builder.Services.AddScoped<IRenterNationality, RenterNationality>();
             builder.Services.AddScoped<IUserContractValididation, UserContractValididation>();
             builder.Services.AddScoped<IAdminstritiveProcedures, AdminstritiveProcedures>();
+            builder.Services.AddScoped<ICarInformation, CarInformation>();
+            builder.Services.AddScoped<IDocumentsMaintainanceCar, DocumentsMaintainanceCar>();
 
             return builder;
         }
