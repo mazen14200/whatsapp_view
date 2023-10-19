@@ -77,6 +77,9 @@ namespace Bnan.Inferastructure.Repository
         public IGenric<CrMasSupCarFuel> CrMasSupCarFuel { get; private set; }
         public IGenric<CrMasSupCarColor> CrMasSupCarColor { get; private set; }
         public IGenric<CrCasCarDocumentsMaintenance> CrCasCarDocumentsMaintenance { get; private set; }
+        public IGenric<CrMasSupCarAdvantage> CrMasSupCarAdvantage { get; private set; }
+        public IGenric<CrCasCarAdvantage> CrCasCarAdvantage { get; private set; }
+
 
 
         public UnitOfWork(BnanKSAContext context)
@@ -145,6 +148,8 @@ namespace Bnan.Inferastructure.Repository
             CrMasSupCarCvt = new BaseRepository<CrMasSupCarCvt>(_context);
             CrMasSupCarColor = new BaseRepository<CrMasSupCarColor>(_context);
             CrCasCarDocumentsMaintenance = new BaseRepository<CrCasCarDocumentsMaintenance>(_context);
+            CrMasSupCarAdvantage = new BaseRepository<CrMasSupCarAdvantage>(_context);
+            CrCasCarAdvantage = new BaseRepository<CrCasCarAdvantage>(_context);
 
 
         }

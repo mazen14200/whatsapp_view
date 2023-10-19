@@ -456,7 +456,6 @@
             var form = document.getElementById('form');
             $("#submitButton").click(function (e) {
                 e.preventDefault();
-
                 // Get the selected checkboxes and their IDs
                 var checkboxes = document.querySelectorAll('.checkbox-branch');
                 var data = [];
@@ -465,48 +464,11 @@
                     var checked = checkbox.checked;
                     data.push({ Id: id, Value: checked });
                 });
-
-                // Create a hidden input field with the data
                 var hiddenInput = document.createElement('input');
                 hiddenInput.setAttribute('type', 'hidden');
                 hiddenInput.setAttribute('name', 'CheckboxBranchesWithData');
                 hiddenInput.value = JSON.stringify(data);
-
-                // Append the hidden input field to the form BEFORE checking validity
                 form.appendChild(hiddenInput);
-
-                // var allInputsValid = true;
-                // var inputs = form.querySelectorAll('input[type="text"]');
-                // var filteredInputs = [];
-
-                // inputs.forEach(function (input) {
-                //     var inputId = input.getAttribute('id');
-                //     if (inputId !== 'CrMasUserInformationEmail' && inputId !== 'CrMasUserInformationMobileNo') {
-                //         filteredInputs.push(input);
-                //     }
-                // });
-                // filteredInputs.forEach(function (input) {
-                //     var readonlyInput = input.getAttribute('readonly');
-                // })
-                // filteredInputs.push(hiddenInput);
-                // console.log(inputs)
-                // console.log(filteredInputs)
-
-                // filteredInputs.forEach(function (input) {
-                //     if (input.value == "" || input.value == null || !input.checkValidity()) {
-                //         allInputsValid = false;
-                //     }
-                // });
-                // console.log(allInputsValid)
-
-                // var Spans = form.querySelectorAll('span');
-                // Spans.forEach(function (span) {
-                //     if (span.innerText !== '' && span.innerText !== null) {
-                //         console.log(span.innerText)
-                //         allInputsValid = false;
-                //     }
-                // })
-                // console.log(allInputsValid)
                 console.log(data)
                 form.submit();
 

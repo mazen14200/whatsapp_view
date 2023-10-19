@@ -714,7 +714,11 @@ namespace Bnan.Core.Models
                     .IsUnicode(false)
                     .HasColumnName("CR_Cas_Car_Advantages_Category")
                     .IsFixedLength();
-
+                entity.Property(e => e.CRCasCarAdvantagesStatus)
+                   .HasMaxLength(1)
+                   .IsUnicode(false)
+                   .HasColumnName("CR_Cas_Car_Advantages_Status")
+                   .IsFixedLength();
                 entity.Property(e => e.CrCasCarAdvantagesLessor)
                     .HasMaxLength(4)
                     .IsUnicode(false)

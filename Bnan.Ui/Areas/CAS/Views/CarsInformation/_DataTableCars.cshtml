@@ -17,6 +17,8 @@
                     <th aria-label="Position: activate to sort column ascending">@localizer["Branch"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["CurrentMeter"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["ContractCount"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["DaysCount"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
@@ -28,14 +30,16 @@
                 }
                 @foreach (var item in Model)
                 {
-                    @if (item.CrCasCarInformationStatus == @Status.Deleted || item.CrCasCarInformationStatus == @Status.Hold)
+                    @if (item.CrCasCarInformationStatus == @Status.Deleted || item.CrCasCarInformationStatus == @Status.Hold || item.CrCasCarInformationStatus == Status.Sold)
                     {
-                        <tr onclick="location.href='@Url.Action("Edit", "CarsInformation", new { id = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;color:red">
+                        <tr onclick="location.href='@Url.Action("Edit", "CarsInformation", new { serialNumber = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;color:red">
                             <td>@no</td>
                             <td>@item.CrCasCarInformationSerailNo</td>
                             <td>@item.CrCasCarInformation1.CrCasBranchInformationEnShortName</td>
                             <td>@item.CrCasCarInformationConcatenateEnName</td>
-                            <td>@item.CrCasCarInformationCurrentMeter</td>
+                            <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationConractDaysNo?.ToString("N0")</td>
                             <td>@item.CrCasCarInformationLastContractDate</td>
                             <td>
                                 @if (@item.CrCasCarInformationStatus == Status.Deleted)
@@ -46,30 +50,28 @@
                                 {
                                     @localizer["Hold"]
                                 }
+                                else if (@item.CrCasCarInformationStatus == Status.Sold)
+                                {
+                                    @localizer["Sold"]
+                                }
                             </td>
                         </tr>
                     }
                     else
                     {
-                        <tr onclick="location.href='@Url.Action("Edit", "CarsInformation", new { id = item.CrCasCarInformationSerailNo })'">
+                        <tr onclick="location.href='@Url.Action("Edit", "CarsInformation", new { serialNumber = item.CrCasCarInformationSerailNo })'">
                            <td>@no</td>
                             <td>@item.CrCasCarInformationSerailNo</td>
                             <td>@item.CrCasCarInformation1.CrCasBranchInformationEnShortName</td>
                             <td>@item.CrCasCarInformationConcatenateEnName</td>
-                            <td>@item.CrCasCarInformationCurrentMeter</td>
+                            <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationConractDaysNo?.ToString("N0")</td>
                             <td>@item.CrCasCarInformationLastContractDate</td>
                             <td>
                                 @if (@item.CrCasCarInformationStatus == Status.Active)
                                 {
                                     @localizer["Active"]
-                                }
-                                else if (@item.CrCasCarInformationStatus == Status.Maintaince)
-                                {
-                                    @localizer["Maintaince"]
-                                }
-                                else if (@item.CrCasCarInformationStatus == Status.Sold)
-                                {
-                                    @localizer["Sold"]
                                 }
                                 else if (@item.CrCasCarInformationStatus == Status.ForSale)
                                 {
@@ -78,6 +80,11 @@
                                 else if (@item.CrCasCarInformationStatus == Status.Rented)
                                 {
                                     @localizer["Rented"]
+                                }
+                                else if (@item.CrCasCarInformationPriceStatus==false || item.CrCasCarInformationOwnerStatus!="A" || item.CrCasCarInformationBranchStatus!="A" ||
+                                         @item.CrCasCarInformationStatus == Status.Hold)
+                                {
+                                    @localizer["UnAvaliable"]
                                 }
                             </td>
                         </tr>
@@ -99,6 +106,8 @@ else
                     <th aria-label="Position: activate to sort column ascending">@localizer["Branch"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["CurrentMeter"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["ContractCount"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["DaysCount"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
@@ -110,14 +119,16 @@ else
                 }
                 @foreach (var item in Model)
                 {
-                    @if (item.CrCasCarInformationStatus == @Status.Deleted || item.CrCasCarInformationStatus == @Status.Hold)
+                    @if (item.CrCasCarInformationStatus == @Status.Deleted || item.CrCasCarInformationStatus == @Status.Hold || @item.CrCasCarInformationStatus == Status.Sold)
                     {
-                        <tr onclick="location.href='@Url.Action("Edit", "CarsInformation", new { id = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;color:red">
+                        <tr onclick="location.href='@Url.Action("Edit", "CarsInformation", new { serialNumber = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;color:red">
                             <td>@no</td>
                             <td>@item.CrCasCarInformationSerailNo</td>
                             <td>@item.CrCasCarInformation1.CrCasBranchInformationArShortName</td>
                             <td>@item.CrCasCarInformationConcatenateArName</td>
-                            <td>@item.CrCasCarInformationCurrentMeter</td>
+                            <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationConractDaysNo?.ToString("N0")</td>
                             <td>@item.CrCasCarInformationLastContractDate</td>
                             <td>
                                 @if (@item.CrCasCarInformationStatus == Status.Deleted)
@@ -128,30 +139,30 @@ else
                                 {
                                     @localizer["Hold"]
                                 }
+                                else if (@item.CrCasCarInformationStatus == Status.Sold)
+                                {
+                                    @localizer["Sold"]
+                                }
+                               
                             </td>
                         </tr>
                     }
                     else
                     {
-                        <tr onclick="location.href='@Url.Action("Edit", "CarsInformation", new { id = item.CrCasCarInformationSerailNo })'">
+                        <tr onclick="location.href='@Url.Action("Edit", "CarsInformation", new { serialNumber = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;">
                             <td>@no</td>
                             <td>@item.CrCasCarInformationSerailNo</td>
                             <td>@item.CrCasCarInformation1.CrCasBranchInformationArShortName</td>
                             <td>@item.CrCasCarInformationConcatenateArName</td>
-                            <td>@item.CrCasCarInformationCurrentMeter</td>
+                            <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationConractDaysNo?.ToString("N0")</td>
                             <td>@item.CrCasCarInformationLastContractDate</td>
                             <td>
-                                @if (@item.CrCasCarInformationStatus == Status.Active)
+                                @if (item.CrCasCarInformationPriceStatus==true && item.CrCasCarInformationOwnerStatus=="A" &&
+                                     item.CrCasCarInformationBranchStatus=="A" &&item.CrCasCarInformationStatus == Status.Active)
                                 {
                                     @localizer["Active"]
-                                }
-                                else if (@item.CrCasCarInformationStatus == Status.Maintaince)
-                                {
-                                    @localizer["Maintaince"]
-                                }
-                                else if (@item.CrCasCarInformationStatus == Status.Sold)
-                                {
-                                    @localizer["Sold"]
                                 }
                                 else if (@item.CrCasCarInformationStatus == Status.ForSale)
                                 {
@@ -160,6 +171,11 @@ else
                                 else if (@item.CrCasCarInformationStatus == Status.Rented)
                                 {
                                     @localizer["Rented"]
+                                }
+                                else if (@item.CrCasCarInformationPriceStatus==false || item.CrCasCarInformationOwnerStatus!="A" || item.CrCasCarInformationBranchStatus!="A" ||
+                                         @item.CrCasCarInformationStatus == Status.Hold)
+                                {
+                                    @localizer["UnAvaliable"]
                                 }
                             </td>
                         </tr>

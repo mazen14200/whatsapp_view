@@ -10,9 +10,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
 using NToastNotify;
+using NuGet.Packaging;
 using System.Globalization;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Bnan.Ui.Areas.CAS.Controllers
 {
@@ -64,6 +68,18 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     {
                         return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == Status.Active || x.CrCasCarInformationStatus == Status.Hold || x.CrCasCarInformationStatus == Status.Rented));
                     }
+                    else if (status == Status.Active)
+                    {
+                        return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == status &&
+                                                                                x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationBranch == Status.Active &&
+                                                                                x.CrCasCarInformationOwnerStatus == Status.Active));
+                    }
+                    else if (status == Status.Hold)
+                    {
+                        return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == status ||
+                                                                                x.CrCasCarInformationPriceStatus == false || x.CrCasCarInformationBranch != Status.Active ||
+                                                                                x.CrCasCarInformationOwnerStatus != Status.Active));
+                    }
                     return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == status));
                 }
             }
@@ -95,25 +111,18 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var Colors = _unitOfWork.CrMasSupCarColor.FindAll(x => x.CrMasSupCarColorStatus == Status.Active).ToList();
             ViewData["ColorsAr"] = Colors.Select(x => new SelectListItem { Value = x.CrMasSupCarColorCode.ToString(), Text = x.CrMasSupCarColorArName }).ToList();
             ViewData["ColorsEn"] = Colors.Select(x => new SelectListItem { Value = x.CrMasSupCarColorCode.ToString(), Text = x.CrMasSupCarColorEnName }).ToList();
+            ViewBag.Advantages = _unitOfWork.CrMasSupCarAdvantage.FindAll(x => x.CrMasSupCarAdvantagesStatus == Status.Active).ToList();
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCar(CarsInforamtionVM carsInforamtionVM, string firstChar, string secondChar, string thirdChar, string BoardNumber)
+        public async Task<IActionResult> AddCar(CarsInforamtionVM carsInforamtionVM, List<string> CheckboxAdvantagesWithData, string firstChar, string secondChar, string thirdChar, string BoardNumber)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
-            var CarsDistribution = _unitOfWork.CrMasSupCarDistribution.FindAll(x => x.CrMasSupCarDistributionStatus == Status.Active).ToList();
+            //var CarsDistribution = _unitOfWork.CrMasSupCarDistribution.FindAll(x => x.CrMasSupCarDistributionStatus == Status.Active).ToList();
 
-            // get plate Number 
-            var firstEnChar = firstChar[0];
-            var secondEnChar = secondChar[0];
-            var ThirdEnChar = thirdChar[0];
-            string firstArChar; if (firstChar[1].ToString() == "ه") firstArChar = "هـ"; else firstArChar = firstChar[1].ToString();
-            string secondArChar; if (secondChar[1].ToString() == "ه") secondArChar = "هـ"; else secondArChar = secondChar[1].ToString();
-            string thirdArChar; if (thirdChar[1].ToString() == "ه") thirdArChar = "هـ"; else thirdArChar = thirdChar[1].ToString();
-            carsInforamtionVM.CrCasCarInformationPlateArNo = $"{firstArChar} {secondArChar} {thirdArChar} {BoardNumber}";
-            carsInforamtionVM.CrCasCarInformationPlateEnNo = $"{firstEnChar} {secondEnChar} {ThirdEnChar} {BoardNumber}";
+
 
             var serialNoExist = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == carsInforamtionVM.CrCasCarInformationSerailNo);
             var SturctureNoExist = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationStructureNo == carsInforamtionVM.CrCasCarInformationStructureNo);
@@ -122,30 +131,56 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             if (serialNoExist != null) ModelState.AddModelError("CrCasCarInformationSerailNo", _localizer["IsExists"]);
             if (SturctureNoExist != null) ModelState.AddModelError("CrCasCarInformationStructureNo", _localizer["IsExists"]);
-            if (PlateNoExist != null)
+            if (PlateNoExist != null) ModelState.AddModelError("BoardNumber", _localizer["IsExists"]);
+
+            if (!string.IsNullOrEmpty(carsInforamtionVM.CrCasCarInformationDistribution))
             {
-                ModelState.AddModelError("BoardNumber", _localizer["IsExists"]);
-            }
-            var DistribtionCode = "";
-            var Distriction = _unitOfWork.CrMasSupCarDistribution.Find(x => x.CrMasSupCarDistributionConcatenateArName == carsInforamtionVM.CrCasCarInformationDistribution ||
-                                                                            x.CrMasSupCarDistributionConcatenateEnName == carsInforamtionVM.CrCasCarInformationDistribution);
-            if (Distriction == null)
-            {
-                ModelState.AddModelError("CrMasSupCarDistributionConcatenateName", _localizer["RessureFromNameCar"]);
-            }
-            else
-            {
-                carsInforamtionVM.CrCasCarInformationDistribution = Distriction.CrMasSupCarDistributionCode;
+                var Distriction = _unitOfWork.CrMasSupCarDistribution.Find(x => x.CrMasSupCarDistributionConcatenateArName == carsInforamtionVM.CrCasCarInformationDistribution ||
+                                                                          x.CrMasSupCarDistributionConcatenateEnName == carsInforamtionVM.CrCasCarInformationDistribution);
+                if (Distriction == null) ModelState.AddModelError("CrMasSupCarDistributionConcatenateName", _localizer["RessureFromNameCar"]);
+                else carsInforamtionVM.CrCasCarInformationDistribution = Distriction.CrMasSupCarDistributionCode;
             }
 
             if (ModelState.IsValid)
             {
+                // get plate Number 
+                var firstEnChar = firstChar[0];
+                var secondEnChar = secondChar[0];
+                var ThirdEnChar = thirdChar[0];
+                string firstArChar; if (firstChar[1].ToString() == "ه") firstArChar = "هـ"; else firstArChar = firstChar[1].ToString();
+                string secondArChar; if (secondChar[1].ToString() == "ه") secondArChar = "هـ"; else secondArChar = secondChar[1].ToString();
+                string thirdArChar; if (thirdChar[1].ToString() == "ه") thirdArChar = "هـ"; else thirdArChar = thirdChar[1].ToString();
+                carsInforamtionVM.CrCasCarInformationPlateArNo = $"{firstArChar} {secondArChar} {thirdArChar} {BoardNumber}";
+                carsInforamtionVM.CrCasCarInformationPlateEnNo = $"{firstEnChar} {secondEnChar} {ThirdEnChar} {BoardNumber}";
+
                 var model = _mapper.Map<CrCasCarInformation>(carsInforamtionVM);
                 model.CrCasCarInformationLessor = lessorCode;
                 var carRes = await _carInformation.AddCarInformation(model);
-                var docRes = await _documentsMaintainanceCar.AddDocumentCar(model.CrCasCarInformationSerailNo,lessorCode,"100",(int)model.CrCasCarInformationCurrentMeter);
+                var docRes = await _documentsMaintainanceCar.AddDocumentCar(model.CrCasCarInformationSerailNo, lessorCode, "100", (int)model.CrCasCarInformationCurrentMeter);
                 var mainRes = await _documentsMaintainanceCar.AddMaintainaceCar(model.CrCasCarInformationSerailNo, lessorCode, "100", (int)model.CrCasCarInformationCurrentMeter);
-                if (carRes==true&&docRes==true&&mainRes==true)
+
+                List<CheckBoxAdvantagesData> checkboxDataList = new List<CheckBoxAdvantagesData>();
+                // Deserialize and filter the checkbox data
+                foreach (var item in CheckboxAdvantagesWithData)
+                {
+                    List<CheckBoxAdvantagesData> deserializedData = JsonConvert.DeserializeObject<List<CheckBoxAdvantagesData>>(item);
+                    checkboxDataList.AddRange(deserializedData);
+                }
+                foreach (var item in checkboxDataList)
+                {
+                    var id = item.Id;
+                    var value = item.Value;
+
+                    if (value.ToLower() == "true")
+                    {
+                        await _carInformation.AddAdvantagesToCar(model.CrCasCarInformationSerailNo, id, model.CrCasCarInformationLessor, model.CrCasCarInformationDistribution, Status.Active);
+                    }
+                    else
+                    {
+                        await _carInformation.AddAdvantagesToCar(model.CrCasCarInformationSerailNo, id, model.CrCasCarInformationLessor, model.CrCasCarInformationDistribution, Status.Deleted);
+                    }
+                }
+                if (carRes == true && docRes == true && mainRes == true)
                 {
                     await _unitOfWork.CompleteAsync();
                     // SaveTracing
@@ -172,6 +207,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var Colors = _unitOfWork.CrMasSupCarColor.FindAll(x => x.CrMasSupCarColorStatus == Status.Active).ToList();
             ViewData["ColorsAr"] = Colors.Select(x => new SelectListItem { Value = x.CrMasSupCarColorCode.ToString(), Text = x.CrMasSupCarColorArName }).ToList();
             ViewData["ColorsEn"] = Colors.Select(x => new SelectListItem { Value = x.CrMasSupCarColorCode.ToString(), Text = x.CrMasSupCarColorEnName }).ToList();
+            ViewBag.Advantages = _unitOfWork.CrMasSupCarAdvantage.FindAll(x => x.CrMasSupCarAdvantagesStatus == Status.Active).ToList();
             return View(carsInforamtionVM);
         }
 
@@ -188,5 +224,186 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var carArrayEn = carsInformation.Select(c => new { text = c.CrMasSupCarDistributionConcatenateEnName, value = c.CrMasSupCarDistributionCode });
             return Json(carArrayEn);
         }
+        [HttpGet]
+        public async Task<IActionResult> Edit(string serialNumber)
+        {
+            //sidebar Active
+            ViewBag.id = "#sidebarcars";
+            ViewBag.no = "0";
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var titles = await setTitle("202", "2202001", "2");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
+
+            var RegistrationType = _unitOfWork.CrMasSupCarRegistration.FindAll(x => x.CrMasSupCarRegistrationStatus == Status.Active).ToList();
+            ViewData["RegistrationTypeAr"] = RegistrationType.Select(x => new SelectListItem { Value = x.CrMasSupCarRegistrationCode.ToString(), Text = x.CrMasSupCarRegistrationArName }).ToList();
+            ViewData["RegistrationTypeEn"] = RegistrationType.Select(x => new SelectListItem { Value = x.CrMasSupCarRegistrationCode.ToString(), Text = x.CrMasSupCarRegistrationEnName }).ToList();
+            var FuelType = _unitOfWork.CrMasSupCarFuel.FindAll(x => x.CrMasSupCarFuelStatus == Status.Active).ToList();
+            ViewData["FuelTypeAr"] = FuelType.Select(x => new SelectListItem { Value = x.CrMasSupCarFuelCode.ToString(), Text = x.CrMasSupCarFuelArName }).ToList();
+            ViewData["FuelTypeEn"] = FuelType.Select(x => new SelectListItem { Value = x.CrMasSupCarFuelCode.ToString(), Text = x.CrMasSupCarFuelEnName }).ToList();
+            var CVTtype = _unitOfWork.CrMasSupCarCvt.FindAll(x => x.CrMasSupCarCvtStatus == Status.Active).ToList();
+            ViewData["CVTtypeAr"] = CVTtype.Select(x => new SelectListItem { Value = x.CrMasSupCarCvtCode.ToString(), Text = x.CrMasSupCarCvtArName }).ToList();
+            ViewData["CVTtypeEn"] = CVTtype.Select(x => new SelectListItem { Value = x.CrMasSupCarCvtCode.ToString(), Text = x.CrMasSupCarCvtEnName }).ToList();
+            var Colors = _unitOfWork.CrMasSupCarColor.FindAll(x => x.CrMasSupCarColorStatus == Status.Active).ToList();
+            ViewData["ColorsAr"] = Colors.Select(x => new SelectListItem { Value = x.CrMasSupCarColorCode.ToString(), Text = x.CrMasSupCarColorArName }).ToList();
+            ViewData["ColorsEn"] = Colors.Select(x => new SelectListItem { Value = x.CrMasSupCarColorCode.ToString(), Text = x.CrMasSupCarColorEnName }).ToList();
+            var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == serialNumber, new[] { "CrCasCarAdvantages" });
+            ViewBag.MainColorAr = _unitOfWork.CrMasSupCarColor.Find(x => x.CrMasSupCarColorCode == car.CrCasCarInformationMainColor).CrMasSupCarColorArName;
+            ViewBag.MainColorEn = _unitOfWork.CrMasSupCarColor.Find(x => x.CrMasSupCarColorCode == car.CrCasCarInformationMainColor).CrMasSupCarColorEnName;
+            ViewBag.JoinedDate = car.CrCasCarInformationJoinedFleetDate?.ToString("dd/MM/yyyy");
+            ViewBag.Advantages = _unitOfWork.CrMasSupCarAdvantage.FindAll(x => x.CrMasSupCarAdvantagesStatus == Status.Active).ToList();
+            ViewBag.CurrentMeter = car.CrCasCarInformationCurrentMeter?.ToString("N0");
+            if (car != null)
+            {
+                var carInforamtionVM = _mapper.Map<CarsInforamtionVM>(car);
+                return View(carInforamtionVM);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(CarsInforamtionVM carsInforamtionVM, List<string> CheckboxAdvantagesWithData)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+
+            var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == carsInforamtionVM.CrCasCarInformationSerailNo, new[] { "CrCasCarAdvantages" });
+            var RegistrationType = _unitOfWork.CrMasSupCarRegistration.FindAll(x => x.CrMasSupCarRegistrationStatus == Status.Active).ToList();
+            ViewData["RegistrationTypeAr"] = RegistrationType.Select(x => new SelectListItem { Value = x.CrMasSupCarRegistrationCode.ToString(), Text = x.CrMasSupCarRegistrationArName }).ToList();
+            ViewData["RegistrationTypeEn"] = RegistrationType.Select(x => new SelectListItem { Value = x.CrMasSupCarRegistrationCode.ToString(), Text = x.CrMasSupCarRegistrationEnName }).ToList();
+            var FuelType = _unitOfWork.CrMasSupCarFuel.FindAll(x => x.CrMasSupCarFuelStatus == Status.Active).ToList();
+            ViewData["FuelTypeAr"] = FuelType.Select(x => new SelectListItem { Value = x.CrMasSupCarFuelCode.ToString(), Text = x.CrMasSupCarFuelArName }).ToList();
+            ViewData["FuelTypeEn"] = FuelType.Select(x => new SelectListItem { Value = x.CrMasSupCarFuelCode.ToString(), Text = x.CrMasSupCarFuelEnName }).ToList();
+            var CVTtype = _unitOfWork.CrMasSupCarCvt.FindAll(x => x.CrMasSupCarCvtStatus == Status.Active).ToList();
+            ViewData["CVTtypeAr"] = CVTtype.Select(x => new SelectListItem { Value = x.CrMasSupCarCvtCode.ToString(), Text = x.CrMasSupCarCvtArName }).ToList();
+            ViewData["CVTtypeEn"] = CVTtype.Select(x => new SelectListItem { Value = x.CrMasSupCarCvtCode.ToString(), Text = x.CrMasSupCarCvtEnName }).ToList();
+            var Colors = _unitOfWork.CrMasSupCarColor.FindAll(x => x.CrMasSupCarColorStatus == Status.Active).ToList();
+            ViewData["ColorsAr"] = Colors.Select(x => new SelectListItem { Value = x.CrMasSupCarColorCode.ToString(), Text = x.CrMasSupCarColorArName }).ToList();
+            ViewData["ColorsEn"] = Colors.Select(x => new SelectListItem { Value = x.CrMasSupCarColorCode.ToString(), Text = x.CrMasSupCarColorEnName }).ToList();
+            ViewBag.MainColorAr = _unitOfWork.CrMasSupCarColor.Find(x => x.CrMasSupCarColorCode == car.CrCasCarInformationMainColor).CrMasSupCarColorArName;
+            ViewBag.MainColorEn = _unitOfWork.CrMasSupCarColor.Find(x => x.CrMasSupCarColorCode == car.CrCasCarInformationMainColor).CrMasSupCarColorEnName;
+            ViewBag.JoinedDate = car.CrCasCarInformationJoinedFleetDate?.ToString("dd/MM/yyyy");
+
+            if (car != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    var carInforamtion = _mapper.Map<CrCasCarInformation>(carsInforamtionVM);
+                    if (await _carInformation.UpdateCarInformation(carInforamtion))
+                    {
+                        if (CheckboxAdvantagesWithData.Count() > 0)
+                        {
+                            List<CheckBoxAdvantagesData> checkboxDataList = new List<CheckBoxAdvantagesData>();
+                            foreach (var item in CheckboxAdvantagesWithData)
+                            {
+                                List<CheckBoxAdvantagesData> deserializedData = JsonConvert.DeserializeObject<List<CheckBoxAdvantagesData>>(item);
+                                checkboxDataList.AddRange(deserializedData);
+                            }
+                            foreach (var item in checkboxDataList)
+                            {
+                                var id = item.Id;
+                                var value = item.Value;
+
+                                if (value.ToLower() == "true")
+                                {
+                                    if (!await _carInformation.UpdateAdvantagesToCar(car.CrCasCarInformationSerailNo, id, car.CrCasCarInformationLessor, Status.Active))
+                                    {
+                                        _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                                        return View(carsInforamtionVM);
+                                    }
+                                }
+                                else
+                                {
+                                    if (!await _carInformation.UpdateAdvantagesToCar(carInforamtion.CrCasCarInformationSerailNo, id, car.CrCasCarInformationLessor, Status.Deleted))
+                                    {
+                                        _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                                        return View(carsInforamtionVM);
+                                    }
+                                }
+                            }
+                        }
+
+                        await _unitOfWork.CompleteAsync();
+                        // SaveTracing
+                        var (mainTask, subTask, system, currentUserr) = await SetTrace("202", "2202001", "2");
+                        await _userLoginsService.SaveTracing(currentUserr.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
+                        subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+                        subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+                        // Save Adminstrive Procedures
+                        await _adminstritiveProcedures.SaveAdminstritive(currentUserr.CrMasUserInformationCode, "1", "202", "20", currentUserr.CrMasUserInformationLessor, "100",
+                            car.CrCasCarInformationSerailNo, null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
+                        _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                        return RedirectToAction("CarsInformation", "CarsInformation");
+                    }
+                    else
+                    {
+                        _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                        return View(carsInforamtionVM);
+                    }
+
+                }
+            }
+
+
+            return View(carsInforamtionVM);
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> EditStatus(string code, string status)
+        {
+            string sAr = "";
+            string sEn = "";
+            var userLogin = await _userManager.GetUserAsync(User);
+            var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == code);
+            if (car != null)
+            {
+                if (status == Status.Hold)
+                {
+                    sAr = "ايقاف ";
+                    sEn = "Hold ";
+                    car.CrCasCarInformationStatus = Status.Hold;
+                }
+                else if (status == Status.Deleted)
+                {
+                    sAr = "حذف";
+                    sEn = "Remove";
+                    car.CrCasCarInformationStatus = Status.Deleted;
+                }
+                else if (status == Status.Active)
+                {
+                    sAr = "استرجاع";
+                    sEn = "Retrive";
+                    car.CrCasCarInformationStatus = Status.Active;
+                }
+                else if (status == Status.ForSale)
+                {
+                    sAr = "عرض للبيع";
+                    sEn = "For Sale";
+                    car.CrCasCarInformationStatus = Status.ForSale;
+                }
+                await _unitOfWork.CompleteAsync();
+                // SaveTracing
+                var (mainTask, subTask, system, currentUserr) = await SetTrace("202", "2202001", "2");
+                await _userLoginsService.SaveTracing(currentUserr.CrMasUserInformationCode, "عرض للبيع", "For Sale", mainTask.CrMasSysMainTasksCode,
+                subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+                subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+                // Save Adminstrive Procedures
+                await _adminstritiveProcedures.SaveAdminstritive(currentUserr.CrMasUserInformationCode, "1", "202", "20", currentUserr.CrMasUserInformationLessor, "100",
+                    car.CrCasCarInformationSerailNo, null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
+                return RedirectToAction("CarsInformation", "CarsInformation");
+            }
+            _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("CarsInformation", "CarsInformation");
+        }
+        public IActionResult SuccesssMessageForCarsInformation()
+        {
+            _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("CarsInformation", "CarsInformation");
+        }
+
+
+
     }
 }

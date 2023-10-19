@@ -108,8 +108,8 @@
   "Renew": "لم يسجل",
   "AboutToExpire": "على وشك الإنتهاء",
   "Expire": "منتهي",
-  "Avaliable": "متاح",
-  "UnAvaliable": "غير متاح",
+  "Avaliable": "متاحه",
+  "UnAvaliable": "غير متاحه",
 
   // component title
   "Branch Data": "بيانات الفرع",
@@ -863,6 +863,8 @@
   "Cars Data": "السيارات",
   "Cars Hint": ".تمكنك الصفحة من البحث و اضافة و تعديل بيانات السيارات",
   "SerialNumber": "الرقم التسلسلي",
+  "ContractCount": "الايام",
+  "DaysCount": "العقود",
   "Add Car": "اضافة سيارة",
   "Rented": "مؤجرة",
   "Maintaince": "صيانة",
@@ -884,5 +886,9 @@
   "PlateNoExist": "رقم اللوحة موجود من قبل",
   "SturctureNoExist": "رقم الهيكل موجود من قبل",
   "IsExists": "موجود من قبل",
-  "RessureFromNameCar": "يرجي اختيار اسم السيارة الصحيح من القائمة"
+  "RessureFromNameCar": "يرجي اختيار اسم السيارة الصحيح من القائمة",
+  "Advantages": "المميزات",
+  "Edit Car Data": "تعديل بيانات السياراة",
+  "Edit Car Hint": "تمكنك هذه الصفحة من تعديل بيانات السياراة",
+  "ForRented": "عرض للايجار"
 }

@@ -11,7 +11,8 @@ namespace Bnan.Core.Models
         public string? CrCasCarAdvantagesBrand { get; set; }
         public string? CrCasCarAdvantagesModel { get; set; }
         public string? CrCasCarAdvantagesCarYear { get; set; }
-        public string CrCasCarAdvantagesCategory { get; set; } = null!;
+        public string? CrCasCarAdvantagesCategory { get; set; }
+        public string? CRCasCarAdvantagesStatus { get; set; }
 
         public virtual CrMasSupCarBrand? CrCasCarAdvantagesBrandNavigation { get; set; }
         public virtual CrMasSupCarCategory CrCasCarAdvantagesCategoryNavigation { get; set; } = null!;
