@@ -47,8 +47,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var user = await _userService.GetUserLessor(User);
             var lessor = await _unitOfWork.CrMasLessorInformation.FindAsync(x=>x.CrMasLessorInformationCode==user.CrMasUserInformationLessor);
-            var Owners = _unitOfWork.CrCasOwner.FindAll(l => l.CrCasOwnersLessorCode == user.CrMasUserInformationLessor &&l.CrCasOwnersCode!=lessor.CrMasLessorInformationGovernmentNo, new[] { "CrCasOwnersLessorCodeNavigation" }).ToList();
-
+            var Owners = _unitOfWork.CrCasOwner.FindAll(l => l.CrCasOwnersLessorCode == user.CrMasUserInformationLessor &&l.CrCasOwnersCode!=lessor.CrMasLessorInformationGovernmentNo, new[] { "CrCasOwnersLessorCodeNavigation", "CrCasCarInformations" }).ToList();
+            foreach (var item in Owners)
+            {
+                item.CrCasCarInformations.Count();
+            }
             return View(Owners);
         }
         [HttpGet]
@@ -62,7 +65,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             {
                 if (!string.IsNullOrEmpty(status))
                 {
-                    var OwnersbyStatusAll =  _unitOfWork.CrCasOwner.FindAll(l => l.CrCasOwnersLessorCode == userLessor.CrMasUserInformationLessor && l.CrCasOwnersCode != lessor.CrMasLessorInformationGovernmentNo, new[] { "CrCasOwnersLessorCodeNavigation" }).ToList();
+                    var OwnersbyStatusAll =  _unitOfWork.CrCasOwner.FindAll(l => l.CrCasOwnersLessorCode == userLessor.CrMasUserInformationLessor && l.CrCasOwnersCode != lessor.CrMasLessorInformationGovernmentNo, new[] { "CrCasOwnersLessorCodeNavigation", "CrCasCarInformations" }).ToList();
                     if (status == Status.All.ToLower())
                     {
                         return PartialView("_DataTableOwners", OwnersbyStatusAll);

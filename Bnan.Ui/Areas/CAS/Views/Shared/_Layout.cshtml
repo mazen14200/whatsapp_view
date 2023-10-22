@@ -171,7 +171,7 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202002")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Documents Cars"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="DocumentsCar" asp-action="DocumentsCar">@localizer["Documents Cars"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202003")?.CrMasUserSubValidationAuthorization == true)
@@ -189,13 +189,13 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202005")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Car Transfer"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="CarsInformation" asp-action="TransfersCarsBranch" >@localizer["Car Transfer"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202006")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Owner Change"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="CarsInformation" asp-action="TransfersOwner">@localizer["Owner Change"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202007")?.CrMasUserSubValidationAuthorization == true)

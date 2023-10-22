@@ -1,8 +1,10 @@
-﻿using Bnan.Core.Interfaces;
+﻿using Bnan.Core.Extensions;
+using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +19,6 @@ namespace Bnan.Inferastructure.Repository
         {
             _unitOfWork = unitOfWork;
         }
-
         public async Task<bool> AddDocumentCar(string serialNumber, string lessorCode, string branchCode, int currentMeter)
         {
             var lessorMechanisms = _unitOfWork.CrCasLessorMechanism.FindAll(l => l.CrCasLessorMechanismCode == lessorCode && l.CrCasLessorMechanismProceduresClassification == "12");
@@ -51,7 +52,6 @@ namespace Bnan.Inferastructure.Repository
                 return false;
             }
         }
-
         public async Task<bool> AddMaintainaceCar(string serialNumber,string lessorCode,string branchCode, int currentMeter)
         {
             var lessorMechanisms = _unitOfWork.CrCasLessorMechanism.FindAll(l => l.CrCasLessorMechanismCode == lessorCode && l.CrCasLessorMechanismProceduresClassification == "13");
@@ -84,6 +84,42 @@ namespace Bnan.Inferastructure.Repository
             {
                 return false;
             }
+        }
+        public async Task<bool> UpdateDocumentCar(CrCasCarDocumentsMaintenance crCasCarDocumentsMaintenance)
+        {
+            if (crCasCarDocumentsMaintenance != null)
+            {
+                var CarDocument = await _unitOfWork.CrCasCarDocumentsMaintenance.FindAsync(l => l.CrCasCarDocumentsMaintenanceBranch == crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceBranch
+                                                                               && l.CrCasCarDocumentsMaintenanceLessor == crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceLessor
+                                                                               && l.CrCasCarDocumentsMaintenanceProcedures == crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceProcedures
+                                                                               && l.CrCasCarDocumentsMaintenanceSerailNo==crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceSerailNo);
+                if (CarDocument!=null)
+                {
+                    var AboutToExpire = _unitOfWork.CrCasLessorMechanism.FindAsync(l => l.CrCasLessorMechanismCode == CarDocument.CrCasCarDocumentsMaintenanceLessor
+                                                                               && l.CrCasLessorMechanismProcedures == CarDocument.CrCasCarDocumentsMaintenanceProcedures
+                                                                               && l.CrCasLessorMechanismProceduresClassification == CarDocument.CrCasCarDocumentsMaintenanceProceduresClassification).Result.CrCasLessorMechanismDaysAlertAboutExpire;
+                    if (crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceStatus==Status.Renewed)
+                    {
+                        CarDocument.CrCasCarDocumentsMaintenanceSerailNo = crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceSerailNo;
+                        CarDocument.CrCasCarDocumentsMaintenanceStartDate = crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceStartDate;
+                        CarDocument.CrCasCarDocumentsMaintenanceEndDate = crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceEndDate;
+                        CarDocument.CrCasCarDocumentsMaintenanceDate = crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceDate;
+                        CarDocument.CrCasCarDocumentsMaintenanceNo = crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceNo;
+                        CarDocument.CrCasCarDocumentsMaintenanceImage = crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceImage;
+                        CarDocument.CrCasCarDocumentsMaintenanceDateAboutToFinish = crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceEndDate?.AddDays(-(double)AboutToExpire);
+                        CarDocument.CrCasCarDocumentsMaintenanceStatus = Status.Active;
+                        CarDocument.CrCasCarDocumentsMaintenanceReasons = crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceReasons;
+                    }
+                    else
+                    {
+                        CarDocument.CrCasCarDocumentsMaintenanceImage = crCasCarDocumentsMaintenance.CrCasCarDocumentsMaintenanceImage;
+                    }
+                    _unitOfWork.CrCasCarDocumentsMaintenance.Update(CarDocument);
+                    return true;
+                }
+                return false;
+            }
+            return false;
         }
     }
 }

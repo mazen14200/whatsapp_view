@@ -1,0 +1,714 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.CAS;
+@model DocumentsMaintainceCarVM
+
+@inject IViewLocalizer localizer
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? $"~{Context.Request.Path.Value}?Procedureid={HttpContextAccessor.HttpContext.Request.Query["Procedureid"]}&BranchId={HttpContextAccessor.HttpContext.Request.Query["BranchId"]}" : $"~{Context.Request.Path.Value}?Procedureid={HttpContextAccessor.HttpContext.Request.Query["Procedureid"]}&BranchId={HttpContextAccessor.HttpContext.Request.Query["BranchId"]}";
+    ViewData["Page-title"] = localizer["DocumentCar Edit Data"];
+    ViewData["Page-Hint"] = localizer["DocumentCar Edit Hint"];
+}
+
+<title>@ViewData["Title"]</title>
+
+<style>
+
+    .datepicker-widget {
+        display: none;
+    }
+
+
+    .datepicker-icon i {
+        font-size: 18px;
+        color: #999;
+    }
+
+    .dateRelative {
+        position: relative;
+    }
+
+    .form-contain {
+        position: relative;
+    }
+
+</style>
+
+<style>
+
+
+    #signaturePreview, #imagePreview {
+        display: block;
+        margin-top: -5px;
+        float: right;
+        margin-right: 20px;
+        height: 100px;
+        width: auto;
+        object-fit: cover;
+        border: .5px solid rgb(231, 231, 231);
+        position: relative;
+    }
+
+    #spanInput {
+        height: 35px;
+    }
+
+    .sub-container form .row > div:nth-child(odd):nth-child(-n+5), .sub-container-form form .row > div:nth-child(odd):nth-child(-n+5) {
+        margin: 0;
+    }
+
+    .file-upload {
+        width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .file-upload-btn {
+        width: 200px;
+        max-height: 200px;
+        max-width: 200px;
+        margin: 0;
+        color: #fff;
+        background: #727cf5;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        border-bottom: 4px solid #727cf5;
+        transition: all .2s ease;
+        outline: none;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+        .file-upload-btn:hover {
+            background: #5661e3;
+            color: #ffffff;
+            transition: all .2s ease;
+            cursor: pointer;
+        }
+
+    .file-upload-input-picture, .file-upload-input-signature {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        width: 200px;
+        height: 200px;
+        max-height: 200px;
+        max-width: 200px;
+        outline: none;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .image-upload-wrap {
+        max-height: 200px;
+        max-width: 200px;
+        margin-top: 5px;
+        border: 4px dashed rgb(231, 231, 231);
+        position: relative;
+        display: none;
+    }
+
+        .image-dropping,
+        .image-upload-wrap:hover {
+            background-color: rgb(231, 231, 231);
+            border: 4px dashed #ffffff;
+        }
+
+    .image-title-wrap {
+        color: #222;
+    }
+
+    .drag-text {
+        text-align: center;
+    }
+
+        .drag-text h3 {
+            font-weight: 100;
+            text-transform: uppercase;
+            padding: 60px 0;
+            font-size: 17px
+        }
+
+    .file-upload-image {
+        height: 200px;
+        max-width: 200px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 20px;
+        border: .5px solid rgb(231, 231, 231);
+    }
+
+    .remove-image {
+        margin: 0;
+        max-height: 200px;
+        max-width: 200px;
+        width: 100%;
+        color: #fff;
+        background: #fa5c7c;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        border-bottom: 4px solid #fa5c7c;
+        transition: all .2s ease;
+        outline: none;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .image-upload-wrap {
+        display: block
+    }
+
+    .file-upload-content {
+        display: none
+    }
+
+    .remove-image:hover {
+        background: #f35474;
+        color: #ffffff;
+        transition: all .2s ease;
+        cursor: pointer;
+    }
+
+    #CrMasSupCarDistributionYear,
+    #CrMasSupCarDistributionPassengers,
+    #CrMasSupCarDistributionDoor,
+    #CrMasSupCarDistributionBagBags,
+    #CrMasSupCarDistributionSmallBags {
+        width: 50%
+    }
+
+    .text-danger {
+        white-space: nowrap
+    }
+
+    @@media (max-width: 600px) {
+        #CarDisImage {
+            position: absolute;
+            top: 70%;
+            right: 75%;
+            width: 243px;
+        }
+    }
+
+</style>
+
+@if (Model.CrCasCarDocumentsMaintenanceImage != null)
+{
+    <style>
+        .image-upload-wrap {
+            display: none;
+        }
+
+        .file-upload-content {
+            display: block
+        }
+    </style>
+}
+
+@if (requestCulture.RequestCulture.UICulture.Name == "ar-EG")
+{
+    <style>
+        .datepicker-icon {
+            cursor: pointer;
+            top: 8%;
+            right: 77%;
+        }
+    </style>
+}
+
+@if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+{
+    <style>
+        .datepicker-icon {
+            position: absolute;
+            display: inline-block;
+            top: 1px;
+            left: 178px;
+        }
+    </style>
+}
+
+@if (Model.CrCasCarDocumentsMaintenanceStatus != Status.Renewed)
+{
+    <style>
+        .datepicker-icon {
+            display: none
+        }
+    </style>
+}
+
+
+<div class="sub-container-form" id="CAS">
+    <form class="needs-validation" novalidate asp-area="CAS" asp-controller="DocumentsCar" asp-action="Edit" enctype="multipart/form-data">
+        <div class="form-contain">
+            @*Document Code*@
+            <div class="row mt-2" hidden>
+                <div class="col-md-1">
+                    <label class="form-label" for="branchCode">@localizer["BranchCode"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" readonly asp-for="CrCasCarDocumentsMaintenanceLessor" maxlength="100" width="80%" />
+                    <input type="text" class="form-control" readonly asp-for="CrCasCarDocumentsMaintenanceBranch" maxlength="100" width="80%" />
+                    <input type="text" class="form-control" readonly asp-for="CrCasCarDocumentsMaintenanceProcedures" maxlength="100" width="80%" />
+                    <input type="text" class="form-control" readonly asp-for="CrCasCarDocumentsMaintenanceStatus" maxlength="100" width="80%" />
+                    <input type="text" class="form-control" readonly asp-for="CrCasCarDocumentsMaintenanceImage" maxlength="100" width="80%" />
+                    <input type="text" class="form-control" readonly asp-for="CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresCode" maxlength="100" width="80%" />
+                </div>
+            </div>
+            @if (Model.CrCasCarDocumentsMaintenanceStatus != Status.Renewed)
+            {
+                @*Document Branch*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["SerialNumber"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceSerailNo" readonly>
+                    </div>
+                </div>
+
+                @*Document Type*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Document Type"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresArName" readonly>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresEnName" readonly>
+
+                        }
+                    </div>
+                </div>
+
+                @*Document Number*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceNo">@localizer["TheNumber"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceNo" readonly>
+                    </div>
+                </div>
+
+                @*Date of Documnet*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Date"]</label>
+                    </div>
+                    <div class="col-md-2 col-11 ">
+                        <input type="text" class="form-control" value="@ViewBag.date" readonly>
+                        <input type="hidden" class="form-control" asp-for="CrCasCarDocumentsMaintenanceDate" readonly>
+                    </div>
+                </div>
+
+                @*Start and End Date*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceStartDate">@localizer["StartDate"]</label>
+                    </div>
+                    <div class="col-md-2 col-11 ">
+                        <input type="text" class="form-control" value="@ViewBag.startDate" readonly>
+                        <input type="hidden" class="form-control" asp-for="CrCasCarDocumentsMaintenanceStartDate" readonly>
+
+                    </div>
+
+                    <div class="col-md-1 formlabel text-center">
+                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceEndDate">@localizer["EndDate"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        <input type="text" class="form-control" value="@ViewBag.endDate" readonly>
+                        <input type="hidden" class="form-control" asp-for="CrCasCarDocumentsMaintenanceEndDate" readonly>
+
+                    </div>
+                </div>
+
+                @*Reasons*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceReasons">@localizer["reasons"]</label>
+                    </div>
+                    <div class="col-md-5 col-11">
+                        <input type="text" id="cities" class="form-control" asp-for="CrCasCarDocumentsMaintenanceReasons" readonly autocomplete="off">
+                    </div>
+                </div>
+
+                <div id="CarDisImage">
+                    <div class="file-upload">
+                        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input-signature').trigger('click')">@localizer["photo"] @ViewBag.type</button>
+                        <div class="image-upload-wrap">
+                            <input class="file-upload-input-signature" type="file" onchange="readURL(this, 'signature');" accept="image/*" id="CarDistributionFile" name="DoucmentImg" />
+                            <div class="drag-text">
+                                <h3>@localizer["DragAndDrop"]</h3>
+                            </div>
+                        </div>
+
+                        <div class="file-upload-content signature">
+                            <img class="file-upload-image signature" src="@Url.Content(Model.CrCasCarDocumentsMaintenanceImage)" />
+                            <div class="image-title-wrap">
+                                <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                @*Document Branch*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["SerialNumber"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceSerailNo" readonly>
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Document Type*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Document Type"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresArName" readonly>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresEnName" readonly>
+
+                        }
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Document Number*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceNo">@localizer["TheNumber"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceNo" maxlength="12" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="@Model.CrCasCarDocumentsMaintenanceNo" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Date of Documnet*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceDate">@localizer["Date"]</label>
+                    </div>
+                    <div class="col-md-2 col-8 dateRelative">
+                        <input type="text" class="form-control dateInput" asp-for="CrCasCarDocumentsMaintenanceDate">
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="@Model.CrCasCarDocumentsMaintenanceDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Start and End Date*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceStartDate">@localizer["StartDate"]</label>
+                    </div>
+                    <div class="col-md-2 col-11 dateRelative">
+                        <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceStartDate">
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="@Model.CrCasCarDocumentsMaintenanceStartDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 formlabel text-center">
+                        <label class="form-label" for="LessorDirNameEn">@localizer["EndDate"]</label>
+                    </div>
+                    <div class="col-md-2 col-11 dateRelative">
+                        <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceEndDate">
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="@Model.CrCasCarDocumentsMaintenanceEndDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Reasons*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceReasons">@localizer["reasons"]</label>
+                    </div>
+                    <div class="col-md-5 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceReasons" autocomplete="off">
+
+                        <div style="margin-top:12px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="CrCasCarDocumentsMaintenanceReasons" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="CarDisImage">
+                    <div class="file-upload">
+                        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input-signature').trigger('click')">@localizer["photo"]</button>
+                        <div class="image-upload-wrap">
+                            <input class="file-upload-input-signature" type="file" onchange="readURL(this, 'signature');" accept="image/*" id="CarDistributionFile" name="DoucmentImg" />
+                            <div class="drag-text">
+                                <h3>@localizer["DragAndDrop"]</h3>
+                            </div>
+                        </div>
+
+                        <div class="file-upload-content signature">
+                            <img class="file-upload-image signature" src="@Url.Content(Model.CrCasCarDocumentsMaintenanceImage)" />
+                            <div class="image-title-wrap">
+                                <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
+        </div>
+        <div class="mt-3" id="buttonContainer">
+
+            <a class="btn btn-primary ms-1" id="saveEdit">@localizer["Save"]</a>
+
+
+            @if (Model.CrCasCarDocumentsMaintenanceStatus == "A")
+            {
+                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Deleted" data-bs-targett="#centermodalDelete">
+                    @localizer["Delete"]
+                </a>
+            }
+
+            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="DocumentsCar" asp-action="DocumentsCar">
+                @localizer["Back"]
+            </a>
+        </div>
+    </form>
+
+    <!-- Delete Lessor Modal-->
+    <div class="modal fade" id="centermodalDelete" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4>@localizer["SureTodelete"]</h4>
+                    <p> @localizer["HintSureTodelete"]</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                    <button type="button" id="deleteUserButton" class="btn btn-primary">@localizer["Okay"]</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- Reactive Delete Lessor MOdel-->
+    <div class="modal fade" id="centermodalRDelete" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <h4>@localizer["SureToRetriveDelete"]</h4>
+                    <p>@localizer["HintSureToRetriveD"]</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                    <button type="button" id="retriveUserButtonD" class="btn btn-primary">@localizer["Okay"]</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            var today = new Date();
+            var startDate = new Date();
+            var EndDate = new Date();
+            var stats = $("#CrCasCarDocumentsMaintenanceStatus").val();
+                var dates = $("#CrCasCarDocumentsMaintenanceDate").val();
+                var formattedDate = new Date(dates);
+
+                var startDates = $("CrCasCarDocumentsMaintenanceStartDate").val();
+                var StartformattedDate = new Date(startDates);
+
+                var EndDates = $("CrCasCarDocumentsMaintenanceEndDate").val();
+                var EndformattedDate = new Date(EndDates);
+                console.log(EndformattedDate);
+                if (!formattedDate || formattedDate === "") {
+                    formattedDate = today; // Set date to today if it's empty or null
+                }
+                if (!StartformattedDate || StartformattedDate === "") {
+                    StartformattedDate = today; // Set date to today if it's empty or null
+                }
+                if (!EndformattedDate || EndformattedDate === "") {
+                    EndformattedDate = today; // Set date to today if it's empty or null
+                }
+
+
+                $("#CrCasCarDocumentsMaintenanceDate").datepicker({
+                    dateFormat: 'yy/mm/dd',
+                    minDate: today,
+                    defaultDate: formattedDate// Set the minimum date to today
+                }).datepicker("widget").addClass("datepicker-widget");
+                $("#CrCasCarDocumentsMaintenanceDate").datepicker("setDate", formattedDate);
+                $("#CrCasCarDocumentsMaintenanceDate").click(function () {
+                    $(this).datepicker("show");
+                });
+
+                $("#CrCasCarDocumentsMaintenanceStartDate").datepicker({
+                    dateFormat: 'yy/mm/dd',
+                    minDate: today,
+                    defaultDate: formattedDate// Set the minimum date to today
+                }).datepicker("widget").addClass("datepicker-widget");
+                $("#CrCasCarDocumentsMaintenanceStartDate").datepicker("setDate", formattedDate);
+                $("#CrCasCarDocumentsMaintenanceStartDate").click(function () {
+                    $(this).datepicker("show");
+                });
+
+                $("#CrCasCarDocumentsMaintenanceEndDate").datepicker({
+                    dateFormat: 'yy/mm/dd',
+                    minDate: today,
+                    defaultDate: formattedDate// Set the minimum date to today
+                }).datepicker("widget").addClass("datepicker-widget");
+                $("#CrCasCarDocumentsMaintenanceEndDate").datepicker("setDate", formattedDate);
+                $("#CrCasCarDocumentsMaintenanceEndDate").click(function () {
+                    $(this).datepicker("show");
+                });
+
+
+                $("#CrCasCarDocumentsMaintenanceDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+                $("#CrCasCarDocumentsMaintenanceStartDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+                $("#CrCasCarDocumentsMaintenanceEndDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+
+
+
+                $(".datepicker-icon").click(function () {
+                    $(this).prevAll('input').datepicker("show");
+                });
+            
+
+
+            $("#saveEdit").on("click", function (event) {
+                event.preventDefault();
+                CheckValidation('2202002', '@Status.Save').done(function (data) {
+                    if (data) {
+                        $('form').submit();
+                    }
+                });
+            })
+        })
+
+    </script>
+
+    <script>
+        function readURL(input, type) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var container = $(input).closest('.file-upload');
+                    container.find('.file-upload-image.' + type).attr('src', e.target.result);
+                    container.find('.file-upload-content.' + type).show();
+                    container.find('.image-title.' + type).html(input.files[0].name);
+                    container.find('.image-upload-wrap').hide();
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                removeUpload(input);
+            }
+        }
+
+        function removeUpload(button) {
+            var container = $(button).closest('.file-upload');
+            var type = container.find('.file-upload-content').hasClass('signature') ? 'signature' : 'picture';
+            container.find('.file-upload-input-' + type).val('');
+            container.find('.file-upload-image.' + type).attr('src', '#');
+            container.find('.file-upload-content.' + type).hide();
+            container.find('.image-upload-wrap').show();
+        }
+
+        $('.image-upload-wrap').bind('dragover', function () {
+            $(this).addClass('image-dropping');
+        });
+        $('.image-upload-wrap').bind('dragleave', function () {
+            $(this).removeClass('image-dropping');
+        });
+    </script>
+
+    <script>
+
+        function updateUserStatus(status) {
+            var DocumentsLessor = document.getElementById("CrCasCarDocumentsMaintenanceLessor").value;
+            var DocumentsBranch = document.getElementById("CrCasCarDocumentsMaintenanceBranch").value;
+            var DocumentsProcedures = document.getElementById("CrCasCarDocumentsMaintenanceProcedures").value;
+            var DocumentSerialNumber = document.getElementById("CrCasCarDocumentsMaintenanceSerailNo").value;
+            $.ajax({
+                type: "DELETE",
+                url: "/CAS/DocumentsCar/EditDocumentStatus",
+                data: { status: status, DocumentCarLessor: DocumentsLessor, DocumentCarBranch: DocumentsBranch, DocumentCarProcedures: DocumentsProcedures, SerialNumber: DocumentSerialNumber },
+                success: function (result) {
+                    console.log(result)
+                    $('.modal').modal('hide');
+                    window.location.href = "/CAS/DocumentsCar/SuccessMessage";
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+        $("#buttonContainer a").on("click", function (event) {
+            var status = $(this).attr("data-error")
+            var Modal = $(this).attr("data-bs-targett")
+            CheckValidation('2201002', status).done(function (data) {
+                console.log(data)
+                if (data) $(Modal).modal('show');
+            });
+        })
+
+        // Event listener for delete Lessor button
+        $('#deleteUserButton').click(function () {
+            updateUserStatus('D');
+        });
+
+
+        $("#saveEdit").on("click", function (event) {
+            event.preventDefault();
+            CheckValidation('2202002', '@Status.Save').done(function (data) {
+                if (data) {
+                    $('form').submit();
+                }
+            });
+        })
+    </script>
+}
+
+

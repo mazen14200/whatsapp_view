@@ -899,9 +899,18 @@
   "Advantages": "Advantages",
   "Edit Car Data": "Edit Car Data",
   "Edit Car Hint": "The page allows you to Edit Car Data.",
-  "ForRented": "For Rent"
+  "ForRented": "For Rent",
 
-
+  //DocumentCar
+  "DocumentCar Edit Data": "Edit Car Document",
+  "DocumentCar Edit Hint": "The page allows you to Edit Car Document .",
+  "TransferCars Hint": "The page allows you to Transfer Car From Branch To another .",
+  "TransferCar Data": "Transfer Car",
+  "CurrentBranch": "Current Branch",
+  "NewBranch": "New Branch",
+  "TransferOwnerCars Hint": "The page allows you to change car ownership .",
+  "NewOwner": "New Owner",
+  "CurrentOwner": "Current Owner"
 }
 
 

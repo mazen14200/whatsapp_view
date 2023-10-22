@@ -1,0 +1,405 @@
+﻿@using Bnan.Core.Extensions
+@model IEnumerable<CrCasCarDocumentsMaintenance>
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+<style>
+    #basic-datatable_wrapper .row:nth-child(2) {
+        margin: 0;
+    }
+</style>
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["SerialNumber"]</th>
+                    <th aria-label="Office: activate to sort column ascending">@localizer["Document Type"]</th>
+                    <th aria-label="Age: activate to sort column ascending">@localizer["TheNumber"]</th>
+                    <th aria-label="Start date: activate to sort column ascending">@localizer["Date"]</th>
+                    <th aria-label="Salary: activate to sort column ascending">@localizer["StartDate"]</th>
+                    <th aria-label="Salary: activate to sort column ascending">@localizer["EndDate"]</th>
+                    <th aria-label="Salary: activate to sort column ascending">@localizer["Status"]</th>
+                    <th aria-label="Salary: activate to sort column ascending">@localizer["Documentphoto"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrCasCarDocumentsMaintenanceStatus == @Status.Renewed)
+                    {
+                        <tr style="cursor:pointer;color:red">
+                            <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@no</td>
+                            <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceSerailNo</td>
+                            @if (@item.CrCasCarDocumentsMaintenanceProceduresNavigation == null)
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'"></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresEnName</td>
+                            }
+
+
+                            @if (@item.CrCasCarDocumentsMaintenanceNo == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td>  onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'" @item.CrCasCarDocumentsMaintenanceNo</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceDate == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceDate?.ToString("dd/MM/yyyy")</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceStartDate == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceStartDate?.ToString("dd/MM/yyyy")</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceEndDate == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceEndDate?.ToString("dd/MM/yyyy")</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceStatus == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                if (@item.CrCasCarDocumentsMaintenanceStatus == Status.Renewed)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["Renew"]</td>
+                                }
+                                else if (@item.CrCasCarDocumentsMaintenanceStatus == Status.Active)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["Active"]</td>
+                                }
+                                else if (@item.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["AboutToExpire"]</td>
+                                }
+                                else if (@item.CrCasCarDocumentsMaintenanceStatus == Status.Expire)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["Expire"]</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            <td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@no</td>
+
+                            <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceSerailNo</td>
+                            
+                            @if (@item.CrCasCarDocumentsMaintenanceProceduresNavigation == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresEnName</td>
+                            }
+
+                            @if (@item.CrCasCarDocumentsMaintenanceNo == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceNo</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceDate == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceDate?.ToString("dd/MM/yyyy")</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceStartDate == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceStartDate?.ToString("dd/MM/yyyy")</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceEndDate == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceEndDate?.ToString("dd/MM/yyyy")</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceStatus == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                if (@item.CrCasCarDocumentsMaintenanceStatus == Status.Renewed)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["Renew"]</td>
+                                }
+                                else if (@item.CrCasCarDocumentsMaintenanceStatus == Status.Active)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["Active"]</td>
+                                }
+                                else if (@item.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["AboutToExpire"]</td>
+                                }
+                                else if (@item.CrCasCarDocumentsMaintenanceStatus == Status.Expire)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["Expire"]</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            @if (item.CrCasCarDocumentsMaintenanceImage == "" || item.CrCasCarDocumentsMaintenanceImage == null)
+                            {
+                                <td> @localizer["notfound"] </td>
+
+                            }
+                            else
+                            {
+                                <td onclick="window.open('@Url.Content(item.CrCasCarDocumentsMaintenanceImage)' , '_blank');"> <i class="dripicons-document-new"></i> </td>
+                            }
+
+                        </tr>
+                    }
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["SerialNumber"]</th>
+                    <th aria-label="Office: activate to sort column ascending">@localizer["Document Type"]</th>
+                    <th aria-label="Age: activate to sort column ascending">@localizer["TheNumber"]</th>
+                    <th aria-label="Start date: activate to sort column ascending">@localizer["Date"]</th>
+                    <th aria-label="Salary: activate to sort column ascending">@localizer["StartDate"]</th>
+                    <th aria-label="Salary: activate to sort column ascending">@localizer["EndDate"]</th>
+                    <th aria-label="Salary: activate to sort column ascending">@localizer["Status"]</th>
+                    <th aria-label="Salary: activate to sort column ascending">@localizer["Documentphoto"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrCasCarDocumentsMaintenanceStatus == @Status.Renewed)
+                    {
+                        <tr style="cursor:pointer;color:red">
+                            <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@no</td>
+                           
+                            <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceSerailNo</td>
+                            
+                            @if (@item.CrCasCarDocumentsMaintenanceProceduresNavigation == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresArName</td>
+                            }
+
+                            @if (@item.CrCasCarDocumentsMaintenanceNo == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceNo</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceDate == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceDate?.ToString("dd/MM/yyyy")</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceStartDate == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceStartDate?.ToString("dd/MM/yyyy")</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceEndDate == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceEndDate?.ToString("dd/MM/yyyy")</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceStatus == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                if (@item.CrCasCarDocumentsMaintenanceStatus == Status.Renewed)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["Renew"]</td>
+                                }
+                                else if (@item.CrCasCarDocumentsMaintenanceStatus == Status.Active)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["Active"]</td>
+                                }
+                                else if (@item.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["AboutToExpire"]</td>
+                                }
+                                else if (@item.CrCasCarDocumentsMaintenanceStatus == Status.Expire)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["Expire"]</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            <td> </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@no</td>
+                            <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceSerailNo</td>
+                            
+                            @if (@item.CrCasCarDocumentsMaintenanceProceduresNavigation == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresArName</td>
+                            }
+
+                            @if (@item.CrCasCarDocumentsMaintenanceNo == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceNo</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceDate == null)
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'"></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceDate?.ToString("dd/MM/yyyy")</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceStartDate == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceStartDate?.ToString("dd/MM/yyyy")</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceEndDate == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@item.CrCasCarDocumentsMaintenanceEndDate?.ToString("dd/MM/yyyy")</td>
+                            }
+                            @if (@item.CrCasCarDocumentsMaintenanceStatus == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                if (@item.CrCasCarDocumentsMaintenanceStatus == Status.Renewed)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["Renew"]</td>
+                                }
+                                else if (@item.CrCasCarDocumentsMaintenanceStatus == Status.Active)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["Active"]</td>
+                                }
+                                else if (@item.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["AboutToExpire"]</td>
+                                }
+                                else if (@item.CrCasCarDocumentsMaintenanceStatus == Status.Expire)
+                                {
+                                    <td onclick="location.href='@Url.Action("Edit", "DocumentsCar", new { Procedureid = item.CrCasCarDocumentsMaintenanceProcedures, SerialNumber = item.CrCasCarDocumentsMaintenanceSerailNo })'">@localizer["Expire"]</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+
+                            @if (item.CrCasCarDocumentsMaintenanceImage == "" || item.CrCasCarDocumentsMaintenanceImage == null)
+                            {
+                                <td> @localizer["notfound"] </td>
+
+                            }
+                            else
+                            {
+                                <td onclick="window.open('@Url.Content(item.CrCasCarDocumentsMaintenanceImage)' , '_blank');"> <i class="dripicons-document-new"></i> </td>
+
+                            }
+                        </tr>
+                    }
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
