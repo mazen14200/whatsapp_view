@@ -15,6 +15,6 @@ namespace Bnan.Core.Interfaces
             string ContractCompanyTaxRate, string ContractCompanyDiscountRate, string Activiation);
         Task<bool> UpdateCompanyContractCas(CrMasContractCompany model);
 
-        Task<bool> AddCompanyContractDetailed(string CompanyContractCode, string From, string To, string Value);
+        Task<bool> AddCompanyContractDetailed(string CompanyContractCode, string From, string To, string Value,int serial);
     }
 }

@@ -307,7 +307,7 @@
                         <label class="form-label" value="@ViewBag.startDate">@localizer["StartDate"]</label>
                     </div>
                     <div class="col-md-2 col-11 ">
-                        <input type="text" class="form-control" asp-for="CrCasBranchDocumentsStartDate" readonly>
+                        <input type="text" class="form-control" value="@ViewBag.startDate" readonly>
                     </div>
 
                     <div class="col-md-1 formlabel text-center">
@@ -324,7 +324,7 @@
                         <label class="form-label" asp-for="CrCasBranchDocumentsReasons">@localizer["reasons"]</label>
                     </div>
                     <div class="col-md-5 col-11">
-                        <input type="text" id="cities" class="form-control" asp-for="CrCasBranchDocumentsReasons" readonly autocomplete="off">
+                        <input type="text" id="cities" class="form-control" asp-for="CrCasBranchDocumentsReasons" autocomplete="off">
                     </div>
                 </div>
 

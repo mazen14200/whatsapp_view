@@ -12,6 +12,7 @@ namespace Bnan.Core.Interfaces
         Task<bool> AddDocumentCar(string serialNumber, string lessorCode, string branchCode, int currentMeter);
         Task<bool> AddMaintainaceCar(string serialNumber, string lessorCode, string branchCode, int currentMeter);
         Task<bool> UpdateDocumentCar(CrCasCarDocumentsMaintenance crCasCarDocumentsMaintenance);
+        Task<bool> UpdateMaintainceCar(CrCasCarDocumentsMaintenance crCasCarDocumentsMaintenance);
 
     }
 }

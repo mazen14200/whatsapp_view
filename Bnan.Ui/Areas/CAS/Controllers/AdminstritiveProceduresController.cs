@@ -162,6 +162,66 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({SalesPoint.CrCasAccountSalesPointEnName})";
                     }
                 }
+                if (item.CrCasSysAdministrativeProceduresCode == "211")
+                {
+                    // if 211 then it is Cars
+                    var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarInformationLessor == lessorCode);
+                    if (car != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({car.CrCasCarInformationSerailNo})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationSerailNo})";
+                    }
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "212")
+                {
+                    // if 212 then it is docCar
+                    var docCar = _unitOfWork.CrCasCarDocumentsMaintenance.Find(x => x.CrCasCarDocumentsMaintenanceNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarDocumentsMaintenanceLessor == lessorCode);
+                    if (docCar != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({docCar.CrCasCarDocumentsMaintenanceNo})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({docCar.CrCasCarDocumentsMaintenanceNo})";
+                    }
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "213")
+                {
+                    // if 213 then it is docCar
+                    var maintanceCar = _unitOfWork.CrCasCarDocumentsMaintenance.Find(x => x.CrCasCarDocumentsMaintenanceNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarDocumentsMaintenanceLessor == lessorCode);
+                    if (maintanceCar != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
+                    }
+                }
+                //if (item.CrCasSysAdministrativeProceduresCode == "214")
+                //{
+                //    // if 214 then it is FixedCar
+                //    var maintanceCar = _unitOfWork.CrCasCarDocumentsMaintenance.Find(x => x.CrCasCarDocumentsMaintenanceNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarDocumentsMaintenanceLessor == lessorCode);
+                //    if (maintanceCar != null)
+                //    {
+                //        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
+                //        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
+                //    }
+                //}
+                if (item.CrCasSysAdministrativeProceduresCode == "215")
+                {
+                    // if 215 then it is Car From branch To another
+                    var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarInformationLessor == lessorCode);
+                    if (car != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({car.CrCasCarInformationConcatenateArName})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationConcatenateEnName})";
+                    }
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "216")
+                {
+                    // if 216 then it is Car From branch To another
+                    var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarInformationLessor == lessorCode);
+                    if (car != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({car.CrCasCarInformationConcatenateArName})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationConcatenateEnName})";
+                    }
+                }
             };
 
             return View(model);
@@ -179,6 +239,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                                                                                                    x.CrCasSysAdministrativeProceduresDate>=sd&&x.CrCasSysAdministrativeProceduresDate<=ed,
                                                                                                     new[] { "CrCasSysAdministrativeProceduresCodeNavigation", "CrCasSysAdministrativeProcedures", "CrCasSysAdministrativeProceduresUserInsertNavigation" })
                                                                                                    .OrderByDescending(x => x.CrCasSysAdministrativeProceduresDate).ThenByDescending(x => x.CrCasSysAdministrativeProceduresTime).ToList();
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+
             var model = _mapper.Map<List<AdminstritiveProceduresVM>>(AdminstritiveProcedures);
 
             foreach (var item in model)
@@ -305,6 +367,66 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     {
                         item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({SalesPoint.CrCasAccountSalesPointArName})";
                         item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({SalesPoint.CrCasAccountSalesPointEnName})";
+                    }
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "211")
+                {
+                    // if 211 then it is Cars
+                    var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarInformationLessor == lessorCode);
+                    if (car != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({car.CrCasCarInformationSerailNo})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationSerailNo})";
+                    }
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "212")
+                {
+                    // if 212 then it is docCar
+                    var docCar = _unitOfWork.CrCasCarDocumentsMaintenance.Find(x => x.CrCasCarDocumentsMaintenanceNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarDocumentsMaintenanceLessor == lessorCode);
+                    if (docCar != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({docCar.CrCasCarDocumentsMaintenanceNo})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({docCar.CrCasCarDocumentsMaintenanceNo})";
+                    }
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "213")
+                {
+                    // if 213 then it is docCar
+                    var maintanceCar = _unitOfWork.CrCasCarDocumentsMaintenance.Find(x => x.CrCasCarDocumentsMaintenanceNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarDocumentsMaintenanceLessor == lessorCode);
+                    if (maintanceCar != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
+                    }
+                }
+                //if (item.CrCasSysAdministrativeProceduresCode == "214")
+                //{
+                //    // if 214 then it is FixedCar
+                //    var maintanceCar = _unitOfWork.CrCasCarDocumentsMaintenance.Find(x => x.CrCasCarDocumentsMaintenanceNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarDocumentsMaintenanceLessor == lessorCode);
+                //    if (maintanceCar != null)
+                //    {
+                //        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
+                //        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
+                //    }
+                //}
+                if (item.CrCasSysAdministrativeProceduresCode == "215")
+                {
+                    // if 215 then it is Car From branch To another
+                    var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarInformationLessor == lessorCode);
+                    if (car != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({car.CrCasCarInformationConcatenateArName})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationConcatenateEnName})";
+                    }
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "216")
+                {
+                    // if 216 then it is Car From branch To another
+                    var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarInformationLessor == lessorCode);
+                    if (car != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({car.CrCasCarInformationConcatenateArName})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationConcatenateEnName})";
                     }
                 }
             };

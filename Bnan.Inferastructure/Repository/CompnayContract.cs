@@ -126,7 +126,7 @@ namespace Bnan.Inferastructure.Repository
             return true;
         }
 
-        public async Task<bool> AddCompanyContractDetailed(string CompanyContractCode, string From, string To, string Value)
+        public async Task<bool> AddCompanyContractDetailed(string CompanyContractCode, string From, string To, string Value,int serial)
         {
             var contractCount = 0;
             CrMasContractCompanyDetailed crMasContractCompanyDetailed = new CrMasContractCompanyDetailed();
@@ -135,18 +135,19 @@ namespace Bnan.Inferastructure.Repository
             var contractDetailedNo = _unitOfWork.CrMasContractCompanyDetailed.FindAll(x => x.CrMasContractCompanyDetailedNo == CompanyContractCode).Count();
             if (contractDetailedNo == 0)
             {
-                contractCount = 1;
+                contractCount = serial;
             }
             else
             {
                 var lastContract = _unitOfWork.CrMasContractCompanyDetailed.GetAll().OrderByDescending(x => x.CrMasContractCompanyDetailedSer).FirstOrDefault(x => x.CrMasContractCompanyDetailedNo != null);
-                contractCount = lastContract != null ? lastContract.CrMasContractCompanyDetailedSer + 1 : 1;
+                contractCount = lastContract != null ? lastContract.CrMasContractCompanyDetailedSer + serial : 1;
             }
             crMasContractCompanyDetailed.CrMasContractCompanyDetailedSer = contractCount;
             crMasContractCompanyDetailed.CrMasContractCompanyDetailedFromPrice = decimal.Parse(From);
             crMasContractCompanyDetailed.CrMasContractCompanyDetailedToPrice = decimal.Parse(To);
             crMasContractCompanyDetailed.CrMasContractCompanyDetailedValue = decimal.Parse(Value);
             await _unitOfWork.CrMasContractCompanyDetailed.AddAsync(crMasContractCompanyDetailed);
+
             return true;
         }
     }

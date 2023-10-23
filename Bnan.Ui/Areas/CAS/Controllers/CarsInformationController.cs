@@ -386,7 +386,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 // Save Adminstrive Procedures
-                await _adminstritiveProcedures.SaveAdminstritive(currentUserr.CrMasUserInformationCode, "1", "202", "20", currentUserr.CrMasUserInformationLessor, "100",
+                await _adminstritiveProcedures.SaveAdminstritive(currentUserr.CrMasUserInformationCode, "1", "211", "20", currentUserr.CrMasUserInformationLessor, "100",
                     car.CrCasCarInformationSerailNo, null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
                 return RedirectToAction("CarsInformation", "CarsInformation");
             }
@@ -429,15 +429,13 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpPost]
         public async Task<IActionResult> TransfersCarToBranch(CarsInforamtionVM model, string NewBranch)
         {
-            //sidebar Active
-            ViewBag.id = "#sidebarcars";
-            ViewBag.no = "0";
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var titles = await setTitle("202", "2202005", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
             var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == model.CrCasCarInformationSerailNo && x.CrCasCarInformationLessor == lessorCode, new[] {"CrCasCarInformation1", "CrCasCarInformationDistributionNavigation",
                                                                                                                                "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2"});
+            var oldBranch = car.CrCasCarInformationBranch;
             var postBranch = _unitOfWork.CrCasBranchPost.Find(x => x.CrCasBranchPostLessor == lessorCode && x.CrCasBranchPostBranch == NewBranch);
 
 
@@ -456,9 +454,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 // Save Adminstrive Procedures
                 await _adminstritiveProcedures.SaveAdminstritive(currentUserr.CrMasUserInformationCode, "1", "215", "20", currentUserr.CrMasUserInformationLessor, "100",
-                    car.CrCasCarInformationSerailNo, null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
+                    car.CrCasCarInformationSerailNo, null, null, null, null, null, null, oldBranch,car.CrCasCarInformationBranch, "تعديل", "Edit", "U", null);
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
-                return RedirectToAction("TransfersCarsBranch", "TransfersCarsBranch");
+                return RedirectToAction("TransfersCarsBranch", "CarsInformation");
             }
 
             var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode && x.CrCasBranchInformationCode != car.CrCasCarInformationBranch);
@@ -512,6 +510,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
             var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == model.CrCasCarInformationSerailNo && x.CrCasCarInformationLessor == lessorCode, new[] {"CrCasCarInformation1", "CrCasCarInformationDistributionNavigation",
                                                                                                                                "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2"});
+
+            var oldOwnerCode = car.CrCasCarInformationOwner; 
             var owner = await _unitOfWork.CrCasOwner.FindAsync(x => x.CrCasOwnersCode == NewOwner && x.CrCasOwnersLessorCode == lessorCode);
             if (car != null && owner != null)
             {
@@ -526,7 +526,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 // Save Adminstrive Procedures
                 await _adminstritiveProcedures.SaveAdminstritive(currentUserr.CrMasUserInformationCode, "1", "216", "20", currentUserr.CrMasUserInformationLessor, "100",
-                    car.CrCasCarInformationSerailNo, null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
+                    car.CrCasCarInformationSerailNo, null, null, null, null, null, null, oldOwnerCode, car.CrCasCarInformationOwner, "تعديل", "Edit", "U", null);
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 return RedirectToAction("TransfersOwner", "CarsInformation");
             }

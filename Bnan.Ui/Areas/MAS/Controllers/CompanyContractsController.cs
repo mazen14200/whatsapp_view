@@ -123,15 +123,17 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 await _compnayContract.UpdateCompanyContract(CompanyContractCode, DateContract, StartDateContract, EndDateContract, ContractCompanyAnnualFees, ContractCompanyTaxRate, ContractCompanyDiscountRate, activiation);
                 if (SelectedOption != "Subscribtion" && data != null)
                 {
+                    int serial = 0;
                     foreach (var item in data)
                     {
                         if (item.To != null && item.To != "" && item.Value != null && item.Value != "")
                         {
-                            await _compnayContract.AddCompanyContractDetailed(CompanyContractCode, item.From, item.To, item.Value);
+                            serial++;
+                            await _compnayContract.AddCompanyContractDetailed(CompanyContractCode, item.From, item.To, item.Value, serial);
                         }
                     }
                 }
-                _unitOfWork.Complete();
+                await _unitOfWork.CompleteAsync();
 
             }
             catch (Exception ex)

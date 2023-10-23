@@ -1,5 +1,6 @@
 ﻿using Bnan.Core.Models;
 using Bnan.Ui.ViewModels.MAS;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bnan.Ui.ViewModels.CAS
 {
@@ -18,6 +19,7 @@ namespace Bnan.Ui.ViewModels.CAS
         public DateTime? CrCasCarDocumentsMaintenanceDateAboutToFinish { get; set; }
         public int? CrCasCarDocumentsMaintenanceReadKm { get; set; }
         public int? CrCasCarDocumentsMaintenanceConsumptionKm { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public int? CrCasCarDocumentsMaintenanceCurrentMeter { get; set; }
         public int? CrCasCarDocumentsMaintenanceKmAboutToFinish { get; set; }
         public int? CrCasCarDocumentsMaintenanceKmEndsAt { get; set; }

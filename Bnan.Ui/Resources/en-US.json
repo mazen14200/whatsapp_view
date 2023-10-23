@@ -100,19 +100,19 @@
   "BranchNameEnShort": "Branch Name Short",
 
   //CAS Edit Branch
-  "Edit Branch Hint": "The page allows you to  Edit Branch data.",
-  "Edit Branch Data": "Edit Branch",
+  "Edit Branch Hint": "The page allows you to view and update Branch Data.",
+  "Edit Branch Data": "Edit Branch Data",
 
   //CAS Branch Doucment
-  "Document Data": "Document",
-  "Document Hint": "The page allows you to  Edit Documents Data .",
+  "Document Data": "Branch Documents",
+  "Document Hint": "The page allows you to search and edit branch documents data .",
   "Document Type": "Document Type",
   "TheNumber": "The Number",
   "Date": "Document Date",
   "StartDate": "Start Date",
   "EndDate": "End Date",
-  "Document Edit Data": "Edit Document",
-  "Document Edit Hint": "The page allows you to Edit Document .",
+  "Document Edit Data": "Edit Document Data",
+  "Document Edit Hint": "The page allows you to display and edit document data .",
 
 
 
@@ -128,8 +128,8 @@
   "UnAvaliable": "غير متاح",
 
   // component title
-  "Branch Data": "Branch Data",
-  "Branch Hint": "The page allows you to  Display Branch data",
+  "Branch Data": "Branches Data",
+  "Branch Hint": "The page allows you to Search and Display Branches data",
   "Users Data": "Employees Data",
 
 
@@ -444,15 +444,15 @@
   "ContEnConditions3": " Contract En Conditions3",
 
   //Contract Company
-  "ContractCompany Data": "Contract Company",
-  "ContractCompany Hint": "The page allows you to display contract company data , and modify it",
+  "ContractCompany Data": "Company Contracts",
+  "ContractCompany Hint": "The page allows you to search and display documents company data",
   "CActive": "Active",
   "OnExpired": "About to expire",
   "Expired": "Expired",
   "NotRegister": "New",
   "CompanyContractNo": "Contract No",
-  "EditContractCompany Data": "Contract",
-  "EditContractCompany Hint": "The page allows you to update contract company",
+  "EditContractCompany Data": "Edit Contract Data",
+  "EditContractCompany Hint": "The page allows you to display and Edit Contract Data",
   "CompanyContractType": "Contract Type",
   "ContractCompanyActivation": "Type",
   "Subscribtion": "Subscribtion",
@@ -844,7 +844,7 @@
   "IsExistModel": "This model is exist",
   //Owners
   "Owners Data": "Owners",
-  "Owners Hint": "The page allows you to display, add, and modify Owners.",
+  "Owners Hint": "The page allows you to search and display Owners.",
   "Add Owner": "Add Owner",
   "Id": "Type ID",
   "Commercial_No": "Commercial No",
@@ -856,7 +856,7 @@
   "OwnerIsExist": "Owner Is Exist",
   "NameOwnerIsExist": "Owner Name Is Exist",
   "Edit Owners Data": "Edit Owner Data",
-  "Edit Owners Hint": "The page allows you to Edit Owner Data.",
+  "Edit Owners Hint": "The page allows you to display and Edit Owner Data.",
   "Mecanism Data": "Alerts",
   "Mecanism Hint": "The page allows you to Edit Alert. ",
   "Additional": "Additional",
@@ -910,7 +910,14 @@
   "NewBranch": "New Branch",
   "TransferOwnerCars Hint": "The page allows you to change car ownership .",
   "NewOwner": "New Owner",
-  "CurrentOwner": "Current Owner"
+  "CurrentOwner": "Current Owner",
+  "MaintainceCar Data": "Maintaince Car",
+  "MaintainceCar Hint": "The page allows you to update Car Maintaince",
+  "EndMaintaince": "Consumption even",
+  "ConsumptionKM": "Consumption KM",
+  "KMEndsAt": "KM Ends At",
+  "CurrentMeterMessage": "The value cannot be less than "
+
 }
 
 

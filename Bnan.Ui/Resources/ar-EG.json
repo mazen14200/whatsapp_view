@@ -11,7 +11,7 @@
   //cars
   "Cars": "السيارات",
   "Data Car": "بيانات السيارات",
-  "Documents Cars": "وثائق السيارات",
+  "Documents Cars": "الوثائق",
   "Maintenance": "الصيانة",
   "Repair Car": "اصلاح السيارة",
   "Car Transfer": "نقل السيارة",
@@ -97,8 +97,8 @@
   "BranchNameEnShort": "اسم الفرع مختصر",
 
   //CAS Edit Branch
-  "Edit Branch Hint": "تمكنك هذه الصفحة من تعديل الفرع ",
-  "Edit Branch Data": "تعديل الفرع",
+  "Edit Branch Hint": "تمكنك هذه الصفحة من الاطلاع على بيانات الفرع و تحديثها",
+  "Edit Branch Data": "تحديث بيانات الفرع",
 
   //table  filter
   "All": "الكل",
@@ -112,20 +112,20 @@
   "UnAvaliable": "غير متاحه",
 
   // component title
-  "Branch Data": "بيانات الفرع",
-  "Branch Hint": "تمكنك هذه الصفحة من عرض بيانات الفرع",
+  "Branch Data": "بيانات الفروع",
+  "Branch Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات الفروع",
   "Users Data": "بيانات الموظفين",
 
   //CAS Branch Doucment
-  "Document Data": "المستندات",
-  "Document Hint": "تمكنك هذه الصفحة من تحديث بيانات المستندات",
+  "Document Data": "مستندات الفروع",
+  "Document Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات مستندات الفروع ",
   "Document Type": "نوع المستند",
   "TheNumber": "الرقم",
   "Date": "تاريخه",
   "StartDate": "بدايته",
   "EndDate": "نهايته",
-  "Document Edit Data": "تعديل المستند",
-  "Document Edit Hint": "تمكن هذه الصفحة المستخدم من التعديل على المستندات",
+  "Document Edit Data": "تحديث بيانات المستند",
+  "Document Edit Hint": "تمكنك هذه الصفحة من الاطلاع على بيانات المستند و تحديثها",
 
 
 
@@ -441,15 +441,15 @@
   "ContEnConditions2": " شروط العقد انجليزي 2",
   "ContEnConditions3": " شروط العقد انجليزي 3",
   //Contract Company
-  "ContractCompany Data": "عقود الشركات",
-  "ContractCompany Hint": "تمكنك هذه الصفحة من عرض عقود الشركات والتعديل عليها ",
+  "ContractCompany Data": "عقود الشركة",
+  "ContractCompany Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات عقود الشركة",
   "CActive": "قائم",
   "OnExpired": "علي وشك الانتهاء",
   "Expired": "منتهي",
   "NotRegister": "لم يسجل",
   "CompanyContractNo": "رقم العقد",
-  "EditContractCompany Data": "العقود",
-  "EditContractCompany Hint": "تمكنك هذه الصفحة من تحديث بيانات العقود",
+  "EditContractCompany Data": "تحديث بيانات العقد",
+  "EditContractCompany Hint": "تمكنك هذه الصفحة من الاطلاع على بيانات العقد و تحديثها",
   "CompanyContractType": "نوع العقد",
   "ContractCompanyActivation": "آليه التعاقد",
   "Subscribtion": "اشتراك",
@@ -832,7 +832,7 @@
   "HintSureToRetriveDSalesPoint": "هل ترغب باسترجاع بيانات نقطة البيع",
   "IsExistModel": "هذا النوع موجود من قبل",
   "Owners Data": "الملاك",
-  "Owners Hint": ".تمكنك الصفحة من البحث و اضافة و تعديل بيانات الملاك",
+  "Owners Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات الملاك ",
   "Add Owner": "اضافة مالك",
   "Id": "الهوية",
   "Commercial_No": "السجل التجاري",
@@ -843,8 +843,8 @@
   "Add Owners Hint": "تمكنك هذه الصفحة من اضافة مالك",
   "OwnerIsExist": "الهوية موجودة من قبل",
   "NameOwnerIsExist": "الاسم موجود من قبل",
-  "Edit Owners Data": "تعديل بيانات المالك",
-  "Edit Owners Hint": "تمكنك هذه الصفحة من تعديل بيانات المالك",
+  "Edit Owners Data": "تحديث بيانات الملاك",
+  "Edit Owners Hint": "تمكنك هذه الصفحة من الاطلاع على بيانات الملاك و تحديثها",
   "Mecanism Data": "عرض التنبيهات",
   "Mecanism Hint": "تمكنك هذه الصفحة من تعديل التنبيهات ",
   "Additional": "سعر السيارات والعروض",
@@ -900,5 +900,11 @@
   "NewBranch": "الفرع الجديد",
   "TransferOwnerCars Hint": "تمكنك هذه الصفحة من تغيير ملكية السيارة",
   "NewOwner": "المالك الجديد",
-  "CurrentOwner": "المالك الحالي"
+  "CurrentOwner": "المالك الحالي",
+  "MaintainceCar Data": "صيانة السيارات",
+  "MaintainceCar Hint": "تمكنك هذه الصفحة من تحديث صيانة السيارات",
+  "EndMaintaince": "الاستهلاك حتي",
+  "ConsumptionKM": "الصيانة القادمة(كم)",
+  "KMEndsAt": "انتهاء الكيلوات",
+  "CurrentMeterMessage": "لا يمكن ان تكون اقل من "
 }

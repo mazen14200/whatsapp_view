@@ -49,8 +49,23 @@
                                 <td>@item.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateEnName</td>
                             }
                             <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationDirectorEnName</td>
-                            <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
-                            <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                            @if (item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey != "" || item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey != null)
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey @item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
+                            }
+                            else
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
+                            }
+                            @if (item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey != "" || item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey != null)
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey @item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                            }
+                            else
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                            }
+
                             <td>@item.CrCasBranchPostNavigation.CrCasCarInformations.Count()</td>
                             <td>
                                 @if (@item.CrCasBranchPostNavigation.CrCasBranchInformationStatus == Status.Active)
@@ -82,8 +97,22 @@
                                 <td>@item.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateEnName</td>
                             }
                             <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationDirectorEnName</td>
-                            <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
-                            <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                            @if (item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey != "" || item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey != null)
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey @item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
+                            }
+                            else
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
+                            }
+                            @if (item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey != "" || item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey != null)
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey @item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                            }
+                            else
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                            }
                             <td>@item.CrCasBranchPostNavigation.CrCasCarInformations.Count()</td>
                             <td>
                                 @if (@item.CrCasBranchPostNavigation.CrCasBranchInformationStatus == Status.Active)
@@ -144,8 +173,22 @@ else
                                 <td>@item.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateArName</td>
                             }
                             <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationDirectorArName</td>
-                            <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
-                            <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                            @if (item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey != "" || item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey != null)
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey @item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
+                            }
+                            else
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
+                            }
+                            @if (item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey != "" || item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey != null)
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey @item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                            }
+                            else
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                            }
                             <td>@item.CrCasBranchPostNavigation.CrCasCarInformations.Count()</td>
                             <td>
                                 @if (@item.CrCasBranchPostNavigation.CrCasBranchInformationStatus == Status.Active)
@@ -177,8 +220,22 @@ else
                                 <td>@item.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateArName</td>
                             }
                             <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationDirectorArName</td>
-                            <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
-                            <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                            @if (!string.IsNullOrEmpty(item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey) && !string.IsNullOrEmpty(item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone))
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey@item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
+                            }
+                            else
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
+                            }
+                            @if (!string.IsNullOrEmpty(item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey) && !string.IsNullOrEmpty(item.CrCasBranchPostNavigation.CrCasBranchInformationMobile))
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                            }
+                            else
+                            {
+                                <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                            }
                             <td>@item.CrCasBranchPostNavigation.CrCasCarInformations.Count()</td>
                             <td>
 

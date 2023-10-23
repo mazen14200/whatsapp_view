@@ -113,7 +113,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (DoucmentImg != null)
                 {
                     var sysProcedure = _unitOfWork.CrMasSysProcedure.Find(x => x.CrMasSysProceduresClassification == "12" && x.CrMasSysProceduresCode == documentsMaintainceCarVM.CrCasCarDocumentsMaintenanceProcedures);
-                    string fileNameImg = sysProcedure.CrMasSysProceduresEnName;
+                    string fileNameImg = sysProcedure.CrMasSysProceduresCode;
                     filePathImage = await DoucmentImg.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
                     documentsMaintainceCar.CrCasCarDocumentsMaintenanceImage = filePathImage;
                 }
@@ -135,7 +135,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
                     // Save Adminstrive Procedures
-                    await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", documentsMaintainceCar.CrCasCarDocumentsMaintenanceProcedures, documentsMaintainceCar.CrCasCarDocumentsMaintenanceProceduresClassification, currentUser.CrMasUserInformationLessor, "100",
+                    await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "212", "20", currentUser.CrMasUserInformationLessor, "100",
                     documentsMaintainceCar.CrCasCarDocumentsMaintenanceNo, null, null, documentsMaintainceCar.CrCasCarDocumentsMaintenanceNo, documentsMaintainceCar.CrCasCarDocumentsMaintenanceDate, documentsMaintainceCar.CrCasCarDocumentsMaintenanceStartDate, documentsMaintainceCar.CrCasCarDocumentsMaintenanceEndDate,
                     null, null, "اضافة", "Insert", "I", null);
                     _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
@@ -188,7 +188,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                     // Save Adminstrive Procedures
-                    await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "202", "20", currentUser.CrMasUserInformationLessor, "100",
+                    await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "212", "20", currentUser.CrMasUserInformationLessor, "100",
                         CarDocument.CrCasCarDocumentsMaintenanceNo, null, null, CarDocument.CrCasCarDocumentsMaintenanceNo, CarDocument.CrCasCarDocumentsMaintenanceDate, CarDocument.CrCasCarDocumentsMaintenanceStartDate, CarDocument.CrCasCarDocumentsMaintenanceEndDate,
                         null, null, "تعديل", "Edit", "U", null);
 

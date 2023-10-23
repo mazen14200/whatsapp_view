@@ -4,8 +4,9 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    ViewData["Page-title"] = localizer["Branch Data"];
-    ViewData["Page-Hint"] = localizer["Branch Hint"];
+    ViewData["Page-title"] = localizer["MaintainceCar Data"];
+    ViewData["Page-Hint"] = localizer["MaintainceCar Hint"];
+
 }
 
 
@@ -30,7 +31,6 @@
         <div class="col-sm-12 col-md-9">
             <div class="col-sm-12 col-md-4 p-0">
                 <a type="button" class="btn btn-danger" asp-controller="Home" asp-action="Index"><i class="mdi mdi-window-close"></i> </a>
-                <a onclick="CheckValidation('2201001', '@Status.Insert', '@Url.Action("AddBranch", "Branches")')" class="btn btn-secondary">@localizer["Add Branch Data"]</a>
             </div>
         </div>
 
@@ -51,43 +51,46 @@
                 <label class="form-check-label" for="customRadioActive">@localizer["Active"]</label>
             </div>
             <div class="form-check form-check-inline">
-                <input type="radio" id="customRadioStoped" name="customRadio" value="H" class="form-check-input">
-                <label class="form-check-label" for="customRadioStoped">@localizer["Stoped"]</label>
+                <input type="radio" id="customRadioRemoved" name="customRadio" value="N" class="form-check-input">
+                <label class="form-check-label" for="customRadioRemoved">@localizer["Renew"]</label>
             </div>
             <div class="form-check form-check-inline">
-                <input type="radio" id="customRadioRemoved" name="customRadio" value="D" class="form-check-input">
-                <label class="form-check-label" for="customRadioRemoved">@localizer["Deleted"]</label>
+                <input type="radio" id="customRadioStoped" name="customRadio" value="X" class="form-check-input">
+                <label class="form-check-label" for="customRadioStoped">@localizer["AboutToExpire"]</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" id="customRadioStoped" name="customRadio" value="E" class="form-check-input">
+                <label class="form-check-label" for="customRadioStoped">@localizer["Expire"]</label>
             </div>
         </div>
     </div>
     <div class="dataTable">
-        <partial name="_DataTableBranches" />
+        <partial name="_DataTableMaintainceCar" />
     </div>
 </div>
+
 @section scripts {
+    @*Get Document Using filter*@
     <script>
-        //get lessor By Status function
-        function GetBranchFitler(status) {
+        function GetMaintainceCarFitler(status) {
             $.ajax({
                 type: "GET",
                 data: {
                     status: status
                 },
-                url: "@Url.Action("GetBranchesByStatus", "Branches", new { Area = "CAS" })",
+                url: "@Url.Action("GetMaintainceCarByStatus", "MaintainceCar", new { Area = "CAS" })",
                 success: function (response) {
-                    console.log(response)
                     $(".dataTable").html(response);
                     set_basic_datatable();
                 },
             })
         }
-
-        //on Click Filter Radio Button GetLessorsByStatus
         $("input[name='customRadio']").on("click", function () {
-            GetBranchFitler($(this).val())
+            GetMaintainceCarFitler($(this).val())
         })
     </script>
 }
+
 
 
 <style>

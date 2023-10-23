@@ -457,10 +457,10 @@
                         <div class="file-upload-content signature" style="display:block">
                             @{
                                 string imagePath = Model.CrMasContractCompanyImage;
-                                if (imagePath != null)
+                                if (!string.IsNullOrEmpty(imagePath))
                                 {
                                     string extension = imagePath?.Substring(imagePath.Length - 3);
-                                    @if (extension == "pdf")
+                                    if (extension == "pdf")
                                     {
                                         <a href="@Url.Content(Model.CrMasContractCompanyImage)" target="_blank">
                                             <img class="file-upload-image signature" for="pdf" src="~/images/common/pdf.png" />
@@ -475,11 +475,9 @@
                                 }
                                 else
                                 {
-                                    <img class="file-upload-image signature" src="~/images/common/Empty.bmp" />
+                                    <span>العقد @localizer["notfound"]</span>
                                 }
                             }
-
-
                             @*  <div class="image-title-wrap">
                         <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                         </div>*@
@@ -492,7 +490,7 @@
                         <label class="form-label" asp-for="CrMasContractCompanyReasons">@localizer["reasons"]</label>
                     </div>
                     <div class="col-md-5 col-11">
-                        <input type="text" class="form-control" asp-for="CrMasContractCompanyReasons" autocomplete="off" readonly>
+                        <input type="text" class="form-control" asp-for="CrMasContractCompanyReasons" readonly autocomplete="off">
                     </div>
                 </div>
 

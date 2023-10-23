@@ -9,8 +9,8 @@
     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? $"~{Context.Request.Path.Value}?Procedureid={HttpContextAccessor.HttpContext.Request.Query["Procedureid"]}&BranchId={HttpContextAccessor.HttpContext.Request.Query["BranchId"]}" : $"~{Context.Request.Path.Value}?Procedureid={HttpContextAccessor.HttpContext.Request.Query["Procedureid"]}&BranchId={HttpContextAccessor.HttpContext.Request.Query["BranchId"]}";
-    ViewData["Page-title"] = localizer["DocumentCar Edit Data"];
-    ViewData["Page-Hint"] = localizer["DocumentCar Edit Hint"];
+    ViewData["Page-title"] = localizer["MaintainceCar Data"];
+    ViewData["Page-Hint"] = localizer["MaintainceCar Hint"];
 }
 
 <title>@ViewData["Title"]</title>
@@ -37,189 +37,6 @@
 
 </style>
 
-<style>
-
-
-    #signaturePreview, #imagePreview {
-        display: block;
-        margin-top: -5px;
-        float: right;
-        margin-right: 20px;
-        height: 100px;
-        width: auto;
-        object-fit: cover;
-        border: .5px solid rgb(231, 231, 231);
-        position: relative;
-    }
-
-    #spanInput {
-        height: 35px;
-    }
-
-    .sub-container form .row > div:nth-child(odd):nth-child(-n+5), .sub-container-form form .row > div:nth-child(odd):nth-child(-n+5) {
-        margin: 0;
-    }
-
-    .file-upload {
-        width: 100%;
-        margin: 0 auto;
-        padding: 20px;
-    }
-
-    .file-upload-btn {
-        width: 200px;
-        max-height: 200px;
-        max-width: 200px;
-        margin: 0;
-        color: #fff;
-        background: #727cf5;
-        border: none;
-        padding: 10px;
-        border-radius: 4px;
-        border-bottom: 4px solid #727cf5;
-        transition: all .2s ease;
-        outline: none;
-        text-transform: uppercase;
-        font-weight: 700;
-    }
-
-        .file-upload-btn:hover {
-            background: #5661e3;
-            color: #ffffff;
-            transition: all .2s ease;
-            cursor: pointer;
-        }
-
-    .file-upload-input-picture, .file-upload-input-signature {
-        position: absolute;
-        margin: 0;
-        padding: 0;
-        width: 200px;
-        height: 200px;
-        max-height: 200px;
-        max-width: 200px;
-        outline: none;
-        opacity: 0;
-        cursor: pointer;
-    }
-
-    .image-upload-wrap {
-        max-height: 200px;
-        max-width: 200px;
-        margin-top: 5px;
-        border: 4px dashed rgb(231, 231, 231);
-        position: relative;
-        display: none;
-    }
-
-        .image-dropping,
-        .image-upload-wrap:hover {
-            background-color: rgb(231, 231, 231);
-            border: 4px dashed #ffffff;
-        }
-
-    .image-title-wrap {
-        color: #222;
-    }
-
-    .drag-text {
-        text-align: center;
-    }
-
-        .drag-text h3 {
-            font-weight: 100;
-            text-transform: uppercase;
-            padding: 60px 0;
-            font-size: 17px
-        }
-
-    .file-upload-image {
-        height: 200px;
-        max-width: 200px;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        padding: 20px;
-        border: .5px solid rgb(231, 231, 231);
-    }
-
-    .remove-image {
-        margin: 0;
-        max-height: 200px;
-        max-width: 200px;
-        width: 100%;
-        color: #fff;
-        background: #fa5c7c;
-        border: none;
-        padding: 10px;
-        border-radius: 4px;
-        border-bottom: 4px solid #fa5c7c;
-        transition: all .2s ease;
-        outline: none;
-        text-transform: uppercase;
-        font-weight: 700;
-    }
-
-    .image-upload-wrap {
-        display: block
-    }
-
-    .file-upload-content {
-        display: none
-    }
-
-    .remove-image:hover {
-        background: #f35474;
-        color: #ffffff;
-        transition: all .2s ease;
-        cursor: pointer;
-    }
-
-    #CrMasSupCarDistributionYear,
-    #CrMasSupCarDistributionPassengers,
-    #CrMasSupCarDistributionDoor,
-    #CrMasSupCarDistributionBagBags,
-    #CrMasSupCarDistributionSmallBags {
-        width: 50%
-    }
-
-    .text-danger {
-        white-space: nowrap
-    }
-
-    @@media (max-width: 600px) {
-        #CarDisImage {
-            position: absolute;
-            top: 70%;
-            right: 75%;
-            width: 243px;
-        }
-    }
-
-</style>
-
-@if (Model.CrCasCarDocumentsMaintenanceImage != null)
-{
-    <style>
-        .image-upload-wrap {
-            display: none;
-        }
-
-        .file-upload-content {
-            display: block
-        }
-    </style>
-}
-
-@if (requestCulture.RequestCulture.UICulture.Name == "ar-EG")
-{
-    <style>
-        .datepicker-icon {
-            cursor: pointer;
-            top: 8%;
-            right: 77%;
-        }
-    </style>
-}
 
 @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
 {
@@ -229,6 +46,16 @@
             display: inline-block;
             top: 1px;
             left: 178px;
+        }
+    </style>
+}
+@if (requestCulture.RequestCulture.UICulture.Name == "ar-EG")
+{
+    <style>
+        .datepicker-icon {
+            cursor: pointer;
+            top: 8%;
+            right: 77%;
         }
     </style>
 }
@@ -244,7 +71,7 @@
 
 
 <div class="sub-container-form" id="CAS">
-    <form class="needs-validation" novalidate asp-area="CAS" asp-controller="DocumentsCar" asp-action="Edit" enctype="multipart/form-data">
+    <form class="needs-validation" novalidate asp-area="CAS" asp-controller="MaintainceCar" asp-action="Edit" enctype="multipart/form-data">
         <div class="form-contain">
             @*Document Code*@
             <div class="row mt-2" hidden>
@@ -257,8 +84,8 @@
                     <input type="text" class="form-control" readonly asp-for="CrCasCarDocumentsMaintenanceProcedures" maxlength="100" width="80%" />
                     <input type="text" class="form-control" readonly asp-for="CrCasCarDocumentsMaintenanceStatus" maxlength="100" width="80%" />
                     <input type="text" class="form-control" readonly asp-for="CrCasCarDocumentsMaintenanceImage" maxlength="100" width="80%" />
-                    <input type="text" class="form-control" readonly asp-for="CrCasCarDocumentsMaintenanceCurrentMeter" maxlength="100" width="80%" />
                     <input type="text" class="form-control" readonly asp-for="CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresCode" maxlength="100" width="80%" />
+                    <input type="text" class="form-control" readonly asp-for="CrCasCarDocumentsMaintenanceSerailNoNavigation.CrCasCarInformationSerailNo" maxlength="100" width="80%" />
                 </div>
             </div>
             @if (Model.CrCasCarDocumentsMaintenanceStatus != Status.Renewed)
@@ -270,6 +97,19 @@
                     </div>
                     <div class="col-md-2 col-11">
                         <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceSerailNo" readonly>
+                    </div>
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Car"]</label>
+                    </div>
+                    <div class="col-md-3 col-11">
+                        @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceSerailNoNavigation.CrCasCarInformationConcatenateArName" readonly>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceSerailNoNavigation.CrCasCarInformationConcatenateEnName" readonly>
+                        }
                     </div>
                 </div>
 
@@ -289,26 +129,11 @@
 
                         }
                     </div>
-                </div>
-
-                @*Document Number*@
-                <div class="row mt-2">
                     <div class="col-md-1 formlabel">
                         <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceNo">@localizer["TheNumber"]</label>
                     </div>
                     <div class="col-md-2 col-11">
                         <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceNo" readonly>
-                    </div>
-                </div>
-
-                @*Date of Documnet*@
-                <div class="row mt-2">
-                    <div class="col-md-1 formlabel">
-                        <label class="form-label">@localizer["Date"]</label>
-                    </div>
-                    <div class="col-md-2 col-11 ">
-                        <input type="text" class="form-control" value="@ViewBag.date" readonly>
-                        <input type="hidden" class="form-control" asp-for="CrCasCarDocumentsMaintenanceDate" readonly>
                     </div>
                 </div>
 
@@ -320,45 +145,64 @@
                     <div class="col-md-2 col-11 ">
                         <input type="text" class="form-control" value="@ViewBag.startDate" readonly>
                         <input type="hidden" class="form-control" asp-for="CrCasCarDocumentsMaintenanceStartDate" readonly>
-
                     </div>
 
-                    <div class="col-md-1 formlabel text-center">
+                    <div class="col-md-1 formlabel">
                         <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceEndDate">@localizer["EndDate"]</label>
                     </div>
                     <div class="col-md-2 col-11">
                         <input type="text" class="form-control" value="@ViewBag.endDate" readonly>
                         <input type="hidden" class="form-control" asp-for="CrCasCarDocumentsMaintenanceEndDate" readonly>
+                    </div>
+                </div>
+                @*Km Current*@
+                <div class="row mt-2">
+                    @*Km Current*@
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["CurrentMeter"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        <input type="text" class="form-control" value="@ViewBag.CurrentMeter" maxlength="6" autocomplete="off" readonly>
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                            </div>
+                        </div>
+                    </div>
+                    @*ConsumptionKM*@
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceConsumptionKm">@localizer["ConsumptionKM"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        <input type="text" class="form-control" value="@ViewBag.ConsumptionKm" maxlength="6" autocomplete="off" readonly>
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*KMEndsAt*@
+                <div class="row">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceKmEndsAt">@localizer["KMEndsAt"]</label>
+                    </div>
+                    <div class="col-md-5 col-11">
+                        <input type="text" class="form-control" value="@ViewBag.KmEndsAt" autocomplete="off" readonly>
+
+                        <div style="margin-top:12px">
+                            <div style="height: 1.35em">
+                            </div>
+                        </div>
 
                     </div>
                 </div>
 
                 @*Reasons*@
-                <div class="row mt-2">
+                <div class="row">
                     <div class="col-md-1 formlabel">
                         <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceReasons">@localizer["reasons"]</label>
                     </div>
                     <div class="col-md-5 col-11">
                         <input type="text" id="cities" class="form-control" asp-for="CrCasCarDocumentsMaintenanceReasons" autocomplete="off">
-                    </div>
-                </div>
-
-                <div id="CarDisImage">
-                    <div class="file-upload">
-                        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input-signature').trigger('click')">@localizer["photo"] @ViewBag.type</button>
-                        <div class="image-upload-wrap">
-                            <input class="file-upload-input-signature" type="file" onchange="readURL(this, 'signature');" accept="image/*" id="CarDistributionFile" name="DoucmentImg" />
-                            <div class="drag-text">
-                                <h3>@localizer["DragAndDrop"]</h3>
-                            </div>
-                        </div>
-
-                        <div class="file-upload-content signature">
-                            <img class="file-upload-image signature" src="@Url.Content(Model.CrCasCarDocumentsMaintenanceImage)" />
-                            <div class="image-title-wrap">
-                                <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             }
@@ -376,6 +220,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Car"]</label>
+                    </div>
+                    <div class="col-md-3 col-11">
+                        @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceSerailNoNavigation.CrCasCarInformationConcatenateArName" readonly>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceSerailNoNavigation.CrCasCarInformationConcatenateEnName" readonly>
+                        }
+                    </div>
                 </div>
 
                 @*Document Type*@
@@ -398,10 +255,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                @*Document Number*@
-                <div class="row mt-2">
                     <div class="col-md-1 formlabel">
                         <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceNo">@localizer["TheNumber"]</label>
                     </div>
@@ -410,21 +263,6 @@
                         <div style="margin-top:2px">
                             <div style="height: 1.35em">
                                 <span asp-validation-for="@Model.CrCasCarDocumentsMaintenanceNo" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                @*Date of Documnet*@
-                <div class="row mt-2">
-                    <div class="col-md-1 formlabel">
-                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceDate">@localizer["Date"]</label>
-                    </div>
-                    <div class="col-md-2 col-8 dateRelative">
-                        <input type="text" class="form-control dateInput" asp-for="CrCasCarDocumentsMaintenanceDate">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span asp-validation-for="@Model.CrCasCarDocumentsMaintenanceDate" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -443,8 +281,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-1 formlabel text-center">
-                        <label class="form-label" for="LessorDirNameEn">@localizer["EndDate"]</label>
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" for="LessorDirNameEn">@localizer["EndMaintaince"]</label>
                     </div>
                     <div class="col-md-2 col-11 dateRelative">
                         <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceEndDate">
@@ -455,7 +293,51 @@
                         </div>
                     </div>
                 </div>
+                @*Km Current*@
+                <div class="row mt-2">
+                    @*Km Current*@
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["CurrentMeter"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceCurrentMeter" id="CrCasCarDocumentsMaintenanceCurrentMeter" maxlength="6" oninput="updateTotal()" autocomplete="off">
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="@Model.CrCasCarDocumentsMaintenanceCurrentMeter" class="text-danger"></span>
+                                <span id="currentMeterValue" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @*ConsumptionKM*@
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceConsumptionKm">@localizer["ConsumptionKM"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceConsumptionKm" id="CrCasCarDocumentsMaintenanceConsumptionKm" maxlength="6" oninput="updateTotal()" autocomplete="off">
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="@Model.CrCasCarDocumentsMaintenanceConsumptionKm" class="text-danger"></span>
+                                <span id="ConsumptionKmMessage" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*KMEndsAt*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceKmEndsAt">@localizer["KMEndsAt"]</label>
+                    </div>
+                    <div class="col-md-5 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceKmEndsAt" id="CrCasCarDocumentsMaintenanceKmEndsAt" autocomplete="off" readonly>
 
+                        <div style="margin-top:12px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="CrCasCarDocumentsMaintenanceKmEndsAt" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
                 @*Reasons*@
                 <div class="row mt-2">
                     <div class="col-md-1 formlabel">
@@ -470,25 +352,6 @@
                             </div>
                         </div>
 
-                    </div>
-                </div>
-
-                <div id="CarDisImage">
-                    <div class="file-upload">
-                        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input-signature').trigger('click')">@localizer["photo"]</button>
-                        <div class="image-upload-wrap">
-                            <input class="file-upload-input-signature" type="file" onchange="readURL(this, 'signature');" accept="image/*" id="CarDistributionFile" name="DoucmentImg" />
-                            <div class="drag-text">
-                                <h3>@localizer["DragAndDrop"]</h3>
-                            </div>
-                        </div>
-
-                        <div class="file-upload-content signature">
-                            <img class="file-upload-image signature" src="@Url.Content(Model.CrCasCarDocumentsMaintenanceImage)" />
-                            <div class="image-title-wrap">
-                                <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             }
@@ -508,7 +371,7 @@
                 </a>
             }
 
-            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="DocumentsCar" asp-action="DocumentsCar">
+            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="MaintainceCar" asp-action="MaintainceCar">
                 @localizer["Back"]
             </a>
         </div>
@@ -551,82 +414,105 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
+        var currentMeterInput = document.querySelector('input[name="CrCasCarDocumentsMaintenanceCurrentMeter"]');
+        currentMeterInput.addEventListener('change', function () {
+            var currentValue = parseInt(this.value);
+            var currentMeterSpan = document.querySelector('span[data-valmsg-for="CrCasCarDocumentsMaintenanceCurrentMeter"]');
+            var currentMeterSpan1 = document.getElementById("currentMeterValue");
+            var currentMeterMessage = '@localizer["CurrentMeterMessage"]';
+            console.log(currentValue)
+            console.log(currentMeterSpan)
+            console.log(currentMeterMessage)
+            // Get the current value from the server-side
+            var currentMeterFromModel = parseInt('@Model.CrCasCarDocumentsMaintenanceCurrentMeter');
+            console.log(currentMeterFromModel)
+
+            if (currentValue < currentMeterFromModel || currentValue == "" || currentValue == null) {
+                currentMeterSpan1.innerText = currentMeterMessage + currentMeterFromModel;
+                return
+            } else {
+                currentMeterSpan1.innerText = '';
+            }
+        });
+    </script>
+    <script>
+        function updateTotal() {
+            // Get the value of CrCasCarDocumentsMaintenanceCurrentMeter and CrCasCarDocumentsMaintenanceConsumptionKm
+            const currentMeterValue = parseInt(document.getElementById("CrCasCarDocumentsMaintenanceCurrentMeter").value.trim(), 10);
+            const consumptionKmValue = parseInt(document.getElementById("CrCasCarDocumentsMaintenanceConsumptionKm").value.trim(), 10);
+            console.log(currentMeterValue)
+            console.log(consumptionKmValue)
+
+            // Calculate the sum
+            const total = currentMeterValue + consumptionKmValue;
+
+            // Update the value of CrCasCarDocumentsMaintenanceKmEndsAt
+            document.getElementById('CrCasCarDocumentsMaintenanceKmEndsAt').value = isNaN(total) ? '' : total.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+    </script>
+    <script>
         $(document).ready(function () {
             var today = new Date();
             var startDate = new Date();
             var EndDate = new Date();
-            var stats = $("#CrCasCarDocumentsMaintenanceStatus").val();
-                var dates = $("#CrCasCarDocumentsMaintenanceDate").val();
-                var formattedDate = new Date(dates);
 
-                var startDates = $("CrCasCarDocumentsMaintenanceStartDate").val();
-                var StartformattedDate = new Date(startDates);
+            var startDates = $("CrCasCarDocumentsMaintenanceStartDate").val();
+            var StartformattedDate = new Date(startDates);
 
-                var EndDates = $("CrCasCarDocumentsMaintenanceEndDate").val();
-                var EndformattedDate = new Date(EndDates);
-                console.log(EndformattedDate);
-                if (!formattedDate || formattedDate === "") {
-                    formattedDate = today; // Set date to today if it's empty or null
-                }
-                if (!StartformattedDate || StartformattedDate === "") {
-                    StartformattedDate = today; // Set date to today if it's empty or null
-                }
-                if (!EndformattedDate || EndformattedDate === "") {
-                    EndformattedDate = today; // Set date to today if it's empty or null
-                }
+            var EndDates = $("CrCasCarDocumentsMaintenanceEndDate").val();
+            var EndformattedDate = new Date(EndDates);
 
-
-                $("#CrCasCarDocumentsMaintenanceDate").datepicker({
-                    dateFormat: 'yy/mm/dd',
-                    minDate: today,
-                    defaultDate: formattedDate// Set the minimum date to today
-                }).datepicker("widget").addClass("datepicker-widget");
-                $("#CrCasCarDocumentsMaintenanceDate").datepicker("setDate", formattedDate);
-                $("#CrCasCarDocumentsMaintenanceDate").click(function () {
-                    $(this).datepicker("show");
-                });
-
-                $("#CrCasCarDocumentsMaintenanceStartDate").datepicker({
-                    dateFormat: 'yy/mm/dd',
-                    minDate: today,
-                    defaultDate: formattedDate// Set the minimum date to today
-                }).datepicker("widget").addClass("datepicker-widget");
-                $("#CrCasCarDocumentsMaintenanceStartDate").datepicker("setDate", formattedDate);
-                $("#CrCasCarDocumentsMaintenanceStartDate").click(function () {
-                    $(this).datepicker("show");
-                });
-
-                $("#CrCasCarDocumentsMaintenanceEndDate").datepicker({
-                    dateFormat: 'yy/mm/dd',
-                    minDate: today,
-                    defaultDate: formattedDate// Set the minimum date to today
-                }).datepicker("widget").addClass("datepicker-widget");
-                $("#CrCasCarDocumentsMaintenanceEndDate").datepicker("setDate", formattedDate);
-                $("#CrCasCarDocumentsMaintenanceEndDate").click(function () {
-                    $(this).datepicker("show");
-                });
-
-
-                $("#CrCasCarDocumentsMaintenanceDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
-                $("#CrCasCarDocumentsMaintenanceStartDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
-                $("#CrCasCarDocumentsMaintenanceEndDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+            if (!StartformattedDate || StartformattedDate === "") {
+                StartformattedDate = today; // Set date to today if it's empty or null
+            }
+            if (!EndformattedDate || EndformattedDate === "") {
+                EndformattedDate = today; // Set date to today if it's empty or null
+            }
 
 
 
-                $(".datepicker-icon").click(function () {
-                    $(this).prevAll('input').datepicker("show");
-                });
-            
+            $("#CrCasCarDocumentsMaintenanceStartDate").datepicker({
+                dateFormat: 'yy/mm/dd',
+                minDate: today,
+                defaultDate: StartformattedDate// Set the minimum date to today
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#CrCasCarDocumentsMaintenanceStartDate").datepicker("setDate", StartformattedDate);
+            $("#CrCasCarDocumentsMaintenanceStartDate").click(function () {
+                $(this).datepicker("show");
+            });
+
+            $("#CrCasCarDocumentsMaintenanceEndDate").datepicker({
+                dateFormat: 'yy/mm/dd',
+                minDate: today,
+                defaultDate: EndformattedDate// Set the minimum date to today
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#CrCasCarDocumentsMaintenanceEndDate").datepicker("setDate", EndformattedDate);
+            $("#CrCasCarDocumentsMaintenanceEndDate").click(function () {
+                $(this).datepicker("show");
+            });
 
 
-            $("#saveEdit").on("click", function (event) {
-                event.preventDefault();
-                CheckValidation('2202002', '@Status.Save').done(function (data) {
-                    if (data) {
-                        $('form').submit();
-                    }
-                });
-            })
+            $("#CrCasCarDocumentsMaintenanceStartDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+            $("#CrCasCarDocumentsMaintenanceEndDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+
+
+
+            $(".datepicker-icon").click(function () {
+                $(this).prevAll('input').datepicker("show");
+            });
+
+
+
+            //$("#saveEdit").on("click", function (event) {
+            //    event.preventDefault();
+            //    CheckValidation('2202003', '@Status.Save').done(function (data) {
+            //        if (data) {
+            //            //Chech Current Meter Value
+
+            //            $('form').submit();
+            //        }
+            //    });
+            //})
         })
 
     </script>
@@ -674,12 +560,12 @@
             var DocumentSerialNumber = document.getElementById("CrCasCarDocumentsMaintenanceSerailNo").value;
             $.ajax({
                 type: "DELETE",
-                url: "/CAS/DocumentsCar/EditDocumentStatus",
+                url: "/CAS/MaintainceCar/EditMaintainceCarStatus",
                 data: { status: status, DocumentCarLessor: DocumentsLessor, DocumentCarBranch: DocumentsBranch, DocumentCarProcedures: DocumentsProcedures, SerialNumber: DocumentSerialNumber },
                 success: function (result) {
                     console.log(result)
                     $('.modal').modal('hide');
-                    window.location.href = "/CAS/DocumentsCar/SuccessMessage";
+                    window.location.href = "/CAS/MaintainceCar/SuccessMessage";
                 },
                 error: function (error) {
                     console.log(error);
@@ -689,7 +575,7 @@
         $("#buttonContainer a").on("click", function (event) {
             var status = $(this).attr("data-error")
             var Modal = $(this).attr("data-bs-targett")
-            CheckValidation('2201002', status).done(function (data) {
+            CheckValidation('2201003', status).done(function (data) {
                 console.log(data)
                 if (data) $(Modal).modal('show');
             });
@@ -703,9 +589,30 @@
 
         $("#saveEdit").on("click", function (event) {
             event.preventDefault();
-            CheckValidation('2202002', '@Status.Save').done(function (data) {
+            CheckValidation('2202003', '@Status.Save').done(function (data) {
                 if (data) {
-                    $('form').submit();
+                    var status = document.getElementById("CrCasCarDocumentsMaintenanceStatus").value;
+                    if (status == "N") {
+                        //Check If Validiton of current meter okay or not
+                        var currentMeterMessage = document.getElementById("currentMeterValue").innerHTML;
+                        var currentMeterinput = document.getElementById("CrCasCarDocumentsMaintenanceCurrentMeter");
+                        var ConsumptionKmMessage = document.getElementById("ConsumptionKmMessage");
+                        var ConsumptionKmInput = document.getElementById("CrCasCarDocumentsMaintenanceConsumptionKm");
+                        if (currentMeterMessage != null && currentMeterMessage != "") {
+                            currentMeterinput.focus();
+                        }
+                        else if (ConsumptionKmInput.value == null || ConsumptionKmInput.value == "") {
+                            ConsumptionKmMessage.innerHTML = '@localizer["requiredFiled"]';
+                            ConsumptionKmInput.focus();
+                        }
+                        else {
+                            $('form').submit();
+                        }
+                    }
+                    else {
+                        $('form').submit();
+                    }
+
                 }
             });
         })

@@ -1,4 +1,5 @@
-﻿using Bnan.Core.Interfaces;
+﻿using Bnan.Core.Extensions;
+using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -89,20 +90,29 @@ namespace Bnan.Inferastructure.Repository
                 var AboutToExpire =  _unitOfWork.CrCasLessorMechanism.FindAsync(l=>l.CrCasLessorMechanismCode == document.CrCasBranchDocumentsLessor 
                                                                                  && l.CrCasLessorMechanismProcedures == document.CrCasBranchDocumentsProcedures 
                                                                                  && l.CrCasLessorMechanismProceduresClassification == document.CrCasBranchDocumentsProceduresClassification).Result.CrCasLessorMechanismDaysAlertAboutExpire;
+                if (CrCasBranchDocument.CrCasBranchDocumentsBranchStatus==Status.Renewed)
+                {
+                    document.CrCasBranchDocumentsStartDate = CrCasBranchDocument.CrCasBranchDocumentsStartDate;
+                    document.CrCasBranchDocumentsEndDate = CrCasBranchDocument.CrCasBranchDocumentsEndDate;
+                    document.CrCasBranchDocumentsDate = CrCasBranchDocument.CrCasBranchDocumentsDate;
+                    document.CrCasBranchDocumentsNo = CrCasBranchDocument.CrCasBranchDocumentsNo;
+                    document.CrCasBranchDocumentsImage = CrCasBranchDocument.CrCasBranchDocumentsImage;
+                    document.CrCasBranchDocumentsReasons = CrCasBranchDocument.CrCasBranchDocumentsReasons;
+                    document.CrCasBranchDocumentsDateAboutToFinish = CrCasBranchDocument.CrCasBranchDocumentsEndDate?.AddDays(-(double)AboutToExpire);
+                    document.CrCasBranchDocumentsStatus = Status.Active;
+                }
+                else
+                {
+                    document.CrCasBranchDocumentsImage = CrCasBranchDocument.CrCasBranchDocumentsImage;
+                    document.CrCasBranchDocumentsReasons = CrCasBranchDocument.CrCasBranchDocumentsReasons;
+                }
 
-                document.CrCasBranchDocumentsStartDate = CrCasBranchDocument.CrCasBranchDocumentsStartDate;
-                document.CrCasBranchDocumentsEndDate = CrCasBranchDocument.CrCasBranchDocumentsEndDate;
-                document.CrCasBranchDocumentsDate = CrCasBranchDocument.CrCasBranchDocumentsDate;
-                document.CrCasBranchDocumentsNo = CrCasBranchDocument.CrCasBranchDocumentsNo;
-                document.CrCasBranchDocumentsImage = CrCasBranchDocument.CrCasBranchDocumentsImage;
-                document.CrCasBranchDocumentsDateAboutToFinish = CrCasBranchDocument.CrCasBranchDocumentsEndDate?.AddDays(-(double)AboutToExpire);
-                document.CrCasBranchDocumentsStatus = CrCasBranchDocument.CrCasBranchDocumentsStatus;
 
                 _unitOfWork.CrCasBranchDocument.Update(document);
                 await _unitOfWork.CompleteAsync();
+                return true;
             }
-
-            return true;
+            return false;
         }
     }
 }
