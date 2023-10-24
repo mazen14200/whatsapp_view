@@ -210,7 +210,6 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewBag.Advantages = _unitOfWork.CrMasSupCarAdvantage.FindAll(x => x.CrMasSupCarAdvantagesStatus == Status.Active).ToList();
             return View(carsInforamtionVM);
         }
-
         [HttpGet]
         public JsonResult GetCarsName()
         {

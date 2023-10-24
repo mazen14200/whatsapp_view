@@ -13,5 +13,6 @@ namespace Bnan.Core.Interfaces
         Task<bool> AddAdvantagesToCar(string serialNumber,string advantageCode,string lessor,string distributionCode, string status);
         Task<bool> UpdateCarInformation(CrCasCarInformation crCasCarInformation);
         Task<bool> UpdateAdvantagesToCar(string serialNumber, string advantageCode, string lessor, string status);
+        Task<bool> UpdateCarToSale(CrCasCarInformation crCasCarInformation);
     }
 }

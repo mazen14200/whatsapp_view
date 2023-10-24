@@ -116,7 +116,7 @@
                 @*Document Type*@
                 <div class="row mt-2">
                     <div class="col-md-1 formlabel">
-                        <label class="form-label">@localizer["Document Type"]</label>
+                        <label class="form-label">@localizer["MaintainancesType"]</label>
                     </div>
                     <div class="col-md-2 col-11">
                         @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
@@ -129,12 +129,12 @@
 
                         }
                     </div>
-                    <div class="col-md-1 formlabel">
+                   @* <div class="col-md-1 formlabel">
                         <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceNo">@localizer["TheNumber"]</label>
                     </div>
                     <div class="col-md-2 col-11">
                         <input type="text" class="form-control" asp-for="CrCasCarDocumentsMaintenanceNo" readonly>
-                    </div>
+                    </div>*@
                 </div>
 
                 @*Start and End Date*@
@@ -168,6 +168,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                @*KMEndsAt*@
+                <div class="row">
                     @*ConsumptionKM*@
                     <div class="col-md-1 formlabel">
                         <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceConsumptionKm">@localizer["ConsumptionKM"]</label>
@@ -179,13 +182,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                @*KMEndsAt*@
-                <div class="row">
                     <div class="col-md-1 formlabel">
                         <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceKmEndsAt">@localizer["KMEndsAt"]</label>
                     </div>
-                    <div class="col-md-5 col-11">
+                    <div class="col-md-2 col-11">
                         <input type="text" class="form-control" value="@ViewBag.KmEndsAt" autocomplete="off" readonly>
 
                         <div style="margin-top:12px">
@@ -255,7 +255,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-1 formlabel">
+                   @* <div class="col-md-1 formlabel">
                         <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceNo">@localizer["TheNumber"]</label>
                     </div>
                     <div class="col-md-2 col-11">
@@ -265,7 +265,7 @@
                                 <span asp-validation-for="@Model.CrCasCarDocumentsMaintenanceNo" class="text-danger"></span>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
 
                 @*Start and End Date*@
@@ -308,6 +308,10 @@
                             </div>
                         </div>
                     </div>
+                   
+                </div>
+                @*KMEndsAt*@
+                <div class="row mt-2">
                     @*ConsumptionKM*@
                     <div class="col-md-1 formlabel">
                         <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceConsumptionKm">@localizer["ConsumptionKM"]</label>
@@ -321,9 +325,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                @*KMEndsAt*@
-                <div class="row mt-2">
                     <div class="col-md-1 formlabel">
                         <label class="form-label" asp-for="CrCasCarDocumentsMaintenanceKmEndsAt">@localizer["KMEndsAt"]</label>
                     </div>

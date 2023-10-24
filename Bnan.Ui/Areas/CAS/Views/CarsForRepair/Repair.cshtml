@@ -1,0 +1,316 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.CAS;
+@model CarsInforamtionVM
+
+@inject IViewLocalizer localizer
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? $"~{Context.Request.Path.Value}?Procedureid={HttpContextAccessor.HttpContext.Request.Query["Procedureid"]}&BranchId={HttpContextAccessor.HttpContext.Request.Query["BranchId"]}" : $"~{Context.Request.Path.Value}?Procedureid={HttpContextAccessor.HttpContext.Request.Query["Procedureid"]}&BranchId={HttpContextAccessor.HttpContext.Request.Query["BranchId"]}";
+    ViewData["Page-title"] = localizer["RepairCar Edit Data"];
+    ViewData["Page-Hint"] = localizer["RepairCar Edit Hint"];
+}
+
+<title>@ViewData["Title"]</title>
+
+<style>
+
+    .datepicker-widget {
+        display: none;
+    }
+
+
+    .datepicker-icon i {
+        font-size: 18px;
+        color: #999;
+    }
+
+    .dateRelative {
+        position: relative;
+    }
+
+    .form-contain {
+        position: relative;
+    }
+
+</style>
+
+
+@if (requestCulture.RequestCulture.UICulture.Name == "ar-EG")
+{
+    <style>
+        .datepicker-icon {
+            cursor: pointer;
+            top: 8%;
+            right: 77%;
+        }
+    </style>
+}
+
+@if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+{
+    <style>
+        .datepicker-icon {
+            position: absolute;
+            display: inline-block;
+            top: 1px;
+            left: 178px;
+        }
+    </style>
+}
+
+@if (Model.CrCasCarInformationStatus != Status.Active)
+{
+    <style>
+        .datepicker-icon {
+            display: none
+        }
+    </style>
+}
+
+
+
+<div class="sub-container-form" id="CAS">
+    <form class="needs-validation" novalidate asp-area="CAS" asp-controller="CarsForRepair" asp-action="Repair" enctype="multipart/form-data">
+        <div class="form-contain">
+            @*Document Code*@
+            <div class="row mt-2" hidden>
+                <div class="col-md-1">
+                    <label class="form-label" for="branchCode">@localizer["BranchCode"]</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" readonly asp-for="CrCasCarInformationLessor" maxlength="100" width="80%" />
+                    <input type="text" class="form-control" readonly asp-for="CrCasCarInformationBranch" maxlength="100" width="80%" />
+                    <input type="text" class="form-control" readonly asp-for="CrCasCarInformationStatus" maxlength="100" width="80%" />
+                </div>
+            </div>
+            @if (Model.CrCasCarInformationStatus != Status.Active)
+            {
+                @*Document Branch*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["SerialNumber"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarInformationSerailNo" readonly>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Car"]</label>
+                    </div>
+                    <div class="col-md-3 col-11">
+                        @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarInformationConcatenateArName" readonly>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarInformationConcatenateEnName" readonly>
+                        }
+                    </div>
+                </div>
+                @*Date of Repair*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Date"]</label>
+                    </div>
+                    <div class="col-md-2 col-11 ">
+                        <input type="text" class="form-control" value="@ViewBag.date" readonly>
+                    </div>
+                </div>
+                @*Reasons*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["reasons"]</label>
+                    </div>
+                    <div class="col-md-5 col-11">
+                        <input type="text" id="cities" class="form-control" value="@ViewBag.reasons" readonly>
+                    </div>
+                </div>
+            }
+            else
+            {
+                @*Document Branch*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["SerialNumber"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarInformationSerailNo" readonly>
+                    </div>
+
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Car"]</label>
+                    </div>
+                    <div class="col-md-3 col-11">
+                        @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarInformationConcatenateArName" readonly>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarInformationConcatenateEnName" readonly>
+                        }
+                    </div>
+                </div>
+                @*Date of Documnet*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Date"]</label>
+                    </div>
+                    <div class="col-md-2 col-8 dateRelative">
+                        <input type="text" class="form-control dateInput" value="@ViewBag.date" id="RepairDate" name="RepairDate">
+                    </div>
+                </div>
+                @*Reasons*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label" asp-for="CrCasCarInformationReasons">@localizer["reasonsForRepair"]</label>
+                    </div>
+                    <div class="col-md-5 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarInformationReasons" autocomplete="off">
+
+                        <div style="margin-top:12px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="CrCasCarInformationReasons" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+
+            @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
+        </div>
+        <div class="mt-3" id="buttonContainer">
+            @if (Model.CrCasCarInformationStatus == "A")
+            {
+                <a class="btn btn-primary ms-1" id="saveEdit">@localizer["Save"]</a>
+            }
+            @if (Model.CrCasCarInformationStatus == "M")
+            {
+                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Active" data-bs-targett="#centermodalDelete">
+                    @localizer["Delete"]
+                </a>
+                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Active" data-bs-targett="#centermodalActive">
+                    @localizer["Reactive"]
+                </a>
+            }
+            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="CarsForRepair" asp-action="CarsForRepair">
+                @localizer["Back"]
+            </a>
+        </div>
+    </form>
+
+    <!-- Delete Lessor Modal-->
+    <div class="modal fade" id="centermodalDelete" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4>@localizer["SureTodelete"]</h4>
+                    <p> @localizer["HintSureTodelete"]</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                    <button type="button" id="retriveToActiveD" class="btn btn-primary">@localizer["Okay"]</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    </div><!-- /.modal -->
+    <!-- Reactive Hold User MOdel-->
+    <div class="modal fade" id="centermodalActive" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4>@localizer["SureToRetriveHold"]</h4>
+                    <p>@localizer["HintSureToRetriveH"]</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                    <button type="button" id="retriveToActiveA" class="btn btn-primary">@localizer["Okay"]</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            var today = new Date();
+            var startDates = $("RepairDate").val();
+            var StartformattedDate = new Date(startDates);
+
+            if (!StartformattedDate || StartformattedDate === "") {
+                StartformattedDate = today; // Set date to today if it's empty or null
+            }
+            $("#RepairDate").datepicker({
+                dateFormat: 'yy/mm/dd',
+                minDate: today,
+                defaultDate: StartformattedDate// Set the minimum date to today
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#RepairDate").datepicker("setDate", StartformattedDate);
+            $("#RepairDate").click(function () {
+                $(this).datepicker("show");
+            });
+            $("#RepairDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+            $(".datepicker-icon").click(function () {
+                $(this).prevAll('input').datepicker("show");
+            });
+        })
+    </script>
+    <script>
+        $("#buttonContainer a").on("click", function (event) {
+            var status = $(this).attr("data-error")
+            var Modal = $(this).attr("data-bs-targett")
+            CheckValidation('2202004', status).done(function (data) {
+                console.log(data)
+                if (data) $(Modal).modal('show');
+            });
+        })
+        function updateRepairCarStatus(status) {
+            var code = document.getElementById("CrCasCarInformationSerailNo").value;
+            $.ajax({
+                type: "POST",
+                url: "/CAS/CarsForRepair/EditStatusOfRepairCar",
+                data: { status: status, code: code },
+                success: function (result) {
+                    $('.modal').modal('hide');
+                    window.location.href = "/CAS/CarsForRepair/SuccesssMessageForCarsInformation";
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+
+        $('#retriveToActiveD').click(function () {
+            updateRepairCarStatus('D');
+        });
+        $('#retriveToActiveA').click(function () {
+            updateRepairCarStatus('A');
+        });
+       
+        
+        $("#saveEdit").on("click", function (event) {
+            event.preventDefault();
+            CheckValidation('2202004', '@Status.Save').done(function (data) {
+                if (data) {
+                    $('form').submit();
+                }
+            });
+        })
+    </script>
+}
+
+

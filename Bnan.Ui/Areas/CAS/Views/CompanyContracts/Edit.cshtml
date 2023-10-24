@@ -395,6 +395,179 @@
                 </div>
 
             }
+            else if (Model.CrMasContractCompanyStatus == "A" && Model.CrMasContractCompanyProcedures == "112")
+            {
+                 <div class="row mt-3">
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                            <!-- Autoclose -->
+                            <div class="col-md-1">
+                                <label class="form-label">@localizer["Date"]</label>
+                            </div>
+                            <div class="col-md-2 dateRelative">
+                                <input type="text" class="form-control dateInput" value="@ViewBag.Date" id="dateInput" style="background-color:white" readonly />
+                            </div>
+                    }
+                    else
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label">@localizer["Date"]</label>
+                            </div>
+                            <div class="col-md-2 dateRelative">
+                                <input type="text" class="form-control dateInput" value="@ViewBag.Date" id="dateInput" style="background-color:white" readonly />
+                            </div>
+                    }
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label">@localizer["StartDate"]</label>
+                            </div>
+                            <div class="col-md-2 dateRelative">
+                                <input type="text" class="form-control dateInput" value="@ViewBag.StartDate" id="startDateInput"  style="background-color:white" readonly />
+                            </div>
+                    }
+                    else
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label">@localizer["StartDate"]</label>
+                            </div>
+                            <div class="col-md-2 dateRelative">
+                                <input type="text" class="form-control dateInput" id="startDateInput" value="@ViewBag.StartDate"  style="background-color:white" readonly />
+                            </div>
+                    }
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label">@localizer["EndDate"]</label>
+                            </div>
+                            <div class="col-md-2 dateRelative">
+                                <input type="text" class="form-control dateInput" id="endDateInput" value="@ViewBag.EndDate"  style="background-color:white" readonly />
+                            </div>
+                    }
+                    else
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label">@localizer["EndDate"]</label>
+                            </div>
+                            <div class="col-md-2 dateRelative">
+                                <input type="text" class="form-control dateInput" id="endDateInput" value="@ViewBag.EndDate"  style="background-color:white" readonly />
+                            </div>
+                    }
+                </div>
+                <div class="row mt-3 ">
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label" for="UserNameAr">@localizer["ContractCompanyActivation"]</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" value="@ViewBag.SelectOption" readonly>
+                            </div>
+                    }
+                    else
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label" for="UserNameAr">@localizer["ContractCompanyActivation"]</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" value="@ViewBag.SelectOption" readonly>
+                            </div>
+                    }
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label" for="UserNameAr">@localizer["ContractCompanyAnnualFees"]</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" id="CrMasContractCompanyAnnualFees" style="width:125px" value="@ViewBag.CrMasContractCompanyAnnualFees" readonly>
+                            </div>
+                    }
+                    else
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label" for="UserNameAr">@localizer["ContractCompanyAnnualFees"]</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" id="CrMasContractCompanyAnnualFees" style="width:125px" value="@ViewBag.CrMasContractCompanyAnnualFees" readonly>
+                            </div>
+                    }
+
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label" for="UserNameAr">@localizer["DiscountRate"]</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" style="width:90px" value="@ViewBag.CrMasContractCompanyDiscountRate" autocomplete="off" readonly>
+                            </div>
+                    }
+                    else
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label" for="UserNameAr">@localizer["DiscountRate"]</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" style="width:90px" value="@ViewBag.CrMasContractCompanyDiscountRate" autocomplete="off" readonly>
+                            </div>
+                    }
+
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label" for="UserNameAr">@localizer["TaxRate"]</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" style="width:90px" autocomplete="off" value="@ViewBag.CrMasContractCompanyTaxRate" readonly>
+                            </div>
+                    }
+                    else
+                    {
+                            <div class="col-md-1">
+                                <label class="form-label" for="UserNameAr">@localizer["TaxRate"]</label>
+                            </div>
+                            <div class="col-md-1">
+                                <input type="text" class="form-control" style="width:90px" autocomplete="off" value="@ViewBag.CrMasContractCompanyTaxRate" readonly>
+                            </div>
+                    }
+                </div>
+                @if (Model.CrMasContractCompanyActivation!="1")
+                {
+                    <div class="row mt-3 text-center " style="width: 1460px;">
+                        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" style="position: relative; width: 1166px;">
+                            <thead>
+                                <tr role="row">
+                                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                                    <th aria-label="Position: activate to sort column ascending">@localizer["From"]</th>
+                                    <th aria-label="Position: activate to sort column ascending">@localizer["To"]</th>
+                                    <th aria-label="Position: activate to sort column ascending">@localizer["Value"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int no = 1;
+                                }
+                                @foreach (var item in ViewBag.ContractsDetailed)
+                                {
+                                    <tr>
+                                        <td>@no</td>
+                                        <td>@item.CrMasContractCompanyDetailedFromPrice</td>
+                                        <td>@item.CrMasContractCompanyDetailedToPrice</td>
+                                        <td>@item.CrMasContractCompanyDetailedValue</td>
+                                    </tr>
+                                    no++;
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            }
+            else if (Model.CrMasContractCompanyStatus == "N" && Model.CrMasContractCompanyProcedures == "112")
+            {
+                <div class="text-center">
+                    <h3>@localizer["notRegisteration"]</h3>
+                </div>
+            }
             else
             {
                 <div class="row mt-4 ">
@@ -430,7 +603,7 @@
                     </div>
                 </div>
                 @*User and Password*@
-                <div class="row mt-2">
+               @* <div class="row mt-2">
                     <div class="col-md-1 formlabel">
                         <label class="form-label">@localizer["UserNumber"]</label>
                     </div>
@@ -443,7 +616,7 @@
                     <div class="col-md-2 col-11 dateRelative">
                         <input type="text" class="form-control" asp-for="CrMasContractCompanyUserPassword" maxlength="10" autocomplete="off" readonly />
                     </div>
-                </div>
+                </div>*@
                 <div id="CompanyContractImg">
                     <div class="file-upload">
                         @* <button class="file-upload-btn" type="button" onclick="$('.file-upload-input-signature').trigger('click')">@localizer["pdf"]</button>
@@ -504,7 +677,7 @@
             {
                 <a class="btn btn-primary" id="saveEdit">@localizer["Save"]</a>
             }
-            @if (Model.CrMasContractCompanyStatus == "A")
+            @if (Model.CrMasContractCompanyStatus == "A"&& Model.CrMasContractCompanyProcedures != "112")
             {
                 <a class="btn btn-primary ms-1" id="deleteButton" data-bs-toggle="modal" data-error="@Status.Deleted" data-bs-targett="#centermodalDelete">
                     @localizer["Delete"]

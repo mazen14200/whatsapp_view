@@ -67,7 +67,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
      
             var lessor = await _UserService.GetUserLessor(User);
             var lessornumber = lessor.CrMasUserInformationLessorNavigation.CrMasLessorInformationCode;
-            var Bracnhes = _unitOfWork?.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationLessor == lessornumber && l.CrCasBranchInformationCode != "100", new[] { "CrCasCarInformations" } );
+            var Bracnhes = _unitOfWork?.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationLessor == lessornumber, new[] { "CrCasCarInformations" } );
             var BranchPost = _PostBranch.GetAllByLessor(lessornumber);
 
             return View(BranchPost);
@@ -77,7 +77,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         {
             var lessor = await _UserService.GetUserLessor(User);
             var lessornumber = lessor.CrMasUserInformationLessorNavigation.CrMasLessorInformationCode;
-            var Bracnhes = _unitOfWork?.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationLessor == lessornumber && l.CrCasBranchInformationCode != "100", new[] { "CrCasCarInformations" });
+            var Bracnhes = _unitOfWork?.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationLessor == lessornumber, new[] { "CrCasCarInformations" });
             if (!string.IsNullOrEmpty(status))
             {
                 if (status == Status.All)

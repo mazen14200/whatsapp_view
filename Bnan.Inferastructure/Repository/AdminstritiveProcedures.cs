@@ -78,6 +78,51 @@ namespace Bnan.Inferastructure.Repository
             return true;
         }
 
-       
+        public async Task<bool> SaveAdminstritiveForRepairCar(string userCode, string LessorCode, string BranchCode, string? Targeted, DateTime? DocumentDate,
+                                                              string ArDescription, string EnDescription, string Status, string? Reasons)
+        {
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var currentUser = await _userManager.FindByIdAsync(userCode);
+            var Lrecord = _unitOfWork.CrCasSysAdministrativeProcedure.FindAll(x => x.CrCasSysAdministrativeProceduresLessor == currentUser.CrMasUserInformationLessor &&
+                x.CrCasSysAdministrativeProceduresCode == "214"
+                && x.CrCasSysAdministrativeProceduresSector == "1"
+                && x.CrCasSysAdministrativeProceduresYear == y).Max(x => x.CrCasSysAdministrativeProceduresNo.Substring(x.CrCasSysAdministrativeProceduresNo.Length - 6, 6));
+            string Serial;
+            if (Lrecord != null)
+            {
+                Int64 val = Int64.Parse(Lrecord) + 1;
+                Serial = val.ToString("000000");
+            }
+            else
+            {
+                Serial = "000001";
+            }
+
+            CrCasSysAdministrativeProcedure crCasSysAdministrativeProcedure = new CrCasSysAdministrativeProcedure()
+            {
+                CrCasSysAdministrativeProceduresNo = y + "-" + "1" + "214" + "-" + LessorCode + BranchCode + "-" + Serial,
+                CrCasSysAdministrativeProceduresYear = y,
+                CrCasSysAdministrativeProceduresSector = "1",
+                CrCasSysAdministrativeProceduresCode = "214",
+                CrCasSysAdministrativeProceduresClassification = "20",
+                CrCasSysAdministrativeProceduresLessor = LessorCode,
+                CrCasSysAdministrativeProceduresBranch = BranchCode,
+                CrCasSysAdministrativeProceduresDate = DateTime.Now.Date,
+                CrCasSysAdministrativeProceduresTime = DateTime.Now.TimeOfDay,
+                CrCasSysAdministrativeProceduresTargeted = Targeted,
+                CrCasSysAdministrativeProceduresDocNo = y + "-" + "1" + "214" + "-" + LessorCode + BranchCode + "-" + Serial,
+                CrCasSysAdministrativeProceduresDocDate = DocumentDate,
+                CrCasSysAdministrativeProceduresUserInsert = userCode,
+                CrCasSysAdministrativeProceduresArDescription = ArDescription,
+                CrCasSysAdministrativeProceduresEnDescription = EnDescription,
+                CrCasSysAdministrativeProceduresStatus = Status,
+                CrCasSysAdministrativeProceduresReasons = Reasons,
+            };
+
+            await _unitOfWork.CrCasSysAdministrativeProcedure.AddAsync(crCasSysAdministrativeProcedure);
+            return true;
+
+        }
     }
 }

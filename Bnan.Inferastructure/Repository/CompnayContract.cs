@@ -31,7 +31,7 @@ namespace Bnan.Inferastructure.Repository
                     string procdureType = item.CrMasSysProceduresCode.ToString();
                     string lessorCodeForEx = lessor.CrMasLessorInformationCode;
                     string Branch = "100";
-                    string? id = _unitOfWork.CrMasContractCompany.GetAll().LastOrDefault(l=>l.CrMasContractCompanyLessor == lessor.CrMasLessorInformationCode)?.CrMasContractCompanyNo.Split("-")[3];
+                    string? id = _unitOfWork.CrMasContractCompany.GetAll().LastOrDefault(l => l.CrMasContractCompanyLessor == lessor.CrMasLessorInformationCode)?.CrMasContractCompanyNo.Split("-")[3];
 
                     CrMasContractCompany contractCompany = new CrMasContractCompany
                     {
@@ -54,31 +54,31 @@ namespace Bnan.Inferastructure.Repository
             return true;
         }
 
-        public async Task<bool> AddCompanyContractCas(string lessorCode,string proceduresCode)
+        public async Task<bool> AddCompanyContractCas(string lessorCode, string proceduresCode)
         {
             var lessor = await _unitOfWork.CrMasLessorInformation.GetByIdAsync(lessorCode);
             if (lessor != null)
             {
-                    string Year = int.Parse(DateTime.Now.ToString("yy")).ToString();
-                    string sector = "3";
-                    string procdureType = proceduresCode;
-                    string lessorCodeForEx = lessor.CrMasLessorInformationCode;
-                    string Branch = "100";
-                    string? id = _unitOfWork.CrMasContractCompany.GetAll().LastOrDefault(l => l.CrMasContractCompanyLessor == lessor.CrMasLessorInformationCode&&l.CrMasContractCompanyProcedures== proceduresCode)?.CrMasContractCompanyNo.Split("-")[3];
+                string Year = int.Parse(DateTime.Now.ToString("yy")).ToString();
+                string sector = "3";
+                string procdureType = proceduresCode;
+                string lessorCodeForEx = lessor.CrMasLessorInformationCode;
+                string Branch = "100";
+                string? id = _unitOfWork.CrMasContractCompany.GetAll().LastOrDefault(l => l.CrMasContractCompanyLessor == lessor.CrMasLessorInformationCode && l.CrMasContractCompanyProcedures == proceduresCode)?.CrMasContractCompanyNo.Split("-")[3];
 
-                    CrMasContractCompany contractCompany = new CrMasContractCompany
-                    {
-                        CrMasContractCompanyNo = IncrementString.IncrementStringExtension(Year, sector, procdureType, lessorCodeForEx, Branch, id),
-                        CrMasContractCompanyStatus = "N",
-                        CrMasContractCompanyYear = int.Parse(DateTime.Now.ToString("yy")).ToString(),
-                        CrMasContractCompanyProceduresClassification = "11",
-                        CrMasContractCompanySector = sector,
-                        CrMasContractCompanyProcedures = procdureType,
-                        CrMasContractCompanyLessor = lessorCodeForEx,
-                    };
+                CrMasContractCompany contractCompany = new CrMasContractCompany
+                {
+                    CrMasContractCompanyNo = IncrementString.IncrementStringExtension(Year, sector, procdureType, lessorCodeForEx, Branch, id),
+                    CrMasContractCompanyStatus = "N",
+                    CrMasContractCompanyYear = int.Parse(DateTime.Now.ToString("yy")).ToString(),
+                    CrMasContractCompanyProceduresClassification = "11",
+                    CrMasContractCompanySector = sector,
+                    CrMasContractCompanyProcedures = procdureType,
+                    CrMasContractCompanyLessor = lessorCodeForEx,
+                };
 
-                    await _unitOfWork.CrMasContractCompany.AddAsync(contractCompany);
-                
+                await _unitOfWork.CrMasContractCompany.AddAsync(contractCompany);
+
             }
 
             return true;
@@ -86,23 +86,23 @@ namespace Bnan.Inferastructure.Repository
 
 
 
-        public async Task<bool> UpdateCompanyContract(string CompanyContractCode, string Date,string StartDate,string EndDate,string ContractCompanyAnnualFees ,
+        public async Task<bool> UpdateCompanyContract(string CompanyContractCode, string Date, string StartDate, string EndDate, string ContractCompanyAnnualFees,
             string ContractCompanyTaxRate, string ContractCompanyDiscountRate, string Activiation)
         {
-            var companyContract = await _unitOfWork.CrMasContractCompany.FindAsync(x=>x.CrMasContractCompanyNo == CompanyContractCode);
+            var companyContract = await _unitOfWork.CrMasContractCompany.FindAsync(x => x.CrMasContractCompanyNo == CompanyContractCode);
             var mecanizm = await _unitOfWork.CrCasLessorMechanism.FindAsync(x => x.CrCasLessorMechanismProcedures == "112");
-            double aboutExp =(double) mecanizm.CrCasLessorMechanismDaysAlertAboutExpire;
-            companyContract.CrMasContractCompanyDate= DateTime.Parse(Date).Date;
-            companyContract.CrMasContractCompanyStartDate= DateTime.Parse(StartDate).Date;
-            companyContract.CrMasContractCompanyEndDate= DateTime.Parse(EndDate).Date;
-            companyContract.CrMasContractCompanyAnnualFees= decimal.Parse(ContractCompanyAnnualFees);
-            companyContract.CrMasContractCompanyDiscountRate= decimal.Parse(ContractCompanyDiscountRate);
-            companyContract.CrMasContractCompanyAboutToExpire = DateTime.Parse(EndDate).AddDays(- aboutExp).Date;
+            double aboutExp = (double)mecanizm.CrCasLessorMechanismDaysAlertAboutExpire;
+            companyContract.CrMasContractCompanyDate = DateTime.Parse(Date).Date;
+            companyContract.CrMasContractCompanyStartDate = DateTime.Parse(StartDate).Date;
+            companyContract.CrMasContractCompanyEndDate = DateTime.Parse(EndDate).Date;
+            companyContract.CrMasContractCompanyAnnualFees = decimal.Parse(ContractCompanyAnnualFees);
+            companyContract.CrMasContractCompanyDiscountRate = decimal.Parse(ContractCompanyDiscountRate);
+            companyContract.CrMasContractCompanyAboutToExpire = DateTime.Parse(EndDate).AddDays(-aboutExp).Date;
             companyContract.CrMasContractCompanyStatus = "A";
             companyContract.CrMasContractCompanyActivation = Activiation;
             companyContract.CrMasContractCompanyTaxRate = decimal.Parse(ContractCompanyTaxRate);
             companyContract.CrMasContractCompanyNumber = companyContract.CrMasContractCompanyNo;
-             _unitOfWork.CrMasContractCompany.Update(companyContract);
+            _unitOfWork.CrMasContractCompany.Update(companyContract);
             return true;
         }
         public async Task<bool> UpdateCompanyContractCas(CrMasContractCompany model)
@@ -117,8 +117,8 @@ namespace Bnan.Inferastructure.Repository
             companyContract.CrMasContractCompanyUserPassword = model.CrMasContractCompanyUserPassword;
             companyContract.CrMasContractCompanyUserId = model.CrMasContractCompanyUserPassword;
             companyContract.CrMasContractCompanyNumber = model.CrMasContractCompanyNumber;
-            companyContract.CrMasContractCompanyReasons= model.CrMasContractCompanyReasons;
-            companyContract.CrMasContractCompanyImage= model.CrMasContractCompanyImage;
+            companyContract.CrMasContractCompanyReasons = model.CrMasContractCompanyReasons;
+            companyContract.CrMasContractCompanyImage = model.CrMasContractCompanyImage;
             companyContract.CrMasContractCompanyStatus = "A";
             _unitOfWork.CrMasContractCompany.Update(companyContract);
             await _unitOfWork.CompleteAsync();
@@ -126,7 +126,7 @@ namespace Bnan.Inferastructure.Repository
             return true;
         }
 
-        public async Task<bool> AddCompanyContractDetailed(string CompanyContractCode, string From, string To, string Value,int serial)
+        public async Task<bool> AddCompanyContractDetailed(string CompanyContractCode, string From, string To, string Value, int serial)
         {
             var contractCount = 0;
             CrMasContractCompanyDetailed crMasContractCompanyDetailed = new CrMasContractCompanyDetailed();
@@ -148,6 +148,38 @@ namespace Bnan.Inferastructure.Repository
             crMasContractCompanyDetailed.CrMasContractCompanyDetailedValue = decimal.Parse(Value);
             await _unitOfWork.CrMasContractCompanyDetailed.AddAsync(crMasContractCompanyDetailed);
 
+            return true;
+        }
+
+        public async Task<bool> AddCompanyContractAfterDelete(string lessorCode)
+        {
+            var sysProcedures = _unitOfWork.CrMasSysProcedure.Find(l => l.CrMasSysProceduresStatus == "A" && l.CrMasSysProceduresClassification == "11" && l.CrMasSysProceduresCode == "112");
+            var lessor = await _unitOfWork.CrMasLessorInformation.GetByIdAsync(lessorCode);
+            if (lessor != null)
+            {
+                string Year = int.Parse(DateTime.Now.ToString("yy")).ToString();
+                string sector = "3";
+                string procdureType = sysProcedures.CrMasSysProceduresCode.ToString();
+                string lessorCodeForEx = lessor.CrMasLessorInformationCode;
+                string Branch = "100";
+                string? id = _unitOfWork.CrMasContractCompany.GetAll().LastOrDefault(l => l.CrMasContractCompanyLessor == lessor.CrMasLessorInformationCode)?.CrMasContractCompanyNo.Split("-")[3];
+
+                CrMasContractCompany contractCompany = new CrMasContractCompany
+                {
+                    CrMasContractCompanyNo = IncrementString.IncrementStringExtension(Year, sector, procdureType, lessorCodeForEx, Branch, id),
+                    CrMasContractCompanyStatus = "N",
+                    CrMasContractCompanyYear = int.Parse(DateTime.Now.ToString("yy")).ToString(),
+                    CrMasContractCompanyProceduresClassification = "11",
+                    CrMasContractCompanySector = sector,
+                    CrMasContractCompanyProcedures = procdureType,
+                    CrMasContractCompanyLessor = lessorCodeForEx,
+                    CrMasContractCompanyTaxRate = 0,
+                    CrMasContractCompanyAnnualFees = 0,
+                    CrMasContractCompanyDiscountRate = 0,
+                };
+
+                await _unitOfWork.CrMasContractCompany.AddAsync(contractCompany);
+            }
             return true;
         }
     }

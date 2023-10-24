@@ -1,4 +1,5 @@
-﻿using Bnan.Core.Interfaces;
+﻿using Bnan.Core.Extensions;
+using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -121,6 +122,28 @@ namespace Bnan.Inferastructure.Repository
             {
                 advantageCar.CRCasCarAdvantagesStatus = status;
                 _unitOfWork.CrCasCarAdvantage.Update(advantageCar);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdateCarToSale(CrCasCarInformation crCasCarInformation)
+        {
+            var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == crCasCarInformation.CrCasCarInformationSerailNo && x.CrCasCarInformationLessor == crCasCarInformation.CrCasCarInformationLessor,
+                                                                                                                       new[] {"CrCasCarInformation1", "CrCasCarInformationDistributionNavigation",
+                                                                                                                          "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2"});
+            if (car != null)
+            {
+                string status;
+                if (crCasCarInformation.CrCasCarInformationForSaleStatus.ToLower() == "true") status = "A";
+                else status = "H";
+
+                car.CrCasCarInformationStatus = Status.ForSale;
+                car.CrCasCarInformationOfferedSaleDate = crCasCarInformation.CrCasCarInformationOfferedSaleDate;
+                car.CrCasCarInformationOfferValueSale = crCasCarInformation.CrCasCarInformationOfferValueSale;
+                car.CrCasCarInformationReasons = crCasCarInformation.CrCasCarInformationReasons;
+                car.CrCasCarInformationForSaleStatus = status;
+                _unitOfWork.CrCasCarInformation.Update(car);
                 return true;
             }
             return false;

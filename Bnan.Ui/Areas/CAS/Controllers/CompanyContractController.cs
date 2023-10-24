@@ -110,6 +110,29 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewBag.EndDate = model.CrMasContractCompanyEndDate?.Date.ToString("dd/MM/yyyy");
             ViewBag.UserID = model.CrMasContractCompanyUserId;
             ViewBag.Password = model.CrMasContractCompanyUserPassword;
+            // If procedure equal 112 Bnan Contract
+            var activiation = "";
+            if (currentCulture == "en-US")
+            {
+                if (model.CrMasContractCompanyActivation == "1") activiation = "Subscribtion";
+                if (model.CrMasContractCompanyActivation == "2") activiation = "Value";
+                if (model.CrMasContractCompanyActivation == "3") activiation = "Rate";
+            }
+            else
+            {
+                if (model.CrMasContractCompanyActivation == "1") activiation = "اشتراك";
+                if (model.CrMasContractCompanyActivation == "2") activiation = "قيمة";
+                if (model.CrMasContractCompanyActivation == "3") activiation = "نسبة";
+            }
+            var companyContractDetailed = _unitOfWork.CrMasContractCompanyDetailed.FindAll(x => x.CrMasContractCompanyDetailedNo == model.CrMasContractCompanyNo);
+            if (companyContractDetailed.Count() > 0)
+            {
+                ViewBag.ContractsDetailed = companyContractDetailed;
+            }
+            ViewBag.SelectOption = activiation;
+            ViewBag.CrMasContractCompanyTaxRate = model.CrMasContractCompanyTaxRate;
+            ViewBag.CrMasContractCompanyDiscountRate = model.CrMasContractCompanyDiscountRate;
+            ViewBag.CrMasContractCompanyAnnualFees = model.CrMasContractCompanyAnnualFees;
             return View(model);
         }
         [HttpPost]

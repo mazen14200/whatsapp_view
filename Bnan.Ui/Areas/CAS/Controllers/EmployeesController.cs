@@ -480,9 +480,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
                     if (procedureTask != null && checkboxProcedure != null)
                     {
-                        if (checkboxProcedure.procedureName.ToLower() == "insert") procedureTask.CrMasUserProceduresValidationInsertAuthorization = checkboxProcedure.value;
-                        if (checkboxProcedure.procedureName.ToLower() == "update") procedureTask.CrMasUserProceduresValidationUpDateAuthorization = checkboxProcedure.value;
-                        if (checkboxProcedure.procedureName.ToLower() == "hold") procedureTask.CrMasUserProceduresValidationHoldAuthorization = checkboxProcedure.value;
+                        if (checkboxProcedure.procedureName.ToLower() == "insert" || checkboxProcedure.procedureName == "Car show for sale") procedureTask.CrMasUserProceduresValidationInsertAuthorization = checkboxProcedure.value;
+                        if (checkboxProcedure.procedureName.ToLower() == "update" || checkboxProcedure.procedureName == "Cancel Offer To Sell") procedureTask.CrMasUserProceduresValidationUpDateAuthorization = checkboxProcedure.value;
+                        if (checkboxProcedure.procedureName.ToLower() == "hold" || checkboxProcedure.procedureName == "Sale Execution") procedureTask.CrMasUserProceduresValidationHoldAuthorization = checkboxProcedure.value;
                         if (checkboxProcedure.procedureName.ToLower() == "unhold") procedureTask.CrMasUserProceduresValidationUnHoldAuthorization = checkboxProcedure.value;
                         if (checkboxProcedure.procedureName.ToLower() == "delete") procedureTask.CrMasUserProceduresValidationDeleteAuthorization = checkboxProcedure.value;
                         if (checkboxProcedure.procedureName.ToLower() == "undelete") procedureTask.CrMasUserProceduresValidationUnDeleteAuthorization = checkboxProcedure.value;

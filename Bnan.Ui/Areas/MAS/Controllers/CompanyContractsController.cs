@@ -161,7 +161,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             }
             else
             {
-                await _compnayContract.AddCompanyContract(companyContract.CrMasContractCompanyLessor);
+                await _compnayContract.AddCompanyContractAfterDelete(companyContract.CrMasContractCompanyLessor);
                 companyContract.CrMasContractCompanyStatus = "D";
                 _unitOfWork.CrMasContractCompany.Update(companyContract); // Update the entity in the context
                 await _unitOfWork.CompleteAsync(); // Save the changes

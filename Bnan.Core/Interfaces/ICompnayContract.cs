@@ -10,6 +10,7 @@ namespace Bnan.Core.Interfaces
     public interface ICompnayContract
     {
         Task<bool> AddCompanyContract(string lessorCode);
+        Task<bool> AddCompanyContractAfterDelete(string lessorCode);
         Task<bool> AddCompanyContractCas(string lessorCode, string proceduresCode);
         Task<bool> UpdateCompanyContract(string CompanyContractCode, string Date, string StartDate, string EndDate, string ContractCompanyAnnualFees,
             string ContractCompanyTaxRate, string ContractCompanyDiscountRate, string Activiation);

@@ -192,16 +192,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
                     }
                 }
-                //if (item.CrCasSysAdministrativeProceduresCode == "214")
-                //{
-                //    // if 214 then it is FixedCar
-                //    var maintanceCar = _unitOfWork.CrCasCarDocumentsMaintenance.Find(x => x.CrCasCarDocumentsMaintenanceNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarDocumentsMaintenanceLessor == lessorCode);
-                //    if (maintanceCar != null)
-                //    {
-                //        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
-                //        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
-                //    }
-                //}
+                if (item.CrCasSysAdministrativeProceduresCode == "214")
+                {
+                    // if 214 then it is FixedCar
+                    var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarInformationLessor == lessorCode);
+                    if (car != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({car.CrCasCarInformationConcatenateArName})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationConcatenateEnName})";
+                    }
+                }
                 if (item.CrCasSysAdministrativeProceduresCode == "215")
                 {
                     // if 215 then it is Car From branch To another
@@ -399,16 +399,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
                     }
                 }
-                //if (item.CrCasSysAdministrativeProceduresCode == "214")
-                //{
-                //    // if 214 then it is FixedCar
-                //    var maintanceCar = _unitOfWork.CrCasCarDocumentsMaintenance.Find(x => x.CrCasCarDocumentsMaintenanceNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarDocumentsMaintenanceLessor == lessorCode);
-                //    if (maintanceCar != null)
-                //    {
-                //        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
-                //        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({maintanceCar.CrCasCarDocumentsMaintenanceNo})";
-                //    }
-                //}
+                if (item.CrCasSysAdministrativeProceduresCode == "214")
+                {
+                    // if 214 then it is FixedCar
+                    var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarInformationLessor == lessorCode);
+                    if (car != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({car.CrCasCarInformationConcatenateArName})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationConcatenateEnName})";
+                    }
+                }
                 if (item.CrCasSysAdministrativeProceduresCode == "215")
                 {
                     // if 215 then it is Car From branch To another

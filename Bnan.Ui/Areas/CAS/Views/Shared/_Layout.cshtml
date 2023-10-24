@@ -183,7 +183,7 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202004")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg=""> @localizer["Repair Car"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="CarsForRepair" asp-action="CarsForRepair"> @localizer["Repair Car"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202005")?.CrMasUserSubValidationAuthorization == true)
@@ -207,7 +207,7 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202008")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Sales Product"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="CarsForSale" asp-action="CarsForSale">@localizer["Sales Product"]</a>
                                                                     </li>
                                                                 }
                                                             }
