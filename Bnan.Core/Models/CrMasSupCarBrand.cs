@@ -9,6 +9,7 @@ namespace Bnan.Core.Models
         {
             CrCasCarAdvantages = new HashSet<CrCasCarAdvantage>();
             CrCasCarInformations = new HashSet<CrCasCarInformation>();
+            CrCasPriceCarBasics = new HashSet<CrCasPriceCarBasic>();
             CrMasSupCarDistributions = new HashSet<CrMasSupCarDistribution>();
             CrMasSupCarModels = new HashSet<CrMasSupCarModel>();
         }
@@ -22,6 +23,7 @@ namespace Bnan.Core.Models
 
         public virtual ICollection<CrCasCarAdvantage> CrCasCarAdvantages { get; set; }
         public virtual ICollection<CrCasCarInformation> CrCasCarInformations { get; set; }
+        public virtual ICollection<CrCasPriceCarBasic> CrCasPriceCarBasics { get; set; }
         public virtual ICollection<CrMasSupCarDistribution> CrMasSupCarDistributions { get; set; }
         public virtual ICollection<CrMasSupCarModel> CrMasSupCarModels { get; set; }
     }

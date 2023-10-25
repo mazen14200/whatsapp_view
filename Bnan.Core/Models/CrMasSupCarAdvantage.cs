@@ -8,6 +8,7 @@ namespace Bnan.Core.Models
         public CrMasSupCarAdvantage()
         {
             CrCasCarAdvantages = new HashSet<CrCasCarAdvantage>();
+            CrCasPriceCarAdvantages = new HashSet<CrCasPriceCarAdvantage>();
         }
 
         public string CrMasSupCarAdvantagesCode { get; set; } = null!;
@@ -18,5 +19,6 @@ namespace Bnan.Core.Models
         public string? CrMasSupCarAdvantagesReasons { get; set; }
 
         public virtual ICollection<CrCasCarAdvantage> CrCasCarAdvantages { get; set; }
+        public virtual ICollection<CrCasPriceCarAdvantage> CrCasPriceCarAdvantages { get; set; }
     }
 }

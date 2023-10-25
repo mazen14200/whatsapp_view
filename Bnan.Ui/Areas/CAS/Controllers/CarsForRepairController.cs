@@ -67,9 +67,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                                                                                                                                "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2"});
             var adminstritive = _unitOfWork.CrCasSysAdministrativeProcedure.FindAll(x => x.CrCasSysAdministrativeProceduresCode == "214" && x.CrCasSysAdministrativeProceduresLessor == car.CrCasCarInformationLessor &&
                                                                                       x.CrCasSysAdministrativeProceduresBranch == car.CrCasCarInformationBranch && x.CrCasSysAdministrativeProceduresTargeted == car.CrCasCarInformationSerailNo).LastOrDefault();
-
-            ViewBag.date = adminstritive.CrCasSysAdministrativeProceduresDate?.ToString("dd/MM/yyyy");
-            ViewBag.reasons = adminstritive.CrCasSysAdministrativeProceduresReasons;
+            if (adminstritive!=null)
+            {
+                ViewBag.date = adminstritive.CrCasSysAdministrativeProceduresDate?.ToString("dd/MM/yyyy");
+                ViewBag.reasons = adminstritive.CrCasSysAdministrativeProceduresReasons;
+            }
 
             var carVM = _mapper.Map<CarsInforamtionVM>(car);
             return View(carVM);

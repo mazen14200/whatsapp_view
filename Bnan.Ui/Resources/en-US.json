@@ -815,6 +815,7 @@
   "CrMasUserContractValidityEmployer": "Validity Employer",
   "CrMasUserContractValidityAge": "Validity Renter Age",
   "CrMasUserContractValidityExtension": "Contract Validity Extension",
+  "CRMasUserContractValidityCreate": "Create Contract",
   "CrMasUserContractValidityCancel": "Contract Validity Cancel",
   "CrMasUserContractValidityEnd": "Contract Validity End",
   "CrMasUserContractValidityLessContractValue": "The payment is less than the contract value",
@@ -880,6 +881,7 @@
   "Add Car": "Add Car",
   "Rented": "Rented",
   "Maintaince": "Maintaince",
+  "Repair": "Repair",
   "ForSale": "For Sale",
   "Sold": "Sold",
   "Add Car Data": "Add Car",
@@ -929,9 +931,15 @@
   "OfferValueSale": "Price",
   "ForSaleAndRent": "Allow To rent",
   "ReactiveOffer": "Cancel Offer",
-  "ConfirmOffer": "Confirm Offer"
-
-
+  "ConfirmOffer": "Confirm Offer",
+  "Yes": "Yes",
+  "Noo": "No",
+  "BranchHold": "Branch Hold",
+  "OwnerHold": "Owner Holded",
+  "PriceHold": "Price Holded",
+  "CarHold": "Car Holded",
+  "CarDelete": "Car Deleted",
+  "CarSold": "Car Sold"
 }
 
 

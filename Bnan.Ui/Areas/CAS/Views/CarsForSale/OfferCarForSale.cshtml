@@ -85,7 +85,7 @@
                     <input type="text" class="form-control" readonly asp-for="CrCasCarInformationConcatenateArName" />
                 </div>
             </div>
-            @if (Model.CrCasCarInformationStatus == Status.ForSale)
+            @if (Model.CrCasCarInformationStatus==Status.Active && (Model.CrCasCarInformationForSaleStatus == Status.ForSale ||Model.CrCasCarInformationForSaleStatus == Status.RendAndForSale))
             {
                 @*Document Branch*@
                 <div class="row mt-2">
@@ -119,11 +119,24 @@
                     <div class="col-md-2 col-8 dateRelative">
                         <input type="text" class="form-control dateInput" value="@ViewBag.date" readonly>
                     </div>
+                   
+                </div>
+                @*Value Offer*@
+                <div class="row mt-2">
                     <div class="col-md-1 formlabel">
                         <label class="form-label">@localizer["OfferValueSale"]</label>
                     </div>
                     <div class="col-md-2 col-8">
                         <input type="text" class="form-control" value="@ViewBag.offerValue" readonly>
+                    </div>
+                </div>
+                @*Forsale and rented*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["ForSaleAndRent"]</label>
+                    </div>
+                    <div class="col-md-2 col-8">
+                        <input type="text" class="form-control" value="@ViewBag.ForRent" readonly>
                     </div>
                 </div>
                 @*Reasons*@
@@ -171,6 +184,9 @@
                     <div class="col-md-2 col-8 dateRelative">
                         <input type="text" class="form-control dateInput" asp-for="CrCasCarInformationOfferedSaleDate">
                     </div>
+                </div>
+                @*Value Offer*@
+                <div class ="row mt-2">
                     <div class="col-md-1 formlabel">
                         <label class="form-label">@localizer["OfferValueSale"]</label>
                     </div>
@@ -184,7 +200,7 @@
                         <label class="form-label">@localizer["ForSaleAndRent"]</label>
                     </div>
                     <div class="col-md-2 col-8">
-                        <input type="checkbox" class="form-check-input" name="CrCasCarInformationForSaleStatus">
+                        <input type="checkbox" style="height: 21px;width: 23px;" class="form-check-input" name="CrCasCarInformationForSaleStatus">
                     </div>
                 </div>
                 @*Reasons*@
@@ -228,22 +244,22 @@
         </div>
     </form>
 
-    
-<!-- Reactive Hold User MOdel-->
-<div class="modal fade" id="centermodalActive" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h4>@localizer["SureToRetriveHold"]</h4>
-                <p>@localizer["HintSureToRetriveH"]</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
-                <button type="button" id="retriveToActiveA" class="btn btn-primary">@localizer["Okay"]</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
+    <!-- Reactive Hold User MOdel-->
+    <div class="modal fade" id="centermodalActive" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4>@localizer["SureToRetriveHold"]</h4>
+                    <p>@localizer["HintSureToRetriveH"]</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                    <button type="button" id="retriveToActiveA" class="btn btn-primary">@localizer["Okay"]</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <!-- Reactive Hold User MOdel-->
     <div class="modal fade" id="centermodalConfirmOffer" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -259,84 +275,84 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <script>
-        $(document).ready(function () {
-            var today = new Date();
-            var startDates = $("CrCasCarInformationOfferedSaleDate").val();
-            var StartformattedDate = new Date(startDates);
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+        <script>
+            $(document).ready(function () {
+                var today = new Date();
+                var startDates = $("CrCasCarInformationOfferedSaleDate").val();
+                var StartformattedDate = new Date(startDates);
 
-            if (!StartformattedDate || StartformattedDate === "") {
-                StartformattedDate = today; // Set date to today if it's empty or null
-            }
-            $("#CrCasCarInformationOfferedSaleDate").datepicker({
-                dateFormat: 'yy/mm/dd',
-                minDate: today,
-                defaultDate: StartformattedDate// Set the minimum date to today
-            }).datepicker("widget").addClass("datepicker-widget");
-            $("#CrCasCarInformationOfferedSaleDate").datepicker("setDate", StartformattedDate);
-            $("#CrCasCarInformationOfferedSaleDate").click(function () {
-                $(this).datepicker("show");
-            });
-            $("#CrCasCarInformationOfferedSaleDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
-            $(".datepicker-icon").click(function () {
-                $(this).prevAll('input').datepicker("show");
-            });
-        })
-    </script>
-    <script>
-        $("#buttonContainer a").on("click", function (event) {
-            var status = $(this).attr("data-error")
-            var Modal = $(this).attr("data-bs-targett")
-            CheckValidation('2202008', status).done(function (data) {
-                console.log(data)
-                if (data) $(Modal).modal('show');
-            });
-        })
-        function updateCarForSaleStatus(status) {
-            var code = document.getElementById("CrCasCarInformationSerailNo").value;
-            $.ajax({
-                type: "POST",
+                if (!StartformattedDate || StartformattedDate === "") {
+                    StartformattedDate = today; // Set date to today if it's empty or null
+                }
+                $("#CrCasCarInformationOfferedSaleDate").datepicker({
+                    dateFormat: 'yy/mm/dd',
+                    minDate: today,
+                    defaultDate: StartformattedDate// Set the minimum date to today
+                }).datepicker("widget").addClass("datepicker-widget");
+                $("#CrCasCarInformationOfferedSaleDate").datepicker("setDate", StartformattedDate);
+                $("#CrCasCarInformationOfferedSaleDate").click(function () {
+                    $(this).datepicker("show");
+                });
+                $("#CrCasCarInformationOfferedSaleDate").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+                $(".datepicker-icon").click(function () {
+                    $(this).prevAll('input').datepicker("show");
+                });
+            })
+        </script>
+        <script>
+            $("#buttonContainer a").on("click", function (event) {
+                var status = $(this).attr("data-error")
+                var Modal = $(this).attr("data-bs-targett")
+                CheckValidation('2202008', status).done(function (data) {
+                    console.log(data)
+                    if (data) $(Modal).modal('show');
+                });
+            })
+            function updateCarForSaleStatus(status) {
+                var code = document.getElementById("CrCasCarInformationSerailNo").value;
+                $.ajax({
+                    type: "POST",
                     url: "/CAS/CarsForSale/EditStatusOfSaleCar",
-                data: { status: status, code: code },
-                success: function (result) {
-                    $('.modal').modal('hide');
-                    window.location.href = "/CAS/CarsForSale/SuccesssMessageForCarsInformation";
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        }
-
-
-        $('#retriveToSoldT').click(function () {
-                updateCarForSaleStatus("@Status.Hold");
-        });
-        $('#retriveToActiveA').click(function () {
-                updateCarForSaleStatus("@Status.Save");
-        });
-
-
-        $("#saveEdit").on("click", function (event) {
-            event.preventDefault();
-            CheckValidation('2202008', '@Status.Insert').done(function (data) {
-                if (data) {
-                    $('form').submit();
-                }
-            });
-        })
-    </script>
-    <script>
-        $(document).on("click", "[type='checkbox']", function (e) {
-            if (this.checked) {
-                $(this).attr("value", "true");
-            } else {
-                $(this).attr("value", "false");
+                    data: { status: status, code: code },
+                    success: function (result) {
+                        $('.modal').modal('hide');
+                        window.location.href = "/CAS/CarsForSale/SuccesssMessageForCarsInformation";
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
             }
-        });
-    </script>
-}
+
+
+            $('#retriveToSoldT').click(function () {
+                updateCarForSaleStatus("@Status.Hold");
+            });
+            $('#retriveToActiveA').click(function () {
+                updateCarForSaleStatus("@Status.Save");
+            });
+
+
+            $("#saveEdit").on("click", function (event) {
+                event.preventDefault();
+                CheckValidation('2202008', '@Status.Insert').done(function (data) {
+                    if (data) {
+                        $('form').submit();
+                    }
+                });
+            })
+        </script>
+        <script>
+            $(document).on("click", "[type='checkbox']", function (e) {
+                if (this.checked) {
+                    $(this).attr("value", "true");
+                } else {
+                    $(this).attr("value", "false");
+                }
+            });
+        </script>
+    }
 
 

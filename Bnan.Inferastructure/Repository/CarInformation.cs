@@ -89,7 +89,7 @@ namespace Bnan.Inferastructure.Repository
                     CrCasCarAdvantagesModel = distribution.CrMasSupCarDistributionModel,
                     CrCasCarAdvantagesCarYear = distribution.CrMasSupCarDistributionYear,
                     CrCasCarAdvantagesCategory = distribution.CrMasSupCarDistributionCategory,
-                    CRCasCarAdvantagesStatus = status
+                    CrCasCarAdvantagesStatus = status
                 };
                 await _unitOfWork.CrCasCarAdvantage.AddAsync(crCasCarAdvantage);
                 return true;
@@ -120,7 +120,7 @@ namespace Bnan.Inferastructure.Repository
             var advantageCar= _unitOfWork.CrCasCarAdvantage.Find(x=>x.CrCasCarAdvantagesSerialNo==serialNumber&&x.CrCasCarAdvantagesCode==advantageCode&&x.CrCasCarAdvantagesLessor==lessor);
             if (advantageCar != null)
             {
-                advantageCar.CRCasCarAdvantagesStatus = status;
+                advantageCar.CrCasCarAdvantagesStatus = status;
                 _unitOfWork.CrCasCarAdvantage.Update(advantageCar);
                 return true;
             }
@@ -135,10 +135,9 @@ namespace Bnan.Inferastructure.Repository
             if (car != null)
             {
                 string status;
-                if (crCasCarInformation.CrCasCarInformationForSaleStatus.ToLower() == "true") status = "A";
-                else status = "H";
+                if (crCasCarInformation.CrCasCarInformationForSaleStatus?.ToLower() == "true") status = Status.RendAndForSale;
+                else status = Status.ForSale;
 
-                car.CrCasCarInformationStatus = Status.ForSale;
                 car.CrCasCarInformationOfferedSaleDate = crCasCarInformation.CrCasCarInformationOfferedSaleDate;
                 car.CrCasCarInformationOfferValueSale = crCasCarInformation.CrCasCarInformationOfferValueSale;
                 car.CrCasCarInformationReasons = crCasCarInformation.CrCasCarInformationReasons;

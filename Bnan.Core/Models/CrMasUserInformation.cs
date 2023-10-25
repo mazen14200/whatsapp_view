@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Bnan.Core.Models
 {
-    public partial class CrMasUserInformation :IdentityUser
+    public partial class CrMasUserInformation:IdentityUser
     {
         public CrMasUserInformation()
         {

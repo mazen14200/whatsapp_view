@@ -64,6 +64,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                                                                                                                                "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2"});
             ViewBag.date = car.CrCasCarInformationOfferedSaleDate?.ToString("dd/MM/yyyy");
             ViewBag.offerValue = car.CrCasCarInformationOfferValueSale?.ToString("N0");
+            if (car.CrCasCarInformationForSaleStatus==Status.RendAndForSale) ViewBag.ForRent = _localizer["Yes"];
+            else ViewBag.ForRent = _localizer["Noo"];
+
+
+
             var carVM = _mapper.Map<CarsInforamtionVM>(car);
             return View(carVM);
         }
@@ -111,7 +116,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
                     sAr = "الغاء العرض";
                     sEn = "Cancel offer";
-                    car.CrCasCarInformationStatus = Status.Active;
+                    car.CrCasCarInformationForSaleStatus = Status.Active;
+                    car.CrCasCarInformationOfferValueSale = 0;
                 }
                 if (status == Status.Hold)
                 {

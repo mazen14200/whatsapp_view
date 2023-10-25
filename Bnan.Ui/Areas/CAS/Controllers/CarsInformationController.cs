@@ -72,13 +72,20 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     {
                         return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == status &&
                                                                                 x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationBranchStatus == Status.Active &&
-                                                                                x.CrCasCarInformationOwnerStatus == Status.Active));
+                                                                                x.CrCasCarInformationOwnerStatus == Status.Active&&
+                                                                               (x.CrCasCarInformationForSaleStatus==Status.Active || (x.CrCasCarInformationForSaleStatus == Status.RendAndForSale))));
                     }
                     else if (status == Status.Hold)
                     {
                         return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == status ||
                                                                                 x.CrCasCarInformationPriceStatus == false || x.CrCasCarInformationBranchStatus != Status.Active ||
                                                                                 x.CrCasCarInformationOwnerStatus != Status.Active));
+                    }
+                    else if (status == Status.ForSale)
+                    {
+                        return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == Status.Active &&
+                                                                                (x.CrCasCarInformationForSaleStatus == Status.ForSale ||
+                                                                                 x.CrCasCarInformationForSaleStatus == Status.RendAndForSale)));
                     }
                     return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == status));
                 }

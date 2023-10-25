@@ -17,6 +17,7 @@ namespace Bnan.Core.Extensions
         public static string Renewed { get; set; } = "N";
         public static string Rented { get; set; } = "R";
         public static string ForSale { get; set; } = "T";
+        public static string RendAndForSale { get; set; } = "V";
         public static string Sold { get; set; } = "S";
         public static string Maintaince { get; set; } = "M";
         public static string Wating { get; set; } = "W";

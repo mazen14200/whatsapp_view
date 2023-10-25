@@ -78,19 +78,20 @@
                                     <td>@item.CrCasCarInformationConractDaysNo?.ToString("N0")</td>
                                     <td>@item.CrCasCarInformationLastContractDate</td>
                                     <td>
-                                        @if (@item.CrCasCarInformationStatus == Status.Active)
+                                        @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.Active)
                                         {
-                                            @localizer["Active"]
+                                            @localizer["Avaliable"]
                                         }
-                                        else if (@item.CrCasCarInformationStatus == Status.ForSale)
+                                        else if (item.CrCasCarInformationStatus == Status.Active &&
+                                                (item.CrCasCarInformationForSaleStatus == Status.RendAndForSale || item.CrCasCarInformationForSaleStatus == Status.ForSale))
                                         {
                                             @localizer["ForSale"]
                                         }
-                                        else if (@item.CrCasCarInformationStatus == Status.Maintaince)
+                                        else if (item.CrCasCarInformationStatus == Status.Maintaince)
                                         {
-                                            @localizer["Maintaince"]
+                                            @localizer["Repair"]
                                         }
-                                        else if (@item.CrCasCarInformationPriceStatus == false || item.CrCasCarInformationOwnerStatus != "A" || item.CrCasCarInformationBranchStatus != "A" ||
+                                        else if (item.CrCasCarInformationPriceStatus == false || item.CrCasCarInformationOwnerStatus != "A" || item.CrCasCarInformationBranchStatus != "A" ||
                                         @item.CrCasCarInformationStatus == Status.Hold)
                                         {
                                             @localizer["UnAvaliable"]
@@ -138,19 +139,20 @@
                                     <td>@item.CrCasCarInformationConractDaysNo?.ToString("N0")</td>
                                     <td>@item.CrCasCarInformationLastContractDate</td>
                                     <td>
-                                        @if (@item.CrCasCarInformationStatus == Status.Active)
+                                        @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.Active)
                                         {
-                                            @localizer["Active"]
+                                            @localizer["Avaliable"]
                                         }
-                                        else if (@item.CrCasCarInformationStatus == Status.ForSale)
+                                        else if (item.CrCasCarInformationStatus == Status.Active &&
+                                        (item.CrCasCarInformationForSaleStatus == Status.RendAndForSale || item.CrCasCarInformationForSaleStatus == Status.ForSale))
                                         {
                                             @localizer["ForSale"]
                                         }
-                                        else if (@item.CrCasCarInformationStatus == Status.Maintaince)
+                                        else if (item.CrCasCarInformationStatus == Status.Maintaince)
                                         {
-                                            @localizer["Maintaince"]
+                                            @localizer["Repair"]
                                         }
-                                        else if (@item.CrCasCarInformationPriceStatus == false || item.CrCasCarInformationOwnerStatus != "A" || item.CrCasCarInformationBranchStatus != "A" ||
+                                        else if (item.CrCasCarInformationPriceStatus == false || item.CrCasCarInformationOwnerStatus != "A" || item.CrCasCarInformationBranchStatus != "A" ||
                                         @item.CrCasCarInformationStatus == Status.Hold)
                                         {
                                             @localizer["UnAvaliable"]

@@ -74,6 +74,7 @@ namespace Bnan.Inferastructure.Repository
             contractValidition.CrMasUserContractValidityFbrake = model.CrMasUserContractValidityFbrake;
             contractValidition.CrMasUserContractValidityHour = model.CrMasUserContractValidityHour;
             contractValidition.CrMasUserContractValidityInsurance = model.CrMasUserContractValidityInsurance;
+            contractValidition.CrMasUserContractValidityTrafficLicense = model.CrMasUserContractValidityTrafficLicense;
             contractValidition.CrMasUserContractValidityId = model.CrMasUserContractValidityId;
             contractValidition.CrMasUserContractValidityKm = model.CrMasUserContractValidityKm;
             contractValidition.CrMasUserContractValidityLessContractValue = model.CrMasUserContractValidityLessContractValue;
@@ -85,8 +86,9 @@ namespace Bnan.Inferastructure.Repository
             contractValidition.CrMasUserContractValidityRenterAddress = model.CrMasUserContractValidityRenterAddress;
             contractValidition.CrMasUserContractValidityTires = model.CrMasUserContractValidityTrafficLicense;
             contractValidition.CrMasUserContractValidityTransferPermission = model.CrMasUserContractValidityTransferPermission;
-            
-             _unitOfWork.CrMasUserContractValidity.Update(contractValidition);
+            contractValidition.CrMasUserContractValidityCreate = model.CrMasUserContractValidityCreate;
+
+            _unitOfWork.CrMasUserContractValidity.Update(contractValidition);
              await _unitOfWork.CompleteAsync();
              return true;
         }

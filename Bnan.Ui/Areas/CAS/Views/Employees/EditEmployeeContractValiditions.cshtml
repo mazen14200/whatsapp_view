@@ -545,6 +545,14 @@
                         <ul class="list mt-2" style="font-size: 17px;">
                             <li>
                                 <h4 class="mb-1">
+                                    <input type="checkbox" style="height: 15px;width: 30px;" @((bool)Model.CrMasUserContractValidityExtension ? "checked='checked'" : "") name="CrMasUserContractValidityCreate" value="@Model.CrMasUserContractValidityCreate" />
+                                    <label for="@Model.CrMasUserContractValidityCreate">@localizer["CRMasUserContractValidityCreate"]</label>
+                                </h4>
+                            </li>
+                        </ul>
+                        <ul class="list mt-2" style="font-size: 17px;">
+                            <li>
+                                <h4 class="mb-1">
                                     <input type="checkbox" style="height: 15px;width: 30px;" @((bool)Model.CrMasUserContractValidityExtension ? "checked='checked'" : "") name="CrMasUserContractValidityExtension" value="@Model.CrMasUserContractValidityExtension" />
                                     <label for="@Model.CrMasUserContractValidityExtension">@localizer["CrMasUserContractValidityExtension"]</label>
                                 </h4>

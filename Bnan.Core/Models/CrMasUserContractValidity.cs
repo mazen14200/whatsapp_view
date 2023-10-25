@@ -29,9 +29,10 @@ namespace Bnan.Core.Models
         public decimal? CrMasUserContractValidityDiscountRate { get; set; }
         public int? CrMasUserContractValidityKm { get; set; }
         public int? CrMasUserContractValidityHour { get; set; }
-        public bool? CrMasUserContractValidityLessContractValue { get; set; }
+        public bool? CrMasUserContractValidityCreate { get; set; }
         public bool? CrMasUserContractValidityCancel { get; set; }
         public bool? CrMasUserContractValidityExtension { get; set; }
+        public bool? CrMasUserContractValidityLessContractValue { get; set; }
         public bool? CrMasUserContractValidityEnd { get; set; }
 
         public virtual CrCasSysAdministrativeProcedure? CrMasUserContractValidityAdminNavigation { get; set; }
