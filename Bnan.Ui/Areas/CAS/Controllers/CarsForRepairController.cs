@@ -78,7 +78,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Repair(CarsInforamtionVM carsInforamtionVM, string RepairDate)
+        public async Task<IActionResult> Repair(CarsInforamtionVM carsInforamtionVM, string RepairDate, string reasons)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -91,7 +91,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             {
                 await _adminstritiveProcedures.SaveAdminstritiveForRepairCar(userLogin.CrMasUserInformationCode, lessorCode, car.CrCasCarInformationBranch,
                                                                             car.CrCasCarInformationSerailNo, date, "اضافة", "Insert", "I",
-                                                                            carsInforamtionVM.CrCasCarInformationReasons);
+                                                                            reasons);
                 car.CrCasCarInformationStatus = Status.Maintaince;
                 _unitOfWork.CrCasCarInformation.Update(car);
                 await _unitOfWork.CompleteAsync();

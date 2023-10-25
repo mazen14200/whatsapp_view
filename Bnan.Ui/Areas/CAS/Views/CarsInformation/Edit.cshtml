@@ -365,8 +365,10 @@
 
         </div>
         <div class="mt-4" id="buttonContainer">
-
-            <a class="btn btn-primary ms-1" id="submitButton">@localizer["Save"]</a>
+            @if (Model.CrCasCarInformationStatus != "S")
+            {
+                <a class="btn btn-primary ms-1" id="submitButton">@localizer["Save"]</a>
+            }
 
             @if (Model.CrCasCarInformationStatus == "A")
             {
@@ -376,9 +378,9 @@
                 <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Deleted" data-bs-targett="#centermodalDelete">
                     @localizer["Delete"]
                 </a>
-               @* <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.ForSale" data-bs-targett="#centermodalForSale">
-                    @localizer["ForSale"]
-                </a>*@
+                @* <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.ForSale" data-bs-targett="#centermodalForSale">
+            @localizer["ForSale"]
+            </a>*@
             }
             else if (Model.CrCasCarInformationStatus == "H")
             {
@@ -398,18 +400,18 @@
                     @localizer["ReactiveDelete"]
                 </a>
             }
-           @* else if (Model.CrCasCarInformationStatus == "T")
+            @* else if (Model.CrCasCarInformationStatus == "T")
             {
 
-                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Hold" data-bs-targett="#centermodalhold">
-                    @localizer["Hold"]
-                </a>
-                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Deleted" data-bs-targett="#centermodalDelete">
-                    @localizer["Delete"]
-                </a>
-                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Active" data-bs-targett="#centermodalToRented">
-                    @localizer["ForRented"]
-                </a>
+            <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Hold" data-bs-targett="#centermodalhold">
+            @localizer["Hold"]
+            </a>
+            <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Deleted" data-bs-targett="#centermodalDelete">
+            @localizer["Delete"]
+            </a>
+            <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Active" data-bs-targett="#centermodalToRented">
+            @localizer["ForRented"]
+            </a>
             }*@
             <a type="button" class="btn btn-danger ms-2" asp-area="CAS" asp-controller="CarsInformation" asp-action="CarsInformation">
                 @localizer["Back"]

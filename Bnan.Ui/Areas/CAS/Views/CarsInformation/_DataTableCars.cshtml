@@ -83,6 +83,10 @@
                                 {
                                     @localizer["Rented"]
                                 }
+                                else if (@item.CrCasCarInformationStatus == Status.Maintaince)
+                                {
+                                    @localizer["Repair"]
+                                }
                                 else if (@item.CrCasCarInformationPriceStatus == false || item.CrCasCarInformationOwnerStatus != "A" || item.CrCasCarInformationBranchStatus != "A" ||
                                 @item.CrCasCarInformationStatus == Status.Hold)
                                 {
@@ -174,6 +178,10 @@ else
                                 else if (@item.CrCasCarInformationStatus == Status.Rented)
                                 {
                                     @localizer["Rented"]
+                                }
+                                else if (@item.CrCasCarInformationStatus == Status.Maintaince)
+                                {
+                                    @localizer["Repair"]
                                 }
                                 else if (@item.CrCasCarInformationPriceStatus == false || item.CrCasCarInformationOwnerStatus != "A" || item.CrCasCarInformationBranchStatus != "A" ||
                                 @item.CrCasCarInformationStatus == Status.Hold)

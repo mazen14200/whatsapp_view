@@ -50,7 +50,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var titles = await setTitle("202", "2202001", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
-            var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationStatus == Status.Active, new[] { "CrCasCarInformation1", "CrCasCarInformationDistributionNavigation", "CrCasCarInformationCategoryNavigation" });
+            var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationStatus == Status.Active|| x.CrCasCarInformationStatus == Status.Maintaince, new[] { "CrCasCarInformation1", "CrCasCarInformationDistributionNavigation", "CrCasCarInformationCategoryNavigation" });
             return View(cars);
         }
         [HttpGet]
@@ -66,14 +66,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     var carsAll = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode, new[] { "CrCasCarInformation1", "CrCasCarInformationDistributionNavigation", "CrCasCarInformationCategoryNavigation" });
                     if (status == Status.All)
                     {
-                        return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == Status.Active || x.CrCasCarInformationStatus == Status.Hold || x.CrCasCarInformationStatus == Status.Rented || x.CrCasCarInformationStatus == Status.ForSale));
+                        return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == Status.Active || x.CrCasCarInformationStatus == Status.Hold || x.CrCasCarInformationStatus == Status.Rented || x.CrCasCarInformationStatus == Status.ForSale || x.CrCasCarInformationStatus==Status.Maintaince));
                     }
                     else if (status == Status.Active)
                     {
-                        return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == status &&
+                        return PartialView("_DataTableCars", carsAll.Where(x => (x.CrCasCarInformationStatus == Status.Active ||x.CrCasCarInformationStatus==Status.Maintaince) &&
                                                                                 x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationBranchStatus == Status.Active &&
                                                                                 x.CrCasCarInformationOwnerStatus == Status.Active&&
-                                                                               (x.CrCasCarInformationForSaleStatus==Status.Active || (x.CrCasCarInformationForSaleStatus == Status.RendAndForSale))));
+                                                                               (x.CrCasCarInformationForSaleStatus==Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale)));
                     }
                     else if (status == Status.Hold)
                     {
