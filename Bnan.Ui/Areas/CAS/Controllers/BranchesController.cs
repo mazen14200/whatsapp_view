@@ -64,10 +64,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("201", "2201001", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-     
+
             var lessor = await _UserService.GetUserLessor(User);
             var lessornumber = lessor.CrMasUserInformationLessorNavigation.CrMasLessorInformationCode;
-            var Bracnhes = _unitOfWork?.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationLessor == lessornumber, new[] { "CrCasCarInformations" } );
+            var Bracnhes = _unitOfWork?.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationLessor == lessornumber, new[] { "CrCasCarInformations" });
             var BranchPost = _PostBranch.GetAllByLessor(lessornumber);
 
             return View(BranchPost);
@@ -210,7 +210,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             BranchVM branchVM = _mapper.Map<BranchVM>(branchinformation);
             branchVM.BranchPostVM = _mapper.Map<BranchPost1VM>(BranchPost);
 
-            if(CultureInfo.CurrentCulture.Name == "en-US")
+            if (CultureInfo.CurrentCulture.Name == "en-US")
             {
                 ViewBag.CrCasBranchPostCity = BranchPost.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateEnName;
             }
@@ -243,7 +243,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     string fileNameImg = "DirectorSignature";
                     filePathSignture = await SigntureFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
                 }
-                else if (branchVM.CrCasBranchInformationDirectorSignature!=null)
+                else if (branchVM.CrCasBranchInformationDirectorSignature != null)
                 {
                     filePathSignture = branchVM.CrCasBranchInformationDirectorSignature;
                 }
@@ -302,9 +302,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         {
             string sAr = "";
             string sEn = "";
-            var branch =  _unitOfWork.CrCasBranchInformation.Find(l=>l.CrCasBranchInformationLessor == lessorCode && l.CrCasBranchInformationCode == Branchcode);
-            var docs =  _unitOfWork.CrCasBranchDocument.FindAll(l=>l.CrCasBranchDocumentsLessor == lessorCode && l.CrCasBranchDocumentsBranch == Branchcode);
-            var salesPoints =  _unitOfWork.CrCasAccountSalesPoint.FindAll(l=>l.CrCasAccountSalesPointLessor == lessorCode && l.CrCasAccountSalesPointBrn == Branchcode);
+            var branch = _unitOfWork.CrCasBranchInformation.Find(l => l.CrCasBranchInformationLessor == lessorCode && l.CrCasBranchInformationCode == Branchcode);
+            var docs = _unitOfWork.CrCasBranchDocument.FindAll(l => l.CrCasBranchDocumentsLessor == lessorCode && l.CrCasBranchDocumentsBranch == Branchcode);
+            var salesPoints = _unitOfWork.CrCasAccountSalesPoint.FindAll(l => l.CrCasAccountSalesPointLessor == lessorCode && l.CrCasAccountSalesPointBrn == Branchcode);
+            var cars = _unitOfWork.CrCasCarInformation.FindAll(l => l.CrCasCarInformationLessor == lessorCode && l.CrCasCarInformationBranch == Branchcode);
             if (branch != null)
             {
                 if (await CheckUserSubValidationProcdures("2201001", status))
@@ -316,15 +317,17 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         branch.CrCasBranchInformationStatus = Status.Hold;
                         foreach (var doc in docs) doc.CrCasBranchDocumentsBranchStatus = Status.Hold;
                         foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Hold;
+                        foreach (var car in cars) car.CrCasCarInformationBranchStatus = Status.Hold;
                     }
                     else if (status == Status.Deleted)
                     {
                         sAr = "حذف فرع";
                         sEn = "Remove Branch";
-                        
-                            branch.CrCasBranchInformationStatus = Status.Deleted;
-                            foreach (var doc in docs) doc.CrCasBranchDocumentsBranchStatus = Status.Deleted;
-                            foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Deleted;
+
+                        branch.CrCasBranchInformationStatus = Status.Deleted;
+                        foreach (var doc in docs) doc.CrCasBranchDocumentsBranchStatus = Status.Deleted;
+                        foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Deleted;
+                        foreach (var car in cars) car.CrCasCarInformationBranchStatus = Status.Deleted;
 
                     }
                     else if (status == Status.Active)
@@ -334,6 +337,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         branch.CrCasBranchInformationStatus = Status.Active;
                         foreach (var doc in docs) doc.CrCasBranchDocumentsBranchStatus = Status.Active;
                         foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Active;
+                        foreach (var car in cars) car.CrCasCarInformationBranchStatus = Status.Active;
+
 
                     }
 
@@ -355,6 +360,6 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
         }
 
-       
+
     }
 }

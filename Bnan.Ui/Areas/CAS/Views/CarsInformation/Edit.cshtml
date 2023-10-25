@@ -333,26 +333,29 @@
             </div>
             <div class="row mt-3">
                 <div class="col-md-3 text-center">
-                    @if(Model.CrCasCarInformationBranchStatus=="H"){
+                    @if (Model.CrCasCarInformationBranchStatus == "H")
+                    {
                         <h5 class="text-danger mt-2">@localizer["BranchHold"]</h5>
                     }
-                    else if (Model.CrCasCarInformationOwner == "H")
+
+                    @if (Model.CrCasCarInformationOwner == "H")
                     {
                         <h5 class="text-danger mt-2 ">@localizer["OwnerHold"]</h5>
                     }
-                    else if (Model.CrCasCarInformationPriceStatus != true)
+
+                    @if (Model.CrCasCarInformationPriceStatus != true)
                     {
                         <h5 class="text-danger mt-2">@localizer["PriceHold"]</h5>
                     }
-                    else if (Model.CrCasCarInformationStatus == "H")
+                    @if (Model.CrCasCarInformationStatus == "H")
                     {
                         <h5 class="text-danger mt-2">@localizer["CarHold"]</h5>
                     }
-                    else if (Model.CrCasCarInformationStatus == "D")
+                    @if (Model.CrCasCarInformationStatus == "D")
                     {
                         <h5 class="text-danger mt-2">@localizer["CarDelete"]</h5>
                     }
-                    else if (Model.CrCasCarInformationStatus == "S")
+                    @if (Model.CrCasCarInformationStatus == "S")
                     {
                         <h5 class="text-danger mt-2">@localizer["CarSold"]</h5>
                     }
@@ -373,9 +376,9 @@
                 <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Deleted" data-bs-targett="#centermodalDelete">
                     @localizer["Delete"]
                 </a>
-                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.ForSale" data-bs-targett="#centermodalForSale">
+               @* <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.ForSale" data-bs-targett="#centermodalForSale">
                     @localizer["ForSale"]
-                </a>
+                </a>*@
             }
             else if (Model.CrCasCarInformationStatus == "H")
             {
@@ -395,7 +398,7 @@
                     @localizer["ReactiveDelete"]
                 </a>
             }
-            else if (Model.CrCasCarInformationStatus == "T")
+           @* else if (Model.CrCasCarInformationStatus == "T")
             {
 
                 <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Hold" data-bs-targett="#centermodalhold">
@@ -407,7 +410,7 @@
                 <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Active" data-bs-targett="#centermodalToRented">
                     @localizer["ForRented"]
                 </a>
-            }
+            }*@
             <a type="button" class="btn btn-danger ms-2" asp-area="CAS" asp-controller="CarsInformation" asp-action="CarsInformation">
                 @localizer["Back"]
             </a>
