@@ -67,37 +67,56 @@
                             }
                             @foreach (var item in Model)
                             {
+                                @if (item.CrCasCarInformationStatus == @Status.Maintaince)
+                                {
+                                    <tr onclick="location.href='@Url.Action("Repair", "CarsForRepair", new { serialNumber = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;color:red">
 
-                                <tr onclick="location.href='@Url.Action("Repair", "CarsForRepair", new { serialNumber = item.CrCasCarInformationSerailNo })'">
-                                    <td>@no</td>
-                                    <td>@item.CrCasCarInformationSerailNo</td>
-                                    <td>@item.CrCasCarInformation1.CrCasBranchInformationEnShortName</td>
-                                    <td>@item.CrCasCarInformationConcatenateEnName</td>
-                                    <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
-                                    <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
-                                    <td>@item.CrCasCarInformationConractDaysNo?.ToString("N0")</td>
-                                    <td>@item.CrCasCarInformationLastContractDate</td>
-                                    <td>
-                                        @if (@item.CrCasCarInformationStatus == Status.Active)
-                                        {
-                                            @localizer["Avaliable"]
-                                        }
-                                        else if (@item.CrCasCarInformationStatus == Status.ForSale)
-                                        {
-                                            @localizer["ForSale"]
-                                        }
-                                        else if (@item.CrCasCarInformationStatus == Status.Maintaince)
-                                        {
+                                        <td>@no</td>
+                                        <td>@item.CrCasCarInformationSerailNo</td>
+                                        <td>@item.CrCasCarInformation1?.CrCasBranchInformationEnShortName</td>
+                                        <td>@item.CrCasCarInformationConcatenateEnName</td>
+                                        <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
+                                        <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
+                                        <td>@item.CrCasCarInformationConractDaysNo?.ToString("N0")</td>
+                                        <td>@item.CrCasCarInformationLastContractDate</td>
+                                        <td>
                                             @localizer["Repair"]
-                                        }
-                                        else if (@item.CrCasCarInformationPriceStatus == false || item.CrCasCarInformationOwnerStatus != "A" || item.CrCasCarInformationBranchStatus != "A" ||
-                                        @item.CrCasCarInformationStatus == Status.Hold)
-                                        {
-                                            @localizer["UnAvaliable"]
-                                        }
-                                    </td>
-                                </tr>
-                                no++;
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr onclick="location.href='@Url.Action("Repair", "CarsForRepair", new { serialNumber = item.CrCasCarInformationSerailNo })'">
+                                        <td>@no</td>
+                                        <td>@item.CrCasCarInformationSerailNo</td>
+                                        <td>@item.CrCasCarInformation1?.CrCasBranchInformationEnShortName</td>
+                                        <td>@item.CrCasCarInformationConcatenateEnName</td>
+                                        <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
+                                        <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
+                                        <td>@item.CrCasCarInformationConractDaysNo?.ToString("N0")</td>
+                                        <td>@item.CrCasCarInformationLastContractDate</td>
+                                        <td>
+                                            @if (@item.CrCasCarInformationStatus == Status.Active)
+                                            {
+                                                @localizer["Avaliable"]
+                                            }
+                                            else if (@item.CrCasCarInformationStatus == Status.Active && @item.CrCasCarInformationForSaleStatus == Status.ForSale)
+                                            {
+                                                @localizer["ForSale"]
+                                            }
+                                            else if (@item.CrCasCarInformationStatus == Status.Active && @item.CrCasCarInformationForSaleStatus == Status.RendAndForSale)
+                                            {
+                                                @localizer["ForSaleAndRent"]
+                                            }
+                                            else if (@item.CrCasCarInformationPriceStatus == false || item.CrCasCarInformationOwnerStatus != "A" || item.CrCasCarInformationBranchStatus != "A" ||
+                                            @item.CrCasCarInformationStatus == Status.Hold)
+                                            {
+                                                @localizer["UnAvaliable"]
+                                            }
+                                        </td>
+                                    </tr>
+                                    no++;
+                                }
                             }
                         </tbody>
                     </table>
@@ -127,38 +146,56 @@
                             }
                             @foreach (var item in Model)
                             {
-
-                                <tr onclick="location.href='@Url.Action("Repair", "CarsForRepair", new { serialNumber = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;">
-                                    <td>@no</td>
-                                    <td>@item.CrCasCarInformationSerailNo</td>
-                                    <td>@item.CrCasCarInformation1.CrCasBranchInformationArShortName</td>
-                                    <td>@item.CrCasCarInformationConcatenateArName</td>
-                                    <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
-                                    <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
-                                    <td>@item.CrCasCarInformationConractDaysNo?.ToString("N0")</td>
-                                    <td>@item.CrCasCarInformationLastContractDate</td>
-                                    <td>
-                                        @if (@item.CrCasCarInformationStatus == Status.Active)
-                                        {
-                                            @localizer["Avaliable"]
-                                        }
-                                        else if (@item.CrCasCarInformationStatus == Status.ForSale)
-                                        {
-                                            @localizer["ForSale"]
-                                        }
-                                        else if (@item.CrCasCarInformationStatus == Status.Maintaince)
-                                        {
+                                @if (item.CrCasCarInformationStatus == @Status.Maintaince)
+                                {
+                                    <tr onclick="location.href='@Url.Action("Repair", "CarsForRepair", new { serialNumber = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;color:red">
+                                        <td>@no</td>
+                                        <td>@item.CrCasCarInformationSerailNo</td>
+                                        <td>@item.CrCasCarInformation1?.CrCasBranchInformationArShortName</td>
+                                        <td>@item.CrCasCarInformationConcatenateArName</td>
+                                        <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
+                                        <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
+                                        <td>@item.CrCasCarInformationConractDaysNo?.ToString("N0")</td>
+                                        <td>@item.CrCasCarInformationLastContractDate</td>
+                                        <td>
                                             @localizer["Repair"]
-                                        }
-                                        else if (@item.CrCasCarInformationPriceStatus == false || item.CrCasCarInformationOwnerStatus != "A" || item.CrCasCarInformationBranchStatus != "A" ||
-                                        @item.CrCasCarInformationStatus == Status.Hold)
-                                        {
-                                            @localizer["UnAvaliable"]
-                                        }
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr onclick="location.href='@Url.Action("Repair", "CarsForRepair", new { serialNumber = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;">
+                                        <td>@no</td>
+                                        <td>@item.CrCasCarInformationSerailNo</td>
+                                        <td>@item.CrCasCarInformation1?.CrCasBranchInformationArShortName</td>
+                                        <td>@item.CrCasCarInformationConcatenateArName</td>
+                                        <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
+                                        <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
+                                        <td>@item.CrCasCarInformationConractDaysNo?.ToString("N0")</td>
+                                        <td>@item.CrCasCarInformationLastContractDate</td>
+                                        <td>
+                                            @if (@item.CrCasCarInformationStatus == Status.Active)
+                                            {
+                                                @localizer["Avaliable"]
+                                            }
+                                            else if (@item.CrCasCarInformationStatus == Status.Active && @item.CrCasCarInformationForSaleStatus == Status.ForSale)
+                                            {
+                                                @localizer["ForSale"]
+                                            }
+                                            else if (@item.CrCasCarInformationStatus == Status.Active && @item.CrCasCarInformationForSaleStatus == Status.RendAndForSale)
+                                            {
+                                                @localizer["ForSaleAndRent"]
+                                            }
+                                            else if (@item.CrCasCarInformationPriceStatus == false || item.CrCasCarInformationOwnerStatus != "A" || item.CrCasCarInformationBranchStatus != "A" ||
+                                            @item.CrCasCarInformationStatus == Status.Hold)
+                                            {
+                                                @localizer["UnAvaliable"]
+                                            }
+                                        </td>
+                                    </tr>
 
-                                no++;
+                                    no++;
+                                }
                             }
                         </tbody>
                     </table>

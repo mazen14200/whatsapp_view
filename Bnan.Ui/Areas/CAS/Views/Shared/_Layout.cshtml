@@ -9,8 +9,8 @@
 
 @inject UserManager<CrMasUserInformation> userManager
 @inject SignInManager<CrMasUserInformation> signinManager
-
 @inject IViewLocalizer localizer
+@*@model Bnan.Ui.ViewModels.CAS.LayoutVM*@
 @inject IOptions<RequestLocalizationOptions> options
 @{
     var user = await userManager.GetUserAsync(User);
@@ -531,6 +531,7 @@
                             </a>
 
                         </li>
+                        <!--Notifaction-->
 
                         <li class="dropdown notification-list">
                             <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="true">
@@ -540,86 +541,59 @@
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(-278px, 72px);" data-popper-placement="bottom-end">
 
                                 <!-- item-->
-                                <div class="dropdown-item noti-title">
-                                    <h5 class="m-0">
-                                        <span class="float-end">
-                                            <a href="javascript: void(0);" class="text-dark">
-                                                <small>Clear All</small>
-                                            </a>
-                                        </span>Notification
+                                <div class="dropdown-item noti-title" >
+                                    <h5 class="m-0 float-start">
+                                        <span>
+                                            الاشعارات
+                                        </span>
                                     </h5>
                                 </div>
-
-                                <div style="max-height: 230px;" data-simplebar="init">
+                                <!--Notifaction-->
+                                <div style="max-height: 230px;margin-top: 3px;" data-simplebar="init">
                                     <div class="simplebar-wrapper" style="margin: 0px;">
                                         <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
                                             <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
                                                 <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
-                                                    <div class="simplebar-content" style="padding: 0px;">
+                                                    <div class="simplebar-content" style="padding: 0px; margin-top: 3%; margin-right: 5%">
                                                         <!-- item-->
                                                         <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                                            <div class="notify-icon bg-primary">
-                                                                <i class="mdi mdi-comment-account-outline"></i>
-                                                            </div>
-                                                            <p class="notify-details">
-                                                                Caleb Flakelar commented on Admin
-                                                                <small class="text-muted">1 min ago</small>
+                                                            <p class="notify-details" style="text-align:right;margin-right:0">
+                                                                <span style="float:right">@localizer["ContractCompany2"]</span>
+                                                                <small class="text-muted" style="float:left;color:green!important">@ViewBag.CompanyContractRenewed</small>
+                                                                <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyContractAboutExpire</small>
+                                                                <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyContractExpired</small>
                                                             </p>
                                                         </a>
-
-                                                        <!-- item-->
                                                         <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                                            <div class="notify-icon bg-info">
-                                                                <i class="mdi mdi-account-plus"></i>
-                                                            </div>
-                                                            <p class="notify-details">
-                                                                New user registered.
-                                                                <small class="text-muted">5 hours ago</small>
+                                                            <p class="notify-details" style="text-align:right;margin-right:0">
+                                                                <span style="float:right">@localizer["ContractCompany"]</span>
+                                                                <small class="text-muted" style="float:left;color:green!important">@ViewBag.CompanyDocumentsRenewed</small>
+                                                                <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyDocumentsAboutExpire</small>
+                                                                <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyDocumentsExpired</small>
                                                             </p>
                                                         </a>
-
-                                                        <!-- item-->
                                                         <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                                            <div class="notify-icon">
-                                                                <img src="assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="">
-                                                            </div>
-                                                            <p class="notify-details">Cristina Pride</p>
-                                                            <p class="text-muted mb-0 user-msg">
-                                                                <small>Hi, How are you? What about our next meeting</small>
+                                                            <p class="notify-details" style="text-align:right;margin-right:0">
+                                                                <span style="float:right">@localizer["CarsDocuments"]</span>
+                                                                <small class="text-muted" style="float:left;color:green!important">@ViewBag.CompanyDocumentsCarRenewed</small>
+                                                                <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyDocumentsCarAboutExpire</small>
+                                                                <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyDocumentsCarExpired</small>
                                                             </p>
                                                         </a>
-
-                                                        <!-- item-->
                                                         <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                                            <div class="notify-icon bg-primary">
-                                                                <i class="mdi mdi-comment-account-outline"></i>
-                                                            </div>
-                                                            <p class="notify-details">
-                                                                Caleb Flakelar commented on Admin
-                                                                <small class="text-muted">4 days ago</small>
+                                                            <p class="notify-details" style="text-align:right;margin-right:0">
+                                                                <span style="float:right">@localizer["CarsFixed"]</span>
+                                                                <small class="text-muted" style="float:left;color:green!important">@ViewBag.CompanyMaintainceCarRenewed</small>
+                                                                <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyMaintainceCarAboutExpire</small>
+                                                                <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyMaintainceCarExpired</small>
                                                             </p>
                                                         </a>
-
-                                                        <!-- item-->
                                                         <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                                            <div class="notify-icon">
-                                                                <img src="assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="">
-                                                            </div>
-                                                            <p class="notify-details">Karen Robinson</p>
-                                                            <p class="text-muted mb-0 user-msg">
-                                                                <small>Wow ! this admin looks good and awesome design</small>
-                                                            </p>
-                                                        </a>
-
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                                            <div class="notify-icon bg-info">
-                                                                <i class="mdi mdi-heart"></i>
-                                                            </div>
-                                                            <p class="notify-details">
-                                                                Carlos Crouch liked
-                                                                <b>Admin</b>
-                                                                <small class="text-muted">13 days ago</small>
+                                                            <p class="notify-details" style="text-align:right;margin-right:0">
+                                                                <span style="float:right">اسعار السيارات</span>
+                                                                <small class="text-muted" style="float:left;color:green!important">@ViewBag.PriceCarRenewed</small>
+                                                                <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.PriceCarAboutExpire</small>
+                                                                <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.PriceCarExpired</small>
                                                             </p>
                                                         </a>
                                                     </div>
@@ -628,14 +602,18 @@
                                         </div><div class="simplebar-placeholder" style="width: 318px; height: 389px;"></div>
                                     </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 135px; display: block; transform: translate3d(0px, 94px, 0px);"></div></div>
                                 </div>
-
-                                <!-- All-->
-                                <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
-                                    View All
-                                </a>
-
                             </div>
                         </li>
+
+
+
+
+
+
+
+
+
+
 
                         <li class="dropdown notification-list">
                             <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="true">

@@ -50,7 +50,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var titles = await setTitle("202", "2202001", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
-            var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationStatus == Status.Active|| x.CrCasCarInformationStatus == Status.Maintaince, new[] { "CrCasCarInformation1", "CrCasCarInformationDistributionNavigation", "CrCasCarInformationCategoryNavigation" });
+            var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationStatus == Status.Active, new[] { "CrCasCarInformation1", "CrCasCarInformationDistributionNavigation", "CrCasCarInformationCategoryNavigation" });
             return View(cars);
         }
         [HttpGet]
@@ -66,26 +66,24 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     var carsAll = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode, new[] { "CrCasCarInformation1", "CrCasCarInformationDistributionNavigation", "CrCasCarInformationCategoryNavigation" });
                     if (status == Status.All)
                     {
-                        return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == Status.Active || x.CrCasCarInformationStatus == Status.Hold || x.CrCasCarInformationStatus == Status.Rented || x.CrCasCarInformationStatus == Status.ForSale || x.CrCasCarInformationStatus==Status.Maintaince));
+                        return PartialView("_DataTableCars", carsAll.Where(x => (x.CrCasCarInformationStatus == Status.Active ||
+                                                                                 x.CrCasCarInformationStatus == Status.Hold ||
+                                                                                 x.CrCasCarInformationStatus == Status.Maintaince
+                                                                                 )));
                     }
                     else if (status == Status.Active)
                     {
-                        return PartialView("_DataTableCars", carsAll.Where(x => (x.CrCasCarInformationStatus == Status.Active ||x.CrCasCarInformationStatus==Status.Maintaince) &&
+                        return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == Status.Active &&
                                                                                 x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationBranchStatus == Status.Active &&
-                                                                                x.CrCasCarInformationOwnerStatus == Status.Active&&
-                                                                               (x.CrCasCarInformationForSaleStatus==Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale)));
+                                                                                x.CrCasCarInformationOwnerStatus == Status.Active &&
+                                                                               (x.CrCasCarInformationForSaleStatus == Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale)));
                     }
                     else if (status == Status.Hold)
                     {
                         return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == status ||
                                                                                 x.CrCasCarInformationPriceStatus == false || x.CrCasCarInformationBranchStatus != Status.Active ||
-                                                                                x.CrCasCarInformationOwnerStatus != Status.Active));
-                    }
-                    else if (status == Status.ForSale)
-                    {
-                        return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == Status.Active &&
-                                                                                (x.CrCasCarInformationForSaleStatus == Status.ForSale ||
-                                                                                 x.CrCasCarInformationForSaleStatus == Status.RendAndForSale)));
+                                                                                x.CrCasCarInformationOwnerStatus != Status.Active || x.CrCasCarInformationStatus == Status.Maintaince ||
+                                                                               (x.CrCasCarInformationStatus == Status.Active && x.CrCasCarInformationForSaleStatus == Status.ForSale)));
                     }
                     return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == status));
                 }
@@ -460,7 +458,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 // Save Adminstrive Procedures
                 await _adminstritiveProcedures.SaveAdminstritive(currentUserr.CrMasUserInformationCode, "1", "215", "20", currentUserr.CrMasUserInformationLessor, "100",
-                    car.CrCasCarInformationSerailNo, null, null, null, null, null, null, oldBranch,car.CrCasCarInformationBranch, "تعديل", "Edit", "U", null);
+                    car.CrCasCarInformationSerailNo, null, null, null, null, null, null, oldBranch, car.CrCasCarInformationBranch, "تعديل", "Edit", "U", null);
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 return RedirectToAction("TransfersCarsBranch", "CarsInformation");
             }
@@ -517,7 +515,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == model.CrCasCarInformationSerailNo && x.CrCasCarInformationLessor == lessorCode, new[] {"CrCasCarInformation1", "CrCasCarInformationDistributionNavigation",
                                                                                                                                "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2"});
 
-            var oldOwnerCode = car.CrCasCarInformationOwner; 
+            var oldOwnerCode = car.CrCasCarInformationOwner;
             var owner = await _unitOfWork.CrCasOwner.FindAsync(x => x.CrCasOwnersCode == NewOwner && x.CrCasOwnersLessorCode == lessorCode);
             if (car != null && owner != null)
             {

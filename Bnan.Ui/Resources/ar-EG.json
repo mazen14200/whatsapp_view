@@ -780,6 +780,7 @@
   "Edit ValiditionsContract Hint": "تمكنك هذه الصفحة من تعديل صلاحيات العقود للموظفين",
   //COntract Valitions
   "ContractCompany": "مستندات الشركة",
+  "ContractCompany2": "عقود الشركة",
   "CompanyContracts": "العقود",
   "ContractValidityRegister": " السجل التجاري",
   "ContractValidityChamber": "اشتراك الغرفة التجارية",
@@ -871,7 +872,8 @@
   "Rented": "مؤجرة",
   "Maintaince": "صيانة",
   "Repair": "اصلاح",
-  "ForSale": "للبيع",
+  "ForSale": "للبيع فقط",
+  "ForSaleAndRent": "للبيع وللايجار",
   "Sold": "مباعه",
   "Add Car Data": "اضافة سيارة",
   "Add Car Hint": "تمكنك هذه الصفحة من اضافة بيانات سيارة",
@@ -920,7 +922,6 @@
   "CarForSale Edit Hint": "تمكنك هذه الصفحة من عرض السيارة للبيع",
   "reasonsForRepair": "وصف الاصلاح",
   "OfferValueSale": "السعر",
-  "ForSaleAndRent": "السماح بالايجار",
   "ReactiveOffer": "الغاء العرض",
   "ConfirmOffer": "تنفيذ البيع",
   "Yes": "نعم",
@@ -930,5 +931,10 @@
   "PriceHold": "غير مسعرة",
   "CarHold": "السيارة موقوفة",
   "CarDelete": "السيارة محذوفة",
-  "CarSold": "السيارة مباعة"
+  "CarSold": "السيارة مباعة",
+  "CarMaintaince": "السيارة في الاصلاح",
+  "CarForSale": "السيارة معروضة للبيع فقط",
+  "CarPrice": "اسعار السيارات",
+  "CarMaintainceReview": "راجع صيانة السيارة",
+  "CarDocumentReview": "راجع مستندات السيارة"
 }

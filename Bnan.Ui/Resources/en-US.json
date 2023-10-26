@@ -792,6 +792,7 @@
   "BranchCode": "Branch Code",
   //COntract Valitions
   "ContractCompany": "Company Contracts",
+  "ContractCompany2": "Company Documents",
   "ContractValidityRegister": "Contract Validity Register",
   "ContractValidityChamber": "Contract Validity Chamber",
   "ValidityTransferPermission": "Validity Transfer Permission",
@@ -939,7 +940,13 @@
   "PriceHold": "Price Holded",
   "CarHold": "Car Holded",
   "CarDelete": "Car Deleted",
-  "CarSold": "Car Sold"
+  "CarSold": "Car Sold",
+  "CarMaintaince": "Car in Maintaince",
+  "CarForSale": "Car offer to sale only",
+  "CarPrice": "Car Price",
+
+  "CarMaintainceReview": "Preview maintainances of car",
+  "CarDocumentReview": "Preview Documents of car"
 }
 
 

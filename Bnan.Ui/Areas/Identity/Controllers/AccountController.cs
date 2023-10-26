@@ -221,7 +221,7 @@ namespace Bnan.Ui.Areas.Identity.Controllers
         public async Task<IActionResult> Logout()
         {
             var user = await _userManager.GetUserAsync(User);
-
+            if (user==null) return RedirectToAction("Login", "Account");
             //var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
             user.CrMasUserInformationOperationStatus = false;
             user.CrMasUserInformationExitLastDate = DateTime.Now.Date;

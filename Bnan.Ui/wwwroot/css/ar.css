@@ -338,3 +338,6 @@ span.search-icon {
 .colFloorColor {
     margin-right:-4.5%
 }
+.float-start {
+    float: right !important;
+}

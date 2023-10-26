@@ -79,6 +79,7 @@ namespace Bnan.Inferastructure.Repository
         public IGenric<CrCasCarDocumentsMaintenance> CrCasCarDocumentsMaintenance { get; private set; }
         public IGenric<CrMasSupCarAdvantage> CrMasSupCarAdvantage { get; private set; }
         public IGenric<CrCasCarAdvantage> CrCasCarAdvantage { get; private set; }
+        public IGenric<CrCasPriceCarBasic> CrCasPriceCarBasic { get; private set; }
 
 
 
@@ -117,27 +118,17 @@ namespace Bnan.Inferastructure.Repository
             CrMasContractCompanyDetailed = new BaseRepository<CrMasContractCompanyDetailed>(_context);
             CrMasSupCarDistribution = new BaseRepository<CrMasSupCarDistribution>(_context);
             CrMasSysSubTask = new BaseRepository<CrMasSysSubTask>(_context);
-
-
             CrMasSupContractAdditional = new BaseRepository<CrMasSupContractAdditional>(_context);
             CrMasSupContractOption = new BaseRepository<CrMasSupContractOption>(_context);
             CrMasSupContractCarCheckup = new BaseRepository<CrMasSupContractCarCheckup>(_context);
             CrMasSupRenterDrivingLicense = new BaseRepository<CrMasSupRenterDrivingLicense>(_context);
-
-
-
-
             CrMasUserInformation = new BaseRepository<CrMasUserInformation>(_context);
             CrMasSupCarCategory = new BaseRepository<CrMasSupCarCategory>(_context);
             CrMasSupCarModel = new BaseRepository<CrMasSupCarModel>(_context);
             CrMasSupPostRegion = new BaseRepository<CrMasSupPostRegion>(_context);
-
-
-
             CrMasUserBranchValidity = new BaseRepository<CrMasUserBranchValidity>(_context);
             CrCasRenterPrivateDriverInformation = new BaseRepository<CrCasRenterPrivateDriverInformation>(_context);
             CrMasSupRenterIdtype = new BaseRepository<CrMasSupRenterIdtype>(_context);
-
             CrMasSupRenterGender = new BaseRepository<CrMasSupRenterGender>(_context);
             CrMasSupRenterNationality = new BaseRepository<CrMasSupRenterNationality>(_context);
             CrMasUserContractValidity = new BaseRepository<CrMasUserContractValidity>(_context);
@@ -150,6 +141,7 @@ namespace Bnan.Inferastructure.Repository
             CrCasCarDocumentsMaintenance = new BaseRepository<CrCasCarDocumentsMaintenance>(_context);
             CrMasSupCarAdvantage = new BaseRepository<CrMasSupCarAdvantage>(_context);
             CrCasCarAdvantage = new BaseRepository<CrCasCarAdvantage>(_context);
+            CrCasPriceCarBasic = new BaseRepository<CrCasPriceCarBasic>(_context);
 
 
         }

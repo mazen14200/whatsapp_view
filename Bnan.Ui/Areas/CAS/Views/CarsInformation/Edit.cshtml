@@ -337,12 +337,10 @@
                     {
                         <h5 class="text-danger mt-2">@localizer["BranchHold"]</h5>
                     }
-
                     @if (Model.CrCasCarInformationOwner == "H")
                     {
                         <h5 class="text-danger mt-2 ">@localizer["OwnerHold"]</h5>
                     }
-
                     @if (Model.CrCasCarInformationPriceStatus != true)
                     {
                         <h5 class="text-danger mt-2">@localizer["PriceHold"]</h5>
@@ -358,6 +356,22 @@
                     @if (Model.CrCasCarInformationStatus == "S")
                     {
                         <h5 class="text-danger mt-2">@localizer["CarSold"]</h5>
+                    }
+                    @if (Model.CrCasCarInformationStatus == "M")
+                    {
+                        <h5 class="text-danger mt-2">@localizer["CarMaintaince"]</h5>
+                    }
+                    @if (Model.CrCasCarInformationStatus==Status.Active&&Model.CrCasCarInformationForSaleStatus == Status.ForSale)
+                    {
+                        <h5 class="text-danger mt-2">@localizer["CarForSale"]</h5>
+                    }
+                    @if (Model.CrCasCarInformationMaintenanceStatus == false)
+                    {
+                        <h5 class="text-danger mt-2">@localizer["CarMaintainceReview"]</h5>
+                    }
+                    @if (Model.CrCasCarInformationDocumentationStatus == false)
+                    {
+                        <h5 class="text-danger mt-2">@localizer["CarDocumentReview"]</h5>
                     }
                 </div>
             </div>
