@@ -1621,11 +1621,11 @@ namespace Bnan.Core.Models
                     .HasColumnName("CR_Cas_Price_Car_Basic_Model_Code")
                     .IsFixedLength();
 
-                entity.Property(e => e.CrCasPriceCarBasicMonthlyDay)
-                    .HasColumnType("decimal(13, 2)")
-                    .HasColumnName("CR_Cas_Price_Car_Basic_Monthly_Day");
+                entity.Property(e => e.CrCasPriceCarBasicMonthlyDay).HasColumnName("CR_Cas_Price_Car_Basic_Monthly_Day");
 
-                entity.Property(e => e.CrCasPriceCarBasicMonthlyRent).HasColumnName("CR_Cas_Price_Car_Basic_Monthly_Rent");
+                entity.Property(e => e.CrCasPriceCarBasicMonthlyRent)
+                .HasColumnType("decimal(13, 2)")
+                .HasColumnName("CR_Cas_Price_Car_Basic_Monthly_Rent");
 
                 entity.Property(e => e.CrCasPriceCarBasicNoDailyFreeKm).HasColumnName("CR_Cas_Price_Car_Basic_No_Daily_Free_KM");
 
@@ -1655,11 +1655,11 @@ namespace Bnan.Core.Models
                     .HasColumnName("CR_Cas_Price_Car_Basic_Type")
                     .IsFixedLength();
 
-                entity.Property(e => e.CrCasPriceCarBasicWeeklyDay)
-                    .HasColumnType("decimal(13, 2)")
-                    .HasColumnName("CR_Cas_Price_Car_Basic_Weekly_Day");
+                entity.Property(e => e.CrCasPriceCarBasicWeeklyDay).HasColumnName("CR_Cas_Price_Car_Basic_Weekly_Day");
 
-                entity.Property(e => e.CrCasPriceCarBasicWeeklyRent).HasColumnName("CR_Cas_Price_Car_Basic_Weekly_Rent");
+                entity.Property(e => e.CrCasPriceCarBasicWeeklyRent)
+                .HasColumnType("decimal(13, 2)")
+                .HasColumnName("CR_Cas_Price_Car_Basic_Weekly_Rent");
 
                 entity.Property(e => e.CrCasPriceCarBasicYear)
                     .HasMaxLength(2)
@@ -1667,11 +1667,11 @@ namespace Bnan.Core.Models
                     .HasColumnName("CR_Cas_Price_Car_Basic_Year")
                     .IsFixedLength();
 
-                entity.Property(e => e.CrCasPriceCarBasicYearlyDay)
-                    .HasColumnType("decimal(13, 2)")
-                    .HasColumnName("CR_Cas_Price_Car_Basic_Yearly_Day");
+                entity.Property(e => e.CrCasPriceCarBasicYearlyDay).HasColumnName("CR_Cas_Price_Car_Basic_Yearly_Day");
 
-                entity.Property(e => e.CrCasPriceCarBasicYearlyRent).HasColumnName("CR_Cas_Price_Car_Basic_Yearly_Rent");
+                entity.Property(e => e.CrCasPriceCarBasicYearlyRent)
+                .HasColumnType("decimal(13, 2)")
+                .HasColumnName("CR_Cas_Price_Car_Basic_Yearly_Rent");
 
                 entity.HasOne(d => d.CrCasPriceCarBasicBrandCodeNavigation)
                     .WithMany(p => p.CrCasPriceCarBasics)

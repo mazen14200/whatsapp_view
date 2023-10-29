@@ -124,8 +124,8 @@
   "Renew": "ReNew",
   "AboutToExpire": "About To Expire",
   "Expire": "Expire",
-  "Avaliable": "متاح",
-  "UnAvaliable": "غير متاح",
+  "Avaliable": "Avaliable",
+  "UnAvaliable": "Un Avaliable",
 
   // component title
   "Branch Data": "Branches Data",
@@ -946,7 +946,30 @@
   "CarPrice": "Car Price",
 
   "CarMaintainceReview": "Preview maintainances of car",
-  "CarDocumentReview": "Preview Documents of car"
+  "CarDocumentReview": "Preview Documents of car",
+  // Car Prices
+  "CarPrice Data": "Prices of cars",
+  "CarPrice Hint": "The page allow you to search diplay prices of cars",
+  "Price": "Price",
+  "AddPrice": "Add Price",
+  "AddPriceCar Hint": "The page allo you to add a new price car",
+  "Next": "Next",
+  "Previous": "Previous",
+  "NoOfCars": "No Of Cars",
+  "DailyRent": "Daily Rent",
+  "WeeklyRent": "Weekly Rent",
+  "YearlyRent": "Yearly Rent",
+  "MonthlyRent": "Monthly Rent",
+  "AdditionalKmValue": "Additional Km Value",
+  "ExtraHourValue": "Extra Hour Value",
+  "AdditionalDriverValue": "Additional Driver Value",
+  "InFeesTamm": "In Fees Tamm",
+  "OutFeesTamm": "Out Fees Tamm",
+  "CompensationAccident": "Compensation Accident",
+  "CompensationDrowning": "Compensation Drowning",
+  "CompensationFire": "Compensation Fire",
+  "CompensationTheft": "Compensation Theft"
+
 }
 
 
