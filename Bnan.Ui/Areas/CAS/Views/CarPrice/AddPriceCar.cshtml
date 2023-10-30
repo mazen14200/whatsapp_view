@@ -47,6 +47,11 @@
     ul {
         list-style-type: none;
     }
+
+    .tbody-wrapper {
+        height: 300px; /* Specify the desired height for the scrollbar */
+        overflow-y: auto;
+    }
 </style>
 @if (requestCulture.RequestCulture.UICulture.Name == "ar-EG")
 {
@@ -87,7 +92,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1" id="noOfCarDiv" hidden>
                     <label class="form-label" for="NoOfCars">@localizer["NoOfCars"]</label>
                 </div>
                 <div class="col-md-3">
@@ -98,31 +103,31 @@
                 <div id="btnwizard" style="width:97%">
                     <ul class="nav nav-pills nav-justified form-wizard-header mb-4">
                         <li class="nav-item">
-                            <a href="#Price" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2 active">
+                            <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2 active">
                                 <i class="mdi mdi-account-cash me-1"></i>
                                 <span class="d-none d-sm-inline">السعر الاساسي</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#RentedTerms" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                            <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                 <i class="mdi mdi-car-2-plus me-1"></i>
                                 <span class="d-none d-sm-inline">بنود التأجير</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#Features" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                            <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                 <i class="mdi mdi-feature-search-outline me-1"></i>
                                 <span class="d-none d-sm-inline">المميزات</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#Choices" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                            <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                 <i class="mdi mdi-select-all"></i>
                                 <span class="d-none d-sm-inline">الخيارات</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#Additional" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                            <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                 <i class="mdi mdi-account-multiple-plus-outline me-1"></i>
                                 <span class="d-none d-sm-inline">الاضافات</span>
                             </a>
@@ -161,7 +166,7 @@
                                     <label class="form-label" asp-for="CrCasPriceCarBasicDailyRent">@localizer["DailyRent"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicDailyRent" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicDailyRent" maxlength="9" oninput="validateInput9Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
                                             <span asp-validation-for="@Model.CrCasPriceCarBasicDailyRent" class="text-danger"></span>
@@ -172,7 +177,7 @@
                                     <label class="form-label" asp-for="CrCasPriceCarBasicWeeklyRent">@localizer["WeeklyRent"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicWeeklyRent" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicWeeklyRent" maxlength="9" oninput="validateInput9Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
                                             <span asp-validation-for="@Model.CrCasPriceCarBasicWeeklyRent" class="text-danger"></span>
@@ -183,7 +188,7 @@
                                     <label class="form-label" asp-for="CrCasPriceCarBasicMonthlyRent">@localizer["MonthlyRent"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicMonthlyRent" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicMonthlyRent" maxlength="9" oninput="validateInput9Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
                                             <span asp-validation-for="@Model.CrCasPriceCarBasicMonthlyRent" class="text-danger"></span>
@@ -194,7 +199,7 @@
                                     <label class="form-label" asp-for="CrCasPriceCarBasicYearlyRent">@localizer["YearlyRent"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicYearlyRent" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicYearlyRent" maxlength="9" oninput="validateInput9Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
                                             <span asp-validation-for="@Model.CrCasPriceCarBasicYearlyRent" class="text-danger"></span>
@@ -208,7 +213,7 @@
                                     <label class="form-label" asp-for="CrCasPriceCarBasicAdditionalKmValue">@localizer["AdditionalKmValue"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicAdditionalKmValue" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicAdditionalKmValue" maxlength="6" oninput="validateInput3Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
                                             <span asp-validation-for="@Model.CrCasPriceCarBasicAdditionalKmValue" class="text-danger"></span>
@@ -219,7 +224,7 @@
                                     <label class="form-label" asp-for="CrCasPriceCarBasicExtraHourValue">@localizer["ExtraHourValue"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicExtraHourValue" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicExtraHourValue" maxlength="6" oninput="validateInput3Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
                                             <span asp-validation-for="@Model.CrCasPriceCarBasicExtraHourValue" class="text-danger"></span>
@@ -230,10 +235,21 @@
                                     <label class="form-label" asp-for="CrCasPriceCarBasicRentalTaxRate">@localizer["TaxRate"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicRentalTaxRate" maxlength="3" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicRentalTaxRate" maxlength="6" oninput="validateInput3Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
                                             <span asp-validation-for="@Model.CrCasPriceCarBasicRentalTaxRate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicAdditionalDriverValue">@localizer["AdditionalDriverValue"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicAdditionalDriverValue" maxlength="6" oninput="validateInput3Digit(this)">
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                            <span asp-validation-for="@Model.CrCasPriceCarBasicAdditionalDriverValue" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -241,21 +257,10 @@
                             @*ِAdditional Driver and InFees and OutFess Value*@
                             <div class="row mt-2">
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicAdditionalDriverValue">@localizer["AdditionalDriverValue"]</label>
-                                </div>
-                                <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicAdditionalDriverValue" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                                    <div style="margin-top:2px">
-                                        <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicAdditionalDriverValue" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-1 formlabel">
                                     <label class="form-label" asp-for="CrCasCarPriceBasicInFeesTamm">@localizer["InFeesTamm"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasCarPriceBasicInFeesTamm" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                    <input type="text" class="form-control" asp-for="CrCasCarPriceBasicInFeesTamm" maxlength="6" oninput="validateInput3Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
                                             <span asp-validation-for="@Model.CrCasCarPriceBasicInFeesTamm" class="text-danger"></span>
@@ -266,7 +271,7 @@
                                     <label class="form-label" asp-for="CrCasCarPriceBasicOutFeesTamm">@localizer["OutFeesTamm"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasCarPriceBasicOutFeesTamm" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                    <input type="text" class="form-control" asp-for="CrCasCarPriceBasicOutFeesTamm" maxlength="6" oninput="validateInput3Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
                                             <span asp-validation-for="@Model.CrCasCarPriceBasicOutFeesTamm" class="text-danger"></span>
@@ -274,144 +279,216 @@
                                     </div>
                                 </div>
                             </div>
-                            @*ِAdditional Driver and InFees and OutFess Value*@
-                            <div class="row mt-2">
-                                <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicCompensationAccident">@localizer["CompensationAccident"]</label>
-                                </div>
-                                <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationAccident" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                                    <div style="margin-top:2px">
-                                        <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicCompensationAccident" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicCompensationTheft">@localizer["CompensationTheft"]</label>
-                                </div>
-                                <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationTheft" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                                    <div style="margin-top:2px">
-                                        <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicCompensationTheft" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicCompensationDrowning">@localizer["CompensationDrowning"]</label>
-                                </div>
-                                <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationDrowning" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                                    <div style="margin-top:2px">
-                                        <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicCompensationDrowning" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicCompensationFire">@localizer["CompensationFire"]</label>
-                                </div>
-                                <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationFire" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                                    <div style="margin-top:2px">
-                                        <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicCompensationFire" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="tab-pane fade " id="RentedTerms">
                             <div class="row">
-                                <div class="col-12">
-                                    <div class="row mb-3">
-                                        <label class="col-md-3 col-form-label" for="name2"> First name</label>
-                                        <div class="col-md-9">
-                                            <input type="text" id="name2" name="name2" class="form-control" value="Francis">
+                                @*ِFree km , additional hour,free hours*@
+                                <div class="row mt-2">
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicNoDailyFreeKm">@localizer["DailyFreeKm"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicNoDailyFreeKm" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                                <span asp-validation-for="@Model.CrCasPriceCarBasicNoDailyFreeKm" class="text-danger"></span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <label class="col-md-3 col-form-label" for="surname2"> Last name</label>
-                                        <div class="col-md-9">
-                                            <input type="text" id="surname2" name="surname2" class="form-control" value="Brinkman">
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicFreeAdditionalHours">@localizer["FreeAdditionalHours"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicFreeAdditionalHours" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                                <span asp-validation-for="@Model.CrCasPriceCarBasicFreeAdditionalHours" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicHourMax">@localizer["HourMax"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicHourMax" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                                <span asp-validation-for="@Model.CrCasPriceCarBasicHourMax" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*ِadditional driver , additional hour,free hours*@
+                                <div class="row mt-2">
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicIsAdditionalDriver">@localizer["IsAdditionalDriver"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="checkbox" style="height: 21px;width: 23px;" class="form-check-input" name="CrCasPriceCarBasicIsAdditionalDriver">
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                                <span asp-validation-for="@Model.CrCasPriceCarBasicIsAdditionalDriver" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicMinAge">@localizer["MinAge"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicMinAge" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                                <span asp-validation-for="@Model.CrCasPriceCarBasicMinAge" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicMaxAge">@localizer["MaxAge"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicMaxAge" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                                <span asp-validation-for="@Model.CrCasPriceCarBasicMaxAge" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicCancelHour">@localizer["CancelHour"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCancelHour" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                                <span asp-validation-for="@Model.CrCasPriceCarBasicCancelHour" class="text-danger"></span>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <label class="col-md-3 col-form-label" for="email2">Email</label>
-                                        <div class="col-md-9">
-                                            <input type="email" id="email2" name="email2" class="form-control" value="cory1979@hotmail.com">
+                                </div>
+                                @*ِCompensationss*@
+                                <div class="row mt-2">
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicCompensationAccident">@localizer["CompensationAccident"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationAccident" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                                <span asp-validation-for="@Model.CrCasPriceCarBasicCompensationAccident" class="text-danger"></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div> <!-- end col -->
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicCompensationTheft">@localizer["CompensationTheft"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationTheft" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                                <span asp-validation-for="@Model.CrCasPriceCarBasicCompensationTheft" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicCompensationDrowning">@localizer["CompensationDrowning"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationDrowning" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                                <span asp-validation-for="@Model.CrCasPriceCarBasicCompensationDrowning" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicCompensationFire">@localizer["CompensationFire"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationFire" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                                <span asp-validation-for="@Model.CrCasPriceCarBasicCompensationFire" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div> <!-- end row -->
                         </div>
                         <div class="tab-pane fade " id="Features">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="text-center">
-                                        <h2 class="mt-0"><i class="mdi mdi-check-all"></i></h2>
-                                        <h3 class="mt-0">Thank you !</h3>
-
-                                        <p class="w-75 mb-2 mx-auto">
-                                            Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat. In egestas mattis dui. Aliquam
-                                            mattis dictum aliquet.
-                                        </p>
-
-                                        <div class="mb-3">
-                                            <div class="form-check d-inline-block">
-                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                <label class="form-check-label" for="customCheck2">I agree with the Terms and Conditions</label>
-                                            </div>
-                                        </div>
+                            <div class="row" style="width: 30%;margin-right: 30%;">
+                                <div class="col-sm-12">
+                                    <div class="dataTable">
+                                        <partial name="_AdvantagesPartialView">
                                     </div>
                                 </div> <!-- end col -->
                             </div> <!-- end row -->
                         </div>
                         <div class="tab-pane fade " id="Choices">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="text-center">
-                                        <h2 class="mt-0"><i class="mdi mdi-check-all"></i></h2>
-                                        <h3 class="mt-0">Thank you !</h3>
+                            <div class="row" style="width: 30%;margin-right: 30%;">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-striped " id="myTable">
+                                        <thead>
+                                            <tr>
+                                                <th width="70%">
+                                                    الخيارات
+                                                </th>
 
-                                        <p class="w-75 mb-2 mx-auto">
-                                            Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat. In egestas mattis dui. Aliquam
-                                            mattis dictum aliquet.
-                                        </p>
+                                                <th width="30%">
+                                                    القيمة
+                                                </th>
 
-                                        <div class="mb-3">
-                                            <div class="form-check d-inline-block">
-                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                <label class="form-check-label" for="customCheck2">I agree with the Terms and Conditions</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
-                        </div>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.Options)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @item.CrMasSupContractOptionsArName
+                                                    </td>
+                                                    <td style="padding: 0 !important;">
+                                                        <input type="text" class="form-control" id="@item.CrMasSupContractOptionsCode" name="val_@item.CrMasSupContractOptionsCode" style="width:100%;border:none;" autocomplete="off" value="0" oninput="validateInput3Digit(this)" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
                         <div class="tab-pane fade " id="Additional">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="text-center">
-                                        <h2 class="mt-0"><i class="mdi mdi-check-all"></i></h2>
-                                        <h3 class="mt-0">Thank you !</h3>
+                            <div class="row" style="width: 30%;margin-right: 30%;">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-striped " id="myTable">
+                                        <thead>
+                                            <tr>
+                                                <th width="70%">
+                                                    الاضافات
+                                                </th>
 
-                                        <p class="w-75 mb-2 mx-auto">
-                                            Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat. In egestas mattis dui. Aliquam
-                                            mattis dictum aliquet.
-                                        </p>
+                                                <th width="30%">
+                                                    القيمة
+                                                </th>
 
-                                        <div class="mb-3">
-                                            <div class="form-check d-inline-block">
-                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                <label class="form-check-label" for="customCheck2">I agree with the Terms and Conditions</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
+                                            </tr>
+                                        </thead>
+                                        <tbody @*class="tbody-wrapper"*@>
+                                            @foreach (var item in ViewBag.Additional)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @item.CrMasSupContractAdditionalArName
+                                                    </td>
+                                                    <td style="padding: 0 !important;">
+                                                        <input type="text" class="form-control" id="@item.CrMasSupContractAdditionalCode" name="val_@item.CrMasSupContractAdditionalCode" style="width:100%;border:none;" autocomplete="off" value="0" oninput="validateInput3Digit(this)" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- end col -->
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -421,6 +498,7 @@
         <div style="width:97%">
             <div class="float-start">
                 <input type='button' class='btn btn-primary button-next' name='next' id="nextBtn" value='@localizer["Next"]'>
+                <input type='button' class='btn btn-primary button-next' name='next' id="saveBtn" value='@localizer["Save"]' hidden>
             </div>
             <div class="float-end">
                 <input type='button' class='btn btn-primary button-previous' name='previous' id="prevBtn" value='@localizer["Previous"]'>
@@ -509,13 +587,12 @@
     </script>
     <script>
         var selectValue;
-
+        var divNoOfCar = document.getElementById("noOfCarDiv");
         $(document).ready(function () {
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("GetCarsName", "CarsInformation", new { Area = "CAS" })",
                 success: function (response) {
-                    console.log(response);
                     const newArray = response.map(obj => ({ text: obj.value, value: obj.text }));
                     $("#CrCasPriceCarBasicDistributionCode").autocomplete({
                         source: newArray,
@@ -529,8 +606,19 @@
                                 url: "@Url.Action("GetNumberOfCar", "CarPrice", new { Area = "CAS" })",
                                 data: { DistribtionCode: selectValue },
                                 success: function (response2) {
-                                    console.log(response2);
                                     $("#NoOfCars").val(response2);
+                                    divNoOfCar.removeAttribute("hidden");
+                                    // Run the third AJAX request here
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "@Url.Action("GetAdvantagesOfCar", "CarPrice", new { Area = "CAS" })",
+                                        data: { DistribtionCode: selectValue },
+                                        success: function (result) {
+                                            //$(".dataTable").html(result);
+                                        },
+                                        error: function (error) {
+                                        }
+                                    });
                                 },
                                 error: function (error) {
                                     // Handle any errors that occur during the second AJAX request
@@ -544,12 +632,18 @@
                 }
             });
         });
+
+        function Advantages() {
+
+        }
     </script>
     <script>
         // Get the next and previous buttons
         var nextBtn = document.getElementById("nextBtn");
         var prevBtn = document.getElementById("prevBtn");
+        var saveBtn = document.getElementById("saveBtn");
         var form = document.getElementById("form");
+        var Distribution = document.getElementById("CrCasPriceCarBasicDistributionCode");
         prevBtn.setAttribute("hidden", "");
         // Get all the tab links
         var tabLinks = document.querySelectorAll(".nav-item a");
@@ -579,43 +673,46 @@
             tabLinks[activeTab].classList.add("active");
         }
 
-        //function handleNextButtonClick() {
-        //    hideAllTabPanes();
-        //    tabLinks[activeTab].classList.remove("active");
-        //    activeTab++;
-        //    if (activeTab >= tabPanes.length - 1) {
-        //        activeTab = tabPanes.length - 1;
-        //        nextBtn.setAttribute("hidden", "");
-        //        prevBtn.removeAttribute("hidden");
-        //    } else {
-        //        nextBtn.removeAttribute("hidden");
-        //        prevBtn.removeAttribute("hidden");
-        //    }
-        //    showActivetabLinks(); // Add active class to new nav link
-        //    showActiveTabPane();
-        //}
         function handleNextButtonClick() {
-            // Check for validation errors on the current tab
-            if ($("#form").valid()) {
-                hideAllTabPanes();
-                tabLinks[activeTab].classList.remove("active");
-                activeTab++;
-                if (activeTab >= tabPanes.length - 1) {
-                    activeTab = tabPanes.length - 1;
-                    nextBtn.setAttribute("hidden", "");
-                    prevBtn.removeAttribute("hidden");
-                } else {
-                    nextBtn.removeAttribute("hidden");
-                    prevBtn.removeAttribute("hidden");
-                }
-                showActivetabLinks(); // Add active class to new nav link
-                showActiveTabPane();
+            hideAllTabPanes();
+            tabLinks[activeTab].classList.remove("active");
+            activeTab++;
+            if (activeTab >= tabPanes.length - 1) {
+                activeTab = tabPanes.length - 1;
+                nextBtn.setAttribute("hidden", "");
+                saveBtn.removeAttribute("hidden");
+                prevBtn.removeAttribute("hidden");
             } else {
-                // Display error message or handle validation errors
-                // You can use emojis to express your reaction here 😟
-                console.log("Please fill in all required fields.");
+                nextBtn.removeAttribute("hidden");
+                prevBtn.removeAttribute("hidden");
+                saveBtn.setAttribute("hidden", "");
             }
+            showActivetabLinks(); // Add active class to new nav link
+            showActiveTabPane();
+            Distribution.setAttribute("readonly", "");
         }
+        //function handleNextButtonClick() {
+        //    // Check for validation errors on the current tab
+        //    if ($("#form").valid()) {
+        //        hideAllTabPanes();
+        //        tabLinks[activeTab].classList.remove("active");
+        //        activeTab++;
+        //        if (activeTab >= tabPanes.length - 1) {
+        //            activeTab = tabPanes.length - 1;
+        //            nextBtn.setAttribute("hidden", "");
+        //            prevBtn.removeAttribute("hidden");
+        //        } else {
+        //            nextBtn.removeAttribute("hidden");
+        //            prevBtn.removeAttribute("hidden");
+        //        }
+        //        showActivetabLinks(); // Add active class to new nav link
+        //        showActiveTabPane();
+        //    } else {
+        //        // Display error message or handle validation errors
+        //        // You can use emojis to express your reaction here 😟
+        //        console.log("Please fill in all required fields.");
+        //    }
+        //}
 
         // Function to handle the "Previous" button click
         function handlePrevButtonClick() {
@@ -625,10 +722,13 @@
             if (activeTab <= 0) {
                 activeTab = 0;
                 prevBtn.setAttribute("hidden", "");
+                saveBtn.setAttribute("hidden", "");
                 nextBtn.removeAttribute("hidden");
+                Distribution.removeAttribute("readonly");
             } else {
                 nextBtn.removeAttribute("hidden");
                 prevBtn.removeAttribute("hidden");
+                saveBtn.setAttribute("hidden", "");
             }
             showActivetabLinks();
             showActiveTabPane();
@@ -637,6 +737,55 @@
         // Add event listeners to the next and previous buttons
         nextBtn.addEventListener("click", handleNextButtonClick);
         prevBtn.addEventListener("click", handlePrevButtonClick);
+    </script>
+    <script>
+        function validateInput9Digit(input) {
+            // Remove non-digit characters and additional decimal points
+            input.value = input.value.replace(/[^0-9\.]/g, '');
+            const decimalIndex = input.value.indexOf('.');
+
+            // Limit to 9 digits before and after the decimal point
+            if (decimalIndex !== -1) {
+                const digitsBeforeDecimal = input.value.substring(0, decimalIndex);
+                const digitsAfterDecimal = input.value.substring(decimalIndex + 1);
+
+                // Limit to 2 digits after the decimal point
+                input.value = digitsBeforeDecimal.substr(0, 9) + '.' + digitsAfterDecimal.substr(0, 2);
+
+                // Remove additional decimal points
+                if (input.value.indexOf('.', decimalIndex + 1) !== -1) {
+                    const lastValidIndex = input.value.lastIndexOf('.');
+                    input.value = input.value.substring(0, lastValidIndex) + input.value.substring(lastValidIndex + 1);
+                }
+            } else {
+                // Limit to 9 digits before the decimal point
+                input.value = input.value.substr(0, 9);
+            }
+        }
+
+        function validateInput3Digit(input) {
+            // Remove non-digit characters and additional decimal points
+            input.value = input.value.replace(/[^0-9\.]/g, '');
+            const decimalIndex = input.value.indexOf('.');
+
+            // Limit to 9 digits before and after the decimal point
+            if (decimalIndex !== -1) {
+                const digitsBeforeDecimal = input.value.substring(0, decimalIndex);
+                const digitsAfterDecimal = input.value.substring(decimalIndex + 1);
+
+                // Limit to 2 digits after the decimal point
+                input.value = digitsBeforeDecimal.substr(0, 9) + '.' + digitsAfterDecimal.substr(0, 2);
+
+                // Remove additional decimal points
+                if (input.value.indexOf('.', decimalIndex + 1) !== -1) {
+                    const lastValidIndex = input.value.lastIndexOf('.');
+                    input.value = input.value.substring(0, lastValidIndex) + input.value.substring(lastValidIndex + 1);
+                }
+            } else {
+                // Limit to 9 digits before the decimal point
+                input.value = input.value.substr(0, 3);
+            }
+        }
     </script>
 }
 

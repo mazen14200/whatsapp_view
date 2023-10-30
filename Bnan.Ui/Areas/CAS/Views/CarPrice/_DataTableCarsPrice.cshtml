@@ -14,7 +14,7 @@
                 <tr role="row">
                     <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Price"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Date"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["StartDate"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["EndDate"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
@@ -32,7 +32,8 @@
                         <tr onclick="location.href='@Url.Action("Edit", "CarPrice", new { serialNumber = item.CrCasPriceCarBasicNo})'" style="cursor:pointer;color:red">
                             <td>@no</td>
                             <td>@item.CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionConcatenateEnName</td>
-                            <td>@item.CrCasPriceCarBasicDailyRent - @item.CrCasPriceCarBasicWeeklyRent - @item.CrCasPriceCarBasicMonthlyRent</td>
+                            @*                            <td>@item.CrCasPriceCarBasicDailyRent - @item.CrCasPriceCarBasicWeeklyRent - @item.CrCasPriceCarBasicMonthlyRent</td>*@
+                            <td>@item.CrCasPriceCarBasicDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicStartDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicEndDate?.ToString("dd/MM/yyyy")</td>
                             <td>
@@ -56,12 +57,13 @@
                         <tr onclick="location.href='@Url.Action("Edit", "CarPrice", new { serialNumber = item.CrCasPriceCarBasicNo })'">
                             <td>@no</td>
                             <td>@item.CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionConcatenateEnName</td>
-                            <td>@item.CrCasPriceCarBasicDailyRent - @item.CrCasPriceCarBasicWeeklyRent - @item.CrCasPriceCarBasicMonthlyRent</td>
+                            @*<td>@item.CrCasPriceCarBasicDailyRent - @item.CrCasPriceCarBasicWeeklyRent - @item.CrCasPriceCarBasicMonthlyRent</td>*@
+                            <td>@item.CrCasPriceCarBasicDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicStartDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicEndDate?.ToString("dd/MM/yyyy")</td>
                             <td>
                                 {
-                                    @localizer["Active"]
+                                @localizer["Active"]
                                 }
                             </td>
                         </tr>
@@ -78,9 +80,9 @@ else
         <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
             <thead>
                 <tr role="row">
-                   <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Price"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Date"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["StartDate"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["EndDate"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
@@ -98,7 +100,8 @@ else
                         <tr onclick="location.href='@Url.Action("Edit", "CarPrice", new { serialNumber = item.CrCasPriceCarBasicNo})'" style="cursor:pointer;color:red">
                             <td>@no</td>
                             <td>@item.CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionConcatenateArName</td>
-                            <td>@item.CrCasPriceCarBasicDailyRent - @item.CrCasPriceCarBasicWeeklyRent - @item.CrCasPriceCarBasicMonthlyRent</td>
+                            @*<td>@item.CrCasPriceCarBasicDailyRent - @item.CrCasPriceCarBasicWeeklyRent - @item.CrCasPriceCarBasicMonthlyRent</td>*@
+                            <td>@item.CrCasPriceCarBasicDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicStartDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicEndDate?.ToString("dd/MM/yyyy")</td>
                             <td>
@@ -122,7 +125,8 @@ else
                         <tr onclick="location.href='@Url.Action("Edit", "CarPrice", new { serialNumber = item.CrCasPriceCarBasicNo })'" style="cursor:pointer;">
                             <td>@no</td>
                             <td>@item.CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionConcatenateArName</td>
-                            <td>@item.CrCasPriceCarBasicDailyRent - @item.CrCasPriceCarBasicWeeklyRent - @item.CrCasPriceCarBasicMonthlyRent</td>
+                            @*<td>@item.CrCasPriceCarBasicDailyRent - @item.CrCasPriceCarBasicWeeklyRent - @item.CrCasPriceCarBasicMonthlyRent</td>*@
+                            <td>@item.CrCasPriceCarBasicDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicStartDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicEndDate?.ToString("dd/MM/yyyy")</td>
                             <td>

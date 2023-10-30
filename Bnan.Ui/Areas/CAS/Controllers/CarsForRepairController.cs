@@ -45,8 +45,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode &&
                                                                   (x.CrCasCarInformationStatus != Status.Rented && x.CrCasCarInformationStatus != Status.Sold && x.CrCasCarInformationStatus != Status.Deleted) &&
-                                                                    x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationBranchStatus == Status.Active &&
-                                                                    x.CrCasCarInformationOwnerStatus == Status.Active,
+                                                                   x.CrCasCarInformationBranchStatus == Status.Active &&
+                                                                   x.CrCasCarInformationOwnerStatus == Status.Active,
                                                                     new[] { "CrCasCarInformation1", "CrCasCarInformationDistributionNavigation",
                                                                             "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2" });
             return View(cars);

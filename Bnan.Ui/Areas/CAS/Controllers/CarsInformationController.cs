@@ -407,7 +407,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("202", "2202005", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationStatus == Status.Active &&
-                                                                    x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationBranchStatus == Status.Active &&
+                                                                    x.CrCasCarInformationBranchStatus == Status.Active &&
                                                                     x.CrCasCarInformationOwnerStatus == Status.Active, new[] { "CrCasCarInformation1", "CrCasCarInformationDistributionNavigation",
                                                                                                                                "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2" });
             return View(cars);
@@ -479,7 +479,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("202", "2202006", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationStatus == Status.Active &&
-                                                                    x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationBranchStatus == Status.Active &&
+                                                                    x.CrCasCarInformationBranchStatus == Status.Active &&
                                                                     x.CrCasCarInformationOwnerStatus == Status.Active, new[] { "CrCasCarInformation1", "CrCasCarInformationDistributionNavigation",
                                                                                                                                "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2" });
             return View(cars);
