@@ -70,6 +70,9 @@ namespace Bnan.Core.Interfaces
         public IGenric<CrMasSupCarAdvantage> CrMasSupCarAdvantage { get; }
         public IGenric<CrCasCarAdvantage> CrCasCarAdvantage { get; }
         public IGenric<CrCasPriceCarBasic> CrCasPriceCarBasic { get; }
+        public IGenric<CrCasPriceCarAdvantage> CrCasPriceCarAdvantage { get; }
+        public IGenric<CrCasPriceCarAdditional> CrCasPriceCarAdditional { get; }
+        public IGenric<CrCasPriceCarOption> CrCasPriceCarOption { get; }
 
 
 

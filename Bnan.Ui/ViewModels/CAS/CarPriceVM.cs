@@ -5,7 +5,7 @@ namespace Bnan.Ui.ViewModels.CAS
 {
     public class CarPriceVM
     {
-        public string CrCasPriceCarBasicNo { get; set; } = null!;
+        public string? CrCasPriceCarBasicNo { get; set; }
         public string? CrCasPriceCarBasicYear { get; set; }
         public string? CrCasPriceCarBasicType { get; set; }
         public string? CrCasPriceCarBasicLessorCode { get; set; }
@@ -29,11 +29,13 @@ namespace Bnan.Ui.ViewModels.CAS
         public decimal? CrCasPriceCarBasicWeeklyDay { get; set; }
         public decimal? CrCasPriceCarBasicMonthlyDay { get; set; }
         public decimal? CrCasPriceCarBasicYearlyDay { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public int? CrCasPriceCarBasicNoDailyFreeKm { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public decimal? CrCasPriceCarBasicAdditionalKmValue { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public int? CrCasPriceCarBasicFreeAdditionalHours { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public int? CrCasPriceCarBasicHourMax { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public decimal? CrCasPriceCarBasicExtraHourValue { get; set; }

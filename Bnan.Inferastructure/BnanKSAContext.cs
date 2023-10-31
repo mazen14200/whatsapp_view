@@ -1546,7 +1546,7 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrCasPriceCarBasicCancelHour).HasColumnName("CR_Cas_Price_Car_Basic_Cancel_Hour");
 
                 entity.Property(e => e.CrCasPriceCarBasicCarYear)
-                    .HasMaxLength(10)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
                     .HasColumnName("CR_Cas_Price_Car_Basic_Car_Year")
                     .IsFixedLength();
@@ -1677,11 +1677,6 @@ namespace Bnan.Core.Models
                     .WithMany(p => p.CrCasPriceCarBasics)
                     .HasForeignKey(d => d.CrCasPriceCarBasicBrandCode)
                     .HasConstraintName("FK_CR_Cas_Price_Car_Basic_CR_Mas_Sup_Car_Brand");
-
-                entity.HasOne(d => d.CrCasPriceCarBasicCarYearNavigation)
-                    .WithMany(p => p.CrCasPriceCarBasics)
-                    .HasForeignKey(d => d.CrCasPriceCarBasicCarYear)
-                    .HasConstraintName("FK_CR_Cas_Price_Car_Basic_CR_Mas_Sup_Car_Year");
 
                 entity.HasOne(d => d.CrCasPriceCarBasicCategoryCodeNavigation)
                     .WithMany(p => p.CrCasPriceCarBasics)

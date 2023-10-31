@@ -169,7 +169,7 @@
   "Models": "الطراز",
   "Categories": "الفئات",
   "CategoriesDistribution": "توزيع الفئات",
-  "Features": "المميزات",
+  "Features": "المميزات الاضافية",
   "Colors": "الالوان",
   //MailsServices
   "MailsServices": "خدمات البريد",
@@ -965,6 +965,8 @@
   "IsAdditionalDriver": "السماح بسائق إضافي",
   "MinAge": "اقل عمر للمستأجر",
   "MaxAge": "أكبر عمر للمستأجر",
-  "CancelHour": "ساعات السماح لالغاء العقد"
-
+  "CancelHour": "ساعات الغاء العقد",
+  "MainPrice": "السعر الاساسي",
+  "TermsRented": "بنود التأجير",
+  "Choises": "الخيارات"
 }

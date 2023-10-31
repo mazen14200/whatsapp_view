@@ -77,7 +77,7 @@
 }
 <title>@ViewData["Title"]</title>
 <div class="sub-container-form">
-    <form id="form" class="needs-validation" novalidate enctype="multipart/form-data">
+    <form id="form" class="needs-validation" asp-area="CAS" asp-action="AddPriceCar" asp-controller="CarPrice" novalidate enctype="multipart/form-data">
         <div class="form-contain">
             <div class="row">
                 <div class="col-md-1">
@@ -105,31 +105,31 @@
                         <li class="nav-item">
                             <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2 active">
                                 <i class="mdi mdi-account-cash me-1"></i>
-                                <span class="d-none d-sm-inline">السعر الاساسي</span>
+                                <span class="d-none d-sm-inline">@localizer["MainPrice"]</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                 <i class="mdi mdi-car-2-plus me-1"></i>
-                                <span class="d-none d-sm-inline">بنود التأجير</span>
+                                <span class="d-none d-sm-inline">@localizer["TermsRented"]</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                 <i class="mdi mdi-feature-search-outline me-1"></i>
-                                <span class="d-none d-sm-inline">المميزات</span>
+                                <span class="d-none d-sm-inline">@localizer["Features"]</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                 <i class="mdi mdi-select-all"></i>
-                                <span class="d-none d-sm-inline">الخيارات</span>
+                                <span class="d-none d-sm-inline">@localizer["Choises"]</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                 <i class="mdi mdi-account-multiple-plus-outline me-1"></i>
-                                <span class="d-none d-sm-inline">الاضافات</span>
+                                <span class="d-none d-sm-inline">@localizer["Additionals"]</span>
                             </a>
                         </li>
                     </ul>
@@ -140,7 +140,7 @@
                                 <div class="col-md-1 formlabel">
                                     <label class="form-label" asp-for="CrCasPriceCarBasicStartDate">@localizer["StartDate"]</label>
                                 </div>
-                                <div class="col-md-2 col-11 dateRelative">
+                                <div class="col-md-1 col-11 dateRelative">
                                     <input type="text" class="form-control" asp-for="CrCasPriceCarBasicStartDate">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
@@ -151,7 +151,7 @@
                                 <div class="col-md-1 formlabel">
                                     <label class="form-label" for="CrCasPriceCarBasicEndDate">@localizer["EndDate"]</label>
                                 </div>
-                                <div class="col-md-2 col-11 dateRelative">
+                                <div class="col-md-1 col-11 dateRelative">
                                     <input type="text" class="form-control" asp-for="CrCasPriceCarBasicEndDate">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
@@ -232,17 +232,6 @@
                                     </div>
                                 </div>
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicRentalTaxRate">@localizer["TaxRate"]</label>
-                                </div>
-                                <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicRentalTaxRate" maxlength="6" oninput="validateInput3Digit(this)">
-                                    <div style="margin-top:2px">
-                                        <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicRentalTaxRate" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-1 formlabel">
                                     <label class="form-label" asp-for="CrCasPriceCarBasicAdditionalDriverValue">@localizer["AdditionalDriverValue"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
@@ -275,6 +264,17 @@
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
                                             <span asp-validation-for="@Model.CrCasCarPriceBasicOutFeesTamm" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicRentalTaxRate">@localizer["TaxRate"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicRentalTaxRate" maxlength="6" oninput="validateInput3Digit(this)">
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                            <span asp-validation-for="@Model.CrCasPriceCarBasicRentalTaxRate" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -324,7 +324,7 @@
                                         <label class="form-label" asp-for="CrCasPriceCarBasicIsAdditionalDriver">@localizer["IsAdditionalDriver"]</label>
                                     </div>
                                     <div class="col-md-1 col-11">
-                                        <input type="checkbox" style="height: 21px;width: 23px;" class="form-check-input" name="CrCasPriceCarBasicIsAdditionalDriver">
+                                        <input type="checkbox" style="height: 21px;width: 23px;" class="form-check-input" name="CrCasPriceCarBasicIsAdditionalDriver" value="false">
                                         <div style="margin-top:2px">
                                             <div style="height: 1.35em">
                                                 <span asp-validation-for="@Model.CrCasPriceCarBasicIsAdditionalDriver" class="text-danger"></span>
@@ -419,7 +419,10 @@
                             <div class="row" style="width: 30%;margin-right: 30%;">
                                 <div class="col-sm-12">
                                     <div class="dataTable">
-                                        <partial name="_AdvantagesPartialView">
+                                        @if (Model == null)
+                                        {
+                                            <partial name="_AdvantagesPartialView"></partial>
+                                        }
                                     </div>
                                 </div> <!-- end col -->
                             </div> <!-- end row -->
@@ -444,11 +447,21 @@
                                             @foreach (var item in ViewBag.Options)
                                             {
                                                 <tr>
-                                                    <td>
-                                                        @item.CrMasSupContractOptionsArName
-                                                    </td>
+                                                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                                    {
+                                                        <td>
+                                                            @item.CrMasSupContractOptionsArName
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>
+                                                            @item.CrMasSupContractOptionsEnName
+                                                        </td>
+                                                    }
+
                                                     <td style="padding: 0 !important;">
-                                                        <input type="text" class="form-control" id="@item.CrMasSupContractOptionsCode" name="val_@item.CrMasSupContractOptionsCode" style="width:100%;border:none;" autocomplete="off" value="0" oninput="validateInput3Digit(this)" />
+                                                        <input type="text" class="form-control Choises" id="Choises@item.CrMasSupContractOptionsCode" data-id="@item.CrMasSupContractOptionsCode" name="Choises[IndexOf(item)]" style="width:100%;border:none;" autocomplete="off" value="0" oninput="validateInput3Digit(this)" />
                                                     </td>
                                                 </tr>
                                             }
@@ -456,7 +469,7 @@
                                     </table>
                                 </div>
                             </div> <!-- end col -->
-                        </div> <!-- end row -->
+                        </div>
                         <div class="tab-pane fade " id="Additional">
                             <div class="row" style="width: 30%;margin-right: 30%;">
                                 <div class="col-sm-12">
@@ -477,11 +490,20 @@
                                             @foreach (var item in ViewBag.Additional)
                                             {
                                                 <tr>
-                                                    <td>
-                                                        @item.CrMasSupContractAdditionalArName
-                                                    </td>
+                                                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                                    {
+                                                        <td>
+                                                            @item.CrMasSupContractAdditionalArName
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>
+                                                            @item.CrMasSupContractAdditionalEnName
+                                                        </td>
+                                                    }
                                                     <td style="padding: 0 !important;">
-                                                        <input type="text" class="form-control" id="@item.CrMasSupContractAdditionalCode" name="val_@item.CrMasSupContractAdditionalCode" style="width:100%;border:none;" autocomplete="off" value="0" oninput="validateInput3Digit(this)" />
+                                                        <input type="text" class="form-control Additional" id="Additional@item.CrMasSupContractAdditionalCode" data-id="@item.CrMasSupContractAdditionalCode" name="Additional[IndexOf(item)]" style="width:100%;border:none;" autocomplete="off" value="0" oninput="validateInput3Digit(this)" />
                                                     </td>
                                                 </tr>
                                             }
@@ -498,7 +520,7 @@
         <div style="width:97%">
             <div class="float-start">
                 <input type='button' class='btn btn-primary button-next' name='next' id="nextBtn" value='@localizer["Next"]'>
-                <input type='button' class='btn btn-primary button-next' name='next' id="saveBtn" value='@localizer["Save"]' hidden>
+                <a class='btn btn-primary' id="saveBtn" hidden>@localizer["Save"]</a>
             </div>
             <div class="float-end">
                 <input type='button' class='btn btn-primary button-previous' name='previous' id="prevBtn" value='@localizer["Previous"]'>
@@ -509,9 +531,6 @@
 
             <div class="clearfix"></div>
         </div>
-
-
-
     </form>
 </div>
 @section Scripts {
@@ -574,19 +593,11 @@
                 var minEndDate = new Date(startDate.getTime() + (24 * 60 * 60 * 1000));
                 $("#CrCasPriceCarBasicEndDate").datepicker("option", "minDate", minEndDate);
             });
-
-            //$("#saveEdit").on("click", function (event) {
-            //    event.preventDefault();
-            //    CheckValidation('2202007', '@Status.Save').done(function (data) {
-            //        if (data) {
-            //            $('form').submit();
-            //        }
-            //    });
-            //})
         })
     </script>
     <script>
         var selectValue;
+        var retriveData;
         var divNoOfCar = document.getElementById("noOfCarDiv");
         $(document).ready(function () {
             $.ajax({
@@ -614,7 +625,8 @@
                                         url: "@Url.Action("GetAdvantagesOfCar", "CarPrice", new { Area = "CAS" })",
                                         data: { DistribtionCode: selectValue },
                                         success: function (result) {
-                                            //$(".dataTable").html(result);
+                                            $(".dataTable").html(result);
+                                            retriveData = result;
                                         },
                                         error: function (error) {
                                         }
@@ -633,11 +645,7 @@
             });
         });
 
-        function Advantages() {
 
-        }
-    </script>
-    <script>
         // Get the next and previous buttons
         var nextBtn = document.getElementById("nextBtn");
         var prevBtn = document.getElementById("prevBtn");
@@ -674,51 +682,49 @@
         }
 
         function handleNextButtonClick() {
-            hideAllTabPanes();
-            tabLinks[activeTab].classList.remove("active");
-            activeTab++;
-            if (activeTab >= tabPanes.length - 1) {
-                activeTab = tabPanes.length - 1;
-                nextBtn.setAttribute("hidden", "");
-                saveBtn.removeAttribute("hidden");
-                prevBtn.removeAttribute("hidden");
-            } else {
-                nextBtn.removeAttribute("hidden");
-                prevBtn.removeAttribute("hidden");
-                saveBtn.setAttribute("hidden", "");
+            if ($("#form").valid()) {
+                hideAllTabPanes();
+                tabLinks[activeTab].classList.remove("active");
+                if ((retriveData == null || retriveData == "") && activeTab == "1") {
+                    activeTab = 3;
+                }
+                else {
+                    activeTab++;
+                }
+                if (activeTab >= tabPanes.length - 1) {
+                    activeTab = tabPanes.length - 1;
+                    nextBtn.setAttribute("hidden", "");
+                    saveBtn.removeAttribute("hidden");
+                    prevBtn.removeAttribute("hidden");
+                } else {
+                    nextBtn.removeAttribute("hidden");
+                    prevBtn.removeAttribute("hidden");
+                    saveBtn.setAttribute("hidden", "");
+                }
+                showActivetabLinks(); // Add active class to new nav link
+                showActiveTabPane();
+                Distribution.setAttribute("readonly", "");
             }
-            showActivetabLinks(); // Add active class to new nav link
-            showActiveTabPane();
-            Distribution.setAttribute("readonly", "");
+            else {
+                // Display error message or handle validation errors
+                // You can use emojis to express your reaction here 😟
+                console.log("Please fill in all required fields.");
+            }
+            console.log(retriveData);
+            console.log(activeTab);
         }
-        //function handleNextButtonClick() {
-        //    // Check for validation errors on the current tab
-        //    if ($("#form").valid()) {
-        //        hideAllTabPanes();
-        //        tabLinks[activeTab].classList.remove("active");
-        //        activeTab++;
-        //        if (activeTab >= tabPanes.length - 1) {
-        //            activeTab = tabPanes.length - 1;
-        //            nextBtn.setAttribute("hidden", "");
-        //            prevBtn.removeAttribute("hidden");
-        //        } else {
-        //            nextBtn.removeAttribute("hidden");
-        //            prevBtn.removeAttribute("hidden");
-        //        }
-        //        showActivetabLinks(); // Add active class to new nav link
-        //        showActiveTabPane();
-        //    } else {
-        //        // Display error message or handle validation errors
-        //        // You can use emojis to express your reaction here 😟
-        //        console.log("Please fill in all required fields.");
-        //    }
-        //}
 
         // Function to handle the "Previous" button click
         function handlePrevButtonClick() {
             hideAllTabPanes();
             tabLinks[activeTab].classList.remove("active");
-            activeTab--;
+
+            if ((retriveData == null || retriveData == "") && activeTab == "3") {
+                activeTab = 1;
+            }
+            else {
+                activeTab--;
+            }
             if (activeTab <= 0) {
                 activeTab = 0;
                 prevBtn.setAttribute("hidden", "");
@@ -737,7 +743,71 @@
         // Add event listeners to the next and previous buttons
         nextBtn.addEventListener("click", handleNextButtonClick);
         prevBtn.addEventListener("click", handlePrevButtonClick);
+
     </script>
+    <script>
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the form element
+            var form = document.getElementById('form');
+            $("#saveBtn").click(function (e) {
+                e.preventDefault();
+
+                //Additional
+                var Additional = document.querySelectorAll('.Additional');
+                var AdditionalData = [];
+                Additional.forEach(function (add) {
+                    var id = add.getAttribute('data-id');
+                    var value = add.value;
+                    AdditionalData.push({ Id: id, Value: value });
+                });
+                // Create a hidden input field with the data
+                var hiddenInputForAdditional = document.createElement('input');
+                hiddenInputForAdditional.setAttribute('type', 'hidden');
+                hiddenInputForAdditional.setAttribute('name', 'Additionals');
+                hiddenInputForAdditional.value = JSON.stringify(AdditionalData);
+                //// Append the hidden input field to the form BEFORE checking validity
+                form.appendChild(hiddenInputForAdditional);
+
+                //Choises
+                var Choises = document.querySelectorAll('.Choises');
+                var ChoisesData = [];
+                Choises.forEach(function (Choise) {
+                    var id = Choise.getAttribute('data-id');
+                    var value = Choise.value;
+                    ChoisesData.push({ Id: id, Value: value });
+                });
+                // Create a hidden input field with the data
+                var hiddenInputForChoises = document.createElement('input');
+                hiddenInputForChoises.setAttribute('type', 'hidden');
+                hiddenInputForChoises.setAttribute('name', 'Choises');
+                hiddenInputForChoises.value = JSON.stringify(ChoisesData);
+                //// Append the hidden input field to the form BEFORE checking validity
+                form.appendChild(hiddenInputForChoises);
+                //Features
+                var Features = document.querySelectorAll('.Features');
+                var FeaturesData = [];
+                Features.forEach(function (Feature) {
+                    var id = Feature.getAttribute('data-id');
+                    var value = Feature.value;
+                    FeaturesData.push({ Id: id, Value: value });
+                });
+                // Create a hidden input field with the data
+                var hiddenInputForFeatures = document.createElement('input');
+                hiddenInputForFeatures.setAttribute('type', 'hidden');
+                hiddenInputForFeatures.setAttribute('name', 'Features');
+                hiddenInputForFeatures.value = JSON.stringify(FeaturesData);
+                //// Append the hidden input field to the form BEFORE checking validity
+                form.appendChild(hiddenInputForFeatures);
+                form.submit();
+            })
+        });
+
+    </script>
+
     <script>
         function validateInput9Digit(input) {
             // Remove non-digit characters and additional decimal points
@@ -786,6 +856,24 @@
                 input.value = input.value.substr(0, 3);
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Code to be executed when the DOM is ready
+            var inputElements = document.querySelectorAll('input');
+            inputElements.forEach(function (input) {
+                input.setAttribute('autocomplete', 'off');
+            });
+        });
+
+
+        $(document).on("click", "[type='checkbox']", function (e) {
+            if (this.checked) {
+                $(this).attr("value", "true");
+            } else {
+                $(this).attr("value", "false");
+            }
+        });
+
     </script>
 }
 

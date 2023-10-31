@@ -80,7 +80,9 @@ namespace Bnan.Inferastructure.Repository
         public IGenric<CrMasSupCarAdvantage> CrMasSupCarAdvantage { get; private set; }
         public IGenric<CrCasCarAdvantage> CrCasCarAdvantage { get; private set; }
         public IGenric<CrCasPriceCarBasic> CrCasPriceCarBasic { get; private set; }
-
+        public IGenric<CrCasPriceCarAdvantage> CrCasPriceCarAdvantage { get; private set; }
+        public IGenric<CrCasPriceCarAdditional> CrCasPriceCarAdditional { get; private set; }
+        public IGenric<CrCasPriceCarOption> CrCasPriceCarOption { get; private set; }
 
 
         public UnitOfWork(BnanKSAContext context)
@@ -142,6 +144,9 @@ namespace Bnan.Inferastructure.Repository
             CrMasSupCarAdvantage = new BaseRepository<CrMasSupCarAdvantage>(_context);
             CrCasCarAdvantage = new BaseRepository<CrCasCarAdvantage>(_context);
             CrCasPriceCarBasic = new BaseRepository<CrCasPriceCarBasic>(_context);
+            CrCasPriceCarAdvantage = new BaseRepository<CrCasPriceCarAdvantage>(_context);
+            CrCasPriceCarOption = new BaseRepository<CrCasPriceCarOption>(_context);
+            CrCasPriceCarAdditional = new BaseRepository<CrCasPriceCarAdditional>(_context);
 
 
         }

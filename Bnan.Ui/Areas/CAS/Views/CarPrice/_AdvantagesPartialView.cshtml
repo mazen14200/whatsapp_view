@@ -1,6 +1,8 @@
 ﻿@model List<CrCasCarAdvantage>
-
-@if (Model != null && Model.Count()>0)
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+}
+@if (Model != null && Model.Count() > 0)
 {
     <div class="col-sm-12">
         <table class="table table-bordered table-striped " id="myTable">
@@ -20,11 +22,22 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @item.CrCasCarAdvantagesCodeNavigation.CrMasSupCarAdvantagesArName
-                        </td>
+                        @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                        {
+                            <td>
+                                @item.CrCasCarAdvantagesCodeNavigation.CrMasSupCarAdvantagesArName
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @item.CrCasCarAdvantagesCodeNavigation.CrMasSupCarAdvantagesEnName
+                            </td>
+                        }
+
                         <td style="padding: 0 !important;">
-                            <input type="text" class="form-control" id="@item.CrCasCarAdvantagesCode" name="val_@item.CrCasCarAdvantagesCode" style="width:100%;border:none;" autocomplete="off" value="0" oninput="validateInput3Digit(this)" />
+                            <input type="text" class="form-control Features" id="Features@item.CrCasCarAdvantagesCode" data-id="@item.CrCasCarAdvantagesCode" name="Features[IndexOf(item)]" style="width:100%;border:none;" autocomplete="off" value="0" oninput="validateInput3Digit(this)" />
+
                         </td>
                     </tr>
                 }
