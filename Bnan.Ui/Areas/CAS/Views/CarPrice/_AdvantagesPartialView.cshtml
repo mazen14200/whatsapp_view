@@ -1,6 +1,8 @@
 ﻿@model List<CrCasCarAdvantage>
+@inject IViewLocalizer localizer
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+
 }
 @if (Model != null && Model.Count() > 0)
 {
@@ -8,20 +10,29 @@
         <table class="table table-bordered table-striped " id="myTable">
             <thead>
                 <tr>
+                    <th>
+                        @localizer["No"]
+                    </th>
                     <th width="70%">
-                        المميزات
+                        @localizer["Advantages"]
                     </th>
 
                     <th width="30%">
-                        القيمة
+                        @localizer["Value"]
                     </th>
 
                 </tr>
             </thead>
             <tbody>
+                @{
+                    int no = 1;
+                }
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td>
+                            @no
+                        </td>
                         @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
                         {
                             <td>
@@ -40,6 +51,7 @@
 
                         </td>
                     </tr>
+                    no++;
                 }
             </tbody>
         </table>

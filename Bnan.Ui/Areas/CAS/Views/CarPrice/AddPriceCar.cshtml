@@ -61,6 +61,11 @@
             top: 8%;
             right: 77%;
         }
+
+        #CenterTable{
+            width: 30%;
+            margin-right: 30%;
+        }
     </style>
 }
 
@@ -68,10 +73,16 @@
 {
     <style>
         .datepicker-icon {
+            cursor: pointer;
             position: absolute;
             display: inline-block;
-            top: 1px;
-            left: 178px;
+            top: 3px;
+            left: 107px;
+        }
+
+        #CenterTable {
+            width: 30%;
+            margin-left: 30%;
         }
     </style>
 }
@@ -168,7 +179,7 @@
                                 <div class="col-md-1 col-11">
                                     <input type="text" class="form-control" asp-for="CrCasPriceCarBasicDailyRent" maxlength="9" oninput="validateInput9Digit(this)">
                                     <div style="margin-top:2px">
-                                        <div style="height: 1.35em">
+                                        <div style="height: 1.35em;width: 145px;">
                                             <span asp-validation-for="@Model.CrCasPriceCarBasicDailyRent" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -179,8 +190,10 @@
                                 <div class="col-md-1 col-11">
                                     <input type="text" class="form-control" asp-for="CrCasPriceCarBasicWeeklyRent" maxlength="9" oninput="validateInput9Digit(this)">
                                     <div style="margin-top:2px">
-                                        <div style="height: 1.35em">
+                                        <div style="height: 1.35em;width: 150px;">
                                             <span asp-validation-for="@Model.CrCasPriceCarBasicWeeklyRent" class="text-danger"></span>
+                                            <span id="WeeklyRent" class="text-danger"></span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -190,8 +203,10 @@
                                 <div class="col-md-1 col-11">
                                     <input type="text" class="form-control" asp-for="CrCasPriceCarBasicMonthlyRent" maxlength="9" oninput="validateInput9Digit(this)">
                                     <div style="margin-top:2px">
-                                        <div style="height: 1.35em">
+                                        <div style="height: 1.35em;width: 150px;">
                                             <span asp-validation-for="@Model.CrCasPriceCarBasicMonthlyRent" class="text-danger"></span>
+                                            <span id="MonthlyRent" class="text-danger"></span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -201,8 +216,9 @@
                                 <div class="col-md-1 col-11">
                                     <input type="text" class="form-control" asp-for="CrCasPriceCarBasicYearlyRent" maxlength="9" oninput="validateInput9Digit(this)">
                                     <div style="margin-top:2px">
-                                        <div style="height: 1.35em">
+                                        <div style="height: 1.35em;width: 150px;">
                                             <span asp-validation-for="@Model.CrCasPriceCarBasicYearlyRent" class="text-danger"></span>
+                                            <span id="YearlyRent" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -275,6 +291,19 @@
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
                                             <span asp-validation-for="@Model.CrCasPriceCarBasicRentalTaxRate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicReasons">@localizer["reasons"]</label>
+                                </div>
+                                <div class="col-md-6 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicReasons" maxlength="100">
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                            <span asp-validation-for="@Model.CrCasPriceCarBasicReasons" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -416,8 +445,8 @@
                             </div> <!-- end row -->
                         </div>
                         <div class="tab-pane fade " id="Features">
-                            <div class="row" style="width: 30%;margin-right: 30%;">
-                                <div class="col-sm-12">
+                            <div class="row"  id="CenterTable">
+                                <div class="col-sm-12" style="overflow: auto; width: 100%; height: 38vh;overflow-x: hidden;">
                                     <div class="dataTable">
                                         @if (Model == null)
                                         {
@@ -428,25 +457,35 @@
                             </div> <!-- end row -->
                         </div>
                         <div class="tab-pane fade " id="Choices">
-                            <div class="row" style="width: 30%;margin-right: 30%;">
-                                <div class="col-sm-12">
+                            <div class="row" id="CenterTable">
+                                <div class="col-sm-12" style="overflow: auto; width: 100%; height: 38vh;overflow-x: hidden;">
                                     <table class="table table-bordered table-striped " id="myTable">
                                         <thead>
                                             <tr>
+                                                <th>
+                                                    @localizer["No"]
+                                                </th>
                                                 <th width="70%">
-                                                    الخيارات
+                                                    @localizer["Choises"]
                                                 </th>
 
                                                 <th width="30%">
-                                                    القيمة
+                                                    @localizer["Value"]
+
                                                 </th>
 
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @{
+                                                int no1 = 1;
+                                            }
                                             @foreach (var item in ViewBag.Options)
                                             {
                                                 <tr>
+                                                    <td>
+                                                        @no1
+                                                    </td>
                                                     @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
                                                     {
                                                         <td>
@@ -464,6 +503,7 @@
                                                         <input type="text" class="form-control Choises" id="Choises@item.CrMasSupContractOptionsCode" data-id="@item.CrMasSupContractOptionsCode" name="Choises[IndexOf(item)]" style="width:100%;border:none;" autocomplete="off" value="0" oninput="validateInput3Digit(this)" />
                                                     </td>
                                                 </tr>
+                                                no1++;
                                             }
                                         </tbody>
                                     </table>
@@ -471,25 +511,34 @@
                             </div> <!-- end col -->
                         </div>
                         <div class="tab-pane fade " id="Additional">
-                            <div class="row" style="width: 30%;margin-right: 30%;">
-                                <div class="col-sm-12">
+                            <div class="row" id="CenterTable">
+                                <div class="col-sm-12" style="overflow: auto; width: 100%; height: 38vh;overflow-x: hidden;">
                                     <table class="table table-bordered table-striped " id="myTable">
                                         <thead>
                                             <tr>
+                                                <th>
+                                                    @localizer["No"]
+                                                </th>
                                                 <th width="70%">
-                                                    الاضافات
+                                                    @localizer["Additionals"]
                                                 </th>
 
                                                 <th width="30%">
-                                                    القيمة
+                                                    @localizer["Value"]
                                                 </th>
 
                                             </tr>
                                         </thead>
                                         <tbody @*class="tbody-wrapper"*@>
+                                            @{
+                                                int no3 = 1;
+                                            }
                                             @foreach (var item in ViewBag.Additional)
                                             {
                                                 <tr>
+                                                    <td>
+                                                        @no3
+                                                    </td>
                                                     @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
                                                     {
                                                         <td>
@@ -506,6 +555,7 @@
                                                         <input type="text" class="form-control Additional" id="Additional@item.CrMasSupContractAdditionalCode" data-id="@item.CrMasSupContractAdditionalCode" name="Additional[IndexOf(item)]" style="width:100%;border:none;" autocomplete="off" value="0" oninput="validateInput3Digit(this)" />
                                                     </td>
                                                 </tr>
+                                                no3++;
                                             }
                                         </tbody>
                                     </table>
@@ -683,6 +733,39 @@
 
         function handleNextButtonClick() {
             if ($("#form").valid()) {
+                // Get the values of the input fields
+                var dailyRent = parseInt($("#CrCasPriceCarBasicDailyRent").val());
+                var weeklyRent = parseInt($("#CrCasPriceCarBasicWeeklyRent").val());
+                var monthlyRent = parseInt($("#CrCasPriceCarBasicMonthlyRent").val());
+                var yearlyRent = parseInt($("#CrCasPriceCarBasicYearlyRent").val());
+
+                // Perform the validations
+                if (weeklyRent <= dailyRent) {
+                    // Weekly rent should be greater than daily rent
+                    $("#WeeklyRent").text('@localizer["WeeklyRentError"]');
+                    return; // Stop further execution
+                }
+                else {
+                    $("#WeeklyRent").text('');
+                }
+                if (monthlyRent <= weeklyRent) {
+                    // Monthly rent should be greater than weekly rent
+                    $("#MonthlyRent").text('@localizer["MonthlyRentError"]');
+                    return; // Stop further execution
+                }
+                else {
+                    $("#MonthlyRent").text('');
+
+                }
+                if (yearlyRent <= monthlyRent) {
+                    // Yearly rent should be greater than monthly rent
+                    $("#YearlyRent").text('@localizer["YearlyRentError"]');
+                    return; // Stop further execution
+                }
+                else {
+                    $("#YearlyRent").text('');
+
+                }
                 hideAllTabPanes();
                 tabLinks[activeTab].classList.remove("active");
                 if ((retriveData == null || retriveData == "") && activeTab == "1") {
@@ -705,13 +788,6 @@
                 showActiveTabPane();
                 Distribution.setAttribute("readonly", "");
             }
-            else {
-                // Display error message or handle validation errors
-                // You can use emojis to express your reaction here 😟
-                console.log("Please fill in all required fields.");
-            }
-            console.log(retriveData);
-            console.log(activeTab);
         }
 
         // Function to handle the "Previous" button click

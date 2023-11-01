@@ -24,6 +24,7 @@
   "Renter Data": " بينات المستأجرين",
   "Renter Contract": "عقود المستأجرين",
   "Renter Balances": "ارصده المستأجرين",
+  "Contract": "العقد",
   //Accounts
   "Accounts": "الحسابات",
   "Cash Feeding": "تغذيه الصندوق",
@@ -968,5 +969,10 @@
   "CancelHour": "ساعات الغاء العقد",
   "MainPrice": "السعر الاساسي",
   "TermsRented": "بنود التأجير",
-  "Choises": "الخيارات"
+  "Choises": "الخيارات",
+  "YearlyRentError": "لا يقل عن الايجار الشهري",
+  "WeeklyRentError": "لا يقل عن الايجار اليومي",
+  "MonthlyRentError": "لا يقل عن الايجار الاسبوع",
+  "Edit AddPriceCar Hint": "تمكنك هذه الصفحة من عرض اسعار السيارة"
+
 }

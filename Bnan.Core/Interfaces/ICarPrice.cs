@@ -12,7 +12,7 @@ namespace Bnan.Core.Interfaces
         Task<bool> AddFeatures(string serialNumber, string id, string value);
         Task<bool> AddChoises(string serialNumber, string id, string value);
         Task<bool> AddAdditionals(string serialNumber, string id , string value);
-        Task<bool> AddPriceCar(CrCasPriceCarBasic crCasPriceCarBasic);
+        Task<string> AddPriceCar(CrCasPriceCarBasic crCasPriceCarBasic);
 
     }
 }

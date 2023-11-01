@@ -83,34 +83,37 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("202", "2202007", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "اضافة", "Add", titles[3]);
             ViewBag.LessorCode = lessorCode;
-            ViewBag.Options=_unitOfWork.CrMasSupContractOption.FindAll(x=>x.CrMasSupContractOptionsStatus== Status.Active);
-            ViewBag.Additional = _unitOfWork.CrMasSupContractAdditional.FindAll(x=>x.CrMasSupContractAdditionalStatus== Status.Active);
+            ViewBag.Options = _unitOfWork.CrMasSupContractOption.FindAll(x => x.CrMasSupContractOptionsStatus == Status.Active);
+            ViewBag.Additional = _unitOfWork.CrMasSupContractAdditional.FindAll(x => x.CrMasSupContractAdditionalStatus == Status.Active);
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPriceCar(CarPriceVM carPriceVM,bool CrCasPriceCarBasicIsAdditionalDriver, List<string> Additionals, List<string> Choises, List<string> Features)
+        public async Task<IActionResult> AddPriceCar(CarPriceVM carPriceVM, bool CrCasPriceCarBasicIsAdditionalDriver, List<string> Additionals, List<string> Choises, List<string> Features)
         {
-           
+
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var distribution = _unitOfWork.CrMasSupCarDistribution.Find(x => x.CrMasSupCarDistributionConcatenateArName == carPriceVM.CrCasPriceCarBasicDistributionCode ||
                                                                              x.CrMasSupCarDistributionConcatenateEnName == carPriceVM.CrCasPriceCarBasicDistributionCode);
 
-            if (distribution != null) { 
-                var carPrice = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicDistributionCode == distribution.CrMasSupCarDistributionCode).Count();
+            if (distribution != null)
+            {
+                var carPrice = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicDistributionCode == distribution.CrMasSupCarDistributionCode&&x.CrCasPriceCarBasicStatus==Status.Active).Count();
                 if (carPrice > 0) ModelState.AddModelError("CrCasPriceCarBasicDistributionCode", _localizer["IsExists"]);
             }
             else ModelState.AddModelError("CrCasPriceCarBasicDistributionCode", _localizer["RessureFromNameCar"]);
-            
+
             if (ModelState.IsValid)
             {
                 var carsInformation = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationDistribution == distribution.CrMasSupCarDistributionCode && x.CrCasCarInformationLessor == lessorCode);
                 carPriceVM.CrCasPriceCarBasicIsAdditionalDriver = CrCasPriceCarBasicIsAdditionalDriver;
                 carPriceVM.CrCasPriceCarBasicDistributionCode = distribution.CrMasSupCarDistributionCode;
-                foreach (var car in carsInformation)
+                carPriceVM.CrCasPriceCarBasicLessorCode = lessorCode;
+                var CarPriceModel = _mapper.Map<CrCasPriceCarBasic>(carPriceVM);
+                var PriceCarNo = await _carPrice.AddPriceCar(CarPriceModel);
+                if (!string.IsNullOrEmpty(PriceCarNo))
                 {
-                    carPriceVM.CrCasPriceCarBasicNo = car.CrCasCarInformationSerailNo;
                     if (Additionals != null)
                     {
                         List<CarPriceAdditionalStringData> additionalStringData = new List<CarPriceAdditionalStringData>();
@@ -122,7 +125,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         }
                         foreach (var item in additionalStringData)
                         {
-                            await _carPrice.AddAdditionals(carPriceVM.CrCasPriceCarBasicNo, item.Id, item.Value);
+                            await _carPrice.AddAdditionals(PriceCarNo, item.Id, item.Value);
                         }
                     }
                     if (Choises != null)
@@ -136,7 +139,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         }
                         foreach (var item in ChoisesStringData)
                         {
-                            await _carPrice.AddChoises(carPriceVM.CrCasPriceCarBasicNo, item.Id, item.Value);
+                            await _carPrice.AddChoises(PriceCarNo, item.Id, item.Value);
                         }
                     }
                     if (Features != null)
@@ -150,13 +153,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         }
                         foreach (var item in ChoisesStringData)
                         {
-                            await _carPrice.AddFeatures(carPriceVM.CrCasPriceCarBasicNo, item.Id, item.Value);
+                            await _carPrice.AddFeatures(PriceCarNo, item.Id, item.Value);
                         }
                     }
-                    var CarPriceModel = _mapper.Map<CrCasPriceCarBasic>(carPriceVM);
-                    await _carPrice.AddPriceCar(CarPriceModel);
                 }
-                if (await _unitOfWork.CompleteAsync()>0)
+                if (await _unitOfWork.CompleteAsync() > 0)
                 {
                     // SaveTracing
                     var (mainTask, subTask, system, currentUserr) = await SetTrace("202", "2202007", "2");
@@ -177,6 +178,64 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         }
 
 
+        public async Task<IActionResult> Edit(string serialNumber)
+        {
+            //sidebar Active
+            ViewBag.id = "#sidebarcars";
+            ViewBag.no = "6";
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var titles = await setTitle("202", "2202007", "2");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
+            var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == serialNumber, new[] { "CrCasPriceCarBasicDistributionCodeNavigation" });
+            var carPriceVM = _mapper.Map<CarPriceVM>(carPrice);
+            if (carPriceVM != null)
+            {
+                ViewBag.date = carPriceVM.CrCasPriceCarBasicDate;
+                ViewBag.startDate = carPriceVM.CrCasPriceCarBasicStartDate?.ToString("dd/MM/yyyy");
+                ViewBag.endDate = carPriceVM.CrCasPriceCarBasicEndDate?.ToString("dd/MM/yyyy");
+                if (carPrice.CrCasPriceCarBasicIsAdditionalDriver == true) ViewBag.CrCasPriceCarBasicIsAdditionalDriver = _localizer["Yes"];
+                else ViewBag.CrCasPriceCarBasicIsAdditionalDriver = _localizer["Noo"];
+                ViewBag.Additional = _unitOfWork.CrCasPriceCarAdditional.FindAll(x => x.CrCasPriceCarAdditionalNo == serialNumber, new[] { "CrCasPriceCarAdditionalCodeNavigation" });
+                ViewBag.Features = _unitOfWork.CrCasPriceCarAdvantage.FindAll(x => x.CrCasPriceCarAdvantagesNo == serialNumber, new[] { "CrCasPriceCarAdvantagesCodeNavigation" });
+                ViewBag.FeaturesCount = _unitOfWork.CrCasPriceCarAdvantage.FindAll(x => x.CrCasPriceCarAdvantagesNo == serialNumber, new[] { "CrCasPriceCarAdvantagesCodeNavigation" }).Count();
+                ViewBag.Choises = _unitOfWork.CrCasPriceCarOption.FindAll(x => x.CrCasPriceCarOptionsNo == serialNumber, new[] { "CrCasPriceCarOptionsCodeNavigation" });
+                ViewBag.NoOfCars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationDistribution == carPrice.CrCasPriceCarBasicDistributionCode && x.CrCasCarInformationLessor == lessorCode).Count();
+                return View(carPriceVM);
+            }
+            _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("CarPrice");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(string serialNumber)
+        {
+           
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == serialNumber, new[] { "CrCasPriceCarBasicDistributionCodeNavigation" });
+            if (carPrice != null)
+            {
+                carPrice.CrCasPriceCarBasicStatus = "D";
+                if (await _unitOfWork.CompleteAsync()>0)
+                {
+                    // SaveTracing
+                    var (mainTask, subTask, system, currentUserr) = await SetTrace("202", "2202007", "2");
+                    await _userLoginsService.SaveTracing(currentUserr.CrMasUserInformationCode, "حذف", "Delete", mainTask.CrMasSysMainTasksCode,
+                    subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+                    subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+                    // Save Adminstrive Procedures
+                    await _adminstritiveProcedures.SaveAdminstritive(currentUserr.CrMasUserInformationCode, "1", "219", "20", currentUserr.CrMasUserInformationLessor, "100",
+                        carPrice.CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionCode, null, null, null, null, null, null, null, null, "تعديل", "Update", "U", null);
+                    _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                    return RedirectToAction("CarPrice");
+                }
+               
+            }
+            _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("CarPrice");
+        }
+
+
         [HttpGet]
         public async Task<JsonResult> GetNumberOfCar(string DistribtionCode)
         {
@@ -185,7 +244,6 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var carsInformation = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationDistribution == DistribtionCode && x.CrCasCarInformationLessor == lessorCode, new[] { "CrCasCarAdvantages" });
             return Json(carsInformation.Count());
         }
-
         [HttpGet]
         public async Task<PartialViewResult> GetAdvantagesOfCar(string DistribtionCode)
         {
@@ -199,6 +257,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                                                                             x.CrCasCarAdvantagesBrand == carInformation.CrCasCarInformationBrand, new[] { "CrCasCarAdvantagesCodeNavigation" });
 
             return PartialView("_AdvantagesPartialView", AdvantagesCars.ToList());
+        }
+
+        public IActionResult SuccesssMessageForCarPrice()
+        {
+            _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("CarPrice");
         }
 
     }

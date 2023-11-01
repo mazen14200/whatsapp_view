@@ -23,6 +23,8 @@
   "Renter": "Renter",
   "Renter Data": "Renter Data",
   "Renter Contract": "Renter Contract",
+  "Contract": "Contract",
+
   "Renter Balances": "Renter Balances",
   //Accounts
   "Accounts": "Accounts",
@@ -978,7 +980,10 @@
   "CancelHour": "Cancel Hour",
   "MainPrice": "Main Price",
   "TermsRented": "Terms Rented",
-  "Choises": "Choises"
+  "Choises": "Choises",
+  "YearlyRentError": "Not less than Monthly rent",
+  "WeeklyRentError": "Not less than Daily rent",
+  "MonthlyRentError": "Not less than Weekly rent",
+  "Edit AddPriceCar Hint": "The page allow you to display price of car"
+
 }
-
-

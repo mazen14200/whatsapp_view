@@ -134,11 +134,7 @@
         cursor: pointer;
     }
 
-    #BranchSigntureImage {
-        position: absolute;
-        top: 39%;
-        right: 50%;
-    }
+   
 
     @@media (max-width: 1050px) {
         #BranchSigntureImage {
@@ -155,7 +151,28 @@
             right: 30%;
         }
     }
-</style>
+    </style>
+
+    @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+{
+    <style>
+        #BranchSigntureImage {
+            position: absolute;
+            top: 39%;
+            left: 50%;
+        }
+    </style>
+}
+else
+{
+    <style>
+        #BranchSigntureImage {
+            position: absolute;
+            top: 39%;
+            right: 50%;
+        }
+    </style>
+}
 
 
 <div class="sub-container-form" id="CAS">

@@ -1,0 +1,689 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.CAS
+@model Bnan.Ui.ViewModels.CAS.CarPriceVM
+@inject IViewLocalizer localizer
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = localizer["CarPrice Data"];
+    ViewData["Page-Hint"] = localizer["Edit AddPriceCar Hint"];
+}
+<style>
+
+    .row {
+        align-items: center;
+    }
+
+    .col-md-1 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 auto;
+        flex: 0 0 auto;
+        width: 10% !important;
+    }
+</style>
+<title>@ViewData["Title"]</title>
+<div class="sub-container-form">
+    <form id="form" class="needs-validation" novalidate>
+        <div class="form-contain">
+            <input type="hidden" asp-for="CrCasPriceCarBasicNo" />
+            <input type="hidden" asp-for="CrCasPriceCarBasicStatus" />
+            <div class="row">
+                <div class="col-md-1">
+                    <label class="form-label" for="CrCasPriceCarBasicDistributionCode">@localizer["Car"]</label>
+                </div>
+                <div class="col-md-3">
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionConcatenateArName" autocomplete="off" readonly>
+
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionConcatenateEnName" autocomplete="off" readonly>
+                    }
+                    <div style="margin-top:2px">
+                        <div style="height: 1.35em">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1" id="noOfCarDiv">
+                    <label class="form-label" for="NoOfCars">@localizer["NoOfCars"]</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" value="@ViewBag.NoOfCars" autocomplete="off" readonly>
+                </div>
+            </div>
+            <div class="row">
+                <div id="btnwizard" style="width:97%">
+                    <ul class="nav nav-pills nav-justified form-wizard-header mb-4">
+                        <li class="nav-item">
+                            <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2 active">
+                                <i class="mdi mdi-account-cash me-1"></i>
+                                <span class="d-none d-sm-inline">@localizer["MainPrice"]</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                <i class="mdi mdi-car-2-plus me-1"></i>
+                                <span class="d-none d-sm-inline">@localizer["TermsRented"]</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                <i class="mdi mdi-feature-search-outline me-1"></i>
+                                <span class="d-none d-sm-inline">@localizer["Features"]</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                <i class="mdi mdi-select-all"></i>
+                                <span class="d-none d-sm-inline">@localizer["Choises"]</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                <i class="mdi mdi-account-multiple-plus-outline me-1"></i>
+                                <span class="d-none d-sm-inline">@localizer["Additionals"]</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content mb-0 b-0">
+                        <div class="tab-pane fade active show" id="Price">
+                            @*Start and End Date*@
+                            <div class="row mt-2">
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicStartDate">@localizer["StartDate"]</label>
+                                </div>
+                                <div class="col-md-1 col-11 dateRelative">
+                                    <input type="text" class="form-control" value="@ViewBag.startDate" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                            <span asp-validation-for="@Model.CrCasPriceCarBasicStartDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" for="CrCasPriceCarBasicEndDate">@localizer["EndDate"]</label>
+                                </div>
+                                <div class="col-md-1 col-11 dateRelative">
+                                    <input type="text" class="form-control" value="@ViewBag.endDate" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                            <span asp-validation-for="@Model.CrCasPriceCarBasicEndDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*Rend Peroid*@
+                            <div class="row mt-2">
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicDailyRent">@localizer["DailyRent"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicDailyRent" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em;width: 145px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicWeeklyRent">@localizer["WeeklyRent"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicWeeklyRent" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em;width: 150px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicMonthlyRent">@localizer["MonthlyRent"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicMonthlyRent" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em;width: 150px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicYearlyRent">@localizer["YearlyRent"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicYearlyRent" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em;width: 150px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*ِAdditional Hour and Km and Tax rate*@
+                            <div class="row mt-2">
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicAdditionalKmValue">@localizer["AdditionalKmValue"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicAdditionalKmValue" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicExtraHourValue">@localizer["ExtraHourValue"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicExtraHourValue" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicAdditionalDriverValue">@localizer["AdditionalDriverValue"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicAdditionalDriverValue" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*ِAdditional Driver and InFees and OutFess Value*@
+                            <div class="row mt-2">
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasCarPriceBasicInFeesTamm">@localizer["InFeesTamm"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasCarPriceBasicInFeesTamm" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasCarPriceBasicOutFeesTamm">@localizer["OutFeesTamm"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasCarPriceBasicOutFeesTamm" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicRentalTaxRate">@localizer["TaxRate"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicRentalTaxRate" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicReasons">@localizer["reasons"]</label>
+                                </div>
+                                <div class="col-md-6 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicReasons" readonly>
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade " id="RentedTerms">
+                            <div class="row">
+                                @*ِFree km , additional hour,free hours*@
+                                <div class="row mt-2">
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicNoDailyFreeKm">@localizer["DailyFreeKm"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicNoDailyFreeKm" readonly>
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicFreeAdditionalHours">@localizer["FreeAdditionalHours"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicFreeAdditionalHours" readonly>
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicHourMax">@localizer["HourMax"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicHourMax" readonly>
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*ِadditional driver , additional hour,free hours*@
+                                <div class="row mt-2">
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicIsAdditionalDriver">@localizer["IsAdditionalDriver"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" value="@ViewBag.CrCasPriceCarBasicIsAdditionalDriver" readonly>
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicMinAge">@localizer["MinAge"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicMinAge" readonly>
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicMaxAge">@localizer["MaxAge"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicMaxAge" readonly>
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicCancelHour">@localizer["CancelHour"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCancelHour" readonly>
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @*ِCompensationss*@
+                                <div class="row mt-2">
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicCompensationAccident">@localizer["CompensationAccident"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationAccident" readonly>
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicCompensationTheft">@localizer["CompensationTheft"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationTheft" readonly>
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicCompensationDrowning">@localizer["CompensationDrowning"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationDrowning" readonly>
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 formlabel">
+                                        <label class="form-label" asp-for="CrCasPriceCarBasicCompensationFire">@localizer["CompensationFire"]</label>
+                                    </div>
+                                    <div class="col-md-1 col-11">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationFire" readonly>
+                                        <div style="margin-top:2px">
+                                            <div style="height: 1.35em">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- end row -->
+                        </div>
+                        <div class="tab-pane fade " id="Features">
+                            <div class="row" style="width: 30%;margin-right: 30%;">
+                                <div class="col-sm-12" style="overflow: auto; width: 100%; height: 38vh;overflow-x: hidden;">
+                                    <table class="table table-bordered table-striped " id="myTable">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @localizer["No"]
+                                                </th>
+                                                <th width="70%">
+                                                    @localizer["Advantages"]
+                                                </th>
+
+                                                <th width="30%">
+                                                    @localizer["Value"]
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.Features != null || ViewBag.FeaturesCount == 0)
+                                            {
+                                                int no1 = 1;
+                                                @foreach (var item in ViewBag.Features)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @no1
+                                                        </td>
+                                                        @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                                        {
+                                                            <td>
+                                                                @item.CrCasPriceCarAdvantagesCodeNavigation.CrMasSupCarAdvantagesArName
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>
+                                                                @item.CrCasPriceCarAdvantagesCodeNavigation.CrMasSupCarAdvantagesEnName
+                                                            </td>
+                                                        }
+                                                        <td style="padding: 0 !important;">
+                                                            <input type="text" class="form-control Choises" style="width:100%;border:none;" value="@item.CrCasPriceCarAdvantagesValue" readonly />
+                                                        </td>
+                                                    </tr>
+                                                    no1++;
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                        <div class="tab-pane fade " id="Choices">
+                            <div class="row" style="width: 30%;margin-right: 30%;">
+                                <div class="col-sm-12" style="overflow: auto; width: 100%; height: 38vh;overflow-x: hidden;">
+                                    <table class="table table-bordered table-striped " id="myTable">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @localizer["No"]
+                                                </th>
+                                                <th width="70%">
+                                                    @localizer["Choices"]
+                                                </th>
+                                                <th width="30%">
+                                                    @localizer["Value"]
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                int no2 = 1;
+                                            }
+                                            @if (ViewBag.Choises != null || ViewBag.Choises == 0)
+                                            {
+                                                @foreach (var item in ViewBag.Choises)
+                                                {
+
+                                                    <tr>
+                                                        <td>
+                                                            @no2
+                                                        </td>
+                                                        @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                                        {
+                                                            <td>
+                                                                @item.CrCasPriceCarOptionsCodeNavigation.CrMasSupContractOptionsArName
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>
+                                                                @item.CrCasPriceCarOptionsCodeNavigation.CrMasSupContractOptionsEnName
+                                                            </td>
+                                                        }
+
+                                                        <td style="padding: 0 !important;">
+                                                            <input type="text" class="form-control Choises" style="width:100%;border:none;" value="@item.CrCasPriceCarOptionsValue" readonly />
+                                                        </td>
+                                                    </tr>
+                                                    no2++;
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- end col -->
+                        </div>
+                        <div class="tab-pane fade " id="Additional">
+                            <div class="row" style="width: 30%;margin-right: 30%;">
+                                <div class="col-sm-12" style="overflow: auto; width: 100%; height: 38vh;overflow-x: hidden;">
+                                    <table class="table table-bordered table-striped " id="myTable">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @localizer["No"]
+                                                </th>
+                                                <th width="70%">
+                                                    @localizer["Additionals"]
+                                                </th>
+
+                                                <th width="30%">
+                                                    @localizer["Value"]
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                int no = 1;
+                                            }
+                                            @if (ViewBag.Additional != null || ViewBag.Additional == 0)
+                                            {
+                                                @foreach (var item in ViewBag.Additional)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @no
+                                                        </td>
+                                                        @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                                        {
+                                                            <td>
+                                                                @item.CrCasPriceCarAdditionalCodeNavigation.CrMasSupContractAdditionalArName
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>
+                                                                @item.CrCasPriceCarAdditionalCodeNavigation.CrMasSupContractAdditionalEnName
+                                                            </td>
+                                                        }
+                                                        <td style="padding: 0 !important;">
+                                                            <input type="text" class="form-control Additional" style="width:100%;border:none;" autocomplete="off" value="@item.CrCasPriceCarAdditionalValue" readonly />
+                                                        </td>
+                                                    </tr>
+                                                    no++;
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- end col -->
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div style="width:97%">
+            <div class="float-start">
+                <input type='button' class='btn btn-primary button-next' name='next' id="nextBtn" value='@localizer["Next"]'>
+                <a class='btn btn-danger' id="deleteBtn" data-bs-toggle="modal" data-error="@Status.Deleted" data-bs-targett="#centermodalDelete" hidden>@localizer["Delete"]</a>
+            </div>
+            <div class="float-end">
+                <input type='button' class='btn btn-primary button-previous' name='previous' id="prevBtn" value='@localizer["Previous"]'>
+                <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="CarPrice" asp-action="CarPrice">
+                    @localizer["Back"]
+                </a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </form>
+</div>
+
+<!-- Delete Lessor Modal-->
+<div class="modal fade" id="centermodalDelete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>@localizer["SureTodelete"]</h4>
+                <p> @localizer["HintSureTodelete"]</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                <button type="button" id="deleteUserButton" onclick="DeletePriceCar()" class="btn btn-primary">@localizer["Okay"]</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        var retriveData = "@ViewBag.FeaturesCount"
+        // Get the next and previous buttons
+        var nextBtn = document.getElementById("nextBtn");
+        var prevBtn = document.getElementById("prevBtn");
+        var deleteBtn = document.getElementById("deleteBtn");
+        var status = document.getElementById("CrCasPriceCarBasicStatus").value;
+        prevBtn.setAttribute("hidden", "");
+        // Get all the tab links
+        var tabLinks = document.querySelectorAll(".nav-item a");
+
+        // Get all the tab panes
+        var tabPanes = document.getElementsByClassName("tab-pane");
+
+        // Set the initial active tab
+        var activeTab = 0;
+
+        // Show the initial active tab pane
+        tabPanes[activeTab].classList.add("active", "show");
+
+        // Function to hide all the tab panes
+        function hideAllTabPanes() {
+            for (var i = 0; i < tabPanes.length; i++) {
+                tabPanes[i].classList.remove("active", "show");
+            }
+        }
+        // Function to show the current active tab pane
+        function showActiveTabPane() {
+            tabPanes[activeTab].classList.add("active", "show");
+        }
+
+        // Function to show the current active tab Links
+        function showActivetabLinks() {
+            tabLinks[activeTab].classList.add("active");
+        }
+
+        function handleNextButtonClick() {
+            hideAllTabPanes();
+            tabLinks[activeTab].classList.remove("active");
+            if ((retriveData == null || retriveData == "") && activeTab == "1") {
+                activeTab = 3;
+            }
+            else {
+                activeTab++;
+            }
+            if (activeTab >= tabPanes.length - 1) {
+                activeTab = tabPanes.length - 1;
+                nextBtn.setAttribute("hidden", "");
+                if (status != '@Status.Deleted') {
+                    deleteBtn.removeAttribute("hidden");
+                }
+                prevBtn.removeAttribute("hidden");
+            } else {
+                nextBtn.removeAttribute("hidden");
+                prevBtn.removeAttribute("hidden");
+                if (status != '@Status.Deleted') {
+                    deleteBtn.setAttribute("hidden", "");
+                }
+            }
+            showActivetabLinks(); // Add active class to new nav link
+            showActiveTabPane();
+        }
+
+        // Function to handle the "Previous" button click
+        function handlePrevButtonClick() {
+            hideAllTabPanes();
+            tabLinks[activeTab].classList.remove("active");
+
+            if ((retriveData == null || retriveData == "" || retriveData == "0") && activeTab == "3") {
+                activeTab = 1;
+            }
+            else {
+                activeTab--;
+            }
+            if (activeTab <= 0) {
+                activeTab = 0;
+                prevBtn.setAttribute("hidden", "");
+                if (status != '@Status.Deleted') {
+                    deleteBtn.setAttribute("hidden", "");
+                }
+                nextBtn.removeAttribute("hidden");
+            } else {
+                nextBtn.removeAttribute("hidden");
+                prevBtn.removeAttribute("hidden");
+                if (status != '@Status.Deleted') {
+                    deleteBtn.setAttribute("hidden", "");
+                }
+            }
+            showActivetabLinks();
+            showActiveTabPane();
+        }
+
+        // Add event listeners to the next and previous buttons
+        nextBtn.addEventListener("click", handleNextButtonClick);
+        prevBtn.addEventListener("click", handlePrevButtonClick);
+    </script>
+
+
+    <script>
+        function DeletePriceCar() {
+            var serialNumber = document.getElementById("CrCasPriceCarBasicNo").value;
+            $.ajax({
+                type: "POST",
+                url: "/CAS/CarPrice/Delete",
+                data: { serialNumber: serialNumber },
+                success: function (result) {
+                    console.log(result)
+                    $('.modal').modal('hide');
+                    window.location.href = "/CAS/CarPrice/SuccesssMessageForCarPrice";
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        $("#deleteBtn").on("click", function (event) {
+            var status = $(this).attr("data-error")
+            var Modal = $(this).attr("data-bs-targett")
+            CheckValidation('2202007', status).done(function (data) {
+                console.log(data)
+                if (data) $(Modal).modal('show');
+            });
+        })
+    </script>
+}

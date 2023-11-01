@@ -18,85 +18,82 @@ namespace Bnan.Inferastructure.Repository
         {
             _unitOfWork = unitOfWork;
         }
-        public class VmModel
-        {
-            public string Id { get; set; }
-            public string Value { get; set; }
-        }
         public async Task<bool> AddFeatures(string serialNumber, string id, string value)
         {
-            var car = _unitOfWork.CrCasCarInformation.Find(x=>x.CrCasCarInformationSerailNo== serialNumber);
-            if (car != null)
+
+            CrCasPriceCarAdvantage crCasPriceCarAdvantage = new CrCasPriceCarAdvantage()
             {
-                CrCasPriceCarAdvantage crCasPriceCarAdvantage = new CrCasPriceCarAdvantage()
-                {
-                    CrCasPriceCarAdvantagesNo = serialNumber,
-                    CrCasPriceCarAdvantagesCode = id,
-                    CrCasPriceCarAdvantagesValue = decimal.Parse(value)
-                };
-                await _unitOfWork.CrCasPriceCarAdvantage.AddAsync(crCasPriceCarAdvantage);
-                return true;
-            }
-            return false;
+                CrCasPriceCarAdvantagesNo = serialNumber,
+                CrCasPriceCarAdvantagesCode = id,
+                CrCasPriceCarAdvantagesValue = decimal.Parse(value)
+            };
+            await _unitOfWork.CrCasPriceCarAdvantage.AddAsync(crCasPriceCarAdvantage);
+            return true;
         }
 
-       
+
 
 
 
         public async Task<bool> AddChoises(string serialNumber, string id, string value)
         {
-            var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == serialNumber);
-            if (car != null)
+
+            CrCasPriceCarOption crCasPriceCarOption = new CrCasPriceCarOption()
             {
-                CrCasPriceCarOption crCasPriceCarOption = new CrCasPriceCarOption()
-                {
-                    CrCasPriceCarOptionsNo = serialNumber,
-                    CrCasPriceCarOptionsCode = id,
-                    CrCasPriceCarOptionsValue = decimal.Parse(value)
-                };
-                await _unitOfWork.CrCasPriceCarOption.AddAsync(crCasPriceCarOption);
-                return true;
-            }
-            return false;
+                CrCasPriceCarOptionsNo = serialNumber,
+                CrCasPriceCarOptionsCode = id,
+                CrCasPriceCarOptionsValue = decimal.Parse(value)
+            };
+            await _unitOfWork.CrCasPriceCarOption.AddAsync(crCasPriceCarOption);
+            return true;
         }
 
-       
+
         public async Task<bool> AddAdditionals(string serialNumber, string id, string value)
         {
-            var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == serialNumber);
-            if (car != null)
+            CrCasPriceCarAdditional crCasPriceCarAdditional = new CrCasPriceCarAdditional()
             {
-                CrCasPriceCarAdditional crCasPriceCarAdditional = new CrCasPriceCarAdditional()
-                {
-                    CrCasPriceCarAdditionalNo = serialNumber,
-                    CrCasPriceCarAdditionalCode = id,
-                    CrCasPriceCarAdditionalValue = decimal.Parse(value)
-                };
-                await _unitOfWork.CrCasPriceCarAdditional.AddAsync(crCasPriceCarAdditional);
-                return true;
-            }
-            return false;
+                CrCasPriceCarAdditionalNo = serialNumber,
+                CrCasPriceCarAdditionalCode = id,
+                CrCasPriceCarAdditionalValue = decimal.Parse(value)
+            };
+            await _unitOfWork.CrCasPriceCarAdditional.AddAsync(crCasPriceCarAdditional);
+            return true;
         }
 
-        public async Task<bool> AddPriceCar(CrCasPriceCarBasic model)
+        public async Task<string> AddPriceCar(CrCasPriceCarBasic model)
         {
-            var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == model.CrCasPriceCarBasicNo);
             var distribution = _unitOfWork.CrMasSupCarDistribution.Find(x => x.CrMasSupCarDistributionCode == model.CrCasPriceCarBasicDistributionCode);
-            if (car != null && distribution!=null)
+            if (distribution != null)
             {
-                var AboutToExpire = _unitOfWork.CrCasLessorMechanism.FindAsync(l => l.CrCasLessorMechanismCode == car.CrCasCarInformationLessor
+                DateTime year = DateTime.Now;
+                var y = year.ToString("yy");
+                var Lrecord = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicLessorCode == model.CrCasPriceCarBasicLessorCode).Max(x => x.CrCasPriceCarBasicNo.Substring(x.CrCasPriceCarBasicNo.Length - 6, 6));
+                string Serial;
+                if (Lrecord != null)
+                {
+                    Int64 val = Int64.Parse(Lrecord) + 1;
+                    Serial = val.ToString("000000");
+                }
+                else
+                {
+                    Serial = "000001";
+                }
+
+                var AboutToExpire = _unitOfWork.CrCasLessorMechanism.FindAsync(l => l.CrCasLessorMechanismCode == model.CrCasPriceCarBasicLessorCode
                                                                                && l.CrCasLessorMechanismProcedures == "219"
                                                                                && l.CrCasLessorMechanismProceduresClassification == "20").Result.CrCasLessorMechanismDaysAlertAboutExpire;
-                model.CrCasPriceCarBasicLessorCode = car.CrCasCarInformationLessor;
+
+                model.CrCasPriceCarBasicNo = y + "-" + "1" + "219" + "-" + model.CrCasPriceCarBasicLessorCode + "100" + "-" + Serial;
+                model.CrCasPriceCarBasicLessorCode = model.CrCasPriceCarBasicLessorCode;
                 model.CrCasPriceCarBasicYear = DateTime.Now.Year.ToString().Substring(2, 2);
                 model.CrCasPriceCarBasicBrandCode = distribution.CrMasSupCarDistributionBrand;
-                model.CrCasPriceCarBasicCarYear = car.CrCasCarInformationYear;
+                model.CrCasPriceCarBasicCarYear = distribution.CrMasSupCarDistributionYear;
                 model.CrCasPriceCarBasicModelCode = distribution.CrMasSupCarDistributionModel;
                 model.CrCasPriceCarBasicCategoryCode = distribution.CrMasSupCarDistributionCategory;
                 model.CrCasPriceCarBasicDistributionCode = distribution.CrMasSupCarDistributionCode;
                 model.CrCasPriceCarBasicDate = DateTime.Now.Date;
-                if (AboutToExpire!=null) model.CrCasPriceCarBasicDateAboutToFinish = model.CrCasPriceCarBasicEndDate?.AddDays(-(double)AboutToExpire);
+                if (AboutToExpire != null) model.CrCasPriceCarBasicDateAboutToFinish = model.CrCasPriceCarBasicEndDate?.AddDays(-(double)AboutToExpire);
                 model.CrCasPriceCarBasicWeeklyDay = 7;
                 model.CrCasPriceCarBasicMonthlyDay = 28;
                 model.CrCasPriceCarBasicYearlyDay = 360;
@@ -104,47 +101,9 @@ namespace Bnan.Inferastructure.Repository
                 model.CrCasPriceCarBasicStatus = Status.Active;
 
                 await _unitOfWork.CrCasPriceCarBasic.AddAsync(model);
-                return true;
+                return model.CrCasPriceCarBasicNo;
             }
-            return false;
+            return null;
         }
     }
 }
-
-
-//CrCasPriceCarBasic crCasPriceCarBasic = new CrCasPriceCarBasic()
-//{
-//    CrCasPriceCarBasicNo = model.CrCasPriceCarBasicNo,
-//    CrCasPriceCarBasicCarYear = distribution.CrMasSupCarDistributionYear,
-//    CrCasPriceCarBasicType = null,
-//    CrCasPriceCarBasicLessorCode = car.CrCasCarInformationLessor,
-//    CrCasPriceCarBasicBrandCode = distribution.CrMasSupCarDistributionBrand,
-//    CrCasPriceCarBasicModelCode = distribution.CrMasSupCarDistributionModel,
-//    CrCasPriceCarBasicCategoryCode = distribution.CrMasSupCarDistributionCategory,
-//    CrCasPriceCarBasicDistributionCode = distribution.CrMasSupCarDistributionCode,
-//    CrCasPriceCarBasicDate = DateTime.Now.Date,
-//    CrCasPriceCarBasicStartDate = model.CrCasPriceCarBasicStartDate,
-//    CrCasPriceCarBasicEndDate = model.CrCasPriceCarBasicEndDate,
-//    CrCasPriceCarBasicDailyRent = model.CrCasPriceCarBasicDailyRent,
-//    CrCasPriceCarBasicWeeklyRent = model.CrCasPriceCarBasicWeeklyRent,
-//    CrCasPriceCarBasicMonthlyRent = model.CrCasPriceCarBasicMonthlyRent,
-//    CrCasPriceCarBasicYearlyRent = model.CrCasPriceCarBasicYearlyRent,
-//    CrCasPriceCarBasicWeeklyDay = 7,
-//    CrCasPriceCarBasicMonthlyDay = 28,
-//    CrCasPriceCarBasicYearlyDay = 360,
-//    CrCasPriceCarBasicNoDailyFreeKm = model.CrCasPriceCarBasicNoDailyFreeKm,
-//    CrCasPriceCarBasicFreeAdditionalHours = model.CrCasPriceCarBasicFreeAdditionalHours,
-//    CrCasPriceCarBasicExtraHourValue = model.CrCasPriceCarBasicExtraHourValue,
-//    CrCasPriceCarBasicHourMax = model.CrCasPriceCarBasicHourMax,
-//    CrCasPriceCarBasicAlertHour = null,
-//    CrCasPriceCarBasicCancelHour = model.CrCasPriceCarBasicCancelHour,
-//    CrCasPriceCarBasicRequireFinancialCredit = false,
-//    CrCasPriceCarBasicCompensationAccident = model.CrCasPriceCarBasicCompensationAccident,
-//    CrCasPriceCarBasicCompensationDrowning = model.CrCasPriceCarBasicCompensationDrowning,
-//    CrCasPriceCarBasicCompensationFire = model.CrCasPriceCarBasicCompensationFire,
-//    CrCasPriceCarBasicCompensationTheft = model.CrCasPriceCarBasicCompensationTheft,
-//    CrCasCarPriceBasicInFeesTga = null,
-//    CrCasCarPriceBasicOutFeesTga = null,
-//    CrCasCarPriceBasicInFeesTamm = model.CrCasCarPriceBasicInFeesTamm,
-//    CrCasCarPriceBasicOutFeesTamm = model.CrCasCarPriceBasicOutFeesTamm
-//};

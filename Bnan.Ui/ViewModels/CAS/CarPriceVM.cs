@@ -21,14 +21,14 @@ namespace Bnan.Ui.ViewModels.CAS
         [Required(ErrorMessage = "requiredFiled")]
         public decimal? CrCasPriceCarBasicDailyRent { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
-        public int? CrCasPriceCarBasicWeeklyRent { get; set; }
+        public decimal? CrCasPriceCarBasicWeeklyRent { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
-        public int? CrCasPriceCarBasicMonthlyRent { get; set; }
+        public decimal? CrCasPriceCarBasicMonthlyRent { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public int? CrCasPriceCarBasicYearlyRent { get; set; }
-        public decimal? CrCasPriceCarBasicWeeklyDay { get; set; }
-        public decimal? CrCasPriceCarBasicMonthlyDay { get; set; }
-        public decimal? CrCasPriceCarBasicYearlyDay { get; set; }
+        public int? CrCasPriceCarBasicWeeklyDay { get; set; }
+        public int? CrCasPriceCarBasicMonthlyDay { get; set; }
+        public int? CrCasPriceCarBasicYearlyDay { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public int? CrCasPriceCarBasicNoDailyFreeKm { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
