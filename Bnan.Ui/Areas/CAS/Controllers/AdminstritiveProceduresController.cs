@@ -222,6 +222,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationConcatenateEnName})";
                     }
                 }
+                if (item.CrCasSysAdministrativeProceduresCode == "219")
+                {
+                    // if 219 then it is Car Price
+                    var carDistribution = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicDistributionCode.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasPriceCarBasicLessorCode == lessorCode, new[] { "CrCasPriceCarBasicDistributionCodeNavigation" });
+                    if (carDistribution != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({carDistribution.CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionConcatenateArName})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({carDistribution.CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionConcatenateEnName})";
+                    }
+                }
             };
 
             return View(model);
@@ -427,6 +437,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     {
                         item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({car.CrCasCarInformationConcatenateArName})";
                         item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationConcatenateEnName})";
+                    }
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "219")
+                {
+                    // if 219 then it is Car Price
+                    var carDistribution = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicDistributionCode.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasPriceCarBasicLessorCode == lessorCode, new[] { "CrCasPriceCarBasicDistributionCodeNavigation" });
+                    if (carDistribution != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({carDistribution.CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionConcatenateArName})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({carDistribution.CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionConcatenateEnName})";
                     }
                 }
             };

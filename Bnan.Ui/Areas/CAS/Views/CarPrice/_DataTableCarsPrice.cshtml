@@ -17,6 +17,7 @@
                     <th aria-label="Position: activate to sort column ascending">@localizer["Date"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["StartDate"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["EndDate"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["NoOfCar"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
             </thead>
@@ -32,10 +33,10 @@
                         <tr onclick="location.href='@Url.Action("Edit", "CarPrice", new { serialNumber = item.CrCasPriceCarBasicNo})'" style="cursor:pointer;color:red">
                             <td>@no</td>
                             <td>@item.CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionConcatenateEnName</td>
-                            @*                            <td>@item.CrCasPriceCarBasicDailyRent - @item.CrCasPriceCarBasicWeeklyRent - @item.CrCasPriceCarBasicMonthlyRent</td>*@
                             <td>@item.CrCasPriceCarBasicDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicStartDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicEndDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@item.CrCasPriceCarBasicDistributionCodeNavigation.CrCasCarInformations.Where(x=>x.CrCasCarInformationLessor==item.CrCasPriceCarBasicLessorCode).Count()</td>
                             <td>
                                 @if (@item.CrCasPriceCarBasicStatus == Status.Deleted)
                                 {
@@ -61,6 +62,7 @@
                             <td>@item.CrCasPriceCarBasicDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicStartDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicEndDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@item.CrCasPriceCarBasicDistributionCodeNavigation.CrCasCarInformations.Where(x=>x.CrCasCarInformationLessor==item.CrCasPriceCarBasicLessorCode).Count()</td>
                             <td>
                                 {
                                 @localizer["Active"]
@@ -85,6 +87,7 @@ else
                     <th aria-label="Position: activate to sort column ascending">@localizer["Date"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["StartDate"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["EndDate"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["NoOfCar"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
             </thead>
@@ -100,10 +103,10 @@ else
                         <tr onclick="location.href='@Url.Action("Edit", "CarPrice", new { serialNumber = item.CrCasPriceCarBasicNo})'" style="cursor:pointer;color:red">
                             <td>@no</td>
                             <td>@item.CrCasPriceCarBasicDistributionCodeNavigation.CrMasSupCarDistributionConcatenateArName</td>
-                            @*<td>@item.CrCasPriceCarBasicDailyRent - @item.CrCasPriceCarBasicWeeklyRent - @item.CrCasPriceCarBasicMonthlyRent</td>*@
                             <td>@item.CrCasPriceCarBasicDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicStartDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicEndDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@item.CrCasPriceCarBasicDistributionCodeNavigation.CrCasCarInformations.Where(x=>x.CrCasCarInformationLessor==item.CrCasPriceCarBasicLessorCode).Count()</td>
                             <td>
                                 @if (@item.CrCasPriceCarBasicStatus == Status.Deleted)
                                 {
@@ -129,6 +132,7 @@ else
                             <td>@item.CrCasPriceCarBasicDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicStartDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasPriceCarBasicEndDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@item.CrCasPriceCarBasicDistributionCodeNavigation.CrCasCarInformations.Where(x=>x.CrCasCarInformationLessor==item.CrCasPriceCarBasicLessorCode).Count()</td>
                             <td>
                                 @localizer["Active"]
                             </td>

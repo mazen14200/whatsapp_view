@@ -62,7 +62,7 @@
             right: 77%;
         }
 
-        #CenterTable{
+        #CenterTable {
             width: 30%;
             margin-right: 30%;
         }
@@ -103,11 +103,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-1" id="noOfCarDiv" hidden>
+                <div class="col-md-1"  id="noOfCarDiv" hidden>
                     <label class="form-label" for="NoOfCars">@localizer["NoOfCars"]</label>
                 </div>
-                <div class="col-md-3">
-                    <input type="text" class="form-control" id="NoOfCars" autocomplete="off" readonly>
+                <div class="col-md-1">
+                    <input type="text" style="margin-right: -4%;" class="form-control" id="NoOfCars" autocomplete="off" readonly>
                 </div>
             </div>
             <div class="row">
@@ -280,6 +280,7 @@
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
                                             <span asp-validation-for="@Model.CrCasCarPriceBasicOutFeesTamm" class="text-danger"></span>
+                                            <span id="OutFeesTamm" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -328,7 +329,7 @@
                                         <label class="form-label" asp-for="CrCasPriceCarBasicFreeAdditionalHours">@localizer["FreeAdditionalHours"]</label>
                                     </div>
                                     <div class="col-md-1 col-11">
-                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicFreeAdditionalHours" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicFreeAdditionalHours" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                                         <div style="margin-top:2px">
                                             <div style="height: 1.35em">
                                                 <span asp-validation-for="@Model.CrCasPriceCarBasicFreeAdditionalHours" class="text-danger"></span>
@@ -339,7 +340,7 @@
                                         <label class="form-label" asp-for="CrCasPriceCarBasicHourMax">@localizer["HourMax"]</label>
                                     </div>
                                     <div class="col-md-1 col-11">
-                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicHourMax" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicHourMax" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                                         <div style="margin-top:2px">
                                             <div style="height: 1.35em">
                                                 <span asp-validation-for="@Model.CrCasPriceCarBasicHourMax" class="text-danger"></span>
@@ -368,6 +369,7 @@
                                         <div style="margin-top:2px">
                                             <div style="height: 1.35em">
                                                 <span asp-validation-for="@Model.CrCasPriceCarBasicMinAge" class="text-danger"></span>
+                                                <span id="MinAge" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -379,6 +381,7 @@
                                         <div style="margin-top:2px">
                                             <div style="height: 1.35em">
                                                 <span asp-validation-for="@Model.CrCasPriceCarBasicMaxAge" class="text-danger"></span>
+                                                <span id="MaxAge" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -386,7 +389,7 @@
                                         <label class="form-label" asp-for="CrCasPriceCarBasicCancelHour">@localizer["CancelHour"]</label>
                                     </div>
                                     <div class="col-md-1 col-11">
-                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCancelHour" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCancelHour" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                                         <div style="margin-top:2px">
                                             <div style="height: 1.35em">
                                                 <span asp-validation-for="@Model.CrCasPriceCarBasicCancelHour" class="text-danger"></span>
@@ -445,7 +448,7 @@
                             </div> <!-- end row -->
                         </div>
                         <div class="tab-pane fade " id="Features">
-                            <div class="row"  id="CenterTable">
+                            <div class="row" id="CenterTable">
                                 <div class="col-sm-12" style="overflow: auto; width: 100%; height: 38vh;overflow-x: hidden;">
                                     <div class="dataTable">
                                         @if (Model == null)
@@ -569,11 +572,11 @@
         </div>
         <div style="width:97%">
             <div class="float-start">
-                <input type='button' class='btn btn-primary button-next' name='next' id="nextBtn" value='@localizer["Next"]'>
-                <a class='btn btn-primary' id="saveBtn" hidden>@localizer["Save"]</a>
+                <input type='button' class='btn btn-primary button-previous' name='previous' id="prevBtn" value='@localizer["Previous"]'>
             </div>
             <div class="float-end">
-                <input type='button' class='btn btn-primary button-previous' name='previous' id="prevBtn" value='@localizer["Previous"]'>
+                <input type='button' class='btn btn-primary button-next' name='next' id="nextBtn" value='@localizer["Next"]'>
+                <a class='btn btn-primary' id="saveBtn" hidden>@localizer["Save"]</a>
                 <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="CarPrice" asp-action="CarPrice">
                     @localizer["Back"]
                 </a>
@@ -738,9 +741,13 @@
                 var weeklyRent = parseInt($("#CrCasPriceCarBasicWeeklyRent").val());
                 var monthlyRent = parseInt($("#CrCasPriceCarBasicMonthlyRent").val());
                 var yearlyRent = parseInt($("#CrCasPriceCarBasicYearlyRent").val());
+                var MinAge = parseInt($("#CrCasPriceCarBasicMinAge").val());
+                var MaxAge = parseInt($("#CrCasPriceCarBasicMaxAge").val());
+                var InFeesTamm = parseInt($("#CrCasCarPriceBasicInFeesTamm").val());
+                var OutFeesTamm = parseInt($("#CrCasCarPriceBasicOutFeesTamm").val());
 
                 // Perform the validations
-                if (weeklyRent <= dailyRent) {
+                if (weeklyRent >= dailyRent) {
                     // Weekly rent should be greater than daily rent
                     $("#WeeklyRent").text('@localizer["WeeklyRentError"]');
                     return; // Stop further execution
@@ -748,7 +755,7 @@
                 else {
                     $("#WeeklyRent").text('');
                 }
-                if (monthlyRent <= weeklyRent) {
+                if (monthlyRent >= weeklyRent) {
                     // Monthly rent should be greater than weekly rent
                     $("#MonthlyRent").text('@localizer["MonthlyRentError"]');
                     return; // Stop further execution
@@ -757,7 +764,7 @@
                     $("#MonthlyRent").text('');
 
                 }
-                if (yearlyRent <= monthlyRent) {
+                if (yearlyRent >= monthlyRent) {
                     // Yearly rent should be greater than monthly rent
                     $("#YearlyRent").text('@localizer["YearlyRentError"]');
                     return; // Stop further execution
@@ -766,6 +773,25 @@
                     $("#YearlyRent").text('');
 
                 }
+
+                if (MaxAge < MinAge) {
+                    // Yearly rent should be greater than monthly rent
+                    $("#MaxAge").text('@localizer["MaxAgeError"]');
+                    return; // Stop further execution
+                }
+                else {
+                    $("#MaxAge").text('');
+                }
+
+                if (OutFeesTamm < InFeesTamm) {
+                    // Yearly rent should be greater than monthly rent
+                    $("#OutFeesTamm").text('@localizer["OutFeesTammError"]');
+                    return; // Stop further execution
+                }
+                else {
+                    $("#OutFeesTamm").text('');
+                }
+
                 hideAllTabPanes();
                 tabLinks[activeTab].classList.remove("active");
                 if ((retriveData == null || retriveData == "") && activeTab == "1") {

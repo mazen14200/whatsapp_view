@@ -964,15 +964,19 @@
   "FreeAdditionalHours": "الساعات المجانية",
   "HourMax": "الحد الأعلى للساعات",
   "IsAdditionalDriver": "السماح بسائق إضافي",
-  "MinAge": "اقل عمر للمستأجر",
-  "MaxAge": "أكبر عمر للمستأجر",
+  "MinAge": "اقل عمر للسائق",
+  "MaxAge": "أكبر عمر للسائق",
   "CancelHour": "ساعات الغاء العقد",
   "MainPrice": "السعر الاساسي",
   "TermsRented": "بنود التأجير",
   "Choises": "الخيارات",
-  "YearlyRentError": "لا يقل عن الايجار الشهري",
-  "WeeklyRentError": "لا يقل عن الايجار اليومي",
-  "MonthlyRentError": "لا يقل عن الايجار الاسبوع",
-  "Edit AddPriceCar Hint": "تمكنك هذه الصفحة من عرض اسعار السيارة"
+  "YearlyRentError": "لا يزيد عن الايجار الشهري",
+  "WeeklyRentError": "لا يزيد عن الايجار اليومي",
+  "MonthlyRentError": "لا يزيد عن الايجار الاسبوع",
+  "MaxAgeError": "لا يقل عن اقل عمر",
+  "MinAgeError": "لا يزيد عن اكبر عمر",
+  "Edit AddPriceCar Hint": "تمكنك هذه الصفحة من عرض اسعار السيارة",
+  "NoOfCar": "عدد السيارات",
+  "OutFeesTammError": "لا يقل عن الداخلي"
 
 }

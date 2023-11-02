@@ -530,11 +530,11 @@
         </div>
         <div style="width:97%">
             <div class="float-start">
-                <input type='button' class='btn btn-primary button-next' name='next' id="nextBtn" value='@localizer["Next"]'>
-                <a class='btn btn-danger' id="deleteBtn" data-bs-toggle="modal" data-error="@Status.Deleted" data-bs-targett="#centermodalDelete" hidden>@localizer["Delete"]</a>
+                <input type='button' class='btn btn-primary button-previous' name='previous' id="prevBtn" value='@localizer["Previous"]'>
             </div>
             <div class="float-end">
-                <input type='button' class='btn btn-primary button-previous' name='previous' id="prevBtn" value='@localizer["Previous"]'>
+                <input type='button' class='btn btn-primary button-next' name='next' id="nextBtn" value='@localizer["Next"]'>
+                <a class='btn btn-danger' id="deleteBtn" data-bs-toggle="modal" data-error="@Status.Deleted" data-bs-targett="#centermodalDelete" hidden>@localizer["Delete"]</a>
                 <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="CarPrice" asp-action="CarPrice">
                     @localizer["Back"]
                 </a>

@@ -46,8 +46,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("202", "2202007", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var carPrices = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicLessorCode == lessorCode && x.CrCasPriceCarBasicStatus == Status.Active,
-                                                                        new[] { "CrCasPriceCarBasicLessorCodeNavigation", "CrCasPriceCarBasicDistributionCodeNavigation" }).DistinctBy(x => x.CrCasPriceCarBasicDistributionCode)
-;
+                                                                        new[] { "CrCasPriceCarBasicLessorCodeNavigation", "CrCasPriceCarBasicDistributionCodeNavigation.CrCasCarInformations" }).DistinctBy(x => x.CrCasPriceCarBasicDistributionCodeNavigation);
             return View(carPrices);
         }
         [HttpGet]
@@ -61,7 +60,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (!string.IsNullOrEmpty(status))
                 {
                     var carPrices = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicLessorCode == lessorCode,
-                                                                           new[] { "CrCasPriceCarBasicLessorCodeNavigation", "CrCasPriceCarBasicDistributionCodeNavigation" }).DistinctBy(x => x.CrCasPriceCarBasicDistributionCode);
+                                                                           new[] { "CrCasPriceCarBasicLessorCodeNavigation", "CrCasPriceCarBasicDistributionCodeNavigation.CrCasCarInformations" }).DistinctBy(x => x.CrCasPriceCarBasicDistributionCode);
 
                     if (status == Status.All)
                     {
@@ -156,6 +155,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                             await _carPrice.AddFeatures(PriceCarNo, item.Id, item.Value);
                         }
                     }
+                    // Change cars status and No Price 
+                    var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationDistribution == CarPriceModel.CrCasPriceCarBasicDistributionCode);
+                    if (cars!=null)
+                    {
+                        foreach (var item in cars)
+                        {
+                            item.CrCasCarInformationPriceStatus = true;
+                            item.CrCasCarInformationPriceNo = PriceCarNo;
+                        }
+                    }
                 }
                 if (await _unitOfWork.CompleteAsync() > 0)
                 {
@@ -216,6 +225,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             if (carPrice != null)
             {
                 carPrice.CrCasPriceCarBasicStatus = "D";
+
+                // Change cars status and No Price 
+                var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationDistribution == carPrice.CrCasPriceCarBasicDistributionCode);
+                if (cars != null)
+                {
+                    foreach (var item in cars)
+                    {
+                        item.CrCasCarInformationPriceStatus = false;
+                    }
+                }
                 if (await _unitOfWork.CompleteAsync()>0)
                 {
                     // SaveTracing
