@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Bnan.Core.Models
 {
-    public partial class CrMasUserInformation:IdentityUser
+    public partial class CrMasUserInformation : IdentityUser
     {
         public CrMasUserInformation()
         {
@@ -51,7 +51,6 @@ namespace Bnan.Core.Models
         public bool? CrMasUserInformationOperationStatus { get; set; }
         public string? CrMasUserInformationStatus { get; set; }
         public string? CrMasUserInformationReasons { get; set; }
-       
         public virtual CrMasLessorInformation? CrMasUserInformationLessorNavigation { get; set; }
         public virtual CrMasUserContractValidity CrMasUserContractValidity { get; set; } = null!;
         public virtual ICollection<CrCasSysAdministrativeProcedure> CrCasSysAdministrativeProcedures { get; set; }

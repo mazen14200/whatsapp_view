@@ -57,7 +57,6 @@ namespace Bnan.Core.Models
         public string? CrCasPriceCarBasicReasons { get; set; }
 
         public virtual CrMasSupCarBrand? CrCasPriceCarBasicBrandCodeNavigation { get; set; }
-        public virtual CrMasSupCarYear? CrCasPriceCarBasicCarYearNavigation { get; set; }
         public virtual CrMasSupCarCategory? CrCasPriceCarBasicCategoryCodeNavigation { get; set; }
         public virtual CrMasSupCarDistribution? CrCasPriceCarBasicDistributionCodeNavigation { get; set; }
         public virtual CrMasLessorInformation? CrCasPriceCarBasicLessorCodeNavigation { get; set; }
