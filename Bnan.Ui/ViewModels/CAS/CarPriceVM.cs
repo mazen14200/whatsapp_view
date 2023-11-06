@@ -25,7 +25,7 @@ namespace Bnan.Ui.ViewModels.CAS
         [Required(ErrorMessage = "requiredFiled")]
         public decimal? CrCasPriceCarBasicMonthlyRent { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
-        public int? CrCasPriceCarBasicYearlyRent { get; set; }
+        public decimal? CrCasPriceCarBasicYearlyRent { get; set; }
         public int? CrCasPriceCarBasicWeeklyDay { get; set; }
         public int? CrCasPriceCarBasicMonthlyDay { get; set; }
         public int? CrCasPriceCarBasicYearlyDay { get; set; }

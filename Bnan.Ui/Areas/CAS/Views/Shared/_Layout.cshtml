@@ -544,7 +544,7 @@
                                 <div class="dropdown-item noti-title" >
                                     <h5 class="m-0 float-start">
                                         <span>
-                                            الاشعارات
+                                            @localizer["Notifications"]
                                         </span>
                                     </h5>
                                 </div>
@@ -1056,6 +1056,55 @@
             //     input.value = input.value.slice(0, 10);
             // }
         }
+
+        function validateInput9Digit(input) {
+            // Remove non-digit characters and additional decimal points
+            input.value = input.value.replace(/[^0-9\.]/g, '');
+            const decimalIndex = input.value.indexOf('.');
+
+            // Limit to 9 digits before and after the decimal point
+            if (decimalIndex !== -1) {
+                const digitsBeforeDecimal = input.value.substring(0, decimalIndex);
+                const digitsAfterDecimal = input.value.substring(decimalIndex + 1);
+
+                // Limit to 2 digits after the decimal point
+                input.value = digitsBeforeDecimal.substr(0, 9) + '.' + digitsAfterDecimal.substr(0, 2);
+
+                // Remove additional decimal points
+                if (input.value.indexOf('.', decimalIndex + 1) !== -1) {
+                    const lastValidIndex = input.value.lastIndexOf('.');
+                    input.value = input.value.substring(0, lastValidIndex) + input.value.substring(lastValidIndex + 1);
+                }
+            } else {
+                // Limit to 9 digits before the decimal point
+                input.value = input.value.substr(0, 9);
+            }
+        }
+
+        function validateInput3Digit(input) {
+            // Remove non-digit characters and additional decimal points
+            input.value = input.value.replace(/[^0-9\.]/g, '');
+            const decimalIndex = input.value.indexOf('.');
+
+            // Limit to 9 digits before and after the decimal point
+            if (decimalIndex !== -1) {
+                const digitsBeforeDecimal = input.value.substring(0, decimalIndex);
+                const digitsAfterDecimal = input.value.substring(decimalIndex + 1);
+
+                // Limit to 2 digits after the decimal point
+                input.value = digitsBeforeDecimal.substr(0, 9) + '.' + digitsAfterDecimal.substr(0, 2);
+
+                // Remove additional decimal points
+                if (input.value.indexOf('.', decimalIndex + 1) !== -1) {
+                    const lastValidIndex = input.value.lastIndexOf('.');
+                    input.value = input.value.substring(0, lastValidIndex) + input.value.substring(lastValidIndex + 1);
+                }
+            } else {
+                // Limit to 9 digits before the decimal point
+                input.value = input.value.substr(0, 3);
+            }
+        }
+
         function validateInputNumberRate(input) {
             const regex = /^(\d{1,2}(\.\d{1,2})?|100(\.0{1,2})?)$/;
             if (!regex.test(input.value)) {

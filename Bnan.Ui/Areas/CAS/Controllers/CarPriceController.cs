@@ -98,7 +98,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             if (distribution != null)
             {
-                var carPrice = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicDistributionCode == distribution.CrMasSupCarDistributionCode&&x.CrCasPriceCarBasicStatus==Status.Active).Count();
+                var carPrice = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicDistributionCode == distribution.CrMasSupCarDistributionCode && x.CrCasPriceCarBasicStatus == Status.Active).Count();
                 if (carPrice > 0) ModelState.AddModelError("CrCasPriceCarBasicDistributionCode", _localizer["IsExists"]);
             }
             else ModelState.AddModelError("CrCasPriceCarBasicDistributionCode", _localizer["RessureFromNameCar"]);
@@ -157,7 +157,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     }
                     // Change cars status and No Price 
                     var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationDistribution == CarPriceModel.CrCasPriceCarBasicDistributionCode);
-                    if (cars!=null)
+                    if (cars != null)
                     {
                         foreach (var item in cars)
                         {

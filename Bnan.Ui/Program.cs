@@ -2,6 +2,7 @@
 using Microsoft.Extensions.FileProviders;
 using Bnan.Inferastructure;
 using NToastNotify;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 

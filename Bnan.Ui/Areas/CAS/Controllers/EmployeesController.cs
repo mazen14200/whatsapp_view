@@ -114,7 +114,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewData["CallingKeys"] = callingKeyList; // Pass the callingKeys to the view
             var currentUser = await _userManager.GetUserAsync(User);
             var lastUser = _userManager.Users.ToList().LastOrDefault(x => x.CrMasUserInformationLessor == currentUser.CrMasUserInformationLessor);
-            ViewBag.Branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == currentUser.CrMasUserInformationLessor&&x.CrCasBranchInformationStatus==Status.Active);
+            ViewBag.Branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == currentUser.CrMasUserInformationLessor && x.CrCasBranchInformationStatus == Status.Active);
 
             return View();
         }
@@ -377,7 +377,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 // Save Adminstrive Procedures
                 await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "234", "20", currentUser.CrMasUserInformationLessor, "100",
-                    user.CrMasUserInformationCode, null, null, null, null, null, null, null, null, sAr,sEn, "U", null);
+                    user.CrMasUserInformationCode, null, null, null, null, null, null, null, null, sAr, sEn, "U", null);
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 return RedirectToAction("Employees", "Employees");
             }
@@ -405,7 +405,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             // Exclude the current user from the list
             var usersByLessor = await _userService.GetAllUsersByLessor(userLessor.CrMasUserInformationLessor);
             var userWithOutManger = usersByLessor.Where(x => x.CrMasUserInformationCode != ("CAS" + userLessor.CrMasUserInformationLessor));
-            return View(userWithOutManger.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode && x.CrMasUserInformationStatus == Status.Active&&x.CrMasUserInformationAuthorizationAdmin==true).ToList());
+            return View(userWithOutManger.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode && x.CrMasUserInformationStatus == Status.Active && x.CrMasUserInformationAuthorizationAdmin == true).ToList());
         }
 
         [HttpGet]
@@ -498,12 +498,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     procedureTask.CrMasUserProceduresValidationUnDeleteAuthorization = false;
                 }
             }
-            var user = await _unitOfWork.CrMasUserInformation.FindAsync(x=>x.CrMasUserInformationCode==model.UserId);
+            var user = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == model.UserId);
 
             //Save Adminstrive Procedures
-                await  _adminstritiveProcedures.SaveAdminstritive(user.CrMasUserInformationCode, "1", "234", "20", user.CrMasUserInformationLessor, "100",
-               user.CrMasUserInformationCode, null, null, null, null, null, null, null, null, "تحديث صلاحيات العقد", "edit contract Validity", "U", null);
-            await  _unitOfWork.CompleteAsync();
+            await _adminstritiveProcedures.SaveAdminstritive(user.CrMasUserInformationCode, "1", "234", "20", user.CrMasUserInformationLessor, "100",
+           user.CrMasUserInformationCode, null, null, null, null, null, null, null, null, "تحديث صلاحيات العقد", "edit contract Validity", "U", null);
+            await _unitOfWork.CompleteAsync();
             return Json(new { success = true });
         }
 
@@ -555,8 +555,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             var model = _mapper.Map<ContractValiditionsVM>(contractValidtion);
             model.CrMasUserContractValidityUser = user;
-            model.CrMasSysProcedure = _unitOfWork.CrMasSysProcedure.FindAll(x=>x.CrMasSysProceduresStatus==Status.Active&&( x.CrMasSysProceduresClassification=="10"|| x.CrMasSysProceduresClassification == "11" || x.CrMasSysProceduresClassification == "12" || x.CrMasSysProceduresClassification == "13")).ToList();
-            model.CrCasLessorMechanism = _unitOfWork.CrCasLessorMechanism.FindAll(x=>x.CrCasLessorMechanismCode==user.CrMasUserInformationLessor && (x.CrCasLessorMechanismProceduresClassification == "10" || x.CrCasLessorMechanismProceduresClassification == "11" || x.CrCasLessorMechanismProceduresClassification == "12" || x.CrCasLessorMechanismProceduresClassification == "13")).ToList();
+            model.CrMasSysProcedure = _unitOfWork.CrMasSysProcedure.FindAll(x => x.CrMasSysProceduresStatus == Status.Active && (x.CrMasSysProceduresClassification == "10" || x.CrMasSysProceduresClassification == "11" || x.CrMasSysProceduresClassification == "12" || x.CrMasSysProceduresClassification == "13")).ToList();
+            model.CrCasLessorMechanism = _unitOfWork.CrCasLessorMechanism.FindAll(x => x.CrCasLessorMechanismCode == user.CrMasUserInformationLessor && (x.CrCasLessorMechanismProceduresClassification == "10" || x.CrCasLessorMechanismProceduresClassification == "11" || x.CrCasLessorMechanismProceduresClassification == "12" || x.CrCasLessorMechanismProceduresClassification == "13")).ToList();
 
             return View(model);
         }

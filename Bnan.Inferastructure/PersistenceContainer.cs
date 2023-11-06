@@ -25,7 +25,7 @@ namespace Bnan.Inferastructure
             builder.Services.AddDbContext<BnanKSAContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("constring"));
-               /* options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);*/
+                /* options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);*/
             });
 
             builder.Services.AddIdentity<CrMasUserInformation, IdentityRole>(opt =>
@@ -85,7 +85,7 @@ namespace Bnan.Inferastructure
                    };
                });
 
-              
+
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
@@ -118,7 +118,7 @@ namespace Bnan.Inferastructure
 
             builder.Services.AddScoped<IUserBranchValidity, UserBranchValidity>();
             builder.Services.AddScoped<IRenterDriver, RenterDriver>();
-            builder.Services.AddScoped<IDrivingLicense, DrivingLicense > ();
+            builder.Services.AddScoped<IDrivingLicense, DrivingLicense>();
 
             builder.Services.AddScoped<IRenterIDType, IDType>();
 
