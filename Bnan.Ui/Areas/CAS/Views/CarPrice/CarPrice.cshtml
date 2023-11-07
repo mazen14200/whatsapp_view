@@ -73,30 +73,30 @@
             </div>
         </div>
     </div>
-
-    @section scripts {
-        @*Get Users Using filter*@
-        <script>
-            //get User By Status function
-            function GetCarsFitler(status) {
-                $.ajax({
-                    type: "GET",
-                    data: {
-                        status: status
-                    },
-                    url: "@Url.Action("CarPriceByStatus", "CarPrice", new { Area = "CAS" })",
-                    success: function (response) {
-                        // set_nice_scroll();
-                        console.log(response);
-                        $(".dataTable").html(response);
-                        set_basic_datatable();
-                    },
-                })
-            }
-
-            //on Click Filter Radio Button GetLessorsByStatus
-            $("input[name='customRadio']").on("click", function () {
-                GetCarsFitler($(this).val())
+</div>
+@section scripts {
+    @*Get Users Using filter*@
+    <script>
+        //get User By Status function
+        function GetCarsFitler(status) {
+            $.ajax({
+                type: "GET",
+                data: {
+                    status: status
+                },
+                url: "@Url.Action("CarPriceByStatus", "CarPrice", new { Area = "CAS" })",
+                success: function (response) {
+                    // set_nice_scroll();
+                    console.log(response);
+                    $(".dataTable").html(response);
+                    set_basic_datatable();
+                },
             })
-        </script>
+        }
+
+        //on Click Filter Radio Button GetLessorsByStatus
+        $("input[name='customRadio']").on("click", function () {
+            GetCarsFitler($(this).val())
+        })
+    </script>
     }

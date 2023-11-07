@@ -83,6 +83,7 @@ namespace Bnan.Inferastructure.Repository
         public IGenric<CrCasPriceCarAdvantage> CrCasPriceCarAdvantage { get; private set; }
         public IGenric<CrCasPriceCarAdditional> CrCasPriceCarAdditional { get; private set; }
         public IGenric<CrCasPriceCarOption> CrCasPriceCarOption { get; private set; }
+        public IGenric<CrMasSysProbabilityMembership> CrMasSysProbabilityMembership { get; private set; }
 
 
         public UnitOfWork(BnanKSAContext context)
@@ -147,6 +148,7 @@ namespace Bnan.Inferastructure.Repository
             CrCasPriceCarAdvantage = new BaseRepository<CrCasPriceCarAdvantage>(_context);
             CrCasPriceCarOption = new BaseRepository<CrCasPriceCarOption>(_context);
             CrCasPriceCarAdditional = new BaseRepository<CrCasPriceCarAdditional>(_context);
+            CrMasSysProbabilityMembership = new BaseRepository<CrMasSysProbabilityMembership>(_context);
 
 
         }
