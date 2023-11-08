@@ -202,7 +202,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             if (IsGovNo) ModelState.AddModelError("CrMasLessorInformationGovernmentNo", _localizer["IsTakenGov"]);
             if (IsTaxNo) ModelState.AddModelError("CrMasLessorInformationTaxNo", _localizer["IsTakenTax"]);
             if (lessorVM.BranchPostVM.CrCasBranchPostCity == "") ModelState.AddModelError("BranchPostVM.CrCasBranchPostCity", _localizer["requiredFiled"]);
-            if (lessorVM.CrMasLessorInformationClassification == "") ModelState.AddModelError("CrMasLessorInformationClassification", _localizer["requiredFiled"]);
+            if (lessorVM.CrMasLessorInformationClassification.Trim() == "") ModelState.AddModelError("CrMasLessorInformationClassification", _localizer["requiredFiled"]);
 
             if (ModelState.IsValid)
             {

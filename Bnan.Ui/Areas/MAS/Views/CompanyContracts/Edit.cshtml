@@ -4,7 +4,7 @@
 @inject IViewLocalizer localizer
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
 }
 
 @{
@@ -54,18 +54,18 @@
     .col-md-6 {
         width: 100px
     }
-    .col-sm-12{
-        margin:0;
-        padding:0;
+
+    .col-sm-12 {
+        margin: 0;
+        padding: 0;
     }
 
     #basic-datatable_wrapper {
         margin: 0;
         padding: 0;
-        margin-right:35px;
+        margin-right: 35px;
     }
 
-   
 </style>
 <title>@ViewData["Title"]</title>
 <div class="sub-container-form">
@@ -127,266 +127,266 @@
             </div>
             @if (Model.CrMasContractCompanyStatus == "N")
             {
-            <div class="row mt-3 text-center">
-                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
-                {
-                    <div class="col-md-3 row">
-                        <!-- Autoclose -->
-                        <div class="col-md-2">
-                            <label class="form-label">@localizer["Date"]</label>
-                        </div>
-                        <div class="col-md-6 dateRelative">
-                            <input type="text" class="form-control dateInput" id="dateInput"   />
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="col-md-3 row">
-                        <div class="col-md-2">
-                            <label class="form-label">@localizer["Date"]</label>
-                        </div>
-                        <div class="col-md-6 dateRelative">
-                            <input type="text" class="form-control dateInput" id="dateInput"   />
-                        </div>
-                    </div>
-                }
-                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
-                {
-                    <div class="col-md-3 row">
-                        <div class="col-md-3">
-                            <label class="form-label">@localizer["StartDate"]</label>
-                        </div>
-                        <div class="col-md-6 dateRelative">
-                            <input type="text" class="form-control dateInput" id="startDateInput"   />
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="col-md-3 row">
-                        <div class="col-md-2">
-                            <label class="form-label">@localizer["StartDate"]</label>
-                        </div>
-                        <div class="col-md-6 dateRelative">
-                            <input type="text" class="form-control dateInput" id="startDateInput" disabled style="background-color:white" />
-                        </div>
-                    </div>
-                }
-                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
-                {
-                    <div class="col-md-3 row">
-                        <div class="col-md-2">
-                            <label class="form-label">@localizer["EndDate"]</label>
-                        </div>
-                        <div class="col-md-6 dateRelative">
-                            <input type="text" class="form-control dateInput" id="endDateInput" disabled style="background-color:white"  />
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="col-md-3 row">
-                        <div class="col-md-2">
-                            <label class="form-label">@localizer["EndDate"]</label>
-                        </div>
-                        <div class="col-md-6 dateRelative">
-                            <input type="text" class="form-control dateInput" id="endDateInput" disabled style="background-color:white"  />
-                        </div>
-                    </div>
-                }
-            </div>
-            <div class="row mt-3 text-center ">
-                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
-                {
-                    <div class="col-md-3 row">
-                        <div class="col-md-2">
-                            <label class="form-label" for="UserNameAr">@localizer["ContractCompanyActivation"]</label>
-                        </div>
-                        <div class="col-md-5">
-                            <select class="form-select select2" data-toggle="select2" id="example-select">
-                                <option value=""></option>
-                                <option value="Subscribtion">@localizer["Subscribtion"]</option>
-                                <option value="Value">@localizer["Value"]</option>
-                                <option value="Rate">@localizer["Rate"]</option>
-                            </select>
-                            <div style="margin-top:2px">
-                                <div style="height: 1.35em">
-                                    <span id="selectRequired" class="text-danger"></span>
-                                </div>
+                <div class="row mt-3 text-center">
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                        <div class="col-md-3 row">
+                            <!-- Autoclose -->
+                            <div class="col-md-2">
+                                <label class="form-label">@localizer["Date"]</label>
+                            </div>
+                            <div class="col-md-6 dateRelative">
+                                <input type="text" class="form-control dateInput" id="dateInput" disabled style="background-color:white" />
                             </div>
                         </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="col-md-3 row">
-                        <div class="col-md-2">
-                            <label class="form-label" for="UserNameAr">@localizer["ContractCompanyActivation"]</label>
-                        </div>
-                        <div class="col-md-5">
-                            <select class="form-select select2" data-toggle="select2" id="example-select">
-                                <option></option>
-                                <option value="Subscribtion">@localizer["Subscribtion"]</option>
-                                <option value="Value">@localizer["Value"]</option>
-                                <option value="Rate">@localizer["Rate"]</option>
-                            </select>
-                            <div style="margin-top:2px">
-                                <div style="height: 1.35em">
-                                    <span id="selectRequired" class="text-danger"></span>
-                                </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3 row">
+                            <div class="col-md-2">
+                                <label class="form-label">@localizer["Date"]</label>
+                            </div>
+                            <div class="col-md-6 dateRelative">
+                                <input type="text" class="form-control dateInput" id="dateInput" disabled style="background-color:white" />
                             </div>
                         </div>
-                    </div>
-                }
-                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
-                {
-                    <div class="col-md-3 row">
-                        <div class="col-md-3">
-                            <label class="form-label" for="UserNameAr">@localizer["ContractCompanyAnnualFees"]</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" id="CrMasContractCompanyAnnualFees" maxlength="10" style="width:125px" value="@ViewBag.CrMasContractCompanyAnnualFees" autocomplete="off" oninput="validateInputNumber(this)">
-                            <div style="margin-top:2px">
-                                <div style="height: 1.35em">
-                                    <span id="annualFeesRequired" class="text-danger"></span>
-                                </div>
+                    }
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                        <div class="col-md-3 row">
+                            <div class="col-md-3">
+                                <label class="form-label">@localizer["StartDate"]</label>
+                            </div>
+                            <div class="col-md-6 dateRelative">
+                                <input type="text" class="form-control dateInput" id="startDateInput" />
                             </div>
                         </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="col-md-3 row">
-                        <div class="col-md-3">
-                            <label class="form-label" for="UserNameAr">@localizer["ContractCompanyAnnualFees"]</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" id="CrMasContractCompanyAnnualFees" maxlength="10" style="width:125px" value="@ViewBag.CrMasContractCompanyAnnualFees" autocomplete="off" oninput="validateInputNumber(this)">
-                            <div style="margin-top:2px">
-                                <div style="height: 1.35em">
-                                    <span id="annualFeesRequired" class="text-danger"></span>
-                                </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3 row">
+                            <div class="col-md-2">
+                                <label class="form-label">@localizer["StartDate"]</label>
+                            </div>
+                            <div class="col-md-6 dateRelative">
+                                <input type="text" class="form-control dateInput" id="startDateInput" />
                             </div>
                         </div>
-                    </div>
-                }
-
-                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
-                {
-                    <div class="col-md-3 row">
-                        <div class="col-md-2">
-                            <label class="form-label" for="UserNameAr">@localizer["DiscountRate"]</label>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" id="CrMasContractCompanyDiscountRate" maxlength="5" style="width:90px" value="@ViewBag.CrMasContractCompanyDiscountRate" autocomplete="off" oninput="validateInputNumber(this)">
-                            <div style="margin-top:2px">
-                                <div style="height: 1.35em">
-                                    <span id="discountRateRequired" class="text-danger"></span>
-                                </div>
+                    }
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                        <div class="col-md-3 row">
+                            <div class="col-md-2">
+                                <label class="form-label">@localizer["EndDate"]</label>
+                            </div>
+                            <div class="col-md-6 dateRelative">
+                                <input type="text" class="form-control dateInput" id="endDateInput" disabled style="background-color:white" />
                             </div>
                         </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="col-md-3 row">
-                        <div class="col-md-2">
-                            <label class="form-label" for="UserNameAr">@localizer["DiscountRate"]</label>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" id="CrMasContractCompanyDiscountRate" maxlength="5" style="width:90px" value="@ViewBag.CrMasContractCompanyDiscountRate" autocomplete="off" oninput="validateInputNumber(this)">
-                            <div style="margin-top:2px">
-                                <div style="height: 1.35em">
-                                    <span id="discountRateRequired" class="text-danger"></span>
-                                </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3 row">
+                            <div class="col-md-2">
+                                <label class="form-label">@localizer["EndDate"]</label>
+                            </div>
+                            <div class="col-md-6 dateRelative">
+                                <input type="text" class="form-control dateInput" id="endDateInput" disabled style="background-color:white" />
                             </div>
                         </div>
-                    </div>
-                }
-
-                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
-                {
-                    <div class="col-md-2 row">
-                        <div class="col-md-3">
-                            <label class="form-label" for="UserNameAr">@localizer["TaxRate"]</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" id="CrMasContractCompanyTaxRate" maxlength="5" style="width:90px" autocomplete="off" value="@ViewBag.CrMasContractCompanyTaxRate" oninput="validateInputNumber(this)">
-                            <div style="margin-top:2px">
-                                <div style="height: 1.35em">
-                                    <span id="taxRateRequired" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="col-md-2 row">
-                        <div class="col-md-3">
-                            <label class="form-label" for="UserNameAr">@localizer["TaxRate"]</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" id="CrMasContractCompanyTaxRate" maxlength="5" style="width:90px" autocomplete="off" value="@ViewBag.CrMasContractCompanyTaxRate" oninput="validateInputNumber(this)">
-                            <div style="margin-top:2px">
-                                <div style="height: 1.35em">
-                                    <span id="taxRateRequired" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-
-            </div>
-            <div class="row mt-3 text-center " id="divOpen">
-                <div class="col-md-3 row">
-                    <div class="col-md-2">
-                        <label class="form-label">
-                            @localizer["From"]
-                        </label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="From" maxlength="10" style="width:125px" autocomplete="off" value="0" disabled>
-                    </div>
+                    }
                 </div>
-                <div class="col-md-3 row">
-                    <div class="col-md-3">
-                        <label class="form-label">
-                            @localizer["To"]
-                        </label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="To" maxlength="10" style="width:125px" autocomplete="off" oninput="validateInputNumber(this)">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span id="ToRequired" class="text-danger"></span>
+                <div class="row mt-3 text-center ">
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                        <div class="col-md-3 row">
+                            <div class="col-md-2">
+                                <label class="form-label" for="UserNameAr">@localizer["ContractCompanyActivation"]</label>
+                            </div>
+                            <div class="col-md-5">
+                                <select class="form-select select2" data-toggle="select2" id="example-select">
+                                    <option value=""></option>
+                                    <option value="Subscribtion">@localizer["Subscribtion"]</option>
+                                    <option value="Value">@localizer["Value"]</option>
+                                    <option value="Rate">@localizer["Rate"]</option>
+                                </select>
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span id="selectRequired" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3 row">
+                            <div class="col-md-2">
+                                <label class="form-label" for="UserNameAr">@localizer["ContractCompanyActivation"]</label>
+                            </div>
+                            <div class="col-md-5">
+                                <select class="form-select select2" data-toggle="select2" id="example-select">
+                                    <option></option>
+                                    <option value="Subscribtion">@localizer["Subscribtion"]</option>
+                                    <option value="Value">@localizer["Value"]</option>
+                                    <option value="Rate">@localizer["Rate"]</option>
+                                </select>
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span id="selectRequired" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                        <div class="col-md-3 row">
+                            <div class="col-md-3">
+                                <label class="form-label" for="UserNameAr">@localizer["ContractCompanyAnnualFees"]</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="CrMasContractCompanyAnnualFees" maxlength="10" style="width:125px" value="@ViewBag.CrMasContractCompanyAnnualFees" autocomplete="off" oninput="validateInputNumber(this)">
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span id="annualFeesRequired" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3 row">
+                            <div class="col-md-3">
+                                <label class="form-label" for="UserNameAr">@localizer["ContractCompanyAnnualFees"]</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="CrMasContractCompanyAnnualFees" maxlength="10" style="width:125px" value="@ViewBag.CrMasContractCompanyAnnualFees" autocomplete="off" oninput="validateInputNumber(this)">
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span id="annualFeesRequired" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                        <div class="col-md-3 row">
+                            <div class="col-md-2">
+                                <label class="form-label" for="UserNameAr">@localizer["DiscountRate"]</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="CrMasContractCompanyDiscountRate" maxlength="5" style="width:90px" value="@ViewBag.CrMasContractCompanyDiscountRate" autocomplete="off" oninput="validateInputNumber(this)">
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span id="discountRateRequired" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3 row">
+                            <div class="col-md-2">
+                                <label class="form-label" for="UserNameAr">@localizer["DiscountRate"]</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="CrMasContractCompanyDiscountRate" maxlength="5" style="width:90px" value="@ViewBag.CrMasContractCompanyDiscountRate" autocomplete="off" oninput="validateInputNumber(this)">
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span id="discountRateRequired" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                    {
+                        <div class="col-md-2 row">
+                            <div class="col-md-3">
+                                <label class="form-label" for="UserNameAr">@localizer["TaxRate"]</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="CrMasContractCompanyTaxRate" maxlength="5" style="width:90px" autocomplete="off" value="@ViewBag.CrMasContractCompanyTaxRate" oninput="validateInputNumber(this)">
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span id="taxRateRequired" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-2 row">
+                            <div class="col-md-3">
+                                <label class="form-label" for="UserNameAr">@localizer["TaxRate"]</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="CrMasContractCompanyTaxRate" maxlength="5" style="width:90px" autocomplete="off" value="@ViewBag.CrMasContractCompanyTaxRate" oninput="validateInputNumber(this)">
+                                <div style="margin-top:2px">
+                                    <div style="height: 1.35em">
+                                        <span id="taxRateRequired" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
 
                 </div>
-                <div class="col-md-3 row">
-                    <div class="col-md-2">
-                        <label class="form-label" id="lableValue">
-
-                        </label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="Value" maxlength="10" style="width:125px" autocomplete="off" oninput="validateInputNumber(this)">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span id="ValueRequired" class="text-danger"></span>
-                            </div>
+                <div class="row mt-3 text-center " id="divOpen">
+                    <div class="col-md-3 row">
+                        <div class="col-md-2">
+                            <label class="form-label">
+                                @localizer["From"]
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="From" maxlength="10" style="width:125px" autocomplete="off" value="0" disabled>
                         </div>
                     </div>
+                    <div class="col-md-3 row">
+                        <div class="col-md-3">
+                            <label class="form-label">
+                                @localizer["To"]
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="To" maxlength="10" style="width:125px" autocomplete="off" oninput="validateInputNumber(this)">
+                            <div style="margin-top:2px">
+                                <div style="height: 1.35em">
+                                    <span id="ToRequired" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
 
+                    </div>
+                    <div class="col-md-3 row">
+                        <div class="col-md-2">
+                            <label class="form-label" id="lableValue">
+
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="Value" maxlength="10" style="width:125px" autocomplete="off" oninput="validateInputNumber(this)">
+                            <div style="margin-top:2px">
+                                <div style="height: 1.35em">
+                                    <span id="ValueRequired" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-1 row">
+                        <a class="btn btn-outline-primary" id="addDivBtn"><i class="dripicons-plus"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-1 row">
-                    <a class="btn btn-outline-primary" id="addDivBtn"><i class="dripicons-plus"></i></a>
-                </div>
-            </div>
-            <div id="dynamicDivContainer"></div>
+                <div id="dynamicDivContainer"></div>
             }
             else
             {
@@ -421,7 +421,7 @@
                                 <label class="form-label">@localizer["StartDate"]</label>
                             </div>
                             <div class="col-md-6 dateRelative">
-                                <input type="text" class="form-control dateInput" value="@ViewBag.StartDate" id="startDateInput"  style="background-color:white" readonly />
+                                <input type="text" class="form-control dateInput" value="@ViewBag.StartDate" id="startDateInput" style="background-color:white" readonly />
                             </div>
                         </div>
                     }
@@ -432,7 +432,7 @@
                                 <label class="form-label">@localizer["StartDate"]</label>
                             </div>
                             <div class="col-md-6 dateRelative">
-                                <input type="text" class="form-control dateInput" id="startDateInput" value="@ViewBag.StartDate"  style="background-color:white" readonly />
+                                <input type="text" class="form-control dateInput" id="startDateInput" value="@ViewBag.StartDate" style="background-color:white" readonly />
                             </div>
                         </div>
                     }
@@ -443,7 +443,7 @@
                                 <label class="form-label">@localizer["EndDate"]</label>
                             </div>
                             <div class="col-md-6 dateRelative">
-                                <input type="text" class="form-control dateInput" id="endDateInput" value="@ViewBag.EndDate"  style="background-color:white" readonly />
+                                <input type="text" class="form-control dateInput" id="endDateInput" value="@ViewBag.EndDate" style="background-color:white" readonly />
                             </div>
                         </div>
                     }
@@ -454,7 +454,7 @@
                                 <label class="form-label">@localizer["EndDate"]</label>
                             </div>
                             <div class="col-md-6 dateRelative">
-                                <input type="text" class="form-control dateInput" id="endDateInput" value="@ViewBag.EndDate"  style="background-color:white" readonly />
+                                <input type="text" class="form-control dateInput" id="endDateInput" value="@ViewBag.EndDate" style="background-color:white" readonly />
                             </div>
                         </div>
                     }
@@ -551,7 +551,7 @@
                         </div>
                     }
                 </div>
-                @if (Model.CrMasContractCompanyActivation!="1")
+                @if (Model.CrMasContractCompanyActivation != "1")
                 {
                     <div class="row mt-3 text-center " style="width: 1460px;">
                         <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" style="position: relative; width: 1166px;">
@@ -592,7 +592,7 @@
             {
                 <a class="btn btn-primary" id="submitBtn">@localizer["Save"]</a>
             }
-            @if (Model.CrMasContractCompanyStatus=="A")
+            @if (Model.CrMasContractCompanyStatus == "A")
             {
                 <a class="btn btn-primary ms-1" id="deleteButton" data-bs-toggle="modal" data-error="@Status.Deleted" data-bs-targett="#centermodalDelete">
                     @localizer["Delete"]
@@ -619,13 +619,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
-                <a  onclick="deleteContract();" class="btn btn-primary">@localizer["Okay"]</a>
+                <a onclick="deleteContract();" class="btn btn-primary">@localizer["Okay"]</a>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
 @section Scripts {
     <script>
         // Datepicker Functions
@@ -641,38 +639,38 @@
             var formattedEndDate = new Date(endDate);
             console.log(status);
             if (status == "N") {
-            if (!formattedDate || formattedDate === "") {
-                formattedDate = today; // Set date to today if it's empty or null
-            }
-            $("#dateInput").datepicker({
-                dateFormat: 'yy/mm/dd',
-                defaultDate: formattedDate,
-                maxDate: today, // Set the maximum date to today
-            }).datepicker("widget").addClass("datepicker-widget");
-            $("#dateInput").datepicker("setDate", formattedDate);
-            $("#dateInput").click(function () {
-                $(this).datepicker("show");
-            });
-            $("#dateInput").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+                if (!formattedDate || formattedDate === "") {
+                    formattedDate = today; // Set date to today if it's empty or null
+                }
+                $("#dateInput").datepicker({
+                    dateFormat: 'yy/mm/dd',
+                    defaultDate: formattedDate,
+                    maxDate: today, // Set the maximum date to today
+                }).datepicker("widget").addClass("datepicker-widget");
+                $("#dateInput").datepicker("setDate", formattedDate);
+                $("#dateInput").click(function () {
+                    $(this).datepicker("show");
+                });
+                $("#dateInput").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
 
-            if (!formattedStartDate || formattedStartDate === "") {
-                formattedStartDate = today; // Set date to today if it's empty or null
-            }
-            $("#startDateInput").datepicker({
-                dateFormat: 'yy/mm/dd',
-                minDate: today,
-                defaultDate: formattedStartDate// Set the minimum date to today
-            }).datepicker("widget").addClass("datepicker-widget");
-            $("#startDateInput").datepicker("setDate", formattedStartDate);
-            $("#startDateInput").click(function () {
-                $(this).datepicker("show");
-            });
-            $("#startDateInput").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
+                if (!formattedStartDate || formattedStartDate === "") {
+                    formattedStartDate = today; // Set date to today if it's empty or null
+                }
+                $("#startDateInput").datepicker({
+                    dateFormat: 'yy/mm/dd',
+                    minDate: today,
+                    defaultDate: formattedStartDate// Set the minimum date to today
+                }).datepicker("widget").addClass("datepicker-widget");
+                $("#startDateInput").datepicker("setDate", formattedStartDate);
+                $("#startDateInput").click(function () {
+                    $(this).datepicker("show");
+                });
+                $("#startDateInput").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
 
 
-            if (!formattedEndDate || formattedEndDate === "") {
-                formattedEndDate = today; // Set date to today if it's empty or null
-            }
+                if (!formattedEndDate || formattedEndDate === "") {
+                    formattedEndDate = today; // Set date to today if it's empty or null
+                }
 
                 $("#endDateInput").datepicker({
                     dateFormat: 'yy/mm/dd',
@@ -774,53 +772,53 @@
                             $("#ValueRequired").text('');
                             $("#ToRequired").text("");
                             var newDiv = `
-                                                                              <div class="row text-center added-div">
-                                                                                <div class="col-md-3 row">
-                                                                                  <div class="col-md-2">
-                                                                                    <label class="form-label">@localizer["From"]</label>
-                                                                                  </div>
-                                                                                  <div class="col-md-6">
-                                                                                    <input type="text" class="form-control" id="From${counter}" maxlength="10" style="width:125px"  autocomplete="off" disabled >
-                                                                                  </div>
-                                                                                </div>
-                                                                                <div class="col-md-3 row">
-                                                                                  <div class="col-md-3">
-                                                                                    <label class="form-label">@localizer["To"]</label>
-                                                                                  </div>
-                                                                                  <div class="col-md-6">
-                                                                                    <input type="text" class="form-control" id="To${counter}" maxlength="10" style="width:125px"  autocomplete="off" required oninput="validateInputNumber(this)">
-                                                                                          <div style="margin-top:2px">
-                                                                                                <div style="height: 1.35em">
-                                                                                                    <span id="ToRequired${counter}" class="text-danger"></span>
-                                                                                                </div>
+                                                                                      <div class="row text-center added-div">
+                                                                                        <div class="col-md-3 row">
+                                                                                          <div class="col-md-2">
+                                                                                            <label class="form-label">@localizer["From"]</label>
                                                                                           </div>
-                                                                                  </div>
-                                                                                </div>
-                                                                                <div class="col-md-3 row">
-                                                                                  <div class="col-md-2">
-                                                                                    <label class="form-label" id="newLable${counter}"></label>
-                                                                                  </div>
-                                                                                  <div class="col-md-6">
-                                                                                    <input type="text" class="form-control" id="Value${counter}" maxlength="10" style="width:125px"  autocomplete="off" required oninput="validateInputNumber(this)">
-                                                                                          <div style="margin-top:2px">
+                                                                                          <div class="col-md-6">
+                                                                                            <input type="text" class="form-control" id="From${counter}" maxlength="10" style="width:125px"  autocomplete="off" disabled >
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-3 row">
+                                                                                          <div class="col-md-3">
+                                                                                            <label class="form-label">@localizer["To"]</label>
+                                                                                          </div>
+                                                                                          <div class="col-md-6">
+                                                                                            <input type="text" class="form-control" id="To${counter}" maxlength="10" style="width:125px"  autocomplete="off" required oninput="validateInputNumber(this)">
+                                                                                                  <div style="margin-top:2px">
                                                                                                         <div style="height: 1.35em">
-                                                                                                            <span id="ValueRequired${counter}" class="text-danger"></span>
+                                                                                                            <span id="ToRequired${counter}" class="text-danger"></span>
                                                                                                         </div>
                                                                                                   </div>
                                                                                           </div>
-                                                                                 </div>
-                                                                                <div class="col-md-1 row">
-                                                                                  <a class="btn btn-outline-danger removeDivBtn" data-counter="${counter}"><i class="dripicons-cross"></i></a>
-                                                                                </div>
-                                                                              </div>
-                                                                            `;
+                                                                                        </div>
+                                                                                        <div class="col-md-3 row">
+                                                                                          <div class="col-md-2">
+                                                                                            <label class="form-label" id="newLable${counter}"></label>
+                                                                                          </div>
+                                                                                          <div class="col-md-6">
+                                                                                            <input type="text" class="form-control" id="Value${counter}" maxlength="10" style="width:125px"  autocomplete="off" required oninput="validateInputNumber(this)">
+                                                                                                  <div style="margin-top:2px">
+                                                                                                                <div style="height: 1.35em">
+                                                                                                                    <span id="ValueRequired${counter}" class="text-danger"></span>
+                                                                                                                </div>
+                                                                                                          </div>
+                                                                                                  </div>
+                                                                                         </div>
+                                                                                        <div class="col-md-1 row">
+                                                                                          <a class="btn btn-outline-danger removeDivBtn" data-counter="${counter}"><i class="dripicons-cross"></i></a>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    `;
                             $('#dynamicDivContainer').append(newDiv);
                             $('#newLable' + counter).text(chose);
                             $('#From' + counter).val(parseInt($('#To').val()) + 1);
                             check++;
                             counter++;
                         }
-                        
+
                     }
                 }
                 else {
@@ -844,53 +842,53 @@
                             $("#ValueRequired" + (counter - 1)).text("");
                             $("#ToRequired" + (counter - 1)).text("");
                             var newDiv = `
-                                                                                      <div class="row text-center added-div">
-                                                                                        <div class="col-md-3 row">
-                                                                                          <div class="col-md-2">
-                                                                                            <label class="form-label">@localizer["From"]</label>
-                                                                                          </div>
-                                                                                          <div class="col-md-6">
-                                                                                            <input type="text" class="form-control" id="From${counter}" maxlength="10" style="width:125px"  autocomplete="off" disabled >
-                                                                                          </div>
-                                                                                        </div>
-                                                                                        <div class="col-md-3 row">
-                                                                                          <div class="col-md-3">
-                                                                                            <label class="form-label">@localizer["To"]</label>
-                                                                                          </div>
-                                                                                          <div class="col-md-6">
-                                                                                            <input type="text" class="form-control" id="To${counter}" maxlength="10" style="width:125px"  autocomplete="off" required oninput="validateInputNumber(this)">
-                                                                                            <div style="margin-top:2px">
-                                                                                                <div style="height: 1.35em">
-                                                                                                    <span id="ToRequired${counter}" class="text-danger"></span>
+                                                                                              <div class="row text-center added-div">
+                                                                                                <div class="col-md-3 row">
+                                                                                                  <div class="col-md-2">
+                                                                                                    <label class="form-label">@localizer["From"]</label>
+                                                                                                  </div>
+                                                                                                  <div class="col-md-6">
+                                                                                                    <input type="text" class="form-control" id="From${counter}" maxlength="10" style="width:125px"  autocomplete="off" disabled >
+                                                                                                  </div>
                                                                                                 </div>
-                                                                                          </div>
-                                                                                          </div>
-                                                                                        </div>
-                                                                                        <div class="col-md-3 row">
-                                                                                          <div class="col-md-2">
-                                                                                            <label class="form-label" id="newLable${counter}"></label>
-                                                                                          </div>
-                                                                                          <div class="col-md-6">
-                                                                                            <input type="text" class="form-control" id="Value${counter}" maxlength="10" style="width:125px"  autocomplete="off" required oninput="validateInputNumber(this)">
+                                                                                                <div class="col-md-3 row">
+                                                                                                  <div class="col-md-3">
+                                                                                                    <label class="form-label">@localizer["To"]</label>
+                                                                                                  </div>
+                                                                                                  <div class="col-md-6">
+                                                                                                    <input type="text" class="form-control" id="To${counter}" maxlength="10" style="width:125px"  autocomplete="off" required oninput="validateInputNumber(this)">
                                                                                                     <div style="margin-top:2px">
                                                                                                         <div style="height: 1.35em">
-                                                                                                            <span id="ValueRequired${counter}" class="text-danger"></span>
+                                                                                                            <span id="ToRequired${counter}" class="text-danger"></span>
                                                                                                         </div>
                                                                                                   </div>
-                                                                                          </div>
-                                                                                        </div>
-                                                                                        <div class="col-md-1 row">
-                                                                                          <a class="btn btn-outline-danger removeDivBtn" data-counter="${counter}"><i class="dripicons-cross"></i></a>
-                                                                                        </div>
-                                                                                      </div>
-                                                                                    `;
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-3 row">
+                                                                                                  <div class="col-md-2">
+                                                                                                    <label class="form-label" id="newLable${counter}"></label>
+                                                                                                  </div>
+                                                                                                  <div class="col-md-6">
+                                                                                                    <input type="text" class="form-control" id="Value${counter}" maxlength="10" style="width:125px"  autocomplete="off" required oninput="validateInputNumber(this)">
+                                                                                                            <div style="margin-top:2px">
+                                                                                                                <div style="height: 1.35em">
+                                                                                                                    <span id="ValueRequired${counter}" class="text-danger"></span>
+                                                                                                                </div>
+                                                                                                          </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-1 row">
+                                                                                                  <a class="btn btn-outline-danger removeDivBtn" data-counter="${counter}"><i class="dripicons-cross"></i></a>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            `;
                             $('#dynamicDivContainer').append(newDiv);
                             $('#newLable' + counter).text(chose);
                             $('#From' + counter).val(parseInt($('#To' + (counter - 1)).val()) + 1);
                             counter++;
                             check++;
                         }
-                        
+
                     }
                 }
             });
@@ -922,11 +920,11 @@
                 }
             })
 
-            $("#To"+counter).on("input", function () {
+            $("#To" + counter).on("input", function () {
                 console.log("XXXXXXX")
 
-                if (parseInt($(this).val()) <= parseInt($("#From"+counter).val())) {
-                    $("#ToRequired"+counter).text('@localizer["requiredGreaterThan"]');
+                if (parseInt($(this).val()) <= parseInt($("#From" + counter).val())) {
+                    $("#ToRequired" + counter).text('@localizer["requiredGreaterThan"]');
                 }
             })
 
@@ -954,7 +952,7 @@
                     if (data) event.stopPropagation();
                 });
 
-               
+
                 if (selectedOption == null || selectedOption == "") {
                     $("#selectRequired").text('@localizer["requiredFiled"]');
                     $("#example-select").focus();
@@ -1017,7 +1015,7 @@
                 else {
                     $("#ToRequired" + (counter - 1)).text('');
                 }
-                
+
                 console.log(data)
                 // Create the AJAX request
                 $.ajax({
@@ -1036,12 +1034,10 @@
                         data: data
                     },
                     success: function (response) {
-                        window.location.href = "/MAS/CompanyContracts/CompanyContracts";
-                        toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                        toastr.success('@localizer["ToastEdit"]');
+                        window.location.href = "/MAS/CompanyContracts/SuccesssMessageCompanyContract";
                     },
                     error: function (xhr, status, error) {
-                        console.log(error);
+                        window.location.href = "/MAS/CompanyContracts/FailedMessageCompanyContract";
                     }
                 });
             });
@@ -1050,8 +1046,8 @@
 
     </script>
     <script>
-       
-        // message required 
+
+        // message required
         $("#CrMasContractCompanyDiscountRate").on("input", function () {
             if ($(this).val() === "") {
                 $("#discountRateRequired").text('@localizer["requiredFiled"]');
@@ -1102,10 +1098,10 @@
                 data: { code: code },
                 success: function (result) {
                     $('.modal').modal('hide');
-                    window.location.href = "/MAS/CompanyContracts/CompanyContracts";
+                    window.location.href = "/MAS/CompanyContracts/SuccesssMessageCompanyContract";
                 },
                 error: function (error) {
-                    console.log(error);
+                    window.location.href = "/MAS/CompanyContracts/FailedMessageCompanyContract";
                 }
             });
         }
@@ -1116,7 +1112,7 @@
                 if (data) $(Modal).modal('show');
             });
         })
-        
+
     </script>
 
 }

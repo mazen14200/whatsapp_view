@@ -122,10 +122,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                             List<CarPriceAdditionalStringData> deserializedData = JsonConvert.DeserializeObject<List<CarPriceAdditionalStringData>>(item);
                             additionalStringData.AddRange(deserializedData);
                         }
-                        foreach (var item in additionalStringData)
-                        {
-                            await _carPrice.AddAdditionals(PriceCarNo, item.Id, item.Value);
-                        }
+                        foreach (var item in additionalStringData) if (item.Checked) await _carPrice.AddAdditionals(PriceCarNo, item.Id, item.Value);
                     }
                     if (Choises != null)
                     {
@@ -136,10 +133,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                             List<CarPriceChoisesStringData> deserializedData = JsonConvert.DeserializeObject<List<CarPriceChoisesStringData>>(item);
                             ChoisesStringData.AddRange(deserializedData);
                         }
-                        foreach (var item in ChoisesStringData)
-                        {
-                            await _carPrice.AddChoises(PriceCarNo, item.Id, item.Value);
-                        }
+                        foreach (var item in ChoisesStringData) if (item.Checked) await _carPrice.AddChoises(PriceCarNo, item.Id, item.Value);
                     }
                     if (Features != null)
                     {
@@ -177,8 +171,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     await _adminstritiveProcedures.SaveAdminstritive(currentUserr.CrMasUserInformationCode, "1", "219", "20", currentUserr.CrMasUserInformationLessor, "100",
                         distribution.CrMasSupCarDistributionCode, null, null, null, null, null, null, null, null, "اضافة", "Insert", "I", null);
                     _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
-                    return RedirectToAction("CarPrice", "CarPrice");
+                    return RedirectToAction("CarPrice");
                 }
+                _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                return RedirectToAction("CarPrice");
             }
             ViewBag.LessorCode = lessorCode;
             ViewBag.Options = _unitOfWork.CrMasSupContractOption.FindAll(x => x.CrMasSupContractOptionsStatus == Status.Active);

@@ -42,7 +42,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
             var lessorMemberships = _unitOfWork.CrCasLessorMembership.FindAll(x => x.CrCasLessorMembershipConditionsLessor == userLogin.CrMasUserInformationLessor &&
-                                                                                   x.CrCasLessorMembershipConditions != "1600000006", new[] { "CrCasLessorMembershipConditionsNavigation" }).ToList();
+                                                                                   x.CrCasLessorMembershipConditions != "1600000006", new[] { "CrCasLessorMembershipConditionsNavigation" })
+                                                           .OrderByDescending(x => x.CrCasLessorMembershipConditions).ToList();
             return View(lessorMemberships);
         }
         [HttpGet]
@@ -64,9 +65,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             {
                 foreach (string item in collection.Keys)
                 {
-                    if (item.StartsWith("CrCasLessorMembershipConditionsActivate-"))
+                    if (item.StartsWith("CrCasLessorMembershipConditionsAmount-"))
                     {
-                        var code = item.Replace("CrCasLessorMembershipConditionsActivate-", "");
+                        var code = item.Replace("CrCasLessorMembershipConditionsAmount-", "");
                         if (code != null && code != "")
                         {
 
@@ -82,18 +83,30 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                             var link2 = result[3].ToString();
                             var isActivate = false;
                             if (ConditionInsert == "on") isActivate = true;
-                            if (! await _membershipConditions.AddRenterMembership(userLogin?.CrMasUserInformationLessor, code, amount, link1, KM, link2, NoContract, isActivate,Group))
+                            if (Group!="N")
                             {
-                                _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
-                                return RedirectToAction("Index", "Home");
+                                if (!await _membershipConditions.AddRenterMembership(userLogin?.CrMasUserInformationLessor, code, amount, link1, KM, link2, NoContract, isActivate, Group))
+                                {
+                                    _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                                    return RedirectToAction("Index", "Home");
+                                }
                             }
+                            else
+                            {
+                                if (!await _membershipConditions.AddRenterMembership(userLogin?.CrMasUserInformationLessor, code, "0", "3", "0", "3", "0", false, "N"))
+                                {
+                                    _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                                    return RedirectToAction("Index", "Home");
+                                }
+                            }
+                            
                         }
                     }
                 }
                 if (await _unitOfWork.CompleteAsync() > 0)
                 {
                     _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("LessorMembership");
                 }
             }
             

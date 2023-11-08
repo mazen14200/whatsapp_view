@@ -5,10 +5,13 @@ using Bnan.Core.Models;
 using Bnan.Inferastructure.Extensions;
 using Bnan.Inferastructure.Repository;
 using Bnan.Ui.Areas.Base.Controllers;
+using Bnan.Ui.Areas.CAS.Controllers;
 using Bnan.Ui.ViewModels.MAS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using NToastNotify;
 using System.Globalization;
 
 namespace Bnan.Ui.Areas.MAS.Controllers
@@ -19,11 +22,17 @@ namespace Bnan.Ui.Areas.MAS.Controllers
     {
         private readonly ICompnayContract _compnayContract;
         private readonly IUserLoginsService _userLoginsService;
+        private readonly IToastNotification _toastNotification;
+        private readonly IStringLocalizer<CompanyContractsController> _localizer;
 
-        public CompanyContractsController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork, IMapper mapper, ICompnayContract compnayContract, IUserLoginsService userLoginsService) : base(userManager, unitOfWork, mapper)
+
+
+        public CompanyContractsController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork, IMapper mapper, ICompnayContract compnayContract, IUserLoginsService userLoginsService, IToastNotification toastNotification, IStringLocalizer<CompanyContractsController> localizer) : base(userManager, unitOfWork, mapper)
         {
             _compnayContract = compnayContract;
             _userLoginsService = userLoginsService;
+            _toastNotification = toastNotification;
+            _localizer = localizer;
         }
 
         public async Task<IActionResult> CompanyContracts()
@@ -117,7 +126,6 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             if (SelectedOption == "Subscribtion") activiation = "1";
             if (SelectedOption == "Value") activiation = "2";
             if (SelectedOption == "Rate") activiation = "3";
-
             try
             {
                 await _compnayContract.UpdateCompanyContract(CompanyContractCode, DateContract, StartDateContract, EndDateContract, ContractCompanyAnnualFees, ContractCompanyTaxRate, ContractCompanyDiscountRate, activiation);
@@ -148,7 +156,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
             subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
-            return Json(new { success = true, message = "Data updated successfully" });
+            return Json(new { success = true});
         }
         [HttpPost]
         public async Task<IActionResult> Delete(string code)
@@ -172,6 +180,16 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 return Json(new { success = true });
             }
+        }
+        public IActionResult SuccesssMessageCompanyContract()
+        {
+            _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("CompanyContracts");
+        }
+        public IActionResult FailedMessageCompanyContract()
+        {
+            _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("CompanyContracts");
         }
     }
 }

@@ -466,13 +466,13 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    @localizer["No"]
+                                                    @localizer["ActivateService"]
                                                 </th>
-                                                <th width="70%">
+                                                <th width="50%">
                                                     @localizer["Choises"]
                                                 </th>
 
-                                                <th width="30%">
+                                                <th width="20%">
                                                     @localizer["Value"]
 
                                                 </th>
@@ -487,7 +487,7 @@
                                             {
                                                 <tr>
                                                     <td>
-                                                        @no1
+                                                        <input type="checkbox" id="OptionsCheckBoxs@item.CrMasSupContractOptionsCode" data-id="@item.CrMasSupContractOptionsCode" name="OptionsCheckBoxs[IndexOf(item)]" style="height: 19px;width: 18px;" class="form-check-input OptionsCheckBoxs" value="false">
                                                     </td>
                                                     @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
                                                     {
@@ -520,7 +520,7 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    @localizer["No"]
+                                                    @localizer["ActivateService"]
                                                 </th>
                                                 <th width="70%">
                                                     @localizer["Additionals"]
@@ -540,7 +540,7 @@
                                             {
                                                 <tr>
                                                     <td>
-                                                        @no3
+                                                        <input type="checkbox" id="Additional@item.CrMasSupContractOptionsCode" data-id="@item.CrMasSupContractAdditionalCode" name="AdditionalCheckBoxs[IndexOf(item)]" style="height: 19px;width: 18px;" class="form-check-input AdditionalCheckBoxs" value="false">
                                                     </td>
                                                     @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
                                                     {
@@ -864,7 +864,12 @@
                 Additional.forEach(function (add) {
                     var id = add.getAttribute('data-id');
                     var value = add.value;
-                    AdditionalData.push({ Id: id, Value: value });
+                    var check = false;
+                    var CheckBox = document.querySelector('.AdditionalCheckBoxs[data-id="' + id + '"]');
+                    if (CheckBox && CheckBox.checked) {
+                        check = true;
+                    }
+                    AdditionalData.push({ Id: id, Value: value, Checked: check });
                 });
                 // Create a hidden input field with the data
                 var hiddenInputForAdditional = document.createElement('input');
@@ -874,13 +879,21 @@
                 //// Append the hidden input field to the form BEFORE checking validity
                 form.appendChild(hiddenInputForAdditional);
 
+
+
+
                 //Choises
                 var Choises = document.querySelectorAll('.Choises');
                 var ChoisesData = [];
                 Choises.forEach(function (Choise) {
                     var id = Choise.getAttribute('data-id');
                     var value = Choise.value;
-                    ChoisesData.push({ Id: id, Value: value });
+                    var check= false;
+                    var CheckBox = document.querySelector('.OptionsCheckBoxs[data-id="' + id + '"]');
+                    if (CheckBox&&CheckBox.checked) {
+                        check=true;
+                    }
+                    ChoisesData.push({ Id: id, Value: value,Checked:check });
                 });
                 // Create a hidden input field with the data
                 var hiddenInputForChoises = document.createElement('input');

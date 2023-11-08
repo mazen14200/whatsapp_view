@@ -48,7 +48,7 @@ namespace Bnan.Ui.ViewModels.MAS
 
         [Required(ErrorMessage = "requiredFiled")]
         public string? CrMasLessorInformationEnShortName { get; set; }
-
+        [Required(ErrorMessage = "requiredFiled")]
         public string? CrMasLessorInformationClassification { get; set; }
         public string? CrMasLessorInformationLocation { get; set; }
 

@@ -6,6 +6,7 @@ namespace Bnan.Ui.ViewModels.MAS
     {
         public string? CrCasBranchPostShortCode { get; set; }
         public string? CrCasBranchPostRegions { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public string? CrCasBranchPostCity { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public string? CrCasBranchPostArDistrict { get; set; }
