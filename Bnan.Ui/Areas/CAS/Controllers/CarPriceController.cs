@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging.EventSource;
 using Newtonsoft.Json;
 using NToastNotify;
 using NToastNotify.Helpers;
@@ -98,7 +99,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             if (distribution != null)
             {
-                var carPrice = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicDistributionCode == distribution.CrMasSupCarDistributionCode && x.CrCasPriceCarBasicStatus == Status.Active).Count();
+                var carPrice = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicDistributionCode == distribution.CrMasSupCarDistributionCode && x.CrCasPriceCarBasicStatus == Status.Active&&x.CrCasPriceCarBasicLessorCode==lessorCode).Count();
                 if (carPrice > 0) ModelState.AddModelError("CrCasPriceCarBasicDistributionCode", _localizer["IsExists"]);
             }
             else ModelState.AddModelError("CrCasPriceCarBasicDistributionCode", _localizer["RessureFromNameCar"]);

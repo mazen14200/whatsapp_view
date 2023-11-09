@@ -1,0 +1,220 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+<!------------------------------------------end of Topbar-------------------------------------------------->
+<div class="container-fluid">
+    <!-- Content Row -->
+    <div class="row justify-content-center-md" style="justify-content:flex-end">
+        <!--  Chart -->
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8">
+
+            <div class="card shadow mb-4">
+
+                <div class="card-body" id="cardBody">
+
+                    <div class="row" id="first-row-of-charts">
+
+                        <div class="col-md-6">
+                            <div class="row " style="position: relative;">
+                                <div class="col-s-9 col-md-9 col-lg-9 col-xl-9 ">
+                                    <canvas id="horizontal_bar" aria-label="chart"></canvas>
+                                </div>
+                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3"
+                                     style="display: flex;justify-content: flex-end ;padding-left: 0;">
+                                    <p class="chart-p">سيارات الفرع : <span>500</span></p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6" style="border-left: 1px solid #FF9626;">
+                            <div class="row ">
+                                <div class="col-sm-8 col-md-8 col-lg-7 col-xl-8 ">
+                                    <canvas id="pieChart" aria-label="chart" height="155px"></canvas>
+
+                                </div>
+
+                                <div class="col-sm-4 col-md-4 col-lg-5 col-xl-4 "
+                                     style="display: flex;justify-content: flex-end ;padding-left: 0;">
+                                    <div class="chart-legend">
+                                        <table class="chart-p">
+                                            <tr>
+                                                <td id="Executed-contracts">2000</td>
+                                                <td>: العقود المنفذة</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="Closed-contracts">5000</td>
+                                                <td>: العقود المغلقة</td>
+                                            </tr>
+                                        </table>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- <hr color="#FF9626"> -->
+
+                    <div class="row" id="second-row-of-charts">
+
+                        <div class="col-md-6" style="border-top: 1px solid #FF9626;">
+                            <div class="row ">
+                                <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 ">
+                                    <canvas id="barChart2" aria-label="chart"></canvas>
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4"
+                                     style="display: flex;justify-content: flex-end ;padding-left: 0;">
+                                    <div class="data chart-p">
+                                        <p class="mb-0">عهدة الفرع : <span id="brunch-custody">10000</span></p>
+                                        <p class="mb-0">الرصيد المتاح : <span id="Available-balance-brunch">5</span></p>
+                                        <p class="mb-0">الرصيد المحجوز : <span id="used-balance-brunch">5</span></p>
+                                        <!--  -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6"
+                             style="border-left: 1px solid #FF9626;border-top: 1px solid #FF9626;">
+                            <div class="row">
+                                <div class="col-sm-7 col-md-7 col-lg-6 col-xl-8  ">
+                                    <canvas id="chartId" aria-label="chart"></canvas>
+                                </div>
+                                <div class="col-sm-5 col-md-5 col-xl-4 col-lg-4"
+                                     style="display: flex;justify-content: flex-end ;padding-left: 0;">
+                                    <div class="data chart-p">
+                                        <p class="mb-0">عهدة الموظف : <span id="employee-custody">100000</span></p>
+                                        <p class="mb-0">الرصيد المتاح : <span id="Available-balance-employee">5</span></p>
+                                        <p class="mb-0">الرصيد المحجوز : <span id="used-balance-employee">5</span></p>
+                                        <!--  -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- buttons  -->
+        <div class=" col-md-12 col-lg-12 col-xl-3 bg-transparent " id="button-on-mobile">
+            <!-- Updated width and added new classes for the second card -->
+            <!-- Card Body -->
+            <div class="card-body pt-0">
+                <form action="" method="" id="formID">
+                    <select id="brunch_name" name="brunch_name">
+                        <option></option>
+                        <option value="الفرع_الاول">الفرع الاول</option>
+                        <option value="الفرع_الثاني">الفرع الثاني</option>
+                    </select>
+                    <label for="brunch_name" style="color: black;">الفرع </label>
+                    <br>
+                    <button type="button" class="btn btn-secondary1 mb-3 mt-2 active1" id="chart"
+                            onclick="setActiveButton(0)">
+                        <img src="~/BranchSys/img/Rectangle 74.png"
+                             class="chart-buttons-img">احصائيات
+                    </button>
+                    <button type="button" class="btn btn-secondary1 mb-3" id="toggleCarousel"
+                            onclick="setActiveButton(1)">
+                        <img src="~/BranchSys/img/Rectangle 75 .png"
+                             class="chart-buttons-img">مؤجرة
+                    </button> <button type="button"
+                                      class="btn btn-secondary1 mb-3" id="toggleCarousel2"
+                                      onclick="setActiveButton(2)">
+                        <img src="~/BranchSys/img/Rectangle 76.png"
+                             class="chart-buttons-img">متاحة
+                    </button>
+                    <button type="button" class="btn btn-secondary1 mb-3" id="toggleCarousel3"
+                            onclick="setActiveButton(3)">
+                        <img src="~/BranchSys/img/Rectangle 77.png"
+                             class="chart-buttons-img">غير متاحة
+                    </button>
+                    <!-- <button type="button" class="btn btn-secondary1"  onclick="setActiveButton(4)" ><img src="~/BranchSys/img/Rectangle 78.png"
+                            class="chart-buttons-img">رسائل</button> -->
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<section>
+
+    <div class="before-footer-widget">
+        <svg width: 100%; height:auto viewbox="0 0 2444 132">
+            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+            </path>
+        </svg>
+    </div>
+    <footer>
+        <div class="container justify-content-center " style="box-sizing: border-box; padding-top: 10px; padding-right: 40px;">
+            <div class="row justify-content-center">
+                <!-- First row of buttons -->
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary mb-3">
+                        <img src="~/BranchSys/img/Rectangle 35.png">
+                        إلغاء العقد
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary mb-3">
+                        <img src="~/BranchSys/img/Rectangle 31.png">
+                        تمديد العقد
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary mb-3">
+                        <img src="~/BranchSys/img/Rectangle 30.png">
+                        تسوية العقد
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary mb-3">
+                        <img src="~/BranchSys/img/Rectangle 29.png">
+                        إنشاء العقد
+                    </button>
+                </div>
+            </div>
+            <div class="row justify-content-center " style="padding-bottom:5px ;">
+                <!-- Second row of buttons -->
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary neonShadow " id="pulse-button-brunch">
+                        <img src="~/BranchSys/img/Rectangle 36.png">تسليم
+                        العهدة
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary neonShadow " id="pulse-button-employee">
+                        <img src="~/BranchSys/img/Rectangle 33.png" id="button-image"> تغذية
+                        الصندوق
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary ">
+                        <img src="~/BranchSys/img/Rectangle 32.png">
+                        التقرير المالي
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary ">
+                        <img src="~/BranchSys/img/Rectangle 34.png">
+                        مستأجرين
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</section>

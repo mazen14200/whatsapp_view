@@ -14,10 +14,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\BS\Views\Shared\_ViewImports.cshtml" />
+    <Content Remove="Areas\BS\Views\Shared\_ViewStart.cshtml" />
     <Content Remove="Areas\MAS\Views\Shared\_ExpirationModalMAS.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\BS\Views\_ViewImports.cshtml" />
+    <None Include="Areas\BS\Views\_ViewStart.cshtml" />
     <None Include="Areas\CAS\Views\Branches\Branches.cshtml" />
     <None Include="Areas\CAS\Views\Branches\_DataTableBranches.cshtml" />
     <None Include="Areas\CAS\Views\Home\Index.cshtml" />
@@ -81,6 +85,7 @@
     <Folder Include="wwwroot\images\Bnan\Models\" />
     <Folder Include="wwwroot\images\Company\" />
     <Folder Include="wwwroot\images\CAS\" />
+    <Folder Include="wwwroot\BranchSys\" />
   </ItemGroup>
 
 </Project>
