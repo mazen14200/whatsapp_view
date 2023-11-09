@@ -30,7 +30,7 @@
                 }
                 @foreach (var item in Model)
                 {
-                    @if (item.CrCasCarInformationStatus == @Status.Deleted || item.CrCasCarInformationStatus == @Status.Hold || item.CrCasCarInformationStatus == Status.Sold)
+                    @if (item.CrCasCarInformationStatus == @Status.Deleted || item.CrCasCarInformationStatus == Status.Sold)
                     {
                         <tr onclick="location.href='@Url.Action("Edit", "CarsInformation", new { serialNumber = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;color:red">
                             <td>@no</td>
@@ -45,10 +45,6 @@
                                 @if (@item.CrCasCarInformationStatus == Status.Deleted)
                                 {
                                     @localizer["Deleted"]
-                                }
-                                else if (@item.CrCasCarInformationStatus == Status.Hold)
-                                {
-                                    @localizer["Hold"]
                                 }
                                 else if (@item.CrCasCarInformationStatus == Status.Sold)
                                 {
@@ -74,21 +70,7 @@
                                 {
                                     @localizer["Avaliable"]
                                 }
-                               @* else if (item.CrCasCarInformationStatus == Status.Active &&
-                                (item.CrCasCarInformationForSaleStatus == Status.RendAndForSale || item.CrCasCarInformationForSaleStatus == Status.ForSale))
-                                {
-                                    @localizer["ForSale"]
-                                }
-                                else if (@item.CrCasCarInformationStatus == Status.Rented)
-                                {
-                                    @localizer["Rented"]
-                                }
-                                else if (@item.CrCasCarInformationStatus == Status.Maintaince)
-                                {
-                                    @localizer["Repair"]
-                                }*@
-                                else @*if (@item.CrCasCarInformationPriceStatus == false || item.CrCasCarInformationOwnerStatus != "A" || item.CrCasCarInformationBranchStatus != "A" ||
-                                @item.CrCasCarInformationStatus == Status.Hold)*@
+                                else
                                 {
                                     @localizer["UnAvaliable"]
                                 }
@@ -125,7 +107,7 @@ else
                 }
                 @foreach (var item in Model)
                 {
-                    @if (item.CrCasCarInformationStatus == @Status.Deleted || item.CrCasCarInformationStatus == @Status.Hold || @item.CrCasCarInformationStatus == Status.Sold)
+                    @if (item.CrCasCarInformationStatus == @Status.Deleted || @item.CrCasCarInformationStatus == Status.Sold)
                     {
                         <tr onclick="location.href='@Url.Action("Edit", "CarsInformation", new { serialNumber = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;color:red">
                             <td>@no</td>
@@ -140,10 +122,6 @@ else
                                 @if (@item.CrCasCarInformationStatus == Status.Deleted)
                                 {
                                     @localizer["Deleted"]
-                                }
-                                else if (@item.CrCasCarInformationStatus == Status.Hold)
-                                {
-                                    @localizer["Hold"]
                                 }
                                 else if (@item.CrCasCarInformationStatus == Status.Sold)
                                 {
@@ -170,21 +148,7 @@ else
                                 {
                                     @localizer["Avaliable"]
                                 }
-                                @*else if (item.CrCasCarInformationStatus == Status.Active &&
-                                (item.CrCasCarInformationForSaleStatus == Status.RendAndForSale || item.CrCasCarInformationForSaleStatus == Status.ForSale))
-                                {
-                                    @localizer["ForSale"]
-                                }
-                                else if (@item.CrCasCarInformationStatus == Status.Rented)
-                                {
-                                    @localizer["Rented"]
-                                }
-                                else if (@item.CrCasCarInformationStatus == Status.Maintaince)
-                                {
-                                    @localizer["Repair"]
-                                }*@
-                                else @*if (@item.CrCasCarInformationPriceStatus == false || item.CrCasCarInformationOwnerStatus != "A" || item.CrCasCarInformationBranchStatus != "A" ||
-                                @item.CrCasCarInformationStatus == Status.Hold)*@
+                                else
                                 {
                                     @localizer["UnAvaliable"]
                                 }

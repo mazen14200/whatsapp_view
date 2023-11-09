@@ -150,7 +150,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         }
                     }
                     // Change cars status and No Price 
-                    var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationDistribution == CarPriceModel.CrCasPriceCarBasicDistributionCode);
+                    var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationDistribution == CarPriceModel.CrCasPriceCarBasicDistributionCode && x.CrCasCarInformationLessor ==lessorCode);
                     if (cars != null)
                     {
                         foreach (var item in cars)

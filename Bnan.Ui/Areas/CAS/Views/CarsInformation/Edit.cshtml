@@ -373,6 +373,10 @@
                     {
                         <h5 class="text-danger mt-2">@localizer["CarDocumentReview"]</h5>
                     }
+                    @if (Model.CrCasCarInformationStatus == Status.Rented)
+                    {
+                        <h5 class="text-danger mt-2">@localizer["CarRented"]</h5>
+                    }
                 </div>
             </div>
 
