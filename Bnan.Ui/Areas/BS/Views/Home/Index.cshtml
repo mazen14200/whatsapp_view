@@ -1,4 +1,5 @@
-﻿
+﻿@using Bnan.Ui.ViewModels.BS;
+@model BSLayoutVM
 @{
     ViewData["Title"] = "Index";
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
@@ -34,7 +35,6 @@
                             <div class="row ">
                                 <div class="col-sm-8 col-md-8 col-lg-7 col-xl-8 ">
                                     <canvas id="pieChart" aria-label="chart" height="155px"></canvas>
-
                                 </div>
 
                                 <div class="col-sm-4 col-md-4 col-lg-5 col-xl-4 "
@@ -112,9 +112,10 @@
             <div class="card-body pt-0">
                 <form action="" method="" id="formID">
                     <select id="brunch_name" name="brunch_name">
-                        <option></option>
-                        <option value="الفرع_الاول">الفرع الاول</option>
-                        <option value="الفرع_الثاني">الفرع الثاني</option>
+                        @foreach (var item in Model.CrCasBranchInformations)
+                        {
+                            <option value="@item.CrCasBranchInformationCode">@item.CrCasBranchInformationArShortName</option>
+                        }
                     </select>
                     <label for="brunch_name" style="color: black;">الفرع </label>
                     <br>

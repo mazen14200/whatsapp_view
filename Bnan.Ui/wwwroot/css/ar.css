@@ -244,8 +244,8 @@ span.search-icon {
 }
 
 .button-menu-mobile.open-left.lessor-title {
-    width: auto;
-    margin-right: 4%
+    /*width: auto;
+    margin-right: 4%*/
 }
 
 
@@ -340,4 +340,15 @@ span.search-icon {
 }
 .float-start {
     float: right !important;
+}
+.CompanyLogo {
+    height: 60px;
+    width: 140px;
+    margin-top: 15px;
+    margin-left: 0;
+    margin-right: -50px;
+}
+.CompanyName {
+    margin-right: 20px;
+    margin-left: 0;
 }

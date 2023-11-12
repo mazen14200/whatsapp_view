@@ -3,6 +3,7 @@ using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using Bnan.Inferastructure.Extensions;
 using Bnan.Ui.Areas.Base.Controllers;
+using Bnan.Ui.ViewModels.BS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -19,9 +20,16 @@ namespace Bnan.Ui.Areas.BS.Controllers
         {
             _localizer = localizer;
         }
-        public  IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode).ToList();
+            BSLayoutVM bSLayoutVM = new BSLayoutVM()
+            {
+                CrCasBranchInformations = branches
+            };
+            return View(bSLayoutVM);
         }
         [HttpGet]
         public IActionResult SetLanguage(string returnUrl, string culture)

@@ -22340,8 +22340,8 @@ span.search-icon {
 }
 
 .button-menu-mobile.open-left.lessor-title {
-    margin-left: 95px
-}
+/*    margin-left: 95px
+*/}
 
 .button-menu-mobile.button-menu-mobile-logo.open-left {
     margin-left: 60px
@@ -22422,4 +22422,15 @@ span.search-icon {
 
 .colFloorColor {
     margin-left: -4.5%
+}
+.CompanyLogo {
+    height: 60px;
+    width: 140px;
+    margin-top: 15px;
+    margin-right: 0;
+    margin-left: -50px;
+}
+.CompanyName {
+    margin-right: 0;
+    margin-left: 65px;
 }

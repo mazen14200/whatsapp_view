@@ -778,9 +778,9 @@
                         <i class="mdi mdi-menu"></i>
                     </button>
                     <button class="button-menu-mobile button-menu-mobile-logo open-left">
-                        <img src="@Url.Content(lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo)" alt="" style="height: 80px;width: 140px;">
+                        <img src="@Url.Content(lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo)" class="CompanyLogo" alt="">
                     </button>
-                    <button class="button-menu-mobile open-left lessor-title" style="font-size:19px;font-weight:800;margin-right: 55px; white-space: nowrap;">
+                    <button class="button-menu-mobile open-left lessor-title CompanyName" style="font-size:20px;font-weight:800;margin-top:15px; white-space: nowrap;width:0">
                         @if (signinManager.IsSignedIn(User))
                         {
                             @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
@@ -794,7 +794,7 @@
                             }
                         }
                     </button>
-                    <div class="list-unstyled topbar-menu float-end mb-0" style="top: 40px;right: 620px; position: fixed;height: 6%; width:30%">
+                    <div class="list-unstyled topbar-menu float-end mb-0" style="top: 55px;right: 550px;position: fixed;height: 6%;width: 45%;">
                         @if (lessorCompanyContract.CrMasUserInformationLessorNavigation.CrMasLessorInformationStatus == Status.Hold)
                         {
                             <div class="text-danger" id="dangerMessage">@localizer["CompanyHoldedDanger"]</div>
