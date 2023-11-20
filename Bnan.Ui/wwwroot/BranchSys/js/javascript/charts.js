@@ -1,107 +1,106 @@
-////////////////////////charts////////////////////////////////
-var available_cars = ["2005", "2012", "2001", "2005", "2012"];
-var not_available_cars = ["2005", "2001", "2001"];
-var rented_cars = ["2012", "2005" ,"2003",'2023'];
+//////////////////////////charts////////////////////////////////
+//var available_cars = ["2005", "2012", "2001", "2005", "2012"];
+//var not_available_cars = ["2005", "2001", "2001"];
+//var rented_cars = ["2012", "2005" ,"2003",'2023'];
 
-var barChart1 = document.getElementById("horizontal_bar").getContext("2d");
-var myChart1 = new Chart(barChart1, {
-  type: "bar",
-  data: {
-    labels: ['متاحة', 'مؤجرة', 'غير متاحة'],
-    datasets: [
-      {
-        data: [available_cars.length, rented_cars.length, not_available_cars.length],
-        backgroundColor: [
-          "rgba(255, 150, 38, 1)",
-          "rgba(151, 71, 255, 1)",
-          "rgba(255, 38, 38, 1)",
-        ],
+//var barChart1 = document.getElementById("horizontal_bar").getContext("2d");
+//var myChart1 = new Chart(barChart1, {
+//  type: "bar",
+//  data: {
+//    labels: ['متاحة', 'مؤجرة', 'غير متاحة'],
+//    datasets: [
+//      {
+//        data: [available_cars.length, rented_cars.length, not_available_cars.length],
+//        backgroundColor: [
+//          "rgba(255, 150, 38, 1)",
+//          "rgba(151, 71, 255, 1)",
+//          "rgba(255, 38, 38, 1)",
+//        ],
        
-      }
-    ]
-  },
-  options: {
-    indexAxis: 'y',
-    plugins: {
-      legend: {
-        display: false
-      },
-      tooltip: {
-        callbacks: {
-          label: function(context) {
-            var label =[];
-            label =getCountByVersion(context.dataIndex);
-            
-            return label;
-          }
-        }
-      }
-    },
-    scales: {
-      x: {
-        grid: {
-          display: false // Remove vertical lines
-        },
-        ticks: {
-          font: {
-            size: 10 // Change the font size of the tick labels
-          }
-        }
-      },
-      y: {
-        grid: {
-          display: false // Remove horizontal lines
-        },
-        beginAtZero: true,
-      }
-    },
-    layout: {
-      padding: {
-        left: 10,
-        right: 10,
-        top: 10,
-        bottom: 10
-      }
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-    barPercentage: 0.6, // Adjust the width of the bars
-    categoryPercentage: 0.8 // Adjust the width of the bars
-  }
-});
-function getCountByVersion(dataIndex) {
-  var versions = {};
-  var cars;
+//      }
+//    ]
+//  },
+//  options: {
+//    indexAxis: 'y',
+//    plugins: {
+//      legend: {
+//        display: false
+//      },
+//      tooltip: {
+//        callbacks: {
+//          label: function(context) {
+//            var label =[];
+//            label =getCountByVersion(context.dataIndex);
+//            return label;
+//          }
+//        }
+//      }
+//    },
+//    scales: {
+//      x: {
+//        grid: {
+//          display: false // Remove vertical lines
+//        },
+//        ticks: {
+//          font: {
+//            size: 10 // Change the font size of the tick labels
+//          }
+//        }
+//      },
+//      y: {
+//        grid: {
+//          display: false // Remove horizontal lines
+//        },
+//        beginAtZero: true,
+//      }
+//    },
+//    layout: {
+//      padding: {
+//        left: 10,
+//        right: 10,
+//        top: 10,
+//        bottom: 10
+//      }
+//    },
+//    responsive: true,
+//    maintainAspectRatio: false,
+//    barPercentage: 0.6, // Adjust the width of the bars
+//    categoryPercentage: 0.8 // Adjust the width of the bars
+//  }
+//});
+//function getCountByVersion(dataIndex) {
+//  var versions = {};
+//  var cars;
   
-  switch (dataIndex) {
-    case 0:
-      cars = available_cars;
-      break;
-    case 1:
-      cars = rented_cars;
-      break;
-    case 2:
-      cars = not_available_cars;
-      break;
-    default:
-      cars = [];
-  }
+//  switch (dataIndex) {
+//    case 0:
+//      cars = available_cars;
+//      break;
+//    case 1:
+//      cars = rented_cars;
+//      break;
+//    case 2:
+//      cars = not_available_cars;
+//      break;
+//    default:
+//      cars = [];
+//  }
   
-  cars.forEach(function(version) {
-    if (!versions[version]) {
-      versions[version] = 1;
-    } else {
-      versions[version]++;
-    }
-  });
+//  cars.forEach(function(version) {
+//    if (!versions[version]) {
+//      versions[version] = 1;
+//    } else {
+//      versions[version]++;
+//    }
+//  });
   
-  var countByVersion = [];
-  Object.keys(versions).forEach(function(version) {
-    countByVersion.push(versions[version] + ':' + version+"\n\r");
-  });
+//  var countByVersion = [];
+//  Object.keys(versions).forEach(function(version) {
+//    countByVersion.push(versions[version] + ':' + version+"\n\r");
+//  });
   
-  return countByVersion;
-}
+//  return countByVersion;
+//}
 //pieChart
 const pieChartEl = document.getElementById('pieChart');
 const pieChartData = {
@@ -254,11 +253,11 @@ let isImageChanged = false;
 
 notificationImage.addEventListener('dblclick', function () {
   if (isImageChanged) {
-    notificationImage.src = '~/BranchSys/img/notofication.png';
+    notificationImage.src = 'img/notofication.png';
     isImageChanged = false;
     counter.style.display = 'inline-block'; // Display the counter
   } else {
-    notificationImage.src = '~/BranchSys/img/Group 3.png';
+    notificationImage.src = 'img/Group 3.png';
     isImageChanged = true;
     counter.style.display = 'none';
   }
@@ -286,35 +285,20 @@ $(document).ready(function () {
 
 
 ////////////js function to view the charts///////////
-$(document).ready(function () {
-  var chart1Container = $('#first-row-of-charts');
-  var chart2Container = $('#second-row-of-charts');
-  
-  
-  $('#chart').click(function () {
 
-    // Remove any existing charts from the card body
-    $('#cardBody').empty();
-  
-    // Create and append the chart elements to the card body
-    $('#cardBody').append(chart1Container);
-    $('#cardBody').append(chart2Container);
-   
-  });
-  
-  
-});
-// Get the numeric span elements
 const employeeCustody = document.getElementById('employee-custody');
 
 // Function to start or stop the neonShadow effect
 function toggleNeonShadow() {
   const brunchButton = document.getElementById("pulse-button-brunch");
+  const brunchButton_img = document.getElementById("brunch_button-img");
 
   if (employeeCustody.innerText >= 100000) {
     brunchButton.classList.add('neonShadow');
+    brunchButton_img.classList.add('anm');
   } else {
     brunchButton.classList.remove('neonShadow');
+    brunchButton_img.classList.remove('anm');
   }
 
   const formattedEmployeeCustody = parseInt(employeeCustody.innerText.replace(/,/g, '')).toLocaleString();
@@ -333,7 +317,7 @@ function formatNumberWithThousandsSeparator(elementId) {
 }
 
 
-// Example usage:
+
 formatNumberWithThousandsSeparator("brunch-custody");
 formatNumberWithThousandsSeparator("Executed-contracts");
 formatNumberWithThousandsSeparator("Closed-contracts");
@@ -343,4 +327,3 @@ formatNumberWithThousandsSeparator("Available-balance-employee");
 formatNumberWithThousandsSeparator("used-balance-employee");
 
 
-// Add more function calls for other numeric values on your website

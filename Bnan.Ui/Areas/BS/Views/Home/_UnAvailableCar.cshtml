@@ -1,0 +1,117 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
+@using Newtonsoft.Json;
+@model BSLayoutVM
+@inject IViewLocalizer localizer
+
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner3" >
+        @if (Model.UnAvaliableCars != null)
+        {
+            @foreach (var item in Model.UnAvaliableCars)
+            {
+                <div class="carousel-item @(item == Model.UnAvaliableCars.First() ? "active" : "")">
+                    <div class="product p-2 pt-0">
+                        <div class="row" id="not_available_data1">
+                            <div class="col-md-7 col-lg-7">
+                                <div class="row product-data2">
+                                    <div class="col-auto">
+                                        <img src="~/BranchSys/img/transimission2.png">
+                                    </div>
+
+                                    <div class="col-auto">
+                                        <img src="~/BranchSys/img/gas1.png">
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <p> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionBagBags <img src="~/BranchSys/img/lbag2.png"> </p>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <p> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionSmallBags <img src="~/BranchSys/img/sbag2.png"></p>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <p>  @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionPassengers <img src="~/BranchSys/img/people2.png"></p>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <p>@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionDoor <img src="~/BranchSys/img/doors2.png"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-lg-5">
+                                <p class="product-data1">@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateArName</p>
+                            </div>
+                        </div>
+                        <div class="row car_img">
+                            <img class="product-image" src="@Url.Content(item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionImage)"
+                                 alt="@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateArName">
+                        </div>
+                        <div class="row" id="not_available_data2">
+                            <div class="col">
+                                <button class="btn btn-link" type="button"
+                                        data-toggle="collapse" data-target="#collapse-reasons{@item.CrCasCarInformationSerailNo}"
+                                        aria-expanded="false" aria-controls="collapse-reasons">
+                                    <img src="~/BranchSys/img/vector.png">
+                                    الاسباب
+                                </button>
+                                <div class="collapse" id="collapse-reasons{@item.CrCasCarInformationSerailNo}">
+                                    <div class="row">
+                                        <div class="col">
+                                            @if (item.CrCasCarInformationBranchStatus == "H")
+                                            {
+                                                <span class="text-danger mt-2">@localizer["BranchHold"]</span>
+                                            }
+                                            @if (item.CrCasCarInformationOwner == "H")
+                                            {
+                                                <span class="text-danger mt-2 ">@localizer["OwnerHold"]</span>
+                                            }
+                                            @if (item.CrCasCarInformationPriceStatus != true)
+                                            {
+                                                <span class="text-danger mt-2">@localizer["PriceHold"]</span>
+                                            }
+                                            @if (item.CrCasCarInformationStatus == "H")
+                                            {
+                                                <span class="text-danger mt-2">@localizer["CarHold"]</span>
+                                            }
+                                            @if (item.CrCasCarInformationStatus == "D")
+                                            {
+                                                <span class="text-danger mt-2">@localizer["CarDelete"]</span>
+                                            }
+                                            @if (item.CrCasCarInformationStatus == "S")
+                                            {
+                                                <span class="text-danger mt-2">@localizer["CarSold"]</span>
+                                            }
+                                            @if (item.CrCasCarInformationStatus == "M")
+                                            {
+                                                <span class="text-danger mt-2">@localizer["CarMaintaince"]</span>
+                                            }
+                                            @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.ForSale)
+                                            {
+                                                <span class="text-danger mt-2">@localizer["CarForSale"]</span>
+                                            }
+                                            @if (item.CrCasCarInformationMaintenanceStatus == false)
+                                            {
+                                                <span class="text-danger mt-2">@localizer["CarMaintainceReview"]</span>
+                                            }
+                                            @if (item.CrCasCarInformationDocumentationStatus == false)
+                                            {
+                                                <span class="text-danger mt-2">@localizer["CarDocumentReview"]</span>
+                                            }
+                                            @if (item.CrCasCarInformationStatus == Status.Rented)
+                                            {
+                                                <span class="text-danger mt-2">@localizer["CarRented"]</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

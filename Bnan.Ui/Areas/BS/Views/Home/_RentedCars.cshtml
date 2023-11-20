@@ -1,0 +1,121 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
+@using Newtonsoft.Json;
+@model BSLayoutVM
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner1">
+        @if (Model.RentedCars != null)
+        {
+            @foreach (var item in Model.RentedCars)
+            {
+                <div class="carousel-item @(item == Model.RentedCars.First() ? "active" : "")">
+                    <div class="product1 p-2 pt-0">
+                        <div class="row" id="rented_data1">
+                            <div class="col-md-7 col-lg-7">
+                                <div class="row product-data2">
+                                    <div class="col-auto">
+                                        <img src="~/BranchSys/img/transimission2.png">
+                                    </div>
+                                    <div class="col-auto">
+                                        <img src="~/BranchSys/img/gas1.png">
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <p> ۱ <img src="~/BranchSys/img/lbag2.png"> </p>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <p> ۲ <img src="~/BranchSys/img/sbag2.png"></p>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <p>  ٥ <img src="~/BranchSys/img/people2.png"></p>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <p>٤ <img src="~/BranchSys/img/doors2.png"></p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-lg-5">
+                                <p class="product-data1"> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateArName</p>
+                            </div>
+                        </div>
+                        <div class="row car_img">
+                            <img class="product-image" src="~/BranchSys/img/car1.png"
+                                 alt="${product.name}">
+                        </div>
+                        <div class="row" id="rented_data2">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="collapse" id="collapse-price-${@item.CrCasCarInformationSerailNo}">
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <p class="rented-p"> نهاية العقد</p>
+                                                    <p>۲۰۲٤/۱/۱۲</p>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <p class="rented-p"> بداية العقد</p>
+                                                    <p>۲۰۲۳/۳/۱۲</p>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <p class="rented-p">المستأجر</p>
+                                                    <p>حسين محمد علي </p>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <p class="rented-p">رقم العقد</p>
+                                                    <p>۹۸۸٦۲۳٤٥۰۲۲۳</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-link" type="button"
+                                            data-toggle="collapse"
+                                            data-target="#collapse-price-${@item.CrCasCarInformationSerailNo}"
+                                            aria-expanded="false"
+                                            aria-controls="collapse-price-${@item.CrCasCarInformationSerailNo}">
+                                        <img src="~/BranchSys/img/vector.png">
+                                        مختصر العقد
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+@* @section Scripts {
+    <script>
+        $(document).ready(function () {
+            var carousel = document.getElementById('carousel-inner1');
+            // const carouselItems = carousel.getElementsByClassName('carousel-item');
+            // let currentIndex = 0;
+            console.log("carousel:" + carousel)
+            console.log("carouselItems:")
+            // function showItem(index) {
+            //     for (let i = 0; i < carouselItems.length; i++) {   //// carouselItems.length is the number of items  in the list you will display in the carsouel you can replace it with their number ////////////
+            //         carouselItems[i].classList.remove('active');
+            //     }
+            //     carouselItems[index].classList.add('active');
+            // }
+
+            // function rotateItems() {
+            //     // Check if the mouse is over the carousel
+            //     const isMouseOverCarousel = carousel.matches(':hover');
+            //     if (!isMouseOverCarousel) {
+            //         currentIndex = (currentIndex + 1) % carouselItems.length;
+            //         showItem(currentIndex);
+            //     }
+            // }
+
+            // setInterval(rotateItems, 2000);
+
+            // showItem(currentIndex);
+        });
+    </script>
+} *@

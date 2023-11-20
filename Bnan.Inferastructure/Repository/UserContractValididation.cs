@@ -84,7 +84,7 @@ namespace Bnan.Inferastructure.Repository
             contractValidition.CrMasUserContractValidityOperatingCard = model.CrMasUserContractValidityOperatingCard;
             contractValidition.CrMasUserContractValidityRegister = model.CrMasUserContractValidityRegister;
             contractValidition.CrMasUserContractValidityRenterAddress = model.CrMasUserContractValidityRenterAddress;
-            contractValidition.CrMasUserContractValidityTires = model.CrMasUserContractValidityTrafficLicense;
+            contractValidition.CrMasUserContractValidityTires = model.CrMasUserContractValidityTires;
             contractValidition.CrMasUserContractValidityTransferPermission = model.CrMasUserContractValidityTransferPermission;
             contractValidition.CrMasUserContractValidityCreate = model.CrMasUserContractValidityCreate;
 

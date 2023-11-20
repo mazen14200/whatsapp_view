@@ -1,221 +1,386 @@
-﻿@using Bnan.Ui.ViewModels.BS;
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
+@using Newtonsoft.Json;
 @model BSLayoutVM
+@inject IViewLocalizer localizer
+
+
 @{
     ViewData["Title"] = "Index";
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
 }
 
-<!------------------------------------------end of Topbar-------------------------------------------------->
-<div class="container-fluid">
-    <!-- Content Row -->
-    <div class="row justify-content-center-md" style="justify-content:flex-end">
-        <!--  Chart -->
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8">
+<!--  Chart -->
+<div class=" col-lg-9 col-xl-9">
 
-            <div class="card shadow mb-4">
+    <div class="card shadow mb-4">
 
-                <div class="card-body" id="cardBody">
+        <div class="card-body" id="cardBody">
 
-                    <div class="row" id="first-row-of-charts">
+            <div class="main-carousel-item active" id="carouselItem1">
+                <div class="row" id="first-row-of-charts">
 
-                        <div class="col-md-6">
-                            <div class="row " style="position: relative;">
-                                <div class="col-s-9 col-md-9 col-lg-9 col-xl-9 ">
-                                    <canvas id="horizontal_bar" aria-label="chart"></canvas>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3"
-                                     style="display: flex;justify-content: flex-end ;padding-left: 0;">
-                                    <p class="chart-p">سيارات الفرع : <span>500</span></p>
-
-                                </div>
+                    <div class="col-md-6 card-col">
+                        <div class="row ">
+                            <div class=" col-md-9 col-lg-9 col-xl-9 ">
+                                <canvas id="horizontal_bar" aria-label="chart"></canvas>
+                            </div>
+                            <div class=" ps-0 col-sm-3 col-md-3 col-lg-3 col-xl-3 pr-0"
+                                 style="display: flex;justify-content: flex-end ;">
+                                <p class="chart-p">سيارات الفرع : <span>@ViewBag.carCount</span></p>
                             </div>
                         </div>
-
-                        <div class="col-md-6" style="border-left: 1px solid #FF9626;">
-                            <div class="row ">
-                                <div class="col-sm-8 col-md-8 col-lg-7 col-xl-8 ">
-                                    <canvas id="pieChart" aria-label="chart" height="155px"></canvas>
-                                </div>
-
-                                <div class="col-sm-4 col-md-4 col-lg-5 col-xl-4 "
-                                     style="display: flex;justify-content: flex-end ;padding-left: 0;">
-                                    <div class="chart-legend">
-                                        <table class="chart-p">
-                                            <tr>
-                                                <td id="Executed-contracts">2000</td>
-                                                <td>: العقود المنفذة</td>
-                                            </tr>
-                                            <tr>
-                                                <td id="Closed-contracts">5000</td>
-                                                <td>: العقود المغلقة</td>
-                                            </tr>
-                                        </table>
-                                        <br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
-                    <!-- <hr color="#FF9626"> -->
 
-                    <div class="row" id="second-row-of-charts">
+                    <div class="col-md-6 card-col" style="border-left: 1px solid #FF9626;">
+                        <div class="row ">
+                            <div class="col-sm-8 col-md-8 col-lg-7 col-xl-8 ">
+                                <canvas id="pieChart" aria-label="chart" height="155px"></canvas>
+                            </div>
 
-                        <div class="col-md-6" style="border-top: 1px solid #FF9626;">
-                            <div class="row ">
-                                <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 ">
-                                    <canvas id="barChart2" aria-label="chart"></canvas>
-                                </div>
-                                <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4"
-                                     style="display: flex;justify-content: flex-end ;padding-left: 0;">
-                                    <div class="data chart-p">
-                                        <p class="mb-0">عهدة الفرع : <span id="brunch-custody">10000</span></p>
-                                        <p class="mb-0">الرصيد المتاح : <span id="Available-balance-brunch">5</span></p>
-                                        <p class="mb-0">الرصيد المحجوز : <span id="used-balance-brunch">5</span></p>
-                                        <!--  -->
-                                    </div>
-
+                            <div class="col-sm-4 col-md-4 col-lg-5 col-xl-4 "
+                                 style="display: flex;justify-content: flex-end ;padding-left: 0;">
+                                <div class="chart-legend">
+                                    <table class="chart-p">
+                                        <tr>
+                                            <td id="Executed-contracts">2000</td>
+                                            <td>: العقود المنفذة</td>
+                                        </tr>
+                                        <tr>
+                                            <td id="Closed-contracts">5000</td>
+                                            <td>: العقود المغلقة</td>
+                                        </tr>
+                                    </table>
+                                    <br>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6"
-                             style="border-left: 1px solid #FF9626;border-top: 1px solid #FF9626;">
-                            <div class="row">
-                                <div class="col-sm-7 col-md-7 col-lg-6 col-xl-8  ">
-                                    <canvas id="chartId" aria-label="chart"></canvas>
-                                </div>
-                                <div class="col-sm-5 col-md-5 col-xl-4 col-lg-4"
-                                     style="display: flex;justify-content: flex-end ;padding-left: 0;">
-                                    <div class="data chart-p">
-                                        <p class="mb-0">عهدة الموظف : <span id="employee-custody">100000</span></p>
-                                        <p class="mb-0">الرصيد المتاح : <span id="Available-balance-employee">5</span></p>
-                                        <p class="mb-0">الرصيد المحجوز : <span id="used-balance-employee">5</span></p>
-                                        <!--  -->
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
 
                 </div>
 
+                <!-- <hr color="#FF9626"> -->
+
+                <div class="row" id="second-row-of-charts">
+
+                    <div class="col-md-6 card-col" style="border-top: 1px solid #FF9626;">
+                        <div class="row ">
+                            <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 ">
+                                <canvas id="barChart2" aria-label="chart"></canvas>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4"
+                                 style="display: flex;justify-content: flex-end ;padding-left: 0;">
+                                <div class="data chart-p">
+                                    <p class="mb-0">
+                                        عهدة الفرع : <span id="brunch-custody">10000</span>
+                                    </p>
+                                    <p class="mb-0">
+                                        الرصيد المتاح : <span id="Available-balance-brunch">5</span>
+                                    </p>
+                                    <p class="mb-0">
+                                        الرصيد المحجوز : <span id="used-balance-brunch">5</span>
+                                    </p>
+                                    <!--  -->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 card-col"
+                         style="border-left: 1px solid #FF9626;border-top: 1px solid #FF9626;">
+                        <div class="row">
+                            <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8  ">
+                                <canvas id="chartId" aria-label="chart"></canvas>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4"
+                                 style="display: flex;justify-content: flex-end ;padding-left: 0;">
+                                <div class="data chart-p">
+                                    <p class="mb-0 ">
+                                        عهدة الموظف : <span id="employee-custody">100000</span>
+                                    </p>
+                                    <p class="mb-0">
+                                        الرصيد المتاح : <span id="Available-balance-employee">5</span>
+                                    </p>
+                                    <p class="mb-0">
+                                        الرصيد المحجوز : <span id="used-balance-employee">5</span>
+                                    </p>
+                                    <!--  -->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-
-        </div>
-        <!-- buttons  -->
-        <div class=" col-md-12 col-lg-12 col-xl-3 bg-transparent " id="button-on-mobile">
-            <!-- Updated width and added new classes for the second card -->
-            <!-- Card Body -->
-            <div class="card-body pt-0">
-                <form action="" method="" id="formID">
-                    <select id="brunch_name" name="brunch_name">
-                        @foreach (var item in Model.CrCasBranchInformations)
-                        {
-                            <option value="@item.CrCasBranchInformationCode">@item.CrCasBranchInformationArShortName</option>
-                        }
-                    </select>
-                    <label for="brunch_name" style="color: black;">الفرع </label>
-                    <br>
-                    <button type="button" class="btn btn-secondary1 mb-3 mt-2 active1" id="chart"
-                            onclick="setActiveButton(0)">
-                        <img src="~/BranchSys/img/Rectangle 74.png"
-                             class="chart-buttons-img">احصائيات
-                    </button>
-                    <button type="button" class="btn btn-secondary1 mb-3" id="toggleCarousel"
-                            onclick="setActiveButton(1)">
-                        <img src="~/BranchSys/img/Rectangle 75 .png"
-                             class="chart-buttons-img">مؤجرة
-                    </button> <button type="button"
-                                      class="btn btn-secondary1 mb-3" id="toggleCarousel2"
-                                      onclick="setActiveButton(2)">
-                        <img src="~/BranchSys/img/Rectangle 76.png"
-                             class="chart-buttons-img">متاحة
-                    </button>
-                    <button type="button" class="btn btn-secondary1 mb-3" id="toggleCarousel3"
-                            onclick="setActiveButton(3)">
-                        <img src="~/BranchSys/img/Rectangle 77.png"
-                             class="chart-buttons-img">غير متاحة
-                    </button>
-                    <!-- <button type="button" class="btn btn-secondary1"  onclick="setActiveButton(4)" ><img src="~/BranchSys/img/Rectangle 78.png"
-                            class="chart-buttons-img">رسائل</button> -->
-                </form>
-
+            <div class="main-carousel-item" id="carouselItem2">
+                <partial name="_RentedCars" />
             </div>
-
+            <div class="main-carousel-item" id="carouselItem3">
+                <partial name="_AvaliableCar" />
+            </div>
+            <div class="main-carousel-item" id="carouselItem4">
+                <partial name="_UnAvailableCar" />
+            </div>
         </div>
+
+    </div>
+
+</div>
+<div class="col-lg-3 col-xl-2  bg-transparent " id="button-on-mobile">
+    <!-- Updated width and added new classes for the second card -->
+    <!-- Card Body -->
+    <div class="card-body p-0 mt-2">
+        @Html.DropDownListFor(model => model.SelectedBranch, new SelectList(Model.CrCasBranchInformations, "CrCasBranchInformationCode", "CrCasBranchInformationArShortName", Model.SelectedBranch),new { id = "branchList" }))
+        <label for="brunch_name" style="color: black;">الفرع </label>
+        <br>
+        <button type="button" class="btn btn-secondary1  mt-2 active1" id="chart"
+                onclick="showCarouselItem(1) , setActiveButton(0)">
+            <img src="~/BranchSys/img/Rectangle 74.png"
+                 class="chart-buttons-img">احصائيات
+        </button>
+        <button type="button" class="btn btn-secondary1" id="toggleCarousel">
+            <img src="~/BranchSys/img/Rectangle 75 .png"
+                 class="chart-buttons-img">مؤجرة
+        </button>
+        <button type="button" class="btn btn-secondary1 " id="toggleCarousel2">
+            <img src="~/BranchSys/img/Rectangle 76.png"
+                 class="chart-buttons-img">متاحة
+        </button>
+        <button type="button" class="btn btn-secondary1 " id="toggleCarousel3">
+            <img src="~/BranchSys/img/Rectangle 77.png"
+                 class="chart-buttons-img">غير متاحة
+        </button>
     </div>
 
 </div>
 
-<section>
+@section Scripts {
+    <!--Charts-->
+    <script>
+        $(document).ready(function () {
 
-    <div class="before-footer-widget">
-        <svg width: 100%; height:auto viewbox="0 0 2444 132">
-            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
-                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
-            </path>
-        </svg>
-    </div>
-    <footer>
-        <div class="container justify-content-center " style="box-sizing: border-box; padding-top: 10px; padding-right: 40px;">
-            <div class="row justify-content-center">
-                <!-- First row of buttons -->
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-secondary mb-3">
-                        <img src="~/BranchSys/img/Rectangle 35.png">
-                        إلغاء العقد
-                    </button>
-                </div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-secondary mb-3">
-                        <img src="~/BranchSys/img/Rectangle 31.png">
-                        تمديد العقد
-                    </button>
-                </div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-secondary mb-3">
-                        <img src="~/BranchSys/img/Rectangle 30.png">
-                        تسوية العقد
-                    </button>
-                </div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-secondary mb-3">
-                        <img src="~/BranchSys/img/Rectangle 29.png">
-                        إنشاء العقد
-                    </button>
-                </div>
-            </div>
-            <div class="row justify-content-center " style="padding-bottom:5px ;">
-                <!-- Second row of buttons -->
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-secondary neonShadow " id="pulse-button-brunch">
-                        <img src="~/BranchSys/img/Rectangle 36.png">تسليم
-                        العهدة
-                    </button>
-                </div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-secondary neonShadow " id="pulse-button-employee">
-                        <img src="~/BranchSys/img/Rectangle 33.png" id="button-image"> تغذية
-                        الصندوق
-                    </button>
-                </div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-secondary ">
-                        <img src="~/BranchSys/img/Rectangle 32.png">
-                        التقرير المالي
-                    </button>
-                </div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-secondary ">
-                        <img src="~/BranchSys/img/Rectangle 34.png">
-                        مستأجرين
-                    </button>
-                </div>
-            </div>
-        </div>
-    </footer>
+            ////////////////////////charts////////////////////////////////
+            var available_cars = "@ViewBag.AvaliableCars";
+            var not_available_cars = "@ViewBag.UnAvaliableCars";
+            var rented_cars = "@ViewBag.RentedCars";
+            console.log(available_cars.length)
+            var barChart1 = document.getElementById("horizontal_bar").getContext("2d");
+            var myChart1 = new Chart(barChart1, {
+                type: "bar",
+                data: {
+                    labels: ['متاحة', 'مؤجرة', 'غير متاحة'],
+                    datasets: [
+                        {
+                            data: [available_cars, rented_cars, not_available_cars],
+                            backgroundColor: [
+                                "rgba(255, 150, 38, 1)",
+                                "rgba(151, 71, 255, 1)",
+                                "rgba(255, 38, 38, 1)",
+                            ],
 
-</section>
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        // tooltip: {
+                        //     callbacks: {
+                        //         label: function (context) {
+                        //             var label = [];
+                        //             label = getCountByVersion(context.dataIndex);
+                        //             return label;
+                        //         }
+                        //     }
+                        // }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false // Remove vertical lines
+                            },
+                            ticks: {
+                                font: {
+                                    size: 10 // Change the font size of the tick labels
+                                }
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false // Remove horizontal lines
+                            },
+                            beginAtZero: true,
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    barPercentage: 0.6, // Adjust the width of the bars
+                    categoryPercentage: 0.8 // Adjust the width of the bars
+                }
+            });
+            // function getCountByVersion(dataIndex) {
+            //     var versions = {};
+            //     var cars;
+
+            //     switch (dataIndex) {
+            //         case 0:
+            //             cars = available_cars;
+            //             break;
+            //         case 1:
+            //             cars = rented_cars;
+            //             break;
+            //         case 2:
+            //             cars = not_available_cars;
+            //             break;
+            //         default:
+            //             cars = [];
+            //     }
+
+            //     cars.forEach(function (version) {
+            //         if (!versions[version]) {
+            //             versions[version] = 1;
+            //         } else {
+            //             versions[version]++;
+            //         }
+            //     });
+
+            //     var countByVersion = [];
+            //     Object.keys(versions).forEach(function (version) {
+            //         countByVersion.push(versions[version] + ':' + version + "\n\r");
+            //     });
+
+            //     return countByVersion;
+            // }
+        });
+
+
+    </script>
+    <script>
+
+
+
+        function loadRentedCars() {
+            $.ajax({
+                url: "/BS/Home/GetRentedCars", // Replace YourController with your actual controller name
+                type: "GET",
+                success: function (data) {
+                    $("#carouselItem2").html(data);
+                },
+                error: function () {
+                    alert("Error loading data.");
+                }
+            });
+        }
+        $("#toggleCarousel").on("click", function () {
+            var RentedCars = "@ViewBag.RentedCars"
+            if (parseInt(RentedCars) > 0) {
+                setActiveButton(1);
+                showCarouselItem(2);
+                loadRentedCars();
+                setTimeout(function () {
+                    initCarousel();
+                }, 1000);
+            }
+            else {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["IsEmptyTab"]');
+            }
+
+        });
+
+        function loadAvaliableCars() {
+            $.ajax({
+                url: "/BS/Home/GetAvaliableCars", // Replace YourController with your actual controller name
+                type: "GET",
+                success: function (data) {
+                    $("#carouselItem3").html(data);
+                },
+                error: function () {
+                    alert("Error loading data.");
+                }
+            });
+        }
+        $("#toggleCarousel2").on("click", function () {
+            var AvaliableCars = "@ViewBag.AvaliableCars"
+            if (parseInt(AvaliableCars) > 0) {
+                showCarouselItem(3);
+                setActiveButton(2);
+                loadAvaliableCars();
+                setTimeout(function () {
+                    initCarousel2();
+                }, 1000);
+            }
+            else {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["IsEmptyTab"]');
+            }
+
+        });
+
+        function loadUnAvaliableCars() {
+            $.ajax({
+                url: "/BS/Home/GetUnAvaliableCars", // Replace YourController with your actual controller name
+                type: "GET",
+                success: function (data) {
+                    $("#carouselItem4").html(data);
+                },
+                error: function () {
+                    alert("Error loading data.");
+                }
+            });
+        }
+        $("#toggleCarousel3").on("click", function () {
+            var UnAvaliableCars = "@ViewBag.UnAvaliableCars"
+            if (parseInt(UnAvaliableCars) > 0) {
+                showCarouselItem(4);
+                setActiveButton(3);
+                loadUnAvaliableCars();
+                setTimeout(function () {
+                    initCarousel3();
+                }, 1000);
+            }
+            else {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["IsEmptyTab"]');
+            }
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Attach a change event handler to the dropdown
+            $("#branchList").change(function () {
+                var selectedBranch = $(this).val();
+
+                // Make an AJAX call
+                $.ajax({
+                    url: "/BS/Home/ChangeBranch", // Update with your controller and action
+                    type: "GET",
+                    data: { selectedBranch: selectedBranch },
+                    success: function (result) {
+                        window.location.href = "/BS/Home/Index";
+                    },
+                    error: function () {
+                        // Handle errors if necessary
+                        console.log("Error occurred");
+                    }
+                });
+            });
+        });
+    </script>
+
+}
+

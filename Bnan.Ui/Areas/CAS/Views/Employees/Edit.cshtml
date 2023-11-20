@@ -27,6 +27,8 @@
         <input asp-for="CrMasUserInformationArName" type="hidden" />
         <input asp-for="CrMasUserInformationAvailableBalance" type="hidden" />
         <input asp-for="CrMasUserInformationTotalBalance" type="hidden" />
+        <input asp-for="CrMasUserInformationTotalBalance" type="hidden" />
+        <input value="@Model.CrMasUserBranchValidities.Sum(x=>x.CrMasUserBranchValidityBranchCashBalance)" name="CashBalance" id="CashBalance" type="hidden" />
         <div class="form-contain">
             <div class="row">
                 <div class="col-md-6">
@@ -471,9 +473,14 @@
                 form.appendChild(hiddenInput);
                 console.log(data)
                 form.submit();
-
             })
         });
-
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Code to run when the document is ready
+            var CashBalance = $("#CashBalance").val();
+            console.log(CashBalance);
+        });
     </script>
 }

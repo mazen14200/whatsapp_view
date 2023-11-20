@@ -1,10 +1,19 @@
-
 body{
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Cairo', 'sans-serif';
 } 
+
 nav {
   background-color: rgba(255, 206, 148, 1);
 }
+
+.main-carousel-item {
+  display: none;
+}
+
+.main-carousel-item.active {
+  display: block;
+}
+
 .btn-secondary {
  
   border-color:rgb(252, 212, 126) ;
@@ -21,22 +30,26 @@ nav {
 }
 
 select {
-  width:150px;
+  width:70%;
   background-color: rgb(255, 253, 253);
-  border-radius:  0.35rem;;
-  height: 35px;
+  border-radius:  0.35rem;
   border:2px  solid #FF9626;
 }
 .btn:not(.btn-link){
-
   color: #000000;
   background-color: white;
-  width: 200px;
   position: relative;
   z-index: 1;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
-
+.btn-secondary1{
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.btn-secondary{
+  width: 95%;
+  border-radius: 15px
+}
 .btn::before:not(.btn-link) {
   content: "";
   position: absolute;
@@ -68,13 +81,13 @@ select {
 
   font-size: 0;
 }
-.col-md-6{
+.card-col{
   position: relative;
   z-index: 1;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.col-md-6::before {
+.card-col::before {
   content: "";
   position: absolute;
   top: 0;
@@ -86,19 +99,19 @@ select {
   z-index: -1;
 }
 
-.col-md-6:hover {
+.card-col:hover {
   transform: translateY(-2px);
   box-shadow: 10px 8px 8px 8px rgba(0, 0, 0, 0.2);
 
 }
 
 
-.col-md-6:hover::before {
+.card-col:hover::before {
   opacity: 0.3;
 }
 .chart-buttons-img{
 margin: 1px;
-padding-right:25px; 
+padding-right:10px; 
 }
 
 .btn-secondary1{
@@ -115,18 +128,18 @@ padding-right:25px;
 }
 
 .chart-p{
-  font-size:1px;
-  color: #272727;
+  font-size:.8rem;
+  color: #000000;
   font-weight: 400;
-  text-align: right;
+  text-align: end;
   font-family: ' sans-serif';
   
   /* font-weight: bold; */
 }
 .chart-legend{
   line-height: 15px;
-  font-size:1px;
-  color: #272727;
+  font-size:.8rem;
+  color: #000000;
   font-family: ' sans-serif';
 
 
@@ -145,11 +158,12 @@ padding-right:25px;
 }
 #rented_data2{
   text-align: end;
-  height: 64px;
+  height: 84px;
 
 }
+
 .img-car-avaliable img{
-width: 27%;
+width: 300px;
 }
 #rented_data2 ,#not_available_data2 ,#available_data2 p{
   color: #000;
@@ -170,12 +184,12 @@ width: 27%;
 }
 #not_available_data2{
   text-align: end;
-  height: 64px;
+  height: 84px;
 }
 #available_data2 p{
-  line-height: 3px;
+ margin-bottom: 0px;
   text-align: center;
-  font-size: xx-small;
+  font-size: small;
 
 }
 #available_data2 p:hover{
@@ -196,12 +210,7 @@ width: 27%;
   color: unset;
   text-decoration: none;
 } 
-#available_data2 .red-text {
-  color: red;
-}
-.red-button{
-  color: red;
-}
+
 .maintenance{
   justify-content: space-around;
 }
@@ -220,7 +229,7 @@ footer{
   margin-bottom: 8px;
  justify-content: flex-end;
   gap:3px;
-  text-align: right;
+  text-align: end;
 }
 
 .legend-item span {
@@ -234,15 +243,29 @@ footer{
   
   box-shadow: 0 0 0 0  rgb(253, 2, 2);
 	animation: pulse-red 2s infinite;
-}
 
+}
+.anm {
+  padding-top: 4px;
+  padding-right: 10px;
+	animation: jump-shaking 2s infinite;
+
+}
 .on-mobile p{
-  font-size: xx-small;
+  font-size: small;
     font-weight: bold;
-    color: #727272;
+    color: #000000;
     margin-left: 70px;
 }
-
+@keyframes jump-shaking {
+  0% { transform: translateX(0) }
+  25% { transform: translateY(-9px) }
+  35% { transform: translateY(-9px) rotate(17deg) }
+  55% { transform: translateY(-9px) rotate(-17deg) }
+  65% { transform: translateY(-9px) rotate(17deg) }
+  75% { transform: translateY(-9px) rotate(-17deg) }
+  100% { transform: translateY(0) rotate(0) }
+}
 @keyframes pulse-red {
 	0% {
 		transform: scale(0.95);
@@ -265,6 +288,10 @@ footer{
  .extra-small-mobile{
   display: none;
  }
+ .chart-buttons-img{
+  display: none;
+
+ }
 }
 @media (max-width: 646px) {
   
@@ -281,7 +308,7 @@ footer{
 }
 @media (max-width: 786px) {
   .col-md-3 .btn{
-    font-size: 12px;
+    font-size: 1rem;
     margin-bottom: 20px;
     width: 200px;
   }
@@ -297,4 +324,49 @@ footer{
   #button-on-mobile{
     text-align: center;
   }
+}
+@media(max-width:988px){
+  .btn-secondary1{
+    width: 40%;
+  }
+  select{
+    width: 40%;
+
+  }
+  .footer-buttons {
+    padding-right: 40px;
+  }
+}
+@media(min-width:1300px){
+  
+  .chart-buttons-img{
+    padding-right:0px; 
+
+  }
+  #cardBody{
+    height: 411px;
+   }
+}
+@media(min-height:990px) 
+  {
+  #content-wrapper {
+    min-height: 10%;
+  }
+  
+  footer {
+    width: 100%;
+    padding-bottom:240px; 
+  }
+ 
+}
+@media (min-width: 993px) and (max-width: 1400px) {
+  #cardBody{
+    height: 343px;
+   }
+}
+@media (min-width: 1100px) and (min-height: 660px) {
+ footer{
+  position: absolute;
+  bottom: 0;
+ }
 }

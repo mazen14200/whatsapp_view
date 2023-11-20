@@ -1,5 +1,4 @@
 ﻿@model Bnan.Ui.ViewModels.CAS.ContractValiditionsVM
-
 @inject IViewLocalizer localizer
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
@@ -379,7 +378,7 @@
                                 <ul class="list mt-2" style="font-size: 17px;">
                                     <li>
                                         <h4 class="mb-1">
-                                            <input type="checkbox" style="height: 15px;width: 30px;" @((bool)Model.CrMasUserContractValidityOil ? "checked='checked'" : "")name="CrMasUserContractValidityOil" value="@Model.CrMasUserContractValidityOil" />
+                                            <input type="checkbox" style="height: 15px;width: 30px;" @((bool)Model.CrMasUserContractValidityOil ? "checked='checked'" : "") name="CrMasUserContractValidityOil" value="@Model.CrMasUserContractValidityOil" />
                                             <label for="@Model.CrMasUserContractValidityOil">@procedure.CrMasSysProceduresArName</label>
                                         </h4>
                                     </li>
@@ -390,7 +389,7 @@
                                 <ul class="list mt-2" style="font-size: 17px;">
                                     <li>
                                         <h4 class="mb-1">
-                                            <input type="checkbox" style="height: 15px;width: 30px;" @((bool)Model.CrMasUserContractValidityOil ? "checked='checked'" : "")name="CrMasUserContractValidityOil" value="@Model.CrMasUserContractValidityOil" />
+                                            <input type="checkbox" style="height: 15px;width: 30px;" @((bool)Model.CrMasUserContractValidityOil ? "checked='checked'" : "") name="CrMasUserContractValidityOil" value="@Model.CrMasUserContractValidityOil" />
                                             <label for="@Model.CrMasUserContractValidityOil">@procedure.CrMasSysProceduresEnName</label>
                                         </h4>
                                     </li>
@@ -406,7 +405,7 @@
                                 <ul class="list mt-2" style="font-size: 17px;">
                                     <li>
                                         <h4 class="mb-1">
-                                            <input type="checkbox" style="height: 15px;width: 30px;" @((bool)Model.CrMasUserContractValidityMaintenance ? "checked='checked'" : "")name="CrMasUserContractValidityMaintenance" value="@Model.CrMasUserContractValidityMaintenance" />
+                                            <input type="checkbox" style="height: 15px;width: 30px;" @((bool)Model.CrMasUserContractValidityMaintenance ? "checked='checked'" : "") name="CrMasUserContractValidityMaintenance" value="@Model.CrMasUserContractValidityMaintenance" />
                                             <label for="@Model.CrMasUserContractValidityMaintenance">@procedure.CrMasSysProceduresArName</label>
                                         </h4>
                                     </li>
@@ -417,7 +416,7 @@
                                 <ul class="list mt-2" style="font-size: 17px;">
                                     <li>
                                         <h4 class="mb-1">
-                                            <input type="checkbox" style="height: 15px;width: 30px;" @((bool)Model.CrMasUserContractValidityMaintenance ? "checked='checked'" : "")name="CrMasUserContractValidityMaintenance" value="@Model.CrMasUserContractValidityMaintenance" />
+                                            <input type="checkbox" style="height: 15px;width: 30px;" @((bool)Model.CrMasUserContractValidityMaintenance ? "checked='checked'" : "") name="CrMasUserContractValidityMaintenance" value="@Model.CrMasUserContractValidityMaintenance" />
                                             <label for="@Model.CrMasUserContractValidityMaintenance">@procedure.CrMasSysProceduresEnName</label>
                                         </h4>
                                     </li>

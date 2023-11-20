@@ -1,10 +1,18 @@
 ﻿using Bnan.Core.Models;
+using System.Text.Json.Serialization;
 
 namespace Bnan.Ui.ViewModels.BS
 {
     public class BSLayoutVM
     {
         public List<CrCasBranchInformation>? CrCasBranchInformations { get; set; }
+        public List<CrCasCarInformation>? AvaliableCars { get; set; }
+        public List<CrCasCarInformation>? UnAvaliableCars { get; set; }
+        public List<CrCasCarInformation>? Cars { get; set; }
+        public List<CrCasCarInformation>? RentedCars { get; set; }
+        public List<CrCasCarDocumentsMaintenance>? DocumentsMaintenances { get; set; }
+        public string? SelectedBranch { get; set; }
+
 
     }
 }

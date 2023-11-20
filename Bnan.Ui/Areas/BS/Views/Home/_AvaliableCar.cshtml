@@ -1,0 +1,212 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
+@using Newtonsoft.Json;
+@model BSLayoutVM
+<!--Avaliable Cars-->
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner2">
+        @if (Model.AvaliableCars != null)
+        {
+            @foreach (var item in Model.AvaliableCars)
+            {
+                <div class="carousel-item @(item == Model.AvaliableCars.First() ? "active" : "")">
+                    <div class="product p-2 pt-0">
+                        <div class="row" id="available_data1">
+                            <div class="col-md-7 col-lg-7">
+                                <div class="row product-data2">
+                                    <div class="col-auto">
+                                        <img src="~/BranchSys/img/transimission2.png">
+                                    </div>
+                                    <div class="col-auto">
+                                        <img src="~/BranchSys/img/gas1.png">
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <p> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionBagBags <img src="~/BranchSys/img/lbag2.png"> </p>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <p> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionSmallBags <img src="~/BranchSys/img/sbag2.png"></p>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <p>  @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionPassengers <img src="~/BranchSys/img/people2.png"></p>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <p>@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionDoor <img src="~/BranchSys/img/doors2.png"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-lg-5">
+                                <p class="product-data1">@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateArName</p>
+                            </div>
+                        </div>
+                        <div class="row car_img img-car-avaliable">
+                            <img class="product-image" src="@Url.Content(item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionImage)"
+                                 alt="@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateArName">
+                        </div>
+                        <div class="row" id="available_data2">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="collapse" id="collapse-price">
+                                            <div class="row">
+                                                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 ">
+                                                    <p class="pb-0">الساعة الاضافية</p>
+                                                    <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicExtraHourValue</p>
+                                                </div>
+                                                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                                    <p> الكيلو الاضافي</p>
+                                                    <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicAdditionalKmValue</p>
+                                                </div>
+                                                @if (@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicIsAdditionalDriver == true)
+                                                {
+                                                    <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
+                                                        <p> السائق الاضافي</p>
+                                                        <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicAdditionalDriverValue</p>
+                                                    </div>
+                                                }
+                                                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                                    <p>نسبة الضريبة </p>
+                                                    <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicRentalTaxRate</p>
+                                                </div>
+                                                <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
+                                                    <p> شهري</p>
+                                                    <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicMonthlyRent</p>
+                                                </div>
+                                                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                                    <p>اسبوعي</p>
+                                                    <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicWeeklyRent</p>
+                                                </div>
+                                                <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
+                                                    <p>يومي</p>
+                                                    <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicDailyRent</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-link  pb-0" type="button"
+                                            data-toggle="collapse"
+                                            data-target="#collapse-price"
+                                            aria-expanded="false"
+                                            aria-controls="collapse-price">
+                                        <img src="~/BranchSys/img/vector.png">
+                                        السعر
+                                    </button>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="collapse" id="collapse-info">
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <p>العمر</p>
+                                                    <p>
+                                                        @item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicMaxAge :
+                                                        @item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicMinAge
+                                                    </p>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <p>الحد الاعلي للساعات</p>
+                                                    <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicHourMax</p>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <p>الساعات المجانية</p>
+                                                    <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicFreeAdditionalHours</p>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <p>كيلوات المجاني اليومي</p>
+                                                    <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicNoDailyFreeKm</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-link pb-0" type="button"
+                                            data-toggle="collapse"
+                                            data-target="#collapse-info"
+                                            aria-expanded="false"
+                                            aria-controls="collapse-info">
+                                        <img src="~/BranchSys/img/vector.png">
+                                        بنود التأجير
+                                    </button>
+                                </div>
+                                <div class="row ">
+                                    <div class="col">
+                                        <div class="collapse" id="collapse-fixing-${@item.CrCasCarInformationSerailNo}">
+                                            <div class="row maintenance">
+                                                @foreach (var maintaince in Model.DocumentsMaintenances.FindAll(x => x.CrCasCarDocumentsMaintenanceSerailNo == item.CrCasCarInformationSerailNo &&
+                                               x.CrCasCarDocumentsMaintenanceProceduresClassification == "13"))
+                                                {
+                                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                                        <p>@maintaince.CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresArName</p>
+                                                        @if (maintaince.CrCasCarDocumentsMaintenanceStatus == Status.Active)
+                                                        {
+                                                            <p> قائم </p>
+                                                        }
+                                                        else if (maintaince.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire)
+                                                        {
+                                                            <p> علي وشك الانتهاء</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p> منتهي </p>
+                                                        }
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn  btn-link btn-link-collapse-fix pb-0" type="button"
+                                            data-toggle="collapse"
+                                            data-target="#collapse-fixing-${@item.CrCasCarInformationSerailNo}"
+                                            aria-expanded="false"
+                                            aria-controls="collapse-fixing-${@item.CrCasCarInformationSerailNo}">
+                                        <img src="~/BranchSys/img/vector.png">
+                                        الصيانه
+                                    </button>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="collapse" id="collapse-doc-${@item.CrCasCarInformationSerailNo}">
+                                            <div class="row">
+                                                @foreach (var maintaince in Model.DocumentsMaintenances.FindAll(x => x.CrCasCarDocumentsMaintenanceSerailNo == item.CrCasCarInformationSerailNo &&
+                                               x.CrCasCarDocumentsMaintenanceProceduresClassification == "12"))
+                                                {
+                                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                                        <p>@maintaince.CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresArName</p>
+                                                        @if (maintaince.CrCasCarDocumentsMaintenanceStatus == Status.Active)
+                                                        {
+                                                            <p> قائم </p>
+                                                        }
+                                                        else if (maintaince.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire)
+                                                        {
+                                                            <p > علي وشك الانتهاء</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p > منتهي </p>
+                                                        }
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-link btn-link-collapse-docs pb-0" type="button"
+                                            data-toggle="collapse"
+                                            data-target="#collapse-doc-${@item.CrCasCarInformationSerailNo}"
+                                            aria-expanded="false"
+                                            aria-controls="collapse-doc-${@item.CrCasCarInformationSerailNo}">
+                                        <img src="~/BranchSys/img/vector.png">
+                                        الوثائق
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+</div>
