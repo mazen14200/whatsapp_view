@@ -50,6 +50,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/toastr.css" />
     <link href="~/BranchSys/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/icons.min.css" />
+    <style>
+        .noti-icon-badge {
+            display: inline-block;
+            position: absolute;
+            top: 22px;
+            right: 6px;
+            border-radius: 50%;
+            height: 7px;
+            width: 7px;
+            background-color: #fa5c7c;
+        }
+    </style>
 
 </head>
 
@@ -73,13 +86,12 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-profile rounded-circle" src="~/BranchSys/img/profile.png">
-                            <div style="display: flex; flex-direction: column;align-items: center;">
-                                <span class=" text-dark font-weight-bold">
-                                    عبد
-                                    الله
+                            <img class="img-profile rounded-circle" src="~/BranchSys/img/profile.png" style="margin-right: 12px;">
+                            <div style="display: flex; flex-direction: column;">
+                                <span class=" text-dark font-weight-bold" style="font-size: 16px;">
+                                    احمد هاني زاهر
                                 </span>
-                                <span class="   text-dark">
+                                <span class="text-dark" style="font-size: 13px;font-weight: 400;">
                                     المدير التنفيذي
                                 </span>
                             </div>
@@ -107,9 +119,9 @@
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class=""><img src="~/BranchSys/img/Rectangle 65.png"></i>
+                            <i class="dripicons-message noti-icon" style="font-size: 22px;vertical-align: middle;line-height: 70px;color: #7a7272;"></i>
                             <!-- Counter - Messages -->
-                            <span class="badge badge-danger badge-counter">7</span>
+                            <span class="noti-icon-badge"></span>
                         </a>
                         <!-- Dropdown - Messages -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in"
@@ -178,50 +190,57 @@
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i><img id="notificationImage" src="~/BranchSys/img/notofication.png"></i>
+                            <i class="dripicons-bell noti-icon" style="font-size: 22px;vertical-align: middle;line-height: 70px;color: #7a7272;"></i>
                             <!-- Counter - Alerts -->
-                            <span id="counter" class="badge badge-danger badge-counter">3+</span>
+                            <span class="noti-icon-badge"></span>
                         </a>
                         <!-- Dropdown - Alerts -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in"
                              aria-labelledby="alertsDropdown">
                             <h6 class="dropdown-header" style="background-color: #FF992E">
-                                مركز الاشعارات
+                                 @localizer["Notifications"]
                             </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-dark-600">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                </div>
+                            <!-- item-->
+                            @* <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <p class="notify-details" style="text-align:right;margin-right:0">
+                                    <span style="float:right">@localizer["ContractCompany2"]</span>
+                                    <small class="text-muted" style="float:left;color:green!important">@ViewBag.CompanyContractRenewed</small>
+                                    <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyContractAboutExpire</small>
+                                    <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyContractExpired</small>
+                                </p>
+                            </a> *@
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <p class="notify-details" style="text-align:right;margin-right:0">
+                                    <span style="float:right">@localizer["ContractBranch"]</span>
+                                    <small class="text-muted" style="float:left;color:green!important">@ViewBag.CompanyDocumentsRenewedBS</small>
+                                    <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyDocumentsAboutExpireBS</small>
+                                    <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyDocumentsExpiredBS</small>
+                                </p>
                             </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                        <i class="fas fa-donate text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-dark-600">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
-                                </div>
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <p class="notify-details" style="text-align:right;margin-right:0">
+                                    <span style="float:right">@localizer["CarsDocuments"]</span>
+                                    <small class="text-muted" style="float:left;color:green!important">@ViewBag.CompanyDocumentsCarRenewedBS</small>
+                                    <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyDocumentsCarAboutExpireBS</small>
+                                    <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyDocumentsCarExpiredBS</small>
+                                </p>
                             </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class=" text-dark-600">December 2, 2019</div>
-                                    Spending Alert: We've noticed unusually high spending for your account.
-                                </div>
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <p class="notify-details" style="text-align:right;margin-right:0">
+                                    <span style="float:right">@localizer["CarsFixed"]</span>
+                                    <small class="text-muted" style="float:left;color:green!important">@ViewBag.CompanyMaintainceCarRenewedBS</small>
+                                    <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyMaintainceCarAboutExpireBS</small>
+                                    <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyMaintainceCarExpiredBS</small>
+                                </p>
                             </a>
-                            <a class="dropdown-item text-center  text-dark-600" href="#">Show All Alerts</a>
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <p class="notify-details" style="text-align:right;margin-right:0">
+                                    <span style="float:right">اسعار السيارات</span>
+                                    <small class="text-muted" style="float:left;color:green!important">@ViewBag.PriceCarRenewedBS</small>
+                                    <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.PriceCarAboutExpireBS</small>
+                                    <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.PriceCarExpiredBS</small>
+                                </p>
+                            </a>
                         </div>
                     </li>
                     <!-- Nav Item - Language -->
@@ -229,13 +248,13 @@
                         @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
                         {
                             <a class="nav-link dropdown-toggle" role="button" asp-area="BS" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="ar-EG">
-                                <span class="align-middle" style="color:black">Ar</span>
+                                <span class="align-middle" style="color: #8d8282;font-size: 14px;font-weight: 600;">Ar</span>
                             </a>
                         }
                         else
                         {
                             <a class="nav-link dropdown-toggle" role="button" asp-area="BS" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="en-US">
-                                <span class="align-middle" style="color:black">En</span>
+                                <span class="align-middle" style="color: #8d8282;font-size: 14px;font-weight: 600;">En</span>
                             </a>
                         }
                     </li>

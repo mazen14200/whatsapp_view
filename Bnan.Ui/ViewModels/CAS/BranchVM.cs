@@ -20,6 +20,7 @@ namespace Bnan.Ui.ViewModels.CAS
         [Required(ErrorMessage = "requiredFiled")]
         [RegularExpression(@"^7\d{9}$", ErrorMessage = "requiredNoStartWithFiled7")]
         public string? CrCasBranchInformationGovernmentNo { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         [StringLength(15, MinimumLength = 15, ErrorMessage = "requiredNoLengthFiled15")]
         public string? CrCasBranchInformationTaxNo { get; set; }
         [Required(ErrorMessage = "requiredFiled")]

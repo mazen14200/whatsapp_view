@@ -190,6 +190,7 @@ else
                     <input type="text" class="form-control" readonly asp-for="CrCasBranchInformationTotalBalance" maxlength="100" width="80%" />
                     <input type="text" class="form-control" readonly asp-for="CrCasBranchInformationDirectorSignature" maxlength="100" width="80%" />
                     <input type="text" class="form-control" readonly id="SalesPointCount" value="@ViewBag.SalesPointCount" maxlength="100" width="80%" />
+                    <input type="text" class="form-control" readonly id="CarsCount" value="@ViewBag.CarsCount" maxlength="100" width="80%" />
                 </div>
             </div>
 
@@ -769,7 +770,6 @@ else
         function updateUserStatus(status) {
             var Branchcode = document.getElementById("CrCasBranchInformationCode").value
             var LessorCode = document.getElementById("CrCasBranchInformationLessor").value
-
             $.ajax({
                 type: "POST",
                 url: "/CAS/Branches/EditStatus",
@@ -807,6 +807,7 @@ else
             var branchCode = $("#CrCasBranchInformationCode").val();
             var salespoint = $("#SalesPointCount").val();
             var Balance = $("#CrCasBranchInformationTotalBalance").val();
+            var CarsCount = $("#CarsCount").val();
           
             if (branchCode!="100") {
                 if(status=="D"){
@@ -814,9 +815,13 @@ else
                     toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                     toastr.error('@localizer["toastMessagebranchHaveBalance"]');
                     }
-                    else if (salespoint > 1) {
+                    else if (salespoint > 0) {
                         toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                         toastr.error('@localizer["toastMessagebranchHaveSalesPoint"]');
+                    }
+                    else if (CarsCount > 0) {
+                        toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                        toastr.error('@localizer["toastMessagebranchHaveCars"]');
                     }
                     else{
                         CheckValidation('2201001', status).done(function (data) {

@@ -94,12 +94,12 @@
 
 
   //CAS Add Branch
-  "Add Branch Hint": "The page allows you to  add Branch data.",
+  "Add Branch Hint": "This page Enables you to search and view branch data.",
   "Add Branch Data": "Add Branch",
-  "BranchNameAr": "Branch Name Arabic",
-  "BranchNameArShort": "Branch Name Short",
-  "BranchNameEn": "Branch Name English",
-  "BranchNameEnShort": "Branch Name Short",
+  "BranchNameAr": "Branch Ar. Name",
+  "BranchNameArShort": "Branch Ar. Name Short",
+  "BranchNameEn": "Branch En. Name",
+  "BranchNameEnShort": "Branch En. Name Short",
 
   //CAS Edit Branch
   "Edit Branch Hint": "The page allows you to view and update Branch Data.",
@@ -241,8 +241,8 @@
   "LessosorNameEnShort": "Name English Short",
   "governmentNo": "gov Number",
   "TaxNo": "Tax Number",
-  "DirNameAr": "DirName Arabic",
-  "DirNameEn": "Dir Name English",
+  "DirNameAr": "Manager's Ar Name",
+  "DirNameEn": "Manager's En Name",
   "LessorPhone": "Mobile",
   "LessorPhone2": "Phone 2",
   "LessorEmail": "Email",
@@ -254,21 +254,21 @@
   "Edit Lessor Hint": "The page allows you to Edit Lessor data ",
   "Edit Lessor Data": "Update",
   "Classification": "Classification",
-  "reasons": "reasons",
+  "reasons": "Reasons",
   "lessorCityPost": "Region/City",
   "region": "region",
-  "DistrictNameAr": "District Name Arabic",
-  "DistrictNameEn": "District Name English",
-  "StreetNameAr": "Street Name Arabic",
-  "StreetNameEn": "Street Name English",
-  "BulidingNumber": "Buliding Number",
-  "UnitNumber": "Unit Number",
+  "DistrictNameAr": "District Ar Name",
+  "DistrictNameEn": "District En Name",
+  "StreetNameAr": "Street Ar Name",
+  "StreetNameEn": "Street En Name",
+  "BulidingNumber": "Buliding No.",
+  "UnitNumber": "Unit No.",
   "symbolMailAr": "Zip Code",
-  "AdditionalNumber": "Additional Number",
+  "AdditionalNumber": "Additional No.",
   "IsTaken": "This Name Is Taken",
   "IsTakenTax": "The Tax Number Is Taken",
   "IsTakenGov": "The Government Number Is Taken",
-  "IsNotValidCity": "The City Is Not Valid",
+  "IsNotValidCity": "The City Name Is InValid",
 
   //Procedure Page
   "Procedures Data": "Procedures Data",
@@ -340,7 +340,10 @@
   "HintSureTodeleteBranch": "Deleting Branch data will Delete All The Document And Sales Point Of Branch...",
   "SureToHoldBranch": "Confirmation of Hold....",
   "HintSureToHoldBranch": "Branch data will be Holed, Which All The Document And Sales Point Of Branch...",
-
+  //Owner
+  "SureToHoldOwner": "Stopping the branch data will result in stopping the rental of all cars associated with the owner",
+  "SureToRetriveHoldOwner": "Confirm activation",
+  "HintSureToRetriveHoldOwner": "Activating the branch data will result in the possibility of renting all cars associated with the owner",
   //validation on input
   "requiredFiled": "This Field Is Required",
   "requiredNoLengthFiled": "Please enter exactly {0} numbers.",
@@ -406,6 +409,8 @@
   "ToastFailed": "Operation Failed",
   "toastMessageMainBranchDelete": "Can't Delete The Main Branch",
   "toastMessagebranchHaveSalesPoint": "A branch with a sales points cannot be deleted",
+  "toastMessagebranchHaveCars": "A branch with a cars cannot be deleted",
+  "toastMessageOwnerHaveCars": "A owner with a cars cannot be deleted",
   "toastMessageMainBranchHold": "Can't Hold The Main Branch",
   "toastMessagebranchHaveBalance": "A branch with a balance cannot be deleted",
   "toastMessageAccountHaveSalesPoint": "A account bank with a sales point cannot be deleted",
@@ -850,13 +855,13 @@
   "Owners Data": "Owners",
   "Owners Hint": "The page allows you to search and display Owners.",
   "Add Owner": "Add Owner",
-  "Id": "Type ID",
+  "Id": "Id No.",
   "Commercial_No": "Commercial No",
   "NumberOfCars": "Cars No",
-  "OwnersArName": "Owner Arabic Name",
-  "OwnersEnName": "Owner English Name",
+  "OwnersArName": "Owner Ar. Name",
+  "OwnersEnName": "Owner En. Name",
   "Add Owners Data": "Add Owner Data",
-  "Add Owners Hint": "The page allows you to add Owners.",
+  "Add Owners Hint": "The page allows you to add new owner.",
   "OwnerIsExist": "Owner Is Exist",
   "NameOwnerIsExist": "Owner Name Is Exist",
   "Edit Owners Data": "Edit Owner Data",
@@ -999,6 +1004,6 @@
   "Translate": "Translate merge",
   "GroupNumber": "Group Char",
   "ActivateService": "Activate",
-  "IsEmptyTab": "Tab is empty"
-
+  "IsEmptyTab": "Tab is empty",
+  "ContractBranch": "Branch Contracts"
 }

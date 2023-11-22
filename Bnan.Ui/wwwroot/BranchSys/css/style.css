@@ -127,14 +127,13 @@ padding-right:10px;
   border:2px solid #FF9626;
 }
 
-.chart-p{
-  font-size:.8rem;
-  color: #000000;
-  font-weight: 400;
-  text-align: end;
-  font-family: ' sans-serif';
-  
-  /* font-weight: bold; */
+.chart-p {
+    font-size: .9rem;
+    color: #000000;
+    font-weight: 600;
+    text-align: end;
+    font-family: 'Cairo', 'sans-serif'
+    /* font-weight: bold; */
 }
 .chart-legend{
   line-height: 15px;

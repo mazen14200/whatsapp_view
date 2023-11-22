@@ -67,7 +67,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             var lessor = await _UserService.GetUserLessor(User);
             var lessornumber = lessor.CrMasUserInformationLessorNavigation.CrMasLessorInformationCode;
-            var Bracnhes = _unitOfWork?.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationLessor == lessornumber, new[] { "CrCasCarInformations" });
+            var Bracnhes = _unitOfWork?.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationLessor == lessornumber&&l.CrCasBranchInformationStatus==Status.Active, new[] { "CrCasCarInformations" });
             var BranchPost = _PostBranch.GetAllByLessor(lessornumber);
 
             return View(BranchPost);
@@ -103,7 +103,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
             // Pass the KSA callingKeys to the view 
-            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active && x.CrMasSysCallingKeysNo == "966");
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active);
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList;
 
@@ -205,7 +205,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var lessor = await _UserService.GetUserLessor(User);
             var branchinformation = _unitOfWork.CrCasBranchInformation.Find(l => l.CrCasBranchInformationLessor == lessor.CrMasUserInformationLessor && l.CrCasBranchInformationCode == id);
             var BranchPost = _unitOfWork.CrCasBranchPost.Find(l => l.CrCasBranchPostLessor == lessor.CrMasUserInformationLessor && l.CrCasBranchPostBranch == id, new[] { "CrCasBranchPostNavigation", "CrCasBranchPostCityNavigation" });
-            ViewBag.SalesPointCount = _unitOfWork.CrCasAccountSalesPoint.FindAll(l => l.CrCasAccountSalesPointLessor == lessor.CrMasUserInformationLessor && l.CrCasAccountSalesPointBrn == id).Count();
+            ViewBag.SalesPointCount = _unitOfWork.CrCasAccountSalesPoint.FindAll(l => l.CrCasAccountSalesPointLessor == lessor.CrMasUserInformationLessor && l.CrCasAccountSalesPointBrn == id&&l.CrCasAccountSalesPointStatus!=Status.Deleted&&l.CrCasAccountSalesPointBank!="00").Count();
+            ViewBag.CarsCount = _unitOfWork.CrCasCarInformation.FindAll(l => l.CrCasCarInformationLessor == lessor.CrMasUserInformationLessor && l.CrCasCarInformationBranch == id&&l.CrCasCarInformationStatus!=Status.Deleted).Count();
 
             BranchVM branchVM = _mapper.Map<BranchVM>(branchinformation);
             branchVM.BranchPostVM = _mapper.Map<BranchPost1VM>(BranchPost);
@@ -306,6 +307,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var docs = _unitOfWork.CrCasBranchDocument.FindAll(l => l.CrCasBranchDocumentsLessor == lessorCode && l.CrCasBranchDocumentsBranch == Branchcode);
             var salesPoints = _unitOfWork.CrCasAccountSalesPoint.FindAll(l => l.CrCasAccountSalesPointLessor == lessorCode && l.CrCasAccountSalesPointBrn == Branchcode);
             var cars = _unitOfWork.CrCasCarInformation.FindAll(l => l.CrCasCarInformationLessor == lessorCode && l.CrCasCarInformationBranch == Branchcode);
+            var userBranchValidity = _unitOfWork.CrMasUserBranchValidity.FindAll(l => l.CrMasUserBranchValidityLessor == lessorCode && l.CrMasUserBranchValidityBranch == Branchcode);
             if (branch != null)
             {
                 if (await CheckUserSubValidationProcdures("2201001", status))
@@ -318,17 +320,17 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         foreach (var doc in docs) doc.CrCasBranchDocumentsBranchStatus = Status.Hold;
                         foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Hold;
                         foreach (var car in cars) car.CrCasCarInformationBranchStatus = Status.Hold;
+                        foreach (var user in userBranchValidity) user.CrMasUserBranchValidityBranchRecStatus = Status.Hold;
                     }
                     else if (status == Status.Deleted)
                     {
                         sAr = "حذف فرع";
                         sEn = "Remove Branch";
-
                         branch.CrCasBranchInformationStatus = Status.Deleted;
                         foreach (var doc in docs) doc.CrCasBranchDocumentsBranchStatus = Status.Deleted;
                         foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Deleted;
                         foreach (var car in cars) car.CrCasCarInformationBranchStatus = Status.Deleted;
-
+                        foreach (var user in userBranchValidity) user.CrMasUserBranchValidityBranchRecStatus = Status.Deleted;
                     }
                     else if (status == Status.Active)
                     {
@@ -338,8 +340,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         foreach (var doc in docs) doc.CrCasBranchDocumentsBranchStatus = Status.Active;
                         foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Active;
                         foreach (var car in cars) car.CrCasCarInformationBranchStatus = Status.Active;
-
-
+                        foreach (var user in userBranchValidity) user.CrMasUserBranchValidityBranchRecStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();

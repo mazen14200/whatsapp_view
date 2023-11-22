@@ -6,11 +6,10 @@ namespace Bnan.Ui.ViewModels.CAS
 {
     public class OwnersVM
     {
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "requiredNoLengthFiled10")]
+        [RegularExpression(@"^7\d{9}$", ErrorMessage = "requiredNoLengthFiled10")]
         [Required(ErrorMessage = "requiredFiled")]
         public string CrCasOwnersCode { get; set; } = null!;
         public string? CrCasOwnersLessorCode { get; set; }
-        [Required(ErrorMessage = "requiredFiled")]
         public string? CrCasOwnersCommercialNo { get; set; }
         public string? CrCasOwnersSector { get; set; }
         [Required(ErrorMessage = "requiredFiled")]

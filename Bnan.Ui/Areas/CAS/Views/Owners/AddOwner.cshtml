@@ -50,7 +50,7 @@
                     <label class="form-label">@localizer["Commercial_No"]</label>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" asp-for="CrCasOwnersCommercialNo" width="80%" maxlength="20" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off" />
+                    <input type="text" class="form-control" asp-for="CrCasOwnersCommercialNo" width="80%" maxlength="20" autocomplete="off" />
                     <div style="margin-top:2px">
                         <div style="height: 1.0em">
                             <span asp-validation-for="@Model.CrCasOwnersCommercialNo" class="text-danger"></span>

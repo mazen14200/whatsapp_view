@@ -1,4 +1,5 @@
 ﻿@using System.Globalization;
+@using Bnan.Core.Extensions;
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @model IEnumerable<CrCasOwner>
@@ -43,7 +44,7 @@
                             <td>@item.CrCasOwnersCode</td>
                             <td>@item.CrCasOwnersEnName</td>
                             <td>@item.CrCasOwnersCommercialNo</td>
-                            <td>@item.CrCasCarInformations.Count()</td>
+                            <td>@item.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus==Status.Active).Count()</td>
                             <td>
                                 @if (@item.CrCasOwnersStatus == "H")
                                 {
@@ -67,7 +68,7 @@
                             <td>@item.CrCasOwnersCode</td>
                             <td>@item.CrCasOwnersEnName</td>
                             <td>@item.CrCasOwnersCommercialNo</td>
-                            <td>@item.CrCasCarInformations.Count()</td>
+                            <td>@item.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus==Status.Active).Count()</td>
                             <td>
                                 @if (@item.CrCasOwnersStatus == "H")
                                 {
@@ -121,7 +122,7 @@ else
                             <td>@item.CrCasOwnersCode</td>
                             <td>@item.CrCasOwnersArName</td>
                             <td>@item.CrCasOwnersCommercialNo</td>
-                            <td>@item.CrCasCarInformations.Count()</td>
+                            <td>@item.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus==Status.Active).Count()</td>
                             <td>
                                 @if (@item.CrCasOwnersStatus == "H")
                                 {
@@ -146,7 +147,7 @@ else
                             <td>@item.CrCasOwnersCode</td>
                             <td>@item.CrCasOwnersArName</td>
                             <td>@item.CrCasOwnersCommercialNo</td>
-                            <td>@item.CrCasCarInformations.Count()</td>
+                            <td>@item.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus==Status.Active).Count()</td>
                             <td>
                                 @if (@item.CrCasOwnersStatus == "H")
                                 {

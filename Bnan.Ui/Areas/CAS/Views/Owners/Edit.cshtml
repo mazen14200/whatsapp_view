@@ -32,6 +32,7 @@
             <input type="hidden" asp-for="CrCasOwnersLessorCode" />
             <input type="hidden" asp-for="CrCasOwnersSector" />
             <input type="hidden" asp-for="CrCasOwnersStatus" />
+            <input type="hidden" value="@ViewBag.CarCount" id="CarCount" />
             <div class="row mt-2">
                 <div class="col-md-1">
                     <label class="form-label">@localizer["Id"]</label>
@@ -195,8 +196,8 @@
         <div class="modal-content">
 
             <div class="modal-body">
-                <h4>@localizer["SureToHold"]</h4>
-                <p> @localizer["HintSureToHold"]</p>
+                <h4>@localizer["SureToHoldOwner"]</h4>
+                <p> @localizer["HintSureToHoldOwner"]</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
@@ -248,9 +249,23 @@
         $("#buttonContainer a").on("click", function (event) {
             var status = $(this).attr("data-error")
             var Modal = $(this).attr("data-bs-targett")
-            CheckValidation('2201004', status).done(function (data) {
-                if (data) $(Modal).modal('show');
-            });
+            var CarCount = $("#CarCount").val();
+            if (status == "D") {
+                if (CarCount > 0) {
+                    toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                    toastr.error('@localizer["toastMessageOwnerHaveCars"]');
+                }
+                else {
+                    CheckValidation('2201004', status).done(function (data) {
+                        if (data) $(Modal).modal('show');
+                    });
+                }
+            }
+            else {
+                CheckValidation('2201004', status).done(function (data) {
+                    if (data) $(Modal).modal('show');
+                });
+            }
         })
         $("#saveEdit").on("click", function (event) {
             event.preventDefault();

@@ -189,7 +189,7 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202005")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="CarsInformation" asp-action="TransfersCarsBranch" >@localizer["Car Transfer"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="CarsInformation" asp-action="TransfersCarsBranch">@localizer["Car Transfer"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2202006")?.CrMasUserSubValidationAuthorization == true)
@@ -541,7 +541,7 @@
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(-278px, 72px);" data-popper-placement="bottom-end">
 
                                 <!-- item-->
-                                <div class="dropdown-item noti-title" >
+                                <div class="dropdown-item noti-title">
                                     <h5 class="m-0 float-start">
                                         <span>
                                             @localizer["Notifications"]
@@ -1112,17 +1112,18 @@
                 input.value = '';
             }
         }
-                                                // auto complete off in all input
-                                                //document.addEventListener("DOMContentLoaded", function () {
-                                                //    // Get all input fields in the document
-                                                //    var inputFields = document.querySelectorAll("input");
 
-                                                //    // Loop through each input field
-                                                //    inputFields.forEach(function (input) {
-                                                //        // Set the autocomplete attribute to "off"
-                                                //        input.setAttribute("autocomplete", "off");
-                                                //    });
-                                                //});
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get all input fields in the document
+            var inputFields = document.querySelectorAll("input");
+
+            // Loop through each input field
+            inputFields.forEach(function (input) {
+                // Set the autocomplete attribute to "off"
+                input.setAttribute("autocomplete", "off");
+            });
+        });
+
     </script>
 
 </body>

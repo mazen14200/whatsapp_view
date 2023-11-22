@@ -22434,3 +22434,9 @@ span.search-icon {
     margin-right: 0;
     margin-left: 65px;
 }
+
+#BranchSigntureImage {
+    position: absolute;
+    top: 53%;
+    right: 32%;
+}

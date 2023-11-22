@@ -66,7 +66,7 @@
                                 <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
                             }
 
-                            <td>@item.CrCasBranchPostNavigation.CrCasCarInformations.Count()</td>
+                            <td>@item.CrCasBranchPostNavigation.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus!=Status.Deleted&&x.CrCasCarInformationStatus!=Status.Sold).Count()</td>
                             <td>
                                 @if (@item.CrCasBranchPostNavigation.CrCasBranchInformationStatus == Status.Active)
                                 {
@@ -113,7 +113,7 @@
                             {
                                 <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
                             }
-                            <td>@item.CrCasBranchPostNavigation.CrCasCarInformations.Count()</td>
+                            <td>@item.CrCasBranchPostNavigation.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus!=Status.Deleted&&x.CrCasCarInformationStatus!=Status.Sold).Count()</td>
                             <td>
                                 @if (@item.CrCasBranchPostNavigation.CrCasBranchInformationStatus == Status.Active)
                                 {
@@ -189,7 +189,7 @@ else
                             {
                                 <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
                             }
-                            <td>@item.CrCasBranchPostNavigation.CrCasCarInformations.Count()</td>
+                            <td>@item.CrCasBranchPostNavigation.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus!=Status.Deleted&&x.CrCasCarInformationStatus!=Status.Sold).Count()</td>
                             <td>
                                 @if (@item.CrCasBranchPostNavigation.CrCasBranchInformationStatus == Status.Active)
                                 {
@@ -236,7 +236,7 @@ else
                             {
                                 <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
                             }
-                            <td>@item.CrCasBranchPostNavigation.CrCasCarInformations.Count()</td>
+                            <td>@item.CrCasBranchPostNavigation.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus!=Status.Deleted&&x.CrCasCarInformationStatus!=Status.Sold).Count()</td>
                             <td>
 
                                 @localizer["Active"]

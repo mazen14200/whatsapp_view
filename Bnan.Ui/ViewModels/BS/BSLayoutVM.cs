@@ -11,6 +11,8 @@ namespace Bnan.Ui.ViewModels.BS
         public List<CrCasCarInformation>? Cars { get; set; }
         public List<CrCasCarInformation>? RentedCars { get; set; }
         public List<CrCasCarDocumentsMaintenance>? DocumentsMaintenances { get; set; }
+        public CrCasBranchInformation? CrCasBranchInformation { get; set; }
+        public CrMasUserBranchValidity? CrMasUserBranchValidity { get; set; }
         public string? SelectedBranch { get; set; }
 
 

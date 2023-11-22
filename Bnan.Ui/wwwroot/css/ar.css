@@ -352,3 +352,9 @@ span.search-icon {
     margin-right: 20px;
     margin-left: 0;
 }
+
+#BranchSigntureImage {
+    position: absolute;
+    top: 53%;
+    right: 52%;
+}

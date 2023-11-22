@@ -47,7 +47,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var user = await _userService.GetUserLessor(User);
             var lessor = await _unitOfWork.CrMasLessorInformation.FindAsync(x=>x.CrMasLessorInformationCode==user.CrMasUserInformationLessor);
-            var Owners = _unitOfWork.CrCasOwner.FindAll(l => l.CrCasOwnersLessorCode == user.CrMasUserInformationLessor &&l.CrCasOwnersCode!=lessor.CrMasLessorInformationGovernmentNo, new[] { "CrCasOwnersLessorCodeNavigation", "CrCasCarInformations" }).ToList();
+            var Owners = _unitOfWork.CrCasOwner.FindAll(l => l.CrCasOwnersLessorCode == user.CrMasUserInformationLessor &&l.CrCasOwnersCode!=lessor.CrMasLessorInformationGovernmentNo&&l.CrCasOwnersStatus==Status.Active, new[] { "CrCasOwnersLessorCodeNavigation", "CrCasCarInformations" }).ToList();
             foreach (var item in Owners)
             {
                 item.CrCasCarInformations.Count();
@@ -126,14 +126,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             //To Set Title !!!!!!!!!!!!!
             var titles = await setTitle("201", "2201004", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
-
             var owner = await _unitOfWork.CrCasOwner.FindAsync(x => x.CrCasOwnersCode == id,
-                new[] { "CrCasOwnersLessorCodeNavigation" });           
+                new[] { "CrCasOwnersLessorCodeNavigation", "CrCasCarInformations" });           
             if (owner == null)
             {
                 ModelState.AddModelError("Exist", "SomeThing Wrong is happened");
                 return View();
             }
+            ViewBag.CarCount=owner.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus!=Status.Deleted).Count();
             var model = _mapper.Map<OwnersVM>(owner);
             return View(model);
         }
@@ -168,11 +168,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpPost]
         public async Task<IActionResult> EditStatus(string code, string status)
         {
+            var loginUser = await _userManager.GetUserAsync(User);
+            var lessorCode = loginUser.CrMasUserInformationLessor;
             string sAr = "";
             string sEn = "";
-            var owner = await _unitOfWork.CrCasOwner.FindAsync(x=>x.CrCasOwnersCode==code);
+
+            var owner = await _unitOfWork.CrCasOwner.FindAsync(x => x.CrCasOwnersCode == code);
+
             if (owner != null)
             {
+                var cars = _unitOfWork.CrCasCarInformation.FindAll(l => l.CrCasCarInformationLessor == lessorCode && l.CrCasCarInformationOwner == owner.CrCasOwnersCode);
                 if (await CheckUserSubValidationProcdures("2201004", status))
                 {
                     if (status == Status.Hold)
@@ -180,18 +185,23 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         sAr = "ايقاف";
                         sEn = "Stop";
                         owner.CrCasOwnersStatus = Status.Hold;
+                        foreach (var car in cars) car.CrCasCarInformationOwnerStatus = Status.Hold;
+
                     }
                     else if (status == Status.Deleted)
                     {
                         sAr = "حذف";
                         sEn = "Delete";
                         owner.CrCasOwnersStatus = Status.Deleted;
+                        foreach (var car in cars) car.CrCasCarInformationOwnerStatus = Status.Deleted;
+
                     }
                     else if (status == Status.Active)
                     {
                         sAr = "استرجاع";
                         sEn = "Retrieve";
                         owner.CrCasOwnersStatus = Status.Active;
+                        foreach (var car in cars) car.CrCasCarInformationOwnerStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();

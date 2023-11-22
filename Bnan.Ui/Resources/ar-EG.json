@@ -268,7 +268,7 @@
   "IsTaken": "الإسم مسجل من قبل",
   "IsTakenTax": "الرقم الضريبى مسجل من قبل",
   "IsTakenGov": "الرقم الحكومى مسجل من قبل",
-  "IsNotValidCity": "المدينه غير متاحه",
+  "IsNotValidCity": "المنطقة او المدينه غير صحيح",
 
   //Procedure Page
   "Procedures Data": "بينات الإجراءات",
@@ -321,7 +321,7 @@
   "requiredFiled": "هذا الحقل مطلوب.",
   "requiredNoLengthFiled": "هذا الحقل يلازم {0} ارقام",
   "requiredNoLengthFiled15": "هذا الحقل يلازم 15 ارقام",
-  "requiredNoLengthFiled10": "هذا الحقل يلازم 10 ارقام",
+  "requiredNoLengthFiled10": "هذا الحقل يلازم 10 ارقام ويبدأ ب 7",
   "requiredNoStartWithFiled7": "هذا الحقل مطلوب و يبدء برقم7",
   "requiredNoStartWithFiled15": "هذا الحقل مطلوب و يبدء برقم15",
   "requiredNoStartWithFiled1": "هذا الحقل مطلوب و يبدء برقم1",
@@ -352,8 +352,8 @@
   "HintSureToHold": "سيترتب على إيقاف بيانات المستخدم إيقاف الدخول على النظام",
 
   // modal for Branch
-  "SureToRetriveHoldBranch": "تأكيد إسترجاع الإيقاف ......",
-  "HintSureToRetriveHBranch": "سيترتب على استرجاع ايقاف بيانات الفرع استرجاع. جميع المستندات و نقاط البيع المرتبطة بالفرع",
+  "SureToRetriveHoldBranch": "تأكيد تفعيل الفرع ......",
+  "HintSureToRetriveHBranch": "سيترتب على استرجاع تفعيل الفرع تفعيل جميع المستندات و نقاط البيع المرتبطة بالفرع",
   "SureToRetriveDeleteBranch": "تأكيد إسترجاع الحذف ......",
   "HintSureToRetriveDBranch": "سيترتب على استرجاع حذف بيانات الفرع استرجاع. جميع المستندات و نقاط البيع المرتبطة بالفرع",
   "SureTodeleteBranch": "تأكيد الحذف...",
@@ -361,8 +361,10 @@
   "SureToHoldBranch": "تأكيد الايقاف...",
   "HintSureToHoldBranch": "سيترتب على إيقاف بيانات الفرع إيقاف تأجير سيارات الفرع و كذلك إيقاف عملية الدفع بنقاط البيع المرتبطة بالفرع",
 
-
-
+  // Owner
+  "SureToHoldOwner": "سيترتب على إيقاف بيانات الفرع ايقاف تأجير جميع السيارات المرتبطة بالمالك",
+  "SureToRetriveHoldOwner": "تأكيد التفعيل",
+  "HintSureToRetriveHoldOwner": "سيترتب على تفعيل بيانات الفرع امكانية تأجير جميع السيارات المرتبطة بالمالك",
   "HintSureTodeleteContractsCompany": "سيترتب على حذف عقد الشركة ايقاف هذا العقد وجميع تفاصيله",
   //expiration Session
   "expiration": "ستنتهى الجلسه ويتم تسجيل خروجك خلال",
@@ -408,6 +410,8 @@
   "toastMessageMainBranchDelete": "لا يمكن حذف الفرع الرئيسي",
   "toastMessageMainBranchHold": "لا يمكن ايقاف الفرع الرئيسي",
   "toastMessagebranchHaveSalesPoint": "لا يمكن حذف فرع به نقاط بيع",
+  "toastMessagebranchHaveCars": "لا يمكن حذف فرع به سيارات",
+  "toastMessageOwnerHaveCars": "لا يمكن حذف مالك يمتلك سيارات",
   "toastMessagebranchHaveBalance": "لا يمكن حذف فرع به رصيد",
   "toastMessageAccountHaveSalesPoint": "لا يمكن حذف حساب بنكي به نقاط بيع",
   "toastMessageSalesPointHaveBalance": "لا يمكن حذف نقطة بيع بها رصيد",
@@ -844,7 +848,7 @@
   "OwnersArName": "اسم المالك عربي",
   "OwnersEnName": "اسم المالك انجليزي",
   "Add Owners Data": "اضافة مالك",
-  "Add Owners Hint": "تمكنك هذه الصفحة من اضافة مالك",
+  "Add Owners Hint": "تمكنك هذه الصفحة من اضافة مالك جديد",
   "OwnerIsExist": "الهوية موجودة من قبل",
   "NameOwnerIsExist": "الاسم موجود من قبل",
   "Edit Owners Data": "تحديث بيانات الملاك",
@@ -989,5 +993,6 @@
   "Translate": "ترحمة الدمج",
   "GroupNumber": "رمز المجموعة",
   "ActivateService": "تفعيل",
-  "IsEmptyTab": "هذه القائمة فارغه"
+  "IsEmptyTab": "هذه القائمة فارغه",
+  "ContractBranch": "مستندات الفرع"
 }
