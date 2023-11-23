@@ -46,7 +46,13 @@
                             }
                             else
                             {
-                                <td onclick="location.href='@Url.Action("Edit", "Documents", new { Procedureid = item.CrCasBranchDocumentsProcedures, BranchId = item.CrCasBranchDocumentsBranch })'">@item.CrCasBranchDocuments.CrCasBranchInformationEnShortName</td>
+                                <td onclick="location.href='@Url.Action("Edit", "Documents", new { Procedureid = item.CrCasBranchDocumentsProcedures, BranchId = item.CrCasBranchDocumentsBranch })'">
+                                    @item.CrCasBranchDocuments.CrCasBranchInformationEnShortName
+                                    @if (item.CrCasBranchDocumentsBranchStatus == Status.Hold)
+                                    {
+                                        <span class="text-danger">(@localizer["Holded"])</span>
+                                    }
+                                </td>
                             }
                             @if (@item.CrCasBranchDocumentsProceduresNavigation == null)
                             {
@@ -122,7 +128,7 @@
                     }
                     else
                     {
-                        <tr>
+                        <tr style="cursor:pointer;">
                             <td onclick="location.href='@Url.Action("Edit", "Documents", new { Procedureid = item.CrCasBranchDocumentsProcedures, BranchId = item.CrCasBranchDocumentsBranch })'">@no</td>
                             @if (@item.CrCasBranchDocuments == null)
                             {
@@ -130,7 +136,13 @@
                             }
                             else
                             {
-                                <td onclick="location.href='@Url.Action("Edit", "Documents", new { Procedureid = item.CrCasBranchDocumentsProcedures, BranchId = item.CrCasBranchDocumentsBranch })'">@item.CrCasBranchDocuments.CrCasBranchInformationEnShortName</td>
+                                <td onclick="location.href='@Url.Action("Edit", "Documents", new { Procedureid = item.CrCasBranchDocumentsProcedures, BranchId = item.CrCasBranchDocumentsBranch })'">
+                                    @item.CrCasBranchDocuments.CrCasBranchInformationEnShortName
+                                    @if (item.CrCasBranchDocumentsBranchStatus == Status.Hold)
+                                    {
+                                        <span class="text-danger">(@localizer["Holded"])</span>
+                                    }
+                                </td>
                             }
                             @if (@item.CrCasBranchDocumentsProceduresNavigation == null)
                             {
@@ -252,7 +264,13 @@ else
                             }
                             else
                             {
-                                <td onclick="location.href='@Url.Action("Edit", "Documents", new { Procedureid = item.CrCasBranchDocumentsProcedures, BranchId = item.CrCasBranchDocumentsBranch })'">@item.CrCasBranchDocuments.CrCasBranchInformationArShortName</td>
+                                <td onclick="location.href='@Url.Action("Edit", "Documents", new { Procedureid = item.CrCasBranchDocumentsProcedures, BranchId = item.CrCasBranchDocumentsBranch })'">
+                                    @item.CrCasBranchDocuments.CrCasBranchInformationArShortName
+                                    @if (item.CrCasBranchDocumentsBranchStatus == Status.Hold)
+                                    {
+                                        <span class="text-danger">(@localizer["Holded"])</span>
+                                    }
+                                </td>
                             }
                             @if (@item.CrCasBranchDocumentsProceduresNavigation == null)
                             {
@@ -327,7 +345,7 @@ else
                     }
                     else
                     {
-                        <tr>
+                        <tr style="cursor:pointer;">
                             <td onclick="location.href='@Url.Action("Edit", "Documents", new { Procedureid = item.CrCasBranchDocumentsProcedures, BranchId = item.CrCasBranchDocumentsBranch })'">@no</td>
                             @if (@item.CrCasBranchDocuments == null)
                             {
@@ -335,7 +353,13 @@ else
                             }
                             else
                             {
-                                <td onclick="location.href='@Url.Action("Edit", "Documents", new { Procedureid = item.CrCasBranchDocumentsProcedures, BranchId = item.CrCasBranchDocumentsBranch })'">@item.CrCasBranchDocuments.CrCasBranchInformationArShortName</td>
+                                <td onclick="location.href='@Url.Action("Edit", "Documents", new { Procedureid = item.CrCasBranchDocumentsProcedures, BranchId = item.CrCasBranchDocumentsBranch })'">
+                                    @item.CrCasBranchDocuments.CrCasBranchInformationArShortName
+                                    @if (item.CrCasBranchDocumentsBranchStatus == Status.Hold)
+                                    {
+                                        <span class="text-danger">(@localizer["Holded"])</span>
+                                    }
+                                </td>
                             }
                             @if (@item.CrCasBranchDocumentsProceduresNavigation == null)
                             {

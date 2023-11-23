@@ -324,7 +324,7 @@
                         <label class="form-label" asp-for="CrCasBranchDocumentsReasons">@localizer["reasons"]</label>
                     </div>
                     <div class="col-md-5 col-11">
-                        <input type="text" id="cities" class="form-control" asp-for="CrCasBranchDocumentsReasons" autocomplete="off">
+                        <input type="text" id="cities" class="form-control" asp-for="CrCasBranchDocumentsReasons" autocomplete="off" maxlength="100">
                     </div>
                 </div>
 
@@ -383,7 +383,7 @@
                         <label class="form-label" asp-for="CrCasBranchDocumentsNo">@localizer["TheNumber"]</label>
                     </div>
                     <div class="col-md-2 col-11">
-                        <input type="text" class="form-control" asp-for="CrCasBranchDocumentsNo" maxlength="12" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                        <input type="text" class="form-control" asp-for="CrCasBranchDocumentsNo" maxlength="50">
                         <div style="margin-top:2px">
                             <div style="height: 1.35em">
                                 <span asp-validation-for="@Model.CrCasBranchDocumentsNo" class="text-danger"></span>
@@ -439,7 +439,7 @@
                         <label class="form-label" asp-for="CrCasBranchDocumentsReasons">@localizer["reasons"]</label>
                     </div>
                     <div class="col-md-5 col-11">
-                        <input type="text" class="form-control" asp-for="CrCasBranchDocumentsReasons" autocomplete="off">
+                        <input type="text" class="form-control" asp-for="CrCasBranchDocumentsReasons" autocomplete="off" maxlength="100">
 
                         <div style="margin-top:12px">
                             <div style="height: 1.35em">
@@ -496,8 +496,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h4>@localizer["SureTodelete"]</h4>
-                    <p> @localizer["HintSureTodelete"]</p>
+                    <h4>@localizer["SureTodeleteDoc"]</h4>
+                    <p> @localizer["HintSureTodeleteDoc"]</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
@@ -653,7 +653,7 @@
                 success: function (result) {
                     console.log(result)
                     $('.modal').modal('hide');
-                    window.location.href = "/CAS/Documents/Documents";
+                    window.location.href = "/CAS/Documents/SuccessToast";
                 },
                 error: function (error) {
                     console.log(error);
@@ -675,14 +675,14 @@
         });
 
 
-        $("#saveEdit").on("click", function (event) {
-            event.preventDefault();
-            CheckValidation('2201002', '@Status.Save').done(function (data) {
-                if (data) {
-                    $('form').submit();
-                }
-            });
-        })
+        // $("#saveEdit").on("click", function (event) {
+        //     event.preventDefault();
+        //     CheckValidation('2201002', '@Status.Save').done(function (data) {
+        //         if (data) {
+        //             $('form').submit();
+        //         }
+        //     });
+        // })
     </script>
 }
 

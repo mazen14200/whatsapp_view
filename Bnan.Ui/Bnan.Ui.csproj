@@ -86,4 +86,6 @@
     <Folder Include="wwwroot\images\CAS\" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties resources_4en-us_1json__JsonSchema="https://blockprotocol.org/schemas/block-metadata.json" /></VisualStudio></ProjectExtensions>
+
 </Project>

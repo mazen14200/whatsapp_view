@@ -35,7 +35,7 @@ namespace Bnan.Inferastructure.Repository
         public  async Task<List<CrMasUserInformation?>> GetAllUsersByLessor(string lessorId)
         {
 
-            var users=  await _userManager.Users.Where(x=>x.CrMasUserInformationLessor==lessorId).ToListAsync();
+            var users=  await _userManager.Users.Where(x=>x.CrMasUserInformationLessor==lessorId).Include(x=>x.CrMasUserBranchValidities).ToListAsync();
             return users;
         }
 

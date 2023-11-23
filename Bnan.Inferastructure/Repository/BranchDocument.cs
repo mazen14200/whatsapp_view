@@ -90,7 +90,7 @@ namespace Bnan.Inferastructure.Repository
                 var AboutToExpire =  _unitOfWork.CrCasLessorMechanism.FindAsync(l=>l.CrCasLessorMechanismCode == document.CrCasBranchDocumentsLessor 
                                                                                  && l.CrCasLessorMechanismProcedures == document.CrCasBranchDocumentsProcedures 
                                                                                  && l.CrCasLessorMechanismProceduresClassification == document.CrCasBranchDocumentsProceduresClassification).Result.CrCasLessorMechanismDaysAlertAboutExpire;
-                if (CrCasBranchDocument.CrCasBranchDocumentsBranchStatus==Status.Renewed)
+                if (CrCasBranchDocument.CrCasBranchDocumentsStatus==Status.Renewed)
                 {
                     document.CrCasBranchDocumentsStartDate = CrCasBranchDocument.CrCasBranchDocumentsStartDate;
                     document.CrCasBranchDocumentsEndDate = CrCasBranchDocument.CrCasBranchDocumentsEndDate;
@@ -100,6 +100,17 @@ namespace Bnan.Inferastructure.Repository
                     document.CrCasBranchDocumentsReasons = CrCasBranchDocument.CrCasBranchDocumentsReasons;
                     document.CrCasBranchDocumentsDateAboutToFinish = CrCasBranchDocument.CrCasBranchDocumentsEndDate?.AddDays(-(double)AboutToExpire);
                     document.CrCasBranchDocumentsStatus = Status.Active;
+                }
+                else if (CrCasBranchDocument.CrCasBranchDocumentsStatus == Status.Deleted)
+                {
+                    document.CrCasBranchDocumentsStartDate = null;
+                    document.CrCasBranchDocumentsEndDate = null;
+                    document.CrCasBranchDocumentsDate = null;
+                    document.CrCasBranchDocumentsNo = null;
+                    document.CrCasBranchDocumentsImage = null;
+                    document.CrCasBranchDocumentsReasons = null;
+                    document.CrCasBranchDocumentsDateAboutToFinish = null;
+                    document.CrCasBranchDocumentsStatus = Status.Renewed;
                 }
                 else
                 {

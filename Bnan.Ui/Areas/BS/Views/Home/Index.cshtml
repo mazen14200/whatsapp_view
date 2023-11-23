@@ -162,8 +162,8 @@
     <!-- Updated width and added new classes for the second card -->
     <!-- Card Body -->
     <div class="card-body p-0 mt-2">
-        @Html.DropDownListFor(model => model.SelectedBranch, new SelectList(Model.CrCasBranchInformations, "CrCasBranchInformationCode", "CrCasBranchInformationArShortName", Model.SelectedBranch),new { id = "branchList" }))
-        <label for="brunch_name" style="color: black;">الفرع </label>
+        @Html.DropDownListFor(model => model.SelectedBranch, new SelectList(Model.CrCasBranchInformations, "CrCasBranchInformationCode", "CrCasBranchInformationArShortName", Model.SelectedBranch),new { id = "branchList" })
+        <label for="brunch_name" style="color: black;">الفرع</label>
         <br>
         <button type="button" class="btn btn-secondary1  mt-2 active1" id="chart"
                 onclick="showCarouselItem(1) , setActiveButton(0)">
@@ -381,7 +381,7 @@
             }
             else {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                toastr.error('@localizer["IsEmptyTab"]');
+                toastr.error('@localizer["RentedCarsIsEmptyTab"]');
             }
 
         });
@@ -410,7 +410,7 @@
             }
             else {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                toastr.error('@localizer["IsEmptyTab"]');
+                toastr.error('@localizer["AvaliableCarsIsEmptyTab"]');
             }
 
         });
@@ -439,7 +439,7 @@
             }
             else {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                toastr.error('@localizer["IsEmptyTab"]');
+                toastr.error('@localizer["UnAvaliableCarsIsEmptyTab"]');
             }
         });
 

@@ -1,0 +1,107 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.CAS;
+@model CrMasUserInformation
+
+@inject IViewLocalizer localizer
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = localizer["FeedBox Data"];
+    ViewData["Page-Hint"] = localizer["FeedBox Send Hint"];
+}
+
+<title>@ViewData["Title"]</title>
+<div class="sub-container-form" id="CAS">
+    <form class="needs-validation" novalidate asp-area="CAS" asp-controller="FeedBox" asp-action="Send" method="post">
+        <div class="form-contain">
+            @*Document Code*@
+            <div class="row mt-2" hidden>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" readonly asp-for="CrMasUserInformationLessor" />
+                    <input type="text" class="form-control" readonly asp-for="CrMasUserInformationDefaultBranch" />
+                    <input type="text" class="form-control" readonly asp-for="CrMasUserInformationCode" />
+                </div>
+            </div>
+            @*Document Branch*@
+            <div class="row mt-2">
+                <div class="col-md-1 formlabel">
+                    <label class="form-label">@localizer["UserName"]</label>
+                </div>
+                <div class="col-md-2 col-11">
+                    @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                    {
+                        <input type="text" class="form-control" asp-for="CrMasUserInformationArName" readonly>
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control" asp-for="CrMasUserInformationEnName" readonly>
+                    }
+                </div>
+            </div>
+            @*Date of FeedBox*@
+            <div class="row mt-2">
+                <div class="col-md-1 formlabel">
+                    <label class="form-label">@localizer["Date"]</label>
+                </div>
+                <div class="col-md-2 col-8">
+                    <input type="text" class="form-control" value="@ViewBag.Date" readonly>
+                </div>
+            </div>
+            @*Value Offer*@
+            <div class="row mt-2">
+                <div class="col-md-1 formlabel">
+                    <label class="form-label">@localizer["FeedValue"]</label>
+                </div>
+                <div class="col-md-2 col-8">
+                    <input type="text" class="form-control" id="FeedValue" name="FeedValue" maxlength="9" oninput="validateInput9Digit(this)">
+                </div>
+            </div>
+            @*Reasons*@
+            <div class="row mt-2">
+                <div class="col-md-1 formlabel">
+                    <label class="form-label">@localizer["reasons"]</label>
+                </div>
+                <div class="col-md-5 col-11">
+                    <input type="text" class="form-control" id="Reasons" name="Reasons" autocomplete="off" maxlength="100">
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class='btn btn-primary' type="submit" >@localizer["Save"]</button>
+            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="FeedBox" asp-action="FeedBox">
+                @localizer["Back"]
+            </a>
+        </div>
+
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function validateInput9Digit(input) {
+            // Remove non-digit characters and additional decimal points
+            input.value = input.value.replace(/[^0-9\.]/g, '');
+            const decimalIndex = input.value.indexOf('.');
+
+            // Limit to 9 digits before and after the decimal point
+            if (decimalIndex !== -1) {
+                const digitsBeforeDecimal = input.value.substring(0, decimalIndex);
+                const digitsAfterDecimal = input.value.substring(decimalIndex + 1);
+
+                // Limit to 2 digits after the decimal point
+                input.value = digitsBeforeDecimal.substr(0, 9) + '.' + digitsAfterDecimal.substr(0, 2);
+
+                // Remove additional decimal points
+                if (input.value.indexOf('.', decimalIndex + 1) !== -1) {
+                    const lastValidIndex = input.value.lastIndexOf('.');
+                    input.value = input.value.substring(0, lastValidIndex) + input.value.substring(lastValidIndex + 1);
+                }
+            } else {
+                // Limit to 9 digits before the decimal point
+                input.value = input.value.substr(0, 9);
+            }
+        }
+    </script>
+}

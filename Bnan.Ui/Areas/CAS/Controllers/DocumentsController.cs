@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Localization;
+using NToastNotify;
 using System.Globalization;
 
 namespace Bnan.Ui.Areas.CAS.Controllers
@@ -25,6 +27,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IUserService _UserService;
         private readonly IAdminstritiveProcedures _adminstritiveProcedures;
+        private readonly IToastNotification _toastNotification;
+        private readonly IStringLocalizer<DocumentsController> _localizer;
 
         public DocumentsController(UserManager<CrMasUserInformation> userManager,
             IUnitOfWork unitOfWork,
@@ -33,13 +37,17 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             IBranchDocument branchDocument,
             IWebHostEnvironment webHostEnvironment,
             IUserLoginsService userLoginsService,
-            IAdminstritiveProcedures adminstritiveProcedures) : base(userManager, unitOfWork, mapper)
+            IAdminstritiveProcedures adminstritiveProcedures,
+            IStringLocalizer<DocumentsController> localizer,
+            IToastNotification toastNotification) : base(userManager, unitOfWork, mapper)
         {
             _UserService = userService;
             _BranchDocument = branchDocument;
             _webHostEnvironment = webHostEnvironment;
             _userLoginsService = userLoginsService;
             _adminstritiveProcedures = adminstritiveProcedures;
+            _localizer = localizer;
+            _toastNotification = toastNotification;
         }
 
         [HttpGet]
@@ -54,8 +62,13 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var user = await _UserService.GetUserLessor(User);
 
-            var Docs = _unitOfWork.CrCasBranchDocument.FindAll(l => l.CrCasBranchDocumentsLessor == user.CrMasUserInformationLessor && l.CrCasBranchDocumentsStatus == Status.Renewed &&l.CrCasBranchDocumentsBranchStatus!=Status.Deleted, new[] { "CrCasBranchDocumentsProceduresNavigation", "CrCasBranchDocuments" }).ToList();
+            var Docs = _unitOfWork.CrCasBranchDocument.FindAll(l => l.CrCasBranchDocumentsLessor == user.CrMasUserInformationLessor && l.CrCasBranchDocumentsStatus != Status.Active &&l.CrCasBranchDocumentsBranchStatus!=Status.Deleted, new[] { "CrCasBranchDocumentsProceduresNavigation", "CrCasBranchDocuments" }).ToList();
+            if (Docs.Count() < 1)
+            {
+                var DocsActive = _unitOfWork.CrCasBranchDocument.FindAll(l => l.CrCasBranchDocumentsLessor == user.CrMasUserInformationLessor && l.CrCasBranchDocumentsStatus == Status.Active && l.CrCasBranchDocumentsBranchStatus != Status.Deleted, new[] { "CrCasBranchDocumentsProceduresNavigation", "CrCasBranchDocuments" }).ToList();
+                return View(DocsActive);
 
+            }
             return View(Docs);
         }
 
@@ -128,6 +141,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "202", "20", currentUser.CrMasUserInformationLessor, "100",
                 branchDocument.CrCasBranchDocumentsNo, null, null, branchDocument.CrCasBranchDocumentsNo, branchDocument.CrCasBranchDocumentsDate, branchDocument.CrCasBranchDocumentsStartDate, branchDocument.CrCasBranchDocumentsEndDate,
                 null, null, "اضافة","Insert", "I", null);
+                _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
             }
             return RedirectToAction("Documents");
         }
@@ -174,12 +188,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         string fileNameImg = sysProcedure.CrMasSysProceduresEnName;
                         sAr = "حذف المستند";
                         sEn = "Remove Document";
-                        branchDocument.CrCasBranchDocumentsStatus = Status.Renewed;
-                        branchDocument.CrCasBranchDocumentsDate = null;
-                        branchDocument.CrCasBranchDocumentsStartDate = null;
-                        branchDocument.CrCasBranchDocumentsEndDate = null;
-                        branchDocument.CrCasBranchDocumentsImage = null;
-                        branchDocument.CrCasBranchDocumentsNo = null;
+                        branchDocument.CrCasBranchDocumentsStatus = Status.Deleted;
                         await _BranchDocument.UpdateBranchDocument(branchDocument);
                         await FileExtensions.RemoveImage(_webHostEnvironment, foldername, fileNameImg, ".png");
 
@@ -201,6 +210,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             return false;
 
+        }
+        public IActionResult SuccessToast()
+        {
+            _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("Documents", "Documents");
         }
 
     }

@@ -1,0 +1,72 @@
+﻿@using Bnan.Core.Extensions;
+@model IEnumerable<CrMasUserInformation>
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = @localizer["FeedBox Data"];
+    ViewData["Page-Hint"] = @localizer["FeedBox Hint"];
+}
+<style>
+    body {
+        overflow: hidden
+    }
+
+    @@media (max-width: 600px) {
+        #basic-datatable1_wrapper .row:first-child > div {
+            text-align: center;
+        }
+
+            #basic-datatable1_wrapper .row:first-child > div:last-child > * {
+                text-align: center;
+            }
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+
+</style>
+
+<div class="sub-container">
+    <div class="container-fluid">
+        <div class="row">
+            @*filter*@
+            <div class="col-sm-12 col-md-9">
+                <div class="col-sm-12 col-md-4 p-0">
+                    <a type="button" class="btn btn-danger" asp-area="CAS" asp-controller="Home" asp-action="Index">
+                        <i class="mdi mdi-window-close"></i>
+                    </a>
+                </div>
+            </div>
+
+            @*search*@
+            <div class="col-sm-12 col-md-3 p-0">
+                <input class="form-control" type="search" id="top-search" style="width: 96%;" placeholder="@localizer["search"]...">
+            </div>
+        </div>
+        <div class="dataTable">
+            <partial name="_DataTableFeedBoxForUsers" />
+        </div>
+    </div>
+</div>
+
+@section scripts {
+   
+}
+
+
+<style>
+    .wrapper {
+        margin-bottom: 60px;
+        overflow: hidden;
+        background-image: url("~/Pictures/bg.jpg") !important;
+    }
+
+    .table-bordered td,
+    .table-bordered th {
+        border: none;
+    }
+</style>

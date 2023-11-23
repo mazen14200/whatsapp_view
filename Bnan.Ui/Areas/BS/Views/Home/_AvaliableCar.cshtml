@@ -74,11 +74,11 @@
                                                 </div>
                                                 <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
                                                     <p> شهري</p>
-                                                    <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicMonthlyRent</p>
+                                                    <p>@(item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicMonthlyRent * item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicMonthlyDay)</p>
                                                 </div>
                                                 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
                                                     <p>اسبوعي</p>
-                                                    <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicWeeklyRent</p>
+                                                    <p>@(item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicWeeklyRent * item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicWeeklyDay)</p>
                                                 </div>
                                                 <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
                                                     <p>يومي</p>

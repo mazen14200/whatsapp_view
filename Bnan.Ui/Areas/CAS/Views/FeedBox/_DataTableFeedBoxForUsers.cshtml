@@ -1,0 +1,94 @@
+﻿@using System.Globalization;
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = @localizer["FeedBox Data"];
+    ViewData["Page-Hint"] = @localizer["FeedBox Hint"];
+}
+
+<style>
+    .email {
+        text-align: end;
+    }
+</style>
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" style="width:100%">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["UserNo"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["UserName"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Balance"]</th>
+                    <th aria-label="Office: activate to sort column ascending">@localizer["Employement"]</th>
+                    <th aria-label="Age: activate to sort column ascending">@localizer["MobilePhone"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Email"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+
+                    <tr onclick="location.href='@Url.Action("Send", "FeedBox", new { id = item.CrMasUserInformationCode })'">
+                        <td>@no</td>
+                        <td>@item.CrMasUserInformationCode</td>
+                        <td>@item.CrMasUserInformationEnName</td>
+                        <td>@item.CrMasUserInformationAvailableBalance</td>
+                        <td>@item.CrMasUserInformationTasksEnName</td>
+                        <td>@item.CrMasUserInformationCallingKey@item.CrMasUserInformationMobileNo</td>
+                        <td>@item.CrMasUserInformationEmail</td>
+                    </tr>
+
+
+                    no++;
+
+                }
+
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["UserNo"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["UserName"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Balance"]</th>
+                    <th aria-label="Office: activate to sort column ascending">@localizer["Employement"]</th>
+                    <th aria-label="Age: activate to sort column ascending">@localizer["MobilePhone"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Email"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    <tr onclick="location.href='@Url.Action("Send", "FeedBox", new { id = item.CrMasUserInformationCode })'">
+                        <td>@no</td>
+                        <td>@item.CrMasUserInformationCode</td>
+                        <td>@item.CrMasUserInformationArName</td>
+                        <td>@item.CrMasUserInformationAvailableBalance</td>
+                        <td>@item.CrMasUserInformationTasksArName</td>
+                        <td>@item.CrMasUserInformationCallingKey@item.CrMasUserInformationMobileNo</td>
+                        <td class="email">@item.CrMasUserInformationEmail</td>
+                    </tr>
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}

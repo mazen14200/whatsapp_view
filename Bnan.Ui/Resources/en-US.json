@@ -344,6 +344,9 @@
   "SureToHoldOwner": "Stopping the branch data will result in stopping the rental of all cars associated with the owner",
   "SureToRetriveHoldOwner": "Confirm activation",
   "HintSureToRetriveHoldOwner": "Activating the branch data will result in the possibility of renting all cars associated with the owner",
+  // Doc Modal
+  "SureTodeleteDoc": "Confirmation of deletion....",
+  "HintSureTodeleteDoc": "Deleting the document will result in its status being returned to 'not registered' while maintaining all previous administrative procedures.",
   //validation on input
   "requiredFiled": "This Field Is Required",
   "requiredNoLengthFiled": "Please enter exactly {0} numbers.",
@@ -1005,5 +1008,13 @@
   "GroupNumber": "Group Char",
   "ActivateService": "Activate",
   "IsEmptyTab": "Tab is empty",
-  "ContractBranch": "Branch Contracts"
+  "ContractBranch": "Branch Contracts",
+  "Holded": "Holded",
+  "RentedCarsIsEmptyTab": "There are no rental cars",
+  "AvaliableCarsIsEmptyTab": "There are no cars available",
+  "UnAvaliableCarsIsEmptyTab": "There are no cars unavailable",
+  "Balance": "Balance",
+  "FeedBox Data": "Feed Box",
+  "FeedBox Hint": "The page allow you to Feed Employee's box ",
+  "FeedValue": "Feed Value"
 }

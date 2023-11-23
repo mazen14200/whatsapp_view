@@ -33,7 +33,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode&&x.CrCasBranchInformationStatus!=Status.Deleted).ToList();
             var selectBranch = userLogin.CrMasUserInformationDefaultBranch;
-            if (selectBranch == null) selectBranch = "100";
+            if (selectBranch == null||selectBranch=="000") selectBranch = "100";
 
             var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
             var Cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationStatus != Status.Deleted&&x.CrCasCarInformationStatus!=Status.Sold && x.CrCasCarInformationBranch == selectBranch, new[] { "CrCasCarInformationDistributionNavigation" }).ToList();

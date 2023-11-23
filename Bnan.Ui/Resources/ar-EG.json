@@ -68,7 +68,7 @@
   "UserNameInvalid": "اسم حساب الموظف خطأ",
   "PleaseEnterUserName": "الرجاء ادخال الاسم",
   "PleaseEnterPassword": "الرجاء ادخال كلمة السر",
-
+  "Holded": "موقوف",
 
   //CAS System NavBar
   "Welcome": "مرحباً",
@@ -360,9 +360,12 @@
   "HintSureTodeleteBranch": "سيترتب على حذف بيانات الفرع حذف جميع المستندات و نقاط البيع المرتبطة بالفرع مع الاحتفاظ بجميع الإجراءات الإدارية و المالية السابقة",
   "SureToHoldBranch": "تأكيد الايقاف...",
   "HintSureToHoldBranch": "سيترتب على إيقاف بيانات الفرع إيقاف تأجير سيارات الفرع و كذلك إيقاف عملية الدفع بنقاط البيع المرتبطة بالفرع",
-
+  // Doc Modal
+  "SureTodeleteDoc": "تأكيد الحذف...",
+  "HintSureTodeleteDoc": "سيترتب علي حذف المستند ارجاع حالته الي 'لم يسجل' مع الاحتفاظ بجميع الاجراءات الادارية السابقة",
   // Owner
-  "SureToHoldOwner": "سيترتب على إيقاف بيانات الفرع ايقاف تأجير جميع السيارات المرتبطة بالمالك",
+  "SureToHoldOwner": "تأكيد الايقاف",
+  "HintSureToHoldOwner": "سيترتب على إيقاف بيانات الفرع ايقاف تأجير جميع السيارات المرتبطة بالمالك",
   "SureToRetriveHoldOwner": "تأكيد التفعيل",
   "HintSureToRetriveHoldOwner": "سيترتب على تفعيل بيانات الفرع امكانية تأجير جميع السيارات المرتبطة بالمالك",
   "HintSureTodeleteContractsCompany": "سيترتب على حذف عقد الشركة ايقاف هذا العقد وجميع تفاصيله",
@@ -993,6 +996,13 @@
   "Translate": "ترحمة الدمج",
   "GroupNumber": "رمز المجموعة",
   "ActivateService": "تفعيل",
-  "IsEmptyTab": "هذه القائمة فارغه",
-  "ContractBranch": "مستندات الفرع"
+  "RentedCarsIsEmptyTab": "لا يوجد سيارات مؤجرة",
+  "AvaliableCarsIsEmptyTab": "لا يوجد سيارات متاحة",
+  "UnAvaliableCarsIsEmptyTab": "لا يوجد سيارات غير متاحة",
+  "ContractBranch": "مستندات الفرع",
+  "Balance": "الرصيد",
+  "FeedBox Data": "تغذية الصندوق",
+  "FeedBox Hint": "تمكنك هذه الصفحة البحث وعرض بيانات الموظفين المتاحين لتغذية الصندوق",
+  "FeedBox Send Hint": "تمكنك هذه الصفحة من تغذية الصندوق للموظفين",
+  "FeedValue": "مبلغ التغذية"
 }

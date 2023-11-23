@@ -86,17 +86,33 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-profile rounded-circle" src="~/BranchSys/img/profile.png" style="margin-right: 12px;">
+                            <img class="img-profile rounded-circle" src="@Url.Content(user.CrMasUserInformationPicture?.ToString())" style="margin-right: 12px;">
                             <div style="display: flex; flex-direction: column;">
-                                <span class=" text-dark font-weight-bold" style="font-size: 16px;">
-                                    احمد هاني زاهر
-                                </span>
-                                <span class="text-dark" style="font-size: 13px;font-weight: 400;">
-                                    المدير التنفيذي
-                                </span>
+                                @if (signinManager.IsSignedIn(User))
+                                {
+                                    @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+                                    {
+                                        <span class=" text-dark font-weight-bold" style="font-size: 16px;">
+                                            @((await userManager.GetUserAsync(User)).CrMasUserInformationArName)
+                                        </span>
+                                        <span class="text-dark" style="font-size: 13px;font-weight: 400;">
+                                            @((await userManager.GetUserAsync(User)).CrMasUserInformationTasksArName)
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class=" text-dark font-weight-bold" style="font-size: 16px;">
+                                            @((await userManager.GetUserAsync(User)).CrMasUserInformationEnName)
+                                        </span>
+                                        <span class="text-dark" style="font-size: 13px;font-weight: 400;">
+                                            @((await userManager.GetUserAsync(User)).CrMasUserInformationTasksEnName)
+                                        </span>
+                                    }
+
+                                }
                             </div>
                         </a>
-                        <!-- Dropdown - User Information -->
+                       @*  <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
                              aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="#">
@@ -112,9 +128,37 @@
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw  text-dark-400"></i>
                                 تسجيل الخروج
                             </a>
+                        </div> *@
+                        <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in text-right" style="font-size: 16px;font-weight: 600;color: black;" aria-labelledby="userDropdown">
+                            <!-- item-->
+                            <div class="dropdown-header noti-title dropdown-item">
+                                <h6 class="text-overflow m-0">@localizer["Welcome"]</h6>
+                            </div>
+
+                            <!-- item-->
+                            <a asp-area="CAS" asp-controller="Employees" asp-action="MyAccount" class="dropdown-item notify-item" id="myAcc">
+                                <i class="mdi mdi-account-circle me-1"></i>
+                                <span>@localizer["My Account"]</span>
+                            </a>
+                            <a asp-area="CAS" asp-controller="Employees" asp-action="ChangePassword" class="dropdown-item notify-item" id="changePass">
+                                <i class="mdi mdi-onepassword me-1"></i>
+                                <span>@localizer["ChangePassword"]</span>
+                            </a>
+                            @if (user.CrMasUserInformationAuthorizationAdmin == true && user.CrMasUserInformationAuthorizationBranch == true)
+                            {
+                                <a asp-area="Identity" asp-controller="Account" asp-action="System" class="dropdown-item notify-item" id="changePass">
+                                    <i class="mdi mdi-access-point-network me-1"></i>
+                                    <span>@localizer["Systems"]</span>
+                                </a>
+                            }
+
+                            <!-- item-->
+                            <a asp-area="Identity" asp-controller="Account" asp-action="Logout" class="dropdown-item notify-item" id="logout">
+                                <i class="mdi mdi-logout me-1"></i>
+                                <span>@localizer["logout"]</span>
+                            </a>
                         </div>
                     </li>
-                    <div class="topbar-divider d-none d-sm-block"></div>
                     <!-- Nav Item - Messages -->
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
@@ -185,7 +229,6 @@
                             <a class="dropdown-item text-center small text-dark-600" href="#">Read More Messages</a>
                         </div>
                     </li>
-
                     <!-- Nav Item - Alerts -->
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
