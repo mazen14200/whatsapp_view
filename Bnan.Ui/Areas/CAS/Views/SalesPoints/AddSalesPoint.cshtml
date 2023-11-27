@@ -174,7 +174,7 @@
                     <label class="form-label" for="AccountBankNameAr">@localizer["SalesPointNameAr"]</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" asp-for="CrCasAccountSalesPointArName" maxlength="50" width="80%" required />
+                    <input type="text" class="form-control" asp-for="CrCasAccountSalesPointArName" maxlength="50" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" required />
                     <div style="margin-top:2px">
                         <div style="height: 1.0em">
                             <span asp-validation-for="@Model.CrCasAccountSalesPointNo" class="text-danger"></span>
@@ -188,7 +188,7 @@
                     <label class="form-label" for="AccountBankNameAr">@localizer["SalesPointNameEn"]</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" asp-for="CrCasAccountSalesPointEnName" maxlength="50" width="80%" required />
+                    <input type="text" class="form-control" asp-for="CrCasAccountSalesPointEnName" maxlength="50" width="80%" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')" required />
                     <div style="margin-top:2px">
                         <div style="height: 1.0em">
                             <span asp-validation-for="@Model.CrCasAccountSalesPointNo" class="text-danger"></span>

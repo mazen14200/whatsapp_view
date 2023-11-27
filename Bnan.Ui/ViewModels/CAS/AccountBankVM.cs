@@ -12,6 +12,7 @@ namespace Bnan.Ui.ViewModels.CAS
         public string? CrCasBankEnName { get; set; }
 
         [NotMapped]
+        [Required(ErrorMessage = "requiredFiled")]
         public string? CrCasBankArName { get; set; }
         public string? CrCasAccountBankNo { get; set; }
         public string? CrCasAccountBankSerail { get; set; }

@@ -81,7 +81,7 @@ namespace Bnan.Ui.Areas.Identity.Controllers
             {
 
 
-                var user = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.UserName, new[] { "CrMasUserInformationLessorNavigation" });
+                var user = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.UserName, new[] { "CrMasUserInformationLessorNavigation", "CrMasUserBranchValidities.CrMasUserBranchValidity1" });
 
 
 
@@ -97,9 +97,9 @@ namespace Bnan.Ui.Areas.Identity.Controllers
                 if (await _authService.CheckPassword(model.UserName, model.Password) == false)
                 {
 
-                    if (user.CrMasUserInformationReasons != null)
+                    if (user.CrMasUserInformationRemindMe != null)
                     {
-                        ModelState.AddModelError("Hint", _localizer["PasswordInvalid"] + ":" + user.CrMasUserInformationReasons);
+                        ModelState.AddModelError("Hint", _localizer["PasswordInvalid"] + ":" + user.CrMasUserInformationRemindMe);
                     }
                     else
                     {
@@ -109,38 +109,49 @@ namespace Bnan.Ui.Areas.Identity.Controllers
 
                     return View(model);
                 }
-                /*else if (await _authService.CheckPassword(model.UserName, model.Password) == true)
-                {
-                    if (user.CrMasUserInformationOperationStatus == true)
-                    {
-                        ModelState.AddModelError("Hint", "User Is Logged In");
-                        return View(model);
-                    }
-                }*/
-
+                //else if (await _authService.CheckPassword(model.UserName, model.Password) == true)
+                //{
+                //    if (user.CrMasUserInformationOperationStatus == true)
+                //    {
+                //        ModelState.AddModelError("Hint", _localizer["UserIsOpen"]);
+                //        return View(model);
+                //    }
+                //}
                 //Check The Status Of User 
                 if (user.CrMasUserInformationStatus == Status.Deleted)
                 {
-                    ModelState.AddModelError("Stat", _localizer["AccountDelete"]);
-                    return View(model);
-                }
-                else if (user.CrMasUserInformationStatus == Status.Hold)
-                {
-                    ModelState.AddModelError("Stat", _localizer["AccountHold"]);
+                    ModelState.AddModelError("Hint", _localizer["AccountDelete"]);
                     return View(model);
                 }
                 if (user.CrMasUserInformationLessorNavigation.CrMasLessorInformationStatus == Status.Deleted)
                 {
-                    ModelState.AddModelError("Stat", _localizer["CompanyDeleted"]);
+                    ModelState.AddModelError("Hint", _localizer["CompanyDeleted"]);
                     return View(model);
+                }
+                if (user.CrMasUserInformationAuthorizationBranch==true&&user.CrMasUserInformationAuthorizationAdmin==false&&user.CrMasUserInformationAuthorizationOwner==false)
+                {
+                    var branchValidities = user.CrMasUserBranchValidities.Where(x => x.CrMasUserBranchValidityBranchStatus == Status.Active);
+                    if (branchValidities.Count()==0)
+                    {
+                        ModelState.AddModelError("Hint", _localizer["NoHaveBranches"]);
+                        return View(model);
+                    }
+                    else if (branchValidities.Count()==1)
+                    {
+                        if (branchValidities.FirstOrDefault().CrMasUserBranchValidity1.CrCasBranchInformationStatus==Status.Deleted)
+                        {
+                            ModelState.AddModelError("Hint", _localizer["HaveOneBranchDeleted"]);
+                            return View(model);
+                        }
+                    }
                 }
 
 
                 var result = await _authService.LoginAsync(model.UserName, model.Password);
                 if (result.Succeeded)
                 {
-                    if (user.CrMasUserInformationDefaultLanguage.ToLower() == "en") SetLanguage("en-US");
-                    else SetLanguage("ar-EG");
+                    //if (user.CrMasUserInformationDefaultLanguage.ToLower() == "en") SetLanguage("en-US");
+                    //else SetLanguage("ar-EG");
                     var UserInforation = await _userService.GetUserByUserNameAsync(model.UserName);
                     UserInforation.CrMasUserInformationOperationStatus = true;
                     UserInforation.CrMasUserInformationEntryLastDate = DateTime.Now.Date;
@@ -285,13 +296,15 @@ namespace Bnan.Ui.Areas.Identity.Controllers
             return RedirectToAction("Systems", "Account");
         }
         [HttpGet]
-        public void SetLanguage(string culture)
+        public IActionResult SetLanguage(string returnUrl, string culture)
         {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
                 );
+
+            return LocalRedirect(returnUrl);
         }
     }
 }

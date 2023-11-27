@@ -45,6 +45,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarServices";
+            ViewBag.no = "2";
             var userLogin = await _userManager.GetUserAsync(User);
             var titles = await setTitle("207", "2207003", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
@@ -60,7 +63,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             if (!string.IsNullOrEmpty(status))
             {
                 var AccountBankbyStatusAll = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankNo != "00" && x.CrCasAccountBankLessor == userLogin.CrMasUserInformationLessor, new[] { "CrCasAccountBankNoNavigation" });
-                if (status == Status.All) return PartialView("_DataTableAccountBank", AccountBankbyStatusAll);
+                if (status == Status.All) return PartialView("_DataTableAccountBank", AccountBankbyStatusAll.Where(x=>x.CrCasAccountBankStatus!=Status.Deleted));
                 return PartialView("_DataTableAccountBank", AccountBankbyStatusAll.Where(l => l.CrCasAccountBankStatus == status));
             }
             return PartialView();
@@ -71,6 +74,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         public async Task<IActionResult> AddAccountBank()
         {
 
+            //sidebar Active
+            ViewBag.id = "#sidebarServices";
+            ViewBag.no = "2";
             var titles = await setTitle("207", "2207003", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
@@ -207,6 +213,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarServices";
+            ViewBag.no = "2";
             //To Set Title !!!!!!!!!!!!!
             var titles = await setTitle("207", "2207003", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
@@ -268,11 +277,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpPost]
         public async Task<IActionResult> EditStatus(string code, string status)
         {
+            // Get Lessor Code
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
             string sAr = "";
             string sEn = "";
             var bank = await _unitOfWork.CrCasAccountBank.GetByIdAsync(code);
+
             if (bank != null)
             {
+                var salesPoints = _unitOfWork.CrCasAccountSalesPoint.FindAll(l => l.CrCasAccountSalesPointLessor == lessorCode && l.CrCasAccountSalesPointAccountBank == bank.CrCasAccountBankCode);
                 if (await CheckUserSubValidationProcdures("2207003", status))
                 {
                     if (status == Status.Hold)
@@ -280,18 +294,21 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         sAr = "ايقاف";
                         sEn = "Stop";
                         bank.CrCasAccountBankStatus = Status.Hold;
+                        foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBankStatus = Status.Hold;
                     }
                     else if (status == Status.Deleted)
                     {
                         sAr = "حذف";
                         sEn = "Delete";
                         bank.CrCasAccountBankStatus = Status.Deleted;
+                        foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBankStatus = Status.Deleted;
                     }
                     else if (status == "Reactivate")
                     {
                         sAr = "استرجاع";
                         sEn = "Retrieve";
                         bank.CrCasAccountBankStatus = Status.Active;
+                        foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBankStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();

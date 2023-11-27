@@ -2,15 +2,18 @@
 @using Bnan.Ui.ViewModels.BS;
 @using Newtonsoft.Json;
 @model BSLayoutVM
+@inject IViewLocalizer localizer
 <!--Avaliable Cars-->
-
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+}
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner2">
         @if (Model.AvaliableCars != null)
         {
             @foreach (var item in Model.AvaliableCars)
             {
-                <div class="carousel-item @(item == Model.AvaliableCars.First() ? "active" : "")">
+                <div class="carousel-item animate @(item == Model.AvaliableCars.First() ? "active" : "")">
                     <div class="product p-2 pt-0">
                         <div class="row" id="available_data1">
                             <div class="col-md-7 col-lg-7">
@@ -40,7 +43,14 @@
                                 </div>
                             </div>
                             <div class="col-md-5 col-lg-5">
-                                <p class="product-data1">@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateArName</p>
+                                @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+                                {
+                                    <p class="product-data1"> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateEnName</p>
+                                }
+                                else
+                                {
+                                    <p class="product-data1"> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateArName</p>
+                                }
                             </div>
                         </div>
                         <div class="row car_img img-car-avaliable">
@@ -51,37 +61,37 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col">
-                                        <div class="collapse" id="collapse-price">
+                                        <div class="collapse" id="collapse-price-${@item.CrCasCarInformationSerailNo+p}">
                                             <div class="row">
                                                 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 ">
-                                                    <p class="pb-0">الساعة الاضافية</p>
+                                                    <p class="pb-0">@localizer["ExtraHour"]</p>
                                                     <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicExtraHourValue</p>
                                                 </div>
                                                 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                                                    <p> الكيلو الاضافي</p>
+                                                    <p>@localizer["ExtraKm"]</p>
                                                     <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicAdditionalKmValue</p>
                                                 </div>
                                                 @if (@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicIsAdditionalDriver == true)
                                                 {
                                                     <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
-                                                        <p> السائق الاضافي</p>
+                                                        <p>@localizer["AdditionalDriver"]</p>
                                                         <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicAdditionalDriverValue</p>
                                                     </div>
                                                 }
                                                 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                                                    <p>نسبة الضريبة </p>
+                                                    <p>@localizer["TaxRate"]</p>
                                                     <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicRentalTaxRate</p>
                                                 </div>
                                                 <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
-                                                    <p> شهري</p>
+                                                    <p> @localizer["Monthly"]</p>
                                                     <p>@(item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicMonthlyRent * item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicMonthlyDay)</p>
                                                 </div>
                                                 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                                                    <p>اسبوعي</p>
+                                                    <p>@localizer["Weekly"]</p>
                                                     <p>@(item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicWeeklyRent * item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicWeeklyDay)</p>
                                                 </div>
                                                 <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
-                                                    <p>يومي</p>
+                                                    <p>@localizer["Daily"]</p>
                                                     <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicDailyRent</p>
                                                 </div>
                                             </div>
@@ -89,34 +99,34 @@
                                     </div>
                                     <button class="btn btn-link  pb-0" type="button"
                                             data-toggle="collapse"
-                                            data-target="#collapse-price"
+                                            data-target="#collapse-price-${@item.CrCasCarInformationSerailNo+p}"
                                             aria-expanded="false"
-                                            aria-controls="collapse-price">
-                                        <img src="~/BranchSys/img/vector.png">
-                                        السعر
+                                            aria-controls="collapse-price-${@item.CrCasCarInformationSerailNo+p}">
+                                        <img src="~/BranchSys/img/vector.png" class="products-collapse-buttons-img">
+                                        <p>@localizer["Price"]</p>
                                     </button>
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <div class="collapse" id="collapse-info">
+                                        <div class="collapse" id="collapse-info-${@item.CrCasCarInformationSerailNo+i}">
                                             <div class="row">
                                                 <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <p>العمر</p>
+                                                    <p>@localizer["Age"]</p>
                                                     <p>
                                                         @item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicMaxAge :
                                                         @item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicMinAge
                                                     </p>
                                                 </div>
                                                 <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <p>الحد الاعلي للساعات</p>
+                                                    <p>@localizer["MaximumHours"]</p>
                                                     <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicHourMax</p>
                                                 </div>
                                                 <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <p>الساعات المجانية</p>
+                                                    <p>@localizer["FreeHours"]</p>
                                                     <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicFreeAdditionalHours</p>
                                                 </div>
                                                 <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <p>كيلوات المجاني اليومي</p>
+                                                    <p>@localizer["DailyFreeKilos"]</p>
                                                     <p>@item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault().CrCasPriceCarBasicNoDailyFreeKm</p>
                                                 </div>
                                             </div>
@@ -124,16 +134,16 @@
                                     </div>
                                     <button class="btn btn-link pb-0" type="button"
                                             data-toggle="collapse"
-                                            data-target="#collapse-info"
+                                            data-target="#collapse-info-${@item.CrCasCarInformationSerailNo+i}"
                                             aria-expanded="false"
-                                            aria-controls="collapse-info">
-                                        <img src="~/BranchSys/img/vector.png">
-                                        بنود التأجير
+                                            aria-controls="collapse-info-${@item.CrCasCarInformationSerailNo+i}">
+                                        <img src="~/BranchSys/img/vector.png" class="products-collapse-buttons-img">
+                                        @localizer["RentalTerms"]
                                     </button>
                                 </div>
                                 <div class="row ">
                                     <div class="col">
-                                        <div class="collapse" id="collapse-fixing-${@item.CrCasCarInformationSerailNo}">
+                                        <div class="collapse" id="collapse-fixing-${@item.CrCasCarInformationSerailNo+f}">
                                             <div class="row maintenance">
                                                 @foreach (var maintaince in Model.DocumentsMaintenances.FindAll(x => x.CrCasCarDocumentsMaintenanceSerailNo == item.CrCasCarInformationSerailNo &&
                                                x.CrCasCarDocumentsMaintenanceProceduresClassification == "13"))
@@ -142,15 +152,15 @@
                                                         <p>@maintaince.CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresArName</p>
                                                         @if (maintaince.CrCasCarDocumentsMaintenanceStatus == Status.Active)
                                                         {
-                                                            <p> قائم </p>
+                                                            <p> @localizer["CActive"] </p>
                                                         }
                                                         else if (maintaince.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire)
                                                         {
-                                                            <p> علي وشك الانتهاء</p>
+                                                            <p> @localizer["OnExpired"] </p>
                                                         }
                                                         else
                                                         {
-                                                            <p> منتهي </p>
+                                                            <p> @localizer["Expired"] </p>
                                                         }
                                                     </div>
                                                 }
@@ -159,16 +169,16 @@
                                     </div>
                                     <button class="btn  btn-link btn-link-collapse-fix pb-0" type="button"
                                             data-toggle="collapse"
-                                            data-target="#collapse-fixing-${@item.CrCasCarInformationSerailNo}"
+                                            data-target="#collapse-fixing-${@item.CrCasCarInformationSerailNo+f}"
                                             aria-expanded="false"
-                                            aria-controls="collapse-fixing-${@item.CrCasCarInformationSerailNo}">
-                                        <img src="~/BranchSys/img/vector.png">
-                                        الصيانه
+                                            aria-controls="collapse-fixing-${@item.CrCasCarInformationSerailNo+f}">
+                                        <img src="~/BranchSys/img/vector.png" class="products-collapse-buttons-img">
+                                        @localizer["Maintenance"]
                                     </button>
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <div class="collapse" id="collapse-doc-${@item.CrCasCarInformationSerailNo}">
+                                        <div class="collapse" id="collapse-doc-${@item.CrCasCarInformationSerailNo+d}">
                                             <div class="row">
                                                 @foreach (var maintaince in Model.DocumentsMaintenances.FindAll(x => x.CrCasCarDocumentsMaintenanceSerailNo == item.CrCasCarInformationSerailNo &&
                                                x.CrCasCarDocumentsMaintenanceProceduresClassification == "12"))
@@ -177,15 +187,15 @@
                                                         <p>@maintaince.CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresArName</p>
                                                         @if (maintaince.CrCasCarDocumentsMaintenanceStatus == Status.Active)
                                                         {
-                                                            <p> قائم </p>
+                                                            <p> @localizer["CActive"] </p>
                                                         }
                                                         else if (maintaince.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire)
                                                         {
-                                                            <p > علي وشك الانتهاء</p>
+                                                            <p> @localizer["OnExpired"] </p>
                                                         }
                                                         else
                                                         {
-                                                            <p > منتهي </p>
+                                                            <p> @localizer["Expired"] </p>
                                                         }
                                                     </div>
                                                 }
@@ -194,11 +204,11 @@
                                     </div>
                                     <button class="btn btn-link btn-link-collapse-docs pb-0" type="button"
                                             data-toggle="collapse"
-                                            data-target="#collapse-doc-${@item.CrCasCarInformationSerailNo}"
+                                            data-target="#collapse-doc-${@item.CrCasCarInformationSerailNo+d}"
                                             aria-expanded="false"
-                                            aria-controls="collapse-doc-${@item.CrCasCarInformationSerailNo}">
-                                        <img src="~/BranchSys/img/vector.png">
-                                        الوثائق
+                                            aria-controls="collapse-doc-${@item.CrCasCarInformationSerailNo+d}">
+                                        <img src="~/BranchSys/img/vector.png" class="products-collapse-buttons-img">
+                                        @localizer["Documents Cars"]
                                     </button>
                                 </div>
                             </div>

@@ -1,6 +1,103 @@
 ﻿@model Bnan.Ui.ViewModels.Identitiy.LoginViewModel
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    var returnUrl = ViewData["returnUrl"];
+}
 
-<div class="account-pages pt-2 pt-md-5 pt-sm-2 pb-sm-5">
+
+
+<div class="limiter">
+    <div class="navbar-div px-2">
+        <nav class="navbar navbar-light">
+            <a class="navbar-brand ">
+                <div class="d-flex navBrand-direction">
+                    <img src="~/LoginAndSystems/images/logo 1.png" width="50" height="50" class="d-inline-block align-top" alt="">
+                    <h1>@localizer["BnanCompany"]</h1>
+                </div>
+            </a>
+            <div class="mode-btn">
+                <label for="switch-mode">
+                    @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+                    {
+                        <a asp-area="Identity" asp-controller="Account" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="ar-EG">
+                            <p style="font-weight: 600;" class="Arabic"> العربية <img src="~/LoginAndSystems/images/Group.png"> </p>
+                        </a>
+                       
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-controller="Account" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="en-US">
+                            <p style="font-weight: 600;" class="english"><img src="~/LoginAndSystems/images/Group.png"> English </p>
+                        </a>
+                    }
+                </label>
+            </div>
+
+        </nav>
+    </div>
+    <div class="container-login">
+
+        <div class="wrap-login">
+            <div class="login-pic">
+                <img src="~/LoginAndSystems/images/Rectangle 133.png" alt="IMG">
+            </div>
+            <div>
+                <form class="login100-form validate-form" asp-action="Login" id="login-form">
+                    <div class="input-label-div">
+                        <label for="employee-number">@localizer["EmployeeNo"]</label>
+                        <div class="wrap-input100 validate-input">
+                            <input class="form-control input100" asp-for="UserName" type="username" id="employee-number" autocomplete="off">
+                            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                            @Html.ValidationMessage("stat", null,  new { @class = "text-danger" })
+                            @Html.ValidationMessage("userLogin", null,  new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="input-label-div">
+                        <label for="password">@localizer["Password"]</label>
+                        <div class="wrap-input100 validate-input">
+                            <input type="password" asp-for="Password" name="password" id="password" class="form-control input100" autocomplete="off">
+                            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                            @Html.ValidationMessage("Hint", null,  new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @* <div class="d-flex align-items-center" style="gap: 5px;">
+                        <input type="checkbox" value="lsRememberMe" id="rememberMe" name="rememberMe"> <label for="rememberMe"
+                                                                                                              style="margin-bottom: 0px;">Remember me</label>
+                    </div> *@
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn" type="submit">
+                            @localizer["Login"]
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footerLogin">
+        <div class="row w-100 align-items-center" style="flex-direction: row-reverse;">
+            <div class="col d-flex text-white align-items-center ">
+                <div class="col d-flex" style="flex-direction: column ;align-items:flex-end">
+                    <span>@localizer["FooterLogin1"]</span>
+                    <span style="font-size: small;"> <span>©2020 </span>@localizer["FooterLogin2"] </span>
+                </div>
+                <img src="~/LoginAndSystems/images/C 1.png">
+            </div>
+            <div class="col-2 d-flex align-items-center" style="justify-content: space-evenly;">
+                <a href="https://966530648535+/"><img src="~/LoginAndSystems/images/واتساب.png"></a>
+                <a href="https://www.youtube.com/Ghyom0"><img src="~/LoginAndSystems/images/youtube.png"></a>
+                <a href="#"><img src="~/LoginAndSystems/images/Rectangle 142.png"></a>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer -->
+</div>
+
+
+@* <div class="account-pages pt-2 pt-md-5 pt-sm-2 pb-sm-5">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xxl-4 col-lg-5">
@@ -60,4 +157,4 @@
     </div>
     <!-- end container -->
 </div>
-
+ *@

@@ -36,7 +36,13 @@
                             <td>@item.CrCasAccountSalesPointEnName</td>
                             <td>@item.CrCasAccountSalesPointNavigation.CrCasBranchInformationEnShortName</td>
                             <td>@item.CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankEnName</td>
-                            <td>@item.CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankEnName</td>
+                            <td>
+                                @item.CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankEnName
+                                @if (item.CrCasAccountSalesPointBankStatus == Status.Hold)
+                                {
+                                    <span class="text-danger">(@localizer["Holded"])</span>
+                                }
+                            </td>
 
                             <td>
                                 @if (@item.CrCasAccountSalesPointStatus == Status.Deleted)
@@ -58,7 +64,13 @@
                             <td>@item.CrCasAccountSalesPointEnName</td>
                             <td>@item.CrCasAccountSalesPointNavigation.CrCasBranchInformationEnShortName</td>
                             <td>@item.CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankEnName</td>
-                            <td>@item.CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankEnName</td>
+                            <td>
+                                @item.CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankEnName
+                                @if (item.CrCasAccountSalesPointBankStatus == Status.Hold)
+                                {
+                                    <span class="text-danger">(@localizer["Holded"])</span>
+                                }
+                            </td>
 
                             <td>
                                 @if (@item.CrCasAccountSalesPointStatus == Status.Active)
@@ -104,7 +116,13 @@ else
                             <td>@item.CrCasAccountSalesPointArName</td>
                             <td>@item.CrCasAccountSalesPointNavigation.CrCasBranchInformationArShortName</td>
                             <td>@item.CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankArName</td>
-                            <td>@item.CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankArName</td>
+                            <td>
+                                @item.CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankArName
+                                @if (item.CrCasAccountSalesPointBankStatus == Status.Hold)
+                                {
+                                    <span class="text-danger">(@localizer["Holded"])</span>
+                                }
+                            </td>
 
                             <td>
                                 @if (@item.CrCasAccountSalesPointStatus == Status.Deleted)
@@ -126,7 +144,13 @@ else
                             <td>@item.CrCasAccountSalesPointArName</td>
                             <td>@item.CrCasAccountSalesPointNavigation.CrCasBranchInformationArShortName</td>
                             <td>@item.CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankArName</td>
-                            <td>@item.CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankArName</td>
+                            <td>
+                                @item.CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankArName
+                                @if (item.CrCasAccountSalesPointBankStatus == Status.Hold)
+                                {
+                                    <span class="text-danger">(@localizer["Holded"])</span>
+                                }
+                            </td>
 
                             <td>
                                 @if (@item.CrCasAccountSalesPointStatus == Status.Active)

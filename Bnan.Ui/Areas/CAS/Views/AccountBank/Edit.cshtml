@@ -179,7 +179,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <h4>@localizer["SureToRetriveHold"]</h4>
+                <h4>@localizer["SureToRetriveHoldOwner"]</h4>
                 <p>@localizer["HintSureToRetriveHAccountBank"]</p>
             </div>
             <div class="modal-footer">
@@ -302,7 +302,7 @@
 
         $("#saveEdit").on("click", function (event) {
             event.preventDefault();
-            CheckValidation('2207003', '@Status.Insert').done(function (data) {
+            CheckValidation('2207003', '@Status.Save').done(function (data) {
                 if (data) {
                     $('form').submit();
                 }

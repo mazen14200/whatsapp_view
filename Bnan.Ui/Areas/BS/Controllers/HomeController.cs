@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using NToastNotify;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Bnan.Ui.Areas.BS.Controllers
 {
@@ -31,11 +32,29 @@ namespace Bnan.Ui.Areas.BS.Controllers
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
-            var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode&&x.CrCasBranchInformationStatus!=Status.Deleted).ToList();
+            var userInformation = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationLessor == lessorCode && x.CrMasUserInformationCode == userLogin.CrMasUserInformationCode, new[] { "CrMasUserBranchValidities.CrMasUserBranchValidity1" });
+            var branchesValidite = userInformation.CrMasUserBranchValidities.Where(x => x.CrMasUserBranchValidityBranchStatus == Status.Active);
+            List<CrCasBranchInformation> branches= new List<CrCasBranchInformation>();
+            if (branchesValidite!=null)
+            {
+                foreach (var item in branchesValidite)
+                {
+                    branches.Add(item.CrMasUserBranchValidity1);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Logout", "Account", new { area = "Identity" });
+            }
+
+
+
             var selectBranch = userLogin.CrMasUserInformationDefaultBranch;
             if (selectBranch == null||selectBranch=="000") selectBranch = "100";
-
+            var checkBranch = branches.Find(x => x.CrCasBranchInformationCode == selectBranch);
+            if (checkBranch == null) selectBranch = branches.FirstOrDefault().CrCasBranchInformationCode;
             var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
+
             var Cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationStatus != Status.Deleted&&x.CrCasCarInformationStatus!=Status.Sold && x.CrCasCarInformationBranch == selectBranch, new[] { "CrCasCarInformationDistributionNavigation" }).ToList();
             var carsRented = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode &&x.CrCasCarInformationBranch== selectBranch && x.CrCasCarInformationStatus == Status.Rented, new[] { "CrCasCarInformationDistributionNavigation" }).ToList();
 

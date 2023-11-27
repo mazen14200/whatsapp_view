@@ -49,8 +49,13 @@
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/toastr.css" />
-    <link href="~/BranchSys/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/icons.min.css" />
+    <link href="~/BranchSys/css/style.css" rel="stylesheet">
+    @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+    {
+        <link href="~/BranchSys/css/En-style.css" rel="stylesheet">
+    }
+   
     <style>
         .noti-icon-badge {
             display: inline-block;
@@ -112,23 +117,6 @@
                                 }
                             </div>
                         </a>
-                       @*  <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
-                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw  text-dark-400"></i>
-                                حسابي
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw  text-dark-400"></i>
-                                تغيير كلمة السر
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw  text-dark-400"></i>
-                                تسجيل الخروج
-                            </a>
-                        </div> *@
                         <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in text-right" style="font-size: 16px;font-weight: 600;color: black;" aria-labelledby="userDropdown">
                             <!-- item-->
                             <div class="dropdown-header noti-title dropdown-item">
@@ -244,14 +232,6 @@
                                  @localizer["Notifications"]
                             </h6>
                             <!-- item-->
-                            @* <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <p class="notify-details" style="text-align:right;margin-right:0">
-                                    <span style="float:right">@localizer["ContractCompany2"]</span>
-                                    <small class="text-muted" style="float:left;color:green!important">@ViewBag.CompanyContractRenewed</small>
-                                    <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyContractAboutExpire</small>
-                                    <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyContractExpired</small>
-                                </p>
-                            </a> *@
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <p class="notify-details" style="text-align:right;margin-right:0">
                                     <span style="float:right">@localizer["ContractBranch"]</span>
@@ -306,13 +286,30 @@
                 <div class=" d-flex align-items-center on-mobile" style="color:black;">
                     <div class="pt-sm-0 pt-md-4  pt-lg-4 pt-xl-4">
                         <h1 class="hide-on-mobile" style="font-size: 1.2rem;font-weight: bold;">
-                            شركة كدي لتأجير السيارات
+                            @if (signinManager.IsSignedIn(User))
+                            {
+                                @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+                                {
+                                    @Html.Raw(lessorInfo.CrMasUserInformationLessorNavigation?.CrMasLessorInformationArLongName)
+                                }
+                                else
+                                {
+                                    @Html.Raw(lessorInfo.CrMasUserInformationLessorNavigation?.CrMasLessorInformationEnLongName)
+                                }
+                            }
                         </h1>
                         <p class="extra-small-mobile">
-                            @Model.CrCasBranchInformations?.Find(x=>x.CrCasBranchInformationCode==Model.SelectedBranch)?.CrCasBranchInformationArShortName
+                            @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+                            {
+                                @Model.CrCasBranchInformations?.Find(x=>x.CrCasBranchInformationCode==Model.SelectedBranch)?.CrCasBranchInformationArShortName
+                            }
+                            else
+                            {
+                                @Model.CrCasBranchInformations?.Find(x=>x.CrCasBranchInformationCode==Model.SelectedBranch)?.CrCasBranchInformationEnShortName
+                            }
                             @if (Model.CrCasBranchInformations?.Find(x => x.CrCasBranchInformationCode == Model.SelectedBranch).CrCasBranchInformationStatus==Status.Hold)
                             {
-                                <span style="color: red;font-size: small;">موقوف</span>
+                                <span style="color: red;font-size: small;">@localizer["Holded"]</span>
                             }
                         </p>
                     </div>
@@ -343,25 +340,25 @@
                     <div class="col-sm-6 col-md-6 col-lg-3 ">
                         <button type="button" class="btn btn-secondary mb-2">
                             <img src="~/BranchSys/img/Rectangle 35.png">
-                            إلغاء العقد
+                           @localizer["CancelContract"]
                         </button>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-3  ">
                         <button type="button" class="btn btn-secondary mb-2">
                             <img src="~/BranchSys/img/Rectangle 31.png">
-                            تمديد العقد
+                            @localizer["ContractExtension"]
                         </button>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-3  ">
                         <button type="button" class="btn btn-secondary mb-2">
                             <img src="~/BranchSys/img/Rectangle 30.png">
-                            تسوية العقد
+                            @localizer["ContractSettlement"]
                         </button>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-3  ">
                         <button type="button" class="btn btn-secondary mb-2">
                             <img src="~/BranchSys/img/Rectangle 29.png">
-                            إنشاء العقد
+                            @localizer["CreateContract"]
                         </button>
                     </div>
                 </div>
@@ -369,52 +366,32 @@
                     <!-- Second row of buttons -->
                     <div class="col-sm-6 col-md-6 col-lg-3 mb-1 ">
                         <button type="button" class="btn btn-secondary neonShadow " id="pulse-button-brunch">
-                            <img src="~/BranchSys/img/Rectangle 36.png" class="anm" id="brunch_button-img">تسليم
-                            العهدة
+                            <img src="~/BranchSys/img/Rectangle 36.png" class="anm" id="brunch_button-img">
+                            @localizer["TheCovenant"]
                         </button>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-3  mb-1   ">
                         <button type="button" class="btn btn-secondary neonShadow " id="pulse-button-employee">
-                            <img src="~/BranchSys/img/Rectangle 33.png" class="anm"> تغذية
-                            الصندوق
+                            <img src="~/BranchSys/img/Rectangle 33.png" class="anm"> 
+                            @localizer["Feedbox"]
                         </button>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-3  mb-1  ">
                         <button type="button" class="btn btn-secondary ">
                             <img src="~/BranchSys/img/Rectangle 32.png">
-                            التقرير المالي
+                            @localizer["FinancialReport"]
                         </button>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-3  mb-1 ">
                         <button type="button" class="btn btn-secondary ">
                             <img src="~/BranchSys/img/Rectangle 34.png">
-                            مستأجرين
+                            @localizer["Tenants"]
                         </button>
                     </div>
                 </div>
             </div>
         </footer>
     </div>
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">اضغط "تسجيل الخروج" أدناه إذا كنت مستعدًا لإنهاء جلستك الحالية .</div>
-                <div class="modal-footer">
-                    <a class="btn btn-secondary1 exit-modal" href="login.html">تسجيل خروج </a>
-
-                    <button class="btn btn-primary w-100" type="button" data-dismiss="modal">الغاء</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
 

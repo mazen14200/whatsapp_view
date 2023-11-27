@@ -1,0 +1,11 @@
+
+ body{
+    direction: rtl;
+}
+ .exit img {
+    transform: rotate(180deg);    
+}
+ .system-card img {
+    transform: rotateY(180deg);    
+}
+

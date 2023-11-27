@@ -42,6 +42,10 @@ function initCarousel() {
             carouselItems[i].classList.remove('active');
         }
         carouselItems[index].classList.add('active');
+        carouselItems[index].classList.add('animate'); // Add animate class for animation
+        setTimeout(() => {
+            carouselItems[index].classList.remove('animate'); // Remove animate class after the animation duration
+        }, 1000);
     }
 
     function rotateItems() {
@@ -53,7 +57,7 @@ function initCarousel() {
         }
     }
 
-    setInterval(rotateItems, 2000);
+    setInterval(rotateItems, 3000);
 
     showItem(currentIndex);
 }
@@ -68,6 +72,10 @@ function initCarousel2() {
             carouselItems[i].classList.remove('active');
         }
         carouselItems[index].classList.add('active');
+        carouselItems[index].classList.add('animate'); // Add animate class for animation
+        setTimeout(() => {
+            carouselItems[index].classList.remove('animate'); // Remove animate class after the animation duration
+        }, 1000);
     }
 
     function rotateItems() {
@@ -79,7 +87,7 @@ function initCarousel2() {
         }
     }
 
-    setInterval(rotateItems, 2000);
+    setInterval(rotateItems, 3000);
 
     showItem(currentIndex);
 }
@@ -94,6 +102,10 @@ function initCarousel3() {
             carouselItems[i].classList.remove('active');
         }
         carouselItems[index].classList.add('active');
+        carouselItems[index].classList.add('animate'); // Add animate class for animation
+        setTimeout(() => {
+            carouselItems[index].classList.remove('animate'); // Remove animate class after the animation duration
+        }, 1000);
     }
 
     function rotateItems() {
@@ -105,7 +117,7 @@ function initCarousel3() {
         }
     }
 
-    setInterval(rotateItems, 2000);
+    setInterval(rotateItems, 3000);
 
     showItem(currentIndex);
 }

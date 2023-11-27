@@ -1,4 +1,150 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
+@inject UserManager<CrMasUserInformation> userManager
+@inject SignInManager<CrMasUserInformation> signinManager
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var user = await userManager.GetUserAsync(User);
+    var lessorInfo = await userManager.Users.Include(l => l.CrMasUserInformationLessorNavigation).ThenInclude(l => l.CrMasLessorImage).FirstOrDefaultAsync(x => x.UserName == user.UserName);
+    var lessorCompanyContract = await userManager.Users.Include(l => l.CrMasUserInformationLessorNavigation).ThenInclude(l => l.CrMasContractCompanies).FirstOrDefaultAsync(x => x.UserName == user.UserName);
+    var userInfo = await userManager.Users
+          .Include(l => l.CrMasUserMainValidations)
+          .Include(l => l.CrMasUserSubValidations)
+          .Include(l => l.CrMasUserInformationLessorNavigation)
+          .FirstOrDefaultAsync(l => l.UserName == user.UserName);
+    string url = Context.Request.Path;
+    string urlhost = Context.Request.Host.Value;
+    string full = urlhost + url;
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    var returnUrl = ViewData["returnUrl"];
+}
+<div class="limiter">
+    <div class="navbar-div px-2">
+        <nav class="navbar">
+            <div class="col brand">
+                <a class="navbar-brand">
+                    <h1>
+                    @if (signinManager.IsSignedIn(User))
+                    {
+                        @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+                        {
+                            @Html.Raw(lessorInfo.CrMasUserInformationLessorNavigation?.CrMasLessorInformationArLongName)
+                        }
+                        else
+                        {
+                            @Html.Raw(lessorInfo.CrMasUserInformationLessorNavigation?.CrMasLessorInformationEnLongName)
+                        }
+                    }
+                    </h1>
+                    @if (lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo!=null)
+                    {
+                        <img src="@Url.Content(lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo)" style="height:46px" class="d-inline-block align-top" alt="logo-image">
+                    }
+                </a>
+            </div>
+            <div class="col">
+                <div class="mode-btn">
+                    <label for="switch-mode">
+                        @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+                        {
+                            <a asp-area="Identity" asp-controller="Account" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="ar-EG">
+                                <p style="font-weight: 600;" class="Arabic"> العربية <img src="~/LoginAndSystems/images/Group.png"> </p>
+                            </a>
+
+                        }
+                        else
+                        {
+                            <a asp-area="Identity" asp-controller="Account" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="en-US">
+                                <p style="font-weight: 600;" class="english"><img src="~/LoginAndSystems/images/Group.png"> English </p>
+                            </a>
+                        }
+                    </label>
+                </div>
+                <a asp-action="Logout" asp-area="Identity" asp-controller="Account" class="exit"><img src="~/LoginAndSystems/images/Group 1.png"></a>
+            </div>
+        </nav>
+    </div>
+    <div class="container container-Systems">
+        <div class="row pb-4">
+            <div class="col-sm-4 ">
+                <div class="system-card">
+                    <a href="#">
+                        <div class="card-content" style="overflow:hidden;">
+                            <div class="img-hover-zoom">
+                                <img class="w-100" src="~/LoginAndSystems/images/Rectangle 136 (1).png" alt="iamge for owners card">
+                            </div>
+                            <div class="card-name1 row p-3 card-content-text ">
+                                <div class="col-auto">
+                                    <p class="owners">@localizer["Owner"]</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4 ">
+                <div class="system-card">
+                    <a asp-area="BS" asp-controller="Home" asp-action="Index">
+                        <div class="card-content" style="overflow:hidden;">
+                            <img class="w-100" src='~/LoginAndSystems/images/branch.png' alt="iamge for branches card" />
+                            <div class="card-name2 row p-3 card-content-text">
+                                <div class="col-auto">
+                                    <p class="branches">@localizer["Branches"]</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4 ">
+                <div class="system-card">
+                    <a asp-area="CAS" asp-controller="Home" asp-action="index">
+                        <div class="card-content" style="overflow:hidden;">
+                            <div class="img-hover-zoom">
+                                <img class="w-100" src="~/LoginAndSystems/images/management.png" alt="iamge for Administration card">
+                            </div>
+                            <div class="card-name3 row p-3 card-content-text ">
+                                <div class="col-auto">
+                                    <p class="Administration">@localizer["CasSystem"] </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Footer -->
+
+    <footer class="footerSystems" style="height: 170px;">
+        <div class="before-footer-widget">
+            <svg width: 100%; height:auto viewbox="0 0 2444 132">
+                <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                      d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+                </path>
+            </svg>
+        </div>
+    </footer>
+
+    <!-- Footer-->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+@*
 <div class="row">
     <div class="col-md-6">
         <div class="card border-secondary border">
@@ -9,9 +155,9 @@
                     additional content.
                 </p>
                 <a class="btn btn-secondary btn-sm" asp-area="CAS" asp-controller="Home" asp-action="index">GO</a>
-            </div> 
-        </div> 
-    </div> 
+            </div>
+        </div>
+    </div>
     <div class="col-md-6">
         <div class="card border-success border">
             <div class="card-body">
@@ -22,13 +168,13 @@
                 </p>
                 <a asp-area="BS" asp-controller="Home" asp-action="Index" class="btn btn-success btn-sm">GO</a>
             </div>
-        </div> 
-    </div> 
+        </div>
+    </div>
 </div>
 <style>
     .row{
         height:100vh;
         justify-content:center;
-        align-items:center; 
+        align-items:center;
     }
-</style>
+</style> *@

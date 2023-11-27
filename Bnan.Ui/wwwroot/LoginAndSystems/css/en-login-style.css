@@ -1,0 +1,12 @@
+
+body {
+    direction: rtl;
+}
+
+.login100-form {
+    text-align: start;
+}
+
+.alert-validate::before {
+    left: 17px;
+}

@@ -41,11 +41,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
         public async Task<IActionResult> SalesPoints()
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarServices";
+            ViewBag.no = "3";
             var currentUser = await _userManager.GetUserAsync(User);
             var titles = await setTitle("207", "2207004", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var salesPointByLessor = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == currentUser.CrMasUserInformationLessor && x.CrCasAccountSalesPointBankStatus == Status.Active && x.CrCasAccountSalesPointBank != "00",
+            var salesPointByLessor = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == currentUser.CrMasUserInformationLessor && x.CrCasAccountSalesPointBankStatus == Status.Active && x.CrCasAccountSalesPointStatus == Status.Active && x.CrCasAccountSalesPointBank != "00",
                 new[] { "CrCasAccountSalesPointAccountBankNavigation", "CrCasAccountSalesPointBankNavigation", "CrCasAccountSalesPointNavigation" });
 
             return View(salesPointByLessor);
@@ -64,7 +67,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         new[] { "CrCasAccountSalesPointAccountBankNavigation", "CrCasAccountSalesPointBankNavigation", "CrCasAccountSalesPointNavigation" });
                     if (status == Status.All)
                     {
-                        return PartialView("_DataTableSalesPoints", SalesPointbyStatusAll);
+                        return PartialView("_DataTableSalesPoints", SalesPointbyStatusAll.Where(x=>x.CrCasAccountSalesPointStatus!=Status.Deleted));
                     }
                     return PartialView("_DataTableSalesPoints", SalesPointbyStatusAll.Where(x => x.CrCasAccountSalesPointStatus == status));
                 }
@@ -153,6 +156,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarServices";
+            ViewBag.no = "3";
             //To Set Title !!!!!!!!!!!!!
             var titles = await setTitle("207", "2207004", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
@@ -217,7 +223,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         {
             string sAr = "";
             string sEn = "";
-            var salesPoint = await _unitOfWork.CrCasAccountSalesPoint.GetByIdAsync(code);
+            var salesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x=>x.CrCasAccountSalesPointCode==code);
             if (salesPoint != null)
             {
                 if (await CheckUserSubValidationProcdures("2207004", status))
@@ -238,6 +244,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     {
                         sAr = "استرجاع";
                         sEn = "Retrieve";
+                        if (salesPoint.CrCasAccountSalesPointBankStatus==Status.Deleted)
+                        {
+                            _toastNotification.AddErrorToastMessage(_localizer["ToastFailedSalesPointDelete"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                            return View(salesPoint);
+                        }
                         salesPoint.CrCasAccountSalesPointStatus = Status.Active;
                     }
 

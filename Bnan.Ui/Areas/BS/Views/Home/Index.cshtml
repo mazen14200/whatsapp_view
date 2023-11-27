@@ -12,16 +12,17 @@
 @inject IViewLocalizer localizer
 @inject UserManager<CrMasUserInformation> userManager
 @inject SignInManager<CrMasUserInformation> signinManager
-@inject IViewLocalizer localizer
+
 
 @{
     var user = await userManager.GetUserAsync(User);
     var userInfo = await userManager.Users
       .Include(l => l.CrMasUserMainValidations)
       .Include(l => l.CrMasUserSubValidations)
-      .Include(x=>x.CrMasUserBranchValidities)
+      .Include(x => x.CrMasUserBranchValidities)
       .Include(l => l.CrMasUserInformationLessorNavigation)
       .FirstOrDefaultAsync(l => l.UserName == user.UserName);
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["Title"] = "Index";
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
 }
@@ -34,36 +35,35 @@
         <div class="card-body" id="cardBody" style="height: 550px;">
 
             <div class="main-carousel-item active" id="carouselItem1">
-                <div class="row" id="first-row-of-charts" style="height: 250px;">
-                    <div class="col-md-6 card-col">
-                        <div class="row" style="height: 250px;">
+                <div class="row" id="first-row-of-charts">
+                    <div class="col-md-6 card-col Branch-car-col">
+                        <div class="row Branch-car-canvas-row">
                             <div class=" col-md-9 col-lg-9 col-xl-9 ">
                                 <canvas id="horizontal_bar" aria-label="chart"></canvas>
                             </div>
                             <div class=" ps-0 col-sm-3 col-md-3 col-lg-3 col-xl-3 pr-0"
                                  style="display: flex;justify-content: flex-end ;">
-                                <p class="chart-p" style="margin-right:20px">سيارات الفرع : <span>@ViewBag.carCount</span></p>
+                                <p class="chart-p" style="margin-right:20px">@localizer["BranchCars"] : <span>@ViewBag.carCount</span></p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-6 card-col" style="border-left: 1px solid #FF9626;">
+                    <div class="col-md-6 card-col pieChart-col">
                         <div class="row " style="height: 240px">
                             <div class="col-sm-8 col-md-8 col-lg-7 col-xl-8 ">
                                 <canvas id="pieChart" aria-label="chart" height="155px"></canvas>
                             </div>
 
-                            <div class="col-sm-4 col-md-4 col-lg-5 col-xl-4 "
-                                 style="display: flex;justify-content: flex-end ;padding-left: 0;">
+                            <div class="col-sm-4 col-md-4 col-lg-5 col-xl-4 pieChart-data">
                                 <div class="chart-legend">
                                     <table class="chart-p">
                                         <tr>
                                             <td id="Executed-contracts">2000</td>
-                                            <td>: العقود المنفذة</td>
+                                            <td>: @localizer["ExecutedContracts"]</td>
                                         </tr>
                                         <tr>
                                             <td id="Closed-contracts">5000</td>
-                                            <td>: العقود المغلقة</td>
+                                            <td>: @localizer["ClosedContracts"]</td>
                                         </tr>
                                     </table>
                                     <br>
@@ -76,24 +76,23 @@
 
                 <!-- <hr color="#FF9626"> -->
 
-                <div class="row" id="second-row-of-charts" style="height: 275px;">
+                <div class="row" id="second-row-of-charts">
 
-                    <div class="col-md-6 card-col" style="border-top: 1px solid #FF9626;">
-                        <div class="row " style="height:240px;margin-top:3%">
+                    <div class="col-md-6 card-col branch-col">
+                        <div class="row branch-row">
                             <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 ">
                                 <canvas id="barChart2" aria-label="chart"></canvas>
                             </div>
-                            <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4"
-                                 style="display: flex;justify-content: flex-end ;padding-left: 0;">
+                            <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 branch-chart-data">
                                 <div class="data chart-p">
                                     <p class="mb-0">
-                                        عهدة الفرع : <span id="brunch-custody">@Model.CrCasBranchInformation?.CrCasBranchInformationTotalBalance?.ToString("N2")</span>
+                                        @localizer["BranchCustody"] : <span id="brunch-custody">@Model.CrCasBranchInformation?.CrCasBranchInformationTotalBalance?.ToString("N2")</span>
                                     </p>
                                     <p class="mb-0">
-                                        الرصيد المتاح : <span id="Available-balance-brunch">@Model.CrCasBranchInformation?.CrCasBranchInformationAvailableBalance?.ToString("N2")</span>
+                                        @localizer["AvailableBalance"] : <span id="Available-balance-brunch">@Model.CrCasBranchInformation?.CrCasBranchInformationAvailableBalance?.ToString("N2")</span>
                                     </p>
                                     <p class="mb-0">
-                                        الرصيد المحجوز : <span id="used-balance-brunch">@Model.CrCasBranchInformation?.CrCasBranchInformationReservedBalance?.ToString("N2")</span>
+                                        @localizer["ReservedBalance"] : <span id="used-balance-brunch">@Model.CrCasBranchInformation?.CrCasBranchInformationReservedBalance?.ToString("N2")</span>
                                     </p>
                                     <!--  -->
                                 </div>
@@ -102,38 +101,36 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 card-col"
-                         style="border-left: 1px solid #FF9626;border-top: 1px solid #FF9626;">
-                        <div class="row" style="height: 240px;margin-top:3%">
+                    <div class="col-md-6 card-col employee-col">
+                        <div class="row employee-row" style="height: 240px;margin-top:3%">
                             <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8  ">
                                 <canvas id="chartId" aria-label="chart"></canvas>
                             </div>
-                            <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4"
-                                 style="display: flex;justify-content: flex-end ;padding-left: 0;">
+                            <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 employee-chart-data">
                                 <div class="data chart-p">
                                     @{
                                         var branchValidity = Model.CrMasUserBranchValidity;
                                         var totalAvaliableBalanceInBranch = branchValidity?.CrMasUserBranchValidityBranchCashAvailable +
-                                                                            branchValidity?.CrMasUserBranchValidityBranchSalesPointAvailable +
-                                                                            branchValidity?.CrMasUserBranchValidityBranchTransferAvailable;
+                                        branchValidity?.CrMasUserBranchValidityBranchSalesPointAvailable +
+                                        branchValidity?.CrMasUserBranchValidityBranchTransferAvailable;
 
-                                        var totalResevedBalanceInBranch =   branchValidity?.CrMasUserBranchValidityBranchCashReserved +
-                                                                            branchValidity?.CrMasUserBranchValidityBranchSalesPointReserved +
-                                                                            branchValidity?.CrMasUserBranchValidityBranchTransferReserved;
+                                        var totalResevedBalanceInBranch = branchValidity?.CrMasUserBranchValidityBranchCashReserved +
+                                        branchValidity?.CrMasUserBranchValidityBranchSalesPointReserved +
+                                        branchValidity?.CrMasUserBranchValidityBranchTransferReserved;
 
-                                        var totalBalanceInBranch =          branchValidity?.CrMasUserBranchValidityBranchSalesPointBalance +
-                                                                            branchValidity?.CrMasUserBranchValidityBranchCashBalance +
-                                                                            branchValidity?.CrMasUserBranchValidityBranchTransferBalance;
+                                        var totalBalanceInBranch = branchValidity?.CrMasUserBranchValidityBranchSalesPointBalance +
+                                        branchValidity?.CrMasUserBranchValidityBranchCashBalance +
+                                        branchValidity?.CrMasUserBranchValidityBranchTransferBalance;
 
                                     }
                                     <p class="mb-0 ">
-                                        عهدة الموظف : <span id="employee-custody">@totalResevedBalanceInBranch?.ToString("N2")</span>
+                                        @localizer["EmployeeCustody"] : <span id="employee-custody">@totalResevedBalanceInBranch?.ToString("N2")</span>
                                     </p>
                                     <p class="mb-0">
-                                        الرصيد المتاح : <span id="Available-balance-employee">@totalAvaliableBalanceInBranch?.ToString("N2")</span>
+                                        @localizer["AvailableBalance"] : <span id="Available-balance-employee">@totalAvaliableBalanceInBranch?.ToString("N2")</span>
                                     </p>
                                     <p class="mb-0">
-                                        الرصيد المحجوز : <span id="used-balance-employee">@totalBalanceInBranch?.ToString("N2")</span>
+                                        @localizer["ReservedBalance"] : <span id="used-balance-employee">@totalBalanceInBranch?.ToString("N2")</span>
                                     </p>
                                     <!--  -->
                                 </div>
@@ -162,28 +159,37 @@
     <!-- Updated width and added new classes for the second card -->
     <!-- Card Body -->
     <div class="card-body p-0 mt-2">
-        @Html.DropDownListFor(model => model.SelectedBranch, new SelectList(Model.CrCasBranchInformations, "CrCasBranchInformationCode", "CrCasBranchInformationArShortName", Model.SelectedBranch),new { id = "branchList" })
-        <label for="brunch_name" style="color: black;">الفرع</label>
+        @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+        {
+            @Html.DropDownListFor(model => model.SelectedBranch, new SelectList(Model.CrCasBranchInformations, "CrCasBranchInformationCode", "CrCasBranchInformationEnShortName", Model.SelectedBranch),new { id = "branchList", @class = "text-left" })
+        }
+        else
+        {
+            @Html.DropDownListFor(model => model.SelectedBranch, new SelectList(Model.CrCasBranchInformations, "CrCasBranchInformationCode", "CrCasBranchInformationArShortName", Model.SelectedBranch),new { id = "branchList", @class = "text-right" })
+        }
+        <label for="brunch_name" style="color: black;">@localizer["Branch"]</label>
         <br>
         <button type="button" class="btn btn-secondary1  mt-2 active1" id="chart"
                 onclick="showCarouselItem(1) , setActiveButton(0)">
             <img src="~/BranchSys/img/Rectangle 74.png"
-                 class="chart-buttons-img">احصائيات
+                 class="chart-buttons-img">@localizer["Statistics"]
         </button>
         <button type="button" class="btn btn-secondary1" id="toggleCarousel">
             <img src="~/BranchSys/img/Rectangle 75 .png"
-                 class="chart-buttons-img">مؤجرة
+                 class="chart-buttons-img">@localizer["Rented"]
         </button>
         <button type="button" class="btn btn-secondary1 " id="toggleCarousel2">
             <img src="~/BranchSys/img/Rectangle 76.png"
-                 class="chart-buttons-img">متاحة
+                 class="chart-buttons-img">@localizer["Avaliable"]
         </button>
         <button type="button" class="btn btn-secondary1 " id="toggleCarousel3">
             <img src="~/BranchSys/img/Rectangle 77.png"
-                 class="chart-buttons-img">غير متاحة
+                 class="chart-buttons-img">@localizer["UnAvaliable"]
         </button>
-        <button type="button" class="btn btn-secondary1"  onclick="setActiveButton(4)" ><img src="~/BranchSys/img/Rectangle 78.png"
-                                            class="chart-buttons-img">رسائل</button> 
+        <button type="button" class="btn btn-secondary1" onclick="setActiveButton(4)">
+            <img src="~/BranchSys/img/Rectangle 78.png"
+                 class="chart-buttons-img">@localizer["Messages"]
+        </button>
     </div>
 
 </div>
@@ -192,8 +198,9 @@
     <!--Charts-->
     <script>
         $(document).ready(function () {
-
             ////////////////////////charts////////////////////////////////
+            //Cars
+
             var available_cars = "@ViewBag.AvaliableCars";
             var not_available_cars = "@ViewBag.UnAvaliableCars";
             var rented_cars = "@ViewBag.RentedCars";
@@ -202,7 +209,7 @@
             var myChart1 = new Chart(barChart1, {
                 type: "bar",
                 data: {
-                    labels: ['متاحة', 'مؤجرة', 'غير متاحة'],
+                    labels: ['@localizer["Avaliable"]', '@localizer["Rented"]', '@localizer["UnAvaliable"]'],
                     datasets: [
                         {
                             data: [available_cars, rented_cars, not_available_cars],
@@ -302,60 +309,153 @@
     </script>
 
     <script>
-        // Bar Chart 2
-        var barChart2 = document.getElementById("barChart2").getContext("2d");
-        var myChart = new Chart(barChart2, {
-            type: "bar",
-            data: {
-                labels: ['نقدًا', 'مدى', 'فيزا', 'اكسبرس', 'ماستر ', 'تحويل'],
-                datasets: [
-                    {
-                        data: [100, 60, 50, 45, 40, 30],
-                        backgroundColor: [
-                            "rgba(255, 99, 132, 1)",
-                            "rgba(54, 162, 235, 1)",
-                            "rgba(255, 206, 86, 1)",
-                            "rgba(75, 192, 192, 1)",
-                            "rgba(153, 102, 255, 1)",
-                            "rgba(255, 159, 64, 1)"
-                        ],
+        $(document).ready(function () {
+            // Bar Chart 2
+            //Branch
+            var barChart2 = document.getElementById("barChart2").getContext("2d");
+            var myChart = new Chart(barChart2, {
+                type: "bar",
+                data: {
+                    labels: ['@localizer["CASH"]', '@localizer["Mada"]', '@localizer["Visa"]', '@localizer["Express"]', '@localizer["MasterCard"] ', '@localizer["transformation"]'],
+                    datasets: [
+                        {
+                            data: [100, 60, 50, 45, 40, 30],
+                            backgroundColor: [
+                                "rgba(255, 99, 132, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(255, 206, 86, 1)",
+                                "rgba(75, 192, 192, 1)",
+                                "rgba(153, 102, 255, 1)",
+                                "rgba(255, 159, 64, 1)"
+                            ],
 
-                    }
-                ]
-            },
-            options: {
-                plugins: {
-
-                    legend: {
-                        display: false
-                    }
-
-                },
-                scales: {
-                    x: {
-                        grid: {
-                            display: false // Remove vertical lines
                         }
+                    ]
+                },
+                options: {
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        }
+
                     },
-                    y: {
-                        grid: {
-                            display: false // Remove horizontal lines
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false // Remove vertical lines
+                            }
                         },
-                        beginAtZero: true,
-                        ticks: {
-                            font: {
-                                size: 11 // Change the font size of the tick labels
+                        y: {
+                            grid: {
+                                display: false // Remove horizontal lines
+                            },
+                            beginAtZero: true,
+                            ticks: {
+                                font: {
+                                    size: 11 // Change the font size of the tick labels
+                                }
                             }
                         }
-                    }
 
+                    }
                 }
-            }
+            });
         });
+
     </script>
     <script>
+        $(document).ready(function () {
+            //Employee Balance
+            var chrt = document.getElementById("chartId").getContext("2d");
+            var chartId = new Chart(chrt, {
+                type: "bar",
+                data: {
+                    labels: ['@localizer["CASH"]', '@localizer["Mada"]', '@localizer["Visa"]', '@localizer["Express"]', '@localizer["MasterCard"] ', '@localizer["transformation"]'],
+                    datasets: [
+                        {
+                            data: [100, 50, 45, 60, 40, 30],
+                            backgroundColor: [
+                                "rgba(255, 99, 132, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(255, 206, 86, 1)",
+                                "rgba(75, 192, 192, 1)",
+                                "rgba(153, 102, 255, 1)",
+                                "rgba(255, 159, 64, 1)"
+                            ],
 
 
+                        }
+                    ]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false // Remove vertical lines
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false // Remove horizontal lines
+                            },
+                            beginAtZero: true,
+                            ticks: {
+                                font: {
+                                    size: 11 // Change the font size of the tick labels
+                                }
+                            }
+                        }
+
+                    }
+                }
+            });
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            const pieChartEl = document.getElementById('pieChart');
+            const pieChartData = {
+                labels: ['@localizer["ExpiredContract"]', '@localizer["ExpiresToday"]', '@localizer["ExpiresTomorrow"]', '@localizer["ExpiresLater"]'],
+                datasets: [{
+                    data: [342, 313, 245, 210],
+                    backgroundColor: ['rgba(242, 143, 36, 1)', '#9966FF', 'rgba(242, 36, 36, 1)', 'rgba(1, 5, 83, 1)']
+                }]
+            };
+
+            const pieChart = new Chart(pieChartEl, {
+                type: 'doughnut',
+                data: pieChartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return context.dataset.data[context.dataIndex];
+                                }
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        });
+
+    </script>
+
+
+    <script>
 
         function loadRentedCars() {
             $.ajax({
@@ -444,6 +544,7 @@
         });
 
     </script>
+
     <script>
         $(document).ready(function () {
             // Attach a change event handler to the dropdown

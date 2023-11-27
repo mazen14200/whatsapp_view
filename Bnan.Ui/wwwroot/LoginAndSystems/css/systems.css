@@ -1,0 +1,173 @@
+/* //////////////////////////////////////////////////////////////////
+[ RESTYLE TAG ]*/
+
+* {
+	margin: 0px; 
+	padding: 0px; 
+	box-sizing: border-box;
+}
+
+body, html {
+	height: 100%;
+	font-family: "cairo";
+  background-color: #FEF8E8;
+
+}
+
+/*---------------------------------------------*/
+
+/*---------------------------------------------*/
+h1,h2,h3,h4,h5,h6 {
+	margin: 0px;
+  font-size:1.2rem;
+   font-weight: bold;
+   display: inline;
+   color: #39629C;
+}
+
+p {
+	font-size: 15px;
+	line-height: 1.7;
+   color: #39629C;
+	margin: 0px;
+    font-weight: 700;
+}
+
+ul, li {
+	margin: 0px;
+	list-style-type: none;
+}
+
+.brand{
+    text-align: end;
+}
+.exit{
+    padding-left: 18px;
+}
+/*---------------------------------------------*/
+input {
+	outline: none;
+	border: none;
+}
+
+textarea {
+  outline: none;
+  border: none;
+}
+
+
+
+
+/*//////////////////////////////////////////////////////////////////
+[ login ]*/
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+/* ////////////////////////////////// */
+nav{
+flex-direction: row-reverse;
+}
+/* /////////////////////////////////// */
+.container-Systems {
+  width: 50%;  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+
+}
+
+.owners{
+    color:#4B6FB5;
+
+}
+.branches{
+    color:#1D9CA1;
+}
+.Administration{
+    color:#153962;
+}
+.card-name1,
+.card-name2,
+.card-name3{
+    justify-content:center;
+    background-color: #Ffff;
+}
+.system-card{
+    border: 1px solid #FF9626;
+}
+/*------------------------------------------------------------------
+[  ]*/
+
+.img-hover-zoom {
+    overflow: hidden;
+}
+
+.system-card img {
+    transition: transform .5s ease;
+}
+
+.system-card:hover img {
+    transform: scale(1.2);
+
+}
+
+
+.system-card:hover .card-name1{
+    background-color: #4B6FB5;
+}
+.system-card:hover .card-name2{
+    background-color: #1C9BA0;
+}
+.system-card:hover .card-name3{
+    background-color: #153962;
+}
+
+.system-card:hover .owners,
+.system-card:hover .Administration,
+.system-card:hover .branches {
+    color: #ffffff;
+}
+/*---------------------------------------------*/
+
+/*------------------------------------------------------------------
+/* ///////////////////////////// */
+.footerSystems{
+  background-color: #FF9626;
+}
+/*------------------------------------------------------------------
+[ Responsive ]*/
+
+/* ///////////////////// */
+.before-.footerSystems-widget {
+    background-image: linear-gradient(2.71deg, #FF9626 64.81%, rgba(255, 150, 38, 0.18) 153.13%);
+    font-size: 0;
+  }
+
+/*------------------------------------------------------------------*/
+
+
+@media (max-width: 992px) {
+  .alert-validate::before {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+/* .footerSystems media */
+@media (min-width:573px) and (min-height:680px) {
+  .footerSystems{
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   right: 0;
+  }
+ }
+ @media (max-width: 572px) {
+   .container-Systems {
+     height: 100%;
+   }
+ 
+ }

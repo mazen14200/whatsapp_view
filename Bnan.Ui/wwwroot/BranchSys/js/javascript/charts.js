@@ -102,35 +102,35 @@
 //  return countByVersion;
 //}
 //pieChart
-const pieChartEl = document.getElementById('pieChart');
-const pieChartData = {
-  labels: ['العقود المنتهية', ' تنتهي اليوم', ' تنتهي غدا', 'تنتهي لاحقا'],
-  datasets: [{
-    data: [342, 313, 245, 210],
-    backgroundColor: ['rgba(242, 143, 36, 1)', '#9966FF', 'rgba(242, 36, 36, 1)', 'rgba(1, 5, 83, 1)']
-  }]
-};
+//const pieChartEl = document.getElementById('pieChart');
+//const pieChartData = {
+//  labels: ['العقود المنتهية', ' تنتهي اليوم', ' تنتهي غدا', 'تنتهي لاحقا'],
+//  datasets: [{
+//    data: [342, 313, 245, 210],
+//    backgroundColor: ['rgba(242, 143, 36, 1)', '#9966FF', 'rgba(242, 36, 36, 1)', 'rgba(1, 5, 83, 1)']
+//  }]
+//};
 
-const pieChart = new Chart(pieChartEl, {
-  type: 'doughnut',
-  data: pieChartData,
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: function (context) {
-            return context.dataset.data[context.dataIndex];
-          }
-        }
-      },
-      legend: {
-        display: false
-      }
-    }
-  }
-});
+//const pieChart = new Chart(pieChartEl, {
+//  type: 'doughnut',
+//  data: pieChartData,
+//  options: {
+//    responsive: true,
+//    maintainAspectRatio: false,
+//    plugins: {
+//      tooltip: {
+//        callbacks: {
+//          label: function (context) {
+//            return context.dataset.data[context.dataIndex];
+//          }
+//        }
+//      },
+//      legend: {
+//        display: false
+//      }
+//    }
+//  }
+//});
 
 const legendContainer = document.querySelector('.chart-legend');
 const legendItems = pieChartData.labels.map((label, index) => {
@@ -197,54 +197,54 @@ legendItems.forEach(item => {
 //  }
 //});
 
-var chrt = document.getElementById("chartId").getContext("2d");
-var chartId = new Chart(chrt, {
-  type: "bar",
-  data: {
-    labels: ['نقدًا', 'مدى', 'فيزا', 'اكسبرس', 'ماستر ', 'تحويل'],
-    datasets: [
-      {
-        data: [100, 50, 45, 60, 40, 30],
-        backgroundColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)"
-        ],
+//var chrt = document.getElementById("chartId").getContext("2d");
+//var chartId = new Chart(chrt, {
+//  type: "bar",
+//  data: {
+//    labels: ['نقدًا', 'مدى', 'فيزا', 'اكسبرس', 'ماستر ', 'تحويل'],
+//    datasets: [
+//      {
+//        data: [100, 50, 45, 60, 40, 30],
+//        backgroundColor: [
+//          "rgba(255, 99, 132, 1)",
+//          "rgba(54, 162, 235, 1)",
+//          "rgba(255, 206, 86, 1)",
+//          "rgba(75, 192, 192, 1)",
+//          "rgba(153, 102, 255, 1)",
+//          "rgba(255, 159, 64, 1)"
+//        ],
        
 
-      }
-    ]
-  },
-  options: {
-    plugins: {
-      legend: {
-        display: false
-      }
-    },
-    scales: {
-      x: {
-        grid: {
-          display: false // Remove vertical lines
-        }
-      },
-      y: {
-        grid: {
-          display: false // Remove horizontal lines
-        },
-        beginAtZero: true,
-        ticks: {
-          font: {
-            size: 11 // Change the font size of the tick labels
-          }
-        }
-      }
+//      }
+//    ]
+//  },
+//  options: {
+//    plugins: {
+//      legend: {
+//        display: false
+//      }
+//    },
+//    scales: {
+//      x: {
+//        grid: {
+//          display: false // Remove vertical lines
+//        }
+//      },
+//      y: {
+//        grid: {
+//          display: false // Remove horizontal lines
+//        },
+//        beginAtZero: true,
+//        ticks: {
+//          font: {
+//            size: 11 // Change the font size of the tick labels
+//          }
+//        }
+//      }
 
-    }
-  }
-});
+//    }
+//  }
+//});
 
 /////////////////////////notification icons/////////////////////////////////
 

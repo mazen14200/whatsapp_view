@@ -1,0 +1,50 @@
+/*nav input[type="checkbox"] {
+    display: none;
+}
+
+.mode-btn input[type="checkbox"]:checked+label .english {
+    display: none;
+}
+
+.mode-btn input[type="checkbox"]:not(input[type="checkbox"]:checked)+label .Arabic {
+    display: none;
+}*/
+ body{
+    direction: rtl;
+}
+
+ .pieChart-data,
+  .employee-chart-data,
+  .branch-chart-data{
+    padding: 0;
+}
+  .pieChart-data{
+    padding-left: 5px;
+
+}
+
+  .Branch-car-canvas-row ,
+  .branch-row ,
+  .employee-row{
+    flex-direction: row-reverse;
+}
+   .employee-col ,
+  .pieChart-col{
+        border-left: none; 
+}
+  .branch-col ,
+  .Branch-car-col{
+    border-left: 1px solid #cc7110; 
+
+}
+  .on-mobile p{
+    margin-left: 6px;
+
+}
+  .products-collapse-buttons-img {
+        transform: rotate(180deg);    
+}
+  /*.mode-btn{
+    padding-right: 15px;
+  cursor: pointer;
+}*/

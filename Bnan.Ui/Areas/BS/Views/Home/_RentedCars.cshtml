@@ -2,14 +2,18 @@
 @using Bnan.Ui.ViewModels.BS;
 @using Newtonsoft.Json;
 @model BSLayoutVM
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
 
+}
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner1">
         @if (Model.RentedCars != null)
         {
             @foreach (var item in Model.RentedCars)
             {
-                <div class="carousel-item @(item == Model.RentedCars.First() ? "active" : "")">
+                <div class="carousel-item animate @(item == Model.RentedCars.First() ? "active" : "")">
                     <div class="product1 p-2 pt-0">
                         <div class="row" id="rented_data1">
                             <div class="col-md-7 col-lg-7">
@@ -40,12 +44,19 @@
                                 </div>
                             </div>
                             <div class="col-md-5 col-lg-5">
-                                <p class="product-data1"> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateArName</p>
+                                @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+                                {
+                                    <p class="product-data1"> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateEnName</p>
+                                }
+                                else
+                                {
+                                    <p class="product-data1"> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateArName</p>
+                                }
                             </div>
                         </div>
                         <div class="row car_img">
-                            <img class="product-image" src="~/BranchSys/img/car1.png"
-                                 alt="${product.name}">
+                            <img class="product-image" src="@Url.Content(item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionImage)"
+                                 alt="@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateArName">
                         </div>
                         <div class="row" id="rented_data2">
                             <div class="col">
@@ -54,19 +65,19 @@
                                         <div class="collapse" id="collapse-price-${@item.CrCasCarInformationSerailNo}">
                                             <div class="row">
                                                 <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <p class="rented-p"> نهاية العقد</p>
+                                                    <p class="rented-p"> @localizer["EndContract"]</p>
                                                     <p>۲۰۲٤/۱/۱۲</p>
                                                 </div>
                                                 <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <p class="rented-p"> بداية العقد</p>
+                                                    <p class="rented-p"> @localizer["StartContract"]</p>
                                                     <p>۲۰۲۳/۳/۱۲</p>
                                                 </div>
                                                 <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <p class="rented-p">المستأجر</p>
+                                                    <p class="rented-p">@localizer["Renter"]</p>
                                                     <p>حسين محمد علي </p>
                                                 </div>
                                                 <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <p class="rented-p">رقم العقد</p>
+                                                    <p class="rented-p">@localizer["ContractNo"]</p>
                                                     <p>۹۸۸٦۲۳٤٥۰۲۲۳</p>
                                                 </div>
                                             </div>
@@ -77,8 +88,8 @@
                                             data-target="#collapse-price-${@item.CrCasCarInformationSerailNo}"
                                             aria-expanded="false"
                                             aria-controls="collapse-price-${@item.CrCasCarInformationSerailNo}">
-                                        <img src="~/BranchSys/img/vector.png">
-                                        مختصر العقد
+                                        <img src="~/BranchSys/img/vector.png" class="products-collapse-buttons-img">
+                                        @localizer["ContractSummary"]
                                     </button>
                                 </div>
                             </div>
@@ -89,33 +100,3 @@
         }
     </div>
 </div>
-@* @section Scripts {
-    <script>
-        $(document).ready(function () {
-            var carousel = document.getElementById('carousel-inner1');
-            // const carouselItems = carousel.getElementsByClassName('carousel-item');
-            // let currentIndex = 0;
-            console.log("carousel:" + carousel)
-            console.log("carouselItems:")
-            // function showItem(index) {
-            //     for (let i = 0; i < carouselItems.length; i++) {   //// carouselItems.length is the number of items  in the list you will display in the carsouel you can replace it with their number ////////////
-            //         carouselItems[i].classList.remove('active');
-            //     }
-            //     carouselItems[index].classList.add('active');
-            // }
-
-            // function rotateItems() {
-            //     // Check if the mouse is over the carousel
-            //     const isMouseOverCarousel = carousel.matches(':hover');
-            //     if (!isMouseOverCarousel) {
-            //         currentIndex = (currentIndex + 1) % carouselItems.length;
-            //         showItem(currentIndex);
-            //     }
-            // }
-
-            // setInterval(rotateItems, 2000);
-
-            // showItem(currentIndex);
-        });
-    </script>
-} *@
