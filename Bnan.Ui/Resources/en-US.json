@@ -338,10 +338,10 @@
   "HintSureTodeleteContractsCompany": "Deleting the company contract will result in the suspension of this contract and all its details",
 
   // modal for Branch
-  "SureToRetriveHoldBranch": "Confirmation of the retrieval process of the Holded",
-  "HintSureToRetriveHBranch": "The retrieval of Branch data will Retriev All The Document And Sales Point Of Branch.",
-  "SureToRetriveDeleteBranch": "Confirmation of the retrieval process of the deleted",
-  "HintSureToRetriveDBranch": "The retrieval of Branch data will Retriev All The Document And Sales Point Of Branch.",
+  "SureToRetriveHoldBranch": "Confirm branch activation",
+  "HintSureToRetriveHBranch": "Retrieving the activation of the branch data will entail activating the cars, points of sale, and documents associated with the branch.",
+  "SureToRetriveDeleteBranch": "Confirm branch return",
+  "HintSureToRetriveDBranch": "Returning the branch data will result in a return. All documents, vehicles, points of sale, and branch powers for employees associated with the branch",
   "SureTodeleteBranch": "Confirmation of deletion....",
   "HintSureTodeleteBranch": "Deleting Branch data will Delete All The Document And Sales Point Of Branch...",
   "SureToHoldBranch": "Confirmation of Hold....",
@@ -757,11 +757,12 @@
 
   "RenterDriverName": "Driver Name",
 
-  "Add RenterDriver": "Add Renter Driver",
+  "Add RenterDriver": "Add Private Driver",
   "Add RenterDriver Method": "Add Renter Driver",
   "Add RenterDriver Hint": "The page allows you to add Renter Driver data.",
   "Add RenterDriver Data": "Add Renter Driver",
-
+  "Add Driver Data": "Add New Driver",
+  "Add Driver Hint": "The page allows you to add New Driver data.",
 
   "RenterDriverLessorCode": "Lessor Code",
   "RenterDriverID": "National Number",
@@ -795,11 +796,13 @@
   "Edit RenterDriver Hint": "The page allows you to edit Renter Driver data.",
   "Edit RenterDriver Data": "Edit",
 
-  "HintSureToRetriveHRenterDriver": "The retrieval of Renter Driver data will result to be restored in the system.",
-  "HintSureToRetriveDRenterDriver": "The retrieval of Renter Driver data will result to be restored in the system.",
+  "SureToRetriveHoldRenterDriver": "Confirm activation ...",
+  "HintSureToRetriveHRenterDriver": "Activating the private driver’s data will result in including the driver’s data in the list of rental contracts.",
 
-  "HintSureTodeleteRenterDriver": "Deleting Renter Driver data will result not being able to accessed in the system.",
-  "HintSureToHoldRenterDriver": "Renter Driver data will be holded, which results in the system being holded as well.",
+  "HintSureToRetriveDRenterDriver": "Recovering the private driver's data will result in the data being included in the list of contract drivers.",
+
+  "HintSureTodeleteRenterDriver": "Deleting the private driver’s data will result in his being deleted from the list of drivers while maintaining all administrative procedures and authorizations..",
+  "HintSureToHoldRenterDriver": "Stopping the private driver’s data will result in stopping his inclusion in the list of drivers under rental contracts.",
   "ValiditySystem": "Validity System",
   "ContractValiditions Data": "Contract Validitions",
   "ContractValiditions Hint": "The page allows you to display Employee data , and modify contract validitions",

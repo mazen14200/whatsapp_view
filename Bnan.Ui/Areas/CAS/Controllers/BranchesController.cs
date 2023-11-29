@@ -66,11 +66,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
 
             var lessor = await _UserService.GetUserLessor(User);
-            var lessornumber = lessor.CrMasUserInformationLessorNavigation.CrMasLessorInformationCode;
-            var Bracnhes = _unitOfWork?.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationLessor == lessornumber&&l.CrCasBranchInformationStatus==Status.Active, new[] { "CrCasCarInformations" });
-            var BranchPost = _PostBranch.GetAllByLessor(lessornumber);
+            var lessornumber = lessor?.CrMasUserInformationLessorNavigation?.CrMasLessorInformationCode;
+            var Bracnhes = _unitOfWork?.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationLessor == lessornumber, new[] { "CrCasCarInformations" });
+            var BranchPost = _unitOfWork?.CrCasBranchPost.FindAll(l => l.CrCasBranchPostLessor == lessor.CrMasUserInformationLessor, new[] { "CrCasBranchPostCityNavigation", "CrCasBranchPostNavigation" }).ToList();
 
-            return View(BranchPost);
+            return View(BranchPost?.Where(x=>x.CrCasBranchPostNavigation.CrCasBranchInformationStatus==Status.Active));
         }
         [HttpGet]
         public async Task<PartialViewResult> GetBranchesByStatus(string status)
@@ -83,7 +83,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (status == Status.All)
                 {
                     var BranchbyStatusAll = _unitOfWork.CrCasBranchPost.FindAll(l => l.CrCasBranchPostLessor == lessor.CrMasUserInformationLessor, new[] { "CrCasBranchPostCityNavigation", "CrCasBranchPostNavigation" }).ToList();
-                    return PartialView("_DataTableBranches", BranchbyStatusAll);
+                    return PartialView("_DataTableBranches", BranchbyStatusAll.Where(x=>x.CrCasBranchPostNavigation.CrCasBranchInformationStatus!=Status.Deleted));
                 }
                 var BranchbyStatus = _unitOfWork.CrCasBranchPost.FindAll(l => l.CrCasBranchPostNavigation.CrCasBranchInformationStatus == status && l.CrCasBranchPostLessor == lessor.CrMasUserInformationLessor, new[] { "CrCasBranchPostCityNavigation", "CrCasBranchPostNavigation" }).ToList();
                 return PartialView("_DataTableBranches", BranchbyStatus);
@@ -206,7 +206,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var branchinformation = _unitOfWork.CrCasBranchInformation.Find(l => l.CrCasBranchInformationLessor == lessor.CrMasUserInformationLessor && l.CrCasBranchInformationCode == id);
             var BranchPost = _unitOfWork.CrCasBranchPost.Find(l => l.CrCasBranchPostLessor == lessor.CrMasUserInformationLessor && l.CrCasBranchPostBranch == id, new[] { "CrCasBranchPostNavigation", "CrCasBranchPostCityNavigation" });
             ViewBag.SalesPointCount = _unitOfWork.CrCasAccountSalesPoint.FindAll(l => l.CrCasAccountSalesPointLessor == lessor.CrMasUserInformationLessor && l.CrCasAccountSalesPointBrn == id&&l.CrCasAccountSalesPointStatus!=Status.Deleted&&l.CrCasAccountSalesPointBank!="00").Count();
-            ViewBag.CarsCount = _unitOfWork.CrCasCarInformation.FindAll(l => l.CrCasCarInformationLessor == lessor.CrMasUserInformationLessor && l.CrCasCarInformationBranch == id&&l.CrCasCarInformationStatus!=Status.Deleted).Count();
+            ViewBag.CarsCount = _unitOfWork.CrCasCarInformation.FindAll(l => l.CrCasCarInformationLessor == lessor.CrMasUserInformationLessor && l.CrCasCarInformationBranch == id&&l.CrCasCarInformationStatus!=Status.Deleted&&l.CrCasCarInformationStatus!=Status.Sold).Count();
 
             BranchVM branchVM = _mapper.Map<BranchVM>(branchinformation);
             branchVM.BranchPostVM = _mapper.Map<BranchPost1VM>(BranchPost);
@@ -306,7 +306,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var branch = _unitOfWork.CrCasBranchInformation.Find(l => l.CrCasBranchInformationLessor == lessorCode && l.CrCasBranchInformationCode == Branchcode);
             var docs = _unitOfWork.CrCasBranchDocument.FindAll(l => l.CrCasBranchDocumentsLessor == lessorCode && l.CrCasBranchDocumentsBranch == Branchcode);
             var salesPoints = _unitOfWork.CrCasAccountSalesPoint.FindAll(l => l.CrCasAccountSalesPointLessor == lessorCode && l.CrCasAccountSalesPointBrn == Branchcode);
-            var cars = _unitOfWork.CrCasCarInformation.FindAll(l => l.CrCasCarInformationLessor == lessorCode && l.CrCasCarInformationBranch == Branchcode);
+            var cars = _unitOfWork.CrCasCarInformation.FindAll(l => l.CrCasCarInformationLessor == lessorCode && l.CrCasCarInformationBranch == Branchcode&&l.CrCasCarInformationStatus!=Status.Sold);
             var userBranchValidity = _unitOfWork.CrMasUserBranchValidity.FindAll(l => l.CrMasUserBranchValidityLessor == lessorCode && l.CrMasUserBranchValidityBranch == Branchcode);
             if (branch != null)
             {

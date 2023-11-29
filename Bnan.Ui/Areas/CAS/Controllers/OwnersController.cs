@@ -68,7 +68,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     var OwnersbyStatusAll =  _unitOfWork.CrCasOwner.FindAll(l => l.CrCasOwnersLessorCode == userLessor.CrMasUserInformationLessor && l.CrCasOwnersCode != lessor.CrMasLessorInformationGovernmentNo, new[] { "CrCasOwnersLessorCodeNavigation", "CrCasCarInformations" }).ToList();
                     if (status == Status.All.ToLower())
                     {
-                        return PartialView("_DataTableOwners", OwnersbyStatusAll);
+                        return PartialView("_DataTableOwners", OwnersbyStatusAll.Where(x=>x.CrCasOwnersStatus!=Status.Deleted));
                     }
                     return PartialView("_DataTableOwners", OwnersbyStatusAll.Where(x => x.CrCasOwnersStatus == status));
                 }
@@ -133,7 +133,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 ModelState.AddModelError("Exist", "SomeThing Wrong is happened");
                 return View();
             }
-            ViewBag.CarCount=owner.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus!=Status.Deleted).Count();
+            ViewBag.CarCount=owner.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus!=Status.Deleted &&x.CrCasCarInformationStatus!=Status.Sold).Count();
             var model = _mapper.Map<OwnersVM>(owner);
             return View(model);
         }

@@ -37,7 +37,7 @@
             <div class="main-carousel-item active" id="carouselItem1">
                 <div class="row" id="first-row-of-charts">
                     <div class="col-md-6 card-col Branch-car-col">
-                        <div class="row Branch-car-canvas-row">
+                        <div class="row Branch-car-canvas-row" style="margin-top: 3%">
                             <div class=" col-md-9 col-lg-9 col-xl-9 ">
                                 <canvas id="horizontal_bar" aria-label="chart"></canvas>
                             </div>
@@ -79,7 +79,7 @@
                 <div class="row" id="second-row-of-charts">
 
                     <div class="col-md-6 card-col branch-col">
-                        <div class="row branch-row">
+                        <div class="row branch-row" style="margin-top:3%">
                             <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 ">
                                 <canvas id="barChart2" aria-label="chart"></canvas>
                             </div>
@@ -193,7 +193,71 @@
     </div>
 
 </div>
-
+<footer class="fixed-bottom-xl" >
+    <div class="before-footer-widget">
+        <svg width: 100%; height:auto viewbox="0 0 2444 132">
+            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+            </path>
+        </svg>
+    </div>
+    <div class="container footer-buttons justify-content-center pt-1 " style="box-sizing: border-box; ">
+        <div class="row justify-content-center">
+            <!-- First row of buttons -->
+            <div class="col-sm-6 col-md-6 col-lg-3 ">
+                <button type="button" class="btn btn-secondary mb-2">
+                    <img src="~/BranchSys/img/Rectangle 35.png">
+                    @localizer["CancelContract"]
+                </button>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-3  ">
+                <button type="button" class="btn btn-secondary mb-2">
+                    <img src="~/BranchSys/img/Rectangle 31.png">
+                    @localizer["ContractExtension"]
+                </button>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-3  ">
+                <button type="button" class="btn btn-secondary mb-2">
+                    <img src="~/BranchSys/img/Rectangle 30.png">
+                    @localizer["ContractSettlement"]
+                </button>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-3  ">
+                <button type="button" class="btn btn-secondary mb-2">
+                    <img src="~/BranchSys/img/Rectangle 29.png">
+                    @localizer["CreateContract"]
+                </button>
+            </div>
+        </div>
+        <div class="row justify-content-center  ">
+            <!-- Second row of buttons -->
+            <div class="col-sm-6 col-md-6 col-lg-3 mb-1 ">
+                <button type="button" class="btn btn-secondary neonShadow " id="pulse-button-brunch">
+                    <img src="~/BranchSys/img/Rectangle 36.png" class="anm" id="brunch_button-img">
+                    @localizer["TheCovenant"]
+                </button>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-3 mb-1">
+                <a asp-action="Index" asp-area="BS" asp-controller="FeedBox" class="btn btn-secondary neonShadow " id="pulse-button-employee">
+                    <img src="~/BranchSys/img/Rectangle 33.png" class="anm">
+                    @localizer["Feedbox"]
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-3  mb-1  ">
+                <button type="button" class="btn btn-secondary ">
+                    <img src="~/BranchSys/img/Rectangle 32.png">
+                    @localizer["FinancialReport"]
+                </button>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-3  mb-1 ">
+                <button type="button" class="btn btn-secondary ">
+                    <img src="~/BranchSys/img/Rectangle 34.png">
+                    @localizer["Tenants"]
+                </button>
+            </div>
+        </div>
+    </div>
+</footer>
 @section Scripts {
     <!--Charts-->
     <script>
@@ -245,7 +309,7 @@
                             },
                             ticks: {
                                 font: {
-                                    size: 10 // Change the font size of the tick labels
+                                    size: 13 // Change the font size of the tick labels
                                 }
                             }
                         },
@@ -353,7 +417,7 @@
                             beginAtZero: true,
                             ticks: {
                                 font: {
-                                    size: 11 // Change the font size of the tick labels
+                                    size: 13 // Change the font size of the tick labels
                                 }
                             }
                         }
@@ -407,7 +471,7 @@
                             beginAtZero: true,
                             ticks: {
                                 font: {
-                                    size: 11 // Change the font size of the tick labels
+                                    size: 13 // Change the font size of the tick labels
                                 }
                             }
                         }

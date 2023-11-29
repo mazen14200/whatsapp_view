@@ -244,10 +244,10 @@
                     <label class="form-label" asp-for="CrCasBranchInformationGovernmentNo">@localizer["governmentNo"]</label>
                 </div>
                 <div class="col-md-2 col-11">
-                    <input type="text" class="form-control" asp-for="CrCasBranchInformationGovernmentNo" maxlength="10" id="BranchGovNo" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'BranchGovNo', 'gov-error', '7')" id="LessorGovNo">
+                    <input type="text" class="form-control" asp-for="CrCasBranchInformationGovernmentNo" maxlength="10" id="BranchGovNo" oninput="this.value=this.value.replace(/[^0-9]/g,'')"  id="LessorGovNo">
                     <div style="margin-top:2px">
                         <div style="height: 1.35em">
-                            <span asp-validation-for="@Model.CrCasBranchInformationGovernmentNo" class="text-danger" data-error="@localizer["requiredNoStartWithFiled7"]" id="gov-error"></span>
+                            <span asp-validation-for="@Model.CrCasBranchInformationGovernmentNo" class="text-danger"  id="gov-error"></span>
                         </div>
                     </div>
                 </div>

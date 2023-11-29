@@ -7,7 +7,9 @@ namespace Bnan.Core.Models
     {
         public CrMasSupRenterNationality()
         {
+            CrCasRenterLessors = new HashSet<CrCasRenterLessor>();
             CrCasRenterPrivateDriverInformations = new HashSet<CrCasRenterPrivateDriverInformation>();
+            CrMasRenterInformations = new HashSet<CrMasRenterInformation>();
         }
 
         public string CrMasSupRenterNationalitiesCode { get; set; } = null!;
@@ -20,6 +22,8 @@ namespace Bnan.Core.Models
         public string? CrMasSupRenterNationalitiesReasons { get; set; }
 
         public virtual CrMasSysGroup? CrMasSupRenterNationalitiesGroupCodeNavigation { get; set; }
+        public virtual ICollection<CrCasRenterLessor> CrCasRenterLessors { get; set; }
         public virtual ICollection<CrCasRenterPrivateDriverInformation> CrCasRenterPrivateDriverInformations { get; set; }
+        public virtual ICollection<CrMasRenterInformation> CrMasRenterInformations { get; set; }
     }
 }

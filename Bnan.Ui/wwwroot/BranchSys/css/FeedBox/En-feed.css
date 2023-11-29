@@ -1,0 +1,4 @@
+:has(#switch-mode:checked) body{
+    direction: rtl;
+}
+ 

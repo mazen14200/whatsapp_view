@@ -59,6 +59,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarServices";
+            ViewBag.no = "4";
             // Get Lessor Code
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -81,7 +84,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             {
                 var RenterDriverbyStatusAll = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x => x.CrCasRenterPrivateDriverInformationLessor == lessorCode,
                 new[] { "CrCasRenterPrivateDriverInformationGenderNavigation", "CrCasRenterPrivateDriverInformationIdtrypeNavigation", "CrCasRenterPrivateDriverInformationLicenseTypeNavigation", "CrCasRenterPrivateDriverInformationNationalityNavigation" }).ToList();
-                if (status == Status.All) return PartialView("_DataTableRenterDriver", RenterDriverbyStatusAll);
+                if (status == Status.All) return PartialView("_DataTableRenterDriver", RenterDriverbyStatusAll.Where(x=>x.CrCasRenterPrivateDriverInformationStatus!=Status.Deleted));
                  RenterDriverbyStatusAll = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(l => l.CrCasRenterPrivateDriverInformationStatus == status && l.CrCasRenterPrivateDriverInformationLessor == lessorCode).ToList();
                 return PartialView("_DataTableRenterDriver", RenterDriverbyStatusAll.Where(x=>x.CrCasRenterPrivateDriverInformationStatus==status));
             }
@@ -143,7 +146,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRenterDriver()
         {
-
+            //sidebar Active
+            ViewBag.id = "#sidebarServices";
+            ViewBag.no = "4";
             // Set Title !!!!!!!!!!!!!!!!!!!!!!!!!!
             var titles = await setTitle("207", "2207005", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
@@ -285,6 +290,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id, string lessor)
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarServices";
+            ViewBag.no = "4";
             //To Set Title !!!!!!!!!!!!!
             var titles = await setTitle("207", "2207005", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);

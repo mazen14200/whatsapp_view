@@ -7,7 +7,9 @@ namespace Bnan.Core.Models
     {
         public CrMasSupRenterGender()
         {
+            CrCasRenterLessors = new HashSet<CrCasRenterLessor>();
             CrCasRenterPrivateDriverInformations = new HashSet<CrCasRenterPrivateDriverInformation>();
+            CrMasRenterInformations = new HashSet<CrMasRenterInformation>();
         }
 
         public string CrMasSupRenterGenderCode { get; set; } = null!;
@@ -18,6 +20,8 @@ namespace Bnan.Core.Models
         public string? CrMasSupRenterGenderReasons { get; set; }
 
         public virtual CrMasSysGroup? CrMasSupRenterGenderGroupCodeNavigation { get; set; }
+        public virtual ICollection<CrCasRenterLessor> CrCasRenterLessors { get; set; }
         public virtual ICollection<CrCasRenterPrivateDriverInformation> CrCasRenterPrivateDriverInformations { get; set; }
+        public virtual ICollection<CrMasRenterInformation> CrMasRenterInformations { get; set; }
     }
 }

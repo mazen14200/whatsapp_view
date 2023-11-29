@@ -26,19 +26,19 @@
             <div class="col brand">
                 <a class="navbar-brand">
                     <h1>
-                    @if (signinManager.IsSignedIn(User))
-                    {
-                        @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+                        @if (signinManager.IsSignedIn(User))
                         {
-                            @Html.Raw(lessorInfo.CrMasUserInformationLessorNavigation?.CrMasLessorInformationArLongName)
+                            @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+                            {
+                                @Html.Raw(lessorInfo.CrMasUserInformationLessorNavigation?.CrMasLessorInformationArLongName)
+                            }
+                            else
+                            {
+                                @Html.Raw(lessorInfo.CrMasUserInformationLessorNavigation?.CrMasLessorInformationEnLongName)
+                            }
                         }
-                        else
-                        {
-                            @Html.Raw(lessorInfo.CrMasUserInformationLessorNavigation?.CrMasLessorInformationEnLongName)
-                        }
-                    }
                     </h1>
-                    @if (lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo!=null)
+                    @if (lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo != null)
                     {
                         <img src="@Url.Content(lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo)" style="height:46px" class="d-inline-block align-top" alt="logo-image">
                     }
@@ -65,6 +65,21 @@
                 <a asp-action="Logout" asp-area="Identity" asp-controller="Account" class="exit"><img src="~/LoginAndSystems/images/Group 1.png"></a>
             </div>
         </nav>
+    </div>
+    <div class="row " style="justify-content: flex-end;width: 85%;">
+        <p>
+            @localizer["Welcome"]،
+            <span>
+                @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+                {
+                    @user.CrMasUserInformationEnName
+                }
+                else
+                {
+                    @user.CrMasUserInformationArName
+                }
+            </span>
+        </p>
     </div>
     <div class="container container-Systems">
         <div class="row pb-4">
@@ -118,18 +133,42 @@
 
         </div>
     </div>
-    <!-- Footer -->
-
-    <footer class="footerSystems" style="height: 170px;">
-        <div class="before-footer-widget">
-            <svg width: 100%; height:auto viewbox="0 0 2444 132">
+   
+   @*  <div class="footer" style="margin-top:3%">
+        <div class="footer-widget">
+            <svg width="100%" height="auto" viewBox="0 0 2444 132">
                 <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
                       d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
                 </path>
             </svg>
         </div>
-    </footer>
-
+        <footer style="background-color: #FF9626; height: 170px;"></footer>
+        <div class="footer-widget">
+            <svg width="100%" height="auto" viewBox="0 0 2444 132" transform="rotate(180)">
+                <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                      d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+                </path>
+            </svg>
+        </div>
+    </div> <!-- Footer --> *@
+    <!-- Footer -->
+    <div class="footer" style="margin-top:3%">
+        <div class="footer-widget">
+            <svg width="100%" height="auto" viewBox="0 0 2444 132">
+                <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                      d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+                </path>
+            </svg>
+        </div>
+        <footer style="background-color: #FF9626; height:170px;"></footer>
+        <div class="footer-widget">
+            <svg width="100%" height="auto" viewBox="0 0 2444 132" transform="rotate(180)">
+                <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                      d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+                </path>
+            </svg>
+        </div>
+    </div> <!-- Footer -->
     <!-- Footer-->
 </div>
 

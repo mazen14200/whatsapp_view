@@ -329,7 +329,7 @@
   "requiredFiled": "هذا الحقل مطلوب.",
   "requiredNoLengthFiled": "هذا الحقل يلازم {0} ارقام",
   "requiredNoLengthFiled15": "هذا الحقل يلازم 15 ارقام",
-  "requiredNoLengthFiled10": "هذا الحقل يلازم 10 ارقام ويبدأ ب 7",
+  "requiredNoLengthFiled10": "هذا الحقل يلازم 10 ارقام ويبدأ برقم 7",
   "requiredNoStartWithFiled7": "هذا الحقل مطلوب و يبدء برقم7",
   "requiredNoStartWithFiled15": "هذا الحقل مطلوب و يبدء برقم15",
   "requiredNoStartWithFiled1": "هذا الحقل مطلوب و يبدء برقم1",
@@ -361,9 +361,9 @@
 
   // modal for Branch
   "SureToRetriveHoldBranch": "تأكيد تفعيل الفرع ......",
-  "HintSureToRetriveHBranch": "سيترتب على استرجاع تفعيل الفرع تفعيل جميع المستندات و نقاط البيع المرتبطة بالفرع",
-  "SureToRetriveDeleteBranch": "تأكيد إسترجاع الحذف ......",
-  "HintSureToRetriveDBranch": "سيترتب على استرجاع حذف بيانات الفرع استرجاع. جميع المستندات و نقاط البيع المرتبطة بالفرع",
+  "HintSureToRetriveHBranch": "سيترتب على استرجاع تفعيل بيانات الفرع تفعيل السيارات و نقاط البيع و المستندات  المرتبطة بالفرع",
+  "SureToRetriveDeleteBranch": "تأكيد إرجاع الفرع ......",
+  "HintSureToRetriveDBranch": "سيترتب على ارجاع بيانات الفرع ارجاع. جميع المستندات والسيارات و نقاط البيع وصلاحيات الفرع للموظفين المرتبطة بالفرع",
   "SureTodeleteBranch": "تأكيد الحذف...",
   "HintSureTodeleteBranch": "سيترتب على حذف بيانات الفرع حذف جميع المستندات و نقاط البيع المرتبطة بالفرع مع الاحتفاظ بجميع الإجراءات الإدارية و المالية السابقة",
   "SureToHoldBranch": "تأكيد الايقاف...",
@@ -373,9 +373,9 @@
   "HintSureTodeleteDoc": "سيترتب علي حذف المستند ارجاع حالته الي 'لم يسجل' مع الاحتفاظ بجميع الاجراءات الادارية السابقة",
   // Owner
   "SureToHoldOwner": "تأكيد الايقاف",
-  "HintSureToHoldOwner": "سيترتب على إيقاف بيانات الفرع ايقاف تأجير جميع السيارات المرتبطة بالمالك",
+  "HintSureToHoldOwner": "سيترتب على إيقاف بيانات المالك ايقاف تأجير جميع السيارات المرتبطة بالمالك",
   "SureToRetriveHoldOwner": "تأكيد التفعيل",
-  "HintSureToRetriveHoldOwner": "سيترتب على تفعيل بيانات الفرع امكانية تأجير جميع السيارات المرتبطة بالمالك",
+  "HintSureToRetriveHoldOwner": "سيترتب على تفعيل بيانات المالك امكانية تأجير جميع السيارات المرتبطة بالمالك",
   "HintSureTodeleteContractsCompany": "سيترتب على حذف عقد الشركة ايقاف هذا العقد وجميع تفاصيله",
   //expiration Session
   "expiration": "ستنتهى الجلسه ويتم تسجيل خروجك خلال",
@@ -746,12 +746,12 @@
 
 
   //RenterDriver Services
-  "RenterDriver Data": "بيانات السائق الخاص",
-  "RenterDriver Hint": "تمكنك الصفحة من عرض و إضافة و تعديل بيانات السائق الخاص.",
+  "RenterDriver Data": "بيانات السائقين",
+  "RenterDriver Hint": "تمكنك الصفحة من عرض و إضافة و تعديل بيانات السائقين.",
   "RenterDriverNameEn": "اسم السائق انجليزي",
   "RenterDriverNameAr": "اسم السائق عربي",
 
-  "Add RenterDriver": "اضافة السائق الخاص",
+  "Add RenterDriver": "اضافة سائق خاص",
   "Add RenterDriver Method": "اضافة السائق الخاص",
   "Add RenterDriver Hint": "تمكنك الصفحة من إضافة بيانات السائق الخاص.",
   "Add RenterDriver Data": "اضافة السائق الخاص",
@@ -786,15 +786,19 @@
   "Edit RenterDriver Hint": "تمكنك الصفحة من تعديل بيانات السائق الخاص",
   "Edit RenterDriver Data": "تعديل",
 
-  "HintSureToRetriveHRenterDriver": "سيترتب على استرجاع إيقاف بيانات السائق الخاص وجودها على النظام.",
-  "HintSureToRetriveDRenterDriver": "سيترتب على استرجاع حذف بيانات السائق الخاص وجودها على النظام.",
+  "SureToRetriveHoldRenterDriver": "تأكيد التفعيل ...",
+  "HintSureToRetriveHRenterDriver": "سيترتب على تفعيل بيانات السائق الخاص ادراج بيانات السائق بقائمة عقود التأجير.",
 
-  "HintSureTodeleteRenterDriver": "سيترتب على حذف بيانات السائق الخاص عدم وجودها على النظام",
-  "HintSureToHoldRenterDriver": "سيترتب على إيقاف بيانات السائق الخاص إيقافها على النظام",
+  "HintSureToRetriveDRenterDriver": "سيترتب على رجاع بيانات السائق الخاص ادراج البيانات بقائمة السائقين بالعقود.",
+  "HintSureTodeleteRenterDriver": "سيترتب على حذف بيانات السائق الخاص حذفه من قائمة السائقين مع الاحتفاظ بجميع الاجراءات الادارية واالعفود",
+  "HintSureToHoldRenterDriver": "سيترتب على إيقاف بيانات السائق الخاص إيقاف ادراجه بقائمة السائقين بعقود التأجير",
   "ContractValiditions Data": "صلاحيات ألعقود للموظفين",
   "ContractValiditions Hint": "تمكنك هذه الصفحة من عرض وتعديل صلاحيات العقود للموظفين",
   "Edit ValiditionsContract Data": "تعديل صلاحيات العقود",
   "Edit ValiditionsContract Hint": "تمكنك هذه الصفحة من تعديل صلاحيات العقود للموظفين",
+
+  "Add Driver Data": "اضافة سائق جديد",
+  "Add Driver Hint": "تمكنك الصفحة من اضافة بيانات سائق جديد",
   //COntract Valitions
   "ContractCompany": "مستندات الشركة",
   "ContractCompany2": "عقود الشركة",
@@ -853,7 +857,7 @@
   "SureToRetriveDeleteSalesPoint": "تأكيد استرجاع الحذف ...",
   "HintSureToRetriveDSalesPoint": "سيترتب على ارجاع بيانات نقطة البيع ارجاع عملية الدفع والاجراءات الادراية والمالية",
   "IsExistModel": "هذا النوع موجود من قبل",
-  "Owners Data": "الملاك",
+  "Owners Data": "بيانات الملاك",
   "Owners Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات الملاك ",
   "Add Owner": "اضافة مالك",
   "Id": "الهوية",
@@ -865,8 +869,8 @@
   "Add Owners Hint": "تمكنك هذه الصفحة من اضافة مالك جديد",
   "OwnerIsExist": "الهوية موجودة من قبل",
   "NameOwnerIsExist": "الاسم موجود من قبل",
-  "Edit Owners Data": "تحديث بيانات الملاك",
-  "Edit Owners Hint": "تمكنك هذه الصفحة من الاطلاع على بيانات الملاك و تحديثها",
+  "Edit Owners Data": "تحديث بيانات المالك",
+  "Edit Owners Hint": "تمكنك هذه الصفحة من الاطلاع على بيانات المالك و تحديثها",
   "Mecanism Data": "عرض التنبيهات",
   "Mecanism Hint": "تمكنك هذه الصفحة من تعديل التنبيهات ",
   "Additional": "سعر السيارات والعروض",
@@ -1037,7 +1041,7 @@
   "MasterCard": "ماستر",
   "Express": "اكسبريس",
   "Visa": "فيزا",
-  "Mada ": "مدى",
+  "Mada": "مدى",
   "CASH": "نقدا",
   "ExpiresTomorrow": "تنتهي غذا",
   "ExpiresLater": "تنتهي لاحقا",

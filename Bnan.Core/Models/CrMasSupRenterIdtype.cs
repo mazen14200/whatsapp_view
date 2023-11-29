@@ -7,7 +7,9 @@ namespace Bnan.Core.Models
     {
         public CrMasSupRenterIdtype()
         {
+            CrCasRenterLessors = new HashSet<CrCasRenterLessor>();
             CrCasRenterPrivateDriverInformations = new HashSet<CrCasRenterPrivateDriverInformation>();
+            CrMasRenterInformations = new HashSet<CrMasRenterInformation>();
         }
 
         public string CrMasSupRenterIdtypeCode { get; set; } = null!;
@@ -16,6 +18,8 @@ namespace Bnan.Core.Models
         public string? CrMasSupRenterIdtypeStatus { get; set; }
         public string? CrMasSupRenterIdtypeReasons { get; set; }
 
+        public virtual ICollection<CrCasRenterLessor> CrCasRenterLessors { get; set; }
         public virtual ICollection<CrCasRenterPrivateDriverInformation> CrCasRenterPrivateDriverInformations { get; set; }
+        public virtual ICollection<CrMasRenterInformation> CrMasRenterInformations { get; set; }
     }
 }

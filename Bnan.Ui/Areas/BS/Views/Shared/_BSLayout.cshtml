@@ -71,7 +71,7 @@
 
 </head>
 
-<body id="page-top" style="background-color:rgba(254, 248, 232, 1);">
+<body id="page-top" style="background-color:rgba(254, 248, 232, 1);font-family:'Cairo', 'sans-serif'">
 
 
 
@@ -91,7 +91,7 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-profile rounded-circle" src="@Url.Content(user.CrMasUserInformationPicture?.ToString())" style="margin-right: 12px;">
+                            <img class="img-profile rounded-circle" src="@Url.Content(user.CrMasUserInformationPicture?.ToString())" style="margin-right: 12px;height:53px;width:53px">
                             <div style="display: flex; flex-direction: column;">
                                 @if (signinManager.IsSignedIn(User))
                                 {
@@ -319,78 +319,14 @@
             <!------------------------------------------end of Topbar-------------------------------------------------->
             <div class="container-fluid">
                 <!-- Content Row -->
-                <div class="row " style="justify-content: center;">
+                <div class="row" style="justify-content: center;">
                     @RenderBody()
                 </div>
                 <!-- buttons  -->
             </div>
 
         </div>
-        <footer class="fixed-bottom-xl">
-            <div class="before-footer-widget">
-                <svg width: 100%; height:auto viewbox="0 0 2444 132">
-                    <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
-                          d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
-                    </path>
-                </svg>
-            </div>
-            <div class="container footer-buttons justify-content-center pt-1 " style="box-sizing: border-box; ">
-                <div class="row justify-content-center">
-                    <!-- First row of buttons -->
-                    <div class="col-sm-6 col-md-6 col-lg-3 ">
-                        <button type="button" class="btn btn-secondary mb-2">
-                            <img src="~/BranchSys/img/Rectangle 35.png">
-                           @localizer["CancelContract"]
-                        </button>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3  ">
-                        <button type="button" class="btn btn-secondary mb-2">
-                            <img src="~/BranchSys/img/Rectangle 31.png">
-                            @localizer["ContractExtension"]
-                        </button>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3  ">
-                        <button type="button" class="btn btn-secondary mb-2">
-                            <img src="~/BranchSys/img/Rectangle 30.png">
-                            @localizer["ContractSettlement"]
-                        </button>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3  ">
-                        <button type="button" class="btn btn-secondary mb-2">
-                            <img src="~/BranchSys/img/Rectangle 29.png">
-                            @localizer["CreateContract"]
-                        </button>
-                    </div>
-                </div>
-                <div class="row justify-content-center  ">
-                    <!-- Second row of buttons -->
-                    <div class="col-sm-6 col-md-6 col-lg-3 mb-1 ">
-                        <button type="button" class="btn btn-secondary neonShadow " id="pulse-button-brunch">
-                            <img src="~/BranchSys/img/Rectangle 36.png" class="anm" id="brunch_button-img">
-                            @localizer["TheCovenant"]
-                        </button>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3  mb-1   ">
-                        <button type="button" class="btn btn-secondary neonShadow " id="pulse-button-employee">
-                            <img src="~/BranchSys/img/Rectangle 33.png" class="anm"> 
-                            @localizer["Feedbox"]
-                        </button>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3  mb-1  ">
-                        <button type="button" class="btn btn-secondary ">
-                            <img src="~/BranchSys/img/Rectangle 32.png">
-                            @localizer["FinancialReport"]
-                        </button>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3  mb-1 ">
-                        <button type="button" class="btn btn-secondary ">
-                            <img src="~/BranchSys/img/Rectangle 34.png">
-                            @localizer["Tenants"]
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </footer>
+       
     </div>
     <!-- charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>

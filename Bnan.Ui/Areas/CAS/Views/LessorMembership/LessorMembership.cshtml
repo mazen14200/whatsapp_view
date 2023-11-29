@@ -59,7 +59,7 @@
                 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
                 {
                     <div class="col-sm-12" style="width:97%;margin-left:1%">
-                        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+                        <table id="basic-datatable1" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
                             <thead>
                                 <tr role="row">
                                     @*<th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>*@
@@ -154,7 +154,7 @@
                 else
                 {
                     <div class="col-sm-12" style="width:97%;margin-right:1%">
-                        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline " role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+                        <table id="basic-datatable1" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline " role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
                             <thead>
                                 <tr role="row">
                                     @*<th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>*@
@@ -329,5 +329,26 @@
             }
         }
 
+    </script>
+    @*Intialize DataTable*@
+    <script>
+        function set_basic_datatable() {
+            var table = $("#basic-datatable1").DataTable({
+                scrollY: "48vh",
+                pageLength: 7,
+                scrollCollapse: true,
+                paging: false,
+                paginate: false,
+                ordering: false, // Set ordering to false to disable sorting
+                language: {
+                    search: `@localizer["search"]`
+                }
+            });
+
+            $('#top-search').on('keyup', function () {
+                table.search(this.value).draw();
+            });
+        }
+        set_basic_datatable();
     </script>
 }

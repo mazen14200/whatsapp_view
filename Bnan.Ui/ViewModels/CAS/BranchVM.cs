@@ -18,7 +18,7 @@ namespace Bnan.Ui.ViewModels.CAS
         [Required(ErrorMessage = "requiredFiled")]
         public string? CrCasBranchInformationEnShortName { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
-        [RegularExpression(@"^7\d{9}$", ErrorMessage = "requiredNoStartWithFiled7")]
+        [RegularExpression(@"^7\d{9}$", ErrorMessage = "requiredNoLengthFiled10")]
         public string? CrCasBranchInformationGovernmentNo { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         [StringLength(15, MinimumLength = 15, ErrorMessage = "requiredNoLengthFiled15")]

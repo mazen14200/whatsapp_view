@@ -1,5 +1,6 @@
 body {
-  font-family: 'Cairo', 'sans-serif';
+    font-family: 'Cairo', 'sans-serif';
+    overflow: hidden;
 }
 
 nav {
@@ -167,22 +168,19 @@ select {
 }
 
 .chart-p {
-  font-size: .8rem;
-  color: #000000;
-  font-weight: 400;
-  text-align: end;
-  font-family: ' sans-serif';
-
-  /* font-weight: bold; */
+    font-size: .8rem;
+    color: #000000;
+    font-weight: 400;
+    text-align: end;
+    font-family: 'Cairo', 'sans-serif';
+     font-weight: bold; 
 }
 
 .chart-legend {
-  line-height: 15px;
-  font-size: .8rem;
-  color: #000000;
-  font-family: ' sans-serif';
-
-
+    line-height: 15px;
+    font-size: .8rem;
+    color: #000000;
+    font-family: 'Cairo', 'sans-serif';
 }
 
 .car_img {

@@ -14,6 +14,10 @@ namespace Bnan.Core.Models
         public string CrCasOwnersLessorCode { get; set; } = null!;
         public string? CrCasOwnersCommercialNo { get; set; }
         public string? CrCasOwnersSector { get; set; }
+        public string? CrCasOwnersCountryKey { get; set; }
+        public string? CrCasOwnersMobile { get; set; }
+        public bool? CrCasOwnersSendContractByWhatsUp { get; set; }
+        public bool? CrCasOwnersSendContractByEmail { get; set; }
         public string? CrCasOwnersArName { get; set; }
         public string? CrCasOwnersEnName { get; set; }
         public string? CrCasOwnersStatus { get; set; }

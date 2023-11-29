@@ -36,6 +36,7 @@ namespace Bnan.Inferastructure.Repository
                 CrCasBranchInformationTelephone = CrCasBranchInformation.CrCasBranchInformationTelephone,
                 CrMasBranchInformationTeleKey = CrCasBranchInformation.CrMasBranchInformationMobileKey,
                 CrCasBranchInformationDirectorSignature = CrCasBranchInformation.CrCasBranchInformationDirectorSignature,
+                CrCasBranchInformationReasons = CrCasBranchInformation.CrCasBranchInformationReasons,
                 CrCasBranchInformationAvailableBalance = 0,
                 CrCasBranchInformationReservedBalance = 0,
                 CrCasBranchInformationTotalBalance = 0,

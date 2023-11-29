@@ -173,17 +173,17 @@ else
                                 <td>@item.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateArName</td>
                             }
                             <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationDirectorArName</td>
-                            @if (item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey != "" || item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey != null)
+                            @if (!string.IsNullOrEmpty(item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey) && !string.IsNullOrEmpty(item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone))
                             {
-                                <td>@item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey @item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
+                                <td>@item.CrCasBranchPostNavigation.CrMasBranchInformationTeleKey@item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
                             }
                             else
                             {
                                 <td>@item.CrCasBranchPostNavigation.CrCasBranchInformationTelephone</td>
                             }
-                            @if (item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey != "" || item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey != null)
+                            @if (!string.IsNullOrEmpty(item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey) && !string.IsNullOrEmpty(item.CrCasBranchPostNavigation.CrCasBranchInformationMobile))
                             {
-                                <td>@item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey @item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
+                                <td>@item.CrCasBranchPostNavigation.CrMasBranchInformationMobileKey@item.CrCasBranchPostNavigation.CrCasBranchInformationMobile</td>
                             }
                             else
                             {

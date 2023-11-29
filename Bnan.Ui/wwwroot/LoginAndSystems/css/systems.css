@@ -2,52 +2,61 @@
 [ RESTYLE TAG ]*/
 
 * {
-	margin: 0px; 
-	padding: 0px; 
-	box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
-body, html {
-	height: 100%;
-	font-family: "cairo";
-  background-color: #FEF8E8;
-
+body,
+html {
+    height: 100%;
+    font-family: "cairo";
+    background-color: #FEF8E8;
+    overflow: hidden;
 }
 
 /*---------------------------------------------*/
 
 /*---------------------------------------------*/
-h1,h2,h3,h4,h5,h6 {
-	margin: 0px;
-  font-size:1.2rem;
-   font-weight: bold;
-   display: inline;
-   color: #39629C;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  display: inline;
+  color: #39629C;
 }
 
 p {
-	font-size: 15px;
-	line-height: 1.7;
-   color: #39629C;
-	margin: 0px;
-    font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #39629C;
+  margin: 0px;
+  font-weight: 700;
 }
 
-ul, li {
-	margin: 0px;
-	list-style-type: none;
+ul,
+li {
+  margin: 0px;
+  list-style-type: none;
 }
 
-.brand{
-    text-align: end;
+.brand {
+  text-align: end;
 }
-.exit{
-    padding-left: 18px;
+
+.exit {
+  padding-left: 18px;
 }
+
 /*---------------------------------------------*/
 input {
-	outline: none;
-	border: none;
+  outline: none;
+  border: none;
 }
 
 textarea {
@@ -65,13 +74,14 @@ textarea {
   width: 100%;
   margin: 0 auto;
 }
+
 /* ////////////////////////////////// */
-nav{
-flex-direction: row-reverse;
+nav {
+  flex-direction: row-reverse;
 }
+
 /* /////////////////////////////////// */
 .container-Systems {
-  width: 50%;  
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -80,72 +90,82 @@ flex-direction: row-reverse;
 
 }
 
-.owners{
-    color:#4B6FB5;
+.owners {
+  color: #4B6FB5;
 
 }
-.branches{
-    color:#1D9CA1;
+
+.branches {
+  color: #1D9CA1;
 }
-.Administration{
-    color:#153962;
+
+.Administration {
+  color: #153962;
 }
+
 .card-name1,
 .card-name2,
-.card-name3{
-    justify-content:center;
-    background-color: #Ffff;
+.card-name3 {
+  justify-content: center;
+  background-color: #Ffff;
 }
-.system-card{
-    border: 1px solid #FF9626;
+
+.system-card {
+  border: 1px solid #FF9626;
 }
+
 /*------------------------------------------------------------------
 [  ]*/
 
 .img-hover-zoom {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .system-card img {
-    transition: transform .5s ease;
+  transition: transform .5s ease;
 }
 
 .system-card:hover img {
-    transform: scale(1.2);
+  transform: scale(1.2);
 
 }
 
 
-.system-card:hover .card-name1{
-    background-color: #4B6FB5;
+.system-card:hover .card-name1 {
+  background-color: #4B6FB5;
 }
-.system-card:hover .card-name2{
-    background-color: #1C9BA0;
+
+.system-card:hover .card-name2 {
+  background-color: #1C9BA0;
 }
-.system-card:hover .card-name3{
-    background-color: #153962;
+
+.system-card:hover .card-name3 {
+  background-color: #153962;
 }
 
 .system-card:hover .owners,
 .system-card:hover .Administration,
 .system-card:hover .branches {
-    color: #ffffff;
+  color: #ffffff;
 }
+
 /*---------------------------------------------*/
 
 /*------------------------------------------------------------------
 /* ///////////////////////////// */
-.footerSystems{
+footer {
   background-color: #FF9626;
+  /* height: 140px; */
 }
+
 /*------------------------------------------------------------------
 [ Responsive ]*/
 
 /* ///////////////////// */
-.before-.footerSystems-widget {
-    background-image: linear-gradient(2.71deg, #FF9626 64.81%, rgba(255, 150, 38, 0.18) 153.13%);
-    font-size: 0;
-  }
+.footer-widget {
+  background-color:  #FF9626 ;
+  font-size: 0;
+}
 
 /*------------------------------------------------------------------*/
 
@@ -156,18 +176,41 @@ flex-direction: row-reverse;
     opacity: 1;
   }
 }
-/* .footerSystems media */
-@media (min-width:573px) and (min-height:680px) {
-  .footerSystems{
-   position: fixed;
-   bottom: 0;
-   left: 0;
-   right: 0;
+
+/* footer media */
+
+
+@media (min-width:573px) and (min-height:1100px) {
+    .footer {
+        position: fixed;
+        bottom: 0px;
+        left: 0;
+        right: 0;
+        height: 30%;
+    }
+}
+
+
+@media (min-width:1400px){
+  .container-Systems {
+    /* min-height: 60vh; */
   }
- }
- @media (max-width: 572px) {
-   .container-Systems {
-     height: 100%;
-   }
- 
- }
+  .card-row{
+    width: 100%;
+  }
+}
+
+@media (min-width:578px) and (min-height:700px){
+  .container-Systems {
+    /* min-height: 60vh; */
+  }
+  .card-row{
+    width: 95%;
+  }
+}
+@media (max-width: 580px) {
+  .container-Systems {
+    height: 85%;
+  }
+
+}

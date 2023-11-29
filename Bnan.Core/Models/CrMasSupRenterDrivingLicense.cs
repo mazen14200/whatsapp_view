@@ -8,6 +8,7 @@ namespace Bnan.Core.Models
         public CrMasSupRenterDrivingLicense()
         {
             CrCasRenterPrivateDriverInformations = new HashSet<CrCasRenterPrivateDriverInformation>();
+            CrMasRenterInformations = new HashSet<CrMasRenterInformation>();
         }
 
         public string CrMasSupRenterDrivingLicenseCode { get; set; } = null!;
@@ -17,5 +18,6 @@ namespace Bnan.Core.Models
         public string? CrMasSupRenterDrivingLicenseReasons { get; set; }
 
         public virtual ICollection<CrCasRenterPrivateDriverInformation> CrCasRenterPrivateDriverInformations { get; set; }
+        public virtual ICollection<CrMasRenterInformation> CrMasRenterInformations { get; set; }
     }
 }

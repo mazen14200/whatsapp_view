@@ -5,6 +5,11 @@ namespace Bnan.Core.Models
 {
     public partial class CrMasSupRenterEmployer
     {
+        public CrMasSupRenterEmployer()
+        {
+            CrMasRenterInformations = new HashSet<CrMasRenterInformation>();
+        }
+
         public string CrMasSupRenterEmployerCode { get; set; } = null!;
         public string? CrMasSupRenterEmployerGroupCode { get; set; }
         public string? CrMasSupRenterEmployerSectorCode { get; set; }
@@ -16,5 +21,6 @@ namespace Bnan.Core.Models
 
         public virtual CrMasSysGroup? CrMasSupRenterEmployerGroupCodeNavigation { get; set; }
         public virtual CrMasSupRenterSector? CrMasSupRenterEmployerSectorCodeNavigation { get; set; }
+        public virtual ICollection<CrMasRenterInformation> CrMasRenterInformations { get; set; }
     }
 }

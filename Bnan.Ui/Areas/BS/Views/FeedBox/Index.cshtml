@@ -1,0 +1,133 @@
+﻿@using Bnan.Ui.ViewModels.BS;
+@model BSLayoutVM
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["Title"] = "Index";
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+<!-- Main Content -->
+<link href="~/BranchSys/css/FeedBox/feed.css" rel="styleSheet">
+<style>
+    /* .row-data{
+        align-items: baseline
+    } */
+</style>
+<div class="card main-card col-md-9 ">
+   @*  <div class="col pt-2 d-flex">
+        <a asp-action="Index" asp-area="BS" asp-controller="Home">
+            <img src="~/BranchSys/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+        </a>
+    </div> *@
+    <div class="row" style="flex-direction: row-reverse;font-weight: 600">
+        <div class="col justify-content-center d-flex" style="margin-right: 33%">
+            <span class="card-title">
+                تغذية الصندوق
+            </span>
+        </div>
+        
+        <div class="col pt-2 d-flex">
+            <a asp-action="Index" asp-area="BS" asp-controller="Home">
+                <img src="~/BranchSys/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+            </a>
+        </div>
+    </div>
+    <div class="row justify-content-center " style="font-weight: 600">
+        <div class="col-11 mx-0">
+            <form id="msform">
+                <fieldset>
+                    <div class="form-card">
+                        <div class="row data-row ">
+                            <div class="col-auto">
+                                <p id="feed-number"> رقم التغذية </p>
+
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p>  23-1-62-5001-000003</p>
+
+                            </div>
+
+                        </div>
+                        <div class="row data-row ">
+                            <div class="col-auto">
+                                <p id="feeder"> المُغذي</p>
+
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p>محمود سعد الكشغري</p>
+
+                            </div>
+
+                        </div>
+                        <div class="row data-row ">
+                            <div class="col-auto">
+                                <p id="date-of-feeding">التاريخ</p>
+
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p> 20/11/2023 </p>
+
+                            </div>
+
+                        </div>
+                        <div class="row data-row ">
+                            <div class="col-auto">
+                                <p id="money-amount">المبلغ</p>
+
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p> 1950.00 </p>
+
+                            </div>
+
+                        </div>
+                        <div class="row data-row ">
+                            <div class="col-auto">
+                                <p id="notes">الملاحظات</p>
+                            </div>
+                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                <textarea class="form-control"
+                                          id="exampleFormControlTextarea1" rows="1" maxlength="100"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="row  data-row ">
+                            <div class="col-auto warninng-p">
+                                <p style="color: #FF2828;"> يمكنك قبول أو رفض تغذية الصندوق الخاص بك بالفرع الحالي</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row button-row">
+                        <div class="button-card p-1">
+                            <button class="btn  save-button">
+                                قبول
+                            </button>
+
+                        </div>
+                        <div class="button-card p-1">
+                            <button class="btn  save-button">
+                                رفض
+                            </button>
+
+                        </div>
+                    </div>
+
+                </fieldset>
+
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="fixed-bottom-xl" style="height: 22%;">
+    <div class="before-footer-widget">
+        <svg width: 100%; height:auto viewbox="0 0 2444 132">
+            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+            </path>
+        </svg>
+    </div>
+    <div class="container footer-buttons justify-content-center pt-1 " style="box-sizing: border-box; ">
+       
+    </div>
+</footer>
+

@@ -22,6 +22,7 @@ namespace Bnan.Core.Models
         public int? CrCasCarDocumentsMaintenanceKmAboutToFinish { get; set; }
         public int? CrCasCarDocumentsMaintenanceKmEndsAt { get; set; }
         public string? CrCasCarDocumentsMaintenanceImage { get; set; }
+        public string? CrCasCarDocumentsMaintenanceCarStatus { get; set; }
         public string? CrCasCarDocumentsMaintenanceStatus { get; set; }
         public string? CrCasCarDocumentsMaintenanceReasons { get; set; }
 

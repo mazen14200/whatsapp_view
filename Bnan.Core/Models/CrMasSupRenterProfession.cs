@@ -5,6 +5,12 @@ namespace Bnan.Core.Models
 {
     public partial class CrMasSupRenterProfession
     {
+        public CrMasSupRenterProfession()
+        {
+            CrCasRenterLessors = new HashSet<CrCasRenterLessor>();
+            CrMasRenterInformations = new HashSet<CrMasRenterInformation>();
+        }
+
         public string CrMasSupRenterProfessionsCode { get; set; } = null!;
         public string? CrMasSupRenterProfessionsGroupCode { get; set; }
         public string? CrMasSupRenterProfessionsArName { get; set; }
@@ -13,5 +19,7 @@ namespace Bnan.Core.Models
         public string? CrMasSupRenterProfessionsReasons { get; set; }
 
         public virtual CrMasSysGroup? CrMasSupRenterProfessionsGroupCodeNavigation { get; set; }
+        public virtual ICollection<CrCasRenterLessor> CrCasRenterLessors { get; set; }
+        public virtual ICollection<CrMasRenterInformation> CrMasRenterInformations { get; set; }
     }
 }
