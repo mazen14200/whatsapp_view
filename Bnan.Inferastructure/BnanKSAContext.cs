@@ -2298,13 +2298,13 @@ namespace Bnan.Core.Models
                     .HasColumnType("date")
                     .HasColumnName("CR_Elm_License_Issued_Date");
 
-                entity.Property(e => e.CrElmLicenseLicenseArName)
+                entity.Property(e => e.CrElmLicenseArName)
                     .HasMaxLength(20)
-                    .HasColumnName("CR_Elm_License_License_Ar_Name");
+                    .HasColumnName("CR_Elm_License_Ar_Name");
 
-                entity.Property(e => e.CrElmLicenseLicenseNo)
+                entity.Property(e => e.CrElmLicenseNo)
                     .HasMaxLength(20)
-                    .HasColumnName("CR_Elm_License_License_No");
+                    .HasColumnName("CR_Elm_License_No");
             });
 
             modelBuilder.Entity<CrElmPersonal>(entity =>
@@ -2363,25 +2363,25 @@ namespace Bnan.Core.Models
                     .HasMaxLength(20)
                     .HasColumnName("CR_Elm_Personal_Mobile");
 
-                entity.Property(e => e.CrElmPersonalPersonalArName)
+                entity.Property(e => e.CrElmPersonalArName)
                     .HasMaxLength(100)
-                    .HasColumnName("CR_Elm_Personal_Personal_Ar_Name");
+                    .HasColumnName("CR_Elm_Personal_Ar_Name");
 
-                entity.Property(e => e.CrElmPersonalPersonalDate)
+                entity.Property(e => e.CrElmPersonalBirthDate)
                     .HasColumnType("date")
-                    .HasColumnName("CR_Elm_Personal_Personal_Date");
+                    .HasColumnName("CR_Elm_Personal_Birth_Date");
 
-                entity.Property(e => e.CrElmPersonalPersonalEnName)
+                entity.Property(e => e.CrElmPersonalEnName)
                     .HasMaxLength(100)
-                    .HasColumnName("CR_Elm_Personal_Personal_En_Name");
+                    .HasColumnName("CR_Elm_Personal_En_Name");
 
-                entity.Property(e => e.CrElmPersonalPersonalSector)
+                entity.Property(e => e.CrElmPersonalSector)
                     .HasMaxLength(20)
-                    .HasColumnName("CR_Elm_Personal_Personal_Sector");
+                    .HasColumnName("CR_Elm_Personal_Sector");
 
-                entity.Property(e => e.CrElmPersonalSource)
+                entity.Property(e => e.CrElmPersonalIssuedPlace)
                     .HasMaxLength(20)
-                    .HasColumnName("CR_Elm_Personal_Source");
+                    .HasColumnName("CR_Elm_Personal_Issued_Place");
             });
 
             modelBuilder.Entity<CrElmPost>(entity =>

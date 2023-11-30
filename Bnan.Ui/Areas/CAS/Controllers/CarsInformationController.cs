@@ -79,7 +79,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     }
                     else if (status == Status.Hold)
                     {
-                        return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == Status.Rented || x.CrCasCarInformationStatus == Status.Hold||
+                        return PartialView("_DataTableCars", carsAll.Where(x => x.CrCasCarInformationStatus == Status.Rented || x.CrCasCarInformationStatus == Status.Hold ||
                                                                                 x.CrCasCarInformationStatus == Status.Maintaince || x.CrCasCarInformationPriceStatus == false ||
                                                                                 x.CrCasCarInformationBranchStatus != Status.Active || x.CrCasCarInformationOwnerStatus != Status.Active ||
                                                                                (x.CrCasCarInformationStatus == Status.Active && x.CrCasCarInformationForSaleStatus == Status.ForSale)));
@@ -358,29 +358,36 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == code);
             if (car != null)
             {
+                var docs = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(l => l.CrCasCarDocumentsMaintenanceLessor == car.CrCasCarInformationLessor && l.CrCasCarDocumentsMaintenanceSerailNo == car.CrCasCarInformationSerailNo);
                 if (status == Status.Hold)
                 {
                     sAr = "ايقاف ";
                     sEn = "Hold ";
                     car.CrCasCarInformationStatus = Status.Hold;
+                    foreach (var doc in docs) doc.CrCasCarDocumentsMaintenanceCarStatus = Status.Hold;
                 }
                 else if (status == Status.Deleted)
                 {
                     sAr = "حذف";
                     sEn = "Remove";
                     car.CrCasCarInformationStatus = Status.Deleted;
+                    foreach (var doc in docs) doc.CrCasCarDocumentsMaintenanceCarStatus = Status.Deleted;
+
                 }
                 else if (status == Status.Active)
                 {
                     sAr = "استرجاع";
                     sEn = "Retrive";
                     car.CrCasCarInformationStatus = Status.Active;
+                    foreach (var doc in docs) doc.CrCasCarDocumentsMaintenanceCarStatus = Status.Active;
                 }
                 else if (status == Status.ForSale)
                 {
                     sAr = "عرض للبيع";
                     sEn = "For Sale";
                     car.CrCasCarInformationStatus = Status.ForSale;
+                    foreach (var doc in docs) doc.CrCasCarDocumentsMaintenanceCarStatus = Status.ForSale;
+
                 }
                 await _unitOfWork.CompleteAsync();
                 // SaveTracing
