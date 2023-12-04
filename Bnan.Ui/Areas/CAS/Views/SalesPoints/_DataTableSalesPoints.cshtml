@@ -34,7 +34,17 @@
                             <td>@no</td>
                             <td>@item.CrCasAccountSalesPointNo</td>
                             <td>@item.CrCasAccountSalesPointEnName</td>
-                            <td>@item.CrCasAccountSalesPointNavigation.CrCasBranchInformationEnShortName</td>
+                            <td>
+                                @item.CrCasAccountSalesPointNavigation.CrCasBranchInformationEnShortName
+                                @if (item.CrCasAccountSalesPointNavigation.CrCasBranchInformationStatus == Status.Hold)
+                                {
+                                    <span class="text-danger">(@localizer["Holded"])</span>
+                                }
+                                else if (item.CrCasAccountSalesPointNavigation.CrCasBranchInformationStatus == Status.Deleted)
+                                {
+                                    <span class="text-danger">(@localizer["Deleted"])</span>
+                                }
+                            </td>
                             <td>@item.CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankEnName</td>
                             <td>
                                 @item.CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankEnName
@@ -42,6 +52,11 @@
                                 {
                                     <span class="text-danger">(@localizer["Holded"])</span>
                                 }
+                                else if (item.CrCasAccountSalesPointBankStatus == Status.Deleted)
+                                {
+                                    <span class="text-danger">(@localizer["Deleted"])</span>
+                                }
+
                             </td>
 
                             <td>
@@ -51,7 +66,7 @@
                                 }
                                 else if (@item.CrCasAccountSalesPointStatus == Status.Hold)
                                 {
-                                    @localizer["Hold"]
+                                    @localizer["Holded"]
                                 }
                             </td>
                         </tr>
@@ -62,13 +77,28 @@
                             <td>@no</td>
                             <td>@item.CrCasAccountSalesPointNo</td>
                             <td>@item.CrCasAccountSalesPointEnName</td>
-                            <td>@item.CrCasAccountSalesPointNavigation.CrCasBranchInformationEnShortName</td>
+                            <td>
+                                @item.CrCasAccountSalesPointNavigation.CrCasBranchInformationEnShortName
+                                @if (item.CrCasAccountSalesPointNavigation.CrCasBranchInformationStatus == Status.Hold)
+                                {
+                                    <span class="text-danger">(@localizer["Holded"])</span>
+                                }
+                                else if (item.CrCasAccountSalesPointNavigation.CrCasBranchInformationStatus == Status.Deleted)
+                                {
+                                    <span class="text-danger">(@localizer["Deleted"])</span>
+                                }
+
+                            </td>
                             <td>@item.CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankEnName</td>
                             <td>
                                 @item.CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankEnName
                                 @if (item.CrCasAccountSalesPointBankStatus == Status.Hold)
                                 {
                                     <span class="text-danger">(@localizer["Holded"])</span>
+                                }
+                                else if (item.CrCasAccountSalesPointBankStatus == Status.Deleted)
+                                {
+                                    <span class="text-danger">(@localizer["Deleted"])</span>
                                 }
                             </td>
 
@@ -114,13 +144,27 @@ else
                             <td>@no</td>
                             <td>@item.CrCasAccountSalesPointNo</td>
                             <td>@item.CrCasAccountSalesPointArName</td>
-                            <td>@item.CrCasAccountSalesPointNavigation.CrCasBranchInformationArShortName</td>
+                            <td>
+                                @item.CrCasAccountSalesPointNavigation.CrCasBranchInformationArShortName
+                                @if (item.CrCasAccountSalesPointNavigation.CrCasBranchInformationStatus == Status.Hold)
+                                {
+                                    <span class="text-danger">(@localizer["Holded"])</span>
+                                }
+                                else if (item.CrCasAccountSalesPointNavigation.CrCasBranchInformationStatus == Status.Deleted)
+                                {
+                                    <span class="text-danger">(@localizer["Deleted"])</span>
+                                }
+                            </td>
                             <td>@item.CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankArName</td>
                             <td>
                                 @item.CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankArName
                                 @if (item.CrCasAccountSalesPointBankStatus == Status.Hold)
                                 {
                                     <span class="text-danger">(@localizer["Holded"])</span>
+                                }
+                                else if (item.CrCasAccountSalesPointBankStatus == Status.Deleted)
+                                {
+                                    <span class="text-danger">(@localizer["Deleted"])</span>
                                 }
                             </td>
 
@@ -131,7 +175,7 @@ else
                                 }
                                 else if (@item.CrCasAccountSalesPointStatus == Status.Hold)
                                 {
-                                    @localizer["Hold"]
+                                    @localizer["Holded"]
                                 }
                             </td>
                         </tr>
@@ -142,13 +186,27 @@ else
                             <td>@no</td>
                             <td>@item.CrCasAccountSalesPointNo</td>
                             <td>@item.CrCasAccountSalesPointArName</td>
-                            <td>@item.CrCasAccountSalesPointNavigation.CrCasBranchInformationArShortName</td>
+                            <td>
+                                @item.CrCasAccountSalesPointNavigation.CrCasBranchInformationArShortName
+                                @if (item.CrCasAccountSalesPointNavigation.CrCasBranchInformationStatus == Status.Hold)
+                                {
+                                    <span class="text-danger">(@localizer["Holded"])</span>
+                                }
+                                else if (item.CrCasAccountSalesPointNavigation.CrCasBranchInformationStatus == Status.Deleted)
+                                {
+                                    <span class="text-danger">(@localizer["Deleted"])</span>
+                                }
+                            </td>
                             <td>@item.CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankArName</td>
                             <td>
                                 @item.CrCasAccountSalesPointAccountBankNavigation.CrCasAccountBankArName
                                 @if (item.CrCasAccountSalesPointBankStatus == Status.Hold)
                                 {
                                     <span class="text-danger">(@localizer["Holded"])</span>
+                                }
+                                else if (item.CrCasAccountSalesPointBankStatus == Status.Deleted)
+                                {
+                                    <span class="text-danger">(@localizer["Deleted"])</span>
                                 }
                             </td>
 

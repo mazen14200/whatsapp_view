@@ -46,13 +46,32 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var checkBranch = branches.Find(x => x.CrCasBranchInformationCode == selectBranch);
             if (checkBranch == null) selectBranch = branches.FirstOrDefault().CrCasBranchInformationCode;
             var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
+
+            var adminstrive = _unitOfWork.CrCasSysAdministrativeProcedure.Find(x => x.CrCasSysAdministrativeProceduresLessor == lessorCode &&
+                                                                                 x.CrCasSysAdministrativeProceduresTargeted == userLogin.CrMasUserInformationCode &&
+                                                                                 x.CrCasSysAdministrativeProceduresCode == "303"&&
+                                                                                 x.CrCasSysAdministrativeProceduresStatus==Status.Insert);
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
                 CrCasBranchInformations = branches,
                 SelectedBranch = selectBranch,
-                CrCasBranchInformation = branch
+                CrCasBranchInformation = branch,
+                CrCasSysAdministrativeProcedure=adminstrive
             };
             return View(bSLayoutVM);
         }
+        [HttpPost]
+        public async Task<IActionResult> AcceptOrNot(string status)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var adminstrive = _unitOfWork.CrCasSysAdministrativeProcedure.Find(x => x.CrCasSysAdministrativeProceduresLessor == lessorCode &&
+                                                                                 x.CrCasSysAdministrativeProceduresTargeted == userLogin.CrMasUserInformationCode &&
+                                                                                 x.CrCasSysAdministrativeProceduresCode == "303" &&
+                                                                                 x.CrCasSysAdministrativeProceduresStatus == Status.Insert);
+           
+            return Json(true);
+        }
+
     }
 }

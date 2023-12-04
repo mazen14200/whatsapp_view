@@ -27,6 +27,8 @@ nav {
 
 .main-card {
     box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important;
+    padding-bottom: 20px;
+    height: 500px;
 }
 
 #msform fieldset {
@@ -36,7 +38,7 @@ nav {
     box-sizing: border-box;
     width: 100%;
     margin: 0;
-
+    padding-bottom: 30px;
     position: relative;
 }
 
@@ -250,3 +252,21 @@ fieldset {
 }
 
 /* ********************************** */
+.container-fluid {
+    height: 70%;
+}
+
+.section-mainCard {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#content-wrapper {
+    height: 100%;
+}
+
+#content {
+    height: 100%;
+}

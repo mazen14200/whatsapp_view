@@ -23,7 +23,6 @@
       .Include(l => l.CrMasUserInformationLessorNavigation)
       .FirstOrDefaultAsync(l => l.UserName == user.UserName);
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-    ViewData["Title"] = "Index";
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
 }
 
@@ -238,8 +237,8 @@
                 </button>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3 mb-1">
-                <a asp-action="Index" asp-area="BS" asp-controller="FeedBox" class="btn btn-secondary neonShadow " id="pulse-button-employee">
-                    <img src="~/BranchSys/img/Rectangle 33.png" class="anm">
+                <a asp-action="Index" asp-area="BS" asp-controller="FeedBox" class="btn btn-secondary" id="pulse-button-employee">
+                    <img src="~/BranchSys/img/Rectangle 33.png" id="anmFeedBox" class="">
                     @localizer["Feedbox"]
                 </a>
             </div>
@@ -629,6 +628,21 @@
                     }
                 });
             });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var model = '@ViewBag.Adminstritive';
+            // Check the value of the model variable
+            if (model === '0') {
+                // If model is 0, remove the class neonShadow
+                $('#pulse-button-employee').removeClass('neonShadow');
+                $('#anmFeedBox').removeClass('anm');
+            } else {
+                // If model is not 0, add the class neonShadow
+                $('#pulse-button-employee').addClass('neonShadow');
+                $('#anmFeedBox').addClass('anm');
+            }
         });
     </script>
 

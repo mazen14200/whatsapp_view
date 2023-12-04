@@ -1,122 +1,147 @@
 ﻿@using Bnan.Ui.ViewModels.BS;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
 @model BSLayoutVM
+@inject UserManager<CrMasUserInformation> userManager
+@inject SignInManager<CrMasUserInformation> signinManager
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["Title"] = "Index";
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    // var user = await userManager.GetUserAsync(User);
+    // var userInfo = await userManager.Users
+    //   .Include(l => l.CrMasUserMainValidations)
+    //   .Include(l => l.CrMasUserSubValidations)
+    //   .Include(x => x.CrMasUserBranchValidities)
+    //   .Include(l => l.CrMasUserInformationLessorNavigation)
+    //   .FirstOrDefaultAsync(l => l.UserName == user.UserName);
 }
 <!-- Main Content -->
 <link href="~/BranchSys/css/FeedBox/feed.css" rel="styleSheet">
 <style>
     /* .row-data{
-        align-items: baseline
-    } */
+                align-items: baseline
+            } */
 </style>
-<div class="card main-card col-md-9 ">
-   @*  <div class="col pt-2 d-flex">
-        <a asp-action="Index" asp-area="BS" asp-controller="Home">
-            <img src="~/BranchSys/img/cancel.png" alt="cancle_icon" class="cancle-icon">
-        </a>
-    </div> *@
-    <div class="row" style="flex-direction: row-reverse;font-weight: 600">
-        <div class="col justify-content-center d-flex" style="margin-right: 33%">
-            <span class="card-title">
-                تغذية الصندوق
-            </span>
-        </div>
-        
-        <div class="col pt-2 d-flex">
-            <a asp-action="Index" asp-area="BS" asp-controller="Home">
-                <img src="~/BranchSys/img/cancel.png" alt="cancle_icon" class="cancle-icon">
-            </a>
-        </div>
-    </div>
-    <div class="row justify-content-center " style="font-weight: 600">
-        <div class="col-11 mx-0">
-            <form id="msform">
-                <fieldset>
-                    <div class="form-card">
-                        <div class="row data-row ">
-                            <div class="col-auto">
-                                <p id="feed-number"> رقم التغذية </p>
 
-                            </div>
-                            <div class="col-auto personal-data">
-                                <p>  23-1-62-5001-000003</p>
 
-                            </div>
-
-                        </div>
-                        <div class="row data-row ">
-                            <div class="col-auto">
-                                <p id="feeder"> المُغذي</p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                                <p>محمود سعد الكشغري</p>
-
-                            </div>
-
-                        </div>
-                        <div class="row data-row ">
-                            <div class="col-auto">
-                                <p id="date-of-feeding">التاريخ</p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                                <p> 20/11/2023 </p>
-
-                            </div>
-
-                        </div>
-                        <div class="row data-row ">
-                            <div class="col-auto">
-                                <p id="money-amount">المبلغ</p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                                <p> 1950.00 </p>
-
-                            </div>
-
-                        </div>
-                        <div class="row data-row ">
-                            <div class="col-auto">
-                                <p id="notes">الملاحظات</p>
-                            </div>
-                            <div class="col-sm-5 col-md-5 col-lg-5">
-                                <textarea class="form-control"
-                                          id="exampleFormControlTextarea1" rows="1" maxlength="100"></textarea>
-                            </div>
-
-                        </div>
-                        <div class="row  data-row ">
-                            <div class="col-auto warninng-p">
-                                <p style="color: #FF2828;"> يمكنك قبول أو رفض تغذية الصندوق الخاص بك بالفرع الحالي</p>
-                            </div>
+<div class="container-fluid " id="grad1">
+    <section class="section-mainCard">
+        <div class="row justify-content-center w-100">
+            <div class="col-md-11 col-sm-10 col-md-8 col-lg-11 col-xl-9  text-center p-0 ">
+                <div class="card main-card ">
+                    @*  <div class="col pt-2 d-flex">
+                    <a asp-action="Index" asp-area="BS" asp-controller="Home">
+                    <img src="~/BranchSys/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+                    </a>
+                    </div> *@
+                    <div class="row" style="flex-direction: row-reverse;font-weight: 600">
+                        <div class="col justify-content-center d-flex" style="margin-right: 33%">
+                            <span class="card-title">
+                                تغذية الصندوق
+                            </span>
                         </div>
 
-                    </div>
-                    <div class="row button-row">
-                        <div class="button-card p-1">
-                            <button class="btn  save-button">
-                                قبول
-                            </button>
-
-                        </div>
-                        <div class="button-card p-1">
-                            <button class="btn  save-button">
-                                رفض
-                            </button>
-
+                        <div class="col pt-2 d-flex">
+                            <a asp-action="Index" asp-area="BS" asp-controller="Home">
+                                <img src="~/BranchSys/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+                            </a>
                         </div>
                     </div>
+                    <div class="row justify-content-center " style="font-weight: 600">
+                        <div class="col-11 mx-0">
+                            @if (Model.CrCasSysAdministrativeProcedure != null)
+                            {
+                                <form id="msform">
+                                    <fieldset>
+                                        <div class="form-card">
+                                            <div class="row data-row ">
+                                                <div class="col-auto">
+                                                    <p id="feed-number"> رقم التغذية </p>
 
-                </fieldset>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>@Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresNo</p>
 
-            </form>
+                                                </div>
+
+                                            </div>
+                                            <div class="row data-row ">
+                                                <div class="col-auto">
+                                                    <p id="feeder"> المُغذي</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>@userManager.FindByIdAsync(Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresUserInsert).Result.CrMasUserInformationArName</p>
+                                                </div>
+
+                                            </div>
+                                            <div class="row data-row ">
+                                                <div class="col-auto">
+                                                    <p id="date-of-feeding">التاريخ</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>@Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresDate?.ToString("dd/MM/yyyy")</p>
+                                                </div>
+
+                                            </div>
+                                            <div class="row data-row ">
+                                                <div class="col-auto">
+                                                    <p id="money-amount">المبلغ</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>@Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresDebit</p>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="row data-row ">
+                                                <div class="col-auto">
+                                                    <p id="notes">الملاحظات</p>
+                                                </div>
+                                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                                    <textarea class="form-control"
+                                                              id="exampleFormControlTextarea1" rows="1" maxlength="100">
+                                                        @*                                           @Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresReasons
+ *@                                    </textarea>
+                                                </div>
+
+                                            </div>
+                                            <div class="row  data-row ">
+                                                <div class="col-auto warninng-p">
+                                                    <p style="color: #FF2828;"> يمكنك قبول أو رفض تغذية الصندوق الخاص بك بالفرع الحالي</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row button-row">
+                                            <div class="button-card p-1">
+                                                <button class="btn  save-button" onclick="AcceptOrNot('A')">
+                                                    قبول
+                                                </button>
+
+                                            </div>
+                                            <div class="button-card p-1">
+                                                <button class="btn save-button" onclick="AcceptOrNot('R')">
+                                                    رفض
+                                                </button>
+
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+
+                                </form>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 </div>
 <footer class="fixed-bottom-xl" style="height: 22%;">
     <div class="before-footer-widget">
@@ -127,7 +152,28 @@
         </svg>
     </div>
     <div class="container footer-buttons justify-content-center pt-1 " style="box-sizing: border-box; ">
-       
     </div>
 </footer>
 
+@section Scripts {
+
+    <script>
+        function AcceptOrNot(status) {
+            // Make an AJAX call
+            $.ajax({
+                url: "/BS/FeedBox/AcceptOrNot", // Update with your controller and action
+                type: "POST",
+                data: { status: status },
+                success: function (result) {
+                    window.location.href = "/BS/Home/Index";
+                },
+                error: function () {
+                    // Handle errors if necessary
+                    console.log("Error occurred");
+                }
+            });
+        }
+
+
+    </script>
+}

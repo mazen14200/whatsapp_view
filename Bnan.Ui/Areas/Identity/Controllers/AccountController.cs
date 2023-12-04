@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using System.Globalization;
 using static StackExchange.Redis.Role;
 
 namespace Bnan.Ui.Areas.Identity.Controllers
@@ -40,6 +41,8 @@ namespace Bnan.Ui.Areas.Identity.Controllers
 
         public async Task<IActionResult> Login()
         {
+            if (CultureInfo.CurrentUICulture.Name == "en-US") await ViewData.SetPageTitleAsync("Log in", "Bnan", "", "", "", "");
+            else await ViewData.SetPageTitleAsync("تسجيل الدخول", "بنان", "", "", "","");
             var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
             var isAuth = _userService.CheckUserifAuth(User);
             if (user != null)
@@ -47,24 +50,33 @@ namespace Bnan.Ui.Areas.Identity.Controllers
                 if (isAuth)
                 {
                     bool? userAuthBnan = user.CrMasUserInformationAuthorizationBnan;
+                    bool? userAuthOwners = user.CrMasUserInformationAuthorizationOwner;
                     bool? userAuthAdmin = user.CrMasUserInformationAuthorizationAdmin;
                     bool? userAuthBranch = user.CrMasUserInformationAuthorizationBranch;
-
                     if (userAuthBnan == true)
                     {
                         return RedirectToAction("Index", "Home", new { area = "MAS" });
                     }
-                    if (userAuthAdmin == true && userAuthBranch == true)
+
+                    if (userAuthAdmin == true && userAuthBranch == true && userAuthOwners==true)
                     {
                         return RedirectToAction("Systems", "Account");
                     }
-                    else if (userAuthAdmin == true && userAuthBranch == false)
+                    else if ((userAuthAdmin==true && userAuthBranch==true) || (userAuthAdmin == true && userAuthOwners == true) || (userAuthBranch == true && userAuthOwners==true))
+                    {
+                        return RedirectToAction("Systems", "Account");
+                    }
+                    else if (userAuthAdmin == true && userAuthBranch == false&& userAuthOwners == false)
                     {
                         return RedirectToAction("Index", "Home", new { area = "CAS" });
                     }
-                    else if (userAuthAdmin == false && userAuthBranch == true)
+                    else if (userAuthAdmin == false && userAuthBranch == true && userAuthOwners == false)
                     {
                         return RedirectToAction("Index", "Home", new { area = "BS" });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Logout", "Account", new { area = "BS" });
                     }
                 }
             }
@@ -91,12 +103,9 @@ namespace Bnan.Ui.Areas.Identity.Controllers
                     ModelState.AddModelError(nameof(model.UserName), _localizer["UserNameInvalid"]);
                     return View(model);
                 }
-
-
                 // If Password Is Invalid Or
                 if (await _authService.CheckPassword(model.UserName, model.Password) == false)
                 {
-
                     if (user.CrMasUserInformationRemindMe != null)
                     {
                         ModelState.AddModelError("Hint", _localizer["PasswordInvalid"] + ":" + user.CrMasUserInformationRemindMe);
@@ -105,8 +114,6 @@ namespace Bnan.Ui.Areas.Identity.Controllers
                     {
                         ModelState.AddModelError("Hint", _localizer["PasswordInvalid"]);
                     }
-
-
                     return View(model);
                 }
                 //else if (await _authService.CheckPassword(model.UserName, model.Password) == true)
@@ -150,8 +157,8 @@ namespace Bnan.Ui.Areas.Identity.Controllers
                 var result = await _authService.LoginAsync(model.UserName, model.Password);
                 if (result.Succeeded)
                 {
-                    //if (user.CrMasUserInformationDefaultLanguage.ToLower() == "en") SetLanguage("en-US");
-                    //else SetLanguage("ar-EG");
+                    if (user.CrMasUserInformationDefaultLanguage.ToLower() == "en") SetLanguage("~/","en-US");
+                    else SetLanguage("~/", "ar-EG");
                     var UserInforation = await _userService.GetUserByUserNameAsync(model.UserName);
                     UserInforation.CrMasUserInformationOperationStatus = true;
                     UserInforation.CrMasUserInformationEntryLastDate = DateTime.Now.Date;
@@ -161,20 +168,27 @@ namespace Bnan.Ui.Areas.Identity.Controllers
                     bool? userAuthBnan = user.CrMasUserInformationAuthorizationBnan;
                     bool? userAuthAdmin = user.CrMasUserInformationAuthorizationAdmin;
                     bool? userAuthBranch = user.CrMasUserInformationAuthorizationBranch;
+                    bool? userAuthOwners = user.CrMasUserInformationAuthorizationOwner;
+
 
                     if (userAuthBnan == true)
                     {
                         return RedirectToAction("Index", "Home", new { area = "MAS" });
                     }
-                    if (userAuthAdmin == true && userAuthBranch == true)
+
+                    if (userAuthAdmin == true && userAuthBranch == true && userAuthOwners == true)
                     {
                         return RedirectToAction("Systems", "Account");
                     }
-                    else if (userAuthAdmin == true && userAuthBranch == false)
+                    else if ((userAuthAdmin == true && userAuthBranch == true) || (userAuthAdmin == true && userAuthOwners == true) || (userAuthBranch == true && userAuthOwners == true))
+                    {
+                        return RedirectToAction("Systems", "Account");
+                    }
+                    else if (userAuthAdmin == true && userAuthBranch == false && userAuthOwners == false)
                     {
                         return RedirectToAction("Index", "Home", new { area = "CAS" });
                     }
-                    else if (userAuthAdmin == false && userAuthBranch == true)
+                    else if (userAuthAdmin == false && userAuthBranch == true && userAuthOwners == false)
                     {
                         return RedirectToAction("Index", "Home", new { area = "BS" });
                     }
@@ -222,9 +236,8 @@ namespace Bnan.Ui.Areas.Identity.Controllers
         public async Task< IActionResult> Systems()
         {
             var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
-
-            await ViewData.SetPageTitleAsync("Systems", "", "", "", "", user.CrMasUserInformationEnName);
-
+            if (CultureInfo.CurrentUICulture.Name == "en-US") await ViewData.SetPageTitleAsync("Systems", "", "", "", "", user.CrMasUserInformationEnName);
+            else await ViewData.SetPageTitleAsync("الأنظمة", "", "", "", "", user.CrMasUserInformationArName);
             return View();
         }
 

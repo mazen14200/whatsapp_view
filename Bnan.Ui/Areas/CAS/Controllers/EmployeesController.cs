@@ -290,16 +290,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 var user = await _userService.GetUserByUserNameAsync(model.CrMasUserInformationCode);
                 if (user != null)
                 {
-
                     user.CrMasUserInformationTasksArName = model.CrMasUserInformationTasksArName;
                     user.CrMasUserInformationTasksEnName = model.CrMasUserInformationTasksEnName;
                     user.CrMasUserInformationCreditLimit = model.CrMasUserInformationCreditLimit;
                     user.CrMasUserInformationReasons = model.CrMasUserInformationReasons;
                     user.CrMasUserInformationAuthorizationAdmin = CrMasUserInformationAuthorizationAdmin;
                     user.CrMasUserInformationAuthorizationOwner = CrMasUserInformationAuthorizationOwner;
-                    user.CrMasUserInformationAuthorizationBranch = CrMasUserInformationAuthorizationBranch;
-                    await _userService.UpdateAsync(user);
-
 
                     List<CheckboxBranchesAuthData> checkboxDataList = new List<CheckboxBranchesAuthData>();
 
@@ -314,10 +310,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     {
                         var id = item.Id;
                         var value = item.Value;
-                        if (user.CrMasUserInformationAuthorizationBranch == true)
+                        if (CrMasUserInformationAuthorizationBranch == true&&(value.ToLower() == "on" || value.ToLower() == "true"))
                         {
-                            if (value.ToLower() == "on" || value.ToLower() == "true") await _userBranchValidity.UpdateUserBranchValidity(user.CrMasUserInformationCode, user.CrMasUserInformationLessor, id, Status.Active);
-                            else await _userBranchValidity.UpdateUserBranchValidity(user.CrMasUserInformationCode, user.CrMasUserInformationLessor, id, Status.Deleted);
+                            await _userBranchValidity.UpdateUserBranchValidity(user.CrMasUserInformationCode, user.CrMasUserInformationLessor, id, Status.Active);
                         }
                         else
                         {
@@ -325,7 +320,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         }
 
                     }
-
+                    var BranchValidity= _unitOfWork.CrMasUserBranchValidity.FindAll(x=>x.CrMasUserBranchValidityId==user.CrMasUserInformationCode&&
+                                                                                       x.CrMasUserBranchValidityLessor==user.CrMasUserInformationLessor&&
+                                                                                       x.CrMasUserBranchValidityBranchStatus==Status.Active);
+                    if (BranchValidity.Count()<1) user.CrMasUserInformationAuthorizationBranch = false;
+                    else user.CrMasUserInformationAuthorizationBranch = true;
+                    await _userService.UpdateAsync(user);
                     //SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("206", "2206001", "2");
                     await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل بيانات", "Edit information", mainTask.CrMasSysMainTasksCode,

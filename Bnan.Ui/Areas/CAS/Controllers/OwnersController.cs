@@ -173,7 +173,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             string sAr = "";
             string sEn = "";
 
-            var owner = await _unitOfWork.CrCasOwner.FindAsync(x => x.CrCasOwnersCode == code);
+            var owner = await _unitOfWork.CrCasOwner.FindAsync(x => x.CrCasOwnersCode == code&&x.CrCasOwnersLessorCode==lessorCode);
 
             if (owner != null)
             {

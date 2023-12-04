@@ -48,7 +48,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("207", "2207004", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var salesPointByLessor = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == currentUser.CrMasUserInformationLessor && x.CrCasAccountSalesPointBankStatus == Status.Active && x.CrCasAccountSalesPointStatus == Status.Active && x.CrCasAccountSalesPointBank != "00",
+            var salesPointByLessor = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == currentUser.CrMasUserInformationLessor && x.CrCasAccountSalesPointStatus == Status.Active && x.CrCasAccountSalesPointBank != "00",
                 new[] { "CrCasAccountSalesPointAccountBankNavigation", "CrCasAccountSalesPointBankNavigation", "CrCasAccountSalesPointNavigation" });
 
             return View(salesPointByLessor);
@@ -115,17 +115,17 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var IsSalesPointNo = _unitOfWork.CrCasAccountSalesPoint.FindAll(l => l.CrCasAccountSalesPointNo == salesPointsVM.CrCasAccountSalesPointNo).Count() > 0;
+
             var IsSalesPointArName = _unitOfWork.CrCasAccountSalesPoint.FindAll(l => l.CrCasAccountSalesPointArName == salesPointsVM.CrCasAccountSalesPointArName&&
-                                                                                l.CrCasAccountSalesPointLessor==currentUser.CrMasUserInformationLessor && 
-                                                                                l.CrCasAccountSalesPointBrn == salesPointsVM.CrCasAccountSalesPointBrn).Count() > 0;
+                                                                                l.CrCasAccountSalesPointLessor==currentUser.CrMasUserInformationLessor).Count() > 0;
+
             var IsSalesPointEnName = _unitOfWork.CrCasAccountSalesPoint.FindAll(l => l.CrCasAccountSalesPointEnName == salesPointsVM.CrCasAccountSalesPointEnName&&
-                                                                                l.CrCasAccountSalesPointLessor==currentUser.CrMasUserInformationLessor &&
-                                                                                l.CrCasAccountSalesPointBrn == salesPointsVM.CrCasAccountSalesPointBrn).Count() > 0;
+                                                                                l.CrCasAccountSalesPointLessor==currentUser.CrMasUserInformationLessor).Count() > 0;
             if (IsSalesPointNo) ModelState.AddModelError("IsSalesPointNo", _localizer["IsSalesPointNo"]);
             if (IsSalesPointArName) ModelState.AddModelError("IsSalesPointArName", _localizer["IsExist"]);
             if (IsSalesPointEnName) ModelState.AddModelError("IsSalesPointEnName", _localizer["IsExist"]);
             var bank = _unitOfWork.CrMasSupAccountBanks.Find(x => x.CrMasSupAccountBankArName == salesPointsVM.CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankArName ||
-            x.CrMasSupAccountBankEnName == salesPointsVM.CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankArName);
+            x.CrMasSupAccountBankEnName == salesPointsVM.CrCasAccountSalesPointBankNavigation.CrMasSupAccountBankEnName);
             if (ModelState.IsValid)
             {
                 var SalesPoint = _mapper.Map<CrCasAccountSalesPoint>(salesPointsVM);
@@ -223,7 +223,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         {
             string sAr = "";
             string sEn = "";
-            var salesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x=>x.CrCasAccountSalesPointCode==code);
+            var salesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x => x.CrCasAccountSalesPointCode == code, new[] { "CrCasAccountSalesPointNavigation" });
             if (salesPoint != null)
             {
                 if (await CheckUserSubValidationProcdures("2207004", status))
@@ -246,7 +246,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         sEn = "Retrieve";
                         if (salesPoint.CrCasAccountSalesPointBankStatus==Status.Deleted)
                         {
-                            _toastNotification.AddErrorToastMessage(_localizer["ToastFailedSalesPointDelete"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                            _toastNotification.AddErrorToastMessage(_localizer["ToastFailedSalesPointDeleteBank"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                            return View(salesPoint);
+                        }
+                        if (salesPoint.CrCasAccountSalesPointNavigation.CrCasBranchInformationStatus==Status.Deleted)
+                        {
+                            _toastNotification.AddErrorToastMessage(_localizer["ToastFailedSalesPointDeleteBranch"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                             return View(salesPoint);
                         }
                         salesPoint.CrCasAccountSalesPointStatus = Status.Active;

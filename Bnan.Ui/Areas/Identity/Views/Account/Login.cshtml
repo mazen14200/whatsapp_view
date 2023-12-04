@@ -5,9 +5,6 @@
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
     var returnUrl = ViewData["returnUrl"];
 }
-
-
-
 <div class="limiter">
     <div class="navbar-div px-2">
         <nav class="navbar navbar-light">
@@ -51,7 +48,6 @@
                             <input class="form-control input100" asp-for="UserName" type="username" id="employee-number" autocomplete="off">
                             <span asp-validation-for="@Model.UserName" class="text-danger"></span>
                             @Html.ValidationMessage("stat", null,  new { @class = "text-danger" })
-                            @Html.ValidationMessage("userLogin", null,  new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="input-label-div">
@@ -77,7 +73,7 @@
         </div>
     </div>
     <!-- Footer -->
-    <footer class="footerLogin">
+    <footer class="footerLogin" style="height:9%">
         <div class="row w-100 align-items-center" style="flex-direction: row-reverse;">
             <div class="col d-flex text-white align-items-center ">
                 <div class="col d-flex" style="flex-direction: column ;align-items:flex-end">

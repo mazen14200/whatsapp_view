@@ -797,22 +797,25 @@
                     <div class="list-unstyled topbar-menu float-end mb-0" style="top: 55px;right: 550px;position: fixed;height: 6%;width: 45%;">
                         @if (lessorCompanyContract.CrMasUserInformationLessorNavigation.CrMasLessorInformationStatus == Status.Hold)
                         {
-                            <div class="text-danger" id="dangerMessage">@localizer["CompanyHoldedDanger"]</div>
-
+                            <div style="color:red;font-weight:300" id="dangerMessage">@localizer["CompanyIsHoldInSystems"]</div>
+                        }
+                        else if (user.CrMasUserInformationStatus==Status.Hold)
+                        {
+                            <div style="color:red;font-weight:300" id="dangerMessage">@localizer["EmployeeHoldedInBS"]</div>
                         }
                         else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.Renewed)
                         {
-                            <div class="text-danger" id="dangerMessage">@localizer["ContractNewDanger"]</div>
+                            <div style="color:red;font-weight:300" id="dangerMessage">@localizer["ContractNewDanger"]</div>
 
                         }
                         else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.Expire)
                         {
-                            <div class="text-danger" id="dangerMessage">@localizer["ContractExpireDanger"]</div>
+                            <div style="color:red;font-weight:300" id="dangerMessage">@localizer["ContractExpireDanger"]</div>
 
                         }
                         else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.AboutToExpire)
                         {
-                            <div class="text-danger" id="dangerMessage">@localizer["ContractAboutExpireDanger"]</div>
+                            <div style="color:red;font-weight:300" id="dangerMessage">@localizer["ContractAboutExpireDanger"]</div>
                         }
                     </div>
 

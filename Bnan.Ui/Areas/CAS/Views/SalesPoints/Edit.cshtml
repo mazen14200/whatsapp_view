@@ -6,7 +6,7 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    ViewData["Page-title"] = localizer["Add SalesPoint Data"];
+    ViewData["Page-title"] = localizer["Edit SalesPoint Data"];
     ViewData["Page-Hint"] = localizer["Edit SalesPoint Hint"];
 }
 <style>

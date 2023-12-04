@@ -3,6 +3,7 @@ using Bnan.Core.Extensions;
 using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using Bnan.Inferastructure.Extensions;
+using Bnan.Inferastructure.Repository;
 using Bnan.Ui.Areas.Base.Controllers;
 using Bnan.Ui.Areas.CAS.Controllers;
 using Bnan.Ui.ViewModels.BS;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using NToastNotify;
+using System.Globalization;
 using System.Reflection.Metadata.Ecma335;
 
 namespace Bnan.Ui.Areas.BS.Controllers
@@ -30,7 +32,10 @@ namespace Bnan.Ui.Areas.BS.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            //To Set Title 
             var userLogin = await _userManager.GetUserAsync(User);
+            if (CultureInfo.CurrentUICulture.Name== "en-US") await ViewData.SetPageTitleAsync("Branches", "", "", "", "", userLogin.CrMasUserInformationEnName);
+            else await ViewData.SetPageTitleAsync("الفروع", "", "", "", "", userLogin.CrMasUserInformationArName);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var userInformation = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationLessor == lessorCode && x.CrMasUserInformationCode == userLogin.CrMasUserInformationCode, new[] { "CrMasUserBranchValidities.CrMasUserBranchValidity1" });
             var branchesValidite = userInformation.CrMasUserBranchValidities.Where(x => x.CrMasUserBranchValidityBranchStatus == Status.Active);
@@ -52,7 +57,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
 
             var selectBranch = userLogin.CrMasUserInformationDefaultBranch;
-            if (selectBranch == null || selectBranch == "000") selectBranch = "100";
+            if (selectBranch == null || selectBranch == "000")
+            {
+                selectBranch = "100";
+                 await  ChangeBranch(selectBranch);
+            }
             var checkBranch = branches.Find(x => x.CrCasBranchInformationCode == selectBranch);
             if (checkBranch == null) selectBranch = branches.FirstOrDefault().CrCasBranchInformationCode;
             var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
@@ -97,6 +106,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
             ViewBag.PriceCarRenewedBS = PriceCar.Where(x => x.CrCasPriceCarBasicStatus == Status.Renewed).Count();
             ViewBag.PriceCarAboutExpireBS = PriceCar.Where(x => x.CrCasPriceCarBasicStatus == Status.AboutToExpire).Count();
             ViewBag.PriceCarExpiredBS = PriceCar.Where(x => x.CrCasPriceCarBasicStatus == Status.Expire).Count();
+
+            ViewBag.Adminstritive = _unitOfWork.CrCasSysAdministrativeProcedure.FindAll(x => x.CrCasSysAdministrativeProceduresLessor == lessorCode &&
+                                                                                x.CrCasSysAdministrativeProceduresTargeted == userLogin.CrMasUserInformationCode &&
+                                                                                x.CrCasSysAdministrativeProceduresCode == "303" &&
+                                                                                x.CrCasSysAdministrativeProceduresStatus == Status.Insert).Count();
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
                 CrCasBranchInformations = branches,
@@ -105,7 +119,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 UnAvaliableCars = null,
                 SelectedBranch = selectBranch,
                 CrCasBranchInformation = branch,
-                CrMasUserBranchValidity = branchValidity
+                CrMasUserBranchValidity = branchValidity,
             };
             return View(bSLayoutVM);
         }

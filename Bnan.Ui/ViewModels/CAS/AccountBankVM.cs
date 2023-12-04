@@ -9,6 +9,7 @@ namespace Bnan.Ui.ViewModels.CAS
         public string CrCasAccountBankCode { get; set; } = null!;
         public string? CrCasAccountBankLessor { get; set; }
         [NotMapped]
+        [Required(ErrorMessage = "requiredFiled")]
         public string? CrCasBankEnName { get; set; }
 
         [NotMapped]

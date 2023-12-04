@@ -102,7 +102,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             if (ModelState.IsValid)
             {
                 await _adminstritiveProcedures.SaveAdminstritive(userLogin.CrMasUserInformationCode, "1", "303", "30", userLogin.CrMasUserInformationLessor, "100",
-                Model.CrMasUserInformationCode, decimal.Parse(FeedValue), null, null, null, null, null, null, null, "اضافة", "Insert", "I", Reasons);
+                Model.CrMasUserInformationCode, decimal.Parse(FeedValue), null, null, null, null, null, null, null, "تغذية صندوق", "Feed Box", "I", Reasons);
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 return RedirectToAction("FeedBox");
             }

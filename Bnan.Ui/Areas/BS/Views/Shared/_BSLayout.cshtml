@@ -38,9 +38,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="شركة كدي لتأجير السيارات ">
     <meta name="author" content="">
-
-    <title>كدي</title>
-    <link rel="shortcut icon" href="~/BranchSys/logo.png" type="image/x-icon" />
+    <title>@ViewData["Title"]</title>
+@*     <title>الفروع - الرئيسية</title>
+ *@    <link rel="shortcut icon" href="~/Bnan.png" type="image/x-icon" />
     <!-- Custom styles for this template-->
     <link href="~/BranchSys/css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -82,7 +82,6 @@
         <div id="content">
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light topbar mb-2 static-top shadow  justify-content-between" style="height:100px;">
-
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ">
 
@@ -282,7 +281,20 @@
                         }
                     </li>
                 </ul>
-                <!-- logo -->
+                @if (lessorInfo.CrMasUserInformationLessorNavigation.CrMasLessorInformationStatus == Status.Hold)
+                {
+                    <div class=" d-flex align-items-center on-mobile" style="color:red; font-weight:600">
+                        @localizer["CompanyIsHoldInSystems"]
+                    </div>
+                }
+                else if (user.CrMasUserInformationStatus==Status.Hold)
+                {
+                    <div class=" d-flex align-items-center on-mobile" style="color:red; font-weight:600">
+                        @localizer["EmployeeHoldedInBS"]
+                    </div>
+                }
+               
+                   <!-- logo -->
                 <div class=" d-flex align-items-center on-mobile" style="color:black;">
                     <div class="pt-sm-0 pt-md-4  pt-lg-4 pt-xl-4">
                         <h1 class="hide-on-mobile" style="font-size: 1.2rem;font-weight: bold;">
