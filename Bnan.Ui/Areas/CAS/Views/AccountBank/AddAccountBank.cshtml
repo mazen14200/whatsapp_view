@@ -4,7 +4,7 @@
 
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
     ViewData["Page-title"] = localizer["Add AccountBank Data"];
     ViewData["Page-Hint"] = localizer["Add AccountBank Hint"];
 }
@@ -21,65 +21,60 @@
 <div class="sub-container-form">
     <form class="needs-validation" novalidate asp-area="CAS" asp-controller="AccountBank" asp-action="AddAccountBank" enctype="multipart/form-data">
         <div class="form-contain">
+            <div class="row mt-2">
 
-            <input type="text" class="form-control" asp-for="CrCasAccountBankNo" id="CrCasAccountBankNo" maxlength="100" width="80%" value="@ViewBag.AccountBankCode" readonly hidden/>
-            <input type="text" class="form-control" asp-for="CrCasAccountBankLessor" id="CrCasAccountBankLessor" maxlength="100" width="80%" value="@ViewBag.LessorCode" readonly hidden />
-            <input type="text" class="form-control" asp-for="CrCasAccountBankSerail" id="CrCasAccountBankSerail" maxlength="100" width="80%" value="@ViewBag.SerialCode" readonly hidden />
+                @*AccountBank code*@
 
-        <div class="row mt-2">
-
-            @*AccountBank code*@
-           
-            <div class="col-md-1">
-               <label class="form-label" for="LessorClass">@localizer["BankName"]</label>
-            </div>
-            <div class="col-md-2">
-                @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
-                {
-                        <select class="form-select" asp-for="@Model.CrCasBankArName" style="width: 100%;" dir="rtl">
+                <div class="col-md-1">
+                    <label class="form-label" for="LessorClass">@localizer["BankName"]</label>
+                </div>
+                <div class="col-md-2">
+                    @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                    {
+                        <select class="form-select" asp-for="@Model.CrCasAccountBankNo" style="width: 100%;" dir="rtl">
                             <option value="" selected></option> <!-- Add an empty option as the first option -->
                             @foreach (var BankName in (List<SelectListItem>)ViewData["BanksDataAr"])
-                        {
-                            <option value="@BankName.Value" selected="@(BankName.Value.Trim() == "" ? "selected" : null)">@BankName.Text</option>
-                        }
-                    </select>
+                            {
+                                <option value="@BankName.Value" selected="@(BankName.Value.Trim() == "" ? "selected" : null)">@BankName.Text</option>
+                            }
+                        </select>
 
                         <div style="margin-top:2px">
                             <div style="height: 1.35em">
-                                <span asp-validation-for="@Model.CrCasBankArName" class="text-danger"></span>
+                                <span asp-validation-for="@Model.CrCasAccountBankNo" class="text-danger"></span>
                             </div>
                         </div>
-                }
-                else
-                {
-                        <select class="form-select" asp-for="@Model.CrCasBankEnName" style="width: 100%;">
+                    }
+                    else
+                    {
+                        <select class="form-select" asp-for="@Model.CrCasAccountBankNo" style="width: 100%;">
                             <option value="" selected></option> <!-- Add an empty option as the first option -->
                             @foreach (var BankName in (List<SelectListItem>)ViewData["BanksDataEn"])
-                        {
-                            <option value="@BankName.Value" selected="@(BankName.Value.Trim() == ""  ? "selected" : null)">@BankName.Text</option>
-                        }
-                    </select>
+                            {
+                                <option value="@BankName.Value" selected="@(BankName.Value.Trim() == ""  ? "selected" : null)">@BankName.Text</option>
+                            }
+                        </select>
                         <div style="margin-top:2px">
                             <div style="height: 1.35em">
-                                <span asp-validation-for="@Model.CrCasBankEnName" class="text-danger"></span>
+                                <span asp-validation-for="@Model.CrCasAccountBankNo" class="text-danger"></span>
                             </div>
                         </div>
-                }
-                
+                    }
+
+                </div>
             </div>
-         </div>
             @*IBank *@
             <div class="row mt-2">
                 <div class="col-md-1">
                     <label class="form-label" for="AccountBankCode">@localizer["AccountBankCode"]</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" asp-for="CrCasAccountBankIban" id="AccountBankCode" maxlength="50" width="80%"  required />
+                    <input type="text" class="form-control" asp-for="CrCasAccountBankIban" id="AccountBankCode" maxlength="50" width="80%" required />
                     <div style="margin-top:2px">
                         <div style="height: 1.0em">
                             <span asp-validation-for="@Model.CrCasAccountBankIban" class="text-danger"></span>
-                             @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
-                                 {
+                            @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                            {
                                 @Html.ValidationMessage("ExistCodeAr", null, new { @class = "text-danger" })
                             }
                             else
@@ -90,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
             @*AccountBank name arabic*@
             <div class="row mt-2">
                 <div class="col-md-1">
@@ -136,7 +131,7 @@
                 </div>
             </div>
 
-         
+
 
             @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
         </div>
@@ -171,7 +166,7 @@
 
 
         }
-       
+
 
     </script>
 }

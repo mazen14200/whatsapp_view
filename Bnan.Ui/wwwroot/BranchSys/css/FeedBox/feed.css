@@ -253,7 +253,7 @@ fieldset {
 
 /* ********************************** */
 .container-fluid {
-    height: 70%;
+    height: 60vh;
 }
 
 .section-mainCard {
@@ -269,4 +269,7 @@ fieldset {
 
 #content {
     height: 100%;
+}
+#exampleFormControlTextarea1{
+    direction:rtl;
 }

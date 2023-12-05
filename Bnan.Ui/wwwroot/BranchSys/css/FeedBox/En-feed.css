@@ -1,4 +1,6 @@
-:has(#switch-mode:checked) body{
+ body{
     direction: rtl;
 }
- 
+#exampleFormControlTextarea1 {
+    direction: ltr;
+}

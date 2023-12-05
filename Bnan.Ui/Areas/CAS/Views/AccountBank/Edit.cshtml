@@ -40,10 +40,9 @@
                         <label class="form-label" for="BankNameAr">@localizer["BankNameArAccount"]</label>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" asp-for="CrCasBankArName" id="CrCasBankArName" maxlength="50" width="80%" value="@ViewBag.BankNameAr" readonly />
+                        <input type="text" class="form-control" id="CrCasBankArName" maxlength="50" width="80%" value="@ViewBag.BankNameAr" readonly />
                         <div style="margin-top:2px">
                             <div style="height: 1.0em">
-                                <span asp-validation-for="@Model.CrCasBankArName" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -57,10 +56,9 @@
                         <label class="form-label" for="BankNameEn">@localizer["BankNameEnAccount"]</label>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" asp-for="CrCasBankEnName" id="CrCasBankEnName" maxlength="100" width="80%" value="@ViewBag.BankNameEn" readonly />
+                        <input type="text" class="form-control"  id="CrCasBankEnName" maxlength="100" width="80%" value="@ViewBag.BankNameEn" readonly />
                         <div style="margin-top:2px">
                             <div style="height: 1.0em">
-                                <span asp-validation-for="@Model.CrCasBankEnName" class="text-danger"></span>
                             </div>
                         </div>
                     </div>

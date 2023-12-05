@@ -91,8 +91,6 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewData["AccountBanksAr"] = accountBanks.Select(x => new SelectListItem { Value = x.CrCasAccountBankCode.ToString(), Text = x.CrCasAccountBankArName }).ToList();
             ViewData["AccountBanksEn"] = accountBanks.Select(x => new SelectListItem { Value = x.CrCasAccountBankCode.ToString(), Text = x.CrCasAccountBankEnName }).ToList();
 
-
-
             return View();
         }
         public string[] GetBankInfo(string code)

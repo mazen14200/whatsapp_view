@@ -430,6 +430,7 @@
   "toastMessageAccountHaveSalesPoint": "لا يمكن حذف حساب بنكي به نقاط بيع",
   "toastMessageSalesPointHaveBalance": "لا يمكن حذف نقطة بيع بها رصيد",
   "toastMessageEmployeeHaveBalance": "لا يمكن حذف موظف لديه رصيد",
+  "toastMessageExistFeedBox": "لا يوجد تغذية صندوق",
 
 
   // LessorImages
@@ -1067,6 +1068,11 @@
   "MaximumHours": "الحد الاعلى للساعات",
   "FreeHours": "الساعات المجانية",
   "DailyFreeKilos": "الكيلوات المجاني اليومي",
-  "RentalTerms": "بنود التأجير"
-
+  "RentalTerms": "بنود التأجير",
+  "FeedNo": "رقم التغذية",
+  "Feeder": "المُغذي",
+  "FeedBoxAmount": "المبلغ",
+  "HintFeedBox": "يمكنك قبول أو رفض تغذية الصندوق الخاص بك بالفرع الحالي",
+  "Accept": "قبول",
+  "Reject": "رفض"
 }

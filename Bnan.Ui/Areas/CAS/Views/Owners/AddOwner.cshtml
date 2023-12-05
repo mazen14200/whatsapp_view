@@ -36,7 +36,7 @@
                 <div class="col-md-2">
                     <input type="text" class="form-control" asp-for="CrCasOwnersCode" width="80%" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off"/>
                     <div style="margin-top:2px">
-                        <div style="height: 1.0em">
+                        <div style="height: 1.0em;width: 25em">
                             <span asp-validation-for="@Model.CrCasOwnersCode" class="text-danger"></span>
                             @Html.ValidationMessage("OwnerIsExist", null, new { @class = "text-danger" })
                         </div>

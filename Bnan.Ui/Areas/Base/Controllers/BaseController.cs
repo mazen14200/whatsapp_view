@@ -131,5 +131,11 @@ namespace Bnan.Ui.Areas.Base.Controllers
 
             return true;
         }
+
+        [HttpGet]
+        public async Task<bool> CheckAuth(string branchCode, string salespoint,string Balance,string CarsCount,string status)
+        {
+            return false;
+        }
     }
 }

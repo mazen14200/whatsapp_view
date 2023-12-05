@@ -80,6 +80,7 @@
 
     .image-title-wrap {
         color: #222;
+        width: 154px;
     }
 
     .drag-text {
@@ -134,7 +135,7 @@
         cursor: pointer;
     }
 
-   
+
 
     @@media (max-width: 1050px) {
         #BranchSigntureImage {
@@ -151,9 +152,9 @@
             right: 30%;
         }
     }
-    </style>
+</style>
 
-    @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+@if (requestCulture.RequestCulture.UICulture.Name == "en-US")
 {
     <style>
         #BranchSigntureImage {
@@ -625,74 +626,71 @@ else
             </a>
         </div>
     </form>
-
-
-    <!-- MOdel-->
-    <!-- Reactive Hold User MOdel-->
-    <div class="modal fade" id="centermodalRHold" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h4>@localizer["SureToRetriveHoldBranch"]</h4>
-                    <p>@localizer["HintSureToRetriveHBranch"]</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
-                    <button type="button" id="retriveUserButtonH" class="btn btn-primary">@localizer["Okay"]</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <!-- Reactive Delete User MOdel-->
-    <div class="modal fade" id="centermodalRDelete" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-
-                <div class="modal-body">
-                    <h4>@localizer["SureToRetriveDeleteBranch"]</h4>
-                    <p>@localizer["HintSureToRetriveDBranch"]</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
-                    <button type="button" id="retriveUserButtonD" class="btn btn-primary">@localizer["Okay"]</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <!-- Delete User MOdel-->
-    <div class="modal fade" id="centermodalDelete" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-
-                <div class="modal-body">
-                    <h4>@localizer["SureTodeleteBranch"]</h4>
-                    <p> @localizer["HintSureTodeleteBranch"]</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
-                    <button type="button" id="deleteUserButton" class="btn btn-primary">@localizer["Okay"]</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <!-- Hold User MOdel-->
-    <div class="modal fade" id="centermodalhold" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-
-                <div class="modal-body">
-                    <h4>@localizer["SureToHoldBranch"]</h4>
-                    <p> @localizer["HintSureToHoldBranch"]</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
-                    <button type="button" id="holdUserButton" class="btn btn-primary">@localizer["Okay"]</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
 </div>
+<!-- MOdel-->
+<!-- Reactive Hold User MOdel-->
+<div class="modal fade" id="centermodalRHold" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>@localizer["SureToRetriveHoldBranch"]</h4>
+                <p>@localizer["HintSureToRetriveHBranch"]</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                <button type="button" id="retriveUserButtonH" class="btn btn-primary">@localizer["Okay"]</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Reactive Delete User MOdel-->
+<div class="modal fade" id="centermodalRDelete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h4>@localizer["SureToRetriveDeleteBranch"]</h4>
+                <p>@localizer["HintSureToRetriveDBranch"]</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                <button type="button" id="retriveUserButtonD" class="btn btn-primary">@localizer["Okay"]</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Delete User MOdel-->
+<div class="modal fade" id="centermodalDelete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h4>@localizer["SureTodeleteBranch"]</h4>
+                <p> @localizer["HintSureTodeleteBranch"]</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                <button type="button" id="deleteUserButton" class="btn btn-primary">@localizer["Okay"]</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Hold User MOdel-->
+<div class="modal fade" id="centermodalhold" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h4>@localizer["SureToHoldBranch"]</h4>
+                <p> @localizer["HintSureToHoldBranch"]</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
+                <button type="button" id="holdUserButton" class="btn btn-primary">@localizer["Okay"]</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
@@ -808,12 +806,12 @@ else
             var salespoint = $("#SalesPointCount").val();
             var Balance = $("#CrCasBranchInformationTotalBalance").val();
             var CarsCount = $("#CarsCount").val();
-          
-            if (branchCode!="100") {
-                if(status=="D"){
-                    if (Balance>0) {
-                    toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                    toastr.error('@localizer["toastMessagebranchHaveBalance"]');
+
+            if (branchCode != "100") {
+                if (status == "D") {
+                    if (Balance > 0) {
+                        toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                        toastr.error('@localizer["toastMessagebranchHaveBalance"]');
                     }
                     else if (salespoint > 0) {
                         toastr.options = { "positionClass": '@localizer["toastPostion"]', };
@@ -823,42 +821,48 @@ else
                         toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                         toastr.error('@localizer["toastMessagebranchHaveCars"]');
                     }
-                    else{
+                    else {
                         CheckValidation('2201001', status).done(function (data) {
                             if (data) $(Modal).modal('show');
                         });
                     }
                 }
-                else{
+                else {
                     CheckValidation('2201001', status).done(function (data) {
                         if (data) $(Modal).modal('show');
                     });
                 }
             }
-            else{
-                if (status=="H") {
+            else {
+                if (status == "H") {
                     toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                     toastr.error('@localizer["toastMessageMainBranchHold"]');
                 }
-                else{
+                else {
                     toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                     toastr.error('@localizer["toastMessageMainBranchDelete"]');
                 }
-               
+
             }
-            
+
         })
 
 
-        $("#saveEdit").on("click", function (event) {
-            event.preventDefault();
-            CheckValidation('2201001', '@Status.Save').done(function (data) {
-                if (data) {
-                    $('form').submit();
-                }
-            });
-        })
 
+
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $("#saveEdit").on("click", function (event) {
+                event.preventDefault();
+                CheckValidation('2201001', '@Status.Save').done(function (data) {
+                    if (data) {
+                        $('form').submit();
+                    }
+                });
+            })
+        });
     </script>
 
 }

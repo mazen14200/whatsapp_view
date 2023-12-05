@@ -358,7 +358,7 @@
   "requiredNoStartWithFiled": "Input Must Start With  Number {0}.",
   "requiredNoStartWithFiled7": "Field Is Required And Must Start With Number 7",
   "requiredNoStartWithFiled15": "Field Is Required And Must Start With Number 15",
-  "requiredNoLengthFiled10": "Field Is Required And Must Start With Number 10",
+  "requiredNoLengthFiled10": " Field Requires 10 Numbers And Start Number 7",
   "requiredNoStartWithFiled1": "Field Is Required And Must Start With Number 1",
   "requiredNoStartWithFiled5": "Field Is Required And Must Start With Number 5",
   "requiredGreaterThan": "Mush be greater than input To",
@@ -416,19 +416,16 @@
   "ToastFailed": "Operation Failed",
   "ToastFailedSalesPointDeleteBank": "The account has been deleted and the point of sale cannot be returned",
   "ToastFailedSalesPointDeleteBranch": "It is not possible to return a point of sale whose branch was deleted",
-  "toastMessageMainBranchDelete": "Can't Delete The Main Branch",
+  "toastMessageMainBranchDelete": "Can t Delete The Main Branch",
   "toastMessagebranchHaveSalesPoint": "A branch with a sales points cannot be deleted",
   "toastMessagebranchHaveCars": "A branch with a cars cannot be deleted",
   "toastMessageOwnerHaveCars": "A owner with a cars cannot be deleted",
-  "toastMessageMainBranchHold": "Can't Hold The Main Branch",
+  "toastMessageMainBranchHold": "Can t Hold The Main Branch",
   "toastMessagebranchHaveBalance": "A branch with a balance cannot be deleted",
   "toastMessageAccountHaveSalesPoint": "A account bank with a sales point cannot be deleted",
   "toastMessageSalesPointHaveBalance": "A sales point with a balance cannot be deleted",
   "toastMessageEmployeeHaveBalance": "A employee with a balance cannot be deleted",
-
-
-
-
+  "toastMessageExistFeedBox": "There is no box feeding",
 
   // LessorImages
   "LessorsImages Hint": "The page allows you to display lessors data , and modify lessors images",
@@ -713,7 +710,7 @@
   "AccountBank Hint": "The page allows you to display, add, and modify Account Bank data.",
   "AccountBankNameEn": " Account En Name",
   "AccountBankNameAr": "Account Ar Name",
-  "AccountBankName": "Account Bank Name",
+  "AccountBankName": "Account Name",
 
   "Add AccountBank": "Add Account Bank",
   "Add AccountBank Method": "Add Account Bank",
@@ -1074,6 +1071,12 @@
   "MaximumHours": "Maximum Hours",
   "FreeHours": "Free Hours",
   "DailyFreeKilos": "Daily Free KM",
-  "RentalTerms": "RentalTerms"
+  "RentalTerms": "RentalTerms",
+  "FeedNo": "FeedBox No.",
+  "Feeder": "Feeder",
+  "FeedBoxAmount": "Amount",
+  "HintFeedBox": "You can accept or reject your box being fed to the current branch",
+  "Accept": "Accept",
+  "Reject": "Reject"
 
 }

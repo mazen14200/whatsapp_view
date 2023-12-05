@@ -4,6 +4,8 @@
 @model BSLayoutVM
 @inject UserManager<CrMasUserInformation> userManager
 @inject SignInManager<CrMasUserInformation> signinManager
+@inject IViewLocalizer localizer
+
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["Title"] = "Index";
@@ -18,6 +20,10 @@
 }
 <!-- Main Content -->
 <link href="~/BranchSys/css/FeedBox/feed.css" rel="styleSheet">
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    <link href="~/BranchSys/css/FeedBox/En-feed.css" rel="styleSheet">
+}
 <style>
     /* .row-data{
                 align-items: baseline
@@ -29,23 +35,15 @@
     <section class="section-mainCard">
         <div class="row justify-content-center w-100">
             <div class="col-md-11 col-sm-10 col-md-8 col-lg-11 col-xl-9  text-center p-0 ">
-                <div class="card main-card ">
-                    @*  <div class="col pt-2 d-flex">
-                    <a asp-action="Index" asp-area="BS" asp-controller="Home">
+                <a class="col pt-2 d-flex" asp-action="Index" asp-area="BS" asp-controller="Home">
                     <img src="~/BranchSys/img/cancel.png" alt="cancle_icon" class="cancle-icon">
-                    </a>
-                    </div> *@
+                </a>
+                <div class="card main-card ">
                     <div class="row" style="flex-direction: row-reverse;font-weight: 600">
-                        <div class="col justify-content-center d-flex" style="margin-right: 33%">
+                        <div class="col justify-content-center d-flex" >
                             <span class="card-title">
-                                تغذية الصندوق
+                                @localizer["Feedbox"]
                             </span>
-                        </div>
-
-                        <div class="col pt-2 d-flex">
-                            <a asp-action="Index" asp-area="BS" asp-controller="Home">
-                                <img src="~/BranchSys/img/cancel.png" alt="cancle_icon" class="cancle-icon">
-                            </a>
                         </div>
                     </div>
                     <div class="row justify-content-center " style="font-weight: 600">
@@ -57,7 +55,7 @@
                                         <div class="form-card">
                                             <div class="row data-row ">
                                                 <div class="col-auto">
-                                                    <p id="feed-number"> رقم التغذية </p>
+                                                    <p id="feed-number"> @localizer["FeedNo"] </p>
 
                                                 </div>
                                                 <div class="col-auto personal-data">
@@ -68,17 +66,24 @@
                                             </div>
                                             <div class="row data-row ">
                                                 <div class="col-auto">
-                                                    <p id="feeder"> المُغذي</p>
+                                                    <p id="feeder"> @localizer["Feeder"]</p>
 
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>@userManager.FindByIdAsync(Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresUserInsert).Result.CrMasUserInformationArName</p>
+                                                    @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+                                                    {
+                                                        <p>@userManager.FindByIdAsync(Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresUserInsert).Result.CrMasUserInformationEnName</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>@userManager.FindByIdAsync(Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresUserInsert).Result.CrMasUserInformationArName</p>
+                                                    }
                                                 </div>
 
                                             </div>
                                             <div class="row data-row ">
                                                 <div class="col-auto">
-                                                    <p id="date-of-feeding">التاريخ</p>
+                                                    <p id="date-of-feeding">@localizer["Date"]</p>
 
                                                 </div>
                                                 <div class="col-auto personal-data">
@@ -88,46 +93,40 @@
                                             </div>
                                             <div class="row data-row ">
                                                 <div class="col-auto">
-                                                    <p id="money-amount">المبلغ</p>
-
+                                                    <p id="money-amount">@localizer["FeedBoxAmount"]</p>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <p>@Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresDebit</p>
-
                                                 </div>
 
                                             </div>
                                             <div class="row data-row ">
                                                 <div class="col-auto">
-                                                    <p id="notes">الملاحظات</p>
+                                                    <p id="notes">@localizer["reasons"]</p>
                                                 </div>
                                                 <div class="col-sm-5 col-md-5 col-lg-5">
-                                                    <textarea class="form-control"
-                                                              id="exampleFormControlTextarea1" rows="1" maxlength="100">
-                                                        @*                                           @Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresReasons
- *@                                    </textarea>
+                                                    <input class="form-control"
+                                                           id="exampleFormControlTextarea1" rows="1" maxlength="100" name="exampleFormControlTextarea1" asp-for="CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresReasons" >
                                                 </div>
 
                                             </div>
                                             <div class="row  data-row ">
                                                 <div class="col-auto warninng-p">
-                                                    <p style="color: #FF2828;"> يمكنك قبول أو رفض تغذية الصندوق الخاص بك بالفرع الحالي</p>
+                                                    <p style="color: #FF2828;">@localizer["HintFeedBox"]</p>
                                                 </div>
                                             </div>
 
                                         </div>
                                         <div class="row button-row">
                                             <div class="button-card p-1">
-                                                <button class="btn  save-button" onclick="AcceptOrNot('A')">
-                                                    قبول
-                                                </button>
-
+                                                <a class="btn  save-button" onclick="AcceptOrNot('Q')">
+                                                    @localizer["Accept"]
+                                                </a>
                                             </div>
                                             <div class="button-card p-1">
-                                                <button class="btn save-button" onclick="AcceptOrNot('R')">
-                                                    رفض
-                                                </button>
-
+                                                <a class="btn save-button" onclick="AcceptOrNot('Z')">
+                                                    @localizer["Reject"]
+                                                </a>
                                             </div>
                                         </div>
 
@@ -159,13 +158,13 @@
 
     <script>
         function AcceptOrNot(status) {
-            // Make an AJAX call
+            var reasons = $("#exampleFormControlTextarea1").val();
             $.ajax({
                 url: "/BS/FeedBox/AcceptOrNot", // Update with your controller and action
                 type: "POST",
-                data: { status: status },
+                data: { status: status, reasons: reasons },
                 success: function (result) {
-                    window.location.href = "/BS/Home/Index";
+                    window.location.href = "/BS/FeedBox/SuccesssMessageForFeedBox";
                 },
                 error: function () {
                     // Handle errors if necessary

@@ -283,13 +283,13 @@
                 </ul>
                 @if (lessorInfo.CrMasUserInformationLessorNavigation.CrMasLessorInformationStatus == Status.Hold)
                 {
-                    <div class=" d-flex align-items-center on-mobile" style="color:red; font-weight:600">
+                    <div class=" d-flex align-items-center on-mobile" style="color:red; font-weight: bold;font-size:14px;margin-top: 3%;">
                         @localizer["CompanyIsHoldInSystems"]
                     </div>
                 }
                 else if (user.CrMasUserInformationStatus==Status.Hold)
                 {
-                    <div class=" d-flex align-items-center on-mobile" style="color:red; font-weight:600">
+                    <div class=" d-flex align-items-center on-mobile" style="color:red; font-weight:bold;font-size:14px;margin-top: 3%;">
                         @localizer["EmployeeHoldedInBS"]
                     </div>
                 }
