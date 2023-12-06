@@ -5,7 +5,7 @@ namespace Bnan.Ui.ViewModels.Identitiy
 {
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "requiredFiled")]
         public string CrMasUserInformationCode { get; set; } = null!;
         public string? CrMasUserInformationPassWord { get; set; }
         public string? CrMasUserInformationLessor { get; set; }
@@ -14,20 +14,20 @@ namespace Bnan.Ui.ViewModels.Identitiy
         public bool? CrMasUserInformationAuthorizationBranch { get; set; }
         public bool? CrMasUserInformationAuthorizationOwner { get; set; }
         public bool? CrMasUserInformationAuthorizationFoolwUp { get; set; }
-        [Required]
+        [Required(ErrorMessage = "requiredFiled")]
         [MinLength(3)]
         public string? CrMasUserInformationArName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "requiredFiled")]
         [MinLength(3)]
         public string? CrMasUserInformationEnName { get; set; }
         public decimal? CrMasUserInformationTotalBalance { get; set; }
         public decimal? CrMasUserInformationReservedBalance { get; set; }
         public decimal? CrMasUserInformationAvailableBalance { get; set; }
         public decimal? CrMasUserInformationCreditLimit { get; set; }
-        [Required]
+        [Required(ErrorMessage = "requiredFiled")]
         [MinLength(3)]
         public string? CrMasUserInformationTasksArName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "requiredFiled")]
         [MinLength(3)]
         public string? CrMasUserInformationTasksEnName { get; set; }
         public string? CrMasUserInformationRemindMe { get; set; }

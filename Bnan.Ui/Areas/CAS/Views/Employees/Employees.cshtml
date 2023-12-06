@@ -52,7 +52,7 @@
 
             <div class="col-sm-12 col-md-12 mt-3" id="status-filter">
                 <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadioAll" name="customRadio" value="all" class="form-check-input">
+                    <input type="radio" id="customRadioAll" name="customRadio" value="All" class="form-check-input">
                     <label class="form-check-label" for="customRadioAll">@localizer["All"]</label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -60,12 +60,12 @@
                     <label class="form-check-label" for="customRadioActive">@localizer["Active"]</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadioRemoved" name="customRadio" value="D" class="form-check-input">
-                    <label class="form-check-label" for="customRadioRemoved">@localizer["Deleted"]</label>
-                </div>
-                <div class="form-check form-check-inline">
                     <input type="radio" id="customRadioStoped" name="customRadio" value="H" class="form-check-input">
                     <label class="form-check-label" for="customRadioStoped">@localizer["Stoped"]</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadioRemoved" name="customRadio" value="D" class="form-check-input">
+                    <label class="form-check-label" for="customRadioRemoved">@localizer["Deleted"]</label>
                 </div>
             </div>
         </div>
@@ -97,6 +97,8 @@
 
         //on Click Filter Radio Button GetLessorsByStatus
         $("input[name='customRadio']").on("click", function () {
+            // Clear the value from the search input
+            $("#top-search").val("");
             GetEmployeesFitler($(this).val())
         })
     </script>

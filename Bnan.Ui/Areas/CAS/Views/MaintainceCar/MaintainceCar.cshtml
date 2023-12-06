@@ -86,6 +86,8 @@
             })
         }
         $("input[name='customRadio']").on("click", function () {
+            // Clear the value from the search input
+            $("#top-search").val("");
             GetMaintainceCarFitler($(this).val())
         })
     </script>

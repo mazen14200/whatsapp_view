@@ -96,6 +96,8 @@
 
         //on Click Filter Radio Button GetLessorsByStatus
         $("input[name='customRadio']").on("click", function () {
+            // Clear the value from the search input
+            $("#top-search").val("");
             GetCarsFitler($(this).val())
         })
     </script>

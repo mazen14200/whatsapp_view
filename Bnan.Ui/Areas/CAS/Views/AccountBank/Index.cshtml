@@ -97,6 +97,8 @@
 
         //on Click Filter Radio Button GetAccountBankByStatus
         $("input[name='customRadio']").on("click", function () {
+            // Clear the value from the search input
+            $("#top-search").val("");
             GetAccountBankFitler($(this).val())
         })
     </script>

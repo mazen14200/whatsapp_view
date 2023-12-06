@@ -319,7 +319,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-2">
+            <div class="row mt-2" hidden>
                 <div class="col-md-1">
                     <label class="form-label" for="UserPhone">@localizer["User Phone"]</label>
                 </div>
@@ -347,7 +347,7 @@
                 </div>
 
             </div>
-            <div class="row mt-2">
+            <div class="row mt-2" hidden>
                 <div class="col-md-1">
                     <label class="form-label" for="Email">@localizer["Email"]</label>
                 </div>
@@ -375,7 +375,7 @@
                 </div>
 
             </div>
-            <div class="row mt-2">
+            <div class="row mt-2" hidden>
                 <div class="col-md-3 mt-3">
                     <div class="file-upload">
                         <button class="file-upload-btn" type="button" onclick="$('.file-upload-input-picture').trigger('click')">@localizer["Picture"]</button>
@@ -570,32 +570,33 @@
                 var inputs = form.querySelectorAll('input[type="text"]');
                 var filteredInputs = [];
 
-                inputs.forEach(function (input) {
-                    var inputId = input.getAttribute('id');
-                    if (inputId !== 'CrMasUserInformationEmail' && inputId !== 'CrMasUserInformationMobileNo' && inputId !== "CrMasUserInformationReasons") {
-                        filteredInputs.push(input);
-                    }
-                });
+                // inputs.forEach(function (input) {
+                //     var inputId = input.getAttribute('id');
+                //     if (inputId !== 'CrMasUserInformationEmail' && inputId !== 'CrMasUserInformationMobileNo' && inputId !== "CrMasUserInformationReasons") {
+                //         filteredInputs.push(input);
+                //     }
+                // });
 
                 filteredInputs.push(hiddenInput);
 
-                filteredInputs.forEach(function (input) {
-                    if (input.value == "" || input.value == null || !input.checkValidity()) {
-                        allInputsValid = false;
-                    }
-                });
+                // filteredInputs.forEach(function (input) {
+                //     if (input.value == "" || input.value == null || !input.checkValidity()) {
+                //         allInputsValid = false;
+                //     }
+                // });
 
-                var Spans = form.querySelectorAll('span');
-                Spans.forEach(function (span) {
-                    if (span.innerText !== '' && span.innerText !== null) {
-                        console.log(span.innerText)
-                        allInputsValid = false;
-                    }
-                })
+                // var Spans = form.querySelectorAll('span');
+                // Spans.forEach(function (span) {
+                //     if (span.innerText !== '' && span.innerText !== null) {
+                //         console.log(span.innerText)
+                //         allInputsValid = false;
+                //     }
+                // })
+                form.submit();
 
-                if (allInputsValid) {
-                    form.submit();
-                }
+                // if (allInputsValid) {
+                //     form.submit();
+                // }
             })
         });
         

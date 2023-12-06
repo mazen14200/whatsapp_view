@@ -1,5 +1,9 @@
-body {
-    font-family: 'Cairo', 'sans-serif';
+.container-fluid {
+    font-family: cairo;
+    font-weight: 400;
+    height: 100vh;
+    font-size: 14px;
+    letter-spacing: 0.28px;
 }
 nav {
     background-color: rgba(255, 206, 148, 1);
@@ -253,7 +257,7 @@ fieldset {
 
 /* ********************************** */
 .container-fluid {
-    height: 60vh;
+    height: 90%;
 }
 
 .section-mainCard {
@@ -273,3 +277,102 @@ fieldset {
 #exampleFormControlTextarea1{
     direction:rtl;
 }
+/* STYLING BEFORE FOOTER WIDGET */
+.before-footer-widget {
+    height: 100px;
+    background-image: linear-gradient(2.71deg, #FF9626 64.81%, rgba(255, 150, 38, 0.18) 153.13%);
+    font-size: 0;
+}
+
+footer {
+    background-color: #FF992E;
+    width: 100%;
+    height: 250px;
+}
+///////////////////////////////////////////////////
+/* ****************media****************** */
+@media (max-width: 375px) {
+    .extra-small-mobile{
+    display: none;
+}
+
+}
+
+@media (max-width: 646px) {
+
+    .hide-on-mobile {
+        display: none;
+    }
+
+    .on-mobile {
+        flex-direction: column-reverse;
+        padding-top: 16px;
+    }
+
+        .on-mobile p {
+            margin-left: 0px;
+        }
+}
+
+@media (max-width: 786px) {
+    .col-md-3 .btn {
+        font-size: 1rem;
+        margin-bottom: 20px;
+        width: 200px;
+    }
+
+    #rented_data2 p {
+        display: inline;
+    }
+
+    #rented_data2 {
+        margin-bottom: 10px;
+    }
+}
+
+@media(max-width:475px) {
+    #button-on-mobile {
+        text-align: center;
+    }
+}
+
+@media(max-width:988px) {
+
+    .btn-secondary1 {
+        width: 40%;
+    }
+
+    select {
+        width: 40%;
+    }
+
+    .footer-buttons {
+        padding-right: 40px;
+    }
+}
+
+@media(min-width:1300px) {
+
+    .chart-buttons-img {
+        padding-right: 0px;
+    }
+
+    #cardBody {
+        height: 411px;
+    }
+}
+
+@media(min-height:990px) {
+
+    footer {
+        width: 100%;
+        padding-bottom: 240px;
+    }
+}
+
+@media (min-width: 993px) and (max-width: 1400px) {
+    #cardBody {
+        height: 343px;
+    }
+}
+  

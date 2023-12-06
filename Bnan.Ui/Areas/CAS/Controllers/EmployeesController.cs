@@ -75,7 +75,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             // Exclude the current user from the list
             var usersByLessor = await _userService.GetAllUsersByLessor(userLessor.CrMasUserInformationLessor);
             var userWithOutManger = usersByLessor.Where(x => x.CrMasUserInformationCode != ("CAS" + userLessor.CrMasUserInformationLessor));
-            return View(userWithOutManger.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode).ToList());
+            return View(userWithOutManger.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode&&x.CrMasUserInformationStatus==Status.Active).ToList());
         }
 
         [HttpGet]
@@ -92,7 +92,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
                     if (status == Status.All)
                     {
-                        return PartialView("_DataTableEmployees", UsersWithOutManger.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode));
+                        return PartialView("_DataTableEmployees", UsersWithOutManger.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode&&x.CrMasUserInformationStatus!=Status.Deleted));
                     }
                     return PartialView("_DataTableEmployees", UsersWithOutManger.Where(x => x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode && x.CrMasUserInformationStatus == status));
                 }
@@ -278,7 +278,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var lastUser = _userManager.Users.ToList().LastOrDefault(x => x.CrMasUserInformationLessor == currentUser.CrMasUserInformationLessor);
             var crMasUserInformation = _mapper.Map<RegisterViewModel>(user);
             crMasUserInformation.CrMasUserBranchValidities = _unitOfWork.CrMasUserBranchValidity.FindAll(x => x.CrMasUserBranchValidityId == user.CrMasUserInformationCode).ToList();
-            crMasUserInformation.CrCasBranchInformations = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == currentUser.CrMasUserInformationLessor).ToList();
+            crMasUserInformation.CrCasBranchInformations = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == currentUser.CrMasUserInformationLessor&&x.CrCasBranchInformationStatus!=Status.Deleted).ToList();
             return View(crMasUserInformation);
         }
         [HttpPost]

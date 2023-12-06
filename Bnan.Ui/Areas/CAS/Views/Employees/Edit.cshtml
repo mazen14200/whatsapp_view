@@ -155,7 +155,7 @@
                             <label class="form-label" for="CrMasUserInformationCreditLimit">@localizer["CreditLimit"]</label>
                         </div>
                         <div class="col-md-8" style="margin-right: -90px;margin-left: -90px;">
-                            <input type="text" class="form-control" style="width:155px" asp-for="CrMasUserInformationCreditLimit" maxlength="13" id="CrMasUserInformationCreditLimit" autocomplete="off" data-val-required="@localizer["requiredFiled"]" oninput="validateInputNumber(this)">
+                            <input type="text" class="form-control" style="width:155px" asp-for="CrMasUserInformationCreditLimit" maxlength="9" id="CrMasUserInformationCreditLimit" autocomplete="off" data-val-required="@localizer["requiredFiled"]" oninput="validateInput9Digit(this)">
                             <div style="margin-top:2px">
                                 <div style="height: 1.0em">
                                     <span asp-validation-for="@Model.CrMasUserInformationCreditLimit" class="text-danger"></span>
@@ -183,17 +183,40 @@
                             <ul class="list mt-2" style="font-size: 17px;">
                                 <li>
                                     <h4 class="mb-1">
-                                        <input type="checkbox" id="CheckBoxBranches@(branch.CrCasBranchInformationCode)" data-id="@branch.CrCasBranchInformationCode" style="height: 15px;width: 30px;" name="CheckBoxBranches[IndexOf(item)]" class="checkbox-branch" @(isChecked ? "checked=\"checked\"" : "") />
+                                        @*  <input id="CrMasUserBranchValidityBranchCashBalance" value="@branch.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityId==Model.CrMasUserInformationCode&&x.CrMasUserBranchValidityLessor==Model.CrMasUserInformationLessor).CrMasUserBranchValidityBranchCashBalance" hidden />
+                                        <input id="CrMasUserBranchValidityBranchSalesPointBalance" value="@branch.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityId==Model.CrMasUserInformationCode&&x.CrMasUserBranchValidityLessor==Model.CrMasUserInformationLessor).CrMasUserBranchValidityBranchSalesPointBalance" hidden />
+                                        <input id="CrMasUserBranchValidityBranchTransferBalance" value="@branch.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityId==Model.CrMasUserInformationCode&&x.CrMasUserBranchValidityLessor==Model.CrMasUserInformationLessor).CrMasUserBranchValidityBranchTransferBalance" hidden /> *@
+                                        @{
+                                            var CashBalance = branch.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityId == Model.CrMasUserInformationCode && x.CrMasUserBranchValidityLessor == Model.CrMasUserInformationLessor).CrMasUserBranchValidityBranchCashBalance;
+                                            var SalesPointBalance = branch.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityId == Model.CrMasUserInformationCode && x.CrMasUserBranchValidityLessor == Model.CrMasUserInformationLessor).CrMasUserBranchValidityBranchSalesPointBalance;
+                                            var TransferBalance = branch.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityId == Model.CrMasUserInformationCode && x.CrMasUserBranchValidityLessor == Model.CrMasUserInformationLessor).CrMasUserBranchValidityBranchTransferBalance;
+                                        }
+                                        @if (branch.CrCasBranchInformationStatus == Status.Hold || CashBalance > 0 || SalesPointBalance > 0 || TransferBalance>0)
+                                        {
+                                            <input type="checkbox" id="CheckBoxBranches@(branch.CrCasBranchInformationCode)" data-id="@branch.CrCasBranchInformationCode" style="height: 15px;width: 30px;" name="CheckBoxBranches[IndexOf(item)]" class="checkbox-branch" @(isChecked ? "checked=\"checked\"" : "") disabled />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="CheckBoxBranches@(branch.CrCasBranchInformationCode)" data-id="@branch.CrCasBranchInformationCode" style="height: 15px;width: 30px;" name="CheckBoxBranches[IndexOf(item)]" class="checkbox-branch" @(isChecked ? "checked=\"checked\"" : "")  />
+                                        }
                                         @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
                                         {
                                             <label for="Branch">
                                                 @branch.CrCasBranchInformationArShortName
+                                                @if (branch.CrCasBranchInformationStatus == Status.Hold)
+                                                {
+                                                    <span style="color:red">(@localizer["Holded"])</span>
+                                                }
                                             </label>
                                         }
                                         else
                                         {
                                             <label for="Branch">
                                                 @branch.CrCasBranchInformationEnShortName
+                                                @if (branch.CrCasBranchInformationStatus == Status.Hold)
+                                                {
+                                                    <span style="color:red">(@localizer["Holded"])</span>
+                                                }
                                             </label>
                                         }
 
@@ -206,7 +229,7 @@
             </div>
 
 
-            <div class="row mt-1">
+            <div class="row mt-1" hidden>
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-2">
@@ -220,7 +243,7 @@
             </div>
 
 
-            <div class="row mt-3">
+            <div class="row mt-3" hidden>
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-2">
@@ -480,7 +503,24 @@
         $(document).ready(function () {
             // Code to run when the document is ready
             var CashBalance = $("#CashBalance").val();
-            console.log(CashBalance);
+            console.log("CashBalance Emp:"CashBalance);
         });
     </script>
+    @* <script>
+        function checkBalance(checkbox) {
+            // Get the balance inputs for the selected branch
+            var cashBalanceInput = document.getElementById("CrMasUserBranchValidityBranchCashBalance");
+            var salesPointBalanceInput = document.getElementById("CrMasUserBranchValidityBranchSalesPointBalance");
+            var transferBalanceInput = document.getElementById("CrMasUserBranchValidityBranchTransferBalance");
+            console.log(cashBalanceInput);
+            console.log(salesPointBalanceInput);
+            console.log(transferBalanceInput);
+            // Check if any of the inputs have a value
+            var hasBalance = cashBalanceInput.value || salesPointBalanceInput.value || transferBalanceInput.value;
+
+            // Update the checkbox based on whether there is a balance or not
+            checkbox.checked = hasBalance;
+        }
+
+    </script> *@
 }

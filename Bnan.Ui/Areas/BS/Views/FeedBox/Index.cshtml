@@ -26,32 +26,32 @@
 }
 <style>
     /* .row-data{
-                align-items: baseline
-            } */
+                        align-items: baseline
+                    } */
 </style>
 
 
-<div class="container-fluid " id="grad1">
+<div class="container-fluid mt-5" id="grad1">
     <section class="section-mainCard">
-        <div class="row justify-content-center w-100">
+        <div class="row justify-content-center w-75">
             <div class="col-md-11 col-sm-10 col-md-8 col-lg-11 col-xl-9  text-center p-0 ">
-                <a class="col pt-2 d-flex" asp-action="Index" asp-area="BS" asp-controller="Home">
-                    <img src="~/BranchSys/img/cancel.png" alt="cancle_icon" class="cancle-icon">
-                </a>
                 <div class="card main-card ">
-                    <div class="row" style="flex-direction: row-reverse;font-weight: 600">
-                        <div class="col justify-content-center d-flex" >
-                            <span class="card-title">
-                                @localizer["Feedbox"]
-                            </span>
-                        </div>
+                    <div class="row pt-2">
+                        <a class="col pt-2 d-flex" asp-action="Index" asp-area="BS" asp-controller="Home">
+                            <img src="~/BranchSys/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+                        </a>
                     </div>
-                    <div class="row justify-content-center " style="font-weight: 600">
+                    <div class="row justify-content-center d-flex" >
+                        <span class="card-title">
+                            @localizer["Feedbox"]
+                        </span>
+                    </div>
+                    <div class="row justify-content-center " >
                         <div class="col-11 mx-0">
                             @if (Model.CrCasSysAdministrativeProcedure != null)
                             {
                                 <form id="msform">
-                                    <fieldset>
+                                    <fieldset style="padding-bottom: 0;">
                                         <div class="form-card">
                                             <div class="row data-row ">
                                                 <div class="col-auto">
@@ -106,7 +106,7 @@
                                                 </div>
                                                 <div class="col-sm-5 col-md-5 col-lg-5">
                                                     <input class="form-control"
-                                                           id="exampleFormControlTextarea1" rows="1" maxlength="100" name="exampleFormControlTextarea1" asp-for="CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresReasons" >
+                                                           id="exampleFormControlTextarea1" rows="1" maxlength="100" name="exampleFormControlTextarea1" asp-for="CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresReasons">
                                                 </div>
 
                                             </div>
@@ -142,7 +142,8 @@
         </div>
     </section>
 </div>
-<footer class="fixed-bottom-xl" style="height: 22%;">
+<!-- Footer -->
+<footer class="fixed-bottom-xl">
     <div class="before-footer-widget">
         <svg width: 100%; height:auto viewbox="0 0 2444 132">
             <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
@@ -150,9 +151,8 @@
             </path>
         </svg>
     </div>
-    <div class="container footer-buttons justify-content-center pt-1 " style="box-sizing: border-box; ">
-    </div>
 </footer>
+<!-- Footer-->
 
 @section Scripts {
 
@@ -172,7 +172,5 @@
                 }
             });
         }
-
-
     </script>
 }
