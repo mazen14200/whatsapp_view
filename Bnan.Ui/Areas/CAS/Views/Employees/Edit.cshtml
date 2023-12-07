@@ -250,15 +250,15 @@
                             <label class="form-label" for="Email">@localizer["Email"]</label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" asp-for="CrMasUserInformationEmail" id="Email" readonly>
+                            <input type="text" class="form-control" asp-for="CrMasUserInformationEmail" id="Email" readonly oninput="this.value = this.value.replace(/[^a-zA-Z@@. ]/g, '')">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="form-label" for="Email">@localizer["reasons"]</label>
                         </div>
                         <div class="col-md-8">
@@ -301,7 +301,9 @@
                     @localizer["ReactiveDelete"]
                 </a>
             }
-
+            <a type="button" class="btn btn-primary ms-2" id="ResetPassword" onclick="ResetPassword()">
+                @localizer["ResetPassword"]
+            </a>
             <a type="button" class="btn btn-danger ms-2" asp-area="CAS" asp-controller="Employees" asp-action="Employees">
                 @localizer["Back"]
             </a>
@@ -506,21 +508,22 @@
             console.log("CashBalance Emp:"CashBalance);
         });
     </script>
-    @* <script>
-        function checkBalance(checkbox) {
-            // Get the balance inputs for the selected branch
-            var cashBalanceInput = document.getElementById("CrMasUserBranchValidityBranchCashBalance");
-            var salesPointBalanceInput = document.getElementById("CrMasUserBranchValidityBranchSalesPointBalance");
-            var transferBalanceInput = document.getElementById("CrMasUserBranchValidityBranchTransferBalance");
-            console.log(cashBalanceInput);
-            console.log(salesPointBalanceInput);
-            console.log(transferBalanceInput);
-            // Check if any of the inputs have a value
-            var hasBalance = cashBalanceInput.value || salesPointBalanceInput.value || transferBalanceInput.value;
-
-            // Update the checkbox based on whether there is a balance or not
-            checkbox.checked = hasBalance;
+    <script>
+        function ResetPassword() {
+            var code = document.getElementById("UserCode").value;
+            $.ajax({
+                type: "POST",
+                url: "/CAS/Employees/ResetPassword",
+                data: { code: code },
+                success: function (result) {
+                    $('.modal').modal('hide');
+                    window.location.href = "/CAS/Employees/SuccessResetPassword";
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
         }
 
-    </script> *@
+    </script>
 }

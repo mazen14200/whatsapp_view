@@ -62,7 +62,6 @@
                                 <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                                 <th aria-label="Position: activate to sort column ascending">@localizer["UserNo"]</th>
                                 <th aria-label="Position: activate to sort column ascending">@localizer["UserName"]</th>
-                                <th aria-label="Position: activate to sort column ascending">@localizer["Email"]</th>
                                 <th aria-label="Office: activate to sort column ascending">@localizer["Employement"]</th>
                                 <th aria-label="Age: activate to sort column ascending">@localizer["MobilePhone"]</th>
                                 <th aria-label="Age: activate to sort column ascending">@localizer["LastExitDate"]</th>
@@ -80,9 +79,15 @@
                                     <td>@no</td>
                                     <td>@item.CrMasUserInformationCode</td>
                                     <td>@item.CrMasUserInformationEnName</td>
-                                    <td>@item.CrMasUserInformationEmail</td>
                                     <td>@item.CrMasUserInformationTasksEnName</td>
-                                    <td>@item.CrMasUserInformationCallingKey@item.CrMasUserInformationMobileNo</td>
+                                    @if (item.CrMasUserInformationCallingKey != "" || item.CrMasUserInformationCallingKey != null)
+                                    {
+                                        <td>@item.CrMasUserInformationCallingKey @item.CrMasUserInformationMobileNo</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.CrMasUserInformationMobileNo</td>
+                                    }
                                     <td>@item.CrMasUserInformationExitLastDate?.ToString("dd/MM/yyyy")</td>
                                     <td>@item.CrMasUserInformationChangePassWordLastDate?.ToString("dd/MM/yyyy")</td>
                                 </tr>
@@ -103,7 +108,6 @@
                                 <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                                 <th aria-label="Position: activate to sort column ascending">@localizer["UserNo"]</th>
                                 <th aria-label="Position: activate to sort column ascending">@localizer["UserName"]</th>
-                                <th aria-label="Position: activate to sort column ascending">@localizer["Email"]</th>
                                 <th aria-label="Office: activate to sort column ascending">@localizer["Employement"]</th>
                                 <th aria-label="Age: activate to sort column ascending">@localizer["MobilePhone"]</th>
                                 <th aria-label="Age: activate to sort column ascending">@localizer["LastExitDate"]</th>
@@ -122,9 +126,15 @@
                                         <td>@no</td>
                                         <td>@item.CrMasUserInformationCode</td>
                                         <td>@item.CrMasUserInformationArName</td>
-                                        <td class="email">@item.CrMasUserInformationEmail</td>
                                         <td>@item.CrMasUserInformationTasksArName</td>
-                                        <td>@item.CrMasUserInformationCallingKey@item.CrMasUserInformationMobileNo</td>
+                                        @if (item.CrMasUserInformationCallingKey != "" || item.CrMasUserInformationCallingKey != null)
+                                        {
+                                            <td>@item.CrMasUserInformationCallingKey @item.CrMasUserInformationMobileNo</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.CrMasUserInformationMobileNo</td>
+                                        }
                                         <td>@item.CrMasUserInformationExitLastDate?.ToString("dd/MM/yyyy")</td>
                                         <td>@item.CrMasUserInformationChangePassWordLastDate?.ToString("dd/MM/yyyy")</td>
                                     </tr>

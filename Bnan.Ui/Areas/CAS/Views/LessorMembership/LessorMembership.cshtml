@@ -1,7 +1,7 @@
 ﻿@using Bnan.Core.Extensions;
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
-@model IEnumerable<CrCasLessorMembership>
+@model List<CrCasLessorMembership>
 
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
@@ -81,15 +81,15 @@
                                     <tr>
                                         <td>
                                             <input type="checkbox" id="CrCasLessorMembershipConditionsActivate-@item.CrCasLessorMembershipConditions"
-                                           name="CrCasLessorMembershipConditionsActivate-@item.CrCasLessorMembershipConditions"
-                                           checked="@item.CrCasLessorMembershipConditionsActivate.GetValueOrDefault()" style="height: 18px;width: 19px;" class="form-check-input">
+                                                   name="CrCasLessorMembershipConditionsActivate-@item.CrCasLessorMembershipConditions"
+                                                   checked="@item.CrCasLessorMembershipConditionsActivate.GetValueOrDefault()" style="height: 18px;width: 19px;" class="form-check-input">
                                             <span style="margin-right:5%">@item.CrCasLessorMembershipConditionsNavigation.CrMasSupRenterMembershipEnName</span>
                                         </td>
                                         <td>
                                             <input type="text" id="CrCasLessorMembershipConditionsAmount-@item.CrCasLessorMembershipConditions"
-                                           name="CrCasLessorMembershipConditionsAmount-@item.CrCasLessorMembershipConditions" class="form-control"
-                                           value="@item.CrCasLessorMembershipConditionsAmount.GetValueOrDefault()"
-                                           onfocusout="calc('CrCasLessorMembershipConditionsAmount-@item.CrCasLessorMembershipConditions')" oninput="validateInput9Digit(this)">
+                                                   name="CrCasLessorMembershipConditionsAmount-@item.CrCasLessorMembershipConditions" class="form-control"
+                                                   value="@item.CrCasLessorMembershipConditionsAmount.GetValueOrDefault()"
+                                                   onfocusout="calc('CrCasLessorMembershipConditionsAmount-@item.CrCasLessorMembershipConditions')" max="10" oninput="validateInput9Digit(this)">
                                         </td>
                                         <td>
                                             @{
@@ -102,7 +102,7 @@
                                             @Html.DropDownList("Conditions1", cnd1,  htmlAttributes: new
                                     {
                                     id = "Conditions1_" + item.CrCasLessorMembershipConditions,
-                                    Name = "Conditions1_" + item.CrCasLessorMembershipConditions,
+                                    name = "Conditions1_" + item.CrCasLessorMembershipConditions,
                                     @class = "form-select",
                                     style = "float:right;",
                                     onchange = "calc('Conditions1-" + item.CrCasLessorMembershipConditions + "')"
@@ -110,22 +110,22 @@
                                         </td>
                                         <td>
                                             <input type="text" id="CrCasLessorMembershipConditionsKm-@item.CrCasLessorMembershipConditions"
-                                           name="CrCasLessorMembershipConditionsKm-@item.CrCasLessorMembershipConditions" class="form-control"
-                                           value="@item.CrCasLessorMembershipConditionsKm.GetValueOrDefault()"
-                                           onfocusout="calc('CrCasLessorMembershipConditionsKm-@item.CrCasLessorMembershipConditions')" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                                   name="CrCasLessorMembershipConditionsKm-@item.CrCasLessorMembershipConditions" class="form-control"
+                                                   value="@item.CrCasLessorMembershipConditionsKm.GetValueOrDefault()"
+                                                   onfocusout="calc('CrCasLessorMembershipConditionsKm-@item.CrCasLessorMembershipConditions')" maxlength="7" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                                         </td>
                                         <td>
                                             @{
                                                 var cnd2 = new List<SelectListItem> {
-                                    new SelectListItem {Value="3",Text="",Selected=item.CrCasLessorMembershipConditionsLink1=="3"},
-                                    new SelectListItem {Value="1",Text="and" ,Selected=item.CrCasLessorMembershipConditionsLink1=="1"},
-                                    new SelectListItem {Value="2",Text="or",Selected=item.CrCasLessorMembershipConditionsLink1=="2"},
+                                    new SelectListItem {Value="3",Text="",Selected=item.CrCasLessorMembershipConditionsLink2=="3"},
+                                    new SelectListItem {Value="1",Text="and" ,Selected=item.CrCasLessorMembershipConditionsLink2=="1"},
+                                    new SelectListItem {Value="2",Text="or",Selected=item.CrCasLessorMembershipConditionsLink2=="2"},
                                     };
                                             }
                                             @Html.DropDownList("Conditions2", cnd2,  htmlAttributes: new
                                     {
                                     id = "Conditions2_" + item.CrCasLessorMembershipConditions,
-                                    Name = "Conditions2_" + item.CrCasLessorMembershipConditions,
+                                    name = "Conditions2_" + item.CrCasLessorMembershipConditions,
                                     @class = "form-select",
                                     style = "float:right",
                                     onchange = "calc('Conditions2-" + item.CrCasLessorMembershipConditions + "')"
@@ -133,17 +133,17 @@
                                         </td>
                                         <td>
                                             <input type="text" id="CrCasLessorMembershipConditionsContractNo-@item.CrCasLessorMembershipConditions"
-                                           name="CrCasLessorMembershipConditionsContractNo-@item.CrCasLessorMembershipConditions" class="form-control"
-                                           value="@item.CrCasLessorMembershipConditionsContractNo.GetValueOrDefault()"
-                                           onfocusout="calc('CrCasLessorMembershipConditionsContractNo-@item.CrCasLessorMembershipConditions')" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                                   name="CrCasLessorMembershipConditionsContractNo-@item.CrCasLessorMembershipConditions" class="form-control"
+                                                   value="@item.CrCasLessorMembershipConditionsContractNo.GetValueOrDefault()"
+                                                   onfocusout="calc('CrCasLessorMembershipConditionsContractNo-@item.CrCasLessorMembershipConditions')" maxlength="7" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                                         </td>
                                         <td>
                                             <input type="text" id="result-@item.CrCasLessorMembershipConditions" name="result-@item.CrCasLessorMembershipConditions"
-                                           class=" form-control" readonly />
+                                                   class=" form-control" readonly />
                                         </td>
                                         <td>
                                             <input type="text" id="Group-@item.CrCasLessorMembershipConditions" name="Group-@item.CrCasLessorMembershipConditions"
-                                           class=" form-control" readonly />
+                                                   class=" form-control" readonly />
                                         </td>
                                     </tr>
                                 }
@@ -176,39 +176,39 @@
                                     <tr>
                                         <td>
                                             <input type="checkbox" id="CrCasLessorMembershipConditionsActivate-@item.CrCasLessorMembershipConditions"
-                                           name="CrCasLessorMembershipConditionsActivate-@item.CrCasLessorMembershipConditions"
-                                           checked="@item.CrCasLessorMembershipConditionsActivate.GetValueOrDefault()" style="height: 18px;width: 19px;" class="form-check-input">
+                                                   name="CrCasLessorMembershipConditionsActivate-@item.CrCasLessorMembershipConditions"
+                                                   checked="@item.CrCasLessorMembershipConditionsActivate.GetValueOrDefault()" style="height: 18px;width: 19px;" class="form-check-input">
                                             <span style="margin-right:5%">@item.CrCasLessorMembershipConditionsNavigation.CrMasSupRenterMembershipArName</span>
 
                                         </td>
                                         <td>
                                             <input type="text" id="CrCasLessorMembershipConditionsAmount-@item.CrCasLessorMembershipConditions"
-                                           name="CrCasLessorMembershipConditionsAmount-@item.CrCasLessorMembershipConditions" class="form-control"
-                                           value="@item.CrCasLessorMembershipConditionsAmount.GetValueOrDefault()"
-                                           onfocusout="calc('CrCasLessorMembershipConditionsAmount-@item.CrCasLessorMembershipConditions')" oninput="validateInput9Digit(this)">
+                                                   name="CrCasLessorMembershipConditionsAmount-@item.CrCasLessorMembershipConditions" class="form-control"
+                                                   value="@item.CrCasLessorMembershipConditionsAmount.GetValueOrDefault()"
+                                                   onfocusout="calc('CrCasLessorMembershipConditionsAmount-@item.CrCasLessorMembershipConditions')" oninput="validateInput9Digit(this)">
                                         </td>
                                         <td>
                                             @{
                                                 var cnd1 = new List<SelectListItem> {
-                                    new SelectListItem {Value="3",Text="",Selected=item.CrCasLessorMembershipConditionsLink1=="3"},
-                                    new SelectListItem {Value="1",Text="و" ,Selected=item.CrCasLessorMembershipConditionsLink1=="1"},
-                                    new SelectListItem {Value="2",Text="أو",Selected=item.CrCasLessorMembershipConditionsLink1=="2"},
-                                    };
+                                                        new SelectListItem {Value="3",Text="",Selected=item.CrCasLessorMembershipConditionsLink1=="3"},
+                                                        new SelectListItem {Value="1",Text="و" ,Selected=item.CrCasLessorMembershipConditionsLink1=="1"},
+                                                        new SelectListItem {Value="2",Text="أو",Selected=item.CrCasLessorMembershipConditionsLink1=="2"},
+                                                        };
                                             }
                                             @Html.DropDownList("Conditions1", cnd1,  htmlAttributes: new
-                                    {
-                                    id = "Conditions1_" + item.CrCasLessorMembershipConditions,
-                                    name = "Conditions1_" + item.CrCasLessorMembershipConditions,
-                                    @class = "form-select",
-                                    style = "float:right;",
-                                    onchange = "calc('Conditions1-" + item.CrCasLessorMembershipConditions + "')"
-                                    })
+                                                        {
+                                                        id = "Conditions1_" + item.CrCasLessorMembershipConditions,
+                                                        name = "Conditions1_" + item.CrCasLessorMembershipConditions,
+                                                        @class = "form-select",
+                                                        style = "float:right;",
+                                                        onchange = "calc('Conditions1-" + item.CrCasLessorMembershipConditions + "')"
+                                                        })
                                         </td>
                                         <td>
                                             <input type="text" id="CrCasLessorMembershipConditionsKm-@item.CrCasLessorMembershipConditions"
-                                           name="CrCasLessorMembershipConditionsKm-@item.CrCasLessorMembershipConditions" class="form-control"
-                                           value="@item.CrCasLessorMembershipConditionsKm.GetValueOrDefault()"
-                                           onfocusout="calc('CrCasLessorMembershipConditionsKm-@item.CrCasLessorMembershipConditions')" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                                   name="CrCasLessorMembershipConditionsKm-@item.CrCasLessorMembershipConditions" class="form-control"
+                                                   value="@item.CrCasLessorMembershipConditionsKm.GetValueOrDefault()"
+                                                   onfocusout="calc('CrCasLessorMembershipConditionsKm-@item.CrCasLessorMembershipConditions')" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                                         </td>
                                         <td>
                                             @{
@@ -229,17 +229,17 @@
                                         </td>
                                         <td>
                                             <input type="text" id="CrCasLessorMembershipConditionsContractNo-@item.CrCasLessorMembershipConditions"
-                                           name="CrCasLessorMembershipConditionsContractNo-@item.CrCasLessorMembershipConditions" class="form-control"
-                                           value="@item.CrCasLessorMembershipConditionsContractNo.GetValueOrDefault()"
-                                           onfocusout="calc('CrCasLessorMembershipConditionsContractNo-@item.CrCasLessorMembershipConditions')" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                                   name="CrCasLessorMembershipConditionsContractNo-@item.CrCasLessorMembershipConditions" class="form-control"
+                                                   value="@item.CrCasLessorMembershipConditionsContractNo.GetValueOrDefault()"
+                                                   onfocusout="calc('CrCasLessorMembershipConditionsContractNo-@item.CrCasLessorMembershipConditions')" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                                         </td>
                                         <td>
                                             <input type="text" id="result-@item.CrCasLessorMembershipConditions" name="result-@item.CrCasLessorMembershipConditions"
-                                           class=" form-control" readonly />
+                                                   class=" form-control" readonly />
                                         </td>
                                         <td>
                                             <input type="text" id="Group-@item.CrCasLessorMembershipConditions" name="Group-@item.CrCasLessorMembershipConditions"
-                                           class=" form-control" readonly />
+                                                   class=" form-control" readonly />
                                         </td>
                                     </tr>
                                 }
@@ -308,7 +308,9 @@
                 result = result + "E";
             }
             document.getElementById('result-' + RowNumber).value = result;
-
+            console.log(cond1);
+            console.log(cond2);
+            console.log(result);
             var group = "";
             if (result.length == 5) {
                 $.ajax({
@@ -320,10 +322,10 @@
                             group = Info;
                             document.getElementById('Group-' + RowNumber).value = group;
                         }
-                        else{
+                        else {
                             document.getElementById('Group-' + RowNumber).value = "N";
                         }
-                        
+
                     }
                 });
             }
@@ -339,15 +341,12 @@
                 scrollCollapse: true,
                 paging: false,
                 paginate: false,
-                ordering: false, // Set ordering to false to disable sorting
-                language: {
-                    search: `@localizer["search"]`
-                }
+                ordering: false,
+                searching: false, // Disable the search box
+                info: false
             });
 
-            $('#top-search').on('keyup', function () {
-                table.search(this.value).draw();
-            });
+
         }
         set_basic_datatable();
     </script>

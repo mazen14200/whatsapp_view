@@ -990,7 +990,8 @@
 
             var ParentNode = localStorage.getItem("li");
             var NoNode = (parseInt(localStorage.getItem("lino")) + 1).toString();
-
+            console.log(ParentNode)
+            console.log(NoNode)
             $(`#${ParentNode}`).addClass("show");
             $(`#${ParentNode}`).siblings("a").attr("aria-expanded", "true");
             $(`#${ParentNode}`).parent().addClass("menuitem-active");

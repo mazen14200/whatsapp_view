@@ -231,7 +231,7 @@
   "Edit User Data": "تحديث بيانات موظف ",
   "Picture": "الصورة",
   "Signture": "التوقيع",
-
+  "ResetPassword": "استرجاع كلمة السر",
 
   //lessor page
   "Lessors Data": "بينات الشركات",
@@ -386,9 +386,9 @@
   //system Validitions
 
   "SystemValiditions Data": " صلاحيات النظام للموظفين",
-  "SystemValiditions Hint": "تمكنك هذه الصفحة من عرض وتعديل صلاحيات النظام للموظفين",
-  "Edit ValiditionsSystem Data": "تعديل صلاحيات النظام",
-  "Edit ValiditionsSystem Hint": "تمكنك هذه الصفحة من تعديل صلاحيات النظام للموظفين",
+  "SystemValiditions Hint": "تمكنك هذه الصفحة من عرض و تحديث بيانات الموظفين الممنوحين صلاحيه للنظام الإداري",
+  "Edit ValiditionsSystem Data": "تحديث بيانات الصلاحيات الإدارة للموظف",
+  "Edit ValiditionsSystem Hint": "تمكنك هذه الصفحة من الاطلاع و تحديث بيانات الصلاحيات الإدارية للموظف",
   // Edit system Validitions
   "MainValiditions": "الصلاحيات الرئيسية",
   "SubValiditions": "الصلاحيات الفرعية",
@@ -786,8 +786,8 @@
   "RenterDriverIDImg": "الهوية",
   "RenterDriverLicenseImg": "رخصة القيادة",
 
-  "Edit RenterDriver Hint": "تمكنك الصفحة من تعديل بيانات السائق الخاص",
-  "Edit RenterDriver Data": "تعديل",
+  "Edit RenterDriver Hint": "تمكنك الصفحة من الاطلاع على بيانات السائق الخاص وتحديثها",
+  "Edit RenterDriver Data": "تحديث بيانات السائق الخاص",
 
   "SureToRetriveHoldRenterDriver": "تأكيد التفعيل ...",
   "HintSureToRetriveHRenterDriver": "سيترتب على تفعيل بيانات السائق الخاص ادراج بيانات السائق بقائمة عقود التأجير.",
@@ -1006,9 +1006,9 @@
   "NoOfCar": "عدد السيارات",
   "OutFeesTammError": "لا يقل عن الداخلي",
   "Notifications": "الاشعارات",
-  "Membership Data": "العضوية",
-  "Membership Hint": "تمكنك هذه الصفحة من تحديث شروط العضوية",
-  "Amountstraded": "المبالغ المتداولة للمستأجر",
+  "Membership Data": "تحديث بيانات العضوية",
+  "Membership Hint": "تمكنك هذه الصفحة من تحديث بيانات شروط العضوية الممنوحة للمستأجرين",
+  "Amountstraded": "المبالغ المتداولة",
   "Condition": "الشرط",
   "Kilotraveled": "الكيلوات المقطوعة",
   "ContractsCount": "عدد العقود",

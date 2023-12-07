@@ -43,7 +43,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             var lessorMemberships = _unitOfWork.CrCasLessorMembership.FindAll(x => x.CrCasLessorMembershipConditionsLessor == userLogin.CrMasUserInformationLessor &&
                                                                                    x.CrCasLessorMembershipConditions != "1600000006", new[] { "CrCasLessorMembershipConditionsNavigation" })
-                                                           .OrderByDescending(x => x.CrCasLessorMembershipConditions).ToList();
+                                                           .OrderBy(x => x.CrCasLessorMembershipConditions).ToList();
             return View(lessorMemberships);
         }
         [HttpGet]

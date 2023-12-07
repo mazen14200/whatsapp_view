@@ -39,8 +39,9 @@
     <meta name="description" content="شركة كدي لتأجير السيارات ">
     <meta name="author" content="">
     <title>@ViewData["Title"]</title>
-@*     <title>الفروع - الرئيسية</title>
- *@    <link rel="shortcut icon" href="~/Bnan.png" type="image/x-icon" />
+    @*     <title>الفروع - الرئيسية</title>
+    *@
+    <link rel="shortcut icon" href="~/Bnan.png" type="image/x-icon" />
     <!-- Custom styles for this template-->
     <link href="~/BranchSys/css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -55,7 +56,7 @@
     {
         <link href="~/BranchSys/css/En-style.css" rel="stylesheet">
     }
-   
+
     <style>
         .noti-icon-badge {
             display: inline-block;
@@ -131,12 +132,14 @@
                                 <i class="mdi mdi-onepassword me-1"></i>
                                 <span>@localizer["ChangePassword"]</span>
                             </a>
-                            @if (user.CrMasUserInformationAuthorizationAdmin == true && user.CrMasUserInformationAuthorizationBranch == true)
+                            @if ((user.CrMasUserInformationAuthorizationAdmin == true && user.CrMasUserInformationAuthorizationBranch == true) ||
+                            (user.CrMasUserInformationAuthorizationAdmin == true && user.CrMasUserInformationAuthorizationOwner == true) ||
+                            (user.CrMasUserInformationAuthorizationBranch == true && user.CrMasUserInformationAuthorizationOwner == true))
                             {
-                                <a asp-area="Identity" asp-controller="Account" asp-action="System" class="dropdown-item notify-item" id="changePass">
-                                    <i class="mdi mdi-access-point-network me-1"></i>
-                                    <span>@localizer["Systems"]</span>
-                                </a>
+                            <a asp-area="Identity" asp-controller="Account" asp-action="System" class="dropdown-item notify-item" id="changePass">
+                                <i class="mdi mdi-access-point-network me-1"></i>
+                                <span>@localizer["Systems"]</span>
+                            </a>
                             }
 
                             <!-- item-->
@@ -228,7 +231,7 @@
                         <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in"
                              aria-labelledby="alertsDropdown">
                             <h6 class="dropdown-header" style="background-color: #FF992E">
-                                 @localizer["Notifications"]
+                                @localizer["Notifications"]
                             </h6>
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
@@ -287,14 +290,14 @@
                         @localizer["CompanyIsHoldInSystems"]
                     </div>
                 }
-                else if (user.CrMasUserInformationStatus==Status.Hold)
+                else if (user.CrMasUserInformationStatus == Status.Hold)
                 {
                     <div class=" d-flex align-items-center on-mobile" style="color:red; font-weight:bold;font-size:14px;margin-top: 3%;">
                         @localizer["EmployeeHoldedInBS"]
                     </div>
                 }
-               
-                   <!-- logo -->
+
+                <!-- logo -->
                 <div class=" d-flex align-items-center on-mobile" style="color:black;">
                     <div class="pt-sm-0 pt-md-4  pt-lg-4 pt-xl-4">
                         <h1 class="hide-on-mobile" style="font-size: 1.2rem;font-weight: bold;">
@@ -319,7 +322,7 @@
                             {
                                 @Model.CrCasBranchInformations?.Find(x=>x.CrCasBranchInformationCode==Model.SelectedBranch)?.CrCasBranchInformationEnShortName
                             }
-                            @if (Model.CrCasBranchInformations?.Find(x => x.CrCasBranchInformationCode == Model.SelectedBranch).CrCasBranchInformationStatus==Status.Hold)
+                            @if (Model.CrCasBranchInformations?.Find(x => x.CrCasBranchInformationCode == Model.SelectedBranch).CrCasBranchInformationStatus == Status.Hold)
                             {
                                 <span style="color: red;font-size: small;">@localizer["Holded"]</span>
                             }
@@ -338,7 +341,7 @@
             </div>
 
         </div>
-       
+
     </div>
     <!-- charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>

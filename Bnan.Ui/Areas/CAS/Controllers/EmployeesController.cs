@@ -384,6 +384,24 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             return View(user);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(string code)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            var Employee= _unitOfWork.CrMasUserInformation.Find(x=>x.CrMasUserInformationCode==code&&x.CrMasUserInformationLessor== currentUser.CrMasUserInformationLessor);
+            if (Employee!=null)
+            {
+                var changePasswordResult = await _userManager.ChangePasswordAsync(Employee, Employee.CrMasUserInformationPassWord, Employee.CrMasUserInformationCode);
+                if (changePasswordResult.Succeeded) {
+                    Employee.CrMasUserInformationPassWord = Employee.CrMasUserInformationCode;
+                    await _unitOfWork.CompleteAsync();
+                    return Json(true);
+                }
+            }
+
+            return Json(false);
+        }
         [HttpGet]
         public async Task<IActionResult> EmployeeSystemValiditions()
         {
@@ -684,6 +702,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         {
             _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
             return RedirectToAction("EmployeeSystemValiditions", "Employees");
+        }
+        public IActionResult SuccessResetPassword()
+        {
+            _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("Employees", "Employees");
         }
     }
 }

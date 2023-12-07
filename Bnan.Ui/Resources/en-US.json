@@ -217,13 +217,13 @@
   //Add User
   "Add User Hint": "The page allows you to add Employee",
   "Add User Data": "Add Employee",
-  "User Code": "Employee Code",
-  "UserNameAr": "Arabic Name",
-  "UserNameEn": "English Name",
+  "User Code": "Employee No.",
+  "UserNameAr": "Employee Ar Name",
+  "UserNameEn": "Employee En Name",
   "User Phone": "Employee Phone",
   "User Is Exists": "Employee Is Exists",
-  "TasksArName": "Arabic Task",
-  "TasksEnName": "English Task",
+  "TasksArName": "Job Ar Title",
+  "TasksEnName": "Job En Title",
   "Edit User Hint": "The page allows you to Edit Employee data ",
   "Edit User Data": "Update",
   "Picture": "Picture",
@@ -380,10 +380,10 @@
 
   //system Validitions
 
-  "SystemValiditions Data": "System Validitions",
-  "SystemValiditions Hint": "The page allows you to display Employee data , and modify system validitions",
-  "Edit ValiditionsSystem Data": "Edit in system validitions",
-  "Edit ValiditionsSystem Hint": "The page allows you to modify system validitions",
+  "SystemValiditions Data": "Edit ValiditionsSystem Data",
+  "SystemValiditions Hint": "This Page Enables You To View And Update The Data Of Employees Granted Authority To The Administrative System",
+  "Edit ValiditionsSystem Data": "Updating The Employee’s Administrative Powers Data",
+  "Edit ValiditionsSystem Hint": " This Page Enables You To View And Update The Employee’s Administrative Powers Data",
   // Edit system Validitions
   "MainValiditions": "Main Validitions",
   "SubValiditions": "Sub Validitions",
@@ -738,10 +738,11 @@
   "EmployementEn": "Job title in Arabic",
   "EmployementAr": "Job title in English",
   "Employement": "Job title",
-  "CreditLimit": "Credit Limit",
+  "CreditLimit": "Credit Limit Of Covenate",
   "BranchesAuth": "Authority of branches",
   "Owners": "Authority Of Owners ",
   "AdminAuth": "Authority Of Admin ",
+  "ResetPassword": "Reset Password",
 
 
 
@@ -789,8 +790,8 @@
 
 
 
-  "Edit RenterDriver Hint": "The page allows you to edit Renter Driver data.",
-  "Edit RenterDriver Data": "Edit",
+  "Edit RenterDriver Hint": "The page allow you to view and update your driver's data",
+  "Edit RenterDriver Data": "Update driver's data",
 
   "SureToRetriveHoldRenterDriver": "Confirm activation ...",
   "HintSureToRetriveHRenterDriver": "Activating the private driver’s data will result in including the driver’s data in the list of rental contracts.",
@@ -1009,11 +1010,12 @@
   "NoOfCar": "No Of Cars",
   "OutFeesTammError": "Not less than InFees",
   "Notifications": "Notifications",
-  "Membership Data": "Membership",
-  "Membership Hint": "The page allow you to edit conditions of membership",
+  "Membership Data": "Update Membership Data",
+  "Membership Hint": "This Page Enables You To Update The Membership Conditions Data Granted To Tenants",
   "Condition": "Condition",
-  "Kilotraveled": "Kilo traveled",
-  "ContractsCount": "Contracts Number",
+  "Amountstraded": "Amounts Traded",
+  "Kilotraveled": "Kilometers Traveled",
+  "ContractsCount": "Number Of Contracts",
   "Translate": "Translate merge",
   "GroupNumber": "Group Char",
   "ActivateService": "Activate",
