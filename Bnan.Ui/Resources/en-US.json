@@ -53,7 +53,7 @@
   // Users
   "Users": "Employees",
   "UsersInfo": "Employees Information",
-
+  "EmployeeExist": "The employee number is already registered",
   "Users' Responsibilities System": "Employees' Responsibilities System",
   "Contract Authorization": "Contract Authorization",
   //Services
@@ -72,17 +72,17 @@
   "Logout": "Logout",
   "My Account": "My Account",
   //login
-  "CompanyDeleted": "Sorry...please contact the operating company",
+  "CompanyDeleted": "Sorry …… You Don't Have Permission Call The Operating Company ",
   "AccountHold": "User Holded",
-  "AccountDelete": "Sorry....you do not have permission, see the administration",
-  "PasswordInvalid": "Sorry....the password is incorrect",
-  "UserNameInvalid": "Sorry....the employee number does not exist",
+  "AccountDelete": " Sorry …… You Don't Have Permission Call Administration",
+  "PasswordInvalid": "Sorry …… Password is Incorrect ",
+  "UserNameInvalid": "Sorry …… Employee No. is Incorrect",
   "PleaseEnterUserName": "Please Enter User Name",
   "PleaseEnterPassword": "Please Enter Password",
   "Password": "Password",
   "UserIsOpen": "Sorry...the employee's number is being used on another device",
-  "EmployeeHoldedInBS": "Sorry, some powers have been reduced. Please check with the administration",
-  "CompanyIsHoldInSystems": "Sorry.. some services have been suspended. Please contact the operating company",
+  "EmployeeHoldedInBS": " Sorry …… Some Power Have Been Reduced. Please Call Administration",
+  "CompanyIsHoldInSystems": "Sorry.. Some Services Have Been Suspended. Please Contact The Operating Company",
   //CAS  Datatable
   "Branch": "Branch",
   "City": "City",
@@ -225,7 +225,7 @@
   "TasksArName": "Job Ar Title",
   "TasksEnName": "Job En Title",
   "Edit User Hint": "The page allows you to Edit Employee data ",
-  "Edit User Data": "Update",
+  "Edit User Data": "Update Employee Data",
   "Picture": "Picture",
   "Signture": "Signture",
 
@@ -326,7 +326,7 @@
   "Save": "Save",
   // Modal
   "SureToRetriveHold": "Confirm Activation",
-  "SureToRetriveDelete": "Confirm Return.",
+  "SureToRetriveDelete": "Confirm UnDelete.",
   "HintSureToRetriveH": "Activating the employee’s data will result in activating all the powers assigned to him",
   "HintSureToRetriveD": "Returning the employee's data will require logging into the system according to the powers granted to him",
   "HintSureTodelete": "Deleting the employee’s data will result in not accessing the system while maintaining all financial and administrative procedures",
@@ -336,16 +336,17 @@
   "HintSureTodeleteContractsCompany": "Deleting the company contract will result in the suspension of this contract and all its details",
 
   // modal for Branch
-  "SureToRetriveHoldBranch": "Confirm branch activation",
+  "SureToRetriveHoldBranch": "Confirm Activation",
   "HintSureToRetriveHBranch": "Retrieving the activation of the branch data will entail activating the cars, points of sale, and documents associated with the branch.",
-  "SureToRetriveDeleteBranch": "Confirm branch return",
+  "SureToRetriveDeleteBranch": "Confirm UnDelete",
   "HintSureToRetriveDBranch": "Returning the branch data will result in a return. All documents, vehicles, points of sale, and branch powers for employees associated with the branch",
   "SureTodeleteBranch": "Confirmation of deletion....",
   "HintSureTodeleteBranch": "Deleting Branch data will Delete All The Document And Sales Point Of Branch...",
   "SureToHoldBranch": "Confirmation of Hold....",
   "HintSureToHoldBranch": "Branch data will be Holed, Which All The Document And Sales Point Of Branch...",
   //Owner
-  "SureToHoldOwner": "Stopping the branch data will result in stopping the rental of all cars associated with the owner",
+  "SureToHoldOwner": "Confirm Hold",
+  "HintSureToHoldOwner": "Stopping the branch data will result in stopping the rental of all cars associated with the owner",
   "SureToRetriveHoldOwner": "Confirm activation",
   "HintSureToRetriveHoldOwner": "Activating the branch data will result in the possibility of renting all cars associated with the owner",
   // Doc Modal
@@ -671,7 +672,7 @@
   "CompanyHoldedDanger": "The company's services have been suspended. Please contact the developing company",
   "ContractNewDanger": "The contract has not been registered yet. Please register the contract to activate all powers",
   "ContractExpireDanger": "The contract has expired, please check with the developing company",
-  "ContractAboutExpireDanger": "The contract is about to expire, please check with the developer company",
+  "ContractAboutExpireDanger": " Attention .....The Contract is About To Expire. Please call The Operating Company",
 
 
   //PostRegion Services  
@@ -735,8 +736,8 @@
   "BankNameEnAccount": "Bank Name",
 
   // CAS employee
-  "EmployementEn": "Job title in Arabic",
-  "EmployementAr": "Job title in English",
+  "EmployementEn": "Job En. title",
+  "EmployementAr": "Job Ar. title",
   "Employement": "Job title",
   "CreditLimit": "Credit Limit Of Covenate",
   "BranchesAuth": "Authority of branches",

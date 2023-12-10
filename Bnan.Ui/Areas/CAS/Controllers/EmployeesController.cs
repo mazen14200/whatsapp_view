@@ -136,8 +136,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 var user = await _userService.GetUserByUserNameAsync(model.CrMasUserInformationCode);
                 if (user != null)
                 {
-                    if (CultureInfo.CurrentCulture.Name == "En-US") ModelState.AddModelError("Exist", "User Code Is Exists");
-                    else ModelState.AddModelError("Exist", "هذا الكود موجود بالفعل");
+                    
+                    ModelState.AddModelError("Exist", _localizer["EmployeeExist"]);
                     return View(model);
                 }
 

@@ -33,10 +33,10 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <label class="form-label" for="UserCode">@localizer["User Code"]</label>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-8" style="margin-right: -95px;margin-left: -100px;">
                             <input type="text" class="form-control" asp-for="CrMasUserInformationCode" id="UserCode" readonly>
                         </div>
                     </div>
@@ -47,10 +47,10 @@
                 <div class="row mt-2">
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <label class="form-label" for="UserNameAr">@localizer["UserName"]</label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-8" style="margin-right: -95px;margin-left: -100px;">
                                 <input type="text" class="form-control" asp-for="CrMasUserInformationArName" width="50%" readonly>
                             </div>
                         </div>
@@ -66,10 +66,10 @@
                 <div class="row mt-2">
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <label class="form-label" for="UserNameAr">@localizer["UserName"]</label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-8" style="margin-right: -95px;margin-left: -100px;">
                                 <input type="text" class="form-control" asp-for="CrMasUserInformationEnName" id="UserNameEn" readonly>
                             </div>
                         </div>
@@ -187,9 +187,9 @@
                                         <input id="CrMasUserBranchValidityBranchSalesPointBalance" value="@branch.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityId==Model.CrMasUserInformationCode&&x.CrMasUserBranchValidityLessor==Model.CrMasUserInformationLessor).CrMasUserBranchValidityBranchSalesPointBalance" hidden />
                                         <input id="CrMasUserBranchValidityBranchTransferBalance" value="@branch.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityId==Model.CrMasUserInformationCode&&x.CrMasUserBranchValidityLessor==Model.CrMasUserInformationLessor).CrMasUserBranchValidityBranchTransferBalance" hidden /> *@
                                         @{
-                                            var CashBalance = branch.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityId == Model.CrMasUserInformationCode && x.CrMasUserBranchValidityLessor == Model.CrMasUserInformationLessor).CrMasUserBranchValidityBranchCashBalance;
-                                            var SalesPointBalance = branch.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityId == Model.CrMasUserInformationCode && x.CrMasUserBranchValidityLessor == Model.CrMasUserInformationLessor).CrMasUserBranchValidityBranchSalesPointBalance;
-                                            var TransferBalance = branch.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityId == Model.CrMasUserInformationCode && x.CrMasUserBranchValidityLessor == Model.CrMasUserInformationLessor).CrMasUserBranchValidityBranchTransferBalance;
+                                            var CashBalance = branch.CrMasUserBranchValidities?.FirstOrDefault(x => x.CrMasUserBranchValidityId == Model.CrMasUserInformationCode && x.CrMasUserBranchValidityLessor == Model.CrMasUserInformationLessor)?.CrMasUserBranchValidityBranchCashBalance;
+                                            var SalesPointBalance = branch.CrMasUserBranchValidities?.FirstOrDefault(x => x.CrMasUserBranchValidityId == Model.CrMasUserInformationCode && x.CrMasUserBranchValidityLessor == Model.CrMasUserInformationLessor)?.CrMasUserBranchValidityBranchSalesPointBalance;
+                                            var TransferBalance = branch.CrMasUserBranchValidities?.FirstOrDefault(x => x.CrMasUserBranchValidityId == Model.CrMasUserInformationCode && x.CrMasUserBranchValidityLessor == Model.CrMasUserInformationLessor)?.CrMasUserBranchValidityBranchTransferBalance;
                                         }
                                         @if (branch.CrCasBranchInformationStatus == Status.Hold || CashBalance > 0 || SalesPointBalance > 0 || TransferBalance>0)
                                         {
@@ -258,7 +258,7 @@
             <div class="row mt-3">
                 <div class="col-md-5">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="width:26%">
                             <label class="form-label" for="Email">@localizer["reasons"]</label>
                         </div>
                         <div class="col-md-8">

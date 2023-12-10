@@ -107,62 +107,62 @@
                                             @if (userInfo.CrMasUserMainValidations.FirstOrDefault(l => l.CrMasUserMainValidationMainTasks == "101")?.CrMasUserMainValidationAuthorization == true)
                                             {
 
-                                        
-                                        @*Company*@
-                                        <li class="side-nav-item">
-                                            <a data-bs-toggle="collapse" href="#sidebarCompany" aria-expanded="false" aria-controls="sidebarCompany" class="side-nav-link collapsed">
-                                                <i class="uil-home-alt"></i>
-                                                <span> @localizer["Companies"]</span>
-                                                <span class="menu-arrow"></span>
-                                            </a>
-                                            <div class="collapse" id="sidebarCompany" style="">
-                                                <ul class="side-nav-second-level">
-                                                    @if (userInfo?.CrMasUserSubValidations != null)
-                                                    {
-                                                        @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1101001")?.CrMasUserSubValidationAuthorization == true)
-                                                        {
-                                                            @*Lessor Data*@
-                                                            <li>
-                                                                <a asp-area="MAS" asp-controller="LessorsKSA" asp-action="index"> @localizer["CompaniesInformations"]</a>
-                                                            </li>
-                                                        }
 
-                                                        @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1101002")?.CrMasUserSubValidationAuthorization == true)
-                                                        {
-                                                            @* Supprot Photo*@
-                                                            <li>
-                                                                <a asp-area="MAS" asp-controller="LessorImages" asp-action="Index">@localizer["Supportphotos"]</a>
-                                                            </li>
-                                                        }
+                                                @*Company*@
+                                                <li class="side-nav-item">
+                                                    <a data-bs-toggle="collapse" href="#sidebarCompany" aria-expanded="false" aria-controls="sidebarCompany" class="side-nav-link collapsed">
+                                                        <i class="uil-home-alt"></i>
+                                                        <span> @localizer["Companies"]</span>
+                                                        <span class="menu-arrow"></span>
+                                                    </a>
+                                                    <div class="collapse" id="sidebarCompany" style="">
+                                                        <ul class="side-nav-second-level">
+                                                            @if (userInfo?.CrMasUserSubValidations != null)
+                                                            {
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1101001")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    @*Lessor Data*@
+                                                                    <li>
+                                                                        <a asp-area="MAS" asp-controller="LessorsKSA" asp-action="index"> @localizer["CompaniesInformations"]</a>
+                                                                    </li>
+                                                                }
 
-                                                        @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1101003")?.CrMasUserSubValidationAuthorization == true)
-                                                        {
-                                                            @*Contracts*@
-                                                            <li>
-                                                                <a asp-area="MAS" asp-controller="CompanyContracts" asp-action="CompanyContracts">@localizer["Contracts"]</a>
-                                                            </li>
-                                                        }
-                                                        @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1101004")?.CrMasUserSubValidationAuthorization == true)
-                                                        {
-                                                            @*Dues*@
-                                                            <li>
-                                                                <a >@localizer["Dues"]</a>
-                                                            </li>
-                                                        }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1101002")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    @* Supprot Photo*@
+                                                                    <li>
+                                                                        <a asp-area="MAS" asp-controller="LessorImages" asp-action="Index">@localizer["Supportphotos"]</a>
+                                                                    </li>
+                                                                }
 
-                                                        @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1101005")?.CrMasUserSubValidationAuthorization == true)
-                                                        {
-                                                            @*Clearingdues*@
-                                                            <li>
-                                                                <a >@localizer["Clearingdues"]</a>
-                                                            </li>
-                                                        }
-                                                    }
-                                                </ul>
-                                            </div>
-                                        </li>
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1101003")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    @*Contracts*@
+                                                                    <li>
+                                                                        <a asp-area="MAS" asp-controller="CompanyContracts" asp-action="CompanyContracts">@localizer["Contracts"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1101004")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    @*Dues*@
+                                                                    <li>
+                                                                        <a>@localizer["Dues"]</a>
+                                                                    </li>
+                                                                }
 
-                                        }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1101005")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    @*Clearingdues*@
+                                                                    <li>
+                                                                        <a>@localizer["Clearingdues"]</a>
+                                                                    </li>
+                                                                }
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </li>
+
+                                            }
                                         }
                                         @if (userInfo?.CrMasUserMainValidations != null)
                                         {
@@ -222,7 +222,7 @@
                                                                 {
                                                                     @*Renter Data*@
                                                                     <li>
-                                                                        <a > @localizer["Renter Data"]</a>
+                                                                        <a> @localizer["Renter Data"]</a>
                                                                     </li>
                                                                 }
 
@@ -230,7 +230,7 @@
                                                                 {
                                                                     @*Renter Contract*@
                                                                     <li>
-                                                                        <a >@localizer["Renter Contract"]</a>
+                                                                        <a>@localizer["Renter Contract"]</a>
                                                                     </li>
                                                                 }
 
@@ -262,7 +262,7 @@
                                                                 {
                                                                     @*Report1*@
                                                                     <li>
-                                                                        <a > @localizer["Report1"]</a>
+                                                                        <a> @localizer["Report1"]</a>
                                                                     </li>
                                                                 }
 
@@ -270,7 +270,7 @@
                                                                 {
                                                                     @*Report2*@
                                                                     <li>
-                                                                        <a > @localizer["Report2"]</a>
+                                                                        <a> @localizer["Report2"]</a>
                                                                     </li>
                                                                 }
 
@@ -278,7 +278,7 @@
                                                                 {
                                                                     @*Report3*@
                                                                     <li>
-                                                                        <a > @localizer["Report3"]</a>
+                                                                        <a> @localizer["Report3"]</a>
                                                                     </li>
                                                                 }
 
@@ -286,7 +286,7 @@
                                                                 {
                                                                     @*Report4*@
                                                                     <li>
-                                                                        <a > @localizer["Report4"]</a>
+                                                                        <a> @localizer["Report4"]</a>
                                                                     </li>
                                                                 }
 
@@ -294,7 +294,7 @@
                                                                 {
                                                                     @*Report5*@
                                                                     <li>
-                                                                        <a > @localizer["Report5"]</a>
+                                                                        <a> @localizer["Report5"]</a>
                                                                     </li>
                                                                 }
 
@@ -302,7 +302,7 @@
                                                                 {
                                                                     @*Report6*@
                                                                     <li>
-                                                                        <a > @localizer["Report6"]</a>
+                                                                        <a> @localizer["Report6"]</a>
                                                                     </li>
                                                                 }
 
@@ -310,7 +310,7 @@
                                                                 {
                                                                     @*Report7*@
                                                                     <li>
-                                                                        <a > @localizer["Report7"]</a>
+                                                                        <a> @localizer["Report7"]</a>
                                                                     </li>
                                                                 }
 
@@ -318,7 +318,7 @@
                                                                 {
                                                                     @*Report8*@
                                                                     <li>
-                                                                        <a > @localizer["Report8"]</a>
+                                                                        <a> @localizer["Report8"]</a>
                                                                     </li>
                                                                 }
                                                             }
@@ -385,7 +385,7 @@
                                                                 {
                                                                     @*UserIdType*@
                                                                     <li>
-                                                                        <a > @localizer["UserIdType"]</a>
+                                                                        <a> @localizer["UserIdType"]</a>
                                                                     </li>
                                                                 }
 
@@ -393,7 +393,7 @@
                                                                 {
                                                                     @*Driving License Type*@
                                                                     <li>
-                                                                        <a >@localizer["DrivingLicenseType"]</a>
+                                                                        <a>@localizer["DrivingLicenseType"]</a>
                                                                     </li>
                                                                 }
 
@@ -401,7 +401,7 @@
                                                                 {
                                                                     @*Nationalities*@
                                                                     <li>
-                                                                        <a >@localizer["Nationalities"]</a>
+                                                                        <a>@localizer["Nationalities"]</a>
                                                                     </li>
                                                                 }
 
@@ -409,7 +409,7 @@
                                                                 {
                                                                     @*Professions*@
                                                                     <li>
-                                                                        <a >@localizer["Professions"]</a>
+                                                                        <a>@localizer["Professions"]</a>
                                                                     </li>
                                                                 }
 
@@ -417,7 +417,7 @@
                                                                 {
                                                                     @*Employers*@
                                                                     <li>
-                                                                        <a >@localizer["Employers"]</a>
+                                                                        <a>@localizer["Employers"]</a>
                                                                     </li>
                                                                 }
 
@@ -425,7 +425,7 @@
                                                                 {
                                                                     @*Membership*@
                                                                     <li>
-                                                                        <a >@localizer["MembershipConditions"]</a>
+                                                                        <a>@localizer["MembershipConditions"]</a>
                                                                     </li>
                                                                 }
 
@@ -434,7 +434,7 @@
                                                                 {
                                                                     @*Sectors*@
                                                                     <li>
-                                                                        <a >@localizer["Sectors"]</a>
+                                                                        <a>@localizer["Sectors"]</a>
                                                                     </li>
                                                                 }
                                                             }
@@ -467,7 +467,7 @@
                                                                 {
                                                                     @*Registration Type*@
                                                                     <li>
-                                                                        <a > @localizer["RegistrationType"]</a>
+                                                                        <a> @localizer["RegistrationType"]</a>
                                                                     </li>
                                                                 }
 
@@ -475,7 +475,7 @@
                                                                 {
                                                                     @*Fuel Type*@
                                                                     <li>
-                                                                        <a >@localizer["FuelType"]</a>
+                                                                        <a>@localizer["FuelType"]</a>
                                                                     </li>
                                                                 }
 
@@ -483,7 +483,7 @@
                                                                 {
                                                                     @*Brands*@
                                                                     <li>
-                                                                        <a >@localizer["Brands"]</a>
+                                                                        <a>@localizer["Brands"]</a>
                                                                     </li>
                                                                 }
 
@@ -491,7 +491,7 @@
                                                                 {
                                                                     @*Models*@
                                                                     <li>
-                                                                        <a >@localizer["Models"]</a>
+                                                                        <a>@localizer["Models"]</a>
                                                                     </li>
                                                                 }
 
@@ -499,7 +499,7 @@
                                                                 {
                                                                     @*Categories*@
                                                                     <li>
-                                                                        <a >@localizer["Categories"]</a>
+                                                                        <a>@localizer["Categories"]</a>
                                                                     </li>
                                                                 }
 
@@ -516,7 +516,7 @@
                                                                 {
                                                                     @*Features*@
                                                                     <li>
-                                                                        <a >@localizer["Features"]</a>
+                                                                        <a>@localizer["Features"]</a>
                                                                     </li>
                                                                 }
 
@@ -524,7 +524,7 @@
                                                                 {
                                                                     @*Colors*@
                                                                     <li>
-                                                                        <a >@localizer["Colors"]</a>
+                                                                        <a>@localizer["Colors"]</a>
                                                                     </li>
                                                                 }
 
@@ -676,98 +676,98 @@
                                         }
                                         @if (userInfo?.CrMasUserMainValidations != null)
                                         {
-                                            
-                                                @*Services*@
-                                                <li class="side-nav-item">
-                                                    <a data-bs-toggle="collapse" href="#sidebarServices" aria-expanded="false" aria-controls="sidebarUsers" class="side-nav-link collapsed">
-                                                        <i class="mdi mdi-arrange-bring-to-front"></i>
-                                                        <span> @localizer["Services"]</span>
-                                                        <span class="menu-arrow"></span>
-                                                    </a>
-                                                    <div class="collapse" id="sidebarServices" style="">
-                                                        <ul class="side-nav-second-level">
-                                                            @if (userInfo.CrMasUserSubValidations != null)
+
+                                            @*Services*@
+                                            <li class="side-nav-item">
+                                                <a data-bs-toggle="collapse" href="#sidebarServices" aria-expanded="false" aria-controls="sidebarUsers" class="side-nav-link collapsed">
+                                                    <i class="mdi mdi-arrange-bring-to-front"></i>
+                                                    <span> @localizer["Services"]</span>
+                                                    <span class="menu-arrow"></span>
+                                                </a>
+                                                <div class="collapse" id="sidebarServices" style="">
+                                                    <ul class="side-nav-second-level">
+                                                        @if (userInfo.CrMasUserSubValidations != null)
+                                                        {
+
+                                                            @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111001")?.CrMasUserSubValidationAuthorization == true)
                                                             {
-
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111001")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    @*Systems*@
-                                                                    <li>
-                                                                        <a > @localizer["Systems"]</a>
-                                                                    </li>
-                                                                }
-
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111002")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    @*Main Tasks*@
-                                                                    <li>
-                                                                        <a > @localizer["MainTasks"]</a>
-                                                                    </li>
-                                                                }
-
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111003")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    @*Sub Tasks*@
-                                                                    <li>
-                                                                        <a > @localizer["SubTasks"]</a>
-                                                                    </li>
-                                                                }
-
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111004")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    @*Groups*@
-                                                                    <li>
-                                                                        <a > @localizer["Groups"]</a>
-                                                                    </li>
-                                                                }
-
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111005")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    @*Procedures*@
-                                                                    <li>
-                                                                        <a asp-area="MAS" asp-controller="Procedures" asp-action="GetProcedures">@localizer["Procedures"]</a>
-                                                                    </li>
-                                                                }
-
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111006")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    @*Registration Status*@
-                                                                    <li>
-                                                                        <a> @localizer["RegistrationStatus"]</a>
-                                                                    </li>
-                                                                }
-
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111007")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    @*Membership Conditions*@
-                                                                    <li>
-                                                                        <a > @localizer["MembershipConditions"]</a>
-                                                                    </li>
-                                                                }
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111008")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    @*Membership Conditions*@
-                                                                    <li>
-                                                                        <a > @localizer["Evaluation"]</a>
-                                                                    </li>
-                                                                }
-                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111009")?.CrMasUserSubValidationAuthorization == true)
-                                                                {
-                                                                    @*Membership Conditions*@
-                                                                    <li>
-                                                                        <a > @localizer["ClassifyCompanies"]</a>
-                                                                    </li>
-                                                                }
-                                                                @*Messages To Users*@
+                                                                @*Systems*@
                                                                 <li>
-                                                                    <a >@localizer["Messages To Users"]</a>
+                                                                    <a> @localizer["Systems"]</a>
                                                                 </li>
-
                                                             }
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                                            }
+
+                                                            @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111002")?.CrMasUserSubValidationAuthorization == true)
+                                                            {
+                                                                @*Main Tasks*@
+                                                                <li>
+                                                                    <a> @localizer["MainTasks"]</a>
+                                                                </li>
+                                                            }
+
+                                                            @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111003")?.CrMasUserSubValidationAuthorization == true)
+                                                            {
+                                                                @*Sub Tasks*@
+                                                                <li>
+                                                                    <a> @localizer["SubTasks"]</a>
+                                                                </li>
+                                                            }
+
+                                                            @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111004")?.CrMasUserSubValidationAuthorization == true)
+                                                            {
+                                                                @*Groups*@
+                                                                <li>
+                                                                    <a> @localizer["Groups"]</a>
+                                                                </li>
+                                                            }
+
+                                                            @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111005")?.CrMasUserSubValidationAuthorization == true)
+                                                            {
+                                                                @*Procedures*@
+                                                                <li>
+                                                                    <a asp-area="MAS" asp-controller="Procedures" asp-action="GetProcedures">@localizer["Procedures"]</a>
+                                                                </li>
+                                                            }
+
+                                                            @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111006")?.CrMasUserSubValidationAuthorization == true)
+                                                            {
+                                                                @*Registration Status*@
+                                                                <li>
+                                                                    <a> @localizer["RegistrationStatus"]</a>
+                                                                </li>
+                                                            }
+
+                                                            @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111007")?.CrMasUserSubValidationAuthorization == true)
+                                                            {
+                                                                @*Membership Conditions*@
+                                                                <li>
+                                                                    <a> @localizer["MembershipConditions"]</a>
+                                                                </li>
+                                                            }
+                                                            @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111008")?.CrMasUserSubValidationAuthorization == true)
+                                                            {
+                                                                @*Membership Conditions*@
+                                                                <li>
+                                                                    <a> @localizer["Evaluation"]</a>
+                                                                </li>
+                                                            }
+                                                            @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1111009")?.CrMasUserSubValidationAuthorization == true)
+                                                            {
+                                                                @*Membership Conditions*@
+                                                                <li>
+                                                                    <a> @localizer["ClassifyCompanies"]</a>
+                                                                </li>
+                                                            }
+                                                            @*Messages To Users*@
+                                                            <li>
+                                                                <a>@localizer["Messages To Users"]</a>
+                                                            </li>
+
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        }
                                     </ul>
                                     <!-- End Sidebar -->
 
@@ -1082,8 +1082,8 @@
                     </button>
                 </div>
                 <!-- Expiration Modal -->
-                @*                <partial name="_ExpirationModalMAS" />
-                *@                <div class="row">
+                <partial name="_ExpirationModalMAS" />
+                <div class="row">
                     <div class="col-12">
                         <div class="page-title-box me-2">
                             <div class="page-title-left">
@@ -1325,17 +1325,17 @@
             // }
         }
 
-                        // auto complete off in all input
-                        //document.addEventListener("DOMContentLoaded", function () {
-                        //    // Get all input fields in the document
-                        //    var inputFields = document.querySelectorAll("input");
+                                // auto complete off in all input
+                                //document.addEventListener("DOMContentLoaded", function () {
+                                //    // Get all input fields in the document
+                                //    var inputFields = document.querySelectorAll("input");
 
-                        //    // Loop through each input field
-                        //    inputFields.forEach(function (input) {
-                        //        // Set the autocomplete attribute to "off"
-                        //        input.setAttribute("autocomplete", "off");
-                        //    });
-                        //});
+                                //    // Loop through each input field
+                                //    inputFields.forEach(function (input) {
+                                //        // Set the autocomplete attribute to "off"
+                                //        input.setAttribute("autocomplete", "off");
+                                //    });
+                                //});
     </script>
 </body>
 </html>

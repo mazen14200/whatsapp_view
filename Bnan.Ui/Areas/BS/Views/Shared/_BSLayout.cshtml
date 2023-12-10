@@ -296,6 +296,20 @@
                         @localizer["EmployeeHoldedInBS"]
                     </div>
                 }
+                else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.Renewed)
+                {
+                    <div style="color:red;font-weight:300" id="dangerMessage">@localizer["ContractNewDanger"]</div>
+
+                }
+                else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.Expire)
+                {
+                    <div style="color:red;font-weight:300" id="dangerMessage">@localizer["ContractExpireDanger"]</div>
+
+                }
+                else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.AboutToExpire)
+                {
+                    <div style="color:red;font-weight:300" id="dangerMessage">@localizer["ContractAboutExpireDanger"]</div>
+                }
 
                 <!-- logo -->
                 <div class=" d-flex align-items-center on-mobile" style="color:black;">
@@ -333,6 +347,8 @@
             </nav>
             <!------------------------------------------end of Topbar-------------------------------------------------->
             <div class="container-fluid">
+                <!-- Expiration Modal -->
+                <partial name="_ExpirationModalBS" />
                 <!-- Content Row -->
                 <div class="row" style="justify-content: center;">
                     @RenderBody()
@@ -366,3 +382,72 @@
 </body>
 
 </html>
+<script>
+    @*Expireation pop up modal*@
+        $(document).ready(function () {
+            // Set an initial timeout of 60 seconds (in milliseconds)
+            let timeout = 300000;
+            let timer;
+
+            // Function to start the countdown
+            function startCountdown() {
+                timer = setInterval(updateCountdown, 1000);
+            }
+            function clearCountdown() {
+                clearInterval(timer);
+            }
+
+            // Function to update the countdown display
+            function updateCountdown() {
+                let countdownElem = $('#countdown');
+                let timeLeft = parseInt(countdownElem.text());
+
+                if (timeLeft > 1) {
+                    countdownElem.text(timeLeft - 1);
+                } else {
+                    clearInterval(timer);
+                    logout();
+                }
+            }
+
+            // Function to logout the user
+            function logout() {
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("Logout", "Account", new { Area = "Identity" })",
+                    success: function (response) {
+                        window.location.href = "@Url.Action("Index", "Account", new { Area = "Identity" })";
+                    },
+                })
+            }
+
+            // Add event listener to detect no activity
+            let idleTimeout = null;
+
+            $(document).on('click keydown mousemove', function () {
+                clearTimeout(idleTimeout);
+                idleTimeout = setTimeout(function () {
+                    if ($('#popup').is(':visible')) {
+                        return; // Popup already displayed, so ignore this event
+                    }
+
+                    $('#popup').modal("show");
+                    startCountdown();
+                }, timeout);
+            });
+
+            // Add event listener to continue button
+            $('#continueBtn').click(function () {
+                $('#countdown').text("60");
+                clearCountdown();
+                clearTimeout(idleTimeout);
+                $('#popup').modal("hide");
+            });
+
+            // Add event listener to logout button
+            $('#logoutBtn').click(function () {
+                clearTimeout(idleTimeout);
+                logout();
+            });
+        });
+</script>

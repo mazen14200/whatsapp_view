@@ -14,12 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\BS\Views\Shared\_ValidationScriptsPartial.cshtml" />
     <Content Remove="Areas\BS\Views\Shared\_ViewImports.cshtml" />
     <Content Remove="Areas\BS\Views\Shared\_ViewStart.cshtml" />
-    <Content Remove="Areas\MAS\Views\Shared\_ExpirationModalMAS.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\BS\Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\BS\Views\_ViewImports.cshtml" />
     <None Include="Areas\BS\Views\_ViewStart.cshtml" />
     <None Include="Areas\CAS\Views\Branches\Branches.cshtml" />
@@ -50,7 +51,6 @@
     <None Include="Areas\MAS\Views\Procedures\Edit.cshtml" />
     <None Include="Areas\MAS\Views\Procedures\GetProcedures.cshtml" />
     <None Include="Areas\MAS\Views\Procedures\_DataTableProcedures.cshtml" />
-    <None Include="Areas\MAS\Views\Shared\_ExpirationModalMAS.cshtml" />
     <None Include="Areas\MAS\Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\MAS\Views\Users\AddUser.cshtml" />
     <None Include="Areas\MAS\Views\Users\Edit.cshtml" />

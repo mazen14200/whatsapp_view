@@ -43,9 +43,9 @@
                             <td>@item.CrMasUserInformationCode</td>
                             <td>@item.CrMasUserInformationEnName</td>
                             <td>@item.CrMasUserInformationTasksEnName</td>
-                            @if (item.CrMasUserInformationCallingKey != "" || item.CrMasUserInformationCallingKey != null)
+                            @if (!string.IsNullOrEmpty(item.CrMasUserInformationMobileNo))
                             {
-                                <td>@item.CrMasUserInformationCallingKey @item.CrMasUserInformationMobileNo</td>
+                                <td>@item.CrMasUserInformationCallingKey@item.CrMasUserInformationMobileNo</td>
                             }
                             else
                             {
@@ -77,9 +77,9 @@
                             <td>@item.CrMasUserInformationCode</td>
                             <td>@item.CrMasUserInformationEnName</td>
                             <td>@item.CrMasUserInformationTasksEnName</td>
-                            @if (item.CrMasUserInformationCallingKey != "" || item.CrMasUserInformationCallingKey != null)
+                            @if (!string.IsNullOrEmpty(item.CrMasUserInformationMobileNo))
                             {
-                                <td>@item.CrMasUserInformationCallingKey @item.CrMasUserInformationMobileNo</td>
+                                <td>@item.CrMasUserInformationCallingKey@item.CrMasUserInformationMobileNo</td>
                             }
                             else
                             {
@@ -142,9 +142,9 @@ else
                             <td>@item.CrMasUserInformationCode</td>
                             <td>@item.CrMasUserInformationArName</td>
                             <td>@item.CrMasUserInformationTasksArName</td>
-                            @if (item.CrMasUserInformationCallingKey != "" || item.CrMasUserInformationCallingKey != null)
+                            @if (!string.IsNullOrEmpty(item.CrMasUserInformationMobileNo))
                             {
-                                <td>@item.CrMasUserInformationCallingKey @item.CrMasUserInformationMobileNo</td>
+                                <td>@item.CrMasUserInformationCallingKey@item.CrMasUserInformationMobileNo</td>
                             }
                             else
                             {
@@ -176,9 +176,9 @@ else
                             <td>@item.CrMasUserInformationCode</td>
                             <td>@item.CrMasUserInformationArName</td>
                             <td>@item.CrMasUserInformationTasksArName</td>
-                            @if (item.CrMasUserInformationCallingKey != "" || item.CrMasUserInformationCallingKey != null)
+                            @if (!string.IsNullOrEmpty(item.CrMasUserInformationMobileNo))
                             {
-                                <td>@item.CrMasUserInformationCallingKey @item.CrMasUserInformationMobileNo</td>
+                                <td>@item.CrMasUserInformationCallingKey@item.CrMasUserInformationMobileNo</td>
                             }
                             else
                             {

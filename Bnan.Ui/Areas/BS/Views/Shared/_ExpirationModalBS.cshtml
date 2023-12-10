@@ -1,0 +1,47 @@
+﻿@using Bnan.Core.Extensions
+@inject IViewLocalizer localizer
+<style>
+
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-color: transparent;
+        border: 1px solid transparent;
+        padding: 0.45rem 0.9rem;
+        font-size: 0.9rem;
+        border-radius: 0.15rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    }
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #727cf5;
+        border-color: #727cf5;
+    }
+
+</style>
+<div class="modal" id="popup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>@localizer["expiration"] <span id="countdown" class="text-danger">60</span> @localizer["seconds"].</p>
+                <button type="button" class="btn btn-secondary" id="logoutBtn" data-bs-dismiss="modal">@localizer["logout"]</button>
+                <button type="button" class="btn btn-primary" id="continueBtn">@localizer["continue"]</button>
+            </div>
+        </div>
+    </div>
+</div>

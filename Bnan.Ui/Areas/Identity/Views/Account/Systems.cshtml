@@ -95,7 +95,42 @@
                 </p>
             </div>
         }
-        
+        else if (user.CrMasUserInformationStatus == Status.Hold)
+        {
+            <div class=" d-flex align-items-center on-mobile" style="color:red; font-weight:bold;font-size:14px;margin-top: 3%;">
+                @localizer["EmployeeHoldedInBS"]
+            </div>
+        }
+        else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.Renewed)
+        {
+            <div class="row" style="justify-content: center;width: 85%;">
+                <p>
+                    <span style="color:red;font-weight:600">
+                        @localizer["ContractNewDanger"]
+                    </span>
+                </p>
+            </div>
+        }
+        else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.Expire)
+        {
+            <div class="row" style="justify-content: center;width: 85%;">
+                <p>
+                    <span style="color:red;font-weight:600">
+                        @localizer["ContractExpireDanger"]
+                    </span>
+                </p>
+            </div>
+        }
+        else if (lessorCompanyContract?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.LastOrDefault(x => x.CrMasContractCompanyLessor == lessorInfo.CrMasUserInformationLessor && x.CrMasContractCompanyProcedures == "112")?.CrMasContractCompanyStatus == Status.AboutToExpire)
+        {
+            <div class="row" style="justify-content: center;width: 85%;">
+                <p>
+                    <span style="color:red;font-weight:600">
+                        @localizer["ContractAboutExpireDanger"]
+                    </span>
+                </p>
+            </div>
+        }
         <div class="row pb-4">
             @if (user.CrMasUserInformationAuthorizationOwner == true)
             {

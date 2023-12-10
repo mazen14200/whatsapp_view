@@ -42,7 +42,7 @@ namespace Bnan.Ui.Areas.Identity.Controllers
         public async Task<IActionResult> Login()
         {
             if (CultureInfo.CurrentUICulture.Name == "en-US") await ViewData.SetPageTitleAsync("Log in", "Bnan", "", "", "", "");
-            else await ViewData.SetPageTitleAsync("تسجيل الدخول", "بنان", "", "", "","");
+            else await ViewData.SetPageTitleAsync("تسجيل الدخول", "بنان", "", "", "", "");
             var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
             var isAuth = _userService.CheckUserifAuth(User);
             if (user != null)
@@ -58,15 +58,15 @@ namespace Bnan.Ui.Areas.Identity.Controllers
                         return RedirectToAction("Index", "Home", new { area = "MAS" });
                     }
 
-                    if (userAuthAdmin == true && userAuthBranch == true && userAuthOwners==true)
+                    if (userAuthAdmin == true && userAuthBranch == true && userAuthOwners == true)
                     {
                         return RedirectToAction("Systems", "Account");
                     }
-                    else if ((userAuthAdmin==true && userAuthBranch==true) || (userAuthAdmin == true && userAuthOwners == true) || (userAuthBranch == true && userAuthOwners==true))
+                    else if ((userAuthAdmin == true && userAuthBranch == true) || (userAuthAdmin == true && userAuthOwners == true) || (userAuthBranch == true && userAuthOwners == true))
                     {
                         return RedirectToAction("Systems", "Account");
                     }
-                    else if (userAuthAdmin == true && userAuthBranch == false&& userAuthOwners == false)
+                    else if (userAuthAdmin == true && userAuthBranch == false && userAuthOwners == false)
                     {
                         return RedirectToAction("Index", "Home", new { area = "CAS" });
                     }
@@ -135,17 +135,18 @@ namespace Bnan.Ui.Areas.Identity.Controllers
                     ModelState.AddModelError("Hint", _localizer["CompanyDeleted"]);
                     return View(model);
                 }
-                if (user.CrMasUserInformationAuthorizationBranch==true&&user.CrMasUserInformationAuthorizationAdmin==false&&user.CrMasUserInformationAuthorizationOwner==false)
+
+                if (user.CrMasUserInformationAuthorizationBranch == true && user.CrMasUserInformationAuthorizationAdmin == false && user.CrMasUserInformationAuthorizationOwner == false)
                 {
                     var branchValidities = user.CrMasUserBranchValidities.Where(x => x.CrMasUserBranchValidityBranchStatus == Status.Active);
-                    if (branchValidities.Count()==0)
+                    if (branchValidities.Count() == 0)
                     {
                         ModelState.AddModelError("Hint", _localizer["NoHaveBranches"]);
                         return View(model);
                     }
-                    else if (branchValidities.Count()==1)
+                    else if (branchValidities.Count() == 1)
                     {
-                        if (branchValidities.FirstOrDefault().CrMasUserBranchValidity1.CrCasBranchInformationStatus==Status.Deleted)
+                        if (branchValidities.FirstOrDefault().CrMasUserBranchValidity1.CrCasBranchInformationStatus == Status.Deleted)
                         {
                             ModelState.AddModelError("Hint", _localizer["HaveOneBranchDeleted"]);
                             return View(model);
@@ -157,18 +158,25 @@ namespace Bnan.Ui.Areas.Identity.Controllers
                 var result = await _authService.LoginAsync(model.UserName, model.Password);
                 if (result.Succeeded)
                 {
-                    if (user.CrMasUserInformationDefaultLanguage.ToLower() == "en") SetLanguage("~/","en-US");
+
+
+
+                    if (user.CrMasUserInformationDefaultLanguage.ToLower() == "en") SetLanguage("~/", "en-US");
                     else SetLanguage("~/", "ar-EG");
-                    var UserInforation = await _userService.GetUserByUserNameAsync(model.UserName);
+
+                    //Check if no have branches and have branch auth true set branch auth false
+                    var UserInforation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == model.UserName, new[] { "CrMasUserBranchValidities.CrMasUserBranchValidity1" });
+                    var branchValiditie = UserInforation.CrMasUserBranchValidities.Where(x => x.CrMasUserBranchValidityBranchStatus == Status.Active &&x.CrMasUserBranchValidityBranchRecStatus!=Status.Deleted).Count();
+                    if (UserInforation.CrMasUserInformationAuthorizationBranch == true && branchValiditie == 0) UserInforation.CrMasUserInformationAuthorizationBranch = false;
                     UserInforation.CrMasUserInformationOperationStatus = true;
                     UserInforation.CrMasUserInformationEntryLastDate = DateTime.Now.Date;
                     UserInforation.CrMasUserInformationEntryLastTime = DateTime.Now.TimeOfDay;
                     await _userService.SaveChanges(UserInforation);
 
-                    bool? userAuthBnan = user.CrMasUserInformationAuthorizationBnan;
-                    bool? userAuthAdmin = user.CrMasUserInformationAuthorizationAdmin;
-                    bool? userAuthBranch = user.CrMasUserInformationAuthorizationBranch;
-                    bool? userAuthOwners = user.CrMasUserInformationAuthorizationOwner;
+                    bool? userAuthBnan = UserInforation.CrMasUserInformationAuthorizationBnan;
+                    bool? userAuthAdmin = UserInforation.CrMasUserInformationAuthorizationAdmin;
+                    bool? userAuthBranch = UserInforation.CrMasUserInformationAuthorizationBranch;
+                    bool? userAuthOwners = UserInforation.CrMasUserInformationAuthorizationOwner;
 
 
                     if (userAuthBnan == true)
@@ -233,7 +241,7 @@ namespace Bnan.Ui.Areas.Identity.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task< IActionResult> Systems()
+        public async Task<IActionResult> Systems()
         {
             var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
             if (CultureInfo.CurrentUICulture.Name == "en-US") await ViewData.SetPageTitleAsync("Systems", "", "", "", "", user.CrMasUserInformationEnName);
@@ -245,7 +253,7 @@ namespace Bnan.Ui.Areas.Identity.Controllers
         public async Task<IActionResult> Logout()
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user==null) return RedirectToAction("Login", "Account");
+            if (user == null) return RedirectToAction("Login", "Account");
             //var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
             user.CrMasUserInformationOperationStatus = false;
             user.CrMasUserInformationExitLastDate = DateTime.Now.Date;

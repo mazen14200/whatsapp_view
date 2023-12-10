@@ -66,9 +66,9 @@
         }
 
     /* .file-upload-btn:active {
-                border: 0;
-                transition: all .2s ease;
-            }*/
+                        border: 0;
+                        transition: all .2s ease;
+                    }*/
 
     .file-upload-content {
         display: none;
@@ -149,12 +149,12 @@
         }
 
     /*.remove-image:active {
-                border: 0;
-                transition: all .2s ease;
-            }*/
-            ul{
-                list-style-type: none;
-            }
+                        border: 0;
+                        transition: all .2s ease;
+                    }*/
+    ul {
+        list-style-type: none;
+    }
 </style>
 <title>@ViewData["Title"]</title>
 
@@ -164,27 +164,32 @@
     <form id="form" class="needs-validation" novalidate asp-area="CAS" asp-controller="Employees" asp-action="AddEmployee" enctype="multipart/form-data">
         <div class="form-contain">
             <div class="row">
-                <div class="col-md-1">
-                    <label class="form-label" for="UserCode">@localizer["User Code"]</label>
-                </div>
-                <div class="col-auto">
-                    <input type="text" class="form-control"  asp-for="CrMasUserInformationCode"  maxlength="10" style="width: 130px;" data-val-required="@localizer["requiredFiled"]" data-val-minlength="@localizer["minLengthField"]" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off" required>
-                    <div style="margin-top:2px">
-                        <div style="height: 1.0em">
-                            <span asp-validation-for="@Model.CrMasUserInformationCode" class="text-danger"></span>
-                            @Html.ValidationMessage("Exist", null, new { @class = "text-danger" })
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" for="UserCode">@localizer["User Code"]</label>
+                        </div>
+                        <div class="col-md-8" style="margin-right: -80px;margin-left: -100px;">
+                            <input type="text" class="form-control" asp-for="CrMasUserInformationCode" maxlength="10" style="width: 130px;" data-val-required="@localizer["requiredFiled"]" data-val-minlength="@localizer["minLengthField"]" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off" required>
+                            <div style="margin-top:2px">
+                                <div style="height: 1.0em">
+                                    <span asp-validation-for="@Model.CrMasUserInformationCode" class="text-danger"></span>
+                                    @Html.ValidationMessage("Exist", null, new { @class = "text-danger" })
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="row mt-2">
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <label class="form-label" for="UserNameAr">@localizer["UserNameAr"]</label>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-8" style="margin-right: -80px;margin-left: -100px;">
                             <input type="text" class="form-control" asp-for="CrMasUserInformationArName" maxlength="40" style="width: 75%;" data-val-required="@localizer["requiredFiled"]" data-val-minlength="@localizer["minLengthField"]" autocomplete="off" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')">
                             <div style="margin-top:2px">
                                 <div style="height: 1.0em">
@@ -197,24 +202,24 @@
                 <div class="col-md-3" style="margin-right:230px">
                     <h5>@localizer["ValiditySystem"]</h5>
                 </div>
-                
+
             </div>
 
             <div class="row mt-2">
                 <div class="col-md-6">
-                  <div class="row">
-                    <div class="col-md-2">
-                        <label class="form-label" for="UserNameEn">@localizer["UserNameEn"]</label>
-                    </div>
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" style="width: 75%;" asp-for="CrMasUserInformationEnName" maxlength="40" id="UserNameEn" autocomplete="off" data-val-required="@localizer["requiredFiled"]" data-val-minlength="@localizer["minLengthField"]" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.0em">
-                                <span asp-validation-for="@Model.CrMasUserInformationEnName" class="text-danger"></span>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" for="UserNameEn">@localizer["UserNameEn"]</label>
+                        </div>
+                        <div class="col-md-8" style="margin-right: -80px;margin-left: -100px;">
+                            <input type="text" class="form-control" style="width: 75%;" asp-for="CrMasUserInformationEnName" maxlength="40" id="UserNameEn" autocomplete="off" data-val-required="@localizer["requiredFiled"]" data-val-minlength="@localizer["minLengthField"]" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')">
+                            <div style="margin-top:2px">
+                                <div style="height: 1.0em">
+                                    <span asp-validation-for="@Model.CrMasUserInformationEnName" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                  </div>
                 </div>
                 <div class="col-md-2" style="margin-right: 250px;">
                     <h4 style="font-size: 20px;">
@@ -234,7 +239,7 @@
                             <label class="form-label" for="TasksArName">@localizer["EmployementAr"]</label>
                         </div>
                         <div class="col-md-8" style="margin-right: -80px;margin-left: -100px;">
-                            <input type="text" class="form-control" style="width: 65%;" asp-for="CrMasUserInformationTasksArName" maxlength="40" id="TasksArName" autocomplete="off" data-val-required="@localizer["requiredFiled"]" data-val-minlength="@localizer["minLengthField"]" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')">
+                            <input type="text" class="form-control" style="width: 75%;" asp-for="CrMasUserInformationTasksArName" maxlength="40" id="TasksArName" autocomplete="off" data-val-required="@localizer["requiredFiled"]" data-val-minlength="@localizer["minLengthField"]" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')">
                             <div style="margin-top:2px">
                                 <div style="height: 1.0em">
                                     <span asp-validation-for="@Model.CrMasUserInformationTasksArName" class="text-danger"></span>
@@ -260,7 +265,7 @@
                             <label class="form-label" for="TasksEnName">@localizer["EmployementEn"]</label>
                         </div>
                         <div class="col-md-8" style="margin-right: -80px;margin-left: -100px;">
-                            <input type="text" class="form-control" style="width: 65%;" asp-for="CrMasUserInformationTasksEnName" maxlength="40" id="TasksEnName" autocomplete="off" data-val-required="@localizer["requiredFiled"]" data-val-minlength="@localizer["minLengthField"]" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')">
+                            <input type="text" class="form-control" style="width: 75%;" asp-for="CrMasUserInformationTasksEnName" maxlength="40" id="TasksEnName" autocomplete="off" data-val-required="@localizer["requiredFiled"]" data-val-minlength="@localizer["minLengthField"]" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')">
                             <div style="margin-top:2px">
                                 <div style="height: 1.0em">
                                     <span asp-validation-for="@Model.CrMasUserInformationTasksEnName" class="text-danger"></span>
@@ -361,11 +366,10 @@
                 </div>
             </div>
             <div class="row mt-2">
-
-                <div class="col-md-1" style="width: 11.33333%">
-                    <label class="form-label" for="Email">@localizer["reasons"]</label>
+                <div class="col-md-1" style="width: 10.33333%">
+                    <label class="form-label" for="CrMasUserInformationReasons">@localizer["reasons"]</label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" style="margin-right: 1.2%;">
                     <input type="text" class="form-control" style="width: 75%;" asp-for="CrMasUserInformationReasons" autocomplete="off" maxlength="100" id="CrMasUserInformationReasons">
                     <div style="margin-top:2px">
                         <div style="height: 1.0em">
@@ -411,12 +415,12 @@
                     </div>
                 </div>
             </div>
-           
+
         </div>
         @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
         <div class="mt-3">
-@*             <button class="btn btn-primary ms-2" type="submit">@localizer["Save"]</button>
-          *@<a class="btn btn-primary ms-2" id="submitButton">@localizer["Save"]</a>
+            @*             <button class="btn btn-primary ms-2" type="submit">@localizer["Save"]</button>
+            *@<a class="btn btn-primary ms-2" id="submitButton">@localizer["Save"]</a>
             <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="Employees" asp-action="Employees">
                 @localizer["Back"]
             </a>
@@ -480,7 +484,7 @@
         }
     </script>
     <script>
-    
+
         // $(document).ready(function () {
         //     // Handle form submission
         //     $("#submitButton").click(function (e) {
@@ -599,7 +603,7 @@
                 // }
             })
         });
-        
+
     </script>
 
     <script>
