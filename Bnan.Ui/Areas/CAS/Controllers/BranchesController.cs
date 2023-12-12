@@ -127,9 +127,17 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var IsValidCity = _unitOfWork.CrMasSupPostCity.FindAll(l => l.CrMasSupPostCityConcatenateArName == branchVM.BranchPostVM.CrCasBranchPostCity || l.CrMasSupPostCityConcatenateEnName == branchVM.BranchPostVM.CrCasBranchPostCity).FirstOrDefault();
             var IsGovNo = _unitOfWork.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationGovernmentNo == branchVM.CrCasBranchInformationGovernmentNo).Count() > 0;
             var IsTaxNo = _unitOfWork.CrCasBranchInformation.FindAll(l => l.CrCasBranchInformationTaxNo == branchVM.CrCasBranchInformationTaxNo).Count() > 0;
+            bool NameArIsExist = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationArName == branchVM.CrCasBranchInformationArName && x.CrCasBranchInformationLessor == user.CrMasUserInformationLessor).Count() > 0;
+            bool NameArShortIsExist = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationArShortName == branchVM.CrCasBranchInformationArShortName && x.CrCasBranchInformationLessor == user.CrMasUserInformationLessor).Count() > 0;
+            bool NameEnIsExist = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationEnName == branchVM.CrCasBranchInformationEnName && x.CrCasBranchInformationLessor == user.CrMasUserInformationLessor).Count() > 0;
+            bool NameEnShortIsExist = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationEnShortName == branchVM.CrCasBranchInformationEnShortName && x.CrCasBranchInformationLessor == user.CrMasUserInformationLessor).Count() > 0;
             if (IsValidCity == null) ModelState.AddModelError("BranchPostVM.CrCasBranchPostCity", _localizer["IsNotValidCity"]);
             if (IsGovNo) ModelState.AddModelError("CrCasBranchInformationGovernmentNo", _localizer["IsTakenGov"]);
             if (IsTaxNo) ModelState.AddModelError("CrCasBranchInformationTaxNo", _localizer["IsTakenTax"]);
+            if (NameArIsExist) ModelState.AddModelError("CrCasBranchInformationArName", _localizer["IsExist"]);
+            if (NameArShortIsExist) ModelState.AddModelError("CrCasBranchInformationArShortName", _localizer["IsExist"]);
+            if (NameEnIsExist) ModelState.AddModelError("CrCasBranchInformationEnName", _localizer["IsExist"]);
+            if (NameEnShortIsExist) ModelState.AddModelError("CrCasBranchInformationEnShortName", _localizer["IsExist"]);
 
             if (ModelState.IsValid)
             {

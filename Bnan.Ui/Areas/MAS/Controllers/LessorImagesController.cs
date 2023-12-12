@@ -4,12 +4,15 @@ using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using Bnan.Inferastructure.Extensions;
 using Bnan.Ui.Areas.Base.Controllers;
+using Bnan.Ui.Areas.CAS.Controllers;
 using Bnan.Ui.ViewModels.MAS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using NToastNotify;
 
 namespace Bnan.Ui.Areas.MAS.Controllers
 {
@@ -18,9 +21,13 @@ namespace Bnan.Ui.Areas.MAS.Controllers
     public class LessorImagesController : BaseController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public LessorImagesController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment webHostEnvironment) : base(userManager, unitOfWork, mapper)
+        private readonly IStringLocalizer<LessorImagesController> _localizer;
+        private readonly IToastNotification _toastNotification;
+        public LessorImagesController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment webHostEnvironment, IStringLocalizer<LessorImagesController> localizer, IToastNotification toastNotification) : base(userManager, unitOfWork, mapper)
         {
             _webHostEnvironment = webHostEnvironment;
+            _localizer = localizer;
+            _toastNotification = toastNotification;
         }
 
         [HttpGet]
@@ -77,7 +84,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     if (file != null && Name != null)
                     {
                         var saveImage = await file.SaveImageAsync(_webHostEnvironment, foldername, Name, ".png");
-                        if (Name == "Logo1") lessorImages.CrMasLessorImageLogo = saveImage;
+                        if (Name == "CompanyLogo") lessorImages.CrMasLessorImageLogo = saveImage;
                         if (Name == "LogoPrint") lessorImages.CrMasLessorImageLogoPrint = saveImage;
                         if (Name == "Stamp") lessorImages.CrMasLessorImageStamp = saveImage;
                         if (Name == "StampOutsideCity") lessorImages.CrMasLessorImageStampOutsideCity = saveImage;
@@ -114,7 +121,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                         {
                             var id = image.id;
                             var deleteImage = await FileExtensions.RemoveImage(_webHostEnvironment, foldername, id, ".png");
-                            if (id == "Logo1") lessorImages.CrMasLessorImageLogo = null;
+                            if (id == "CompanyLogo") lessorImages.CrMasLessorImageLogo = null;
                             if (id == "LogoPrint") lessorImages.CrMasLessorImageLogoPrint = null;
                             if (id == "Stamp") lessorImages.CrMasLessorImageStamp = null;
                             if (id == "StampOutsideCity") lessorImages.CrMasLessorImageStampOutsideCity = null;
@@ -144,11 +151,16 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     
                 }
                 _unitOfWork.Complete();
-                return Json(new { redirect = true, url = Url.Action("Index", "LessorImages") });
+                return Json(true);
             }
-            return Json(new { redirect = false, url = Url.Action("Index", "LessorImages"), error = "Something wrong occured" });
+            return Json(false);
 
         }
-        
+        public IActionResult SuccesssMessageForLessorImages()
+        {
+            _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -1144,9 +1144,9 @@
     <script>
         $(document).ready(function () {
             // Set an initial timeout of 60 seconds (in milliseconds)
-            let timeout = 300000;
+            var exitUser="@user.CrMasUserInformationExitTimer";
+            let timeout = parseInt(exitUser)*60*1000;
             let timer;
-
             // Function to start the countdown
             function startCountdown() {
                 timer = setInterval(updateCountdown, 1000);

@@ -195,7 +195,7 @@
                         <div class="file-upload">
                             <button class="file-upload-btn" type="button" onclick="$('.logo1').trigger('click')">@localizer["logo1"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input logo1" type="file" onchange="readURL(this, 'logo1');" accept="image/*" id="Logo1" name="Logo1" value="@Model.CrMasLessorImageLogo?.ToString()" />
+                                <input class="file-upload-input logo1" type="file" onchange="readURL(this, 'logo1');" accept="image/*" id="CompanyLogo" name="CompanyLogo" value="@Model.CrMasLessorImageLogo?.ToString()" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
@@ -215,7 +215,7 @@
                         <div class="file-upload">
                             <button class="file-upload-btn" type="button" onclick="$('.logo1').trigger('click')">@localizer["logo1"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input logo1" type="file" onchange="readURL(this, 'logo1');" accept="image/*" id="Logo1" name="Logo1" />
+                                <input class="file-upload-input logo1" type="file" onchange="readURL(this, 'logo1');" accept="image/*" id="CompanyLogo" name="CompanyLogo" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
@@ -1232,11 +1232,9 @@
                     'lessorcode': lessorCode
                 },
                 success: function (response) {
-                    if (response.redirect) {
-                        window.location.href = response.url;
-                    } else {
-                        console.log(response.error);
-                    }
+                    if (response) {
+                        window.location.href = "/MAS/LessorImages/SuccesssMessageForLessorImages";
+                    } 
                 },
                 error: function (xhr, status, error) {
                     // Handle error response
