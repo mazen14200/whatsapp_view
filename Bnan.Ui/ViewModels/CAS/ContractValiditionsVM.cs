@@ -36,7 +36,7 @@ namespace Bnan.Ui.ViewModels.CAS
         public bool CrMasUserContractValidityCancel { get; set; }
         public bool CrMasUserContractValidityExtension { get; set; }
         public bool CrMasUserContractValidityEnd { get; set; }
-        public bool? CrMasUserContractValidityCreate { get; set; }
+        public bool CrMasUserContractValidityCreate { get; set; }
 
         public virtual CrMasUserInformation CrMasUserContractValidityUser { get; set; } = null!;
         public virtual List<CrCasLessorMechanism>? CrCasLessorMechanism { get; set; }

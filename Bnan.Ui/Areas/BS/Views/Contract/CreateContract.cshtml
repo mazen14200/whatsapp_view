@@ -1,0 +1,1972 @@
+﻿@using Bnan.Ui.ViewModels.BS;
+@model BSLayoutVM
+@{
+    ViewData["Title"] = "CreateContract";
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+<link href="~\BranchSys\CreateContract\sb-admin-2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<link href="~/BranchSys/CreateContract/contract.css" rel="styleSheet">
+
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    <link href="~/BranchSys/CreateContract/english-style.css" rel="styleSheet">
+}
+
+
+<section class="section-mainCard" style="font-weight: 600;">
+    <div class="row justify-content-center w-100 h-100">
+        <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
+            <div class="card main-card ">
+                <div class="row pt-2">
+                    <a asp-action="Index" asp-area="BS" asp-controller="Home" style="width: fit-content;">
+                        <img src="~/BranchSys/CreateContract/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+                    </a>
+                </div>
+                <div class="row" style="flex-direction: row-reverse;">
+                    <div class="col justify-content-center d-flex title-row">
+                        <span class="card-title">
+                            إنشاء العقد
+                        </span>
+                    </div>
+
+                </div>
+                <div class="row justify-content-center h-100 content-row">
+
+                    <div class="col-md-11 mx-0">
+
+                        <form id="msform">
+                            <div>
+                                <!-- progressbar -->
+                                <ul id="progressbar">
+                                    <li class="active" id="tenant">المستأجر</li>
+                                    <li id="car">السيارة</li>
+                                    <li id="driver">السائق</li>
+                                    <li id="add-driver">السائق الإضافي</li>
+                                    <li id="options">إضافات وخيارات</li>
+                                    <li id="check">الفحص الظاهري</li>
+                                    <li id="payment">الدفع</li>
+
+                                </ul>
+                            </div>
+                            <fieldset>
+                                <div class="form-card form-card1 h-100">
+
+                                    <div class="row row-step1 ">
+                                        <div class="col-auto">
+                                            <label for="national-number-step1"
+                                                   class="col-form-label">
+                                                رقم
+                                                الهوية
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                            <input type="tel" class="form-control"
+                                                   id="national-number-step1"
+                                                   style="margin-left: -4px;"
+                                                   name="national-number-step1" required>
+                                            <div class="row requird-field-row">
+                                                <p class="requird-field">هذا الحقل مطلوب</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto seacrh-icon-col">
+                                            <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="seacrh-icon Image"
+                                                 id="hover-image">
+                                            <div class="dropdown-content" id="dropdown-content">
+                                                <div class="row dropdown-content-row pt-2">
+                                                    <div class="col-7 pe-4">
+                                                        <p>اخر زيارة </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>3/10/2020</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p>اخر عقد </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>30/6/2023</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> عدد العقود </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>5</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> عدد ايام التأجير </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>100</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> الكبلات المقطوعة </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>7.200</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> المبالغ المتداولة</p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>92.500</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> الرصيد </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>-1.250</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> التقييم </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>4.12</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> آالية التعامل</p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>جيد</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> العوضية</p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>ماسية</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-step1 align-items-center">
+                                        <div class="col-auto" style="padding-bottom: 30px;">
+                                            <label for="birth-date-step1"
+                                                   class=" col-form-label">
+                                                تاريخ
+                                                الميلاد
+                                            </label>
+
+                                        </div>
+                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                            <input type="date" class="form-control"
+                                                   id="birth-date-step1" name="birth-date-step1"
+                                                   required>
+                                            <div class="row requird-field-row">
+                                                <p class="requird-field">هذا الحقل مطلوب</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-auto" style="margin-bottom: 32px;">
+                                            <button type="button" class="btn check-btn"
+                                                    data-bs-toggle="modal"
+                                                    href="#checkModalToggle">
+                                                تحقق
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-auto col-md-auto col-lg-auto radio-style"
+                                             style="padding-right: 60px;">
+                                            <div class="form-check">
+                                                <label class="form-check-label" for="driver1">
+                                                    المستأجر سائق
+                                                </label>
+                                                <input class="form-check-input" type="radio"
+                                                       name="driver" id="driver1"
+                                                       value="tenant-is-driver">
+                                            </div>
+                                            <div class="form-check form-check2">
+                                                <label class="form-check-label" for="driver2">
+                                                    سائق خاص
+                                                </label>
+                                                <input class="form-check-input" type="radio"
+                                                       name="driver" id="driver2"
+                                                       value="another-driver">
+                                            </div>
+                                        </div>
+                                        <div id="dropdown-container" class="col-auto "
+                                             style="display:none;">
+                                            <div class="offset">
+                                                <select class="form-select" id="driver-dropdown">
+                                                    <option selected disabled> اختر سائقك </option>
+                                                    <option value="سائق1 ">سائق 1</option>
+                                                    <option value="2سائق">سائق 2</option>
+                                                    <option value="3سائق">سائق 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row row-step1 mb-3 ">
+                                        <div class="col-auto">
+                                            <p id="name"> الاسم </p>
+
+                                        </div>
+                                        <div class="col-auto personal-data">
+                                            <p>أحمد عبد الله الجندي</p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row row-step1 mb-3">
+                                        <div class="col-auto">
+                                            <p id="email">البريد الإلكتروني</p>
+
+                                        </div>
+                                        <div class="col-auto personal-data">
+                                            <p>ahmed34@gmail.com</p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row row-step1 mb-3">
+                                        <div class="col-auto">
+                                            <p id="adress">العنوان</p>
+
+                                        </div>
+                                        <div class="col-auto personal-data">
+                                            <p>القصيم - حي رقم 123-شارع رقم83223- وحدة 12</p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row row-step1 ">
+                                        <div class="col-auto">
+                                            <label for="FormControlTextarea1">الملاحظات</label>
+                                        </div>
+                                        <div class="col-sm-5 col-md-5 col-lg-5">
+
+                                            <textarea class="form-control"
+                                                      id="FormControlTextarea1" rows="1"
+                                                      maxlength="100"
+                                                      name="tenant-notes"
+                                                      type="text"></textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row button-row" style="text-align: left;">
+                                    <div class="button-card">
+                                        <img src="~/BranchSys/CreateContract/Group.png" alt="Button Image"
+                                             class="next action-button"
+                                             style="vertical-align: middle; ">
+                                        <input type="button" name="next" class="next action-button"
+                                               value="التالي" />
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card">
+                                    <div class="row" style="flex-direction: row-reverse;">
+                                        <div class="col-sm-4 col-md-4 col-lg-3 car-catogeries " id="scrollContainer">
+                                            <div class="d-flex " style="flex-direction:column; gap:4px">
+                                                <button type="button"
+                                                        class="btn customized-button ">
+                                                    الكل
+                                                </button>
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    اقتصادية
+                                                </button>
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    عائلية صغيرة
+                                                </button>
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    عائلية وسط
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    عائلية كبيرة
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    سيدان صغيرة
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    سيدان وسط
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    فخمة صغيرة
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    فان صغيرة
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    Warning
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    Warning
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    Warning
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    Warning
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    Warning
+                                                </button>
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    Warning
+                                                </button>
+                                                <button type="button"
+                                                        class="btn  customized-button">
+                                                    Warning
+                                                </button>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-8 col-md-8 col-lg-9 scrollable-content p-0">
+                                            <table width="100%" class="table table-hover" id="ListCars">
+                                                <tbody>
+                                                    <tr style="border-bottom: 1px solid #39629C;cursor: pointer;" class="next ">
+                                                        <td>
+                                                            <div class="row" style="flex-direction: row-reverse;">
+                                                                <div class="col-sm-12  col-md-12 col-lg-2 p-1">
+                                                                    <img src="~/BranchSys/CreateContract/img/Rectangle1.png">
+                                                                </div>
+                                                                <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
+                                                                    <p><span>فورد</span> <span> - </span><span>تورس</span><span> - </span><span>۲۰۱۹</span> <span> - </span><span>سيدان متوسطة</span><span> - </span><span>أزرق</span><span> - </span> 9714 ق د ف</p>
+                                                                    <p><span>القراءة الحالية: </span><span>۱۰۱٥۰</span></p>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
+
+                                                                    <p>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 93.png">
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 143.png ">
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>2</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>5</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>4</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 98 (1).png"><span>4</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr style="border-bottom: 1px solid #39629C;cursor: pointer;" class="next ">
+                                                        <td>
+                                                            <div class="row" style="flex-direction: row-reverse;">
+                                                                <div class="col-sm-12  col-md-12 col-lg-2 p-1">
+                                                                    <img src="~/BranchSys/CreateContract/img/Rectangle2.png">
+                                                                </div>
+                                                                <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
+                                                                    <p><span>فورد </span> <span> - </span><span>تورس</span><span> - </span><span>۲۰۱۹ </span> <span> - </span><span>سيدان متوسطة</span><span> - </span><span>أزرق </span><span> - </span>  9714 ق د ف</p>
+                                                                    <p><span>القراءة الحالية: </span><span>۱۰۱٥۰</span></p>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
+
+                                                                    <p>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 93.png">
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 143.png ">
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>2</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>5</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>4</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 98 (1).png"><span>4</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr style="border-bottom: 1px solid #39629C;cursor: pointer;" class="next ">
+                                                        <td>
+                                                            <div class="row" style="flex-direction: row-reverse;">
+                                                                <div class="col-sm-12  col-md-12 col-lg-2 p-1">
+                                                                    <img src="~/BranchSys/CreateContract/img/Rectangle3.png">
+                                                                </div>
+                                                                <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
+                                                                    <p><span>فورد </span> <span> - </span><span>تورس</span><span> - </span><span>۲۰۱۹ </span> <span> - </span><span>سيدان متوسطة</span><span> - </span><span>أزرق </span><span> - </span>  9714 ق د ف</p>
+                                                                    <p><span>القراءة الحالية: </span><span>۱۰۱٥۰</span></p>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
+
+                                                                    <p>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 93.png">
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 143.png ">
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>2</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>5</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>4</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 98 (1).png"><span>4</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr style="border-bottom: 1px solid #39629C; cursor: pointer;" class="next ">
+                                                        <td>
+                                                            <div class="row" style="flex-direction: row-reverse;">
+                                                                <div class="col-sm-12  col-md-12 col-lg-2 p-1">
+                                                                    <img src="~/BranchSys/CreateContract/img/Rectangle4.png">
+                                                                </div>
+                                                                <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
+                                                                    <p><span>فورد </span> <span> - </span><span>تورس</span><span> - </span><span>۲۰۱۹ </span> <span> - </span><span>سيدان متوسطة</span><span> - </span><span>أزرق </span><span> - </span>  9714 ق د ف</p>
+                                                                    <p><span>القراءة الحالية: </span><span>۱۰۱٥۰</span></p>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
+
+                                                                    <p>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 93.png">
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 143.png ">
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>2</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>5</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>4</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 98 (1).png"><span>4</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr style="border-bottom: 1px solid #39629C;cursor: pointer;" class="next ">
+                                                        <td>
+                                                            <div class="row" style="flex-direction: row-reverse;">
+                                                                <div class="col-sm-12  col-md-12 col-lg-2 p-1">
+                                                                    <img src="~/BranchSys/CreateContract/img/Rectangle1.png">
+                                                                </div>
+                                                                <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
+                                                                    <p><span>فورد </span> <span> - </span><span>تورس</span><span> - </span><span>۲۰۱۹ </span> <span> - </span><span>سيدان متوسطة</span><span> - </span><span>أزرق </span><span> - </span>  9714 ق د ف</p>
+                                                                    <p><span>القراءة الحالية: </span><span>۱۰۱٥۰</span></p>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
+
+                                                                    <p>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 93.png">
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 143.png ">
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>2</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>5</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>4</span>
+                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 98 (1).png"><span>4</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row button-row">
+                                    <div class="button-card">
+                                    </div>
+                                    <div class="button-card">
+                                        <input type="button" name="previous"
+                                               class="previous action-button-previous" value="السابق" />
+                                        <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
+                                             class="previous action-button-previous"
+                                             style="vertical-align: middle; ">
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card form-card3">
+                                    <div class="row row-step3 ">
+                                        <div class="col-auto">
+                                            <label for="national-number-driver"
+                                                   class="col-form-label">
+                                                رقم
+                                                الهوية
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                            <input type="tel" class="form-control"
+                                                   id="national-number-driver"
+                                                   style="margin-left: -4px;"
+                                                   name="national-number-driver" required>
+                                            <div class="row requird-field-row">
+                                                <p class="requird-field">هذا الحقل مطلوب</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto seacrh-icon-col">
+                                            <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="seacrh-icon Image"
+                                                 id="hover-image-driver">
+                                            <div class="dropdown-content" id="dropdown-content-driver">
+                                                <div class="row dropdown-content-row pt-2">
+                                                    <div class="col-7 pe-4">
+                                                        <p>اخر زيارة </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>3/10/2020</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p>اخر عقد </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>30/6/2023</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> عدد العقود </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>5</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> عدد ايام التأجير </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>100</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> الكبلات المقطوعة </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>7.200</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> المبالغ المتداولة</p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>92.500</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> الرصيد </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>-1.250</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> التقييم </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>4.12</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> آالية التعامل</p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>جيد</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> العوضية</p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>ماسية</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-step3 align-items-center">
+                                        <div class="col-auto" style="padding-bottom: 30px;">
+                                            <label for="birth-date-driver"
+                                                   class=" col-form-label">
+                                                تاريخ
+                                                الميلاد
+                                            </label>
+
+                                        </div>
+                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                            <input type="date" class="form-control"
+                                                   id="birth-date-driver" name="birth-date-driver"
+                                                   required>
+                                            <div class="row requird-field-row">
+                                                <p class="requird-field">هذا الحقل مطلوب</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-auto" style="margin-bottom: 32px;">
+                                            <button type="button" class="btn check-btn"
+                                                    data-bs-toggle="modal"
+                                                    href="#checkModalToggle">
+                                                تحقق
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <div class="row row-step3 align-items-center">
+                                        <div class="col-md-6">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p>أحمد عبد الله الجندي</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="driver-name"> الاسم </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" style="    display: flex;
+                                                                justify-content: flex-end;">
+                                            <div class="addational-driver d-flex gap-3">
+                                                <label class="addational-driver-label"
+                                                       for="addational-driver">
+                                                    سائق إضافي
+                                                </label>
+                                                <input class="addational-driver-input"
+                                                       type="checkbox" name='addtional-driver-add' value="checked" id="addational-driver">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-step3 ">
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p>سعودي</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="driver-nationality"> الجنسية </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p>ذكر</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="driver-type"> الجنس </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p>عسكري</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="driver-jop"> المهنة </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-step3 "
+                                         style="flex-direction: row-reverse;">
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p>خصوصي</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="driver-licence-type"> نوع الرخصة </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p> ۲۰۲۲/۲/٥</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="driver-licence-date"> إصدارها </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p> ۲۰۲٥/۸/۱۰</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="driver-licence-end"> نهايتها </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-step3 ">
+                                        <div class="col-auto">
+                                            <p id="driver-adress">العنوان</p>
+
+                                        </div>
+                                        <div class="col-auto personal-data">
+                                            <p>القصيم - حي رقم 123-شارع رقم83223- وحدة 12</p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row row-step3 ">
+                                        <div class="col-auto">
+                                            <p id="driver-email">البريد الإلكتروني</p>
+
+                                        </div>
+                                        <div class="col-auto personal-data">
+                                            <p>ahmed34@gmail.com</p>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row row-step3">
+                                        <div class="col-auto">
+                                            <label for="FormControlTextarea2">الملاحظات</label>
+                                        </div>
+                                        <div class="col-sm-5 col-md-5 col-lg-5">
+
+                                            <textarea class="form-control"
+                                                      id="FormControlTextarea2"
+                                                      maxlength="100"
+                                                      rows="1"
+                                                      name="driver-notes"></textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row button-row">
+                                    <div class="button-card">
+                                        <img src="~/BranchSys/CreateContract/Group.png" alt="Button Image"
+                                             class="next action-button"
+                                             style="vertical-align: middle; ">
+                                        <input type="button" name="next" class="next action-button"
+                                               value="التالي" />
+                                    </div>
+                                    <div class="button-card">
+                                        <input type="button" name="previous"
+                                               class="previous action-button-previous"
+                                               value="السابق" />
+                                        <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
+                                             class="previous action-button-previous"
+                                             style="vertical-align: middle; ">
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card form-card4">
+
+                                    <div class="row row-step4 ">
+                                        <div class="col-auto">
+                                            <label for="national-number-additionalDriver"
+                                                   class="col-form-label">
+                                                رقم
+                                                الهوية
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                            <input type="tel" class="form-control"
+                                                   id="national-number-additionalDriver"
+                                                   style="margin-left: -4px;"
+                                                   name="national-number-additionalDriver" required>
+                                            <div class="row requird-field-row">
+                                                <p class="requird-field">هذا الحقل مطلوب</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto seacrh-icon-col">
+                                            <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="seacrh-icon Image"
+                                                 id="hover-image-Add-driver">
+                                            <div class="dropdown-content" id="dropdown-content-Add-driver">
+                                                <div class="row dropdown-content-row pt-2">
+                                                    <div class="col-7 pe-4">
+                                                        <p>اخر زيارة </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>3/10/2020</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p>اخر عقد </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>30/6/2023</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> عدد العقود </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>5</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> عدد ايام التأجير </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>100</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> الكبلات المقطوعة </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>7.200</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> المبالغ المتداولة</p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>92.500</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> الرصيد </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>-1.250</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> التقييم </p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>4.12</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> آالية التعامل</p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>جيد</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row dropdown-content-row">
+                                                    <div class="col-7 pe-4">
+                                                        <p> العوضية</p>
+                                                    </div>
+                                                    <div class="col personal-data">
+                                                        <p>ماسية</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-step4 align-items-center">
+                                        <div class="col-auto" style="padding-bottom: 30px;">
+                                            <label for="birth-date-additionalDriver"
+                                                   class=" col-form-label">
+                                                تاريخ
+                                                الميلاد
+                                            </label>
+
+                                        </div>
+                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                            <input type="date" class="form-control"
+                                                   id="birth-date-additionalDriver" name="birth-date-additionalDriver"
+                                                   required>
+                                            <div class="row requird-field-row">
+                                                <p class="requird-field">هذا الحقل مطلوب</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-auto" style="margin-bottom: 32px;">
+                                            <button type="button" class="btn check-btn"
+                                                    data-bs-toggle="modal"
+                                                    href="#checkModalToggle">
+                                                تحقق
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <div class="row row-step4">
+                                        <div class="col-auto">
+                                            <p id="additionalDriver-name"> الاسم </p>
+
+                                        </div>
+                                        <div class="col-auto personal-data">
+                                            <p>أحمد عبد الله الجندي</p>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row row-step4 ">
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p>سعودي</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="additionalDriver-nationality"> الجنسية </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p>ذكر</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="additionalDriver-type"> الجنس </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p>عسكري</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="additionalDriver-jop"> المهنة </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-step4 "
+                                         style="flex-direction: row-reverse;">
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p>خصوصي</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="additionalDriver-licence-type"> نوع الرخصة </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p> ۲۰۲۲/۲/٥</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="additionalDriver-licence-date"> إصدارها </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-end;">
+                                                <div class="col-auto personal-data">
+                                                    <p> ۲۰۲٥/۸/۱۰</p>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p id="additionalDriver-licence-end"> نهايتها </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-step4 ">
+                                        <div class="col-auto">
+                                            <p id="additionalDriver-adress">العنوان</p>
+
+                                        </div>
+                                        <div class="col-auto personal-data">
+                                            <p>القصيم - حي رقم 123-شارع رقم83223- وحدة 12</p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row row-step4 ">
+                                        <div class="col-auto">
+                                            <p id="additionalDriver-email">البريد الإلكتروني</p>
+
+                                        </div>
+                                        <div class="col-auto personal-data">
+                                            <p>ahmed34@gmail.com</p>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row row-step4 ">
+                                        <div class="col-auto">
+                                            <label for="FormControlTextarea3">الملاحظات</label>
+                                        </div>
+                                        <div class="col-sm-5 col-md-5 col-lg-5">
+
+                                            <textarea class="form-control"
+                                                      id="FormControlTextarea3"
+                                                      maxlength="100"
+                                                      rows="1"
+                                                      name="addational-driver-notes"></textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row button-row">
+                                    <div class="button-card">
+                                        <img src="~/BranchSys/CreateContract/Group.png" alt="Button Image"
+                                             class="next action-button"
+                                             style="vertical-align: middle; ">
+                                        <input type="button" name="next" class="next action-button"
+                                               value="التالي" />
+                                    </div>
+                                    <div class="button-card">
+                                        <input type="button" name="previous"
+                                               class="previous action-button-previous"
+                                               value="السابق" />
+                                        <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
+                                             class="previous action-button-previous"
+                                             style="vertical-align: middle; ">
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card">
+                                    <div class="row gap-5 table-field-row ">
+                                        <div class="col">
+                                            <div class="table-scroll">
+
+                                                <table class="table table-bordered  table-hover table-scroll ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">القيمة</th>
+                                                            <th scope="col" style='border-left: 1px solid #ff9626a3;
+                                                                                    '>الاضافات</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۱۰۰:۰۰
+                                                            </td>
+                                                            <td class="tabel-data-checkbox-td">
+                                                                <label class="Delivery-to-another-branch"
+                                                                       for="Delivery-to-another-branch">
+                                                                    تسليم بفرع آخر
+                                                                </label>
+                                                                <input class="Delivery-to-another-branch-input"
+                                                                       type="checkbox" name="Additions" value="Delivery-to-another-branch"
+                                                                       id="Delivery-to-another-branch">
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td class="text-center">
+                                                                ۱۲۰:۰۰
+
+                                                            </td>
+                                                            <td class="tabel-data-checkbox-td">
+                                                                <label class="Receiving-the-car"
+                                                                       for="Receiving-the-car">
+                                                                    استلام السيارة
+                                                                </label>
+                                                                <input class="Receiving-the-car-input"
+                                                                       type="checkbox" name="Additions" value="Receiving-the-car"
+                                                                       id="Receiving-the-car">
+
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۳۰:۰۰
+
+                                                            </td>
+                                                            <td class="tabel-data-checkbox-td">
+                                                                <label class="child-seat"
+                                                                       for="child-seat">
+                                                                    كرسي أطفال
+                                                                </label>
+                                                                <input class="child-seat-input"
+                                                                       type="checkbox" name="Additions" value="child-seat"
+                                                                       id="child-seat">
+
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۳۰:۰۰
+
+                                                            </td>
+                                                            <td class="tabel-data-checkbox-td">
+                                                                <label class="Baby chair"
+                                                                       for="Baby chair">
+                                                                    كرسي رضيع
+                                                                </label>
+                                                                <input class="Baby chair-input"
+                                                                       type="checkbox" name="Additions" value="Baby chair"
+                                                                       id="Baby chair">
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۳۰:۰۰
+                                                            </td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۳۰:۰۰
+                                                            </td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۲۰:۰۰
+
+                                                            </td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۲۰:۰۰
+
+                                                            </td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۲۰:۰۰
+
+                                                            </td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۲۰:۰۰
+
+                                                            </td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۰۰:۰۰
+                                                            </td>
+                                                            <td class="text-center">المجموع</td>
+
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="table-scroll">
+                                                <table class="table table-bordered  table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">القيمة</th>
+                                                            <th scope="col"
+                                                                style='border-left: 1px solid #ff9626a3; '>
+                                                                الخيارات
+                                                            </th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۱٥:۰۰
+                                                            </td>
+                                                            <td class="tabel-data-checkbox-td">
+                                                                <label class="Open-the-counter"
+                                                                       for="Open-the-counter">
+                                                                    فتح العداد
+
+                                                                </label>
+                                                                <input class="Open-the-counter-input"
+                                                                       type="checkbox"
+                                                                       name="options"
+                                                                       value="Open-the-counter"
+                                                                       id="Open-the-counter">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td class="text-center">
+                                                                ۲۰:۰۰
+
+                                                            </td>
+                                                            <td class="tabel-data-checkbox-td">
+                                                                <label class="full insurance"
+                                                                       for="full insurance">
+                                                                    تأمين شامل
+
+                                                                </label>
+                                                                <input class="full insurance-input"
+                                                                       type="checkbox"
+                                                                       name="options"
+                                                                       value="full insurance"
+                                                                       id="full insurance">
+
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۳۰:۰۰
+
+                                                            </td>
+                                                            <td class="tabel-data-checkbox-td">
+                                                                <label class="Plus-insurance"
+                                                                       for="Plus-insurance">
+                                                                    +تأمين
+
+                                                                </label>
+                                                                <input class="Plus-insurance-input"
+                                                                       type="checkbox"
+                                                                       name="options"
+                                                                       value="Plus-insurance"
+                                                                       id="Plus-insurance">
+
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۲۰:۰۰
+
+                                                            </td>
+                                                            <td>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۲۰:۰۰
+                                                            </td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۲۰:۰۰
+                                                            </td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۲۰:۰۰
+                                                            </td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۲۰:۰۰
+                                                            </td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۲۰:۰۰
+                                                            </td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۲۰:۰۰
+                                                            </td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                ۰۰:۰۰
+                                                            </td>
+                                                            <td class="text-center">المجموع</td>
+
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row button-row">
+                                    <div class="button-card">
+                                        <img src="~/BranchSys/CreateContract/Group.png" alt="Button Image"
+                                             class="next action-button"
+                                             style="vertical-align: middle; margin-right: 10px;">
+                                        <input type="button" name="next" class="next action-button"
+                                               value="التالي" />
+                                    </div>
+                                    <div class="button-card">
+                                        <input type="button" name="previous"
+                                               class="previous action-button-previous" value="السابق" />
+                                        <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
+                                             class="previous action-button-previous"
+                                             style="vertical-align: middle; margin-right: 10px;">
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card" style="height: 300px;">
+                                </div>
+                                <div class="row button-row" style=" justify-content: space-around;">
+                                    <div class="button-card">
+                                        <img src="~/BranchSys/CreateContract/Group.png" alt="Button Image"
+                                             class="next action-button"
+                                             style="vertical-align: middle; margin-right: 10px;">
+                                        <input type="submit" name="next" class="next action-button"
+                                               value="التالي" />
+                                    </div>
+                                    <div class="button-card">
+                                        <input type="button" name="previous"
+                                               class="previous action-button-previous"
+                                               value="السابق" />
+                                        <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
+                                             class="previous action-button-previous"
+                                             style="vertical-align: middle; margin-right: 10px;">
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card form-card7">
+                                    <div class="row" style="flex-direction: row-reverse;">
+                                        <div class="col payment-col"
+                                             style="display: flex; flex-direction: column;">
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="contract-number">رقم العقد</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p> ٤٥-۱-٦۳٥٤-٥٤-٥٦</p>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <label id="days-number" for="days-number-input">
+                                                        عدد
+                                                        الأيام
+                                                    </label>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <input type="tel" class="form-control1"
+                                                           id="days-number-input" name="days-number"
+                                                           required>
+                                                </div>
+                                                <div class="row requird-field-row-last">
+                                                    <!-- <p class="requird-field">هذا الحقل مطلوب</p> -->
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="renting-price"> سعر الإيجار</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>۱٥۰۰.۰۰</p>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-md-6" style=" display: flex;
+                                                                    justify-content: flex-end;">
+                                                    <div class="Delegate-out d-flex gap-2">
+                                                        <label class="Delegate-out-label"
+                                                               for="Delegate-out">
+                                                            تفويض خارجي
+                                                        </label>
+                                                        <input class="Delegate-out-input"
+                                                               type="checkbox" value=""
+                                                               id="Delegate-out">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <label id="discount-percentage"
+                                                           for="discount-percentage-input">
+                                                        نسبة
+                                                        الخصم
+                                                    </label>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <input type="tel" class="form-control1"
+                                                           id="discount-percentage-input"
+                                                           name="discount-percentage" required>
+                                                </div>
+                                                <div class="row requird-field-row-last">
+                                                    <!-- <p class="requird-field">هذا الحقل مطلوب</p> -->
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="Total contract">إجمالي العقد</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>۱٥۰٥.۰۰</p>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="Total contract"> صافي العقد</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>۱۷۳۰.۷٥</p>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <label id="amount-paid" for="amount-paid-input">
+                                                        المبلغ المدفوع
+                                                    </label>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <input type="tel" class="form-control2"
+                                                           id="amount-paid-input" name="amount-paid"
+                                                           required>
+                                                </div>
+                                                <div class="row requird-field-row-last">
+                                                    <!-- <p class="requird-field">هذا الحقل مطلوب</p> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col payment-col"
+                                             style="display: flex; flex-direction: column;">
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="start-date">تاريخ البداية</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>
+                                                        ۲۰۲۲/۲/٥
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="end-date">تاريخ النهاية</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>
+                                                        ۲۰۲۲/۲/٥
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="options">الخيارات </p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>
+                                                        ۰۰.۰۰
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="contract-value">قيمة العقد </p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>
+                                                        ۱٥۰٥.۰۰
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <label id="addational-hours"
+                                                           for="addational-hours-input">
+                                                        الساعات
+                                                        الإضافية
+                                                    </label>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <input type="tel" class="form-control1"
+                                                           id="addational-hours-input"
+                                                           name="addational-hours" required>
+                                                </div>
+                                                <div class="row requird-field-row-last">
+                                                    <!-- <p class="requird-field">هذا الحقل مطلوب</p> -->
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="Tax-value
+                                                                            "> قيمة الضريبة </p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>
+                                                        ۲۲٥.۷٥
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="previous-balance"> رصيد سابق</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p>
+                                                        ۰۰.۹٦
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <div class="row"
+                                                         style="flex-direction: row-reverse;">
+                                                        <div class="col-auto">
+                                                            <p id="payment-method">طريقة الدفع</p>
+
+                                                        </div>
+
+                                                        <div class="col-auto ">
+                                                            <div class="offset">
+                                                                <select class="form-select-last"
+                                                                        id="payment-method-select">
+                                                                    <option selected disabled>
+                                                                    </option>
+                                                                    <option value=""> </option>
+                                                                    <option value=""> </option>
+                                                                    <option value=""> </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col payment-col"
+                                             style="display: flex; flex-direction: column;">
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="start-time">وقت البداية</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p> ۰٥:۲۷ </p>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="start-time">وقت النهاية</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p> ۰٥:۲۷ </p>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse; justify-content: space-between;">
+                                                <div class="col-auto d-flex p-0">
+                                                    <div class="col-auto personal-data">
+                                                        <p> ۰۰.۰۰ </p>
+
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <p id="start-time"> الإضافات</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto d-flex pe-0">
+                                                    <div class="col-auto personal-data">
+                                                        <p> ۱٥۰۰.۰۰</p>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <p id="start-time"> السائق الإضافي</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="height:37px">
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <label id="addational-kilos"
+                                                           for="addational-kilos-input">
+                                                        الكيلات الإضافية
+                                                    </label>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <input type="tel" class="form-control1"
+                                                           id="addational-kilos-input"
+                                                           name="addational-kilos" required>
+                                                </div>
+                                                <div class="row requird-field-row-last">
+                                                    <!-- <p class="requird-field">هذا الحقل مطلوب</p> -->
+                                                </div>
+                                            </div>
+                                            <div class="row" style="height:37px">
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="price"> المبلغ المطلوب</p>
+
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p> ۱۷۲۹.۷۹ </p>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <div class="row"
+                                                         style="flex-direction: row-reverse;">
+                                                        <div class="col-auto">
+                                                            <p id="selling-point"> نقطة البيع </p>
+
+                                                        </div>
+
+                                                        <div class="col-auto ">
+                                                            <div class="offset">
+                                                                <select class="form-select-last"
+                                                                        id="selling-point-dropdown">
+                                                                    <option selected disabled>
+                                                                    </option>
+                                                                    <option value=""> </option>
+                                                                    <option value=""> </option>
+                                                                    <option value=""> </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row p-2 row-step1 ">
+                                            <div class="col-auto">
+                                                <p id="notes">ملاحظات</p>
+                                            </div>
+                                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                                <textarea class="form-control"
+                                                          id="FormControl-last-Textarea" rows="1"
+                                                          minlength="100"></textarea>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row button-row align-items-center"
+                                     style="padding: 6px 7px 0px 20px;">
+                                    <div class="button-card  gap-2">
+                                        <button type="submit"
+                                                class=" check-btn payment-button">
+                                            حفظ
+                                        </button>
+                                        <button type="button" class=" check-btn payment-button"
+                                                data-bs-toggle="modal" href="#paymentPopupModal">
+                                            تفويض
+                                        </button>
+                                        <button type="button" class=" check-btn payment-button"
+                                                data-bs-toggle="modal" href="#signaturePopupModal">
+                                            توقيع
+                                            المستأجر
+                                        </button>
+
+                                    </div>
+                                    <div class="button-card">
+                                        <input type="button" name="previous"
+                                               class="previous action-button-previous"
+                                               value="السابق" />
+                                        <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
+                                             class="previous action-button-previous"
+                                             style="vertical-align: middle; margin-right: 10px;">
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="checkModalToggle" aria-hidden="true"
+                 aria-labelledby="checkModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="otc" name="one-time-code" id="otc">
+                                <legend>
+                                    من فضلك ادخل رمز التحقق المرسل على جوال*********۹٦
+                                </legend>
+                                <div>
+                                    <input type="number" pattern="[0-9]*" value=""
+                                           inputtype="numeric" autocomplete="one-time-code" id="otc-1"
+                                           name="otc-1" required>
+                                    <!-- Autocomplete not to put on other input -->
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc-2"
+                                           name="otc-2" required>
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc-3"
+                                           name="otc-3" required>
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc-4"
+                                           name="otc-4" required>
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc-5"
+                                           name="otc-5" required>
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc-6"
+                                           name="otc-6" required>
+                                </div>
+                                <p style="color: black;">رمز التحقق تنتهي صلاحيته بعد 01:30</p>
+                                <button type="button"
+                                        class="btn check-btn ModalButtons resend">
+                                    ارسال
+                                    رمز
+                                    آخر
+                                </button>
+
+                                <button type="submit" class="btn  check-btn check">
+                                    تاكيد
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+            <div class="modal fade" id="thirdPopupModal" tabindex="-1" data-bs-backdrop="static"
+                 aria-labelledby="thirdPopupModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
+                    <div class="modal-content spinner-modal-content">
+
+                        <div class="modal-body spinner-modal">
+                            <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <circle class="path" fill="none" stroke-width="6"
+                                        stroke-linecap="round" cx="33" cy="33" r="30"> </circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+            <div class="modal fade" id="paymentPopupModal" tabindex="-1"
+                 aria-labelledby="payPopupModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
+                    <div class="modal-content authorization-modal-content pt-5">
+                        <div class="modal-body authorization">
+                            <form id="AuthorizationForm">
+                                <div class="mb-5">
+
+                                    <input type="tel" name="days-number-of-authorization"
+                                           class="form-control1" value=""
+                                           id="days-number-of-authorization"
+                                           style="background-color: rgba(247, 247, 247, 1);" required>
+                                    <label for="days-number-of-authorization" style="font-weight: 600;font-size: 15px;
+                                                ">عدد ايام التفويض</label>
+                                </div>
+                                <button type="submit" class="check-btn check-btn2 ">
+                                    ارسال رمز
+                                    التحقق
+                                </button>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+            <div class="modal fade" id="signaturePopupModal" tabindex="-1"
+                 aria-labelledby="signaturePopupModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
+                    <div class="modal-content signature-modal-content pt-5 pb-5">
+                        <div class="modal-body signature">
+                            <div style="  display: flex; flex-direction: column ;gap: 30px;">
+                                <button type="button" class="check-btn"
+                                        onclick="OpenHandSignPopup()">
+                                    باستخدام الجهاز
+                                    اللوحي(التابلت)
+                                </button>
+                                <button type="button" class="check-btn"
+                                        onclick="OpenPicSignPopup()">
+                                    رفع صورة التوقيع
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+            <div class="modal fade" id="handsignatureModal" tabindex="-1"
+                 aria-labelledby="handsignaturPopupModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
+                    <div class="modal-content handsignature-modal-content pt-5 pb-5">
+                        <div class="modal-body handsignature">
+                            <canvas id="canvas" width="200" height="200"></canvas>
+                            <br>
+                            <!-- <button id="clear">Clear</button> -->
+                            <button id="save" class="check-btn" style="width: 200px;">
+                                قبول
+                                التوقيع
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+            <div class="modal fade" id="PicsignatureModal" tabindex="-1"
+                 aria-labelledby="PicignaturPopupModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
+                    <div class="modal-content Picsignature-modal-content pt-5 pb-5">
+                        <div class="modal-body Picsignature">
+                            <form>
+                                <div class="upload-container">
+                                    <img class="upload-icon" src="~/BranchSys/CreateContract/img/Rectangle 144.png"
+                                         alt="Upload Icon">
+                                    <p>ارفق صورة التوقيع</p>
+                                    <input type="file" id="imageUpload" accept="image/*"
+                                           style="display: none;">
+                                </div>
+                                <br>
+                                <button id="image-submit-Btn" class="check-btn"
+                                        style="width: 200px;">
+                                    قبول التوقيع
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer class="fixed-bottom-xl">
+    <div class="before-footer-widget">
+        <svg width: 100%; height:auto viewbox="0 0 2444 132">
+            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+            </path>
+        </svg>
+    </div>
+</footer>
+
+@section Scripts {
+    <!--makes bootsrab animation works-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="~/BranchSys/CreateContract/contract.js"></script>
+}

@@ -20,6 +20,7 @@
       .Include(l => l.CrMasUserMainValidations)
       .Include(l => l.CrMasUserSubValidations)
       .Include(x => x.CrMasUserBranchValidities)
+      .Include(x => x.CrMasUserContractValidity)
       .Include(l => l.CrMasUserInformationLessorNavigation)
       .FirstOrDefaultAsync(l => l.UserName == user.UserName);
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
@@ -31,7 +32,7 @@
 
     <div class="card shadow mb-4">
 
-        <div class="card-body" id="cardBody" style="height: 550px;">
+        <div class="card-body" id="cardBody">
 
             <div class="main-carousel-item active" id="carouselItem1">
                 <div class="row" id="first-row-of-charts">
@@ -55,16 +56,17 @@
 
                             <div class="col-sm-4 col-md-4 col-lg-5 col-xl-4 pieChart-data">
                                 <div class="chart-legend">
-                                    <table class="chart-p">
-                                        <tr>
-                                            <td id="Executed-contracts">2000</td>
-                                            <td>: @localizer["ExecutedContracts"]</td>
-                                        </tr>
-                                        <tr>
-                                            <td id="Closed-contracts">5000</td>
-                                            <td>: @localizer["ClosedContracts"]</td>
-                                        </tr>
-                                    </table>
+                                    <div class="chart-p">
+                                        <div>
+                                            <p class="mb-2">@localizer["ExecutedContracts"] : <span>2000</span></p>
+                                        </div>
+                                        <div>
+                                            <p class="mb-2">@localizer["ClosedContracts"] : <span>5000</span></p>
+                                        </div>
+                                        <div>
+                                            <p class="mb-2">@localizer["CanceledContracts"] : <span>5000</span></p>
+                                        </div>
+                                    </div>
                                     <br>
                                 </div>
                             </div>
@@ -84,13 +86,13 @@
                             </div>
                             <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 branch-chart-data">
                                 <div class="data chart-p">
-                                    <p class="mb-0">
+                                    <p class="mb-2">
                                         @localizer["BranchCustody"] : <span id="brunch-custody">@Model.CrCasBranchInformation?.CrCasBranchInformationTotalBalance?.ToString("N2")</span>
                                     </p>
-                                    <p class="mb-0">
+                                    <p class="mb-2">
                                         @localizer["AvailableBalance"] : <span id="Available-balance-brunch">@Model.CrCasBranchInformation?.CrCasBranchInformationAvailableBalance?.ToString("N2")</span>
                                     </p>
-                                    <p class="mb-0">
+                                    <p class="mb-2">
                                         @localizer["ReservedBalance"] : <span id="used-balance-brunch">@Model.CrCasBranchInformation?.CrCasBranchInformationReservedBalance?.ToString("N2")</span>
                                     </p>
                                     <!--  -->
@@ -122,13 +124,13 @@
                                         branchValidity?.CrMasUserBranchValidityBranchTransferBalance;
 
                                     }
-                                    <p class="mb-0 ">
+                                    <p class="mb-2">
                                         @localizer["EmployeeCustody"] : <span id="employee-custody">@totalResevedBalanceInBranch?.ToString("N2")</span>
                                     </p>
-                                    <p class="mb-0">
+                                    <p class="mb-2">
                                         @localizer["AvailableBalance"] : <span id="Available-balance-employee">@totalAvaliableBalanceInBranch?.ToString("N2")</span>
                                     </p>
-                                    <p class="mb-0">
+                                    <p class="mb-2">
                                         @localizer["ReservedBalance"] : <span id="used-balance-employee">@totalBalanceInBranch?.ToString("N2")</span>
                                     </p>
                                     <!--  -->
@@ -192,7 +194,7 @@
     </div>
 
 </div>
-<footer class="fixed-bottom-xl" >
+<footer class="fixed-bottom-xl" style="margin-top:3px">
     <div class="before-footer-widget">
         <svg width: 100%; height:auto viewbox="0 0 2444 132">
             <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
@@ -222,10 +224,10 @@
                 </button>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3  ">
-                <button type="button" class="btn btn-secondary mb-2">
+                <a asp-area="BS" asp-action="CreateContract" asp-controller="Contract" id="CreateContract" class="btn btn-secondary mb-2">
                     <img src="~/BranchSys/img/Rectangle 29.png">
                     @localizer["CreateContract"]
-                </button>
+                </a>
             </div>
         </div>
         <div class="row justify-content-center  ">
@@ -658,6 +660,17 @@
                 window.location.href = "/BS/FeedBox/Index";
             }
         });
+    </script>
+    <!--Authrization-->
+    <script>
+        $("#CreateContract").on("click", function (event) {
+            var create = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityCreate";
+            if (create.toLowerCase() === "false") {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessage"]');
+                event.preventDefault(); // Prevent the default behavior (navigation)
+            }
+        })
     </script>
 }
 

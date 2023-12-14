@@ -46,9 +46,11 @@
     <link href="~/BranchSys/css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   @*  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> *@
     <link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@200;300;400;500&family=Cairo:wght@200&display=swap"
           rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400&display=swap" rel="stylesheet">
+@*     <link href="https://fonts.googleapis.com/css?family=Cairo:500,400,700" rel="stylesheet">
+ *@    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/toastr.css" />
     <link rel="stylesheet" href="~/css/icons.min.css" />
     <link href="~/BranchSys/css/style.css" rel="stylesheet">
@@ -78,7 +80,6 @@
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
         <!-- Main Content -->
         <div id="content">
             <!-- Topbar -->
@@ -237,7 +238,6 @@
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <p class="notify-details" style="text-align:right;margin-right:0">
                                     <span style="float:right">@localizer["ContractBranch"]</span>
-                                    <small class="text-muted" style="float:left;color:green!important">@ViewBag.CompanyDocumentsRenewedBS</small>
                                     <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyDocumentsAboutExpireBS</small>
                                     <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyDocumentsExpiredBS</small>
                                 </p>
@@ -245,7 +245,6 @@
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <p class="notify-details" style="text-align:right;margin-right:0">
                                     <span style="float:right">@localizer["CarsDocuments"]</span>
-                                    <small class="text-muted" style="float:left;color:green!important">@ViewBag.CompanyDocumentsCarRenewedBS</small>
                                     <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyDocumentsCarAboutExpireBS</small>
                                     <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyDocumentsCarExpiredBS</small>
                                 </p>
@@ -253,7 +252,6 @@
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <p class="notify-details" style="text-align:right;margin-right:0">
                                     <span style="float:right">@localizer["CarsFixed"]</span>
-                                    <small class="text-muted" style="float:left;color:green!important">@ViewBag.CompanyMaintainceCarRenewedBS</small>
                                     <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyMaintainceCarAboutExpireBS</small>
                                     <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyMaintainceCarExpiredBS</small>
                                 </p>
@@ -261,7 +259,6 @@
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <p class="notify-details" style="text-align:right;margin-right:0">
                                     <span style="float:right">اسعار السيارات</span>
-                                    <small class="text-muted" style="float:left;color:green!important">@ViewBag.PriceCarRenewedBS</small>
                                     <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.PriceCarAboutExpireBS</small>
                                     <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.PriceCarExpiredBS</small>
                                 </p>
@@ -342,7 +339,7 @@
                             }
                         </p>
                     </div>
-                    <img class="extra-small-mobile " src="~/BranchSys/logo.png">
+                    <img class="extra-small-mobile " src="@Url.Content(lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo)" style="height: 60px;width: 140px;">
                 </div>
             </nav>
             <!------------------------------------------end of Topbar-------------------------------------------------->
@@ -361,7 +358,6 @@
     </div>
     <!-- charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
-
     <!--link to make javascript function operate-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -373,7 +369,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-    <!--makes bootsrab animation works-->
     <script src="~/BranchSys/js/javascript/carousel_data.js"></script>
     <script src="~/BranchSys/js/javascript/charts.js"></script>
     <script src="~/js/toastr.js"></script>

@@ -1,0 +1,171 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Canvas styling */
+        canvas {
+            border: 1px solid rgba(255, 150, 38, 1);
+            background-color: rgba(255, 150, 38, 0.08);
+
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" height="200"></canvas>
+    <br>
+    <button id="clear">Clear</button>
+    <button id="save">Save</button>
+    <script>
+        // Get canvas element and its context
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+
+        // Variables for drawing
+        var drawing = false;
+        var prevX = 0;
+        var prevY = 0;
+        var currX = 0;
+        var currY = 0;
+
+        // Draw a line between the previous point and the current point
+        function drawLine(x0, y0, x1, y1) {
+            ctx.beginPath();
+            ctx.moveTo(x0, y0);
+            ctx.lineTo(x1, y1);
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        // Add event listeners to handle mouse events
+        canvas.addEventListener('mousedown', function (e) {
+            drawing = true;
+            prevX = e.clientX - canvas.getBoundingClientRect().left;
+            prevY = e.clientY - canvas.getBoundingClientRect().top;
+        });
+
+        canvas.addEventListener('mousemove', function (e) {
+            if (!drawing) return;
+            currX = e.clientX - canvas.getBoundingClientRect().left;
+            currY = e.clientY - canvas.getBoundingClientRect().top;
+            drawLine(prevX, prevY, currX, currY);
+            prevX = currX;
+            prevY = currY;
+        });
+
+        canvas.addEventListener('mouseup', function () {
+            drawing = false;
+        });
+
+        // Clear the canvas
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        document.getElementById('clear').addEventListener('click', function () {
+            clearCanvas();
+        });
+
+        // Save the canvas as an image
+        function saveCanvas() {
+            var dataURL = canvas.toDataURL();
+            var link = document.createElement('a');
+            link.download = 'signature.png';
+            link.href = dataURL;
+            link.click();
+        }
+
+        document.getElementById('save').addEventListener('click', function () {
+            saveCanvas();
+        });
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Upload Preview</title>
+  <style>
+    .upload-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      border: 2px dashed #ccc;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    
+    .upload-container:hover {
+      border-color: #aaa;
+    }
+    
+    .upload-icon {
+      width: 50px;
+      height: 50px;
+      transition: opacity 0.3s ease;
+    }
+    
+    .preview-image {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    
+    .upload-container.previewing .upload-icon,
+    .upload-container.previewing p {
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="upload-container">
+    <img class="upload-icon" src="Rectangle 144.png" alt="Upload Icon">
+    <p>ارفق صورة التوقيع</p>
+    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+  </div>
+  <button id="image-submit-Btn">Submit</button>
+
+  <script>
+    const uploadContainer = document.querySelector('.upload-container');
+    const imageUpload = document.getElementById('imageUpload');
+    const imageSubmitBtn = document.getElementById('image-submit-Btn');
+
+    uploadContainer.addEventListener('click', function() {
+      imageUpload.click();
+    });
+
+    imageUpload.addEventListener('change', function() {
+      const file = imageUpload.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const imageURL = e.target.result;
+          const previewImage = document.createElement('img');
+          previewImage.classList.add('preview-image');
+          previewImage.src = imageURL;
+          uploadContainer .innerHTML = '';
+          uploadContainer .appendChild(previewImage);
+          uploadContainer.classList.add('previewing');
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    imageSubmitBtn.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevent the default form submission behavior
+      if (uploadContainer .firstChild) {
+        // Image is selected and previewed, you can perform further actions here
+        console.log('Image submitted!');
+        uploadContainer .innerHTML = ''; // Remove the image from the preview container
+        uploadContainer.classList.remove('previewing'); // Reset the preview state
+        uploadContainer .innerHTML = ' <img class="upload-icon" src="Rectangle 144.png" alt="Upload Icon"><p>ارفق صورة التوقيع</p>';
+
+      } else {
+        // No image selected or previewed
+        console.log('Please select an image.');
+      }
+    });
+  </script>
+</body>
+</html>

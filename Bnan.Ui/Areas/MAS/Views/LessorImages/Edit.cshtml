@@ -8,7 +8,7 @@
 @inject IViewLocalizer localizer
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
 }
 
 <style>
@@ -69,9 +69,9 @@
         }
 
     /* .file-upload-btn:active {
-                        border: 0;
-                        transition: all .2s ease;
-                    }*/
+                            border: 0;
+                            transition: all .2s ease;
+                        }*/
 
     .file-upload-content {
         display: none;
@@ -1234,7 +1234,7 @@
                 success: function (response) {
                     if (response) {
                         window.location.href = "/MAS/LessorImages/SuccesssMessageForLessorImages";
-                    } 
+                    }
                 },
                 error: function (xhr, status, error) {
                     // Handle error response
@@ -1252,4 +1252,5 @@
 
 
     </script>
+   
 }

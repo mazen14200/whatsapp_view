@@ -33,6 +33,8 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            // Set cache-control headers to prevent caching
+            Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             //sidebar Active
             ViewBag.id = "#sidebarCompany";
             ViewBag.no = "1";
@@ -52,6 +54,8 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
+            // Set cache-control headers to prevent caching
+            Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             //sidebar Active
             ViewBag.id = "#sidebarCompany";
             ViewBag.no = "1";
@@ -72,7 +76,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         public async Task<IActionResult> EditImages(IFormCollection formData)
         {
             string lessorCode = Request.Headers["lessorcode"].ToString();
-            
+
             var lessorImages = _unitOfWork.CrMasLessorImage.GetById(lessorCode);
             if (lessorImages != null)
             {
@@ -115,7 +119,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 {
                     var imagesForRemoveJson = Request.Form["imagesForRemove"];
                     var imagesForRemove = JsonConvert.DeserializeObject<List<RemoveFileViewModel>>(imagesForRemoveJson);
-                    if (imagesForRemove!=null)
+                    if (imagesForRemove != null)
                     {
                         foreach (var image in imagesForRemove)
                         {
@@ -148,7 +152,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                             _unitOfWork.CrMasLessorImage.Update(lessorImages);
                         }
                     }
-                    
+
                 }
                 _unitOfWork.Complete();
                 return Json(true);

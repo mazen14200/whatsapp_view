@@ -1,6 +1,5 @@
 body {
     font-family: 'Cairo', 'sans-serif';
-    overflow: hidden;
 }
 
 nav {
@@ -449,15 +448,13 @@ footer {
 }
 
 @media(min-width:1300px) {
-
-  .chart-buttons-img {
-    padding-right: 0px;
-
-  }
-
-  #cardBody {
-    height: 411px;
-  }
+    #cardBody{
+        height:550px;
+    }
+    .chart-buttons-img {
+        padding-right: 0px;
+    }
+  
 }
 
 @media(min-height:990px) {
@@ -472,16 +469,17 @@ footer {
 
 }
 
-@media (min-width: 993px) and (max-width: 1400px) {
+/*@media (min-width: 993px) and (max-width: 1400px) {
   #cardBody {
-    height: 343px;
+    height: 550px;
   }
-}
+}*/
 
-@media (min-width: 1100px) and (min-height: 660px) {
+
+/*@media (min-width: 1100px) and (min-height: 660px) {
   footer {
     position: absolute;
     bottom: 0;
   }
-}
+}*/
 

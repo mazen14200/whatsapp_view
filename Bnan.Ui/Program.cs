@@ -3,6 +3,7 @@ using Microsoft.Extensions.FileProviders;
 using Bnan.Inferastructure;
 using NToastNotify;
 using System.Globalization;
+using Bnan.Inferastructure.MiddleWare;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,7 +51,6 @@ app.UseStatusCodePagesWithRedirects("/identity/account/login");
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
-
 /*app.UseMiddleware<CheckCultureOfUser>();*/
 
 app.UseEndpoints(endpoints =>
