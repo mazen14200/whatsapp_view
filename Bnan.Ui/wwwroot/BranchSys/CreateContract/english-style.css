@@ -1,9 +1,140 @@
 body{
     direction: rtl;
 }
+.form-check label {
+    margin-left: 20px;
+}
 .radio-style{
  text-align: center;   
 }
 .form-check2{
     padding: 0px;
+}
+#progressbar #tenant:after{
+    left:50%
+}
+#progressbar #payment:after{
+    width: 60%;
+    left: 0%;
+}
+.cancle-icon {
+   
+    margin-right: 25px;
+}
+.button-card img{
+    transform: rotateY(180deg);
+}
+.radio-style{
+    padding-left: 60px;
+}
+.car-catogeries {
+    padding-right: 30px;
+    padding-left: 0px;
+}
+.scrollable-content{
+    padding-right: 20px !important;
+}
+.table-bordered thead .value-tabel-header {
+   border-left:1px solid #ff9626a3
+}
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  */
+@media (min-height: 740px) {
+   
+    .form-card1,
+    .form-card3,
+    .form-card4,
+    .form-card7 {
+        padding: 30px 50px 17px 12px;  
+    }
+   
+}
+@media (max-width: 740px) {
+    .table-field-row {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+}
+@media (min-height: 890px) {
+   
+
+    footer {
+        padding-bottom: 300px;
+    }
+
+    .form-card1,
+    .form-card3,
+    .form-card4,
+    .form-card7 {
+        padding: 40px 12px 17px 50px;  
+        gap:20px
+    }
+    
+  
+    .form-card1
+    {
+        padding: 40px 12px 17px 50px;  
+        gap:25px
+    }
+    .form-card3,
+    .form-card4,
+    .form-card7 {
+        gap:15px
+
+    }
+    .table-scroll {
+        height: 450px;
+    }
+    .car-catogeries {
+        height: 450px;
+    }
+    .scrollable-content{
+        height: 450px;
+    }
+    .payment-col{
+        gap:20px
+    }
+    .content-row{
+        padding-top: 15px;
+    }
+    .title-row{
+        padding-top:10px;
+    }
+}
+@media (min-height: 950px) {
+    body{
+        font-size: 20px;
+        font-weight: 500;
+    }
+    .form-card1
+    {
+        padding: 40px 12px 17px 50px;  
+        gap:30px
+    }
+    .form-card3,
+    .form-card4,
+    .form-card7 {
+        gap:15px
+
+    }
+    .table-scroll {
+        height: 550px;
+    }
+    .car-catogeries {
+        height: 550px;
+    }
+    .scrollable-content{
+        height: 550px;
+    }
+    .payment-col{
+        gap:15px
+    }
+    .content-row{
+        padding-top: 20px;
+    }
+    .title-row{
+        padding-top:10px;
+    }
+   
+    
 }

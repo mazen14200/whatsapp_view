@@ -56,5 +56,29 @@ namespace Bnan.Ui.Areas.BS.Controllers
             };
             return View(bSLayoutVM);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetRenter(string RenterId)
+        {
+            //First check if bnan have this renter id or not 
+            var BnanRenterInfo= _unitOfWork.CrMasRenterInformation.Find(x=>x.CrMasRenterInformationId == RenterId);
+            if (BnanRenterInfo!=null) return Json(BnanRenterInfo);
+            else
+            {
+                var elmRenterInfo = _unitOfWork.CrElmPersonal.Find(x=>x.CrElmPersonalCode == RenterId);
+                if (elmRenterInfo != null) {
+                    var elmRenterLicince = _unitOfWork.CrElmLicense.Find(x => x.CrElmLicensePersonId == RenterId);
+                    var elmRenterEmployeer = _unitOfWork.CrElmEmployer.Find(x => x.CrElmEmployerCode == RenterId);
+                    var elmRenterPost = _unitOfWork.CrElmPost.Find(x => x.CrElmPostCode == RenterId);
+                    return Json(new {
+                        ElmRenterInfo = elmRenterInfo,
+                        ElmRenterLicince= elmRenterLicince,
+                        ElmRenterEmployeer= elmRenterEmployeer,
+                        ElmRenterPost= elmRenterPost,
+                    });
+                } 
+            }
+            return Json(null);
+        }
+
     }
 }

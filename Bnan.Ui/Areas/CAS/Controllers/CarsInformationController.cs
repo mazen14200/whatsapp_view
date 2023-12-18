@@ -430,7 +430,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
             var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == serialNumber && x.CrCasCarInformationLessor == lessorCode, new[] {"CrCasCarInformation1", "CrCasCarInformationDistributionNavigation",
                                                                                                                                "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2"});
-            var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode && x.CrCasBranchInformationCode != car.CrCasCarInformationBranch);
+            var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode && x.CrCasBranchInformationCode != car.CrCasCarInformationBranch && x.CrCasBranchInformationStatus==Status.Active);
             ViewData["BranchAr"] = branches.Select(x => new SelectListItem { Value = x.CrCasBranchInformationCode.ToString(), Text = x.CrCasBranchInformationArName }).ToList();
             ViewData["BranchEn"] = branches.Select(x => new SelectListItem { Value = x.CrCasBranchInformationCode.ToString(), Text = x.CrCasBranchInformationEnName }).ToList();
             var carVM = _mapper.Map<CarsInforamtionVM>(car);
@@ -447,7 +447,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                                                                                                                                "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2"});
             var oldBranch = car.CrCasCarInformationBranch;
             var postBranch = _unitOfWork.CrCasBranchPost.Find(x => x.CrCasBranchPostLessor == lessorCode && x.CrCasBranchPostBranch == NewBranch);
-
+            var docAndMain = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceSerailNo == car.CrCasCarInformationSerailNo &&
+                                                                                x.CrCasCarDocumentsMaintenanceLessor == lessorCode &&
+                                                                                x.CrCasCarDocumentsMaintenanceBranch == oldBranch);
 
             if (car != null && postBranch != null)
             {
@@ -455,6 +457,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 car.CrCasCarInformationCity = postBranch.CrCasBranchPostCity;
                 car.CrCasCarInformationRegion = postBranch.CrCasBranchPostRegions;
                 car.CrCasCarInformationReasons = model.CrCasCarInformationReasons;
+                foreach (var item in docAndMain) item.CrCasCarDocumentsMaintenanceBranch = car.CrCasCarInformationBranch;
                 _unitOfWork.CrCasCarInformation.Update(car);
                 await _unitOfWork.CompleteAsync();
                 // SaveTracing
@@ -502,7 +505,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
             var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == serialNumber && x.CrCasCarInformationLessor == lessorCode, new[] {"CrCasCarInformation1", "CrCasCarInformationDistributionNavigation",
                                                                                                                                "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2"});
-            var Owners = _unitOfWork.CrCasOwner.FindAll(x => x.CrCasOwnersLessorCode == lessorCode && x.CrCasOwnersCode != car.CrCasCarInformationOwner);
+            var Owners = _unitOfWork.CrCasOwner.FindAll(x => x.CrCasOwnersLessorCode == lessorCode && x.CrCasOwnersCode != car.CrCasCarInformationOwner&& x.CrCasOwnersStatus==Status.Active);
             ViewData["OwnersAr"] = Owners.Select(x => new SelectListItem { Value = x.CrCasOwnersCode.ToString(), Text = x.CrCasOwnersArName }).ToList();
             ViewData["OwnersEn"] = Owners.Select(x => new SelectListItem { Value = x.CrCasOwnersCode.ToString(), Text = x.CrCasOwnersEnName }).ToList();
             var carVM = _mapper.Map<CarsInforamtionVM>(car);

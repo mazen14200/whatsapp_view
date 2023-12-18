@@ -6,6 +6,7 @@ namespace Bnan.Core.Models
     public partial class CrMasSysEvaluation
     {
         public string CrMasSysEvaluationsCode { get; set; } = null!;
+        public string? CrMasSysEvaluationsClassification { get; set; }
         public string? CrMasSysEvaluationsArDescription { get; set; }
         public string? CrMasSysEvaluationsEnDescription { get; set; }
         public int? CrMasSysServiceEvaluationsValue { get; set; }

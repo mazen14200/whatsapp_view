@@ -14,13 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\BS\Views\Shared\_ValidationScriptsPartial.cshtml" />
     <Content Remove="Areas\BS\Views\Shared\_ViewImports.cshtml" />
     <Content Remove="Areas\BS\Views\Shared\_ViewStart.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Areas\BS\Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\BS\Views\_ViewImports.cshtml" />
     <None Include="Areas\BS\Views\_ViewStart.cshtml" />
     <None Include="Areas\CAS\Views\Branches\Branches.cshtml" />
@@ -67,7 +65,6 @@
     <None Include="wwwroot\BranchSys\CreateContract\img\undraw_profile_2.svg" />
     <None Include="wwwroot\BranchSys\CreateContract\img\undraw_profile_3.svg" />
     <None Include="wwwroot\BranchSys\CreateContract\img\undraw_rocket.svg" />
-    <None Include="wwwroot\BranchSys\CreateContract\New folder\script.js" />
     <None Include="wwwroot\LoginAndSystems\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <None Include="wwwroot\LoginAndSystems\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
     <None Include="wwwroot\LoginAndSystems\fonts\font-awesome-4.7.0\less\animated.less" />

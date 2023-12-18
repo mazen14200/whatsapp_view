@@ -92,7 +92,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 await _adminstritiveProcedures.SaveAdminstritiveForRepairCar(userLogin.CrMasUserInformationCode, lessorCode, car.CrCasCarInformationBranch,
                                                                             car.CrCasCarInformationSerailNo, date, "اضافة", "Insert", "I",
                                                                             reasons);
+                var docAndMain = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceSerailNo == car.CrCasCarInformationSerailNo &&
+                                                                               x.CrCasCarDocumentsMaintenanceLessor == lessorCode &&
+                                                                               x.CrCasCarDocumentsMaintenanceBranch == car.CrCasCarInformationBranch);
                 car.CrCasCarInformationStatus = Status.Maintaince;
+                foreach (var item in docAndMain) item.CrCasCarDocumentsMaintenanceCarStatus = Status.Maintaince;
                 _unitOfWork.CrCasCarInformation.Update(car);
                 await _unitOfWork.CompleteAsync();
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });

@@ -38,9 +38,6 @@ namespace Bnan.Core.Models
         public DateTime? CrMasRenterInformationUpDatePersonalData { get; set; }
         public DateTime? CrMasRenterInformationUpDateWorkplaceData { get; set; }
         public DateTime? CrMasRenterInformationUpDateLicenseData { get; set; }
-        public int? CrMasRenterInformationEvaluationCount { get; set; }
-        public decimal? CrMasRenterInformationEvaluationTotal { get; set; }
-        public decimal? CrMasRenterInformationEvaluationValue { get; set; }
         public string? CrMasRenterInformationSignature { get; set; }
         public string? CrMasRenterInformationRenterIdImage { get; set; }
         public string? CrMasRenterInformationRenterLicenseImage { get; set; }

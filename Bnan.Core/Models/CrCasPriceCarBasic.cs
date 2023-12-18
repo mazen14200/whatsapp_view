@@ -39,6 +39,7 @@ namespace Bnan.Core.Models
         public decimal? CrCasPriceCarBasicRentalTaxRate { get; set; }
         public bool? CrCasPriceCarBasicIsAdditionalDriver { get; set; }
         public decimal? CrCasPriceCarBasicAdditionalDriverValue { get; set; }
+        public decimal? CrCasPriceCarBasicPrivateDriverValue { get; set; }
         public decimal? CrCasCarPriceBasicInFeesTamm { get; set; }
         public decimal? CrCasCarPriceBasicOutFeesTamm { get; set; }
         public decimal? CrCasCarPriceBasicInFeesTga { get; set; }

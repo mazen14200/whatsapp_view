@@ -6,7 +6,7 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    ViewData["Page-title"] = localizer["TransferCar Data"];
+    ViewData["Page-title"] = localizer["Car Data"];
     ViewData["Page-Hint"] = localizer["TransferCars Hint"];
 }
 <style>
@@ -117,7 +117,7 @@
                     <label class="form-label" for="CrCasCarInformationReasons">@localizer["reasons"]</label>
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" asp-for="CrCasCarInformationReasons" style="width: 100%;" />
+                    <input type="text" class="form-control" asp-for="CrCasCarInformationReasons" style="width: 100%;" maxlength="100"/>
                 </div>
             </div>
         </div>

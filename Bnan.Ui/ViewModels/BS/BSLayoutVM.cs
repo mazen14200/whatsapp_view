@@ -14,6 +14,7 @@ namespace Bnan.Ui.ViewModels.BS
         public CrCasBranchInformation? CrCasBranchInformation { get; set; }
         public CrMasUserBranchValidity? CrMasUserBranchValidity { get; set; }
         public CrCasSysAdministrativeProcedure? CrCasSysAdministrativeProcedure { get; set; }
+        public Contract? Contract { get; set; }
         public string? SelectedBranch { get; set; }
 
 

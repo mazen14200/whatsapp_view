@@ -13,7 +13,6 @@ namespace Bnan.Core.Models
         public string? CrCasRenterLessorMembership { get; set; }
         public DateTime? CrCasRenterLessorDateFirstInteraction { get; set; }
         public DateTime? CrCasRenterLessorDateLastContractual { get; set; }
-        public DateTime? CrCasRenterLessorDateLastFinancialTransaction { get; set; }
         public int? CrCasRenterLessorContractCount { get; set; }
         public int? CrCasRenterLessorContractExtension { get; set; }
         public int? CrCasRenterLessorContractDays { get; set; }

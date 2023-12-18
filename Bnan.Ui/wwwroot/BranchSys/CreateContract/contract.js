@@ -1,136 +1,91 @@
-var current_fs, next_fs, previous_fs;
-var left, opacity, scale; // fieldset properties which we will animate
-var animating; // flag to prevent quick multi-click glitches
+//var current_fs, next_fs, previous_fs;
 
-$(".next").click(function () {
-	if (animating) return false;
-	animating = true;
 
-	current_fs = $(this).closest("fieldset");
-	next_fs = $(this).closest("fieldset").next();
+//$(".next").click(function () {
 
-	// Activate next step on progressbar using the index of next_fs
-	$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+//	current_fs = $(this).closest("fieldset");
+//	next_fs = $(this).closest("fieldset").next();
 
-	// Show the next fieldset
-	next_fs.show();
-	// Hide the current fieldset with style
-	current_fs.animate(
-		{ opacity: 0 },
-		{
-			step: function (now, mx) {
-				// As the opacity of current_fs reduces to 0 - stored in "now"
-				// 1. Scale current_fs down to 80%
-				scale = 1 - (1 - now) * 0.2;
-				// 2. Bring next_fs from the right(50%)
-				left = (now * 10) + "%";
-				// 3. Increase opacity of next_fs to 1 as it moves in
-				opacity = 1 - now;
-				current_fs.css({
-					transform: "scale(" + scale + ")",
-					position: "absolute"
-				});
-				next_fs.css({ left: left, opacity: opacity });
-			},
-			duration: 800,
-			complete: function () {
-				current_fs.hide();
-				animating = false;
-			},
-			// This comes from the custom easing plugin
-			easing: "easeInOutBack"
-		}
-	);
-});
+//	// Activate next step on progressbar using the index of next_fs
+//	$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
-$(".previous").click(function () {
-	if (animating) return false;
-	animating = true;
+//	// Show the next fieldset
+//	next_fs.show();
+//	// Hide the current fieldset with style
 
-	current_fs = $(this).closest("fieldset");
-	previous_fs = $(this).closest("fieldset").prev();
+//	current_fs.hide();
 
-	//de-activate current step on progressbar
-	$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
 
-	//show the previous fieldset
-	previous_fs.show();
-	//hide the current fieldset with style
-	current_fs.animate({ opacity: 0 }, {
-		step: function (now, mx) {
-			//as the opacity of current_fs reduces to 0 - stored in "now"
-			//1. scale previous_fs from 80% to 100%
-			scale = 0.8 + (1 - now) * 0.2;
-			//2. take current_fs to the right(50%) - from 0%
-			left = ((1 - now) * 10) + "%";
-			//3. increase opacity of previous_fs to 1 as it moves in
-			opacity = 1 - now;
-			current_fs.css({ 'left': left });
-			previous_fs.css({ 'transform': 'scale(' + scale + ')', 'opacity': opacity 
-		});
-		},
-		duration: 800,
-		complete: function () {
-			current_fs.hide();
-			animating = false;
-		},
-		//this comes from the custom easing plugin
-		easing: 'easeInOutBack'
-	});
-});
+//});
+
+//$(".previous").click(function () {
+
+
+//	current_fs = $(this).closest("fieldset");
+//	previous_fs = $(this).closest("fieldset").prev();
+
+//	//de-activate current step on progressbar
+//	$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+//	//show the previous fieldset
+//	previous_fs.show();
+
+//	current_fs.hide();
+
+//});
 
 
 
 
-///////////////////////////////////////////////the-Modal-6-digit-vaildation/////////////////////
-function openThirdPopup() {
-	// Hide the second popup modal
-	$('#checkModalToggle').modal('hide');
-  
-	// Open the third popup modal
-	$('#thirdPopupModal').modal('show');
-  
-	// Close the third popup modal after 5 seconds
-	setTimeout(function() {
-	  $('#thirdPopupModal').modal('hide');
-	}, 5000); // Adjust the duration as needed (in milliseconds)
-  }
-  
-document.addEventListener('DOMContentLoaded', function() {
-	document.querySelector('#otc').addEventListener('submit', function(event) {
-		event.preventDefault();
-			var inputFieldValue = document.getElementById('otc-1');
-			var numericValue = parseInt(inputFieldValue.value);
-		
-			if (isNaN(numericValue)) {
-				// Input value is not a number or is empty
-				console.log('Input value:', numericValue);
-				return;
-			}
-		$.ajax({
-			type: 'POST',
-			url: 'https://jsonplaceholder.typicode.com/posts', // Using JSONPlaceholder as a mock server
-			data: $(this).serialize(),
-			success: function (response) {
-				// Handle the response from the mock server
-				console.log('Form data submitted successfully:', response);
-				openThirdPopup() 
-			
-			},
-			error: function (error) {
-				// Handle any errors
-				console.error('Error submitting form data:', error);
-			}
-		});
-		document.getElementById('otc-1').value='';
-        document.getElementById('otc-2').value='';
-		document.getElementById('otc-3').value='';
-		document.getElementById('otc-4').value='';
-		document.getElementById('otc-5').value='';
-		document.getElementById('otc-6').value='';
-	});
+/////////////////////////////////////////////////the-Modal-6-digit-vaildation/////////////////////
+//function openThirdPopup() {
+//	// Hide the second popup modal
+//	$('#checkModalToggle').modal('hide');
 
-});
+//	// Open the third popup modal
+//	$('#thirdPopupModal').modal('show');
+
+//	// Close the third popup modal after 5 seconds
+//	setTimeout(function () {
+//		$('#thirdPopupModal').modal('hide');
+//	}, 5000); // Adjust the duration as needed (in milliseconds)
+//}
+
+//document.addEventListener('DOMContentLoaded', function () {
+//	document.querySelector('#otc').addEventListener('submit', function (event) {
+//		event.preventDefault();
+//		var inputFieldValue = document.getElementById('otc-1');
+//		var numericValue = parseInt(inputFieldValue.value);
+
+//		if (isNaN(numericValue)) {
+//			// Input value is not a number or is empty
+//			console.log('Input value:', numericValue);
+//			return;
+//		}
+//		$.ajax({
+//			type: 'POST',
+//			url: 'https://jsonplaceholder.typicode.com/posts', // Using JSONPlaceholder as a mock server
+//			data: $(this).serialize(),
+//			success: function (response) {
+//				// Handle the response from the mock server
+//				console.log('Form data submitted successfully:', response);
+//				openThirdPopup()
+
+//			},
+//			error: function (error) {
+//				// Handle any errors
+//				console.error('Error submitting form data:', error);
+//			}
+//		});
+//		document.getElementById('otc-1').value = '';
+//		document.getElementById('otc-2').value = '';
+//		document.getElementById('otc-3').value = '';
+//		document.getElementById('otc-4').value = '';
+//		document.getElementById('otc-5').value = '';
+//		document.getElementById('otc-6').value = '';
+//	});
+
+//});
 
 let in1 = document.getElementById('otc-1'),
 	ins = document.querySelectorAll('input[type="number"]'),
@@ -243,7 +198,7 @@ imageAddDriver.addEventListener('mouseout', function () {
 });
 
 
-// /////////////////////////////////////////
+// // /////////////////////////////////////////
 let isScrolling = false;
 let startX, startY, scrollLeft, scrollTop;
 
@@ -270,37 +225,30 @@ scrollContainer.addEventListener('mousemove', (e) => {
 	e.preventDefault();
 	const x = e.pageX - scrollContainer.offsetLeft;
 	const y = e.pageY - scrollContainer.offsetTop;
-	const walkX = (x - startX) * 2; 
-	const walkY = (y - startY) * 2; 
+	const walkX = (x - startX) * 2;
+	const walkY = (y - startY) * 2;
 	scrollContainer.scrollLeft = scrollLeft - walkX;
 	scrollContainer.scrollTop = scrollTop - walkY;
 });
-// /////////////////////////////////////////////////////////////////////  
-// ////////////////////////////////////////////////////////////////////////////////
+ // /////////////////////////////////////////////////////////////////////  
+ // ////////////////////////////////////////////////////////////////////////////////
 function openThirdPopuppp() {
 	// Hide the second popup modal
 	$('#paymentPopupModal').modal('hide');
-  
+
 	// Open the third popup modal
 	$('#thirdPopupModal').modal('show');
-  
+
 	// Close the third popup modal after 5 seconds
-	setTimeout(function() {
-	  $('#thirdPopupModal').modal('hide');
-	  $('#checkModalToggle').modal('show'); // Show the checkModalToggle modal
+	setTimeout(function () {
+		$('#thirdPopupModal').modal('hide');
+		$('#checkModalToggle').modal('show'); // Show the checkModalToggle modal
 	}, 5000); // Adjust the duration as needed (in milliseconds)
-  }
-document.addEventListener('DOMContentLoaded', function() {
-	document.querySelector('#AuthorizationForm').addEventListener('submit', function(event) {
+}
+document.addEventListener('DOMContentLoaded', function () {
+	document.querySelector('#AuthorizationForm').addEventListener('submit', function (event) {
 		event.preventDefault();
-			var inputttt= document.getElementById('days-number-of-authorization');
-			var nummmm = parseInt(inputttt.value);
-		
-			if (isNaN(nummmm )) {
-				// Input value is not a number or is empty
-				console.log('Input value:',nummmm );
-				return;
-			}
+
 		$.ajax({
 			type: 'POST',
 			url: 'https://jsonplaceholder.typicode.com/posts', // Using JSONPlaceholder as a mock server
@@ -308,29 +256,29 @@ document.addEventListener('DOMContentLoaded', function() {
 			success: function (response) {
 				// Handle the response from the mock server
 				console.log('Form data submitted successfully:', response);
-				openThirdPopuppp() 
-			
+				openThirdPopuppp()
+
 			},
 			error: function (error) {
 				// Handle any errors
 				console.error('Error submitting form data:', error);
 			}
 		});
-		
+
 	});
 
 });
-// ///////////////////////////////////////////////////////////////////////////
+ // ///////////////////////////////////////////////////////////////////////////
 function OpenHandSignPopup() {
 	// Hide the second popup modal
 	$('#signaturePopupModal').modal('hide');
-  
+
 	// Open the third popup modal
 	$('#handsignatureModal').modal('show');
-  
-	
+
+
 }
-// ///////////////////////////////////////////////////////////////////////////////////
+// // ///////////////////////////////////////////////////////////////////////////////////
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
@@ -391,69 +339,71 @@ function saveCanvas() {
 document.getElementById('save').addEventListener('click', function () {
 	saveCanvas();
 	$('#handsignatureModal').modal('hide');
-  
+
 	// Open the third popup modal
 	$('#thirdPopupModal').modal('show');
 	// Close the third popup modal after 5 seconds
-	setTimeout(function() {
+	setTimeout(function () {
 		$('#thirdPopupModal').modal('hide');
-	  }, 5000); // Adjust the duration as needed (in milliseconds)
+	}, 5000); // Adjust the duration as needed (in milliseconds)
 });
-// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function OpenPicSignPopup() {
 	// Hide the second popup modal
 	$('#signaturePopupModal').modal('hide');
-  
+
 	// Open the third popup modal
 	$('#PicsignatureModal').modal('show');
-  
-	
+
+
 }
-// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const uploadContainer = document.querySelector('.upload-container');
 const imageUpload = document.getElementById('imageUpload');
 const imageSubmitBtn = document.getElementById('image-submit-Btn');
 
-uploadContainer.addEventListener('click', function() {
-  imageUpload.click();
+uploadContainer.addEventListener('click', function () {
+	imageUpload.click();
 });
 
-imageUpload.addEventListener('change', function() {
-  const file = imageUpload.files[0];
-  if (file) {
-	const reader = new FileReader();
-	reader.onload = function(e) {
-	  const imageURL = e.target.result;
-	  const previewImage = document.createElement('img');
-	  previewImage.classList.add('preview-image');
-	  previewImage.src = imageURL;
-	  uploadContainer .innerHTML = '';
-	  uploadContainer .appendChild(previewImage);
-	  uploadContainer.classList.add('previewing');
-	};
-	reader.readAsDataURL(file);
-  }
+imageUpload.addEventListener('change', function () {
+	const file = imageUpload.files[0];
+	if (file) {
+		const reader = new FileReader();
+		reader.onload = function (e) {
+			const imageURL = e.target.result;
+			const previewImage = document.createElement('img');
+			previewImage.classList.add('preview-image');
+			previewImage.src = imageURL;
+			uploadContainer.innerHTML = '';
+			uploadContainer.appendChild(previewImage);
+			uploadContainer.classList.add('previewing');
+		};
+		reader.readAsDataURL(file);
+	}
 });
 
-imageSubmitBtn.addEventListener('click', function(event) {
-  event.preventDefault(); // Prevent the default form submission behavior
-  if (uploadContainer .firstChild) {
-	// Image is selected and previewed, you can perform further actions here
-	console.log('Image submitted!');
-	uploadContainer .innerHTML = ''; // Remove the image from the preview container
-	uploadContainer.classList.remove('previewing'); // Reset the preview state
-	uploadContainer .innerHTML = ' <img class="upload-icon" src="img/Rectangle 144.png" alt="Upload Icon"><p>ارفق صورة التوقيع</p>';
+imageSubmitBtn.addEventListener('click', function (event) {
+	event.preventDefault(); // Prevent the default form submission behavior
+	if (uploadContainer.firstChild) {
+		// Image is selected and previewed, you can perform further actions here
+		console.log('Image submitted!');
+		uploadContainer.innerHTML = ''; // Remove the image from the preview container
+		uploadContainer.classList.remove('previewing'); // Reset the preview state
+		uploadContainer.innerHTML = ' <img class="upload-icon" src="img/Rectangle 144.png" alt="Upload Icon"><p>ارفق صورة التوقيع</p>';
 
-  } else {
-	// No image selected or previewed
-	console.log('Please select an image.');
-  }
-  $('#PicsignatureModal').modal('hide');
-  
+	} else {
+		// No image selected or previewed
+		console.log('Please select an image.');
+	}
+	$('#PicsignatureModal').modal('hide');
+
 	// Open the third popup modal
 	$('#thirdPopupModal').modal('show');
 	// Close the third popup modal after 5 seconds
-	setTimeout(function() {
+	setTimeout(function () {
 		$('#thirdPopupModal').modal('hide');
-	  }, 5000); // Adjust the duration as needed (in milliseconds)
+	}, 5000); // Adjust the duration as needed (in milliseconds)
 });
+// ///////%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

@@ -93,7 +93,6 @@ namespace Bnan.Core.Models
         public virtual DbSet<CrMasUserMessage> CrMasUserMessages { get; set; } = null!;
         public virtual DbSet<CrMasUserProceduresValidation> CrMasUserProceduresValidations { get; set; } = null!;
         public virtual DbSet<CrMasUserSubValidation> CrMasUserSubValidations { get; set; } = null!;
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -838,7 +837,7 @@ namespace Bnan.Core.Models
 
                 entity.Property(e => e.CrCasCarDocumentsMaintenanceImage)
                     .HasMaxLength(100)
-                    .HasColumnName("CR_Cas_Car_Documents_Maintenance _Image");
+                    .HasColumnName("CR_Cas_Car_Documents_Maintenance_Image");
 
                 entity.Property(e => e.CrCasCarDocumentsMaintenanceIsActivation).HasColumnName("CR_Cas_Car_Documents_Maintenance_IS_Activation");
 
@@ -1652,6 +1651,10 @@ namespace Bnan.Core.Models
 
                 entity.Property(e => e.CrCasPriceCarBasicNoDailyFreeKm).HasColumnName("CR_Cas_Price_Car_Basic_No_Daily_Free_KM");
 
+                entity.Property(e => e.CrCasPriceCarBasicPrivateDriverValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Price_Car_Basic_Private_Driver_Value");
+
                 entity.Property(e => e.CrCasPriceCarBasicReasons)
                     .HasMaxLength(100)
                     .HasColumnName("CR_Cas_Price_Car_Basic_Reasons");
@@ -1764,6 +1767,24 @@ namespace Bnan.Core.Models
 
                 entity.ToTable("CR_Cas_Renter_Lessor");
 
+                entity.HasIndex(e => e.CrCasRenterLessorCode, "IX_CR_Cas_Renter_Lessor_CR_Cas_Renter_Lessor_Code");
+
+                entity.HasIndex(e => e.CrCasRenterLessorIdtrype, "IX_CR_Cas_Renter_Lessor_CR_Cas_Renter_Lessor_IDTRype");
+
+                entity.HasIndex(e => e.CrCasRenterLessorMembership, "IX_CR_Cas_Renter_Lessor_CR_Cas_Renter_Lessor_Membership");
+
+                entity.HasIndex(e => e.CrCasRenterLessorSector, "IX_CR_Cas_Renter_Lessor_CR_Cas_Renter_Lessor_Sector");
+
+                entity.HasIndex(e => e.CrCasRenterLessorStatisticsCity, "IX_CR_Cas_Renter_Lessor_CR_Cas_Renter_Lessor_Statistics_City");
+
+                entity.HasIndex(e => e.CrCasRenterLessorStatisticsGender, "IX_CR_Cas_Renter_Lessor_CR_Cas_Renter_Lessor_Statistics_Gender");
+
+                entity.HasIndex(e => e.CrCasRenterLessorStatisticsJobs, "IX_CR_Cas_Renter_Lessor_CR_Cas_Renter_Lessor_Statistics_Jobs");
+
+                entity.HasIndex(e => e.CrCasRenterLessorStatisticsNationalities, "IX_CR_Cas_Renter_Lessor_CR_Cas_Renter_Lessor_Statistics_Nationalities");
+
+                entity.HasIndex(e => e.CrCasRenterLessorStatisticsRegions, "IX_CR_Cas_Renter_Lessor_CR_Cas_Renter_Lessor_Statistics_Regions");
+
                 entity.Property(e => e.CrCasRenterLessorId)
                     .HasMaxLength(20)
                     .HasColumnName("CR_Cas_Renter_Lessor_Id");
@@ -1800,12 +1821,8 @@ namespace Bnan.Core.Models
                     .HasColumnType("date")
                     .HasColumnName("CR_Cas_Renter_Lessor_Date_Last_contractual");
 
-                entity.Property(e => e.CrCasRenterLessorDateLastFinancialTransaction)
-                    .HasColumnType("date")
-                    .HasColumnName("CR_Cas_Renter_Lessor_Date_Last_Financial_Transaction");
-
                 entity.Property(e => e.CrCasRenterLessorDealingMechanism)
-                    .HasMaxLength(1)
+                    .HasMaxLength(2)
                     .IsUnicode(false)
                     .HasColumnName("CR_Cas_Renter_Lessor_Dealing_Mechanism")
                     .IsFixedLength();
@@ -2286,6 +2303,10 @@ namespace Bnan.Core.Models
                     .HasMaxLength(20)
                     .HasColumnName("CR_Elm_License_Person_Id");
 
+                entity.Property(e => e.CrElmLicenseArName)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Elm_License_Ar_Name");
+
                 entity.Property(e => e.CrElmLicenseEnName)
                     .HasMaxLength(20)
                     .HasColumnName("CR_Elm_License_En_Name");
@@ -2297,10 +2318,6 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrElmLicenseIssuedDate)
                     .HasColumnType("date")
                     .HasColumnName("CR_Elm_License_Issued_Date");
-
-                entity.Property(e => e.CrElmLicenseArName)
-                    .HasMaxLength(20)
-                    .HasColumnName("CR_Elm_License_Ar_Name");
 
                 entity.Property(e => e.CrElmLicenseNo)
                     .HasMaxLength(20)
@@ -2321,6 +2338,10 @@ namespace Bnan.Core.Models
                     .HasMaxLength(20)
                     .HasColumnName("CR_Elm_Personal_Ar_Gender");
 
+                entity.Property(e => e.CrElmPersonalArName)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Elm_Personal_Ar_Name");
+
                 entity.Property(e => e.CrElmPersonalArNationality)
                     .HasMaxLength(20)
                     .HasColumnName("CR_Elm_Personal_Ar_Nationality");
@@ -2328,6 +2349,10 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrElmPersonalArProfessions)
                     .HasMaxLength(20)
                     .HasColumnName("CR_Elm_Personal_Ar_Professions");
+
+                entity.Property(e => e.CrElmPersonalBirthDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Elm_Personal_Birth_Date");
 
                 entity.Property(e => e.CrElmPersonalCountryKey)
                     .HasMaxLength(10)
@@ -2340,6 +2365,10 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrElmPersonalEnGender)
                     .HasMaxLength(20)
                     .HasColumnName("CR_Elm_Personal_En_Gender");
+
+                entity.Property(e => e.CrElmPersonalEnName)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Elm_Personal_En_Name");
 
                 entity.Property(e => e.CrElmPersonalEnNationality)
                     .HasMaxLength(20)
@@ -2359,29 +2388,17 @@ namespace Bnan.Core.Models
                     .HasColumnType("date")
                     .HasColumnName("CR_Elm_Personal_Issued_Id_Date");
 
+                entity.Property(e => e.CrElmPersonalIssuedPlace)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Elm_Personal_Issued_Place");
+
                 entity.Property(e => e.CrElmPersonalMobile)
                     .HasMaxLength(20)
                     .HasColumnName("CR_Elm_Personal_Mobile");
 
-                entity.Property(e => e.CrElmPersonalArName)
-                    .HasMaxLength(100)
-                    .HasColumnName("CR_Elm_Personal_Ar_Name");
-
-                entity.Property(e => e.CrElmPersonalBirthDate)
-                    .HasColumnType("date")
-                    .HasColumnName("CR_Elm_Personal_Birth_Date");
-
-                entity.Property(e => e.CrElmPersonalEnName)
-                    .HasMaxLength(100)
-                    .HasColumnName("CR_Elm_Personal_En_Name");
-
                 entity.Property(e => e.CrElmPersonalSector)
                     .HasMaxLength(20)
                     .HasColumnName("CR_Elm_Personal_Sector");
-
-                entity.Property(e => e.CrElmPersonalIssuedPlace)
-                    .HasMaxLength(20)
-                    .HasColumnName("CR_Elm_Personal_Issued_Place");
             });
 
             modelBuilder.Entity<CrElmPost>(entity =>
@@ -2847,6 +2864,22 @@ namespace Bnan.Core.Models
             {
                 entity.ToTable("CR_Mas_Renter_Information");
 
+                entity.HasIndex(e => e.CrMasRenterInformationBank, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Bank");
+
+                entity.HasIndex(e => e.CrMasRenterInformationDrivingLicenseType, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Driving_License_Type");
+
+                entity.HasIndex(e => e.CrMasRenterInformationGender, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Gender");
+
+                entity.HasIndex(e => e.CrMasRenterInformationIdtype, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_IDType");
+
+                entity.HasIndex(e => e.CrMasRenterInformationJobs, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Jobs");
+
+                entity.HasIndex(e => e.CrMasRenterInformationNationality, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Nationality");
+
+                entity.HasIndex(e => e.CrMasRenterInformationSector, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Sector");
+
+                entity.HasIndex(e => e.CrMasRenterInformationWorkplaceSubscription, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Workplace_Subscription");
+
                 entity.Property(e => e.CrMasRenterInformationId)
                     .HasMaxLength(20)
                     .HasColumnName("CR_Mas_Renter_Information_Id");
@@ -2899,16 +2932,6 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrMasRenterInformationEnName)
                     .HasMaxLength(110)
                     .HasColumnName("CR_Mas_Renter_Information_En_Name");
-
-                entity.Property(e => e.CrMasRenterInformationEvaluationCount).HasColumnName("CR_Mas_Renter_Information_Evaluation_Count");
-
-                entity.Property(e => e.CrMasRenterInformationEvaluationTotal)
-                    .HasColumnType("decimal(9, 2)")
-                    .HasColumnName("CR_Mas_Renter_Information_Evaluation_Total");
-
-                entity.Property(e => e.CrMasRenterInformationEvaluationValue)
-                    .HasColumnType("decimal(5, 2)")
-                    .HasColumnName("CR_Mas_Renter_Information_Evaluation_Value");
 
                 entity.Property(e => e.CrMasRenterInformationExpiryDrivingLicenseDate)
                     .HasColumnType("date")
@@ -3057,6 +3080,10 @@ namespace Bnan.Core.Models
                 entity.HasKey(e => e.CrMasRenterPostCode);
 
                 entity.ToTable("CR_Mas_Renter_Post");
+
+                entity.HasIndex(e => e.CrMasRenterPostCity, "IX_CR_Mas_Renter_Post_CR_Mas_Renter_Post_City");
+
+                entity.HasIndex(e => e.CrMasRenterPostRegions, "IX_CR_Mas_Renter_Post_CR_Mas_Renter_Post_Regions");
 
                 entity.Property(e => e.CrMasRenterPostCode)
                     .HasMaxLength(20)
@@ -3954,7 +3981,7 @@ namespace Bnan.Core.Models
                 entity.HasOne(d => d.CrMasSupPostCityRegionsCodeNavigation)
                     .WithMany(p => p.CrMasSupPostCities)
                     .HasForeignKey(d => d.CrMasSupPostCityRegionsCode)
-                    .HasConstraintName("FK_CR_Mas_Sup_Post_City_CR_Mas_Sup_Post_Regions");
+                    .HasConstraintName("fk_CR_Mas_Sup_Post_City_CR_Mas_Sup_Post_Regions");
             });
 
             modelBuilder.Entity<CrMasSupPostRegion>(entity =>
@@ -4417,7 +4444,7 @@ namespace Bnan.Core.Models
                 entity.ToTable("CR_Mas_Sys_Evaluation");
 
                 entity.Property(e => e.CrMasSysEvaluationsCode)
-                    .HasMaxLength(1)
+                    .HasMaxLength(2)
                     .IsUnicode(false)
                     .HasColumnName("CR_Mas_Sys_Evaluations_Code")
                     .IsFixedLength();
@@ -4425,6 +4452,12 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrMasSysEvaluationsArDescription)
                     .HasMaxLength(20)
                     .HasColumnName("CR_Mas_Sys_Evaluations_Ar_Description");
+
+                entity.Property(e => e.CrMasSysEvaluationsClassification)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Mas_Sys_Evaluations_Classification")
+                    .IsFixedLength();
 
                 entity.Property(e => e.CrMasSysEvaluationsEnDescription)
                     .HasMaxLength(20)
@@ -5136,6 +5169,9 @@ namespace Bnan.Core.Models
                     .HasColumnType("decimal(13, 2)")
                     .HasColumnName("CR_Mas_User_Information_Total_Balance")
                     .HasDefaultValueSql("((0))");
+
+               
+
                 entity.HasOne(d => d.CrMasUserInformationLessorNavigation)
                     .WithMany(p => p.CrMasUserInformations)
                     .HasForeignKey(d => d.CrMasUserInformationLessor)
