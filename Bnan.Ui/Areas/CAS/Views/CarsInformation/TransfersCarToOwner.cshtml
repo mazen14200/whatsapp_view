@@ -2,11 +2,12 @@
 @using Bnan.Ui.ViewModels.CAS
 @model Bnan.Ui.ViewModels.CAS.CarsInforamtionVM
 @inject IViewLocalizer localizer
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    ViewData["Page-title"] = localizer["Car Data"];
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? $"~{Context.Request.Path.Value}?serialNumber={HttpContextAccessor.HttpContext.Request.Query["serialNumber"]}" : $"~{Context.Request.Path.Value}?serialNumber={HttpContextAccessor.HttpContext.Request.Query["serialNumber"]}";
+    ViewData["Page-title"] = localizer["TransferOwnerCarsEdit Data"];
     ViewData["Page-Hint"] = localizer["TransferOwnerCarsEdit Hint"];
 }
 <style>
@@ -88,24 +89,26 @@
                     <label class="form-label" for="CrCasCarInformationRegistration">@localizer["NewOwner"]</label>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select" id="NewOwner" name="NewOwner" style="width: 100%;" dir="rtl" required>
-                        <option value="" selected></option> <!-- Add an empty option as the first option -->
-                        @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
-                        {
+                    @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                    {
+                        <select class="form-select" id="NewOwner" name="NewOwner" style="width: 100%;" dir="rtl" required>
+                            <option value="" selected></option> <!-- Add an empty option as the first option -->
                             @foreach (var owner in (List<SelectListItem>)ViewData["OwnersAr"])
                             {
                                 <option value="@owner.Value" selected="@(owner.Value.Trim() == "" ? "selected" : null)">@owner.Text</option>
                             }
-                        }
-                        else
-                        {
+                        </select>
+                    }
+                    else
+                    {
+                        <select class="form-select" id="NewOwner" name="NewOwner" style="width: 100%;" dir="ltr" required>
+                            <option value="" selected></option> <!-- Add an empty option as the first option -->
                             @foreach (var owner in (List<SelectListItem>)ViewData["OwnersEn"])
                             {
                                 <option value="@owner.Value" selected="@(owner.Value.Trim() == "" ? "selected" : null)">@owner.Text</option>
                             }
-                        }
-
-                    </select>
+                        </select>
+                    }
                     <div style="margin-top:2px">
                         <div style="height: 1.35em">
                             <span id="NewOwnerMessage" class="text-danger"></span>
@@ -141,14 +144,14 @@
                 var select = document.getElementById("NewOwner").value
                 var message = document.getElementById("NewOwnerMessage");
                 e.preventDefault();
-                if(select==null || select==""){
+                if (select == null || select == "") {
                     message.innerText = '@localizer["requiredFiled"]';
                     return
                 }
-                else{
+                else {
                     form.submit();
                 }
-              
+
 
             })
         });

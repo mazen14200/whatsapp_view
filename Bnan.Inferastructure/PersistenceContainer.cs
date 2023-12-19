@@ -130,6 +130,7 @@ namespace Bnan.Inferastructure
             builder.Services.AddScoped<IDocumentsMaintainanceCar, DocumentsMaintainanceCar>();
             builder.Services.AddScoped<ICarPrice, CarPrice>();
             builder.Services.AddScoped<IMembershipConditions, MembershipConditions>();
+            builder.Services.AddScoped<IContract, Contract>();
 
             return builder;
         }

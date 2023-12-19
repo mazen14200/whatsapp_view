@@ -17,10 +17,12 @@ namespace Bnan.Ui.Areas.BS.Controllers
     {
         private readonly IToastNotification _toastNotification;
         private readonly IStringLocalizer<ContractController> _localizer;
-        public ContractController(IStringLocalizer<ContractController> localizer, IUnitOfWork unitOfWork, UserManager<CrMasUserInformation> userManager, IMapper mapper, IToastNotification toastNotification) : base(userManager, unitOfWork, mapper)
+        private readonly IContract _ContractServices;
+        public ContractController(IStringLocalizer<ContractController> localizer, IUnitOfWork unitOfWork, UserManager<CrMasUserInformation> userManager, IMapper mapper, IToastNotification toastNotification, IContract contractServices) : base(userManager, unitOfWork, mapper)
         {
             _localizer = localizer;
             _toastNotification = toastNotification;
+            _ContractServices = contractServices;
         }
         public async Task<IActionResult> CreateContract()
         {
@@ -69,13 +71,43 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     var elmRenterLicince = _unitOfWork.CrElmLicense.Find(x => x.CrElmLicensePersonId == RenterId);
                     var elmRenterEmployeer = _unitOfWork.CrElmEmployer.Find(x => x.CrElmEmployerCode == RenterId);
                     var elmRenterPost = _unitOfWork.CrElmPost.Find(x => x.CrElmPostCode == RenterId);
-                    return Json(new {
-                        ElmRenterInfo = elmRenterInfo,
-                        ElmRenterLicince= elmRenterLicince,
-                        ElmRenterEmployeer= elmRenterEmployeer,
-                        ElmRenterPost= elmRenterPost,
-                    });
-                } 
+
+                    var masRenterInformation = await _ContractServices.AddRenterFromElmToMasRenter(RenterId, elmRenterEmployeer, elmRenterInfo, elmRenterLicince);
+                    if (masRenterInformation) {
+                        //try for test
+                        try
+                        {
+                            await _unitOfWork.CompleteAsync();
+                        }
+                        catch (Exception ex)
+                        {
+
+                            throw;
+                        }
+                    }
+                    
+                    //this model for View Only 
+                    RenterInformationsVM renterInformationsVM = new RenterInformationsVM {
+                        PersonalArName = elmRenterInfo?.CrElmPersonalArName,
+                        PersonalEnName = elmRenterInfo?.CrElmPersonalEnName,
+                        PersonalArGender = elmRenterInfo?.CrElmPersonalArGender,
+                        PersonalEnGender = elmRenterInfo?.CrElmPersonalEnGender,
+                        PersonalArNationality = elmRenterInfo?.CrElmPersonalArNationality,
+                        PersonalEnNationality = elmRenterInfo?.CrElmPersonalEnNationality,
+                        PersonalArProfessions = elmRenterInfo?.CrElmPersonalArNationality,
+                        PersonalEnProfessions = elmRenterInfo?.CrElmPersonalEnProfessions,
+                        PersonalEmail = elmRenterInfo?.CrElmPersonalEmail,
+                        EmployerArName = elmRenterEmployeer.CrElmEmployerArName,
+                        EmployerEnName = elmRenterEmployeer.CrElmEmployerEnName,
+                        LicenseArName = elmRenterLicince.CrElmLicenseArName,
+                        LicenseEnName = elmRenterLicince.CrElmLicenseEnName,
+                        LicenseExpiryDate = elmRenterLicince.CrElmLicenseExpiryDate,
+                        LicenseIssuedDate = elmRenterLicince.CrElmLicenseIssuedDate,
+                        PostArNameConcenate = elmRenterPost.CrElmPostCityArName + "-" + elmRenterPost.CrElmPostRegionsArName + "-" + elmRenterPost.CrElmPostDistrictArName + "-" + elmRenterPost.CrElmPostStreetArName + "-" + elmRenterPost.CrElmPostUnitNo,
+                        PostEnNameConcenate = elmRenterPost.CrElmPostCityEnName + "-" + elmRenterPost.CrElmPostRegionsEnName + "-" + elmRenterPost.CrElmPostDistrictEnName + "-" + elmRenterPost.CrElmPostStreetEnName + "-" + elmRenterPost.CrElmPostUnitNo,
+                    };
+                    return Json(renterInformationsVM);
+                }
             }
             return Json(null);
         }

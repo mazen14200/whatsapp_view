@@ -2,10 +2,12 @@
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @model IEnumerable<CrCasCarInformation>
-
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    // ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? $"~{Context.Request.Path.Value}?serialNumber={HttpContextAccessor.HttpContext.Request.Query["serialNumber"]}" : $"~{Context.Request.Path.Value}?serialNumber={HttpContextAccessor.HttpContext.Request.Query["serialNumber"]}";
+
     ViewData["Page-title"] = localizer["Cars Data"];
     ViewData["Page-Hint"] = localizer["TransferCars Hint"];
 }
@@ -81,7 +83,7 @@
                                 }
                                 else
                                 {
-                                    <tr onclick="location.href='@Url.Action("TransfersCarToBranch", "CarsInformation", new { serialNumber = item.CrCasCarInformationSerailNo })'">
+                                    <tr onclick="location.href='@Url.Action("TransfersCarToBranch", "CarsInformation", new { serialNumber = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;">
                                         <td>@no</td>
                                         <td>@item.CrCasCarInformationSerailNo</td>
                                         <td>@item.CrCasCarInformationConcatenateEnName</td>

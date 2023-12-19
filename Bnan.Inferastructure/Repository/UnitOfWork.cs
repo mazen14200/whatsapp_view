@@ -89,6 +89,9 @@ namespace Bnan.Inferastructure.Repository
         public IGenric<CrElmEmployer> CrElmEmployer { get; private set; }
         public IGenric<CrElmLicense> CrElmLicense { get; private set; }
         public IGenric<CrElmPost> CrElmPost { get; private set; }
+        public IGenric<CrMasSupRenterSector> CrMasSupRenterSector { get; private set; }
+        public IGenric<CrMasSupRenterProfession> CrMasSupRenterProfession { get; private set; }
+        public IGenric<CrMasSupRenterEmployer> CrMasSupRenterEmployer { get; private set; }
 
 
         public UnitOfWork(BnanKSAContext context)
@@ -159,6 +162,9 @@ namespace Bnan.Inferastructure.Repository
             CrElmLicense = new BaseRepository<CrElmLicense>(_context);
             CrElmPersonal = new BaseRepository<CrElmPersonal>(_context);
             CrElmPost = new BaseRepository<CrElmPost>(_context);
+            CrMasSupRenterSector = new BaseRepository<CrMasSupRenterSector>(_context);
+            CrMasSupRenterProfession = new BaseRepository<CrMasSupRenterProfession>(_context);
+            CrMasSupRenterEmployer = new BaseRepository<CrMasSupRenterEmployer>(_context);
         }
         public int Complete()
         {

@@ -86,7 +86,7 @@
                                 }
                                 else
                                 {
-                                    <tr onclick="location.href='@Url.Action("Repair", "CarsForRepair", new { serialNumber = item.CrCasCarInformationSerailNo })'">
+                                    <tr onclick="location.href='@Url.Action("Repair", "CarsForRepair", new { serialNumber = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;">
                                         <td>@no</td>
                                         <td>@item.CrCasCarInformationSerailNo</td>
                                         <td>@item.CrCasCarInformation1?.CrCasBranchInformationEnShortName</td>

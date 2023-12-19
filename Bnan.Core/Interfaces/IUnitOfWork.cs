@@ -79,6 +79,9 @@ namespace Bnan.Core.Interfaces
         public IGenric<CrElmEmployer> CrElmEmployer { get; }
         public IGenric<CrElmLicense> CrElmLicense { get; }
         public IGenric<CrElmPost> CrElmPost { get; }
+        public IGenric<CrMasSupRenterSector> CrMasSupRenterSector { get; }
+        public IGenric<CrMasSupRenterProfession> CrMasSupRenterProfession { get; }
+        public IGenric<CrMasSupRenterEmployer> CrMasSupRenterEmployer { get; }
 
 
 

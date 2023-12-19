@@ -431,8 +431,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == serialNumber && x.CrCasCarInformationLessor == lessorCode, new[] {"CrCasCarInformation1", "CrCasCarInformationDistributionNavigation",
                                                                                                                                "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2"});
             var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode && x.CrCasBranchInformationCode != car.CrCasCarInformationBranch && x.CrCasBranchInformationStatus==Status.Active);
-            ViewData["BranchAr"] = branches.Select(x => new SelectListItem { Value = x.CrCasBranchInformationCode.ToString(), Text = x.CrCasBranchInformationArName }).ToList();
-            ViewData["BranchEn"] = branches.Select(x => new SelectListItem { Value = x.CrCasBranchInformationCode.ToString(), Text = x.CrCasBranchInformationEnName }).ToList();
+            ViewData["BranchAr"] = branches.Select(x => new SelectListItem { Value = x.CrCasBranchInformationCode.ToString(), Text = x.CrCasBranchInformationArShortName }).ToList();
+            ViewData["BranchEn"] = branches.Select(x => new SelectListItem { Value = x.CrCasBranchInformationCode.ToString(), Text = x.CrCasBranchInformationEnShortName }).ToList();
             var carVM = _mapper.Map<CarsInforamtionVM>(car);
             return View(carVM);
         }

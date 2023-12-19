@@ -2,12 +2,13 @@
 @using Bnan.Ui.ViewModels.CAS
 @model Bnan.Ui.ViewModels.CAS.CarsInforamtionVM
 @inject IViewLocalizer localizer
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    ViewData["Page-title"] = localizer["Car Data"];
-    ViewData["Page-Hint"] = localizer["TransferCars Hint"];
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? $"~{Context.Request.Path.Value}?serialNumber={HttpContextAccessor.HttpContext.Request.Query["serialNumber"]}" : $"~{Context.Request.Path.Value}?serialNumber={HttpContextAccessor.HttpContext.Request.Query["serialNumber"]}";
+    ViewData["Page-title"] = localizer["TransferCarss Data"];
+    ViewData["Page-Hint"] = localizer["TransferCarss Hint"];
 }
 <style>
 
@@ -87,24 +88,30 @@
                     <label class="form-label" for="CrCasCarInformationRegistration">@localizer["NewBranch"]</label>
                 </div>
                 <div class="col-md-2">
-                    <select class="form-select" name="NewBranch" id="NewBranch" style="width: 100%;" dir="rtl" required>
-                        <option value="" selected></option> <!-- Add an empty option as the first option -->
-                        @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
-                        {
+
+                    @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                    {
+                        <select class="form-select" name="NewBranch" id="NewBranch" style="width: 100%;" dir="rtl" required>
+                            <option value="" selected></option> <!-- Add an empty option as the first option -->
                             @foreach (var branch in (List<SelectListItem>)ViewData["BranchAr"])
                             {
                                 <option value="@branch.Value" selected="@(branch.Value.Trim() == "" ? "selected" : null)">@branch.Text</option>
                             }
-                        }
-                        else
-                        {
+                        </select>
+
+                    }
+                    else
+                    {
+                        <select class="form-select" name="NewBranch" id="NewBranch" style="width: 100%;" dir="ltr" required>
+                            <option value="" selected></option> <!-- Add an empty option as the first option -->
                             @foreach (var branch in (List<SelectListItem>)ViewData["BranchEn"])
                             {
                                 <option value="@branch.Value" selected="@(branch.Value.Trim() == "" ? "selected" : null)">@branch.Text</option>
                             }
-                        }
+                        </select>
 
-                    </select>
+                    }
+
                     <div style="margin-top:2px">
                         <div style="height: 1.35em">
                             <span id="NewBranchMessage" class="text-danger"></span>
@@ -117,7 +124,7 @@
                     <label class="form-label" for="CrCasCarInformationReasons">@localizer["reasons"]</label>
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" asp-for="CrCasCarInformationReasons" style="width: 100%;" maxlength="100"/>
+                    <input type="text" class="form-control" asp-for="CrCasCarInformationReasons" style="width: 100%;" maxlength="100" />
                 </div>
             </div>
         </div>
@@ -130,28 +137,28 @@
     </form>
 </div>
 @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Get the form element
-                $("#submitButton").click(function (e) {
-                    var form = document.getElementById('form');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the form element
+            $("#submitButton").click(function (e) {
+                var form = document.getElementById('form');
                 var select = document.getElementById("NewBranch").value
-                    var message = document.getElementById("NewBranchMessage");
-                    e.preventDefault();
-                    if(select==null || select==""){
-                        message.innerText = '@localizer["requiredFiled"]';
-                        return
-                    }
-                    else{
-                        form.submit();
-                    }
+                var message = document.getElementById("NewBranchMessage");
+                e.preventDefault();
+                if (select == null || select == "") {
+                    message.innerText = '@localizer["requiredFiled"]';
+                    return
+                }
+                else {
+                    form.submit();
+                }
 
 
-                })
-            });
-        </script>
+            })
+        });
+    </script>
 
 
 

@@ -113,17 +113,22 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == code&&x.CrCasCarInformationLessor==userLogin.CrMasUserInformationLessor);
             if (car != null)
             {
+                var docAndMain = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceSerailNo == car.CrCasCarInformationSerailNo &&
+                                                                               x.CrCasCarDocumentsMaintenanceLessor == userLogin.CrMasUserInformationLessor &&
+                                                                               x.CrCasCarDocumentsMaintenanceBranch == car.CrCasCarInformationBranch);
                 if (status == Status.Active)
                 {
                     sAr = "استرجاع";
                     sEn = "Retrive";
                     car.CrCasCarInformationStatus = Status.Active;
+                    foreach (var item in docAndMain) item.CrCasCarDocumentsMaintenanceCarStatus = Status.Active;
                 }
                 if (status == Status.Deleted)
                 {
                     sAr = "حذف";
                     sEn = "Delete";
                     car.CrCasCarInformationStatus = Status.Active;
+                    foreach (var item in docAndMain) item.CrCasCarDocumentsMaintenanceCarStatus = Status.Active;
                 }
                 await _unitOfWork.CompleteAsync();
                 // SaveTracing

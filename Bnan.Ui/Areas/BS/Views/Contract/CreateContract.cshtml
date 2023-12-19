@@ -182,7 +182,7 @@
                                                 @localizer["Verification"]
                                             </button>
                                         </div>
-                                        <div class="col-sm-auto col-md-auto col-lg-auto radio-style">
+                                        <div class="col-sm-auto col-md-auto col-lg-auto radio-style" id="radioDriverRenter">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="driver1">
                                                     @localizer["TheRenterIsAdriver"]
@@ -2407,6 +2407,7 @@
         // Select elements with the class "seacrh-icon-col" and hide them Renter Contract Info
         $(document).ready(function () {
             $(".seacrh-icon-col").hide();
+            $("#radioDriverRenter").hide();
         });
 
 
@@ -2461,17 +2462,12 @@
 
             setTimeout(function () {
                 $('#thirdPopupModal').modal('hide');
-
+                console.log(RenterInformation);
                 // Set the style to display: block after 1000 milliseconds
                 setTimeout(function () {
-                    $("#RenterAddress").text(RenterInformation.elmRenterPost.crElmPostCityArName +
-                        "-" + RenterInformation.elmRenterPost.crElmPostRegionsArName +
-                        "-" + RenterInformation.elmRenterPost.crElmPostDistrictArName + "-" +
-                        RenterInformation.elmRenterPost.crElmPostStreetArName + "-" +
-                        RenterInformation.elmRenterPost.crElmPostStreetArName.crElmPostUnitNo);
-
-                    $("#RenterEmail").text(RenterInformation.elmRenterInfo.crElmPersonalEmail);
-                    $("#RenterName").text(RenterInformation.elmRenterInfo.crElmPersonalArName);
+                    $("#RenterAddress").text(RenterInformation.postArNameConcenate);
+                    $("#RenterEmail").text(RenterInformation.personalEmail);
+                    $("#RenterName").text(RenterInformation.personalArName);
                 }, 1000);
             }, 1000); // Adjust the duration as needed (in milliseconds)
         }
@@ -2516,19 +2512,23 @@
 
         var current_fs, next_fs, previous_fs;
         $(".next").click(function () {
+            var renterName = $("#RenterName").val();
             current_fs = $(this).closest("fieldset");
-            console.log(current_fs)
             next_fs = $(this).closest("fieldset").next();
-            console.log(next_fs)
-            console.log($("#msform").valid())
+            console.log(renterName);
             if ($("#msform").valid()) {
-                // Activate next step on progressbar using the index of next_fs
-                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                // Show the next fieldset
-                next_fs.show();
-                // Hide the current fieldset with style
-                current_fs.hide();
-                console.log(555555)
+                if (renterName!=null && renterName!="") {
+                    // Activate next step on progressbar using the index of next_fs
+                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                    // Show the next fieldset
+                    next_fs.show();
+                    // Hide the current fieldset with style
+                    current_fs.hide();
+                }      
+                else{
+                    $('#requird-field_RenterID').text('الرجاء التحقق من رقم الهوية اولا');
+                }
+                
             }
         });
 

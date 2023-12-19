@@ -8,8 +8,8 @@
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
-    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? $"~{Context.Request.Path.Value}?Procedureid={HttpContextAccessor.HttpContext.Request.Query["Procedureid"]}&BranchId={HttpContextAccessor.HttpContext.Request.Query["BranchId"]}" : $"~{Context.Request.Path.Value}?Procedureid={HttpContextAccessor.HttpContext.Request.Query["Procedureid"]}&BranchId={HttpContextAccessor.HttpContext.Request.Query["BranchId"]}";
-    ViewData["Page-title"] = localizer["Car Data"];
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? $"~{Context.Request.Path.Value}?serialNumber={HttpContextAccessor.HttpContext.Request.Query["serialNumber"]}" : $"~{Context.Request.Path.Value}?serialNumber={HttpContextAccessor.HttpContext.Request.Query["serialNumber"]}";
+    ViewData["Page-title"] = localizer["RepairCar Edit Data"];
     ViewData["Page-Hint"] = localizer["RepairCar Edit Hint"];
 }
 
@@ -101,7 +101,7 @@
                     <div class="col-md-1 formlabel">
                         <label class="form-label">@localizer["Car"]</label>
                     </div>
-                    <div class="col-md-3 col-11">
+                    <div class="col-md-5 col-11">
                         @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                         {
                             <input type="text" class="form-control" asp-for="CrCasCarInformationConcatenateArName" readonly>
@@ -126,7 +126,7 @@
                     <div class="col-md-1 formlabel">
                         <label class="form-label">@localizer["reasons"]</label>
                     </div>
-                    <div class="col-md-5 col-11">
+                    <div class="col-md-9 col-11">
                         <input type="text" id="cities" class="form-control" value="@ViewBag.reasons" readonly>
                     </div>
                 </div>
@@ -147,7 +147,7 @@
                     <div class="col-md-1 formlabel">
                         <label class="form-label">@localizer["Car"]</label>
                     </div>
-                    <div class="col-md-3 col-11">
+                    <div class="col-md-5 col-11">
                         @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                         {
                             <input type="text" class="form-control" asp-for="CrCasCarInformationConcatenateArName" readonly>
@@ -172,7 +172,7 @@
                     <div class="col-md-1 formlabel">
                         <label class="form-label" asp-for="CrCasCarInformationReasons">@localizer["reasonsForRepair"]</label>
                     </div>
-                    <div class="col-md-5 col-11">
+                    <div class="col-md-6 col-11">
                         <input type="text" class="form-control" name="reasons" maxlength="100" autocomplete="off">
                         <div style="margin-top:12px">
                             <div style="height: 1.35em">
@@ -194,11 +194,11 @@
             }
             @if (Model.CrCasCarInformationStatus == "M")
             {
-                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Active" data-bs-targett="#centermodalDelete">
+                <a type="button" class="btn btn-primary ms-1" id="Delete" data-bs-toggle="modal" data-error="@Status.Active" data-bs-targett="#centermodalDelete">
                     @localizer["Delete"]
                 </a>
-                <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Active" data-bs-targett="#centermodalActive">
-                    @localizer["Reactive"]
+                <a type="button" class="btn btn-primary ms-1" id="FinishRepair" data-bs-toggle="modal" data-error="@Status.Active" data-bs-targett="#centermodalActive">
+                    @localizer["FinishRepair"]
                 </a>
             }
             <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="CarsForRepair" asp-action="CarsForRepair">
@@ -207,7 +207,7 @@
         </div>
     </form>
 
-    <!-- Delete Lessor Modal-->
+   @*  <!-- Delete Lessor Modal-->
     <div class="modal fade" id="centermodalDelete" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -238,7 +238,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div><!-- /.modal --> *@
 
 </div>
 @section Scripts {
@@ -293,10 +293,10 @@
         }
 
 
-        $('#retriveToActiveD').click(function () {
+        $('#Delete').click(function () {
             updateRepairCarStatus('D');
         });
-        $('#retriveToActiveA').click(function () {
+        $('#FinishRepair').click(function () {
             updateRepairCarStatus('A');
         });
        

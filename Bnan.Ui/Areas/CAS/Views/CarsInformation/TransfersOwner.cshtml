@@ -67,7 +67,7 @@
                             @foreach (var item in Model)
                             {
 
-                                <tr onclick="location.href='@Url.Action("TransfersCarToOwner", "CarsInformation", new { serialNumber = item.CrCasCarInformationSerailNo })'">
+                                <tr onclick="location.href='@Url.Action("TransfersCarToOwner", "CarsInformation", new { serialNumber = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;">
                                     <td>@no</td>
                                     <td>@item.CrCasCarInformationSerailNo</td>
                                     <td>@item.CrCasCarInformationConcatenateEnName</td>
