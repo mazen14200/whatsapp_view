@@ -61,6 +61,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRenter(string RenterId)
         {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
             //First check if bnan have this renter id or not 
             var BnanRenterInfo= _unitOfWork.CrMasRenterInformation.Find(x=>x.CrMasRenterInformationId == RenterId);
             if (BnanRenterInfo!=null) return Json(BnanRenterInfo);
@@ -73,7 +75,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     var elmRenterPost = _unitOfWork.CrElmPost.Find(x => x.CrElmPostCode == RenterId);
 
                     var masRenterInformation = await _ContractServices.AddRenterFromElmToMasRenter(RenterId, elmRenterEmployeer, elmRenterInfo, elmRenterLicince);
-                    if (masRenterInformation) {
+                    var masRenterPost = await _ContractServices.AddRenterFromElmToMasRenterPost(RenterId, elmRenterPost);
+                    var casRenterLessor = await _ContractServices.AddRenterFromElmToCasRenterLessor(lessorCode, masRenterInformation, masRenterPost);
+                    if (masRenterInformation!=null&& masRenterPost!=null && casRenterLessor!=null) {
                         //try for test
                         try
                         {
@@ -81,11 +85,15 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         }
                         catch (Exception ex)
                         {
-
+                            return Json(null);
                             throw;
                         }
                     }
-                    
+                    else
+                    {
+                        return Json(null);
+                    }
+
                     //this model for View Only 
                     RenterInformationsVM renterInformationsVM = new RenterInformationsVM {
                         PersonalArName = elmRenterInfo?.CrElmPersonalArName,
@@ -97,8 +105,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         PersonalArProfessions = elmRenterInfo?.CrElmPersonalArNationality,
                         PersonalEnProfessions = elmRenterInfo?.CrElmPersonalEnProfessions,
                         PersonalEmail = elmRenterInfo?.CrElmPersonalEmail,
-                        EmployerArName = elmRenterEmployeer.CrElmEmployerArName,
-                        EmployerEnName = elmRenterEmployeer.CrElmEmployerEnName,
+                        EmployerArName = elmRenterEmployeer?.CrElmEmployerArName,
+                        EmployerEnName = elmRenterEmployeer?.CrElmEmployerEnName,
                         LicenseArName = elmRenterLicince.CrElmLicenseArName,
                         LicenseEnName = elmRenterLicince.CrElmLicenseEnName,
                         LicenseExpiryDate = elmRenterLicince.CrElmLicenseExpiryDate,

@@ -92,6 +92,8 @@ namespace Bnan.Inferastructure.Repository
         public IGenric<CrMasSupRenterSector> CrMasSupRenterSector { get; private set; }
         public IGenric<CrMasSupRenterProfession> CrMasSupRenterProfession { get; private set; }
         public IGenric<CrMasSupRenterEmployer> CrMasSupRenterEmployer { get; private set; }
+        public IGenric<CrMasRenterPost> CrMasRenterPost { get; private set; }
+        public IGenric<CrCasRenterLessor> CrCasRenterLessor { get; private set; }
 
 
         public UnitOfWork(BnanKSAContext context)
@@ -165,6 +167,8 @@ namespace Bnan.Inferastructure.Repository
             CrMasSupRenterSector = new BaseRepository<CrMasSupRenterSector>(_context);
             CrMasSupRenterProfession = new BaseRepository<CrMasSupRenterProfession>(_context);
             CrMasSupRenterEmployer = new BaseRepository<CrMasSupRenterEmployer>(_context);
+            CrMasRenterPost = new BaseRepository<CrMasRenterPost>(_context);
+            CrCasRenterLessor = new BaseRepository<CrCasRenterLessor>(_context);
         }
         public int Complete()
         {

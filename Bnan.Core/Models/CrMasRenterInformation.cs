@@ -26,10 +26,10 @@ namespace Bnan.Core.Models
         public DateTime? CrMasRenterInformationDrivingLicenseDate { get; set; }
         public DateTime? CrMasRenterInformationExpiryDrivingLicenseDate { get; set; }
         public string? CrMasRenterInformationCommunicationLanguage { get; set; }
-        public string? CrMasRenterInformationWorkplaceSubscription { get; set; }
+        public string? CrMasRenterInformationProfession { get; set; }
         public string? CrMasRenterInformationNationality { get; set; }
         public string? CrMasRenterInformationGender { get; set; }
-        public string? CrMasRenterInformationJobs { get; set; }
+        public string? CrMasRenterInformationEmployer { get; set; }
         public string? CrMasRenterInformationCountreyKey { get; set; }
         public string? CrMasRenterInformationMobile { get; set; }
         public string? CrMasRenterInformationEmail { get; set; }
@@ -48,10 +48,10 @@ namespace Bnan.Core.Models
         public virtual CrMasSupRenterDrivingLicense? CrMasRenterInformationDrivingLicenseTypeNavigation { get; set; }
         public virtual CrMasSupRenterGender? CrMasRenterInformationGenderNavigation { get; set; }
         public virtual CrMasSupRenterIdtype? CrMasRenterInformationIdtypeNavigation { get; set; }
-        public virtual CrMasSupRenterEmployer? CrMasRenterInformationJobsNavigation { get; set; }
+        public virtual CrMasSupRenterEmployer? CrMasRenterInformationEmployerNavigation { get; set; }
         public virtual CrMasSupRenterNationality? CrMasRenterInformationNationalityNavigation { get; set; }
         public virtual CrMasSupRenterSector? CrMasRenterInformationSectorNavigation { get; set; }
-        public virtual CrMasSupRenterProfession? CrMasRenterInformationWorkplaceSubscriptionNavigation { get; set; }
+        public virtual CrMasSupRenterProfession? CrMasRenterInformationProfessionNavigation { get; set; }
         public virtual CrMasRenterPost CrMasRenterPost { get; set; } = null!;
         public virtual ICollection<CrCasRenterLessor> CrCasRenterLessors { get; set; }
     }

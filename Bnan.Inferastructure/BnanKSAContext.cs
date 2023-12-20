@@ -2872,13 +2872,13 @@ namespace Bnan.Core.Models
 
                 entity.HasIndex(e => e.CrMasRenterInformationIdtype, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_IDType");
 
-                entity.HasIndex(e => e.CrMasRenterInformationJobs, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Jobs");
+                entity.HasIndex(e => e.CrMasRenterInformationEmployer, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Employer");
 
                 entity.HasIndex(e => e.CrMasRenterInformationNationality, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Nationality");
 
                 entity.HasIndex(e => e.CrMasRenterInformationSector, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Sector");
 
-                entity.HasIndex(e => e.CrMasRenterInformationWorkplaceSubscription, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Workplace_Subscription");
+                entity.HasIndex(e => e.CrMasRenterInformationProfession, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Profession");
 
                 entity.Property(e => e.CrMasRenterInformationId)
                     .HasMaxLength(20)
@@ -2966,10 +2966,10 @@ namespace Bnan.Core.Models
                     .HasMaxLength(50)
                     .HasColumnName("CR_Mas_Renter_Information_Issue_Place");
 
-                entity.Property(e => e.CrMasRenterInformationJobs)
+                entity.Property(e => e.CrMasRenterInformationEmployer)
                     .HasMaxLength(10)
                     .IsUnicode(false)
-                    .HasColumnName("CR_Mas_Renter_Information_Jobs")
+                    .HasColumnName("CR_Mas_Renter_Information_Employer")
                     .IsFixedLength();
 
                 entity.Property(e => e.CrMasRenterInformationMobile)
@@ -3028,10 +3028,10 @@ namespace Bnan.Core.Models
                     .HasColumnType("date")
                     .HasColumnName("CR_Mas_Renter_Information_UpDate_Workplace_Data");
 
-                entity.Property(e => e.CrMasRenterInformationWorkplaceSubscription)
+                entity.Property(e => e.CrMasRenterInformationProfession)
                     .HasMaxLength(10)
                     .IsUnicode(false)
-                    .HasColumnName("CR_Mas_Renter_Information_Workplace_Subscription")
+                    .HasColumnName("CR_Mas_Renter_Information_Profession")
                     .IsFixedLength();
 
                 entity.HasOne(d => d.CrMasRenterInformationBankNavigation)
@@ -3054,9 +3054,9 @@ namespace Bnan.Core.Models
                     .HasForeignKey(d => d.CrMasRenterInformationIdtype)
                     .HasConstraintName("FK_CR_Mas_Renter_Information_CR_Mas_Sup_Renter_IDType");
 
-                entity.HasOne(d => d.CrMasRenterInformationJobsNavigation)
+                entity.HasOne(d => d.CrMasRenterInformationEmployerNavigation)
                     .WithMany(p => p.CrMasRenterInformations)
-                    .HasForeignKey(d => d.CrMasRenterInformationJobs)
+                    .HasForeignKey(d => d.CrMasRenterInformationEmployer)
                     .HasConstraintName("FK_CR_Mas_Renter_Information_CR_Mas_Sup_Renter_Employer");
 
                 entity.HasOne(d => d.CrMasRenterInformationNationalityNavigation)
@@ -3069,9 +3069,9 @@ namespace Bnan.Core.Models
                     .HasForeignKey(d => d.CrMasRenterInformationSector)
                     .HasConstraintName("FK_CR_Mas_Renter_Information_CR_Mas_Sup_Renter_Sector");
 
-                entity.HasOne(d => d.CrMasRenterInformationWorkplaceSubscriptionNavigation)
+                entity.HasOne(d => d.CrMasRenterInformationProfessionNavigation)
                     .WithMany(p => p.CrMasRenterInformations)
-                    .HasForeignKey(d => d.CrMasRenterInformationWorkplaceSubscription)
+                    .HasForeignKey(d => d.CrMasRenterInformationProfession)
                     .HasConstraintName("FK_CR_Mas_Renter_Information_CR_Mas_Sup_Renter_Professions");
             });
 

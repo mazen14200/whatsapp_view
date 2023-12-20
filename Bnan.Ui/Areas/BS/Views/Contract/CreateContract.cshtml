@@ -2424,7 +2424,8 @@
                     return true; // Renter exists
                 }
             } catch (error) {
-                console.error("Error loading data:", error);
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["SomethingWrongPleaseCallAdmin"]');
                 return false; // Error occurred or Renter doesn't exist
             }
 
