@@ -416,6 +416,9 @@
   //toastr Message,
   "toastPostion": "toast-top-left",
   "toastMessage": "ليس لديك صلاحيه",
+  "toastMessageLessorHold": "الشركة موقوقه , الرجاء التواصل مع الادارة",
+  "toastMessageCompanyContractExpired": "يرجي مراجعة عقود الشركة",
+  "toastMessageUserHold": "الموظف موقوف يرجي التواصل مع الادارة",
   "toastRequiredField": "من فضلك تأكد من ملئ جميع الحقول ",
   "SomethingWrongPleaseCallAdmin": "هناك خطأ ما حدث يرجى التواصل مع الادارة",
   "ToastSave": "تم الحفظ بنجاح",
@@ -1106,5 +1109,8 @@
   "ChooseYourDriver": "اختر سائقك",
   "Name": "الاسم",
   "Address": "العنوان",
-  "RenterIdWrong": "عفواً .. رقم الهوية غير صحيح "
+  "RenterIdWrong": "عفواً .. رقم الهوية غير صحيح ",
+  "PleaseShowMobile": "من فضلك ادخل رمز التحقق المرسل على جوال",
+  "SendAnotherCode": "ارسال رمز آخر",
+  "Submit": "تأكيد"
 }

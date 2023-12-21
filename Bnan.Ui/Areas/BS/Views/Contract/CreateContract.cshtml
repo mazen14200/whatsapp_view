@@ -21,7 +21,7 @@
         <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
             <div class="card main-card ">
                 <div class="row pt-2">
-                    <a href="#" style="width: fit-content;">
+                    <a asp-action="Index" asp-area="BS" asp-controller="Home" style="width: fit-content;">
                         <img src="~/BranchSys/CreateContract/img/cancel.png" alt="cancle_icon" class="cancle-icon">
                     </a>
                 </div>
@@ -171,7 +171,7 @@
                                         </div>
                                         <div class="col-sm-3 col-md-3 col-lg-3">
                                             <input type="date" class="form-control"
-                                                   id="birth-date-step1" name="birth-date-step1">
+                                                   id="birth-date-step1" name="birth-date-step1" readonly>
                                             <div class="row requird-field-row">
                                                 <p class="requird-field"></p>
                                             </div>
@@ -2228,7 +2228,7 @@
                         <div class="modal-body">
                             <form class="otc" name="one-time-code" id="otc">
                                 <legend>
-                                    من فضلك ادخل رمز التحقق المرسل على جوال*********۹٦
+                                    @localizer["PleaseShowMobile"]<p id="MobileNumber"></p>
                                 </legend>
                                 <div>
                                     <input type="number" pattern="[0-9]*" value=""
@@ -2254,13 +2254,11 @@
                                 <p style="color: red;" id="WrongCodeMessage"></p>
                                 <button type="button"
                                         class=" check-btn ModalButtons resend">
-                                    ارسال
-                                    رمز
-                                    آخر
+                                   @localizer["SendAnotherCode"]
                                 </button>
 
                                 <button type="submit" class="  check-btn check">
-                                    تاكيد
+                                    @localizer["Submit"]
                                 </button>
 
                             </form>
@@ -2428,7 +2426,6 @@
                 toastr.error('@localizer["SomethingWrongPleaseCallAdmin"]');
                 return false; // Error occurred or Renter doesn't exist
             }
-
             return false; // Renter doesn't exist
         }
 
@@ -2438,12 +2435,13 @@
 
             RenterCheckBtn.addEventListener('click', async function () {
                 var RenterID = $('#Contract_RenterId').val();
-                console.log(RenterID);
 
                 if ($("#msform").valid()) {
                     CheckIfRenterIdExist = await GetRenterInformation(RenterID);
                     if (CheckIfRenterIdExist) {
                         $('#checkModalToggle').modal('show');
+                        // get mobile number
+                        $("#MobileNumber").text(RenterInformation.mobileNumber)
                     } else {
                         $('#requird-field_RenterID').text('@localizer["RenterIdWrong"]');
                     }
@@ -2457,18 +2455,26 @@
         function openThirdPopup() {
             // Hide the second popup modal
             $('#checkModalToggle').modal('hide');
-
             // Open the third popup modal
             $('#thirdPopupModal').modal('show');
-
             setTimeout(function () {
                 $('#thirdPopupModal').modal('hide');
                 console.log(RenterInformation);
                 // Set the style to display: block after 1000 milliseconds
                 setTimeout(function () {
-                    $("#RenterAddress").text(RenterInformation.postArNameConcenate);
-                    $("#RenterEmail").text(RenterInformation.personalEmail);
-                    $("#RenterName").text(RenterInformation.personalArName);
+                    var birthdate = RenterInformation.birthDate.split('T')[0];
+                    if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                        $("#RenterAddress").text(RenterInformation.postEnNameConcenate);
+                        $("#RenterEmail").text(RenterInformation.personalEmail);
+                        $("#RenterName").text(RenterInformation.personalEnName);
+                        $("#birth-date-step1").val(birthdate);
+                    }
+                    else{
+                        $("#RenterAddress").text(RenterInformation.postArNameConcenate);
+                        $("#RenterEmail").text(RenterInformation.personalEmail);
+                        $("#RenterName").text(RenterInformation.personalArName);
+                        $("#birth-date-step1").val(birthdate);
+                    }
                 }, 1000);
             }, 1000); // Adjust the duration as needed (in milliseconds)
         }
@@ -2513,7 +2519,7 @@
 
         var current_fs, next_fs, previous_fs;
         $(".next").click(function () {
-            var renterName = $("#RenterName").val();
+            var renterName = $("#RenterName").text();
             current_fs = $(this).closest("fieldset");
             next_fs = $(this).closest("fieldset").next();
             console.log(renterName);

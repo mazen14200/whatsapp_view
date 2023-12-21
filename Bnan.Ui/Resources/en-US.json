@@ -414,7 +414,9 @@
   "toastRequiredField": "Please fill in all the required fields.",
   "toastPostion": "toast-top-right",
   "SomethingWrongPleaseCallAdmin": "Something went wrong, please contact the administration",
-
+  "toastMessageLessorHold": "The company is suspended, please contact the administration",
+  "toastMessageCompanyContractExpired": "Please review the company contracts",
+  "toastMessageUserHold": "The employee is suspended. Please contact the administration",
   "ToastSave": "Saved successfully",
   "ToastEdit": "Edit successfully",
   "ToastDelete": "Deleted successfully",
@@ -1112,6 +1114,8 @@
   "ChooseYourDriver": "Choose your driver",
   "Address": "Address",
   "Name": "Name",
-  "RenterIdWrong": "Sorry, the ID number is incorrect"
-
+  "RenterIdWrong": "Sorry, the ID number is incorrect",
+  "PleaseShowMobile": "Please enter the verification code sent to your mobile phone",
+  "SendAnotherCode": "Send Another Code",
+  "Submit": "Submit"
 }

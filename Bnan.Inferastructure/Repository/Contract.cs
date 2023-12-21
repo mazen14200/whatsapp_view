@@ -47,6 +47,7 @@ namespace Bnan.Inferastructure.Repository
             else licenceCode = "2";
             if (crElmEmployer != null) employerCode = GetEmployer(firstChar, crElmEmployer.CrElmEmployerArName, crElmEmployer.CrElmEmployerEnName);
             else employerCode = "1800000002";
+            var typeID = GetTypeID(firstChar, sectorCode);
             CrMasRenterInformation renterInformation = new CrMasRenterInformation
             {
                 CrMasRenterInformationId = RenterID,
@@ -75,7 +76,7 @@ namespace Bnan.Inferastructure.Repository
                 CrMasRenterInformationEmployer = employerCode,
                 CrMasRenterInformationProfession = professionsCode,
                 CrMasRenterInformationStatus = "A",
-                CrMasRenterInformationIdtype = null,
+                CrMasRenterInformationIdtype = typeID,
                 CrMasRenterInformationDrivingLicenseNo = crElmLicense.CrElmLicenseNo,
                 CrMasRenterInformationDrivingLicenseDate = crElmLicense.CrElmLicenseIssuedDate,
                 CrMasRenterInformationExpiryDrivingLicenseDate = crElmLicense.CrElmLicenseExpiryDate,
@@ -100,6 +101,15 @@ namespace Bnan.Inferastructure.Repository
                 RegionCode = "11";
                 CityCode = "1700000002";
             }
+            //concatenatedAddress
+            var buildingInfoAr = $"مبنى({crElmPost.CrElmPostBuildingNo})";
+            var unitInfoAr = $"وحدة({crElmPost.CrElmPostUnitNo})";
+            var buildingInfoEn = $"Building ({crElmPost.CrElmPostBuildingNo})";
+            var unitInfoEn = $"Unit ({crElmPost.CrElmPostUnitNo})";
+            var concatenatedArAddress = string.Join("-", crElmPost.CrElmPostRegionsArName,crElmPost.CrElmPostCityArName, crElmPost.CrElmPostDistrictArName,
+                                                        crElmPost.CrElmPostStreetArName, buildingInfoAr, unitInfoAr);
+            var concatenatedEnAddress = string.Join("-", crElmPost.CrElmPostRegionsEnName, crElmPost.CrElmPostCityEnName, crElmPost.CrElmPostDistrictEnName,
+                                                        crElmPost.CrElmPostStreetEnName, buildingInfoEn, unitInfoEn);
 
             CrMasRenterPost crMasRenterPost = new CrMasRenterPost
             {
@@ -115,10 +125,10 @@ namespace Bnan.Inferastructure.Repository
                 CrMasRenterPostZipCode = crElmPost.CrElmPostZipCode.ToString(),
                 CrMasRenterPostBuilding = crElmPost.CrElmPostBuildingNo.ToString(),
                 CrMasRenterPostUnitNo = crElmPost.CrElmPostUnitNo,
-                CrMasRenterPostArConcatenate = crElmPost.CrElmPostRegionsArName + "-" + crElmPost.CrElmPostCityArName + "-" + crElmPost.CrElmPostDistrictArName + "-" + crElmPost.CrElmPostStreetArName + "-" + crElmPost.CrElmPostBuildingNo + "-" + crElmPost.CrElmPostUnitNo,
-                CrMasRenterPostArShortConcatenate = crElmPost.CrElmPostRegionsArName + "-" + crElmPost.CrElmPostCityArName + "-" + crElmPost.CrElmPostDistrictArName,
-                CrMasRenterPostEnConcatenate = crElmPost.CrElmPostRegionsEnName + "-" + crElmPost.CrElmPostCityEnName + "-" + crElmPost.CrElmPostDistrictEnName + "-" + crElmPost.CrElmPostStreetEnName + "-" + crElmPost.CrElmPostBuildingNo + "-" + crElmPost.CrElmPostUnitNo,
-                CrMasRenterPostEnShortConcatenate = crElmPost.CrElmPostRegionsEnName + "-" + crElmPost.CrElmPostCityEnName + "-" + crElmPost.CrElmPostDistrictEnName,
+                CrMasRenterPostArConcatenate = concatenatedArAddress,
+                CrMasRenterPostArShortConcatenate = crElmPost.CrElmPostRegionsArName + "-" + crElmPost.CrElmPostCityArName + "-" + crElmPost.CrElmPostDistrictArName + "-" + crElmPost.CrElmPostStreetArName,
+                CrMasRenterPostEnConcatenate = concatenatedEnAddress,
+                CrMasRenterPostEnShortConcatenate = crElmPost.CrElmPostRegionsEnName + "-" + crElmPost.CrElmPostCityEnName + "-" + crElmPost.CrElmPostDistrictEnName + "-" + crElmPost.CrElmPostStreetEnName,
                 CrMasRenterPostStatus = Status.Active,
                 CrMasRenterPostUpDatePost = DateTime.Now.Date,
                 CrMasRenterPostReasons = ""
@@ -130,11 +140,12 @@ namespace Bnan.Inferastructure.Repository
         {
             var ageCode = "";
             if (crMasRenterInformation != null) ageCode = GetAge(crMasRenterInformation.CrMasRenterInformationBirthDate.ToString());
-            
+
             CrCasRenterLessor casRenterLessor = new CrCasRenterLessor
             {
                 CrCasRenterLessorId = crMasRenterInformation.CrMasRenterInformationId,
                 CrCasRenterLessorCode = LessorCode,
+                CrCasRenterLessorSector = crMasRenterInformation.CrMasRenterInformationSector,
                 CrCasRenterLessorCopyId = crMasRenterInformation.CrMasRenterInformationCopyId,
                 CrCasRenterLessorIdtrype = crMasRenterInformation.CrMasRenterInformationIdtype,
                 CrCasRenterLessorMembership = Membership.Mutual, // This The first memeber ship for every new renter 1600000006
@@ -147,15 +158,17 @@ namespace Bnan.Inferastructure.Repository
                 CrCasRenterLessorEvaluationNumber = 0,
                 CrCasRenterLessorEvaluationTotal = 0,
                 CrCasRenterLessorEvaluationValue = 0,
+                CrCasRenterLessorBalance = 0,
                 CrCasRenterLessorStatisticsNationalities = crMasRenterInformation.CrMasRenterInformationNationality,
                 CrCasRenterLessorStatisticsGender = crMasRenterInformation.CrMasRenterInformationGender,
                 CrCasRenterLessorStatisticsJobs = crMasRenterInformation.CrMasRenterInformationProfession,
                 CrCasRenterLessorStatisticsRegions = crMasRenterPost.CrMasRenterPostRegions,
                 CrCasRenterLessorStatisticsCity = crMasRenterPost.CrMasRenterPostCity,
                 CrCasRenterLessorStatisticsAge = ageCode,
+                CrCasRenterLessorStatisticsTraded = "1",
                 CrCasRenterLessorDealingMechanism = "10", //I Dont Know why put this 10 
                 CrCasRenterLessorStatus = Status.Active,
-                CrCasRenterLessorReasons = ""
+                CrCasRenterLessorReasons = "",
             };
             if (await _unitOfWork.CrCasRenterLessor.AddAsync(casRenterLessor) == null) return null;
             return casRenterLessor;
@@ -452,6 +465,18 @@ namespace Bnan.Inferastructure.Repository
                     break;
             }
             return ageCode;
+        }
+        private string GetTypeID(string firstChar, string sector)
+        {
+            string typeID = "";
+            if (firstChar == "1") typeID = "1";
+            else if (firstChar == "2") typeID = "2";
+            else
+            {
+                if (sector == "2") typeID = "5";
+                else typeID = "6";
+            }
+            return typeID;
         }
     }
 }

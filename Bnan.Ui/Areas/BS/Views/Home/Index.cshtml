@@ -664,11 +664,48 @@
     <!--Authrization-->
     <script>
         $("#CreateContract").on("click", function (event) {
-            var create = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityCreate";
-            if (create.toLowerCase() === "false") {
+            var createAuth = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityCreate";
+            var userStatus = "@userInfo?.CrMasUserInformationStatus";
+            var lessorStatus = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorInformationStatus";
+            var CarsAvaliableNo = "@ViewBag.AvaliableCars";
+            var CompanyContract = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.Where(x=>x.CrMasContractCompanyStatus==Status.Active).Count()";
+            var CompanyDocuments = "@userInfo?.CrMasUserInformationLessorNavigation?.CrCasBranchDocuments.Where(x=>x.CrCasBranchDocumentsStatus==Status.Active).Count()";
+            var checkContractValidity;
+            var selectedBranch = "@Model.SelectedBranch";
+
+            $.ajax({
+                url: "/BS/Home/CheckCompanyDocuments", // Replace YourController with your actual controller name
+                type: "GET",
+                data: { selectedBranch: selectedBranch },
+                success: function (data) {
+                    checkContractValidity = data;
+                },
+                error: function () {
+                    alert("Error loading data.");
+                }
+            });
+
+            if (createAuth.toLowerCase() === "false") {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["toastMessage"]');
                 event.preventDefault(); // Prevent the default behavior (navigation)
+            }
+            else if (lessorStatus!=@Status.Active) {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageLessorHold"]');
+                event.preventDefault(); // Prevent the default behavior (navigation)
+            }
+            else if (parseInt(AvaliableCars) < 1) {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["AvaliableCarsIsEmptyTab"]');
+            }
+            else if (CompanyContract<3) {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageCompanyContractExpired"]');
+            }
+            else if (userStatus != @Status.Active) {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageUserHold"]');
             }
         })
     </script>

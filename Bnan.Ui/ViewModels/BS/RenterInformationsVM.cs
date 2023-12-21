@@ -12,6 +12,8 @@
         public string? PersonalArProfessions { get; set; }
         public string? PersonalEnProfessions { get; set; }
         public string? PersonalEmail { get; set; }
+        public string? MobileNumber { get; set; }
+        public DateTime? BirthDate { get; set; }
         //Licence
         public string? LicenseArName { get; set; }
         public string? LicenseEnName { get; set; }
