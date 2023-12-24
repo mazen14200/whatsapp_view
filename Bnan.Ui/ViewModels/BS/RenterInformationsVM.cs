@@ -13,7 +13,9 @@
         public string? PersonalEnProfessions { get; set; }
         public string? PersonalEmail { get; set; }
         public string? MobileNumber { get; set; }
+        public string? KeyCountry { get; set; }
         public DateTime? BirthDate { get; set; }
+        public DateTime? ExpiryIdDate { get; set; }
         //Licence
         public string? LicenseArName { get; set; }
         public string? LicenseEnName { get; set; }

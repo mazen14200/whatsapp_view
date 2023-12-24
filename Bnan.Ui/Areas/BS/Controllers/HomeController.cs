@@ -206,24 +206,23 @@ namespace Bnan.Ui.Areas.BS.Controllers
             };
             return PartialView("_AvaliableCar", bSLayoutVM);
         }
-
-
+        [HttpGet]
         public async Task<IActionResult> CheckCompanyDocuments(string selectedBranch)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var documents = _unitOfWork.CrCasBranchDocument.FindAll(x => x.CrCasBranchDocumentsLessor == lessorCode && x.CrCasBranchDocumentsBranch == selectedBranch);
-            var documentNotActive = documents.Where(x=>x.CrCasBranchDocumentsStatus==Status.Renewed && x.CrCasBranchDocumentsStatus==Status.Expire).ToList();
+            var documentNotActive = documents.Where(x=>x.CrCasBranchDocumentsStatus==Status.Renewed || x.CrCasBranchDocumentsStatus==Status.Expire).ToList();
             var userContractValidity = _unitOfWork.CrMasUserContractValidity.Find(x => x.CrMasUserContractValidityUserId == userLogin.Id);
-            bool check = true;
+            var check = "true";
             foreach ( var document in documentNotActive )
             {
-                if (document.CrCasBranchDocumentsProcedures=="100"&& userContractValidity.CrMasUserContractValidityRegister == false) check=false;
-                else if (document.CrCasBranchDocumentsProcedures=="101" && userContractValidity.CrMasUserContractValidityChamber == false) check = false;
-                else if (document.CrCasBranchDocumentsProcedures == "102" && userContractValidity.CrMasUserContractValidityTransferPermission == false)check = false;
-                else if (document.CrCasBranchDocumentsProcedures == "103" && userContractValidity.CrMasUserContractValidityLicenceMunicipale == false)check = false;
-                else if (document.CrCasBranchDocumentsProcedures == "104" && userContractValidity.CrMasUserContractValidityCompanyAddress == false)check = false;
-                else check = true;
+                if (document.CrCasBranchDocumentsProcedures=="100"&& userContractValidity.CrMasUserContractValidityRegister == false) check="100";
+                else if (document.CrCasBranchDocumentsProcedures=="101" && userContractValidity.CrMasUserContractValidityChamber == false) check = "101";
+                else if (document.CrCasBranchDocumentsProcedures == "102" && userContractValidity.CrMasUserContractValidityTransferPermission == false)check = "102";
+                else if (document.CrCasBranchDocumentsProcedures == "103" && userContractValidity.CrMasUserContractValidityLicenceMunicipale == false)check = "103";
+                else if (document.CrCasBranchDocumentsProcedures == "104" && userContractValidity.CrMasUserContractValidityCompanyAddress == false)check = "104";
+                else check = "true";
             }
             return Json(check);
         }

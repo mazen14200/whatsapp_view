@@ -6,9 +6,8 @@
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
 }
-<link href="~\BranchSys\CreateContract\sb-admin-2.min.css" rel="stylesheet">
+<link href="~/BranchSys/CreateContract/sb-admin-2.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <link href="~/BranchSys/CreateContract/contract.css" rel="styleSheet">
 
 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
@@ -254,11 +253,8 @@
                                 </div>
                                 <div class="row button-row" style="text-align: left;">
                                     <div class="button-card">
-                                        <img src="~/BranchSys/CreateContract/Group.png" alt="Button Image"
-                                             class="next action-button"
-                                             style="vertical-align: middle; ">
-                                        <input type="button" name="next" class="next action-button"
-                                               value="@localizer["Next"]" />
+                                        <img src="~/BranchSys/CreateContract/Group.png" alt="Button Image" class="next action-button" style="vertical-align: middle; ">
+                                        <input type="button" name="next" class="next action-button" value="@localizer["Next"]" />
                                     </div>
                                 </div>
 
@@ -610,19 +606,12 @@
                                 <div class="form-card form-card3">
                                     <div class="row row-step3 ">
                                         <div class="col-auto">
-                                            <label for="national-number-driver"
-                                                   class="col-form-label">
-                                                رقم
-                                                الهوية
-                                            </label>
+                                            <label for="national-number-driver" class="col-form-label">@localizer["RenterId"]</label>
                                         </div>
                                         <div class="col-sm-3 col-md-3 col-lg-3">
-                                            <input type="tel" class="form-control"
-                                                   id="national-number-driver"
-                                                   style="margin-left: -4px;"
-                                                   name="national-number-driver" required>
+                                            <input type="tel" class="form-control" asp-for="Contract.DriverId" style="margin-left: -4px;" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="12" required>
                                             <div class="row requird-field-row">
-                                                <p class="requird-field">هذا الحقل مطلوب</p>
+                                                <span class="requird-field" id="requird_field_DriverID" asp-validation-for="@Model.Contract.DriverId"></span>
                                             </div>
                                         </div>
                                         <div class="col-auto seacrh-icon-col">
@@ -725,28 +714,17 @@
                                     </div>
                                     <div class="row row-step3 align-items-center">
                                         <div class="col-auto" style="padding-bottom: 30px;">
-                                            <label for="birth-date-driver"
-                                                   class=" col-form-label">
-                                                تاريخ
-                                                الميلاد
-                                            </label>
-
+                                            <label for="birth-date-driver" class="col-form-label">@localizer["Birthdate"]</label>
                                         </div>
                                         <div class="col-sm-3 col-md-3 col-lg-3">
-                                            <input type="date" class="form-control"
-                                                   id="birth-date-driver" name="birth-date-driver"
-                                                   required>
+                                            <input type="date" class="form-control" id="birth-date-driver" name="birth-date-driver" readonly>
                                             <div class="row requird-field-row">
-                                                <p class="requird-field">هذا الحقل مطلوب</p>
+                                                <p class="requird-field"></p>
                                             </div>
                                         </div>
 
                                         <div class="col-auto" style="margin-bottom: 32px;">
-                                            <button type="button" class="check-btn"
-                                                    data-bs-toggle="modal"
-                                                    href="#checkModalToggle">
-                                                تحقق
-                                            </button>
+                                            <button type="button" class="check-btn" data-bs-toggle="modal" id="DriverCheckBtn">@localizer["Verification"] </button>
                                         </div>
 
                                     </div>
@@ -754,12 +732,11 @@
                                         <div class="col-md-6">
                                             <div class="row " style="justify-content: flex-end;">
                                                 <div class="col-auto personal-data">
-                                                    <p>أحمد عبد الله الجندي</p>
+                                                    <p id="DriverName"></p>
 
                                                 </div>
                                                 <div class="col-auto">
-                                                    <p id="driver-name"> الاسم </p>
-
+                                                    <p> @localizer["Name"] </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -768,56 +745,43 @@
                                             <div class="addational-driver d-flex gap-3">
                                                 <label class="addational-driver-label"
                                                        for="addational-driver">
-                                                    سائق إضافي
+                                                    @localizer["AdditionalDriverr"]
                                                 </label>
-                                                <input class="addational-driver-input"
-                                                       type="checkbox" name='addtional-driver-add'
-                                                       value="checked" id="addational-driver">
-
+                                                <input class="addational-driver-input" type="checkbox" name='addtional-driver-add' value="checked" id="addational-driver">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row row-step3 ">
                                         <div class="col-md-4">
-                                            <div class="row " style="justify-content: flex-start;
-                                                                flex-direction: row-reverse;">
+                                            <div class="row " style="justify-content: flex-start;flex-direction: row-reverse;">
                                                 <div class="col-auto">
-                                                    <p id="driver-nationality"> الجنسية </p>
-
+                                                    <p id="driver-nationality">@localizer["Nationality"]</p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>سعودي</p>
-
+                                                    <p id="DriverNationality"></p>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="row " style="justify-content: flex-start;
                                                                 flex-direction: row-reverse;">
                                                 <div class="col-auto">
-                                                    <p id="driver-type"> الجنس </p>
-
+                                                    <p id="driver-type">@localizer["Gender"] </p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>ذكر</p>
-
+                                                    <p id="DriverGender"></p>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="row " style="justify-content: flex-start;
                                                                 flex-direction: row-reverse;">
                                                 <div class="col-auto">
-                                                    <p id="driver-jop"> المهنة </p>
-
+                                                    <p id="driver-jop"> @localizer["Professions"] </p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>عسكري</p>
-
+                                                    <p id="DriverProffessions"></p>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -827,12 +791,21 @@
                                             <div class="row " style="justify-content: flex-start;
                                                                 flex-direction: row-reverse;">
                                                 <div class="col-auto">
-                                                    <p id="driver-licence-type"> نوع الرخصة </p>
-
+                                                    <p id="driver-licence-type">@localizer["Typeoflicense"]</p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>خصوصي</p>
-
+                                                    <p id="DriverLicenseType"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row " style="justify-content: flex-start;
+                                                                flex-direction: row-reverse;">
+                                                <div class="col-auto">
+                                                    <p id="driver-licence-date"> @localizer["Issuingit"] </p>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <p id="DriverLicenseIssued"></p>
                                                 </div>
 
                                             </div>
@@ -841,28 +814,11 @@
                                             <div class="row " style="justify-content: flex-start;
                                                                 flex-direction: row-reverse;">
                                                 <div class="col-auto">
-                                                    <p id="driver-licence-date"> إصدارها </p>
-
+                                                    <p id="driver-licence-end"> @localizer["Expirationdate"] </p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p> ۲۰۲۲/۲/٥</p>
-
+                                                    <p id="DriverLicenseExpiration"></p>
                                                 </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="row " style="justify-content: flex-start;
-                                                                flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <p id="driver-licence-end"> نهايتها </p>
-
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <p> ۲۰۲٥/۸/۱۰</p>
-
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -870,16 +826,12 @@
                                         <div class="col-md-8">
                                             <div class="row " style="justify-content: flex-start;flex-direction: row-reverse;">
                                                 <div class="col-auto">
-                                                    <p id="additionalDriver-adress">العنوان</p>
-
+                                                    <p id="additionalDriver-adress">@localizer["Address"]</p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>
-                                                        القصيم - حي رقم 123-شارع رقم83223- وحدة 12
+                                                    <p id="DriverAddress">
                                                     </p>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -887,12 +839,12 @@
                                                                 flex-direction: row-reverse;">
                                                 <div class="col-auto p-0">
                                                     <p id="workplace">
-                                                        جهة العمل
+                                                        @localizer["Employer"]
                                                     </p>
 
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p> وزارة الموارد البشرية</p>
+                                                    <p id="DriverEmployer"></p>
 
                                                 </div>
 
@@ -901,25 +853,21 @@
                                     </div>
                                     <div class="row row-step3 ">
                                         <div class="col-auto">
-                                            <p id="driver-email">البريد الإلكتروني</p>
+                                            <p id="driver-email">@localizer["Email"]</p>
 
                                         </div>
                                         <div class="col-auto personal-data">
-                                            <p>ahmed34@gmail.com</p>
-
+                                            <p id="DriverEmail"></p>
                                         </div>
 
                                     </div>
 
                                     <div class="row row-step3">
                                         <div class="col-auto">
-                                            <label for="FormControlTextarea2">الملاحظات</label>
+                                            <label for="FormControlTextarea2">@localizer["reasons"]</label>
                                         </div>
                                         <div class="col-sm-5 col-md-5 col-lg-5">
-
-                                            <textarea class="form-control" id="FormControlTextarea2"
-                                                      maxlength="100" rows="1"
-                                                      name="driver-notes"></textarea>
+                                            <textarea class="form-control" id="FormControlTextarea2" maxlength="100" rows="1" name="driver-notes"></textarea>
                                         </div>
 
                                     </div>
@@ -929,16 +877,11 @@
                                         <img src="~/BranchSys/CreateContract/Group.png" alt="Button Image"
                                              class="next action-button"
                                              style="vertical-align: middle; ">
-                                        <input type="button" name="next" class="next action-button"
-                                               value="التالي" />
+                                        <input type="button" name="next" class="next action-button" value="@localizer["Next"]" />
                                     </div>
                                     <div class="button-card">
-                                        <input type="button" name="previous"
-                                               class="previous action-button-previous"
-                                               value="السابق" />
-                                        <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
-                                             class="previous action-button-previous"
-                                             style="vertical-align: middle; ">
+                                        <input type="button" name="previous" class="previous action-button-previous" value="@localizer["Previous"]" />
+                                        <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image" class="previous action-button-previous" style="vertical-align: middle; ">
                                     </div>
                                 </div>
                             </fieldset>
@@ -2214,6 +2157,9 @@
                     </div>
                 </div>
             </div>
+
+
+            <!-- Renter -->
             <div class="modal fade" id="checkModalToggle" aria-hidden="true"
                  aria-labelledby="checkModalToggleLabel" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
@@ -2254,10 +2200,66 @@
                                 <p style="color: red;" id="WrongCodeMessage"></p>
                                 <button type="button"
                                         class=" check-btn ModalButtons resend">
-                                   @localizer["SendAnotherCode"]
+                                    @localizer["SendAnotherCode"]
                                 </button>
 
                                 <button type="submit" class="  check-btn check">
+                                    @localizer["Submit"]
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+            <!-- Driver -->
+            <div class="modal fade" id="checkModalToggleDriver" aria-hidden="true"
+                 aria-labelledby="checkModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <p class="modal-title w-100">
+                                رمز التحقق تنتهي صلاحيته بعد 01:30
+                            </p>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                        </div>
+                        <div class="modal-body">
+                            <form class="otc" name="one-time-code" id="otc00">
+                                <legend>
+                                    @localizer["PleaseShowMobile"]<p id="MobileNumberDriver"></p>
+                                </legend>
+                                <div>
+                                    <input type="number" pattern="[0-9]*" value=""
+                                           inputtype="numeric" autocomplete="one-time-code" id="otc11"
+                                           name="otc11" required>
+                                    <!-- Autocomplete not to put on other input -->
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc22"
+                                           name="otc22" required>
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc33"
+                                           name="otc33" required>
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc44"
+                                           name="otc44" required>
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc55"
+                                           name="otc55" required>
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc66"
+                                           name="otc66" required>
+                                </div>
+                                <p style="color: red;" id="WrongCodeMessageDriver"></p>
+                                <button type="button"
+                                        class=" check-btn ModalButtons resend">
+                                    @localizer["SendAnotherCode"]
+                                </button>
+
+                                <button type="submit" class="check-btn check">
                                     @localizer["Submit"]
                                 </button>
 
@@ -2401,14 +2403,16 @@
 
     <script>
         var CheckIfRenterIdExist = false;
+        var CheckIfDriverIdExist = false;
         var RenterInformation;
+        var DriverInformation;
         // Select elements with the class "seacrh-icon-col" and hide them Renter Contract Info
         $(document).ready(function () {
             $(".seacrh-icon-col").hide();
             $("#radioDriverRenter").hide();
         });
 
-
+        // For Renter
         async function GetRenterInformation(RenterId) {
             try {
                 var data = await $.ajax({
@@ -2428,7 +2432,7 @@
             }
             return false; // Renter doesn't exist
         }
-
+        //For Renter Modal
         document.addEventListener('DOMContentLoaded', function () {
             var RenterCheckBtn = document.getElementById('RenterCheckBtn');
             var FieldRequiredRenterID = document.getElementById('requird-field_RenterID');
@@ -2441,15 +2445,13 @@
                     if (CheckIfRenterIdExist) {
                         $('#checkModalToggle').modal('show');
                         // get mobile number
-                        $("#MobileNumber").text(RenterInformation.mobileNumber)
+                        $("#MobileNumber").text("+" + RenterInformation.keyCountry + " " + RenterInformation.mobileNumber);
                     } else {
                         $('#requird-field_RenterID').text('@localizer["RenterIdWrong"]');
                     }
                 }
             });
         });
-
-
         // Modal Submit Code from Mobile
         ///////////////////////////////////////////////the-Modal-6-digit-vaildation/////////////////////
         function openThirdPopup() {
@@ -2469,7 +2471,7 @@
                         $("#RenterName").text(RenterInformation.personalEnName);
                         $("#birth-date-step1").val(birthdate);
                     }
-                    else{
+                    else {
                         $("#RenterAddress").text(RenterInformation.postArNameConcenate);
                         $("#RenterEmail").text(RenterInformation.personalEmail);
                         $("#RenterName").text(RenterInformation.personalArName);
@@ -2517,42 +2519,177 @@
         });
 
 
-        var current_fs, next_fs, previous_fs;
-        $(".next").click(function () {
-            var renterName = $("#RenterName").text();
-            current_fs = $(this).closest("fieldset");
-            next_fs = $(this).closest("fieldset").next();
-            console.log(renterName);
-            if ($("#msform").valid()) {
-                if (renterName!=null && renterName!="") {
-                    // Activate next step on progressbar using the index of next_fs
-                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                    // Show the next fieldset
-                    next_fs.show();
-                    // Hide the current fieldset with style
-                    current_fs.hide();
-                }      
-                else{
-                    $('#requird-field_RenterID').text('الرجاء التحقق من رقم الهوية اولا');
+
+
+        // For Driver
+        async function GetDriverInformation(DriverId) {
+            try {
+                var data = await $.ajax({
+                    url: "/BS/Contract/GetRenter",
+                    type: "GET",
+                    data: { RenterId: DriverId },
+                });
+
+                DriverInformation = data;
+                if (data != null) {
+                    return true; // Renter exists
                 }
-                
+            } catch (error) {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["SomethingWrongPleaseCallAdmin"]');
+                return false; // Error occurred or Renter doesn't exist
             }
+            return false; // Renter doesn't exist
+        }
+        //For Renter Modal
+        document.addEventListener('DOMContentLoaded', function () {
+            var DriverCheckBtn = document.getElementById('DriverCheckBtn');
+            DriverCheckBtn.addEventListener('click', async function () {
+                var DriverId = $('#Contract_DriverId').val();
+                var RenterId = $('#Contract_RenterId').val();
+                if ($("#msform").valid()) {
+                    CheckIfDriverIdExist = await GetDriverInformation(DriverId);
+                    console.log(RenterInformation.renterId)
+                    console.log(DriverInformation.renterId)
+                    //Check Renter ID Is Not the same ID Driver
+                    if (CheckIfDriverIdExist) {
+                        if (DriverId != RenterId) {
+                            $('#checkModalToggleDriver').modal('show');
+                            $("#MobileNumberDriver").text("+" + DriverInformation.keyCountry + " " + DriverInformation.mobileNumber);
+                        }
+                        else {
+                            $('#requird_field_DriverID').text('@localizer["DriverIdExistRenter"]');
+                        }
+
+                    } else {
+                        $('#requird_field_DriverID').text('@localizer["RenterIdWrong"]');
+                    }
+                }
+            });
+        });
+        // Modal Submit Code from Mobile
+        ///////////////////////////////////////////////the-Modal-6-digit-vaildation/////////////////////
+        function openThirdPopupDriver() {
+            // Hide the second popup modal
+            $('#checkModalToggleDriver').modal('hide');
+            // Open the third popup modal
+            $('#thirdPopupModal').modal('show');
+            setTimeout(function () {
+                $('#thirdPopupModal').modal('hide');
+                console.log(DriverInformation);
+                setTimeout(function () {
+                    var birthdate = DriverInformation.birthDate.split('T')[0];
+                    if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                        $("#DriverAddress").text(DriverInformation.postEnNameConcenate);
+                        $("#DriverEmail").text(DriverInformation.personalEmail);
+                        $("#DriverName").text(DriverInformation.personalEnName);
+                        $("#DriverNationality").text(DriverInformation.personalEnNationality);
+                        $("#DriverGender").text(DriverInformation.personalEnGender);
+                        $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
+                        $("#DriverLicenseType").text(DriverInformation.licenseEnName);
+                        $("#DriverLicenseIssued").text(DriverInformation.licenseIssuedDate.split('T')[0]);
+                        $("#DriverLicenseExpiration").text(DriverInformation.licenseExpiryDate.split('T')[0]);
+                        $("#DriverEmployer").text(DriverInformation.employerEnName);
+                        $("#birth-date-driver").val(birthdate);
+                    }
+                    else {
+                        $("#DriverAddress").text(DriverInformation.postArNameConcenate);
+                        $("#DriverEmail").text(DriverInformation.personalEmail);
+                        $("#DriverName").text(DriverInformation.personalArName);
+                        $("#DriverProffessions").text(DriverInformation.personalArProfessions);
+                        $("#DriverGender").text(DriverInformation.personalArGender);
+                        $("#DriverNationality").text(DriverInformation.personalArNationality);
+                        $("#DriverLicenseType").text(DriverInformation.licenseArName);
+                        $("#DriverLicenseIssued").text(DriverInformation.licenseIssuedDate.split('T')[0]);
+                        $("#DriverLicenseExpiration").text(DriverInformation.licenseExpiryDate.split('T')[0]);
+                        $("#DriverEmployer").text(DriverInformation.employerArName);
+                        $("#birth-date-driver").val(birthdate);
+                    }
+                }, 1000);
+            }, 1000); // Adjust the duration as needed (in milliseconds)
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('#otc00').addEventListener('submit', function (event) {
+                event.preventDefault();
+                var inputFieldValue = document.getElementById('otc11');
+                var numericValue = parseInt(inputFieldValue.value);
+
+                if (isNaN(numericValue)) {
+                    // Input value is not a number or is empty
+                    console.log('Input value:', numericValue);
+                    return;
+                }
+                // Gather values from input fields
+                var otc1 = $("#otc11").val();
+                var otc2 = $("#otc22").val();
+                var otc3 = $("#otc33").val();
+                var otc4 = $("#otc44").val();
+                var otc5 = $("#otc55").val();
+                var otc6 = $("#otc66").val();
+
+                // Concatenate values into a single string
+                var concatenatedCode = otc1 + otc2 + otc3 + otc4 + otc5 + otc6;
+                console.log('Input value:', concatenatedCode);
+                if (concatenatedCode === '111111') {
+                    openThirdPopupDriver();
+                }
+                else {
+                    $('#WrongCodeMessageDriver').text('الرمز المدخل غير صحيح');
+                }
+                document.getElementById('otc11').value = '';
+                document.getElementById('otc22').value = '';
+                document.getElementById('otc33').value = '';
+                document.getElementById('otc44').value = '';
+                document.getElementById('otc55').value = '';
+                document.getElementById('otc66').value = '';
+            });
         });
 
-        $(".previous").click(function () {
-
+        var current_fs, next_fs, previous_fs;
+        $(".next").click(function () {
+            var currentDate = new Date();
+            var renterName = $("#RenterName").text();
 
             current_fs = $(this).closest("fieldset");
+            next_fs = $(this).closest("fieldset").next();
+
+
+
+            if ($("#msform").valid()) {
+                if (renterName != null && renterName != "") {
+                    //Check if Expiry Id Date is Expired Or not
+                    var ExpiryIdDate = new Date(RenterInformation.expiryIdDate);
+                    var renterAddress = $("#RenterAddress").text();
+                    console.log(ExpiryIdDate);
+                    console.log(renterAddress);
+                    if (ExpiryIdDate < currentDate) {
+                        toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                        toastr.error('@localizer["ExpiryIdDateIsExpired"]');
+                        return;
+                    }
+                    else if (renterAddress == "" || renterAddress == null) {
+                        toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                        toastr.error('@localizer["ExpiryIdDateIsExpired"]');
+                        return;
+                    }
+                    else {
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                        next_fs.show();
+                        current_fs.hide();
+                    }
+                }
+                else {
+                    $('#requird-field_RenterID').text('الرجاء التحقق من رقم الهوية اولا');
+                }
+            }
+        });
+        $(".previous").click(function () {
+            current_fs = $(this).closest("fieldset");
             previous_fs = $(this).closest("fieldset").prev();
-
-            //de-activate current step on progressbar
             $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-
-            //show the previous fieldset
             previous_fs.show();
-
             current_fs.hide();
-
         });
     </script>
 

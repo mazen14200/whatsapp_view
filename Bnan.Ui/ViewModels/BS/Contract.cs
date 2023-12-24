@@ -6,6 +6,8 @@ namespace Bnan.Ui.ViewModels.BS
     {
         [Required(ErrorMessage = "requiredFiled")]
         public string? RenterId { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? DriverId { get; set; }
 
     }
 }

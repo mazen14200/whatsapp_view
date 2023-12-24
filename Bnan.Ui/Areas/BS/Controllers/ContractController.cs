@@ -95,8 +95,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     PostArNameConcenate = RenterPost?.CrMasRenterPostArConcatenate,
                     PostEnNameConcenate = RenterPost?.CrMasRenterPostEnConcatenate,
                     MobileNumber = BnanRenterInfo?.CrMasRenterInformationMobile,
-                    BirthDate = BnanRenterInfo?.CrMasRenterInformationBirthDate
-
+                    BirthDate = BnanRenterInfo?.CrMasRenterInformationBirthDate,
+                    ExpiryIdDate = BnanRenterInfo?.CrMasRenterInformationExpiryIdDate,
+                    KeyCountry = BnanRenterInfo.CrMasRenterInformationCountreyKey
                 };
                 return Json(renterInformationsVM);
             }
@@ -151,7 +152,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         PostArNameConcenate = elmRenterPost.CrElmPostCityArName + "-" + elmRenterPost.CrElmPostRegionsArName + "-" + elmRenterPost.CrElmPostDistrictArName + "-" + elmRenterPost.CrElmPostStreetArName + "-" + elmRenterPost.CrElmPostUnitNo,
                         PostEnNameConcenate = elmRenterPost.CrElmPostCityEnName + "-" + elmRenterPost.CrElmPostRegionsEnName + "-" + elmRenterPost.CrElmPostDistrictEnName + "-" + elmRenterPost.CrElmPostStreetEnName + "-" + elmRenterPost.CrElmPostUnitNo,
                         MobileNumber = elmRenterInfo?.CrElmPersonalMobile,
-                        BirthDate = elmRenterInfo.CrElmPersonalBirthDate
+                        BirthDate = elmRenterInfo.CrElmPersonalBirthDate,
+                        ExpiryIdDate = elmRenterInfo?.CrElmPersonalExpiryIdDate,
+                        KeyCountry=elmRenterInfo.CrElmPersonalCountryKey
                     };
                     return Json(renterInformationsVM);
                 }

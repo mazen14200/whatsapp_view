@@ -409,14 +409,22 @@
 
 
 
-  //taostr 
+  //taostr
   "toastMessage": "You do not have the authority",
+  "toastMessageCreateContract": "Sorry.......There is no authority to create a contract",
   "toastRequiredField": "Please fill in all the required fields.",
   "toastPostion": "toast-top-right",
   "SomethingWrongPleaseCallAdmin": "Something went wrong, please contact the administration",
-  "toastMessageLessorHold": "The company is suspended, please contact the administration",
-  "toastMessageCompanyContractExpired": "Please review the company contracts",
-  "toastMessageUserHold": "The employee is suspended. Please contact the administration",
+  "toastMessageLessorHold": "Sorry....... The company is suspended. A contract cannot be created",
+  "toastMessageCompanyContractExpired": "Sorry....it is not possible to create a contract. Check the company contracts",
+  "toastMessageCompanyDocumentRegister": "The commercial registration has expired and cannot be continued",
+  "toastMessageCompanyDocumentChamber": "The Chamber of Commerce subscription has expired and cannot be continued",
+  "toastMessageCompanyDocumentTransferPermission": "The Transport Authority permit has expired and cannot be continued",
+  "toastMessageCompanyDocumentLicenceMunicipale": "The municipal license has expired and cannot be continued",
+  "toastMessageCompanyDocumentLicenceAddress": "The national title has expired and cannot be continued",
+  "ExpiryIdDateIsExpired": "Expiry ID Date Is Expired",
+  "toastMessageUserHold": "Sorry....... Some services have been reduced. A contract cannot be created",
+  "toastMessageBranchHold": "Sorry....... The branch is suspended. A contract cannot be created",
   "ToastSave": "Saved successfully",
   "ToastEdit": "Edit successfully",
   "ToastDelete": "Deleted successfully",
@@ -1117,5 +1125,14 @@
   "RenterIdWrong": "Sorry, the ID number is incorrect",
   "PleaseShowMobile": "Please enter the verification code sent to your mobile phone",
   "SendAnotherCode": "Send Another Code",
-  "Submit": "Submit"
+  "Submit": "Submit",
+  "Employer": "Employer",
+  "AdditionalDriverr": "Additional Driver",
+  "Nationality": "Nationality",
+  "Gender": "Gender",
+  "Profession": "Profession",
+  "Typeoflicense": "Type of license",
+  "Issuingit": "Issuing it",
+  "Expirationdate": "Expiration date"
+
 }

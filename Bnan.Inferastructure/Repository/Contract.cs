@@ -102,14 +102,18 @@ namespace Bnan.Inferastructure.Repository
                 CityCode = "1700000002";
             }
             //concatenatedAddress
-            var buildingInfoAr = $"مبنى({crElmPost.CrElmPostBuildingNo})";
-            var unitInfoAr = $"وحدة({crElmPost.CrElmPostUnitNo})";
-            var buildingInfoEn = $"Building ({crElmPost.CrElmPostBuildingNo})";
-            var unitInfoEn = $"Unit ({crElmPost.CrElmPostUnitNo})";
-            var concatenatedArAddress = string.Join("-", crElmPost.CrElmPostRegionsArName,crElmPost.CrElmPostCityArName, crElmPost.CrElmPostDistrictArName,
-                                                        crElmPost.CrElmPostStreetArName, buildingInfoAr, unitInfoAr);
-            var concatenatedEnAddress = string.Join("-", crElmPost.CrElmPostRegionsEnName, crElmPost.CrElmPostCityEnName, crElmPost.CrElmPostDistrictEnName,
-                                                        crElmPost.CrElmPostStreetEnName, buildingInfoEn, unitInfoEn);
+            var buildingInfoAr = $"مبنى ({crElmPost.CrElmPostBuildingNo}) ";
+            var unitInfoAr = $"وحدة ({crElmPost.CrElmPostUnitNo}) ";
+            var zipCodeAr = $"الرمز البريدي ({crElmPost.CrElmPostZipCode}) ";
+            var additionalNoAr = $"الرقم الاضافي ({crElmPost.CrElmPostAdditionalNo}) ";
+            var buildingInfoEn = $"Building ({crElmPost.CrElmPostBuildingNo}) ";
+            var unitInfoEn = $"Unit ({crElmPost.CrElmPostUnitNo}) ";
+            var zipCodeEn = $"ZipCode ({crElmPost.CrElmPostZipCode}) ";
+            var additionalNoEn = $"additionalNo ({crElmPost.CrElmPostAdditionalNo}) ";
+            var concatenatedArAddress = string.Join(" - ", crElmPost.CrElmPostRegionsArName,crElmPost.CrElmPostCityArName, crElmPost.CrElmPostDistrictArName,
+                                                        crElmPost.CrElmPostStreetArName, buildingInfoAr, unitInfoAr,zipCodeAr,additionalNoAr);
+            var concatenatedEnAddress = string.Join(" - ", crElmPost.CrElmPostRegionsEnName, crElmPost.CrElmPostCityEnName, crElmPost.CrElmPostDistrictEnName,
+                                                        crElmPost.CrElmPostStreetEnName, buildingInfoEn, unitInfoEn,zipCodeEn,additionalNoEn);
 
             CrMasRenterPost crMasRenterPost = new CrMasRenterPost
             {
