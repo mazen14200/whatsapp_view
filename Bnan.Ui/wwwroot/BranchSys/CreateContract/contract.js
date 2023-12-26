@@ -145,23 +145,23 @@ in1.addEventListener('input', splitNumber);
 
 
 // // //////////////////////choose-adriver-display////////////////
-document.addEventListener("DOMContentLoaded", function () {
-	var driverRadio1 = document.getElementById("driver1");
-	var driverRadio2 = document.getElementById("driver2");
-	var dropdownContainer = document.getElementById("dropdown-container");
+//document.addEventListener("DOMContentLoaded", function () {
+//	var driverRadio1 = document.getElementById("RenterIsdriver");
+//	var driverRadio2 = document.getElementById("PrivateDriver");
+//	var dropdownContainer = document.getElementById("dropdown-container");
 
-	driverRadio1.addEventListener("click", function () {
-		dropdownContainer.style.display = "none";
-	});
+//	driverRadio1.addEventListener("click", function () {
+//		dropdownContainer.style.display = "none";
+//	});
 
-	driverRadio2.addEventListener("click", function () {
-		if (this.checked) {
-			dropdownContainer.style.display = "block";
-		} else {
-			dropdownContainer.style.display = "none";
-		}
-	});
-});
+//	driverRadio2.addEventListener("click", function () {
+//		if (this.checked) {
+//			dropdownContainer.style.display = "block";
+//		} else {
+//			dropdownContainer.style.display = "none";
+//		}
+//	});
+//});
 
 //////////////////////////serch-icon-list-for Tenant////////////////////////
 const image = document.getElementById('hover-image');

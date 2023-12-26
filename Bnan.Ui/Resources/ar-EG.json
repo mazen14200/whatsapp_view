@@ -333,6 +333,7 @@
   "requiredNoLengthFiled": "هذا الحقل يلازم {0} ارقام",
   "requiredNoLengthFiled15": "هذا الحقل يلازم 15 ارقام",
   "requiredNoLengthFiled10": "هذا الحقل يلازم 10 ارقام ويبدأ برقم 7",
+  "NotStartWith7": "هذا الحقل يلازم 10 ارقام و لا يمكن ان يبدأ برقم 7",
   "requiredNoStartWithFiled7": "هذا الحقل مطلوب و يبدء برقم7",
   "requiredNoStartWithFiled15": "هذا الحقل مطلوب و يبدء برقم15",
   "requiredNoStartWithFiled1": "هذا الحقل مطلوب و يبدء برقم1",
@@ -1129,5 +1130,9 @@
   "Typeoflicense": "نوع الرخصة",
   "Issuingit": "إصدارها",
   "Expirationdate": "نهايتها",
-  "DriverIdExistRenter": "رقم الهوية للمستأجر لا يمكن تكراره"
+  "DriverIdExistRenter": "رقم الهوية للمستأجر لا يمكن تكراره",
+  "IdIsExpire": "تاريخ صلاحية الهوية منتهي",
+  "IdIsExpriredAndYouNotAuth": "ليس لديك صلاحية تجاوز انتهاء الهوية",
+  "AddressIsExpriredAndYouNotAuth": "ليس لديك صلاحية تجاوز العنوان",
+  "PleaseCheckYourID": "الرجاء التحقق من رقم الهوية اولا"
 }

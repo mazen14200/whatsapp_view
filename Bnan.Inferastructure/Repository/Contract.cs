@@ -77,9 +77,9 @@ namespace Bnan.Inferastructure.Repository
                 CrMasRenterInformationProfession = professionsCode,
                 CrMasRenterInformationStatus = "A",
                 CrMasRenterInformationIdtype = typeID,
-                CrMasRenterInformationDrivingLicenseNo = crElmLicense.CrElmLicenseNo,
-                CrMasRenterInformationDrivingLicenseDate = crElmLicense.CrElmLicenseIssuedDate,
-                CrMasRenterInformationExpiryDrivingLicenseDate = crElmLicense.CrElmLicenseExpiryDate,
+                CrMasRenterInformationDrivingLicenseNo = crElmLicense?.CrElmLicenseNo,
+                CrMasRenterInformationDrivingLicenseDate = crElmLicense?.CrElmLicenseIssuedDate,
+                CrMasRenterInformationExpiryDrivingLicenseDate = crElmLicense?.CrElmLicenseExpiryDate,
                 CrMasRenterInformationSignature = null,
                 CrMasRenterInformationTaxNo = null,
                 CrMasRenterInformationReasons = null
@@ -89,31 +89,46 @@ namespace Bnan.Inferastructure.Repository
         }
         public async Task<CrMasRenterPost> AddRenterFromElmToMasRenterPost(string RenterID, CrElmPost crElmPost)
         {
-            var RegionCode = "";
-            var CityCode = "";
             if (crElmPost != null)
             {
-                RegionCode = GetRegion(crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostRegionsEnName);
-                CityCode = GetCity(crElmPost.CrElmPostCityArName, crElmPost.CrElmPostCityEnName, RegionCode);
-            }
-            else
-            {
-                RegionCode = "11";
-                CityCode = "1700000002";
-            }
-            //concatenatedAddress
-            var buildingInfoAr = $"مبنى ({crElmPost.CrElmPostBuildingNo}) ";
-            var unitInfoAr = $"وحدة ({crElmPost.CrElmPostUnitNo}) ";
-            var zipCodeAr = $"الرمز البريدي ({crElmPost.CrElmPostZipCode}) ";
-            var additionalNoAr = $"الرقم الاضافي ({crElmPost.CrElmPostAdditionalNo}) ";
-            var buildingInfoEn = $"Building ({crElmPost.CrElmPostBuildingNo}) ";
-            var unitInfoEn = $"Unit ({crElmPost.CrElmPostUnitNo}) ";
-            var zipCodeEn = $"ZipCode ({crElmPost.CrElmPostZipCode}) ";
-            var additionalNoEn = $"additionalNo ({crElmPost.CrElmPostAdditionalNo}) ";
-            var concatenatedArAddress = string.Join(" - ", crElmPost.CrElmPostRegionsArName,crElmPost.CrElmPostCityArName, crElmPost.CrElmPostDistrictArName,
-                                                        crElmPost.CrElmPostStreetArName, buildingInfoAr, unitInfoAr,zipCodeAr,additionalNoAr);
-            var concatenatedEnAddress = string.Join(" - ", crElmPost.CrElmPostRegionsEnName, crElmPost.CrElmPostCityEnName, crElmPost.CrElmPostDistrictEnName,
-                                                        crElmPost.CrElmPostStreetEnName, buildingInfoEn, unitInfoEn,zipCodeEn,additionalNoEn);
+            var RegionCode = "";
+            var CityCode = "";
+            var concatenatedArAddress = "";
+            var concatenatedEnAddress = "";
+            var concatenatedArAddressShort = "";
+            var concatenatedEnAddressShort = "";
+            var buildingInfoAr = "";
+            var unitInfoAr = "";
+            var zipCodeAr = "";
+            var additionalNoAr = "";
+            var buildingInfoEn = "";
+            var unitInfoEn = "";
+            var zipCodeEn = "";
+            var additionalNoEn = "";
+
+
+            RegionCode = GetRegion(crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostRegionsEnName);
+            CityCode = GetCity(crElmPost.CrElmPostCityArName, crElmPost.CrElmPostCityEnName, RegionCode);
+            buildingInfoAr = $"مبنى ({crElmPost.CrElmPostBuildingNo}) ";
+            unitInfoAr = $"وحدة ({crElmPost.CrElmPostUnitNo}) ";
+            zipCodeAr = $"الرمز البريدي ({crElmPost.CrElmPostZipCode}) ";
+            additionalNoAr = $"الرقم الاضافي ({crElmPost.CrElmPostAdditionalNo}) ";
+            buildingInfoEn = $"Building ({crElmPost.CrElmPostBuildingNo}) ";
+            unitInfoEn = $"Unit ({crElmPost.CrElmPostUnitNo}) ";
+            zipCodeEn = $"ZipCode ({crElmPost.CrElmPostZipCode}) ";
+            additionalNoEn = $"additionalNo ({crElmPost.CrElmPostAdditionalNo}) ";
+
+            concatenatedArAddress = string.Join(" - ", crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostCityArName, crElmPost.CrElmPostDistrictArName,
+                                                       crElmPost.CrElmPostStreetArName, buildingInfoAr, unitInfoAr, zipCodeAr, additionalNoAr);
+
+            concatenatedEnAddress = string.Join(" - ", crElmPost.CrElmPostRegionsEnName, crElmPost.CrElmPostCityEnName, crElmPost.CrElmPostDistrictEnName,
+                                                       crElmPost.CrElmPostStreetEnName, buildingInfoEn, unitInfoEn, zipCodeEn, additionalNoEn);
+
+            concatenatedArAddressShort = string.Join(" - ", crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostCityArName, crElmPost.CrElmPostDistrictArName,
+                                                       crElmPost.CrElmPostStreetArName);
+
+            concatenatedEnAddressShort = string.Join(" - ", crElmPost.CrElmPostRegionsEnName, crElmPost.CrElmPostCityEnName, crElmPost.CrElmPostDistrictEnName,
+                                                       crElmPost.CrElmPostStreetEnName);
 
             CrMasRenterPost crMasRenterPost = new CrMasRenterPost
             {
@@ -130,28 +145,42 @@ namespace Bnan.Inferastructure.Repository
                 CrMasRenterPostBuilding = crElmPost.CrElmPostBuildingNo.ToString(),
                 CrMasRenterPostUnitNo = crElmPost.CrElmPostUnitNo,
                 CrMasRenterPostArConcatenate = concatenatedArAddress,
-                CrMasRenterPostArShortConcatenate = crElmPost.CrElmPostRegionsArName + "-" + crElmPost.CrElmPostCityArName + "-" + crElmPost.CrElmPostDistrictArName + "-" + crElmPost.CrElmPostStreetArName,
+                CrMasRenterPostArShortConcatenate = concatenatedArAddressShort,
                 CrMasRenterPostEnConcatenate = concatenatedEnAddress,
-                CrMasRenterPostEnShortConcatenate = crElmPost.CrElmPostRegionsEnName + "-" + crElmPost.CrElmPostCityEnName + "-" + crElmPost.CrElmPostDistrictEnName + "-" + crElmPost.CrElmPostStreetEnName,
+                CrMasRenterPostEnShortConcatenate = concatenatedEnAddressShort,
                 CrMasRenterPostStatus = Status.Active,
                 CrMasRenterPostUpDatePost = DateTime.Now.Date,
                 CrMasRenterPostReasons = ""
             };
             if (await _unitOfWork.CrMasRenterPost.AddAsync(crMasRenterPost) == null) return null;
             return crMasRenterPost;
+            }
+            return null;
         }
         public async Task<CrCasRenterLessor> AddRenterFromElmToCasRenterLessor(string LessorCode, CrMasRenterInformation crMasRenterInformation, CrMasRenterPost crMasRenterPost)
         {
             var ageCode = "";
+            var RegionCode = "";
+            var CityCode = "";
+            if (crMasRenterPost != null)
+            {
+                RegionCode = crMasRenterPost.CrMasRenterPostRegions;
+                CityCode = crMasRenterPost.CrMasRenterPostCity;
+            }
+            else
+            {
+                RegionCode = "11";
+                CityCode = "1700000002";
+            }
+           
             if (crMasRenterInformation != null) ageCode = GetAge(crMasRenterInformation.CrMasRenterInformationBirthDate.ToString());
-
             CrCasRenterLessor casRenterLessor = new CrCasRenterLessor
             {
                 CrCasRenterLessorId = crMasRenterInformation.CrMasRenterInformationId,
                 CrCasRenterLessorCode = LessorCode,
-                CrCasRenterLessorSector = crMasRenterInformation.CrMasRenterInformationSector,
-                CrCasRenterLessorCopyId = crMasRenterInformation.CrMasRenterInformationCopyId,
-                CrCasRenterLessorIdtrype = crMasRenterInformation.CrMasRenterInformationIdtype,
+                CrCasRenterLessorSector = crMasRenterInformation?.CrMasRenterInformationSector,
+                CrCasRenterLessorCopyId = crMasRenterInformation?.CrMasRenterInformationCopyId,
+                CrCasRenterLessorIdtrype = crMasRenterInformation?.CrMasRenterInformationIdtype,
                 CrCasRenterLessorMembership = Membership.Mutual, // This The first memeber ship for every new renter 1600000006
                 CrCasRenterLessorDateFirstInteraction = DateTime.Now.Date,
                 CrCasRenterLessorDateLastContractual = null,
@@ -163,11 +192,11 @@ namespace Bnan.Inferastructure.Repository
                 CrCasRenterLessorEvaluationTotal = 0,
                 CrCasRenterLessorEvaluationValue = 0,
                 CrCasRenterLessorBalance = 0,
-                CrCasRenterLessorStatisticsNationalities = crMasRenterInformation.CrMasRenterInformationNationality,
-                CrCasRenterLessorStatisticsGender = crMasRenterInformation.CrMasRenterInformationGender,
-                CrCasRenterLessorStatisticsJobs = crMasRenterInformation.CrMasRenterInformationProfession,
-                CrCasRenterLessorStatisticsRegions = crMasRenterPost.CrMasRenterPostRegions,
-                CrCasRenterLessorStatisticsCity = crMasRenterPost.CrMasRenterPostCity,
+                CrCasRenterLessorStatisticsNationalities = crMasRenterInformation?.CrMasRenterInformationNationality,
+                CrCasRenterLessorStatisticsGender = crMasRenterInformation?.CrMasRenterInformationGender,
+                CrCasRenterLessorStatisticsJobs = crMasRenterInformation?.CrMasRenterInformationProfession,
+                CrCasRenterLessorStatisticsRegions = RegionCode,
+                CrCasRenterLessorStatisticsCity = CityCode,
                 CrCasRenterLessorStatisticsAge = ageCode,
                 CrCasRenterLessorStatisticsTraded = "1",
                 CrCasRenterLessorDealingMechanism = "10", //I Dont Know why put this 10 

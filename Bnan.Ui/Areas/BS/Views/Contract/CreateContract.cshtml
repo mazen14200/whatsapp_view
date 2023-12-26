@@ -1,4 +1,5 @@
-﻿@using Bnan.Ui.ViewModels.BS;
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
 @model BSLayoutVM
 @inject IViewLocalizer localizer
 @{
@@ -58,7 +59,7 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-3 col-md-3 col-lg-3">
-                                            <input type="text" class="form-control" style="margin-left: -4px;" asp-for="Contract.RenterId" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="12">
+                                            <input type="text" class="form-control" style="margin-left: -4px;" asp-for="Contract.RenterId" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="10">
                                             <div class="row requird-field-row">
                                                 <span class="requird-field" id="requird-field_RenterID" asp-validation-for="@Model.Contract.RenterId"></span>
                                             </div>
@@ -172,7 +173,7 @@
                                             <input type="date" class="form-control"
                                                    id="birth-date-step1" name="birth-date-step1" readonly>
                                             <div class="row requird-field-row">
-                                                <p class="requird-field"></p>
+                                                <p class="requird-field" id="requird_field_Birthdate"></p>
                                             </div>
                                         </div>
 
@@ -181,33 +182,44 @@
                                                 @localizer["Verification"]
                                             </button>
                                         </div>
+
                                         <div class="col-sm-auto col-md-auto col-lg-auto radio-style" id="radioDriverRenter">
-                                            <div class="form-check">
-                                                <label class="form-check-label" for="driver1">
+                                            <div class="form-check" id="RenterIsdriverDiv">
+                                                <label class="form-check-label" for="RenterIsdriver">
                                                     @localizer["TheRenterIsAdriver"]
                                                 </label>
-                                                <input class="form-check-input" type="radio"
-                                                       name="driver" id="driver1"
-                                                       value="tenant-is-driver">
+                                                <input class="form-check-input" type="checkbox" name="RenterIsdriver" id="RenterIsdriver">
                                             </div>
-                                            <div class="form-check form-check2">
-                                                <label class="form-check-label" for="driver2">
+                                            <div class="form-check form-check2" id="PrivateDriverDiv">
+                                                <label class="form-check-label" for="PrivateDriver">
                                                     @localizer["PrivateDriver"]
                                                 </label>
-                                                <input class="form-check-input" type="radio"
-                                                       name="driver" id="driver2"
-                                                       value="another-driver">
+                                                <input class="form-check-input" type="checkbox" name="PrivateDriver" id="PrivateDriver">
                                             </div>
                                         </div>
-                                        <div id="dropdown-container" class="col-auto"
-                                             style="display:none;">
+
+                                        <div id="dropdown-container" class="col-auto" style="display:none">
                                             <div class="offset">
-                                                <select class="form-select" id="driver-dropdown">
-                                                    <option selected disabled>@localizer["ChooseYourDriver"]</option>
-                                                    <option value="سائق1 ">سائق 1</option>
-                                                    <option value="2سائق">سائق 2</option>
-                                                    <option value="3سائق">سائق 3</option>
-                                                </select>
+                                                @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+                                                {
+                                                    <select class="form-select" id="driver-dropdown">
+                                                        <option selected disabled>@localizer["ChooseYourDriver"]</option>
+                                                        @foreach (var driver in Model.Drivers)
+                                                        {
+                                                            <option value="@driver.CrCasRenterPrivateDriverInformationId">@driver.CrCasRenterPrivateDriverInformationEnName</option>
+                                                        }
+                                                    </select>
+                                                }
+                                                else
+                                                {
+                                                    <select class="form-select text-right" id="driver-dropdown">
+                                                        <option selected disabled>@localizer["ChooseYourDriver"]</option>
+                                                        @foreach (var driver in Model.Drivers)
+                                                        {
+                                                            <option value="@driver.CrCasRenterPrivateDriverInformationId">@driver.CrCasRenterPrivateDriverInformationArName</option>
+                                                        }
+                                                    </select>
+                                                }
                                             </div>
                                         </div>
 
@@ -609,7 +621,7 @@
                                             <label for="national-number-driver" class="col-form-label">@localizer["RenterId"]</label>
                                         </div>
                                         <div class="col-sm-3 col-md-3 col-lg-3">
-                                            <input type="tel" class="form-control" asp-for="Contract.DriverId" style="margin-left: -4px;" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="12" required>
+                                            <input type="tel" class="form-control" asp-for="Contract.DriverId" style="margin-left: -4px;" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="10" required>
                                             <div class="row requird-field-row">
                                                 <span class="requird-field" id="requird_field_DriverID" asp-validation-for="@Model.Contract.DriverId"></span>
                                             </div>
@@ -719,7 +731,7 @@
                                         <div class="col-sm-3 col-md-3 col-lg-3">
                                             <input type="date" class="form-control" id="birth-date-driver" name="birth-date-driver" readonly>
                                             <div class="row requird-field-row">
-                                                <p class="requird-field"></p>
+                                                <p class="requird-field" id="requird_field_Birthdate_driver"></p>
                                             </div>
                                         </div>
 
@@ -892,17 +904,13 @@
                                         <div class="col-auto">
                                             <label for="national-number-additionalDriver"
                                                    class="col-form-label">
-                                                رقم
-                                                الهوية
+                                                @localizer["RenterId"]
                                             </label>
                                         </div>
                                         <div class="col-sm-3 col-md-3 col-lg-3">
-                                            <input type="tel" class="form-control"
-                                                   id="national-number-additionalDriver"
-                                                   style="margin-left: -4px;"
-                                                   name="national-number-additionalDriver" required>
+                                            <input type="tel" class="form-control" style="margin-left: -4px;" required asp-for="Contract.AdditionalDriverId" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="10">
                                             <div class="row requird-field-row">
-                                                <p class="requird-field">هذا الحقل مطلوب</p>
+                                                <span class="requird-field" id="requird_field_AdditionalDriverId" asp-validation-for="@Model.Contract.AdditionalDriverId"></span>
                                             </div>
                                         </div>
                                         <div class="col-auto seacrh-icon-col">
@@ -1007,53 +1015,43 @@
                                         <div class="col-auto" style="padding-bottom: 30px;">
                                             <label for="birth-date-additionalDriver"
                                                    class=" col-form-label">
-                                                تاريخ
-                                                الميلاد
+                                                @localizer["Birthdate"]
                                             </label>
 
                                         </div>
                                         <div class="col-sm-3 col-md-3 col-lg-3">
                                             <input type="date" class="form-control"
                                                    id="birth-date-additionalDriver"
-                                                   name="birth-date-additionalDriver" required>
+                                                   name="birth-date-additionalDriver" readonly>
                                             <div class="row requird-field-row">
-                                                <p class="requird-field">هذا الحقل مطلوب</p>
+                                                <p class="requird_field_BirthDate_AddDriver"></p>
                                             </div>
                                         </div>
 
                                         <div class="col-auto" style="margin-bottom: 32px;">
-                                            <button type="button" class="check-btn"
-                                                    data-bs-toggle="modal"
-                                                    href="#checkModalToggle">
-                                                تحقق
-                                            </button>
+                                            <button type="button" class="check-btn" data-bs-toggle="modal" id="AddDriverCheckBtn">@localizer["Verification"]</button>
                                         </div>
-
                                     </div>
                                     <div class="row row-step4">
                                         <div class="col-auto">
-                                            <p id="additionalDriver-name"> الاسم </p>
+                                            <p id="additionalDriver-name">@localizer["Name"] </p>
 
                                         </div>
                                         <div class="col-auto personal-data">
-                                            <p>أحمد عبد الله الجندي</p>
-
+                                            <p id="AddDriverName"></p>
                                         </div>
-
-
                                     </div>
                                     <div class="row row-step4 ">
                                         <div class="col-md-4">
                                             <div class="row " style="justify-content: flex-start;flex-direction: row-reverse;">
                                                 <div class="col-auto">
                                                     <p id="additionalDriver-nationality">
-                                                        الجنسية
+                                                        @localizer["Nationality"]
                                                     </p>
 
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>سعودي</p>
-
+                                                    <p id="AddDriverNationality"></p>
                                                 </div>
 
                                             </div>
@@ -1061,27 +1059,21 @@
                                         <div class="col-md-4">
                                             <div class="row " style="justify-content: flex-start;flex-direction: row-reverse;">
                                                 <div class="col-auto">
-                                                    <p id="additionalDriver-type"> الجنس </p>
-
+                                                    <p id="additionalDriver-type">@localizer["Gender"]</p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>ذكر</p>
-
+                                                    <p id="AddDriverGender"></p>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="row " style="justify-content: flex-start;flex-direction: row-reverse;">
                                                 <div class="col-auto">
-                                                    <p id="additionalDriver-jop"> المهنة </p>
-
+                                                    <p id="additionalDriver-jop">@localizer["Professions"]</p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>عسكري</p>
-
+                                                    <p id="AddDriverProffessions"></p>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -1090,47 +1082,36 @@
                                         <div class="col-md-4">
                                             <div class="row " style="justify-content: flex-start;flex-direction: row-reverse;">
                                                 <div class="col-auto">
-                                                    <p id="additionalDriver-licence-type">
-                                                        نوع
-                                                        الرخصة
-                                                    </p>
-
+                                                    <p id="additionalDriver-licence-type">@localizer["Typeoflicense"]</p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>خصوصي</p>
-
+                                                    <p id="AddDriverLicenseType"></p>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="row " style="justify-content: flex-start;flex-direction: row-reverse;">
                                                 <div class="col-auto">
                                                     <p id="additionalDriver-licence-date">
-                                                        إصدارها
+                                                        @localizer["Issuingit"]
                                                     </p>
 
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p> ۲۰۲۲/۲/٥</p>
-
+                                                    <p id="AddDriverLicenseIssued"></p>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="row " style="justify-content: flex-start;flex-direction: row-reverse;">
                                                 <div class="col-auto">
                                                     <p id="additionalDriver-licence-end">
-                                                        نهايتها
+                                                        @localizer["Expirationdate"]
                                                     </p>
-
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p> ۲۰۲٥/۸/۱۰</p>
-
+                                                    <p id="AddDriverLicenseExpiration"></p>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -1138,58 +1119,41 @@
                                         <div class="col-md-8">
                                             <div class="row " style="justify-content: flex-start;flex-direction: row-reverse;">
                                                 <div class="col-auto">
-                                                    <p id="additionalDriver-adress">العنوان</p>
-
+                                                    <p id="additionalDriver-adress">@localizer["Address"]</p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>
-                                                        القصيم - حي رقم 123-شارع رقم83223- وحدة 12
-                                                    </p>
+                                                    <p id="AddDriverAddress"></p>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="row " style="justify-content: flex-start;
-                                                                flex-direction: row-reverse;">
+                                            <div class="row " style="justify-content: flex-start; flex-direction: row-reverse;">
                                                 <div class="col-auto p-0">
-                                                    <p id="workplace">
-                                                        جهة العمل
-                                                    </p>
-
+                                                    <p id="workplace">@localizer["Employer"]</p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p> وزارة الموارد البشرية</p>
-
+                                                    <p id="AddDriverEmployer"></p>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row row-step4 ">
                                         <div class="col-auto">
-                                            <p id="additionalDriver-email">البريد الإلكتروني</p>
+                                            <p id="additionalDriver-email">@localizer["Email"]</p>
 
                                         </div>
                                         <div class="col-auto personal-data">
-                                            <p>ahmed34@gmail.com</p>
+                                            <p id="AddDriverEmail"></p>
 
                                         </div>
-
                                     </div>
-
                                     <div class="row row-step4 ">
                                         <div class="col-auto">
-                                            <label for="FormControlTextarea3">الملاحظات</label>
+                                            <label for="FormControlTextarea3">@localizer["reasons"]</label>
                                         </div>
                                         <div class="col-sm-5 col-md-5 col-lg-5">
-
-                                            <textarea class="form-control" id="FormControlTextarea3"
-                                                      maxlength="100" rows="1"
-                                                      name="addational-driver-notes"></textarea>
+                                            <textarea class="form-control" id="FormControlTextarea3" maxlength="100" rows="1" name="addational-driver-notes"></textarea>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="row button-row">
@@ -1198,12 +1162,12 @@
                                              class="next action-button"
                                              style="vertical-align: middle; ">
                                         <input type="button" name="next" class="next action-button"
-                                               value="التالي" />
+                                               value="@localizer["Next"]" />
                                     </div>
                                     <div class="button-card">
                                         <input type="button" name="previous"
                                                class="previous action-button-previous"
-                                               value="السابق" />
+                                               value="@localizer["Previous"]" />
                                         <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
                                              class="previous action-button-previous"
                                              style="vertical-align: middle; ">
@@ -2271,6 +2235,62 @@
                 </div>
             </div>
             <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+            <!--Additional Driver -->
+            <div class="modal fade" id="checkModalToggleAddDriver" aria-hidden="true"
+                 aria-labelledby="checkModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <p class="modal-title w-100">
+                                رمز التحقق تنتهي صلاحيته بعد 01:30
+                            </p>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                        </div>
+                        <div class="modal-body">
+                            <form class="otc" name="one-time-code" id="otc000">
+                                <legend>
+                                    @localizer["PleaseShowMobile"]<p id="MobileNumberAddDriver"></p>
+                                </legend>
+                                <div>
+                                    <input type="number" pattern="[0-9]*" value=""
+                                           inputtype="numeric" autocomplete="one-time-code" id="otc111"
+                                           name="otc111" required>
+                                    <!-- Autocomplete not to put on other input -->
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc222"
+                                           name="otc222" required>
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc333"
+                                           name="otc333" required>
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc444"
+                                           name="otc444" required>
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc555"
+                                           name="otc555" required>
+                                    <input type="number" pattern="[0-9]*" min="0" max="9"
+                                           maxlength="1" value="" inputtype="numeric" id="otc666"
+                                           name="otc666" required>
+                                </div>
+                                <p style="color: red;" id="WrongCodeMessageAddDriver"></p>
+                                <button type="button"
+                                        class=" check-btn ModalButtons resend">
+                                    @localizer["SendAnotherCode"]
+                                </button>
+
+                                <button type="submit" class="check-btn check">
+                                    @localizer["Submit"]
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
             <div class="modal fade" id="thirdPopupModal" tabindex="-1" data-bs-backdrop="static"
                  aria-labelledby="thirdPopupModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
@@ -2400,17 +2420,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="~/BranchSys/CreateContract/contract.js"></script>
     <script src="~/BranchSys/CreateContract/contract2.js"></script>
+    <script>
 
+
+        // //////////////////////choose-adriver-display////////////////
+        document.addEventListener("DOMContentLoaded", function () {
+            $(".seacrh-icon-col").hide();
+            $("#PrivateDriverDiv").hide();
+            $("#RenterIsdriverDiv").hide();
+            // Check if have driver or not
+            var driverRadio1 = document.getElementById("RenterIsdriver");
+            var driverRadio2 = document.getElementById("PrivateDriver");
+            var dropdownContainer = document.getElementById("dropdown-container");
+
+            driverRadio1.addEventListener("click", function () {
+                dropdownContainer.style.display = "none";
+                driverRadio2.checked = false;
+            });
+
+            driverRadio2.addEventListener("click", function () {
+                if (this.checked) {
+                    dropdownContainer.style.display = "block";
+                    driverRadio1.checked = false;
+                } else {
+                    dropdownContainer.style.display = "none";
+                }
+            });
+        });
+
+    </script>
     <script>
         var CheckIfRenterIdExist = false;
         var CheckIfDriverIdExist = false;
+        var CheckIfAddDriverIdExist = false;
         var RenterInformation;
         var DriverInformation;
-        // Select elements with the class "seacrh-icon-col" and hide them Renter Contract Info
-        $(document).ready(function () {
-            $(".seacrh-icon-col").hide();
-            $("#radioDriverRenter").hide();
-        });
+        var AddDriverInformation;
+
+
 
         // For Renter
         async function GetRenterInformation(RenterId) {
@@ -2432,14 +2479,40 @@
             }
             return false; // Renter doesn't exist
         }
+        //Restart All informations
+        $(document).ready(function () {
+            var initialRenterID = $('#Contract_RenterId').val();
+            $('#Contract_RenterId').on('change', function () {
+                // Check if the value has changed
+                if ($(this).val() !== initialRenterID) {
+                    // Clear previous data and style
+                    $("#RenterAddress").text('').css("color", "");
+                    $("#RenterEmail").text('').css("color", "");
+                    $("#requird_field_Birthdate").text('').css("color", "");
+                    $("#RenterName").text('');
+                    $("#birth-date-step1").val('');
+                    document.getElementById("PrivateDriver").checked = false;
+                    document.getElementById("RenterIsdriver").checked = false;
+                    document.getElementById("dropdown-container").style.display = "none";
+                    $("#PrivateDriverDiv").hide();
+                    $("#RenterIsdriverDiv").hide();
+                    var CheckIfRenterIdExist = false;
+                    var CheckIfDriverIdExist = false;
+                    var RenterInformation = null;
+                    var DriverInformation = null;
+                    // Update the initial value of RenterID
+                    initialRenterID = $(this).val();
+                }
+            });
+        });
         //For Renter Modal
         document.addEventListener('DOMContentLoaded', function () {
             var RenterCheckBtn = document.getElementById('RenterCheckBtn');
             var FieldRequiredRenterID = document.getElementById('requird-field_RenterID');
-
+            console.log("xxxxxxxx")
             RenterCheckBtn.addEventListener('click', async function () {
                 var RenterID = $('#Contract_RenterId').val();
-
+                console.log("xxxxxxxx")
                 if ($("#msform").valid()) {
                     CheckIfRenterIdExist = await GetRenterInformation(RenterID);
                     if (CheckIfRenterIdExist) {
@@ -2455,32 +2528,79 @@
         // Modal Submit Code from Mobile
         ///////////////////////////////////////////////the-Modal-6-digit-vaildation/////////////////////
         function openThirdPopup() {
-            // Hide the second popup modal
+            // Clear previous data and style
+            $("#RenterAddress").text('').css("color", "");
+            $("#RenterEmail").text('').css("color", "");
+            $("#requird_field_Birthdate").text('').css("color", "");
+            $("#RenterName").text('');
+            $("#birth-date-step1").val('');
+            ////////////////////////////////
             $('#checkModalToggle').modal('hide');
-            // Open the third popup modal
             $('#thirdPopupModal').modal('show');
             setTimeout(function () {
                 $('#thirdPopupModal').modal('hide');
                 console.log(RenterInformation);
-                // Set the style to display: block after 1000 milliseconds
+                var firstCharacterFromID = RenterInformation.renterID.charAt(0);
+                var currentDate = new Date();
+                var ExpiryIdDate = new Date(RenterInformation.expiryIdDate);
+                var driverCount = "@Model.Drivers.Count()";
+
                 setTimeout(function () {
                     var birthdate = RenterInformation.birthDate.split('T')[0];
                     if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
-                        $("#RenterAddress").text(RenterInformation.postEnNameConcenate);
-                        $("#RenterEmail").text(RenterInformation.personalEmail);
+                        if (RenterInformation.postEnNameConcenate != "" && RenterInformation.postEnNameConcenate != null && RenterInformation.postEnNameConcenate != undefined) {
+                            $("#RenterAddress").text(RenterInformation.postEnNameConcenate);
+                        }
+                        else {
+                            $("#RenterAddress").text('@localizer["notfound"]').css("color", "red");
+                        }
+                        if (RenterInformation.personalEmail != "" && RenterInformation.personalEmail != null && RenterInformation.personalEmail != undefined) {
+                            $("#RenterEmail").text(RenterInformation.personalEmail);
+                        }
+                        else {
+                            $("#RenterEmail").text('@localizer["notfound"]').css("color", "red");
+                        }
+                        if (ExpiryIdDate < currentDate) {
+                            $("#requird_field_Birthdate").text('@localizer["IdIsExpire"]').css("color", "red");
+                        }
+                        if (firstCharacterFromID !== "7") {
+                            $("#RenterIsdriverDiv").show();
+                        }
+                        if (parseInt(driverCount) > 0) {
+                            $("#PrivateDriverDiv").show();
+                        }
                         $("#RenterName").text(RenterInformation.personalEnName);
                         $("#birth-date-step1").val(birthdate);
                     }
                     else {
-                        $("#RenterAddress").text(RenterInformation.postArNameConcenate);
-                        $("#RenterEmail").text(RenterInformation.personalEmail);
+
+                        if (RenterInformation.postArNameConcenate != "" && RenterInformation.postArNameConcenate != null && RenterInformation.postArNameConcenate != undefined) {
+                            $("#RenterAddress").text(RenterInformation.postArNameConcenate);
+                        }
+                        else {
+                            $("#RenterAddress").text('@localizer["notfound"]').css("color", "red");
+                        }
+                        if (RenterInformation.personalEmail != "" && RenterInformation.personalEmail != null && RenterInformation.personalEmail != undefined) {
+                            $("#RenterEmail").text(RenterInformation.personalEmail);
+                        }
+                        else {
+                            $("#RenterEmail").text('@localizer["notfound"]');
+                        }
+                        if (ExpiryIdDate < currentDate) {
+                            $("#requird_field_Birthdate").text('@localizer["IdIsExpire"]').css("color", "red");
+                        }
+                        if (firstCharacterFromID !== "7") {
+                            $("#RenterIsdriverDiv").show();
+                        }
+                        if (parseInt(driverCount) > 0) {
+                            $("#PrivateDriverDiv").show();
+                        }
                         $("#RenterName").text(RenterInformation.personalArName);
                         $("#birth-date-step1").val(birthdate);
                     }
                 }, 1000);
             }, 1000); // Adjust the duration as needed (in milliseconds)
         }
-
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('#otc').addEventListener('submit', function (event) {
                 event.preventDefault();
@@ -2521,7 +2641,8 @@
 
 
 
-        // For Driver
+
+        // For Driver///////////////////////
         async function GetDriverInformation(DriverId) {
             try {
                 var data = await $.ajax({
@@ -2531,6 +2652,8 @@
                 });
 
                 DriverInformation = data;
+                console.log("data",data)
+                console.log("DriverInformation",DriverInformation)
                 if (data != null) {
                     return true; // Renter exists
                 }
@@ -2541,6 +2664,33 @@
             }
             return false; // Renter doesn't exist
         }
+        $(document).ready(function () {
+            // Store the initial value of RenterID
+            var initialDriver = $('#Contract_DriverId').val();
+            // Event handler for the change event on #Contract_RenterId
+            $('#Contract_DriverId').on('change', function () {
+                // Check if the value has changed
+                if ($(this).val() !== initialDriver) {
+                    // Clear previous data and style
+                    $("#requird_field_Birthdate_driver").text('').css("color", "");
+                    $("#birth-date-driver").val(null);
+                    $("#DriverAddress").text("");
+                    $("#DriverEmail").text("");
+                    $("#DriverName").text("");
+                    $("#DriverNationality").text("");
+                    $("#DriverGender").text("");
+                    $("#DriverProffessions").text("");
+                    $("#DriverLicenseType").text("");
+                    $("#DriverLicenseIssued").text("");
+                    $("#DriverLicenseExpiration").text("");
+                    $("#DriverEmployer").text("");
+                    CheckIfDriverIdExist = false;
+                    DriverInformation = null;
+                    // Update the initial value of RenterID
+                    initialDriver = $(this).val();
+                }
+            });
+        });
         //For Renter Modal
         document.addEventListener('DOMContentLoaded', function () {
             var DriverCheckBtn = document.getElementById('DriverCheckBtn');
@@ -2549,8 +2699,8 @@
                 var RenterId = $('#Contract_RenterId').val();
                 if ($("#msform").valid()) {
                     CheckIfDriverIdExist = await GetDriverInformation(DriverId);
-                    console.log(RenterInformation.renterId)
-                    console.log(DriverInformation.renterId)
+                    console.log(DriverInformation)
+                    console.log(CheckIfDriverIdExist)
                     //Check Renter ID Is Not the same ID Driver
                     if (CheckIfDriverIdExist) {
                         if (DriverId != RenterId) {
@@ -2570,45 +2720,72 @@
         // Modal Submit Code from Mobile
         ///////////////////////////////////////////////the-Modal-6-digit-vaildation/////////////////////
         function openThirdPopupDriver() {
-            // Hide the second popup modal
+            var currentDate = new Date();
+            var ExpiryIdDate = new Date(DriverInformation.expiryIdDate);
             $('#checkModalToggleDriver').modal('hide');
-            // Open the third popup modal
             $('#thirdPopupModal').modal('show');
             setTimeout(function () {
                 $('#thirdPopupModal').modal('hide');
                 console.log(DriverInformation);
                 setTimeout(function () {
-                    var birthdate = DriverInformation.birthDate.split('T')[0];
+                    var birthdate = DriverInformation.birthDate ? DriverInformation.birthDate.split('T')[0] : null;
+                    var licenseExpiryDate = DriverInformation.licenseExpiryDate ? DriverInformation.licenseExpiryDate.split('T')[0] : null;
+                    var licenseIssuedDate = DriverInformation.licenseIssuedDate ? DriverInformation.licenseIssuedDate.split('T')[0] : null;
                     if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
-                        $("#DriverAddress").text(DriverInformation.postEnNameConcenate);
-                        $("#DriverEmail").text(DriverInformation.personalEmail);
+                        if (DriverInformation.postEnNameConcenate != "" && DriverInformation.postEnNameConcenate != null && DriverInformation.postEnNameConcenate != undefined) {
+                            $("#DriverAddress").text(DriverInformation.postEnNameConcenate);
+                        }
+                        else {
+                            $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
+                        }
+                        if (DriverInformation.personalEmail != "" && DriverInformation.personalEmail != null && DriverInformation.personalEmail != undefined) {
+                            $("#DriverEmail").text(DriverInformation.personalEmail);
+                        }
+                        else {
+                            $("#DriverEmail").text('@localizer["notfound"]');
+                        }
+                        if (ExpiryIdDate < currentDate) {
+                            $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
+                        }
                         $("#DriverName").text(DriverInformation.personalEnName);
                         $("#DriverNationality").text(DriverInformation.personalEnNationality);
                         $("#DriverGender").text(DriverInformation.personalEnGender);
                         $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
                         $("#DriverLicenseType").text(DriverInformation.licenseEnName);
-                        $("#DriverLicenseIssued").text(DriverInformation.licenseIssuedDate.split('T')[0]);
-                        $("#DriverLicenseExpiration").text(DriverInformation.licenseExpiryDate.split('T')[0]);
+                        $("#DriverLicenseIssued").text(licenseIssuedDate);
+                        $("#DriverLicenseExpiration").text(licenseExpiryDate);
                         $("#DriverEmployer").text(DriverInformation.employerEnName);
                         $("#birth-date-driver").val(birthdate);
                     }
                     else {
-                        $("#DriverAddress").text(DriverInformation.postArNameConcenate);
-                        $("#DriverEmail").text(DriverInformation.personalEmail);
+                        if (DriverInformation.postArNameConcenate != "" && DriverInformation.postArNameConcenate != null && DriverInformation.postArNameConcenate != undefined) {
+                            $("#DriverAddress").text(DriverInformation.postArNameConcenate);
+                        }
+                        else {
+                            $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
+                        }
+                        if (DriverInformation.personalEmail != "" && DriverInformation.personalEmail != null && DriverInformation.personalEmail != undefined) {
+                            $("#DriverEmail").text(DriverInformation.personalEmail);
+                        }
+                        else {
+                            $("#DriverEmail").text('@localizer["notfound"]');
+                        }
+                        if (ExpiryIdDate < currentDate) {
+                            $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
+                        }
                         $("#DriverName").text(DriverInformation.personalArName);
                         $("#DriverProffessions").text(DriverInformation.personalArProfessions);
                         $("#DriverGender").text(DriverInformation.personalArGender);
                         $("#DriverNationality").text(DriverInformation.personalArNationality);
                         $("#DriverLicenseType").text(DriverInformation.licenseArName);
-                        $("#DriverLicenseIssued").text(DriverInformation.licenseIssuedDate.split('T')[0]);
-                        $("#DriverLicenseExpiration").text(DriverInformation.licenseExpiryDate.split('T')[0]);
                         $("#DriverEmployer").text(DriverInformation.employerArName);
+                        $("#DriverLicenseIssued").text(licenseIssuedDate);
+                        $("#DriverLicenseExpiration").text(licenseExpiryDate);
                         $("#birth-date-driver").val(birthdate);
                     }
                 }, 1000);
             }, 1000); // Adjust the duration as needed (in milliseconds)
         }
-
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('#otc00').addEventListener('submit', function (event) {
                 event.preventDefault();
@@ -2646,50 +2823,420 @@
             });
         });
 
-        var current_fs, next_fs, previous_fs;
-        $(".next").click(function () {
-            var currentDate = new Date();
-            var renterName = $("#RenterName").text();
-
-            current_fs = $(this).closest("fieldset");
-            next_fs = $(this).closest("fieldset").next();
 
 
 
-            if ($("#msform").valid()) {
-                if (renterName != null && renterName != "") {
-                    //Check if Expiry Id Date is Expired Or not
-                    var ExpiryIdDate = new Date(RenterInformation.expiryIdDate);
-                    var renterAddress = $("#RenterAddress").text();
-                    console.log(ExpiryIdDate);
-                    console.log(renterAddress);
-                    if (ExpiryIdDate < currentDate) {
-                        toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                        toastr.error('@localizer["ExpiryIdDateIsExpired"]');
-                        return;
-                    }
-                    else if (renterAddress == "" || renterAddress == null) {
-                        toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                        toastr.error('@localizer["ExpiryIdDateIsExpired"]');
-                        return;
-                    }
-                    else {
-                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                        next_fs.show();
-                        current_fs.hide();
+
+
+        // For AddDriver///////////////////////
+        async function GetAddDriverInformation(AddDriverId) {
+            try {
+                var data = await $.ajax({
+                    url: "/BS/Contract/GetRenter",
+                    type: "GET",
+                    data: { RenterId: AddDriverId },
+                });
+
+                AddDriverInformation = data;
+                if (data != null) {
+                    return true; // Renter exists
+                }
+            } catch (error) {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["SomethingWrongPleaseCallAdmin"]');
+                return false; // Error occurred or Renter doesn't exist
+            }
+            return false; // Renter doesn't exist
+        }
+        $(document).ready(function () {
+            // Store the initial value of RenterID
+            var initialAddDriver = $('#Contract_AdditionalDriverId').val();
+            // Event handler for the change event on #Contract_RenterId
+            $('#Contract_AdditionalDriverId').on('change', function () {
+                // Check if the value has changed
+                if ($(this).val() !== initialAddDriver) {
+                    // Clear previous data and style
+                    $("#requird_field_Birthdate_driver").text('').css("color", "");
+                    $("#birth-date-driver").val(null);
+                    $("#AddDriverAddress").text("");
+                    $("#AddDriverEmail").text("");
+                    $("#AddDriverName").text("");
+                    $("#AddDriverNationality").text("");
+                    $("#AddDriverGender").text("");
+                    $("#AddDriverProffessions").text("");
+                    $("#AddDriverLicenseType").text("");
+                    $("#AddDriverLicenseIssued").text("");
+                    $("#AddDriverLicenseExpiration").text("");
+                    $("#AddDriverEmployer").text("");
+                    CheckIfAddDriverIdExist = false;
+                    AddDriverInformation = null;
+                    // Update the initial value of AddDriver
+                    initialAddDriver = $(this).val();
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var AddDriverCheckBtn = document.getElementById('AddDriverCheckBtn');
+            AddDriverCheckBtn.addEventListener('click', async function () {
+                var DriverId = $('#Contract_DriverId').val();
+                var RenterId = $('#Contract_RenterId').val();
+                var AddDriverId = $('#Contract_AdditionalDriverId').val();
+                if ($("#msform").valid()) {
+                    CheckIfAddDriverIdExist = await GetAddDriverInformation(AddDriverId);
+                    console.log(AddDriverInformation);
+                    //Check Renter ID Is Not the same ID Driver
+                    if (CheckIfAddDriverIdExist) {
+                        if (AddDriverId != RenterId && AddDriverId != DriverId) {
+                            $('#checkModalToggleAddDriver').modal('show');
+                            $("#MobileNumberAddDriver").text("+" + AddDriverInformation.keyCountry + " " + AddDriverInformation.mobileNumber);
+                        }
+                        else {
+                            $('#requird_field_AdditionalDriverId').text('@localizer["DriverIdExistRenter"]');
+                        }
+
+                    } else {
+                        $('#requird_field_AdditionalDriverId').text('@localizer["RenterIdWrong"]');
                     }
                 }
+            });
+        });
+        // Modal Submit Code from Mobile
+        ///////////////////////////////////////////////the-Modal-6-digit-vaildation/////////////////////
+        function openThirdPopupAddDriver() {
+            var currentDate = new Date();
+            var ExpiryIdDate = new Date(AddDriverInformation.expiryIdDate);
+            $('#checkModalToggleAddDriver').modal('hide');
+            $('#thirdPopupModal').modal('show');
+            setTimeout(function () {
+                $('#thirdPopupModal').modal('hide');
+                console.log(AddDriverInformation);
+                setTimeout(function () {
+                    var birthdate = AddDriverInformation.birthDate ? AddDriverInformation.birthDate.split('T')[0] : null;
+                    var licenseExpiryDate = AddDriverInformation.licenseExpiryDate ? AddDriverInformation.licenseExpiryDate.split('T')[0] : null;
+                    var licenseIssuedDate = AddDriverInformation.licenseIssuedDate ? AddDriverInformation.licenseIssuedDate.split('T')[0] : null;
+                    if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                        if (AddDriverInformation.postEnNameConcenate != "" && AddDriverInformation.postEnNameConcenate != null && AddDriverInformation.postEnNameConcenate != undefined) {
+                            $("#AddDriverAddress").text(AddDriverInformation.postEnNameConcenate);
+                        }
+                        else {
+                            $("#AddDriverAddress").text('@localizer["notfound"]').css("color", "red");
+                        }
+                        if (AddDriverInformation.personalEmail != "" && AddDriverInformation.personalEmail != null && AddDriverInformation.personalEmail != undefined) {
+                            $("#AddDriverEmail").text(AddDriverInformation.personalEmail);
+                        }
+                        else {
+                            $("#AddDriverEmail").text('@localizer["notfound"]');
+                        }
+                        if (ExpiryIdDate < currentDate) {
+                            $("#requird_field_BirthDate_AddDriver").text('@localizer["IdIsExpire"]').css("color", "red");
+                        }
+                        $("#AddDriverName").text(AddDriverInformation.personalEnName);
+                        $("#AddDriverNationality").text(AddDriverInformation.personalEnNationality);
+                        $("#AddDriverGender").text(AddDriverInformation.personalEnGender);
+                        $("#AddDriverProffessions").text(AddDriverInformation.personalEnProfessions);
+                        $("#AddDriverLicenseType").text(AddDriverInformation.licenseEnName);
+                        $("#AddDriverLicenseIssued").text(licenseIssuedDate);
+                        $("#AddDriverLicenseExpiration").text(licenseExpiryDate);
+                        $("#AddDriverEmployer").text(AddDriverInformation.employerEnName);
+                        $("#birth-date-additionalDriver").val(birthdate);
+                    }
+                    else {
+                        if (AddDriverInformation.postArNameConcenate != "" && AddDriverInformation.postArNameConcenate != null && AddDriverInformation.postArNameConcenate != undefined) {
+                            $("#AddDriverAddress").text(AddDriverInformation.postArNameConcenate);
+                        }
+                        else {
+                            $("#AddDriverAddress").text('@localizer["notfound"]').css("color", "red");
+                        }
+                        if (AddDriverInformation.personalEmail != "" && AddDriverInformation.personalEmail != null && AddDriverInformation.personalEmail != undefined) {
+                            $("#AddDriverEmail").text(AddDriverInformation.personalEmail);
+                        }
+                        else {
+                            $("#AddDriverEmail").text('@localizer["notfound"]');
+                        }
+                        if (ExpiryIdDate < currentDate) {
+                            $("#requird_field_BirthDate_AddDriver").text('@localizer["IdIsExpire"]').css("color", "red");
+                        }
+                        $("#AddDriverName").text(DriverInformation.personalArName);
+                        $("#AddDriverProffessions").text(DriverInformation.personalArProfessions);
+                        $("#AddDriverGender").text(DriverInformation.personalArGender);
+                        $("#AddDriverNationality").text(DriverInformation.personalArNationality);
+                        $("#AddDriverLicenseType").text(DriverInformation.licenseArName);
+                        $("#AddDriverEmployer").text(DriverInformation.employerArName);
+                        $("#AddDriverLicenseIssued").text(licenseIssuedDate);
+                        $("#AddDriverLicenseExpiration").text(licenseExpiryDate);
+                        $("#birth-date-additionalDriver").val(birthdate);
+                    }
+                }, 1000);
+            }, 1000); // Adjust the duration as needed (in milliseconds)
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('#otc000').addEventListener('submit', function (event) {
+                event.preventDefault();
+                var inputFieldValue = document.getElementById('otc111');
+                var numericValue = parseInt(inputFieldValue.value);
+
+                if (isNaN(numericValue)) {
+                    // Input value is not a number or is empty
+                    console.log('Input value:', numericValue);
+                    return;
+                }
+                // Gather values from input fields
+                var otc1 = $("#otc111").val();
+                var otc2 = $("#otc222").val();
+                var otc3 = $("#otc333").val();
+                var otc4 = $("#otc444").val();
+                var otc5 = $("#otc555").val();
+                var otc6 = $("#otc666").val();
+
+                // Concatenate values into a single string
+                var concatenatedCode = otc1 + otc2 + otc3 + otc4 + otc5 + otc6;
+                console.log('Input value:', concatenatedCode);
+                if (concatenatedCode === '111111') {
+                    openThirdPopupAddDriver();
+                }
                 else {
-                    $('#requird-field_RenterID').text('الرجاء التحقق من رقم الهوية اولا');
+                    $('#WrongCodeMessageAddDriver').text('الرمز المدخل غير صحيح');
+                }
+                document.getElementById('otc111').value = '';
+                document.getElementById('otc222').value = '';
+                document.getElementById('otc333').value = '';
+                document.getElementById('otc444').value = '';
+                document.getElementById('otc555').value = '';
+                document.getElementById('otc666').value = '';
+            });
+        });
+
+
+
+
+
+
+
+
+        var current_fs, next_fs, previous_fs;
+        var tab = 1;
+        $(".next").click(function () {
+            var renterName = $("#RenterName").text();
+            current_fs = $(this).closest("fieldset");
+            next_fs = $(this).closest("fieldset").next();
+            var currentField = $("#progressbar li").eq($("fieldset").index(current_fs))[0].id;
+            var NextField = $("#progressbar li").eq($("fieldset").index(next_fs))[0].id;
+            console.log("currentField", currentField)
+            console.log("NextField", NextField)
+            if ($("#msform").valid()) {
+                if (currentField === "tenant") {
+                    if (renterName != null && renterName != "") {
+                        var currentDate = new Date();
+                        var ExpiryIdDateRenter = new Date(RenterInformation.expiryIdDate);
+                        var AddressAr = RenterInformation.postArNameConcenate;
+                        var AddressEn = RenterInformation.postEnNameConcenate;
+                        var id = true;
+                        var address = true;
+                        var chechAuthUser;
+                        if (ExpiryIdDateRenter < currentDate) {
+                            id = false;
+                        }
+                        if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+
+                            if (AddressAr == null || AddressAr == "") {
+                                address = false;
+                            }
+                        }
+                        else {
+                            if (AddressEn == null || AddressEn == "") {
+                                address = false;
+                            }
+                        }
+
+                        if (id != true || address != true) {
+                            $.ajax({
+                                url: "/BS/Contract/CheckAuthUser", // Replace YourController with your actual controller name
+                                type: "GET",
+                                data: { id: id, address: address },
+                                success: function (data) {
+                                    var check = data;
+                                    if (check == "id") {
+                                        toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                                        toastr.error('@localizer["IdIsExpriredAndYouNotAuth"]');
+                                        return;
+                                    }
+                                    else if (check == "address") {
+                                        toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                                        toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
+                                        return
+                                    }
+                                    else {
+                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                        next_fs.show();
+                                        current_fs.hide();
+                                        tab++;
+                                    }
+                                }
+                            });
+                        }
+                        else {
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.show();
+                            current_fs.hide();
+                            tab++;
+                        }
+                    }
+                    else {
+                        $('#requird-field_RenterID').text('@localizer["PleaseCheckYourID"]');
+                    }
+                }
+                else if (currentField === "car") {
+                    var driverRadio1 = document.getElementById("RenterIsdriver");
+                    // This Check to If driverIsRenter Or not
+                    if (driverRadio1.checked) {
+                        DriverInformation = RenterInformation;
+                        var currentDate = new Date();
+                        var ExpiryIdDate = new Date(DriverInformation.expiryIdDate);
+                        $("#DriverCheckBtn").hide();
+                        var birthdate = DriverInformation.birthDate ? DriverInformation.birthDate.split('T')[0] : null;
+                        var licenseExpiryDate = DriverInformation.licenseExpiryDate ? DriverInformation.licenseExpiryDate.split('T')[0] : null;
+                        var licenseIssuedDate = DriverInformation.licenseIssuedDate ? DriverInformation.licenseIssuedDate.split('T')[0] : null;
+                        if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                            if (DriverInformation.postEnNameConcenate != "" && DriverInformation.postEnNameConcenate != null && DriverInformation.postEnNameConcenate != undefined) {
+                                $("#DriverAddress").text(DriverInformation.postEnNameConcenate);
+                            }
+                            else {
+                                $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
+                            }
+                            if (DriverInformation.personalEmail != "" && DriverInformation.personalEmail != null && DriverInformation.personalEmail != undefined) {
+                                $("#DriverEmail").text(DriverInformation.personalEmail);
+                            }
+                            else {
+                                $("#DriverEmail").text('@localizer["notfound"]');
+                            }
+                            if (ExpiryIdDate < currentDate) {
+                                $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
+                            }
+                            $("#Contract_DriverId").val(DriverInformation.renterID);
+                            $("#Contract_DriverId").prop("readonly", true);
+
+                            $("#DriverName").text(DriverInformation.personalEnName);
+                            $("#DriverNationality").text(DriverInformation.personalEnNationality);
+                            $("#DriverGender").text(DriverInformation.personalEnGender);
+                            $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
+                            $("#DriverLicenseType").text(DriverInformation.licenseEnName);
+                            $("#DriverLicenseIssued").text(licenseIssuedDate);
+                            $("#DriverLicenseExpiration").text(licenseExpiryDate);
+                            $("#DriverEmployer").text(DriverInformation.employerEnName);
+                            $("#birth-date-driver").val(birthdate);
+                        }
+                        else {
+                            if (DriverInformation.postArNameConcenate != "" && DriverInformation.postArNameConcenate != null && DriverInformation.postArNameConcenate != undefined) {
+                                $("#DriverAddress").text(DriverInformation.postArNameConcenate);
+                            }
+                            else {
+                                $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
+                            }
+                            if (DriverInformation.personalEmail != "" && DriverInformation.personalEmail != null && DriverInformation.personalEmail != undefined) {
+                                $("#DriverEmail").text(DriverInformation.personalEmail);
+                            }
+                            else {
+                                $("#DriverEmail").text('@localizer["notfound"]');
+                            }
+                            if (ExpiryIdDate < currentDate) {
+                                $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
+                            }
+                            $("#Contract_DriverId").val(DriverInformation.renterID);
+                            $("#Contract_DriverId").prop("readonly", true);
+
+                            $("#DriverName").text(DriverInformation.personalArName);
+                            $("#DriverProffessions").text(DriverInformation.personalArProfessions);
+                            $("#DriverGender").text(DriverInformation.personalArGender);
+                            $("#DriverNationality").text(DriverInformation.personalArNationality);
+                            $("#DriverLicenseType").text(DriverInformation.licenseArName);
+                            $("#DriverEmployer").text(DriverInformation.employerArName);
+                            $("#DriverLicenseIssued").text(licenseIssuedDate);
+                            $("#DriverLicenseExpiration").text(licenseExpiryDate);
+                            $("#birth-date-driver").val(birthdate);
+                        }
+                    }
+                    else {
+                        // Clear previous data and style
+                        $("#Contract_DriverId").val("");
+                        $("#Contract_DriverId").prop("readonly", false);
+                        $("#requird_field_Birthdate_driver").text('').css("color", "");
+                        $("#birth-date-driver").val(null);
+                        $("#DriverAddress").text("");
+                        $("#DriverEmail").text("");
+                        $("#DriverName").text("");
+                        $("#DriverNationality").text("");
+                        $("#DriverGender").text("");
+                        $("#DriverProffessions").text("");
+                        $("#DriverLicenseType").text("");
+                        $("#DriverLicenseIssued").text("");
+                        $("#DriverLicenseExpiration").text("");
+                        $("#DriverEmployer").text("");
+                        CheckIfDriverIdExist = false;
+                        DriverInformation = null;
+                        $("#DriverCheckBtn").show();
+                    }
+                    //////////////////////////////////////////
+                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                    next_fs.show();
+                    current_fs.hide();
+                    tab++;
+                }
+                else if (currentField === "driver") {
+                    var driverName = $("#DriverName").text();
+                    if (driverName != null && driverName != "") {
+                        var additionalDriver = document.getElementById("addational-driver");
+                        console.log("addational", additionalDriver.checked)
+                        if (additionalDriver.checked) {
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.show();
+                            current_fs.hide();
+                            tab++;
+                        }
+                        else{
+                            NextField = "option";
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.show();
+                            current_fs.hide();
+                            tab++;
+                            // console.log("currentField", currentField)
+                            // console.log("NextField", NextField)
+                            // console.log("next_fs", next_fs)
+                            // console.log("current_fs", NextField)
+                        }
+                       
+                    }
+                    else{
+                        $('#requird_field_DriverID').text('@localizer["PleaseCheckYourID"]');
+                    }
+                }
+                else if (currentField === "add-driver") {
+                    var addDriverName = $("#AddDriverName").text();
+                    if (addDriverName != null && addDriverName != "") {
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.show();
+                            current_fs.hide();
+                            tab++;
+                            // console.log("currentField", currentField)
+                            // console.log("NextField", NextField)
+                            // console.log("next_fs", next_fs)
+                            // console.log("current_fs", NextField)
+                        
+
+                    }
+                    else {
+                        $('#requird_field_AdditionalDriverId').text('@localizer["PleaseCheckYourID"]');
+                    }
                 }
             }
         });
+
         $(".previous").click(function () {
             current_fs = $(this).closest("fieldset");
             previous_fs = $(this).closest("fieldset").prev();
             $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
             previous_fs.show();
             current_fs.hide();
+            tab--;
         });
     </script>
 

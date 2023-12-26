@@ -48,13 +48,13 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var checkBranch = branches.Find(x => x.CrCasBranchInformationCode == selectBranch);
             if (checkBranch == null) selectBranch = branches.FirstOrDefault().CrCasBranchInformationCode;
             var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
-
-
+            var drivers = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x => x.CrCasRenterPrivateDriverInformationLessor == lessorCode && x.CrCasRenterPrivateDriverInformationStatus == Status.Active).ToList();
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
                 CrCasBranchInformations = branches,
                 SelectedBranch = selectBranch,
                 CrCasBranchInformation = branch,
+                Drivers = drivers,
             };
             return View(bSLayoutVM);
         }
@@ -77,6 +77,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 //this model for View Only 
                 RenterInformationsVM renterInformationsVM = new RenterInformationsVM
                 {
+                    RenterID = BnanRenterInfo?.CrMasRenterInformationId,
                     PersonalArName = BnanRenterInfo?.CrMasRenterInformationArName,
                     PersonalEnName = BnanRenterInfo?.CrMasRenterInformationEnName,
                     PersonalArGender = BnanRenterInfo?.CrMasRenterInformationGenderNavigation?.CrMasSupRenterGenderArName,
@@ -97,7 +98,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     MobileNumber = BnanRenterInfo?.CrMasRenterInformationMobile,
                     BirthDate = BnanRenterInfo?.CrMasRenterInformationBirthDate,
                     ExpiryIdDate = BnanRenterInfo?.CrMasRenterInformationExpiryIdDate,
-                    KeyCountry = BnanRenterInfo.CrMasRenterInformationCountreyKey
+                    KeyCountry = BnanRenterInfo?.CrMasRenterInformationCountreyKey
                 };
                 return Json(renterInformationsVM);
             }
@@ -113,7 +114,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     var masRenterInformation = await _ContractServices.AddRenterFromElmToMasRenter(RenterId, elmRenterEmployeer, elmRenterInfo, elmRenterLicince);
                     var masRenterPost = await _ContractServices.AddRenterFromElmToMasRenterPost(RenterId, elmRenterPost);
                     var casRenterLessor = await _ContractServices.AddRenterFromElmToCasRenterLessor(lessorCode, masRenterInformation, masRenterPost);
-                    if (masRenterInformation != null && masRenterPost != null && casRenterLessor != null)
+                    if (masRenterInformation != null && casRenterLessor != null)
                     {
                         //try for test
                         try
@@ -131,9 +132,38 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         return Json(null);
                     }
 
+                    var buildingInfoAr = "";
+                    var unitInfoAr = "";
+                    var zipCodeAr = "";
+                    var additionalNoAr = "";
+                    var buildingInfoEn = "";
+                    var unitInfoEn = "";
+                    var zipCodeEn = "";
+                    var additionalNoEn = "";
+                    var concatenatedArAddress = "";
+                    var concatenatedEnAddress = "";
+
+                    if (elmRenterPost != null)
+                    {
+                        buildingInfoAr = $"مبنى ({elmRenterPost.CrElmPostBuildingNo}) ";
+                        unitInfoAr = $"وحدة ({elmRenterPost.CrElmPostUnitNo}) ";
+                        zipCodeAr = $"الرمز البريدي ({elmRenterPost.CrElmPostZipCode}) ";
+                        additionalNoAr = $"الرقم الاضافي ({elmRenterPost.CrElmPostAdditionalNo}) ";
+                        buildingInfoEn = $"Building ({elmRenterPost.CrElmPostBuildingNo}) ";
+                        unitInfoEn = $"Unit ({elmRenterPost.CrElmPostUnitNo}) ";
+                        zipCodeEn = $"ZipCode ({elmRenterPost.CrElmPostZipCode}) ";
+                        additionalNoEn = $"additionalNo ({elmRenterPost.CrElmPostAdditionalNo}) ";
+                        concatenatedArAddress = string.Join(" - ", elmRenterPost.CrElmPostRegionsArName, elmRenterPost.CrElmPostCityArName, elmRenterPost.CrElmPostDistrictArName,
+                                                          elmRenterPost.CrElmPostStreetArName, buildingInfoAr, unitInfoAr, zipCodeAr, additionalNoAr);
+
+                        concatenatedEnAddress = string.Join(" - ", elmRenterPost.CrElmPostRegionsEnName, elmRenterPost.CrElmPostCityEnName, elmRenterPost.CrElmPostDistrictEnName,
+                                                                   elmRenterPost.CrElmPostStreetEnName, buildingInfoEn, unitInfoEn, zipCodeEn, additionalNoEn);
+                    }
+
                     //this model for View Only 
                     RenterInformationsVM renterInformationsVM = new RenterInformationsVM
                     {
+                        RenterID = elmRenterInfo?.CrElmPersonalCode,
                         PersonalArName = elmRenterInfo?.CrElmPersonalArName,
                         PersonalEnName = elmRenterInfo?.CrElmPersonalEnName,
                         PersonalArGender = elmRenterInfo?.CrElmPersonalArGender,
@@ -145,22 +175,41 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         PersonalEmail = elmRenterInfo?.CrElmPersonalEmail,
                         EmployerArName = elmRenterEmployeer?.CrElmEmployerArName,
                         EmployerEnName = elmRenterEmployeer?.CrElmEmployerEnName,
-                        LicenseArName = elmRenterLicince.CrElmLicenseArName,
-                        LicenseEnName = elmRenterLicince.CrElmLicenseEnName,
-                        LicenseExpiryDate = elmRenterLicince.CrElmLicenseExpiryDate,
-                        LicenseIssuedDate = elmRenterLicince.CrElmLicenseIssuedDate,
-                        PostArNameConcenate = elmRenterPost.CrElmPostCityArName + "-" + elmRenterPost.CrElmPostRegionsArName + "-" + elmRenterPost.CrElmPostDistrictArName + "-" + elmRenterPost.CrElmPostStreetArName + "-" + elmRenterPost.CrElmPostUnitNo,
-                        PostEnNameConcenate = elmRenterPost.CrElmPostCityEnName + "-" + elmRenterPost.CrElmPostRegionsEnName + "-" + elmRenterPost.CrElmPostDistrictEnName + "-" + elmRenterPost.CrElmPostStreetEnName + "-" + elmRenterPost.CrElmPostUnitNo,
+                        LicenseArName = elmRenterLicince?.CrElmLicenseArName,
+                        LicenseEnName = elmRenterLicince?.CrElmLicenseEnName,
+                        LicenseExpiryDate = elmRenterLicince?.CrElmLicenseExpiryDate,
+                        LicenseIssuedDate = elmRenterLicince?.CrElmLicenseIssuedDate,
+                        PostArNameConcenate = concatenatedArAddress,
+                        PostEnNameConcenate = concatenatedEnAddress,
                         MobileNumber = elmRenterInfo?.CrElmPersonalMobile,
-                        BirthDate = elmRenterInfo.CrElmPersonalBirthDate,
+                        BirthDate = elmRenterInfo?.CrElmPersonalBirthDate,
                         ExpiryIdDate = elmRenterInfo?.CrElmPersonalExpiryIdDate,
-                        KeyCountry=elmRenterInfo.CrElmPersonalCountryKey
+                        KeyCountry = elmRenterInfo?.CrElmPersonalCountryKey
                     };
                     return Json(renterInformationsVM);
                 }
             }
             return Json(null);
         }
+        [HttpGet]
+        public async Task<IActionResult> CheckAuthUser(bool id,bool address)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var userContractValidity = _unitOfWork.CrMasUserContractValidity.Find(x => x.CrMasUserContractValidityUserId == userLogin.Id);
+            var check = "true";
+            if (id==false&&userContractValidity.CrMasUserContractValidityId == false)
+            {
+                check = "id";
+                return Json(check);
+            }
+            else if (address==false&& userContractValidity.CrMasUserContractValidityRenterAddress == false)
+            {
+                check = "address";
+                return Json(check);
+            }
+            else { return Json(check); }
 
+        }
     }
 }

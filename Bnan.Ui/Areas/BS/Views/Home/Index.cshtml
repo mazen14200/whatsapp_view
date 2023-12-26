@@ -671,8 +671,8 @@
             var lessorStatus = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorInformationStatus";
             var BranchStatus = "@Model?.CrCasBranchInformation?.CrCasBranchInformationStatus";
             var CarsAvaliableNo = "@ViewBag.AvaliableCars";
-            var CompanyContract = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.Where(x=>x.CrMasContractCompanyStatus==@Status.Active).Count()";
-            var CompanyDocuments = "@userInfo?.CrMasUserInformationLessorNavigation?.CrCasBranchDocuments.Where(x=>x.CrCasBranchDocumentsStatus==Status.Active).Count()";
+            var CompanyContract = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.Where(x=>x.CrMasContractCompanyStatus==@Status.AboutToExpire||x.CrMasContractCompanyStatus==Status.Renewed).Count()";
+            var CompanyDocuments = "@userInfo?.CrMasUserInformationLessorNavigation?.CrCasBranchDocuments.Where(x=>x.CrCasBranchDocumentsStatus==Status.AboutToExpire || x.CrCasBranchDocumentsStatus==Status.Renewed).Count()";
             var checkContractValidity = "";
             var selectedBranch = "@Model?.SelectedBranch";
             if (createAuth.toLowerCase() === "false" || createAuth == null || createAuth == "") {
@@ -695,17 +695,17 @@
                 toastr.error('@localizer["toastMessageLessorHold"]');
                 event.preventDefault(); // Prevent the default behavior (navigation)
             }
-            else if (parseInt(CarsAvaliableNo) < 1) {
+            else if (parseInt(CarsAvaliableNo) == 0) {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["AvaliableCarsIsEmptyTab"]');
                 event.preventDefault(); // Prevent the default behavior (navigation)
             }
-            else if (CompanyContract < 3) {
+            else if (CompanyContract > 0) {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["toastMessageCompanyContractExpired"]');
                 event.preventDefault(); // Prevent the default behavior (navigation)
             }
-            else if (CompanyDocuments < 5) {
+            else if (CompanyDocuments > 0) {
                 $.ajax({
                     url: "/BS/Home/CheckCompanyDocuments", // Replace YourController with your actual controller name
                     type: "GET",
