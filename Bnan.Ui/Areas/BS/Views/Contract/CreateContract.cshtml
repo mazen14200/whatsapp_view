@@ -221,6 +221,9 @@
                                                     </select>
                                                 }
                                             </div>
+                                            <div class="row requird-field-row">
+                                                <p class="requird-field" id="PrivateDriverRequired"></p>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -271,330 +274,32 @@
                                 </div>
 
                             </fieldset>
+                            <!--Car Field-->
                             <fieldset>
                                 <div class="form-card">
                                     <div class="row" style="flex-direction: row-reverse;">
-                                        <div class="col-sm-4 col-md-4 col-lg-3 car-catogeries "
-                                             id="scrollContainer">
-                                            <div class="d-flex "
-                                                 style="flex-direction:column; gap:4px">
-                                                <button type="button"
-                                                        class="btn customized-button ">
-                                                    الكل
-                                                </button>
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    اقتصادية
-                                                </button>
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    عائلية صغيرة
-                                                </button>
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    عائلية وسط
-                                                </button>
-
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    عائلية كبيرة
-                                                </button>
-
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    سيدان صغيرة
-                                                </button>
-
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    سيدان وسط
-                                                </button>
-
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    فخمة صغيرة
-                                                </button>
-
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    فان صغيرة
-                                                </button>
-
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    Warning
-                                                </button>
-
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    Warning
-                                                </button>
-
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    Warning
-                                                </button>
-
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    Warning
-                                                </button>
-
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    Warning
-                                                </button>
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    Warning
-                                                </button>
-                                                <button type="button"
-                                                        class="btn  customized-button">
-                                                    Warning
-                                                </button>
-
+                                        <!--Car Category-->
+                                        <div class="col-sm-4 col-md-4 col-lg-3 car-catogeries " id="scrollContainer">
+                                            <div class="d-flex " style="flex-direction:column; gap:4px">
+                                                <button type="button" class="btn customized-button" onclick="GetCodeCategory(`3400000000`)">@localizer["All"]</button>
+                                                @foreach (var category in Model.CarCategories)
+                                                {
+                                                    @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+                                                    {
+                                                        <button type="button" class="btn customized-button" onclick="GetCodeCategory(`@category.CrMasSupCarCategoryCode`)">@category.CrMasSupCarCategoryEnName</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button type="button" class="btn customized-button" onclick="GetCodeCategory(`@category.CrMasSupCarCategoryCode`)">@category.CrMasSupCarCategoryArName</button>
+                                                    }
+                                                }
                                             </div>
                                         </div>
-
+                                        <!--Cars Informations-->
                                         <div class="col-sm-8 col-md-8 col-lg-9 scrollable-content p-0">
-                                            <table width="100%" class="table table-hover"
-                                                   id="ListCars">
+                                            <table width="100%" class="table table-hover" id="ListCars">
                                                 <tbody>
-                                                    <tr style="border-bottom: 1px solid #39629C;cursor: pointer;"
-                                                        class="next ">
-                                                        <td>
-                                                            <div class="row"
-                                                                 style="flex-direction: row-reverse;">
-                                                                <div class="col-sm-12  col-md-12 col-lg-2 p-1">
-                                                                    <img src="~/BranchSys/CreateContract/img/Rectangle1.png">
-                                                                </div>
-                                                                <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
-                                                                    <p>
-                                                                        <span>فورد</span> <span>
-                                                                            -
-                                                                        </span><span>تورس</span><span>
-                                                                            -
-                                                                        </span><span>۲۰۱۹</span>
-                                                                        <span> - </span><span>
-                                                                            سيدان
-                                                                            متوسطة
-                                                                        </span>
-                                                                    </p>
-                                                                    <p>
-                                                                        <span>أزرق</span><span>
-                                                                            -
-                                                                        </span> 9714 ق د ف
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
-
-                                                                    <p>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 93.png">
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 143.png ">
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>2</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>5</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>4</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 98 (1).png"><span>4</span>
-                                                                    </p>
-                                                                    <p>
-                                                                        <span>
-                                                                            القراءة الحالية:
-                                                                        </span><span>۱۰۱٥۰</span>
-                                                                    </p>
-
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-                                                    </tr>
-                                                    <tr style="border-bottom: 1px solid #39629C;cursor: pointer;"
-                                                        class="next ">
-                                                        <td>
-                                                            <div class="row"
-                                                                 style="flex-direction: row-reverse;">
-                                                                <div class="col-sm-12  col-md-12 col-lg-2 p-1">
-                                                                    <img src="~/BranchSys/CreateContract/img/Rectangle2.png">
-                                                                </div>
-                                                                <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
-                                                                    <p>
-                                                                        <span>فورد</span> <span>
-                                                                            -
-                                                                        </span><span>تورس</span><span>
-                                                                            -
-                                                                        </span><span>۲۰۱۹</span>
-                                                                        <span> - </span><span>
-                                                                            سيدان
-                                                                            متوسطة
-                                                                        </span>
-                                                                    </p>
-                                                                    <p>
-                                                                        <span>أزرق</span><span>
-                                                                            -
-                                                                        </span> 9714 ق د ف
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
-
-                                                                    <p>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 93.png">
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 143.png ">
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>2</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>5</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>4</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 98 (1).png"><span>4</span>
-                                                                    </p>
-                                                                    <p>
-                                                                        <span>
-                                                                            القراءة الحالية:
-                                                                        </span><span>۱۰۱٥۰</span>
-                                                                    </p>
-
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-                                                    </tr>
-                                                    <tr style="border-bottom: 1px solid #39629C;cursor: pointer;"
-                                                        class="next ">
-                                                        <td>
-                                                            <div class="row"
-                                                                 style="flex-direction: row-reverse;">
-                                                                <div class="col-sm-12  col-md-12 col-lg-2 p-1">
-                                                                    <img src="~/BranchSys/CreateContract/img/Rectangle3.png">
-                                                                </div>
-                                                                <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
-                                                                    <p>
-                                                                        <span>فورد</span> <span>
-                                                                            -
-                                                                        </span><span>تورس</span><span>
-                                                                            -
-                                                                        </span><span>۲۰۱۹</span>
-                                                                        <span> - </span><span>
-                                                                            سيدان
-                                                                            متوسطة
-                                                                        </span>
-                                                                    </p>
-                                                                    <p>
-                                                                        <span>أزرق</span><span>
-                                                                            -
-                                                                        </span> 9714 ق د ف
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
-
-                                                                    <p>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 93.png">
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 143.png ">
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>2</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>5</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>4</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 98 (1).png"><span>4</span>
-                                                                    </p>
-                                                                    <p>
-                                                                        <span>
-                                                                            القراءة الحالية:
-                                                                        </span><span>۱۰۱٥۰</span>
-                                                                    </p>
-
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-                                                    </tr>
-                                                    <tr style="border-bottom: 1px solid #39629C; cursor: pointer;"
-                                                        class="next ">
-                                                        <td>
-                                                            <div class="row"
-                                                                 style="flex-direction: row-reverse;">
-                                                                <div class="col-sm-12  col-md-12 col-lg-2 p-1">
-                                                                    <img src="~/BranchSys/CreateContract/img/Rectangle4.png">
-                                                                </div>
-                                                                <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
-                                                                    <p>
-                                                                        <span>فورد</span> <span>
-                                                                            -
-                                                                        </span><span>تورس</span><span>
-                                                                            -
-                                                                        </span><span>۲۰۱۹</span>
-                                                                        <span> - </span><span>
-                                                                            سيدان
-                                                                            متوسطة
-                                                                        </span>
-                                                                    </p>
-                                                                    <p>
-                                                                        <span>أزرق</span><span>
-                                                                            -
-                                                                        </span> 9714 ق د ف
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
-
-                                                                    <p>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 93.png">
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 143.png ">
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>2</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>5</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>4</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 98 (1).png"><span>4</span>
-                                                                    </p>
-                                                                    <p>
-                                                                        <span>
-                                                                            القراءة الحالية:
-                                                                        </span><span>۱۰۱٥۰</span>
-                                                                    </p>
-
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-                                                    </tr>
-                                                    <tr style="border-bottom: 1px solid #39629C;cursor: pointer;"
-                                                        class="next ">
-                                                        <td>
-                                                            <div class="row"
-                                                                 style="flex-direction: row-reverse;">
-                                                                <div class="col-sm-12  col-md-12 col-lg-2 p-1">
-                                                                    <img src="~/BranchSys/CreateContract/img/Rectangle1.png">
-                                                                </div>
-                                                                <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
-                                                                    <p>
-                                                                        <span>فورد</span> <span>
-                                                                            -
-                                                                        </span><span>تورس</span><span>
-                                                                            -
-                                                                        </span><span>۲۰۱۹</span>
-                                                                        <span> - </span><span>
-                                                                            سيدان
-                                                                            متوسطة
-                                                                        </span>
-                                                                    </p>
-                                                                    <p>
-                                                                        <span>أزرق</span><span>
-                                                                            -
-                                                                        </span> 9714 ق د ف
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
-
-                                                                    <p>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 93.png">
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 143.png ">
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>2</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>5</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>4</span>
-                                                                        <img src="~/BranchSys/CreateContract/img/Rectangle 98 (1).png"><span>4</span>
-                                                                    </p>
-                                                                    <p>
-                                                                        <span>
-                                                                            القراءة الحالية:
-                                                                        </span><span>۱۰۱٥۰</span>
-                                                                    </p>
-
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-                                                    </tr>
+                                                    <partial name="_CarsList" />
                                                 </tbody>
                                             </table>
                                         </div>
@@ -606,7 +311,7 @@
                                     <div class="button-card">
                                         <input type="button" name="previous"
                                                class="previous action-button-previous"
-                                               value="السابق" />
+                                               value="@localizer["Previous"]" />
                                         <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
                                              class="previous action-button-previous"
                                              style="vertical-align: middle; ">
@@ -2498,8 +2203,10 @@
                     $("#RenterIsdriverDiv").hide();
                     var CheckIfRenterIdExist = false;
                     var CheckIfDriverIdExist = false;
+                    var CheckIfAddDriverIdExist = false;
                     var RenterInformation = null;
                     var DriverInformation = null;
+                    var AddDriverInformation = null;
                     // Update the initial value of RenterID
                     initialRenterID = $(this).val();
                 }
@@ -2652,8 +2359,8 @@
                 });
 
                 DriverInformation = data;
-                console.log("data",data)
-                console.log("DriverInformation",DriverInformation)
+                console.log("data", data)
+                console.log("DriverInformation", DriverInformation)
                 if (data != null) {
                     return true; // Renter exists
                 }
@@ -2909,11 +2616,11 @@
             $('#thirdPopupModal').modal('show');
             setTimeout(function () {
                 $('#thirdPopupModal').modal('hide');
-                console.log(AddDriverInformation);
                 setTimeout(function () {
                     var birthdate = AddDriverInformation.birthDate ? AddDriverInformation.birthDate.split('T')[0] : null;
                     var licenseExpiryDate = AddDriverInformation.licenseExpiryDate ? AddDriverInformation.licenseExpiryDate.split('T')[0] : null;
                     var licenseIssuedDate = AddDriverInformation.licenseIssuedDate ? AddDriverInformation.licenseIssuedDate.split('T')[0] : null;
+                    console.log(AddDriverInformation.personalArName);
                     if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
                         if (AddDriverInformation.postEnNameConcenate != "" && AddDriverInformation.postEnNameConcenate != null && AddDriverInformation.postEnNameConcenate != undefined) {
                             $("#AddDriverAddress").text(AddDriverInformation.postEnNameConcenate);
@@ -2956,12 +2663,12 @@
                         if (ExpiryIdDate < currentDate) {
                             $("#requird_field_BirthDate_AddDriver").text('@localizer["IdIsExpire"]').css("color", "red");
                         }
-                        $("#AddDriverName").text(DriverInformation.personalArName);
-                        $("#AddDriverProffessions").text(DriverInformation.personalArProfessions);
-                        $("#AddDriverGender").text(DriverInformation.personalArGender);
-                        $("#AddDriverNationality").text(DriverInformation.personalArNationality);
-                        $("#AddDriverLicenseType").text(DriverInformation.licenseArName);
-                        $("#AddDriverEmployer").text(DriverInformation.employerArName);
+                        $("#AddDriverName").text(AddDriverInformation.personalArName);
+                        $("#AddDriverProffessions").text(AddDriverInformation.personalArProfessions);
+                        $("#AddDriverGender").text(AddDriverInformation.personalArGender);
+                        $("#AddDriverNationality").text(AddDriverInformation.personalArNationality);
+                        $("#AddDriverLicenseType").text(AddDriverInformation.licenseArName);
+                        $("#AddDriverEmployer").text(AddDriverInformation.employerArName);
                         $("#AddDriverLicenseIssued").text(licenseIssuedDate);
                         $("#AddDriverLicenseExpiration").text(licenseExpiryDate);
                         $("#birth-date-additionalDriver").val(birthdate);
@@ -3015,12 +2722,14 @@
 
         var current_fs, next_fs, previous_fs;
         var tab = 1;
+        var currentField = "";
+        var NextField = "";
         $(".next").click(function () {
             var renterName = $("#RenterName").text();
             current_fs = $(this).closest("fieldset");
             next_fs = $(this).closest("fieldset").next();
-            var currentField = $("#progressbar li").eq($("fieldset").index(current_fs))[0].id;
-            var NextField = $("#progressbar li").eq($("fieldset").index(next_fs))[0].id;
+            currentField = $("#progressbar li").eq($("fieldset").index(current_fs))[0].id;
+            NextField = $("#progressbar li").eq($("fieldset").index(next_fs))[0].id;
             console.log("currentField", currentField)
             console.log("NextField", NextField)
             if ($("#msform").valid()) {
@@ -3033,6 +2742,8 @@
                         var id = true;
                         var address = true;
                         var chechAuthUser;
+
+
                         if (ExpiryIdDateRenter < currentDate) {
                             id = false;
                         }
@@ -3047,8 +2758,13 @@
                                 address = false;
                             }
                         }
-
-                        if (id != true || address != true) {
+                        // This Check to If Renter Need Private Driver Or not
+                        var privateDriverRadio1 = document.getElementById("PrivateDriver");
+                        var privateDriverID = $("#driver-dropdown").val();
+                        if (privateDriverRadio1.checked && privateDriverID == null) {
+                            $("#PrivateDriverRequired").text('@localizer["PleaseChooseYourDriver"]').css("color", "red");
+                        }
+                        else if (id != true || address != true) {
                             $.ajax({
                                 url: "/BS/Contract/CheckAuthUser", // Replace YourController with your actual controller name
                                 type: "GET",
@@ -3056,16 +2772,19 @@
                                 success: function (data) {
                                     var check = data;
                                     if (check == "id") {
+                                        $("#PrivateDriverRequired").text('').css("color", "");
                                         toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                         toastr.error('@localizer["IdIsExpriredAndYouNotAuth"]');
                                         return;
                                     }
                                     else if (check == "address") {
+                                        $("#PrivateDriverRequired").text('').css("color", "");
                                         toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                         toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
                                         return
                                     }
                                     else {
+                                        $("#PrivateDriverRequired").text('').css("color", "");
                                         $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                                         next_fs.show();
                                         current_fs.hide();
@@ -3075,6 +2794,7 @@
                             });
                         }
                         else {
+                            $("#PrivateDriverRequired").text('').css("color", "");
                             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                             next_fs.show();
                             current_fs.hide();
@@ -3087,15 +2807,34 @@
                 }
                 else if (currentField === "car") {
                     var driverRadio1 = document.getElementById("RenterIsdriver");
+                    var privateDriverRadio1 = document.getElementById("PrivateDriver");
+                    var privateDriverID = $("#driver-dropdown").val();
+                    console.log(privateDriverRadio1.checked)
+                    // This Check to If Renter Need Private Driver Or not
+                    if (privateDriverRadio1.checked) {
+                        // Clear previous data and style
+                        clearDataDriver();
+                        clearDataAddDriver();
+                        document.getElementById("addational-driver").checked = false;
+                        currentField = "option";
+                        NextField = "check";
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                        next_fs = $(this).closest("fieldset").next().next();
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                        next_fs = $(this).closest("fieldset").next().next().next();
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                        next_fs.show();
+                        current_fs.hide();
+                    }
                     // This Check to If driverIsRenter Or not
-                    if (driverRadio1.checked) {
-                        DriverInformation = RenterInformation;
+                    else if (driverRadio1.checked) {
+                        // DriverInformation = RenterInformation;
                         var currentDate = new Date();
-                        var ExpiryIdDate = new Date(DriverInformation.expiryIdDate);
+                        var ExpiryIdDate = new Date(RenterInformation.expiryIdDate);
                         $("#DriverCheckBtn").hide();
-                        var birthdate = DriverInformation.birthDate ? DriverInformation.birthDate.split('T')[0] : null;
-                        var licenseExpiryDate = DriverInformation.licenseExpiryDate ? DriverInformation.licenseExpiryDate.split('T')[0] : null;
-                        var licenseIssuedDate = DriverInformation.licenseIssuedDate ? DriverInformation.licenseIssuedDate.split('T')[0] : null;
+                        var birthdate = RenterInformation.birthDate ? RenterInformation.birthDate.split('T')[0] : null;
+                        var licenseExpiryDate = RenterInformation.licenseExpiryDate ? RenterInformation.licenseExpiryDate.split('T')[0] : null;
+                        var licenseIssuedDate = RenterInformation.licenseIssuedDate ? RenterInformation.licenseIssuedDate.split('T')[0] : null;
                         if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
                             if (DriverInformation.postEnNameConcenate != "" && DriverInformation.postEnNameConcenate != null && DriverInformation.postEnNameConcenate != undefined) {
                                 $("#DriverAddress").text(DriverInformation.postEnNameConcenate);
@@ -3126,14 +2865,14 @@
                             $("#birth-date-driver").val(birthdate);
                         }
                         else {
-                            if (DriverInformation.postArNameConcenate != "" && DriverInformation.postArNameConcenate != null && DriverInformation.postArNameConcenate != undefined) {
-                                $("#DriverAddress").text(DriverInformation.postArNameConcenate);
+                            if (RenterInformation.postArNameConcenate != "" && RenterInformation.postArNameConcenate != null && RenterInformation.postArNameConcenate != undefined) {
+                                $("#DriverAddress").text(RenterInformation.postArNameConcenate);
                             }
                             else {
                                 $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
                             }
-                            if (DriverInformation.personalEmail != "" && DriverInformation.personalEmail != null && DriverInformation.personalEmail != undefined) {
-                                $("#DriverEmail").text(DriverInformation.personalEmail);
+                            if (RenterInformation.personalEmail != "" && RenterInformation.personalEmail != null && RenterInformation.personalEmail != undefined) {
+                                $("#DriverEmail").text(RenterInformation.personalEmail);
                             }
                             else {
                                 $("#DriverEmail").text('@localizer["notfound"]');
@@ -3141,103 +2880,182 @@
                             if (ExpiryIdDate < currentDate) {
                                 $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
                             }
-                            $("#Contract_DriverId").val(DriverInformation.renterID);
+                            $("#Contract_DriverId").val(RenterInformation.renterID);
                             $("#Contract_DriverId").prop("readonly", true);
 
-                            $("#DriverName").text(DriverInformation.personalArName);
-                            $("#DriverProffessions").text(DriverInformation.personalArProfessions);
-                            $("#DriverGender").text(DriverInformation.personalArGender);
-                            $("#DriverNationality").text(DriverInformation.personalArNationality);
-                            $("#DriverLicenseType").text(DriverInformation.licenseArName);
-                            $("#DriverEmployer").text(DriverInformation.employerArName);
+                            $("#DriverName").text(RenterInformation.personalArName);
+                            $("#DriverProffessions").text(RenterInformation.personalArProfessions);
+                            $("#DriverGender").text(RenterInformation.personalArGender);
+                            $("#DriverNationality").text(RenterInformation.personalArNationality);
+                            $("#DriverLicenseType").text(RenterInformation.licenseArName);
+                            $("#DriverEmployer").text(RenterInformation.employerArName);
                             $("#DriverLicenseIssued").text(licenseIssuedDate);
                             $("#DriverLicenseExpiration").text(licenseExpiryDate);
                             $("#birth-date-driver").val(birthdate);
                         }
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                        next_fs.show();
+                        current_fs.hide();
                     }
                     else {
                         // Clear previous data and style
-                        $("#Contract_DriverId").val("");
-                        $("#Contract_DriverId").prop("readonly", false);
-                        $("#requird_field_Birthdate_driver").text('').css("color", "");
-                        $("#birth-date-driver").val(null);
-                        $("#DriverAddress").text("");
-                        $("#DriverEmail").text("");
-                        $("#DriverName").text("");
-                        $("#DriverNationality").text("");
-                        $("#DriverGender").text("");
-                        $("#DriverProffessions").text("");
-                        $("#DriverLicenseType").text("");
-                        $("#DriverLicenseIssued").text("");
-                        $("#DriverLicenseExpiration").text("");
-                        $("#DriverEmployer").text("");
-                        CheckIfDriverIdExist = false;
-                        DriverInformation = null;
-                        $("#DriverCheckBtn").show();
+                        clearDataDriver();
+                        clearDataAddDriver();
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                        next_fs.show();
+                        current_fs.hide();
                     }
                     //////////////////////////////////////////
-                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                    next_fs.show();
-                    current_fs.hide();
-                    tab++;
+
                 }
                 else if (currentField === "driver") {
                     var driverName = $("#DriverName").text();
                     if (driverName != null && driverName != "") {
                         var additionalDriver = document.getElementById("addational-driver");
-                        console.log("addational", additionalDriver.checked)
                         if (additionalDriver.checked) {
                             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                             next_fs.show();
                             current_fs.hide();
-                            tab++;
                         }
-                        else{
-                            NextField = "option";
+                        else {
+                            currentField = "option";
+                            NextField = "check";
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs = $(this).closest("fieldset").next().next();
                             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                             next_fs.show();
                             current_fs.hide();
-                            tab++;
-                            // console.log("currentField", currentField)
-                            // console.log("NextField", NextField)
-                            // console.log("next_fs", next_fs)
-                            // console.log("current_fs", NextField)
                         }
-                       
+
                     }
-                    else{
+                    else {
                         $('#requird_field_DriverID').text('@localizer["PleaseCheckYourID"]');
                     }
                 }
                 else if (currentField === "add-driver") {
                     var addDriverName = $("#AddDriverName").text();
                     if (addDriverName != null && addDriverName != "") {
-                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                            next_fs.show();
-                            current_fs.hide();
-                            tab++;
-                            // console.log("currentField", currentField)
-                            // console.log("NextField", NextField)
-                            // console.log("next_fs", next_fs)
-                            // console.log("current_fs", NextField)
-                        
-
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                        next_fs.show();
+                        current_fs.hide();
+                        tab++;
                     }
                     else {
                         $('#requird_field_AdditionalDriverId').text('@localizer["PleaseCheckYourID"]');
                     }
                 }
+                else if (currentField === "option") {
+                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                    next_fs.show();
+                    current_fs.hide();
+                }
             }
         });
-
         $(".previous").click(function () {
             current_fs = $(this).closest("fieldset");
             previous_fs = $(this).closest("fieldset").prev();
-            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-            previous_fs.show();
-            current_fs.hide();
-            tab--;
+            console.log(DriverInformation);
+            console.log(currentField);
+            console.log(NextField);
+            if (currentField === "option") {
+                var additionalDriver = document.getElementById("addational-driver");
+                var privateDriverRadio1 = document.getElementById("PrivateDriver");
+                console.log(privateDriverRadio1.checked)
+                // This Check to If Renter Need Private Driver Or not
+                if (privateDriverRadio1.checked) {
+                    // Clear previous data and style
+                    clearDataDriver();
+                    clearDataAddDriver();
+                    currentField = "car";
+                    $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                    $("#progressbar li").eq($("fieldset").index(previous_fs)).removeClass("active");
+                    previous_fs = $(this).closest("fieldset").prev().prev();
+                    $("#progressbar li").eq($("fieldset").index(previous_fs)).removeClass("active");
+                    previous_fs = $(this).closest("fieldset").prev().prev().prev();
+                    previous_fs.show();
+                    current_fs.hide();
+                    console.log("currentField", currentField);
+                    console.log("NextField", NextField);
+                }
+                else if (additionalDriver.checked) {
+                    $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                    previous_fs.show();
+                    current_fs.hide();
+                }
+                else {
+                    $("#progressbar li").eq($("fieldset").index(previous_fs)).removeClass("active");
+                    previous_fs = $(this).closest("fieldset").prev().prev();
+                    $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                    previous_fs.show();
+                    current_fs.hide();
+                }
+            }
+            else {
+                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                previous_fs.show();
+                current_fs.hide();
+            }
         });
+
+
+
+
+        function clearDataDriver() {
+            $("#Contract_DriverId").val("");
+            $("#Contract_DriverId").prop("readonly", false);
+            $("#requird_field_Birthdate_driver").text('').css("color", "");
+            $("#birth-date-driver").val(null);
+            $("#DriverAddress").text("");
+            $("#DriverEmail").text("");
+            $("#DriverName").text("");
+            $("#DriverNationality").text("");
+            $("#DriverGender").text("");
+            $("#DriverProffessions").text("");
+            $("#DriverLicenseType").text("");
+            $("#DriverLicenseIssued").text("");
+            $("#DriverLicenseExpiration").text("");
+            $("#DriverEmployer").text("");
+            CheckIfDriverIdExist = false;
+            DriverInformation = null;
+            $("#DriverCheckBtn").show();
+        }
+        function clearDataAddDriver() {
+            $("#Contract_AdditionalDriverId").val("");
+            $("#Contract_AdditionalDriverId").prop("readonly", false);
+            $("#requird_field_Birthdate_AddDriver").text('').css("color", "");
+            $("#birth-date-additionalDriver").val(null);
+            $("#AddDriverAddress").text("");
+            $("#AddDriverEmail").text("");
+            $("#AddDriverName").text("");
+            $("#AddDriverNationality").text("");
+            $("#AddDriverGender").text("");
+            $("#AddDriverProffessions").text("");
+            $("#AddDriverLicenseType").text("");
+            $("#AddDriverLicenseIssued").text("");
+            $("#AddDriverLicenseExpiration").text("");
+            $("#AddDriverEmployer").text("");
+            CheckIfAddDriverIdExist = false;
+            AddDriverInformation = null;
+        }
+
+
+
+        function GetCodeCategory(categoryCode){
+            var selectedBranch = "@Model.SelectedBranch";
+            console.log(categoryCode);
+            console.log(selectedBranch);
+            $.ajax({
+                url: "/BS/Contract/GetCarsByCategory", // Replace YourController with your actual controller name
+                type: "GET",
+                data: { selectedCategory: categoryCode, selectedBranch: selectedBranch },
+                success: function (data) {
+                    $('#ListCars tbody').html(data);
+                },
+                error: function () {
+                    alert("Error loading data.");
+                }
+            });
+        }
     </script>
 
 

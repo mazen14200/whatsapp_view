@@ -49,12 +49,19 @@ namespace Bnan.Ui.Areas.BS.Controllers
             if (checkBranch == null) selectBranch = branches.FirstOrDefault().CrCasBranchInformationCode;
             var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
             var drivers = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x => x.CrCasRenterPrivateDriverInformationLessor == lessorCode && x.CrCasRenterPrivateDriverInformationStatus == Status.Active).ToList();
+            var carsAvailable = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == selectBranch && x.CrCasCarInformationStatus == Status.Active &&
+                                                                                 x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationOwnerStatus == Status.Active &&
+                                                                                (x.CrCasCarInformationForSaleStatus == Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale),
+                                                                                new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics", "CrCasCarInformationCategoryNavigation" }).ToList();
+            var categoryCars= carsAvailable.Select(item => item.CrCasCarInformationCategoryNavigation).Distinct().OrderBy(item => item.CrMasSupCarCategoryCode).ToList();
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
                 CrCasBranchInformations = branches,
                 SelectedBranch = selectBranch,
                 CrCasBranchInformation = branch,
                 Drivers = drivers,
+                CarCategories=categoryCars,
+                CarsFilter= carsAvailable
             };
             return View(bSLayoutVM);
         }
@@ -209,6 +216,32 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 return Json(check);
             }
             else { return Json(check); }
+
+        }
+
+        [HttpGet]
+        public async Task<PartialViewResult> GetCarsByCategory(string selectedCategory, string selectedBranch)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == selectedBranch && x.CrCasCarInformationStatus == Status.Active &&
+                                                                                 x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationOwnerStatus == Status.Active &&
+                                                                                (x.CrCasCarInformationForSaleStatus == Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale),
+                                                                                new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics", "CrCasCarInformationCategoryNavigation" }).ToList();
+            if (selectedCategory== "3400000000")
+            {
+                BSLayoutVM bSLayoutVM = new BSLayoutVM()
+                {
+                    CarsFilter = cars
+                };
+                return PartialView("_CarsList", bSLayoutVM);
+            }
+            BSLayoutVM bSLayout = new BSLayoutVM()
+            {
+                CarsFilter = cars.Where(x => x.CrCasCarInformationCategory == selectedCategory).ToList(),
+            };
+            return PartialView("_CarsList", bSLayout);
+
 
         }
     }

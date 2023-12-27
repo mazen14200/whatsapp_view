@@ -224,7 +224,7 @@
                 </button>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3  ">
-                <a asp-area="BS" asp-action="CreateContract" asp-controller="Contract" id="CreateContract" class="btn btn-secondary mb-2">
+                <a id="CreateContract" class="btn btn-secondary mb-2">
                     <img src="~/BranchSys/img/Rectangle 29.png">
                     @localizer["CreateContract"]
                 </a>
@@ -665,7 +665,7 @@
     </script>
     <!--Authrization-->
     <script>
-        $("#CreateContract").on("click", function (event) {
+        document.getElementById("CreateContract").addEventListener('click', function () {
             var createAuth = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityCreate";
             var userStatus = "@userInfo?.CrMasUserInformationStatus";
             var lessorStatus = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorInformationStatus";
@@ -678,32 +678,32 @@
             if (createAuth.toLowerCase() === "false" || createAuth == null || createAuth == "") {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["toastMessage"]');
-                event.preventDefault(); // Prevent the default behavior (navigation)
+                return
             }
             else if (userStatus !== "@Status.Active") {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["toastMessageUserHold"]');
-                event.preventDefault(); // Prevent the default behavior (navigation)
+                return
             }
             else if (BranchStatus !== "@Status.Active") {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                toastr.error('@localizer["toastMessageUserHold"]');
-                event.preventDefault(); // Prevent the default behavior (navigation)
+                toastr.error('@localizer["toastMessageBranchHold"]');
+                return
             }
             else if (lessorStatus !== "@Status.Active") {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["toastMessageLessorHold"]');
-                event.preventDefault(); // Prevent the default behavior (navigation)
+                return
             }
             else if (parseInt(CarsAvaliableNo) == 0) {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["AvaliableCarsIsEmptyTab"]');
-                event.preventDefault(); // Prevent the default behavior (navigation)
+                return
             }
             else if (CompanyContract > 0) {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["toastMessageCompanyContractExpired"]');
-                event.preventDefault(); // Prevent the default behavior (navigation)
+                return
             }
             else if (CompanyDocuments > 0) {
                 $.ajax({
@@ -715,34 +715,37 @@
                         if (checkContract == "100") {
                             toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                             toastr.error('@localizer["toastMessageCompanyDocumentRegister"]');
-                            event.preventDefault(); // Prevent the default behavior (navigation)
+                            return
                         }
                         else if (checkContract == "101") {
                             toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                             toastr.error('@localizer["toastMessageCompanyDocumentChamber"]');
-                            event.preventDefault(); // Prevent the default behavior (navigation)
+                            return
                         }
                         else if (checkContract == "102") {
                             toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                             toastr.error('@localizer["toastMessageCompanyDocumentTransferPermission"]');
-                            event.preventDefault(); // Prevent the default behavior (navigation)
+                            return
                         }
                         else if (checkContract == "103") {
                             toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                             toastr.error('@localizer["toastMessageCompanyDocumentLicenceMunicipale"]');
-                            event.preventDefault(); // Prevent the default behavior (navigation)
+                            return
                         }
                         else if (checkContract == "104") {
                             toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                             toastr.error('@localizer["toastMessageCompanyDocumentLicenceAddress"]');
-                            event.preventDefault(); // Prevent the default behavior (navigation)
+                            return
                         }
-                    },
-                    error: function () {
-                        alert("Error loading data.");
+                        else {
+                            window.location.href = "/BS/Contract/CreateContract";
+                        }
                     }
                 });
-               
+
+            }
+            else {
+                window.location.href = "/BS/Contract/CreateContract";
             }
         })
 
