@@ -7,6 +7,7 @@ using Bnan.Ui.ViewModels.BS;
 using Bnan.Ui.ViewModels.CAS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Localization;
 using NToastNotify;
 
@@ -52,16 +53,17 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var carsAvailable = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == selectBranch && x.CrCasCarInformationStatus == Status.Active &&
                                                                                  x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationOwnerStatus == Status.Active &&
                                                                                 (x.CrCasCarInformationForSaleStatus == Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale),
-                                                                                new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics", "CrCasCarInformationCategoryNavigation" }).ToList();
-            var categoryCars= carsAvailable.Select(item => item.CrCasCarInformationCategoryNavigation).Distinct().OrderBy(item => item.CrMasSupCarCategoryCode).ToList();
+                                                                                new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics",
+                                                                                        "CrCasCarInformationCategoryNavigation", "CrCasCarDocumentsMaintenances" }).ToList();
+            var categoryCars = carsAvailable.Select(item => item.CrCasCarInformationCategoryNavigation).Distinct().OrderBy(item => item.CrMasSupCarCategoryCode).ToList();
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
                 CrCasBranchInformations = branches,
                 SelectedBranch = selectBranch,
                 CrCasBranchInformation = branch,
                 Drivers = drivers,
-                CarCategories=categoryCars,
-                CarsFilter= carsAvailable
+                CarCategories = categoryCars,
+                CarsFilter = carsAvailable
             };
             return View(bSLayoutVM);
         }
@@ -199,18 +201,18 @@ namespace Bnan.Ui.Areas.BS.Controllers
             return Json(null);
         }
         [HttpGet]
-        public async Task<IActionResult> CheckAuthUser(bool id,bool address)
+        public async Task<IActionResult> CheckAuthUser(bool id, bool address)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var userContractValidity = _unitOfWork.CrMasUserContractValidity.Find(x => x.CrMasUserContractValidityUserId == userLogin.Id);
             var check = "true";
-            if (id==false&&userContractValidity.CrMasUserContractValidityId == false)
+            if (id == false && userContractValidity.CrMasUserContractValidityId == false)
             {
                 check = "id";
                 return Json(check);
             }
-            else if (address==false&& userContractValidity.CrMasUserContractValidityRenterAddress == false)
+            else if (address == false && userContractValidity.CrMasUserContractValidityRenterAddress == false)
             {
                 check = "address";
                 return Json(check);
@@ -227,8 +229,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == selectedBranch && x.CrCasCarInformationStatus == Status.Active &&
                                                                                  x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationOwnerStatus == Status.Active &&
                                                                                 (x.CrCasCarInformationForSaleStatus == Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale),
-                                                                                new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics", "CrCasCarInformationCategoryNavigation" }).ToList();
-            if (selectedCategory== "3400000000")
+                                                                                new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics",
+                                                                                        "CrCasCarInformationCategoryNavigation", "CrCasCarDocumentsMaintenances" }).ToList();
+            if (selectedCategory == "3400000000")
             {
                 BSLayoutVM bSLayoutVM = new BSLayoutVM()
                 {
@@ -244,5 +247,39 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCarInformation(string serialNumber)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            BSCarsInformationVM carVM = new BSCarsInformationVM();
+            var carInfo = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationSerailNo == serialNumber);
+            carVM.CarInformation = carInfo;
+            var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicDistributionCode == carInfo.CrCasCarInformationDistribution);
+            if (carPrice != null)
+            {
+                carVM.CarPrice = carPrice;
+                //var options = _unitOfWork.CrCasPriceCarOption.FindAll(x => x.CrCasPriceCarOptionsNo == carPrice.CrCasPriceCarBasicNo).Sum(x => x.CrCasPriceCarOptionsValue);
+                //var additionals = _unitOfWork.CrCasPriceCarAdditional.FindAll(x => x.CrCasPriceCarAdditionalNo == carPrice.CrCasPriceCarBasicNo).Sum(x => x.CrCasPriceCarAdditionalValue);
+                //if (options > 0) carVM.Options = "1";
+                //else carVM.Options = "0";
+                //if (additionals > 0) carVM.Additionals = "1";
+                //else carVM.Additionals = "0";
+                return Json(carVM);
+            }
+            return Json(null);
+
+        }
+
+        //[HttpGet]
+        //public async Task<IActionResult> GetCarPrice(string ditribtionCode)
+        //{
+        //    var userLogin = await _userManager.GetUserAsync(User);
+        //    var lessorCode = userLogin.CrMasUserInformationLessor;
+        //    var CarPrice = await _unitOfWork.CrCasPriceCarBasic.FindAsync(x => x.CrCasPriceCarBasicDistributionCode == ditribtionCode &&
+        //                                                      x.CrCasPriceCarBasicLessorCode == lessorCode);
+        //    return Json(CarPrice);
+        //}
     }
 }

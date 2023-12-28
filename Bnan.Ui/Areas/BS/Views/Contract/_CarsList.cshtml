@@ -1,4 +1,5 @@
-﻿@using Bnan.Ui.ViewModels.BS;
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
 @model BSLayoutVM
 
 @inject IViewLocalizer localizer
@@ -14,7 +15,7 @@
     @foreach (var item in Model.CarsFilter)
     {
         <tr style="border-bottom: 1px solid #39629C;cursor: pointer;" class="next ">
-            <td>
+            <td data-serial-number="@item.CrCasCarInformationSerailNo">
                 <div class="row"
                      style="flex-direction: row-reverse;">
                     <div class="col-sm-12  col-md-12 col-lg-2 p-1">
@@ -36,11 +37,9 @@
                             <span>@localizer["CurrentMeter"]:</span>
                             <span>@item.CrCasCarInformationCurrentMeter</span>
                         </p>
-
                     </div>
                 </div>
             </td>
-
         </tr>
     }
 }
@@ -48,8 +47,8 @@ else
 {
     @foreach (var item in Model.CarsFilter)
     {
-        <tr style="border-bottom: 1px solid #39629C;cursor: pointer;" class="next ">
-            <td>
+        <tr style="border-bottom: 1px solid #39629C;cursor: pointer;" class="next " data-serialNnumber="@item.CrCasCarInformationSerailNo">
+            <td data-serial-number="@item.CrCasCarInformationSerailNo">
                 <div class="row"
                      style="flex-direction: row-reverse;">
                     <div class="col-sm-12  col-md-12 col-lg-2 p-1">
@@ -71,7 +70,18 @@ else
                             <span>@localizer["CurrentMeter"]:</span>
                             <span>@item.CrCasCarInformationCurrentMeter</span>
                         </p>
-
+                        @if (item.CrCasCarDocumentsMaintenances.Where(x=>x.CrCasCarDocumentsMaintenanceProceduresClassification=="12"&&x.CrCasCarDocumentsMaintenanceStatus!=Status.Active).Count()>0)
+                        {
+                            <p>
+                                <span style="color:red">راجع وثائق السيارة</span>
+                            </p>
+                        }
+                        @if (item.CrCasCarDocumentsMaintenances.Where(x => x.CrCasCarDocumentsMaintenanceProceduresClassification == "13" && x.CrCasCarDocumentsMaintenanceStatus != Status.Active).Count() > 0)
+                        {
+                            <p>
+                                <span style="color:red">راجع صيانة السيارة</span>
+                            </p>
+                        }
                     </div>
                 </div>
             </td>

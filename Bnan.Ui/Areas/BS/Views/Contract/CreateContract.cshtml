@@ -459,7 +459,7 @@
                                         </div>
                                         <div class="col-md-6" style="    display: flex;
                                                                 justify-content: flex-end;">
-                                            <div class="addational-driver d-flex gap-3">
+                                            <div class="addational-driver d-flex gap-3" id="addationalDriverDiv">
                                                 <label class="addational-driver-label"
                                                        for="addational-driver">
                                                     @localizer["AdditionalDriverr"]
@@ -2161,7 +2161,8 @@
         var RenterInformation;
         var DriverInformation;
         var AddDriverInformation;
-
+        var SerialNumberOfCar;
+        var CarInformation;
 
 
         // For Renter
@@ -2724,12 +2725,14 @@
         var tab = 1;
         var currentField = "";
         var NextField = "";
-        $(".next").click(function () {
+        var PreviousField = "";
+        $(document).on("click", ".next", function () {
             var renterName = $("#RenterName").text();
             current_fs = $(this).closest("fieldset");
             next_fs = $(this).closest("fieldset").next();
             currentField = $("#progressbar li").eq($("fieldset").index(current_fs))[0].id;
             NextField = $("#progressbar li").eq($("fieldset").index(next_fs))[0].id;
+            PreviousField = $("#progressbar li").eq($("fieldset").index(next_fs))[0].id;
             console.log("currentField", currentField)
             console.log("NextField", NextField)
             if ($("#msform").valid()) {
@@ -2810,7 +2813,8 @@
                     var privateDriverRadio1 = document.getElementById("PrivateDriver");
                     var privateDriverID = $("#driver-dropdown").val();
                     console.log(privateDriverRadio1.checked)
-                    // This Check to If Renter Need Private Driver Or not
+                    SerialNumberOfCar = $(this).find('td').data("serial-number");
+                    GetCarInfo(SerialNumberOfCar);                    
                     if (privateDriverRadio1.checked) {
                         // Clear previous data and style
                         clearDataDriver();
@@ -2906,7 +2910,6 @@
                         current_fs.hide();
                     }
                     //////////////////////////////////////////
-
                 }
                 else if (currentField === "driver") {
                     var driverName = $("#DriverName").text();
@@ -2955,6 +2958,7 @@
             current_fs = $(this).closest("fieldset");
             previous_fs = $(this).closest("fieldset").prev();
             console.log(DriverInformation);
+            console.log(PreviousField);
             console.log(currentField);
             console.log(NextField);
             if (currentField === "option") {
@@ -2983,6 +2987,7 @@
                     current_fs.hide();
                 }
                 else {
+
                     $("#progressbar li").eq($("fieldset").index(previous_fs)).removeClass("active");
                     previous_fs = $(this).closest("fieldset").prev().prev();
                     $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
@@ -3040,7 +3045,7 @@
 
 
 
-        function GetCodeCategory(categoryCode){
+        function GetCodeCategory(categoryCode) {
             var selectedBranch = "@Model.SelectedBranch";
             console.log(categoryCode);
             console.log(selectedBranch);
@@ -3056,6 +3061,94 @@
                 }
             });
         }
+
+
+        function GetCarInfo(serialNumber) {
+            console.log(serialNumber);
+            $.ajax({
+                url: "/BS/Contract/GetCarInformation",
+                type: "GET",
+                data: { serialNumber: serialNumber },
+                success: function (data) {
+                    CarInformation = data;
+                    console.log(CarInformation)
+                    // if (CarInformation.carPrice.crCasPriceCarBasicIsAdditionalDriver == null || CarInformation.carPrice.crCasPriceCarBasicIsAdditionalDriver ==false) {
+                    //     $("#addationalDriverDiv").hide();
+                    // }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error("Error loading data:", textStatus, errorThrown);
+                }
+            });
+        }
+
+
+
+        // function GetCarInfo(serialNumber) {
+        //     console.log(serialNumber);
+        //     $.ajax({
+        //         url: "/BS/Contract/GetCarInformation",
+        //         type: "GET",
+        //         data: { serialNumber: serialNumber },
+        //         success: function (data) {
+        //             CarInformation = data;
+        //             console.log(CarInformation)
+        //             GetCarPrice(data.crCasCarInformationDistribution);
+        //         },
+        //         error: function (xhr, textStatus, errorThrown) {
+        //             console.error("Error loading data:", textStatus, errorThrown);
+        //         }
+        //     });
+        // }
+        // function GetCarPrice(distributionCode) {
+        //     console.log(distributionCode);
+        //     $.ajax({
+        //         url: "/BS/Contract/GetCarPrice",
+        //         type: "GET",
+        //         data: { ditribtionCode: distributionCode },
+        //         success: function (data) {
+        //             CarPrice = data;
+        //             console.log(CarPrice)
+        //         },
+        //         error: function (xhr, textStatus, errorThrown) {
+        //             console.error("Error loading data:", textStatus, errorThrown);
+        //         }
+        //     });
+        // }
+
+
+        // function GetCarOptionNumber(carPriceCode) {
+        //     console.log(carPriceCode);
+        //     $.ajax({
+        //         url: "/BS/Contract/GetCarOptionNumber",
+        //         type: "GET",
+        //         data: { ditribtionCode: distributionCode },
+        //         success: function (data) {
+        //             CarPrice = data;
+        //             console.log(CarPrice)
+        //         },
+        //         error: function (xhr, textStatus, errorThrown) {
+        //             console.error("Error loading data:", textStatus, errorThrown);
+        //         }
+        //     });
+        // }
+
+        // function GetCarAdditionalNumber(carPriceCode) {
+        //     console.log(carPriceCode);
+        //     $.ajax({
+        //         url: "/BS/Contract/GetCarAdditionalNumber",
+        //         type: "GET",
+        //         data: { ditribtionCode: distributionCode },
+        //         success: function (data) {
+        //             CarPrice = data;
+        //             console.log(CarPrice)
+        //         },
+        //         error: function (xhr, textStatus, errorThrown) {
+        //             console.error("Error loading data:", textStatus, errorThrown);
+        //         }
+        //     });
+        // }
+
     </script>
 
 

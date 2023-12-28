@@ -671,8 +671,8 @@
             var lessorStatus = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorInformationStatus";
             var BranchStatus = "@Model?.CrCasBranchInformation?.CrCasBranchInformationStatus";
             var CarsAvaliableNo = "@ViewBag.AvaliableCars";
-            var CompanyContract = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.Where(x=>x.CrMasContractCompanyStatus==@Status.AboutToExpire||x.CrMasContractCompanyStatus==Status.Renewed).Count()";
-            var CompanyDocuments = "@userInfo?.CrMasUserInformationLessorNavigation?.CrCasBranchDocuments.Where(x=>x.CrCasBranchDocumentsStatus==Status.AboutToExpire || x.CrCasBranchDocumentsStatus==Status.Renewed).Count()";
+            var CompanyContract = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.Where(x=>x.CrMasContractCompanyStatus==Status.Expire||x.CrMasContractCompanyStatus==Status.Renewed).Count()";
+            var CompanyDocuments = "@userInfo?.CrMasUserInformationLessorNavigation?.CrCasBranchDocuments.Where(x=>x.CrCasBranchDocumentsStatus==Status.Expire || x.CrCasBranchDocumentsStatus==Status.Renewed).Count()";
             var checkContractValidity = "";
             var selectedBranch = "@Model?.SelectedBranch";
             if (createAuth.toLowerCase() === "false" || createAuth == null || createAuth == "") {
