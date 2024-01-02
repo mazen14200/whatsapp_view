@@ -319,6 +319,7 @@
                                 </div>
 
                             </fieldset>
+                            <!--Driver-->
                             <fieldset>
                                 <div class="form-card form-card3">
                                     <div class="row row-step3 ">
@@ -535,6 +536,9 @@
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <p id="DriverLicenseExpiration"></p>
+                                                    <div class="row requird-field-row">
+                                                        <span class="requird-field" id="DriverLicenseExpirationMessage"></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -543,11 +547,11 @@
                                         <div class="col-md-8">
                                             <div class="row " style="justify-content: flex-start;flex-direction: row-reverse;">
                                                 <div class="col-auto">
-                                                    <p id="additionalDriver-adress">@localizer["Address"]</p>
+                                                    <p id="driver-email">@localizer["Email"]</p>
+
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p id="DriverAddress">
-                                                    </p>
+                                                    <p id="DriverEmail"></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -570,13 +574,12 @@
                                     </div>
                                     <div class="row row-step3 ">
                                         <div class="col-auto">
-                                            <p id="driver-email">@localizer["Email"]</p>
-
+                                            <p id="additionalDriver-adress">@localizer["Address"]</p>
                                         </div>
                                         <div class="col-auto personal-data">
-                                            <p id="DriverEmail"></p>
+                                            <p id="DriverAddress">
+                                            </p>
                                         </div>
-
                                     </div>
 
                                     <div class="row row-step3">
@@ -602,6 +605,7 @@
                                     </div>
                                 </div>
                             </fieldset>
+                            <!--AddDriver-->
                             <fieldset>
                                 <div class="form-card form-card4">
 
@@ -816,6 +820,9 @@
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <p id="AddDriverLicenseExpiration"></p>
+                                                    <div class="row requird-field-row">
+                                                        <span class="requird-field" id="AddDriverLicenseExpirationMessage"></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -824,10 +831,12 @@
                                         <div class="col-md-8">
                                             <div class="row " style="justify-content: flex-start;flex-direction: row-reverse;">
                                                 <div class="col-auto">
-                                                    <p id="additionalDriver-adress">@localizer["Address"]</p>
+                                                    <p id="additionalDriver-email">@localizer["Email"]</p>
+
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p id="AddDriverAddress"></p>
+                                                    <p id="AddDriverEmail"></p>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -844,12 +853,10 @@
                                     </div>
                                     <div class="row row-step4 ">
                                         <div class="col-auto">
-                                            <p id="additionalDriver-email">@localizer["Email"]</p>
-
+                                            <p id="additionalDriver-adress">@localizer["Address"]</p>
                                         </div>
                                         <div class="col-auto personal-data">
-                                            <p id="AddDriverEmail"></p>
-
+                                            <p id="AddDriverAddress"></p>
                                         </div>
                                     </div>
                                     <div class="row row-step4 ">
@@ -879,149 +886,22 @@
                                     </div>
                                 </div>
                             </fieldset>
+                            <!--Choices and Additional-->
                             <fieldset>
                                 <div class="form-card">
                                     <div class="row  table-field-row ">
+                                        <!--Car Options-->
                                         <div class="col">
                                             <div class="table-scroll">
-
-                                                <table class="table table-bordered  table-hover table-scroll ">
+                                                <table class="table table-bordered  table-hover table-scroll " id="OptionsList">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col"
-                                                                class="value-tabel-header">
-                                                                القيمة
-                                                            </th>
-                                                            <th scope="col" style='border-left: 1px solid #ff9626a3;
-                                                                                    '>الاضافات</th>
-
+                                                            <th scope="col" class="value-tabel-header">@localizer["TheValue"]</th>
+                                                            <th scope="col" style='border-left: 1px solid #ff9626a3;'>@localizer["Additionals"]</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۱۰۰:۰۰
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="Delivery-to-another-branch"
-                                                                       for="Delivery-to-another-branch">
-                                                                    تسليم بفرع آخر
-                                                                </label>
-                                                                <input class="Delivery-to-another-branch-input"
-                                                                       type="checkbox" name="Additions"
-                                                                       value="Delivery-to-another-branch"
-                                                                       id="Delivery-to-another-branch">
 
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td class="text-center">
-                                                                ۱۲۰:۰۰
-
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="Receiving-the-car"
-                                                                       for="Receiving-the-car">
-                                                                    استلام السيارة
-                                                                </label>
-                                                                <input class="Receiving-the-car-input"
-                                                                       type="checkbox" name="Additions"
-                                                                       value="Receiving-the-car"
-                                                                       id="Receiving-the-car">
-
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۳۰:۰۰
-
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="child-seat"
-                                                                       for="child-seat">
-                                                                    كرسي أطفال
-                                                                </label>
-                                                                <input class="child-seat-input"
-                                                                       type="checkbox" name="Additions"
-                                                                       value="child-seat"
-                                                                       id="child-seat">
-
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۳۰:۰۰
-
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="Baby chair"
-                                                                       for="Baby chair">
-                                                                    كرسي رضيع
-                                                                </label>
-                                                                <input class="Baby chair-input"
-                                                                       type="checkbox" name="Additions"
-                                                                       value="Baby chair"
-                                                                       id="Baby chair">
-
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۳۰:۰۰
-                                                            </td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۳۰:۰۰
-                                                            </td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۲۰:۰۰
-
-                                                            </td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۲۰:۰۰
-
-                                                            </td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۲۰:۰۰
-
-                                                            </td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۲۰:۰۰
-
-                                                            </td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۰۰:۰۰
-                                                            </td>
-                                                            <td class="text-center">المجموع</td>
-
-                                                        </tr>
-
+                                                    <tbody id="additionalBody">
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1033,129 +913,16 @@
                                                         <tr>
                                                             <th scope="col"
                                                                 class="value-tabel-header">
-                                                                القيمة
+                                                                @localizer["TheValue"]
                                                             </th>
                                                             <th scope="col"
                                                                 style='border-left: 1px solid #ff9626a3; '>
-                                                                الخيارات
+                                                                @localizer["Choices"]
                                                             </th>
 
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۱٥:۰۰
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="Open-the-counter"
-                                                                       for="Open-the-counter">
-                                                                    فتح العداد
-
-                                                                </label>
-                                                                <input class="Open-the-counter-input"
-                                                                       type="checkbox" name="options"
-                                                                       value="Open-the-counter"
-                                                                       id="Open-the-counter">
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td class="text-center">
-                                                                ۲۰:۰۰
-
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="full insurance"
-                                                                       for="full insurance">
-                                                                    تأمين شامل
-
-                                                                </label>
-                                                                <input class="full insurance-input"
-                                                                       type="checkbox" name="options"
-                                                                       value="full insurance"
-                                                                       id="full insurance">
-
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۳۰:۰۰
-
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="Plus-insurance"
-                                                                       for="Plus-insurance">
-                                                                    +تأمين
-
-                                                                </label>
-                                                                <input class="Plus-insurance-input"
-                                                                       type="checkbox" name="options"
-                                                                       value="Plus-insurance"
-                                                                       id="Plus-insurance">
-
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۲۰:۰۰
-
-                                                            </td>
-                                                            <td>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۲۰:۰۰
-                                                            </td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۲۰:۰۰
-                                                            </td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۲۰:۰۰
-                                                            </td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۲۰:۰۰
-                                                            </td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۲۰:۰۰
-                                                            </td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۲۰:۰۰
-                                                            </td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                ۰۰:۰۰
-                                                            </td>
-                                                            <td class="text-center">المجموع</td>
-
-                                                        </tr>
-
+                                                    <tbody id="optionsBody">
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1180,6 +947,7 @@
                                     </div>
                                 </div>
                             </fieldset>
+                            <!--CheckUP-->
                             <fieldset>
                                 <div class="form-card">
                                     <div class="row">
@@ -1189,44 +957,33 @@
                                                 <div class="col-auto">
                                                     <label id="CurrentReadingg"
                                                            for="CurrentReadingg-input">
-                                                        القراءة الحالية
+                                                        @localizer["CurrentMeter"]
                                                     </label>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <input type="tel" class="form-control1"
-                                                           style="width: 130px;"
-                                                           id="CurrentReadingg-input"
-                                                           name="CurrentReadingg-input" required>
+                                                    <input type="tel" class="form-control1" style="width: 130px;" id="currentMeter" name="currentMeter" required maxlength="10">
+                                                    <div class="row requird-field-row">
+                                                        <span class="requird-field" id="requird_field_CurrentMeter"></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="upload__box d-flex">
-                                                <div class="upload_img-wrap_inner" style="display: flex;
-                                                                  flex-wrap: wrap;
-                                                                  gap: 10px ">
+                                                <div class="upload_img-wrap_inner" style="display: flex;flex-wrap: wrap;gap: 10px ">
                                                     <div class="upload__img-box" id="upload-img1">
                                                     </div>
                                                     <div class="upload__btn-box">
                                                         <label class="upload__btn">
                                                             <div class="upload-container-checking">
-                                                                <img class="upload-icon"
-                                                                     src="~/BranchSys/CreateContract/Group (1).png"
-                                                                     alt="Upload Icon">
-                                                                <input type="file" multiple
-                                                                       accept="image/*"
-                                                                       data-max_length="20"
-                                                                       id="checking-img"
-                                                                       class="upload__inputfile "
-                                                                       onclick="HideFirstImg()">
+                                                                <img class="upload-icon" src="~/BranchSys/CreateContract/Group (1).png" alt="Upload Icon">
+                                                                <input type="file" multiple accept="image/*" data-max_length="20" id="checking-img" class="upload__inputfile " onclick="HideFirstImg()">
                                                             </div>
                                                         </label>
                                                     </div>
                                                 </div>
-
                                             </div>
                                             <div class="row">
-                                                <p style="color: red;">
-                                                    بحد أدنى صورة واحدة (۱) وحد
-                                                    أقصى اثني عشرة صورة (۱۲)
+                                                <p style="color: red;" id="checkUpMessageRequired">
+                                                    
                                                 </p>
                                             </div>
 
@@ -1239,199 +996,17 @@
                                                         <tr>
                                                             <th scope="col"
                                                                 class="value-tabel-header">
-                                                                ملاحظات
+                                                                @localizer["reasons"]
                                                             </th>
                                                             <th scope="col"
                                                                 style='border-left: 1px solid #ff9626a3; '>
-                                                                بنود الفحص
+                                                                @localizer["CheckUpNames"]
                                                             </th>
 
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                <textarea style="border: none;height: 24px; resize: none;"
-                                                                          id="Tires-textarea"
-                                                                          maxlength="100"
-                                                                          name="Tires-textarea"></textarea>
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="Tires" for="Tires">
-                                                                    الإطارات
-
-                                                                </label>
-                                                                <input class="Tires-input"
-                                                                       type="checkbox"
-                                                                       name="Examination-items"
-                                                                       value="Tires" id="Tires">
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td class="text-center">
-                                                                <textarea style="border: none;height: 24px; resize: none;"
-                                                                          id="lights-textarea"
-                                                                          maxlength="100"
-                                                                          name="lights-textarea"></textarea>
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="lights" for="lights">
-                                                                    الأنوار
-
-                                                                </label>
-                                                                <input class="lights-input"
-                                                                       type="checkbox"
-                                                                       name="Examination-items"
-                                                                       value="lights" id="lights">
-
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                <textarea style="border: none;height: 24px; resize: none;"
-                                                                          id="Air_conditioner-textarea"
-                                                                          maxlength="100"
-                                                                          name="Air_conditioner-textarea"></textarea>
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="Air_conditioner"
-                                                                       for="Air_conditioner">
-                                                                    المكيف
-
-                                                                </label>
-                                                                <input class="Air_conditioner-input"
-                                                                       type="checkbox"
-                                                                       name="Examination-items"
-                                                                       value="Air_conditioner"
-                                                                       id="Air_conditioner">
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                <textarea style="border: none;height: 24px; resize: none;"
-                                                                          id="Safety_Security-textarea"
-                                                                          maxlength="100"
-                                                                          name="Safety_Security-textarea"></textarea>
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="Safety_Security"
-                                                                       for="Safety_Security">
-                                                                    الأمن والسلامة
-
-                                                                </label>
-                                                                <input class="Safety_Security-input"
-                                                                       type="checkbox"
-                                                                       name="Examination-items"
-                                                                       value="Safety_Security"
-                                                                       id="Safety_Security">
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                <textarea style="border: none;height: 24px; resize: none;"
-                                                                          id="wiper-textarea"
-                                                                          maxlength="100"
-                                                                          name="wiper-textarea"></textarea>
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="wiper" for="wiper">
-                                                                    المساحات
-
-                                                                </label>
-                                                                <input class="wiper-input"
-                                                                       type="checkbox"
-                                                                       name="Examination-items"
-                                                                       value="wiper" id="wiper">
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                <textarea style="border: none;height: 24px; resize: none;"
-                                                                          id="signals-textarea"
-                                                                          maxlength="100"
-                                                                          name="signals-textarea"></textarea>
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="signals"
-                                                                       for="signals">
-                                                                    الإشارات
-
-                                                                </label>
-                                                                <input class="signals-input"
-                                                                       type="checkbox"
-                                                                       name="Examination-items"
-                                                                       value="signals" id="signals">
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                <textarea style="border: none;height: 24px; resize: none;"
-                                                                          id="cleanliness-textarea"
-                                                                          maxlength="100"
-                                                                          name="cleanliness-textarea"></textarea>
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="cleanliness"
-                                                                       for="cleanliness">
-                                                                    النظافة
-
-                                                                </label>
-                                                                <input class="cleanliness-input"
-                                                                       type="checkbox"
-                                                                       name="Examination-items"
-                                                                       value="cleanliness"
-                                                                       id="cleanliness">
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                <textarea style="border: none;height: 24px; resize: none;"
-                                                                          id="Front_brake-textarea"
-                                                                          maxlength="100"
-                                                                          name="Front_brake-textarea"></textarea>
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="Front_brake "
-                                                                       for="Front_brake">
-                                                                    الفرامل الأمامية
-
-                                                                </label>
-                                                                <input class="Front_brake-input"
-                                                                       type="checkbox"
-                                                                       name="Examination-items"
-                                                                       value="Front_brake"
-                                                                       id="Front_brake">
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                <textarea style="border: none;height: 24px; resize: none;"
-                                                                          id="Rear_brake-textarea"
-                                                                          maxlength="100"
-                                                                          name="Rear_brake-textarea"></textarea>
-                                                            </td>
-                                                            <td class="tabel-data-checkbox-td">
-                                                                <label class="Rear_brake"
-                                                                       for="Rear_brake">
-                                                                    الفرامل الخلفية
-
-                                                                </label>
-                                                                <input class="Rear_brake-input"
-                                                                       type="checkbox"
-                                                                       name="Examination-items"
-                                                                       value="Rear_brake"
-                                                                       id="Rear_brake">
-                                                            </td>
-
-                                                        </tr>
+                                                    <tbody id="CheckBody">
+                                                        <partial name="_CheckUpList" />
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1445,7 +1020,7 @@
                                         <img src="~/BranchSys/CreateContract/Group.png" alt="Button Image"
                                              class="next action-button"
                                              style="vertical-align: middle; margin-right: 10px;">
-                                        <input type="submit" name="next" class="next action-button"
+                                        <input type="button" name="next" class="next action-button"
                                                value="التالي" />
                                     </div>
                                     <div class="button-card">
@@ -1826,8 +1401,6 @@
                     </div>
                 </div>
             </div>
-
-
             <!-- Renter -->
             <div class="modal fade" id="checkModalToggle" aria-hidden="true"
                  aria-labelledby="checkModalToggleLabel" tabindex="-1">
@@ -2116,9 +1689,10 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <!--makes bootsrab animation works-->
-    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.9.2/dist/umd/popper.min.js"
-            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-            crossorigin="anonymous"></script>
+    @*     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+     *@    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.9.2/dist/umd/popper.min.js"
+                       integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+                       crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
             integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
             crossorigin="anonymous"></script>
@@ -2162,8 +1736,11 @@
         var DriverInformation;
         var AddDriverInformation;
         var SerialNumberOfCar;
+        var PriceNumberOfCar;
         var CarInformation;
-
+        var CarChoices;
+        var CarAdditionals;
+        var CarCheckUp;
 
         // For Renter
         async function GetRenterInformation(RenterId) {
@@ -2391,6 +1968,7 @@
                     $("#DriverLicenseType").text("");
                     $("#DriverLicenseIssued").text("");
                     $("#DriverLicenseExpiration").text("");
+                    $("#DriverLicenseExpirationMessage").text("").css("color", "");
                     $("#DriverEmployer").text("");
                     CheckIfDriverIdExist = false;
                     DriverInformation = null;
@@ -2454,6 +2032,9 @@
                         }
                         if (ExpiryIdDate < currentDate) {
                             $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
+                        }
+                        if (licenseExpiryDate < currentDate) {
+                            $("#DriverLicenseExpirationMessage").text('@localizer["LicenseIsExpire"]').css("color", "red");
                         }
                         $("#DriverName").text(DriverInformation.personalEnName);
                         $("#DriverNationality").text(DriverInformation.personalEnNationality);
@@ -2575,6 +2156,7 @@
                     $("#AddDriverLicenseType").text("");
                     $("#AddDriverLicenseIssued").text("");
                     $("#AddDriverLicenseExpiration").text("");
+                    $("#AddDriverLicenseExpirationMessage").text("").css("color", "");
                     $("#AddDriverEmployer").text("");
                     CheckIfAddDriverIdExist = false;
                     AddDriverInformation = null;
@@ -2637,6 +2219,9 @@
                         }
                         if (ExpiryIdDate < currentDate) {
                             $("#requird_field_BirthDate_AddDriver").text('@localizer["IdIsExpire"]').css("color", "red");
+                        }
+                        if (licenseExpiryDate < currentDate) {
+                            $("#AddDriverLicenseExpirationMessage").text('@localizer["LicenseIsExpire"]').css("color", "red");
                         }
                         $("#AddDriverName").text(AddDriverInformation.personalEnName);
                         $("#AddDriverNationality").text(AddDriverInformation.personalEnNationality);
@@ -2726,16 +2311,15 @@
         var currentField = "";
         var NextField = "";
         var PreviousField = "";
-        $(document).on("click", ".next", function () {
+        $(document).on("click", ".next", async function () {
             var renterName = $("#RenterName").text();
             current_fs = $(this).closest("fieldset");
             next_fs = $(this).closest("fieldset").next();
             currentField = $("#progressbar li").eq($("fieldset").index(current_fs))[0].id;
             NextField = $("#progressbar li").eq($("fieldset").index(next_fs))[0].id;
             PreviousField = $("#progressbar li").eq($("fieldset").index(next_fs))[0].id;
-            console.log("currentField", currentField)
-            console.log("NextField", NextField)
             if ($("#msform").valid()) {
+                console.log(currentField);
                 if (currentField === "tenant") {
                     if (renterName != null && renterName != "") {
                         var currentDate = new Date();
@@ -2812,103 +2396,129 @@
                     var driverRadio1 = document.getElementById("RenterIsdriver");
                     var privateDriverRadio1 = document.getElementById("PrivateDriver");
                     var privateDriverID = $("#driver-dropdown").val();
-                    console.log(privateDriverRadio1.checked)
                     SerialNumberOfCar = $(this).find('td').data("serial-number");
-                    GetCarInfo(SerialNumberOfCar);                    
-                    if (privateDriverRadio1.checked) {
-                        // Clear previous data and style
-                        clearDataDriver();
-                        clearDataAddDriver();
-                        document.getElementById("addational-driver").checked = false;
-                        currentField = "option";
-                        NextField = "check";
-                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                        next_fs = $(this).closest("fieldset").next().next();
-                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                        next_fs = $(this).closest("fieldset").next().next().next();
-                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                        next_fs.show();
-                        current_fs.hide();
-                    }
-                    // This Check to If driverIsRenter Or not
-                    else if (driverRadio1.checked) {
-                        // DriverInformation = RenterInformation;
-                        var currentDate = new Date();
-                        var ExpiryIdDate = new Date(RenterInformation.expiryIdDate);
-                        $("#DriverCheckBtn").hide();
-                        var birthdate = RenterInformation.birthDate ? RenterInformation.birthDate.split('T')[0] : null;
-                        var licenseExpiryDate = RenterInformation.licenseExpiryDate ? RenterInformation.licenseExpiryDate.split('T')[0] : null;
-                        var licenseIssuedDate = RenterInformation.licenseIssuedDate ? RenterInformation.licenseIssuedDate.split('T')[0] : null;
-                        if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
-                            if (DriverInformation.postEnNameConcenate != "" && DriverInformation.postEnNameConcenate != null && DriverInformation.postEnNameConcenate != undefined) {
-                                $("#DriverAddress").text(DriverInformation.postEnNameConcenate);
+                    PriceNumberOfCar = $(this).find('td').data("price-number");
+                    GetCarInfo(SerialNumberOfCar);
+                    // Use Promises to ensure data is available before proceeding
+                    Promise.all([getCarChoices(PriceNumberOfCar), getCarAdditional(PriceNumberOfCar)])
+                        .then(([choicesData, additionalsData]) => {
+                            if (privateDriverRadio1.checked) {
+                                //Clear Data Of Driver And Add Driver To Return Check
+                                clearDataDriver();
+                                clearDataAddDriver();
+                                document.getElementById("addational-driver").checked = false;
+                                if (CarAdditionals.count == 0 && CarChoices.count == 0) {
+                                    currentField = "check";
+                                    NextField = "payment";
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next().next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs.show();
+                                    current_fs.hide();
+                                    console.log(55555)
+                                }
+                                else {
+                                    currentField = "options";
+                                    NextField = "check";
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs.show();
+                                    current_fs.hide();
+                                }
                             }
-                            else {
-                                $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
-                            }
-                            if (DriverInformation.personalEmail != "" && DriverInformation.personalEmail != null && DriverInformation.personalEmail != undefined) {
-                                $("#DriverEmail").text(DriverInformation.personalEmail);
-                            }
-                            else {
-                                $("#DriverEmail").text('@localizer["notfound"]');
-                            }
-                            if (ExpiryIdDate < currentDate) {
-                                $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
-                            }
-                            $("#Contract_DriverId").val(DriverInformation.renterID);
-                            $("#Contract_DriverId").prop("readonly", true);
+                            // This Check to If driverIsRenter Or not
+                            else if (driverRadio1.checked) {
+                                // DriverInformation = RenterInformation;
+                                var currentDate = new Date();
+                                var ExpiryIdDate = new Date(RenterInformation.expiryIdDate);
+                                $("#DriverCheckBtn").hide();
+                                var birthdate = RenterInformation.birthDate ? RenterInformation.birthDate.split('T')[0] : null;
+                                var licenseExpiryDate = RenterInformation.licenseExpiryDate ? RenterInformation.licenseExpiryDate.split('T')[0] : null;
+                                var licenseIssuedDate = RenterInformation.licenseIssuedDate ? RenterInformation.licenseIssuedDate.split('T')[0] : null;
+                                if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                                    if (DriverInformation.postEnNameConcenate != "" && DriverInformation.postEnNameConcenate != null && DriverInformation.postEnNameConcenate != undefined) {
+                                        $("#DriverAddress").text(DriverInformation.postEnNameConcenate);
+                                    }
+                                    else {
+                                        $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
+                                    }
+                                    if (DriverInformation.personalEmail != "" && DriverInformation.personalEmail != null && DriverInformation.personalEmail != undefined) {
+                                        $("#DriverEmail").text(DriverInformation.personalEmail);
+                                    }
+                                    else {
+                                        $("#DriverEmail").text('@localizer["notfound"]');
+                                    }
+                                    if (ExpiryIdDate < currentDate) {
+                                        $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
+                                    }
+                                    $("#Contract_DriverId").val(DriverInformation.renterID);
+                                    $("#Contract_DriverId").prop("readonly", true);
 
-                            $("#DriverName").text(DriverInformation.personalEnName);
-                            $("#DriverNationality").text(DriverInformation.personalEnNationality);
-                            $("#DriverGender").text(DriverInformation.personalEnGender);
-                            $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
-                            $("#DriverLicenseType").text(DriverInformation.licenseEnName);
-                            $("#DriverLicenseIssued").text(licenseIssuedDate);
-                            $("#DriverLicenseExpiration").text(licenseExpiryDate);
-                            $("#DriverEmployer").text(DriverInformation.employerEnName);
-                            $("#birth-date-driver").val(birthdate);
-                        }
-                        else {
-                            if (RenterInformation.postArNameConcenate != "" && RenterInformation.postArNameConcenate != null && RenterInformation.postArNameConcenate != undefined) {
-                                $("#DriverAddress").text(RenterInformation.postArNameConcenate);
-                            }
-                            else {
-                                $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
-                            }
-                            if (RenterInformation.personalEmail != "" && RenterInformation.personalEmail != null && RenterInformation.personalEmail != undefined) {
-                                $("#DriverEmail").text(RenterInformation.personalEmail);
-                            }
-                            else {
-                                $("#DriverEmail").text('@localizer["notfound"]');
-                            }
-                            if (ExpiryIdDate < currentDate) {
-                                $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
-                            }
-                            $("#Contract_DriverId").val(RenterInformation.renterID);
-                            $("#Contract_DriverId").prop("readonly", true);
+                                    $("#DriverName").text(DriverInformation.personalEnName);
+                                    $("#DriverNationality").text(DriverInformation.personalEnNationality);
+                                    $("#DriverGender").text(DriverInformation.personalEnGender);
+                                    $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
+                                    $("#DriverLicenseType").text(DriverInformation.licenseEnName);
+                                    $("#DriverLicenseIssued").text(licenseIssuedDate);
+                                    $("#DriverLicenseExpiration").text(licenseExpiryDate);
+                                    $("#DriverEmployer").text(DriverInformation.employerEnName);
+                                    $("#birth-date-driver").val(birthdate);
+                                }
+                                else {
+                                    if (RenterInformation.postArNameConcenate != "" && RenterInformation.postArNameConcenate != null && RenterInformation.postArNameConcenate != undefined) {
+                                        $("#DriverAddress").text(RenterInformation.postArNameConcenate);
+                                    }
+                                    else {
+                                        $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
+                                    }
+                                    if (RenterInformation.personalEmail != "" && RenterInformation.personalEmail != null && RenterInformation.personalEmail != undefined) {
+                                        $("#DriverEmail").text(RenterInformation.personalEmail);
+                                    }
+                                    else {
+                                        $("#DriverEmail").text('@localizer["notfound"]');
+                                    }
+                                    if (ExpiryIdDate < currentDate) {
+                                        $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
+                                    }
+                                    $("#Contract_DriverId").val(RenterInformation.renterID);
+                                    $("#Contract_DriverId").prop("readonly", true);
 
-                            $("#DriverName").text(RenterInformation.personalArName);
-                            $("#DriverProffessions").text(RenterInformation.personalArProfessions);
-                            $("#DriverGender").text(RenterInformation.personalArGender);
-                            $("#DriverNationality").text(RenterInformation.personalArNationality);
-                            $("#DriverLicenseType").text(RenterInformation.licenseArName);
-                            $("#DriverEmployer").text(RenterInformation.employerArName);
-                            $("#DriverLicenseIssued").text(licenseIssuedDate);
-                            $("#DriverLicenseExpiration").text(licenseExpiryDate);
-                            $("#birth-date-driver").val(birthdate);
-                        }
-                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                        next_fs.show();
-                        current_fs.hide();
-                    }
-                    else {
-                        // Clear previous data and style
-                        clearDataDriver();
-                        clearDataAddDriver();
-                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                        next_fs.show();
-                        current_fs.hide();
-                    }
+                                    $("#DriverName").text(RenterInformation.personalArName);
+                                    $("#DriverProffessions").text(RenterInformation.personalArProfessions);
+                                    $("#DriverGender").text(RenterInformation.personalArGender);
+                                    $("#DriverNationality").text(RenterInformation.personalArNationality);
+                                    $("#DriverLicenseType").text(RenterInformation.licenseArName);
+                                    $("#DriverEmployer").text(RenterInformation.employerArName);
+                                    $("#DriverLicenseIssued").text(licenseIssuedDate);
+                                    $("#DriverLicenseExpiration").text(licenseExpiryDate);
+                                    $("#birth-date-driver").val(birthdate);
+                                }
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs.show();
+                                current_fs.hide();
+                            }
+                            else {
+                                //Clear Data Of Driver And Add Driver To Return Check
+                                clearDataDriver();
+                                clearDataAddDriver();
+                                document.getElementById("addational-driver").checked = false;
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs.show();
+                                current_fs.hide();
+                                currentField = "driver";
+                                NextField = "add-driver";
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error loading data:", error);
+                        });
                     //////////////////////////////////////////
                 }
                 else if (currentField === "driver") {
@@ -2919,15 +2529,31 @@
                             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                             next_fs.show();
                             current_fs.hide();
+                            currentField = "add-driver";
+                            NextField = "options";
                         }
                         else {
-                            currentField = "option";
-                            NextField = "check";
-                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                            next_fs = $(this).closest("fieldset").next().next();
-                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                            next_fs.show();
-                            current_fs.hide();
+                            if (CarChoices.count == 0 && CarAdditionals.count == 0) {
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs = $(this).closest("fieldset").next().next();
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs = $(this).closest("fieldset").next().next().next();
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs.show();
+                                current_fs.hide();
+                                currentField = "check";
+                                NextField = "payment";
+                            }
+                            else {
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs = $(this).closest("fieldset").next().next();
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs.show();
+                                current_fs.hide();
+                                currentField = "options";
+                                NextField = "check";
+                            }
+
                         }
 
                     }
@@ -2938,39 +2564,102 @@
                 else if (currentField === "add-driver") {
                     var addDriverName = $("#AddDriverName").text();
                     if (addDriverName != null && addDriverName != "") {
-                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                        next_fs.show();
-                        current_fs.hide();
-                        tab++;
+                        if (CarChoices.count == 0 && CarAdditionals.count == 0) {
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs = $(this).closest("fieldset").next().next();
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.show();
+                            current_fs.hide();
+                            currentField = "check";
+                            NextField = "payment"
+                        }
+                        else {
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.show();
+                            current_fs.hide();
+                            currentField = "options"
+                            NextField = "check"
+                        }
+
                     }
                     else {
                         $('#requird_field_AdditionalDriverId').text('@localizer["PleaseCheckYourID"]');
                     }
                 }
-                else if (currentField === "option") {
+                else if (currentField === "options") {
                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                     next_fs.show();
                     current_fs.hide();
+                    currentField = "check";
+                    NextField = "payment";
+                    console.log("555555");
+
                 }
+                else if (currentField === "check") {
+                    // Initialize variables
+                    var allChecked = true;
+                    var currentMeter = true;
+                    var imgs = true;
+
+                    // Check checkboxes
+                    var checkboxes = document.querySelectorAll(".CheckUp");
+                    checkboxes.forEach(function (checkbox) {
+                        if (!checkbox.checked) {
+                            allChecked = false;
+                        }
+                    });
+
+                    // Check currentMeterSpan
+                    var currentMeterSpan = $("#requird_field_CurrentMeter");
+                    if (currentMeterSpan.text().trim() === "") {
+                        console.log("Span is empty");
+                    } else {
+                        currentMeter = false;
+                        console.log("Span is not empty");
+                    }
+
+                    // Check if the div contains at least one img element
+                    if ($('.upload__img-box img').length > 0) {
+                        console.log("The div contains at least one img element");
+                    } else {
+                        imgs = false;
+                        console.log("The div does not contain any img elements");
+                    }
+
+                    // Final check
+                    if (imgs && currentMeter && allChecked) {
+                        $("#checkUpMessageRequired").text('')
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                        next_fs.show();
+                        current_fs.hide();
+                        currentField = "payment"
+                    } else {
+                        $("#checkUpMessageRequired").text('@localizer["checkUpMessageRequired"]')
+                    }
+                }
+                // else {
+                //     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                //     next_fs.show();
+                //     current_fs.hide();
+                // }
+                console.log(currentField);
             }
         });
         $(".previous").click(function () {
             current_fs = $(this).closest("fieldset");
             previous_fs = $(this).closest("fieldset").prev();
-            console.log(DriverInformation);
-            console.log(PreviousField);
+            var additionalDriver = document.getElementById("addational-driver");
+            var privateDriverRadio1 = document.getElementById("PrivateDriver");
             console.log(currentField);
-            console.log(NextField);
-            if (currentField === "option") {
-                var additionalDriver = document.getElementById("addational-driver");
-                var privateDriverRadio1 = document.getElementById("PrivateDriver");
-                console.log(privateDriverRadio1.checked)
+
+            if (currentField === "options") {
+                console.log(5555);
+
                 // This Check to If Renter Need Private Driver Or not
                 if (privateDriverRadio1.checked) {
                     // Clear previous data and style
                     clearDataDriver();
                     clearDataAddDriver();
-                    currentField = "car";
                     $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
                     $("#progressbar li").eq($("fieldset").index(previous_fs)).removeClass("active");
                     previous_fs = $(this).closest("fieldset").prev().prev();
@@ -2978,32 +2667,98 @@
                     previous_fs = $(this).closest("fieldset").prev().prev().prev();
                     previous_fs.show();
                     current_fs.hide();
-                    console.log("currentField", currentField);
-                    console.log("NextField", NextField);
+                    currentField = "car";
+                    PreviousField = "tenant"
                 }
                 else if (additionalDriver.checked) {
                     $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
                     previous_fs.show();
                     current_fs.hide();
+                    currentField = "add-driver"
                 }
                 else {
-
                     $("#progressbar li").eq($("fieldset").index(previous_fs)).removeClass("active");
                     previous_fs = $(this).closest("fieldset").prev().prev();
                     $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
                     previous_fs.show();
+                    currentField = "driver"
                     current_fs.hide();
+                    console.log(55555);
                 }
+            }
+            else if (currentField === "check") {
+                if (privateDriverRadio1.checked) {
+                    // Clear previous data and style
+                    clearDataDriver();
+                    clearDataAddDriver();
+                    if (CarAdditionals.count == 0 && CarChoices.count == 0) {
+                        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                        $("#progressbar li").eq($("fieldset").index(previous_fs)).removeClass("active");
+                        previous_fs = $(this).closest("fieldset").prev().prev();
+                        $("#progressbar li").eq($("fieldset").index(previous_fs)).removeClass("active");
+                        previous_fs = $(this).closest("fieldset").prev().prev().prev();
+                        $("#progressbar li").eq($("fieldset").index(previous_fs)).removeClass("active");
+                        previous_fs = $(this).closest("fieldset").prev().prev().prev().prev();
+                        previous_fs.show();
+                        current_fs.hide();
+                        currentField = "car";
+                        PreviousField = "tenant"
+                        console.log(3)
+                    }
+                    else {
+                        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                        previous_fs.show();
+                        current_fs.hide();
+                        currentField = "options";
+                        PreviousField = "car"
+                        console.log(4)
+                    }
+                }
+                else if (additionalDriver.checked) {
+                    $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                    $("#progressbar li").eq($("fieldset").index(previous_fs)).removeClass("active");
+                    previous_fs = $(this).closest("fieldset").prev().prev();
+                    previous_fs.show();
+                    current_fs.hide();
+                    currentField = "add-driver";
+                    PreviousField = "driver";
+                }
+                else {
+                    if (CarAdditionals.count == 0 && CarChoices.count == 0) {
+                        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                        $("#progressbar li").eq($("fieldset").index(previous_fs)).removeClass("active");
+                        previous_fs = $(this).closest("fieldset").prev().prev();
+                        $("#progressbar li").eq($("fieldset").index(previous_fs)).removeClass("active");
+                        previous_fs = $(this).closest("fieldset").prev().prev().prev();
+                        previous_fs.show();
+                        current_fs.hide();
+                        currentField = "driver";
+                        PreviousField = "car";
+                    }
+                    else {
+                        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                        previous_fs.show();
+                        current_fs.hide();
+                        currentField = "options";
+                        PreviousField = "driver";
+                    }
+
+                }
+            }
+            else if (currentField === "payment") {
+                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                previous_fs.show();
+                current_fs.hide();
+                currentField = "check"
             }
             else {
                 $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
                 previous_fs.show();
                 current_fs.hide();
             }
+            console.log(currentField);
+
         });
-
-
-
 
         function clearDataDriver() {
             $("#Contract_DriverId").val("");
@@ -3061,8 +2816,6 @@
                 }
             });
         }
-
-
         function GetCarInfo(serialNumber) {
             console.log(serialNumber);
             $.ajax({
@@ -3071,10 +2824,9 @@
                 data: { serialNumber: serialNumber },
                 success: function (data) {
                     CarInformation = data;
-                    console.log(CarInformation)
-                    // if (CarInformation.carPrice.crCasPriceCarBasicIsAdditionalDriver == null || CarInformation.carPrice.crCasPriceCarBasicIsAdditionalDriver ==false) {
-                    //     $("#addationalDriverDiv").hide();
-                    // }
+                    console.log(data)
+                    $("#currentMeter").val(CarInformation.carInformation.crCasCarInformationCurrentMeter);
+                    handleCurrentMeterInput();
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.error("Error loading data:", textStatus, errorThrown);
@@ -3082,73 +2834,255 @@
             });
         }
 
+        function handleCurrentMeterInput() {
+            // Assuming currentMeterInput is the ID of your input field
+            var currentMeterInput = $("#currentMeter");
+            var currentMeterFromDB = CarInformation.carInformation.crCasCarInformationCurrentMeter;
+            var currentMeterValue = parseFloat(currentMeterFromDB) || 0;
+
+            currentMeterInput.on("input keyup", function () {
+                var enteredValue = parseFloat($(this).val()) || 0;
+
+                // Check if the entered value is lower than the current value
+                if (enteredValue < currentMeterValue) {
+                    $("#requird_field_CurrentMeter").text("@localizer["requirdfieldCurrentMeter"]" + " " + currentMeterValue);
+                }
+                else {
+                    $("#requird_field_CurrentMeter").text("")
+                }
+            });
+        }
 
 
-        // function GetCarInfo(serialNumber) {
-        //     console.log(serialNumber);
+        function updateOptionsTable(data) {
+            // Assuming 'data' is an object with 'OptionsList' property
+            var optionsList = data.optionsList;
+
+            // Get the tbody container
+            var tbodyContainer = $("#optionsBody");
+
+            // Clear existing content
+            tbodyContainer.empty();
+
+            // Populate the tbody with the received data
+            optionsList.forEach(function (option) {
+                var row = $("<tr>");
+                row.append("<td class='text-center'>" + option.optionsValue + "</td>");
+                row.append("<td class='tabel-data-checkbox-td'>" +
+                    "<label class='Delivery-to-another-branch' for='checkbox-" + option.optionsNo + "'>" +
+                    option.arName + "</label>" +
+                    "<input class='Delivery-to-another-branch-input ChkChoicesList' type='checkbox' name='Additions' " +
+                    "value='" + option.optionsCode + "' data-val='" + option.optionsValue + "' id='checkbox - " + option.optionsNo + "'>" +
+                    "</td>");
+                tbodyContainer.append(row);
+            });
+
+            // Add the total row
+            var totalRow = $("<tr>");
+            totalRow.append("<td class='text-center' id='TotalChoices'></td>");
+            totalRow.append("<td class='text-center'>المجموع</td>");
+            tbodyContainer.append(totalRow);
+        }
+        // function GetCarChoices(priceNumber) {
+        //     console.log(priceNumber);
         //     $.ajax({
-        //         url: "/BS/Contract/GetCarInformation",
+        //         url: "/BS/Contract/GetCarChoices",
         //         type: "GET",
-        //         data: { serialNumber: serialNumber },
+        //         data: { priceNumber: priceNumber },
+        //         cache: false,
         //         success: function (data) {
-        //             CarInformation = data;
-        //             console.log(CarInformation)
-        //             GetCarPrice(data.crCasCarInformationDistribution);
+        //             CarChoices = data;
+        //             console.log(CarChoices);
+        //             if (data && data.optionsList) {
+        //                 updateOptionsTable(data);
+        //             } else {
+        //                 console.error("Invalid data format:", data.optionsList);
+        //             }
         //         },
         //         error: function (xhr, textStatus, errorThrown) {
         //             console.error("Error loading data:", textStatus, errorThrown);
         //         }
         //     });
         // }
-        // function GetCarPrice(distributionCode) {
-        //     console.log(distributionCode);
+        // Function to get CarChoices data
+        function getCarChoices(priceNumber) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: "/BS/Contract/GetCarChoices",
+                    type: "GET",
+                    data: { priceNumber: priceNumber },
+                    cache: false,
+                    success: function (data) {
+                        CarChoices = data;
+                        resolve(data);
+                        if (data && data.optionsList) {
+                            updateOptionsTable(data);
+                        } else {
+                            console.error("Invalid data format:", data.optionsList);
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        reject(errorThrown);
+                    }
+                });
+            });
+        }
+        $(document).ready(function () {
+            // Use event delegation for dynamically generated checkboxes
+            $(document).on("change", ".ChkChoicesList", function () {
+                var checkedValue = $(this).val();
+
+                if (checkedValue >= '5100000002' && checkedValue <= '5100000005') {
+                    var isChecked = $(this).prop("checked");
+                    if (isChecked) {
+                        $(".ChkChoicesList[value='5100000002'], .ChkChoicesList[value='5100000003'], .ChkChoicesList[value='5100000004'], .ChkChoicesList[value='5100000005']").not(this).prop("checked", false).prop("disabled", true);
+                    }
+                    else {
+                        $(".ChkChoicesList[value='5100000002'], .ChkChoicesList[value='5100000003'], .ChkChoicesList[value='5100000004'], .ChkChoicesList[value='5100000005']").not(this).prop("checked", false).prop("disabled", false);
+                    }
+                    // Uncheck and disable all checkboxes with values from 5100000002 to 5100000005
+                }
+
+                updateTotal();
+            });
+
+            function updateTotal() {
+                var s = 0;
+                $(".ChkChoicesList:checked").each(function () {
+                    var dataVal = $(this).attr('data-val');
+                    s += parseFloat(dataVal) || 0;
+                });
+
+                if (s > 0) {
+                    $('#TotalChoices').text(s.toFixed(2));
+                } else {
+                    $('#TotalChoices').text("0.00");
+                }
+            }
+        });
+
+
+
+        function updateAdditionalTable(data) {
+            // Assuming 'data' is an object with 'OptionsList' property
+            var additionalList = data.addList;
+
+            // Get the tbody container
+            var tbodyContainer = $("#additionalBody");
+
+            // Clear existing content
+            tbodyContainer.empty();
+
+            // Populate the tbody with the received data
+            additionalList.forEach(function (add) {
+                var row = $("<tr>");
+                row.append("<td class='text-center'>" + add.addValue + "</td>");
+                row.append("<td class='tabel-data-checkbox-td'>" +
+                    "<label class='Delivery-to-another-branch ' for='checkbox-" + add.AddNo + "'>" + add.arName + "</label>"
+                    +
+                    "<input class='Delivery-to-another-branch-input ChkAddList' type='checkbox' name='Additions' " + "value='" + add.addCode + "' data-val='" + add.addValue + "' id='checkbox-" + add.addNo + "'>" +
+                    "</td>");
+                tbodyContainer.append(row);
+            });
+
+            // Add the total row
+            var totalRow = $("<tr>");
+            totalRow.append("<td class='text-center' id='TotalAdditionals'></td>");
+            totalRow.append("<td class='text-center'>المجموع</td>");
+            tbodyContainer.append(totalRow);
+        }
+        // function GetCarAdditional(priceNumber) {
+        //     console.log(priceNumber);
         //     $.ajax({
-        //         url: "/BS/Contract/GetCarPrice",
+        //         url: "/BS/Contract/GetCarAdditional",
         //         type: "GET",
-        //         data: { ditribtionCode: distributionCode },
+        //         data: { priceNumber: priceNumber },
+        //         cache: false,
         //         success: function (data) {
-        //             CarPrice = data;
-        //             console.log(CarPrice)
+        //             CarAdditionals = data;
+        //             console.log(CarAdditionals);
+        //             if (data && data.addList) {
+        //                 updateAdditionalTable(data);
+        //             } else {
+        //                 console.error("Invalid data format:", data.addList);
+        //             }
         //         },
         //         error: function (xhr, textStatus, errorThrown) {
         //             console.error("Error loading data:", textStatus, errorThrown);
         //         }
         //     });
         // }
+        // Function to get CarAdditional data
+        function getCarAdditional(priceNumber) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: "/BS/Contract/GetCarAdditional",
+                    type: "GET",
+                    data: { priceNumber: priceNumber },
+                    cache: false,
+                    success: function (data) {
+                        CarAdditionals = data;
+                        resolve(data);
+                        if (data && data.addList) {
+                            updateAdditionalTable(data);
+                        } else {
+                            console.error("Invalid data format:", data.addList);
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        reject(errorThrown);
+                    }
+                });
+            });
+        }
+        $(document).ready(function () {
+            // Use event delegation for dynamically generated checkboxes
+            $(document).on("change", ".ChkAddList", function () {
+                var checkedValue = $(this).val();
 
+                // if (checkedValue >= '5100000002' && checkedValue <= '5100000005') {
+                //     var isChecked = $(this).prop("checked");
+                //     if (isChecked) {
+                //         $(".ChkChoicesList[value='5100000002'], .ChkChoicesList[value='5100000003'], .ChkChoicesList[value='5100000004'], .ChkChoicesList[value='5100000005']").not(this).prop("checked", false).prop("disabled", true);
+                //     }
+                //     else {
+                //         $(".ChkChoicesList[value='5100000002'], .ChkChoicesList[value='5100000003'], .ChkChoicesList[value='5100000004'], .ChkChoicesList[value='5100000005']").not(this).prop("checked", false).prop("disabled", false);
+                //     }
+                //     // Uncheck and disable all checkboxes with values from 5100000002 to 5100000005
+                // }
 
-        // function GetCarOptionNumber(carPriceCode) {
-        //     console.log(carPriceCode);
-        //     $.ajax({
-        //         url: "/BS/Contract/GetCarOptionNumber",
-        //         type: "GET",
-        //         data: { ditribtionCode: distributionCode },
-        //         success: function (data) {
-        //             CarPrice = data;
-        //             console.log(CarPrice)
-        //         },
-        //         error: function (xhr, textStatus, errorThrown) {
-        //             console.error("Error loading data:", textStatus, errorThrown);
-        //         }
-        //     });
-        // }
+                updateTotal();
+            });
 
-        // function GetCarAdditionalNumber(carPriceCode) {
-        //     console.log(carPriceCode);
-        //     $.ajax({
-        //         url: "/BS/Contract/GetCarAdditionalNumber",
-        //         type: "GET",
-        //         data: { ditribtionCode: distributionCode },
-        //         success: function (data) {
-        //             CarPrice = data;
-        //             console.log(CarPrice)
-        //         },
-        //         error: function (xhr, textStatus, errorThrown) {
-        //             console.error("Error loading data:", textStatus, errorThrown);
-        //         }
-        //     });
-        // }
+            function updateTotal() {
+                var s = 0;
+                $(".ChkAddList:checked").each(function () {
+                    var dataVal = $(this).attr('data-val');
+                    s += parseFloat(dataVal) || 0;
+                });
 
+                if (s > 0) {
+                    $('#TotalAdditionals').text(s.toFixed(2));
+                } else {
+                    $('#TotalAdditionals').text("0.00");
+                }
+            }
+        });
+
+        function GetCarCheckUp() {
+            $.ajax({
+                url: "/BS/Contract/GetCarCheckUp",
+                type: "GET",
+                cache: false,
+                success: function (data) {
+                    CarCheckUp = data;
+                    console.log(data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error("Error loading data:", textStatus, errorThrown);
+                }
+            });
+        }
     </script>
 
 

@@ -7,8 +7,10 @@ using Bnan.Ui.ViewModels.BS;
 using Bnan.Ui.ViewModels.CAS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 using NToastNotify;
 
 namespace Bnan.Ui.Areas.BS.Controllers
@@ -56,6 +58,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                 new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics",
                                                                                         "CrCasCarInformationCategoryNavigation", "CrCasCarDocumentsMaintenances" }).ToList();
             var categoryCars = carsAvailable.Select(item => item.CrCasCarInformationCategoryNavigation).Distinct().OrderBy(item => item.CrMasSupCarCategoryCode).ToList();
+            var CheckupCars = _unitOfWork.CrMasSupContractCarCheckup.FindAll(x=>x.CrMasSupContractCarCheckupStatus == Status.Active).ToList();
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
                 CrCasBranchInformations = branches,
@@ -63,7 +66,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 CrCasBranchInformation = branch,
                 Drivers = drivers,
                 CarCategories = categoryCars,
-                CarsFilter = carsAvailable
+                CarsFilter = carsAvailable,
+                CarsCheckUp= CheckupCars
             };
             return View(bSLayoutVM);
         }
@@ -255,31 +259,105 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var lessorCode = userLogin.CrMasUserInformationLessor;
             BSCarsInformationVM carVM = new BSCarsInformationVM();
             var carInfo = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationSerailNo == serialNumber);
+            
             carVM.CarInformation = carInfo;
             var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicDistributionCode == carInfo.CrCasCarInformationDistribution);
             if (carPrice != null)
             {
                 carVM.CarPrice = carPrice;
-                //var options = _unitOfWork.CrCasPriceCarOption.FindAll(x => x.CrCasPriceCarOptionsNo == carPrice.CrCasPriceCarBasicNo).Sum(x => x.CrCasPriceCarOptionsValue);
-                //var additionals = _unitOfWork.CrCasPriceCarAdditional.FindAll(x => x.CrCasPriceCarAdditionalNo == carPrice.CrCasPriceCarBasicNo).Sum(x => x.CrCasPriceCarAdditionalValue);
-                //if (options > 0) carVM.Options = "1";
-                //else carVM.Options = "0";
-                //if (additionals > 0) carVM.Additionals = "1";
-                //else carVM.Additionals = "0";
                 return Json(carVM);
             }
             return Json(null);
 
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetCarPrice(string ditribtionCode)
-        //{
-        //    var userLogin = await _userManager.GetUserAsync(User);
-        //    var lessorCode = userLogin.CrMasUserInformationLessor;
-        //    var CarPrice = await _unitOfWork.CrCasPriceCarBasic.FindAsync(x => x.CrCasPriceCarBasicDistributionCode == ditribtionCode &&
-        //                                                      x.CrCasPriceCarBasicLessorCode == lessorCode);
-        //    return Json(CarPrice);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> GetCarChoices(string priceNumber)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+
+            List<OptionsVM> optionsList = new List<OptionsVM>();
+
+            var carOptions = _unitOfWork.CrCasPriceCarOption.FindAll(x => x.CrCasPriceCarOptionsNo == priceNumber);
+
+            foreach (var option in carOptions)
+            {
+                var supCarOptions = _unitOfWork.CrMasSupContractOption.Find(x => x.CrMasSupContractOptionsCode == option.CrCasPriceCarOptionsCode);
+
+                OptionsVM optionsVM = new OptionsVM
+                {
+                    OptionsNo = option.CrCasPriceCarOptionsNo,
+                    OptionsCode = option.CrCasPriceCarOptionsCode,
+                    OptionsValue = option.CrCasPriceCarOptionsValue,
+                    ArName = supCarOptions.CrMasSupContractOptionsArName,
+                    EnName = supCarOptions.CrMasSupContractOptionsEnName
+                };
+
+                optionsList.Add(optionsVM);
+            }
+            var result = new
+            {
+                OptionsList = optionsList,
+                Count = carOptions.Count(),
+                Total=optionsList.Select(x=>x.OptionsValue).Sum()
+            };
+
+            return Json(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetCarAdditional(string priceNumber)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            List<AdditionalVM> additionalList = new List<AdditionalVM>();
+
+            var carAdditionals = _unitOfWork.CrCasPriceCarAdditional.FindAll(x => x.CrCasPriceCarAdditionalNo == priceNumber);
+
+            foreach (var additional in carAdditionals)
+            {
+                var supCarAdditional = _unitOfWork.CrMasSupContractAdditional.Find(x => x.CrMasSupContractAdditionalCode == additional.CrCasPriceCarAdditionalCode);
+                
+                AdditionalVM additionalVM = new AdditionalVM
+                {
+                    AddNo = additional.CrCasPriceCarAdditionalNo,
+                    AddCode = additional.CrCasPriceCarAdditionalCode,
+                    AddValue = additional.CrCasPriceCarAdditionalValue,
+                    ArName = supCarAdditional.CrMasSupContractAdditionalArName,
+                    EnName = supCarAdditional.CrMasSupContractAdditionalEnName
+                };
+                additionalList.Add(additionalVM);
+
+            }
+            var result = new
+            {
+                addList = additionalList,
+                Count = carAdditionals.Count(),
+                Total = additionalList.Select(x => x.AddValue).Sum()
+            };
+            return Json(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCarCheckUp()
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            List<CheckUpVM> checkUpList = new List<CheckUpVM>();
+            var CheckUps = _unitOfWork.CrMasSupContractCarCheckup.FindAll(x => x.CrMasSupContractCarCheckupStatus == Status.Active).ToList();
+            foreach (var carCheckup in CheckUps)
+            {
+
+                CheckUpVM carCheckupVM = new CheckUpVM
+                {
+                    Code = carCheckup.CrMasSupContractCarCheckupCode,
+                    ArName = carCheckup.CrMasSupContractCarCheckupArName,
+                    EnName = carCheckup.CrMasSupContractCarCheckupEnName
+                };
+                checkUpList.Add(carCheckupVM);
+            }
+            return Json(checkUpList);
+        }
+        
     }
 }

@@ -1136,9 +1136,14 @@
   "Issuingit": "Issuing it",
   "Expirationdate": "Expiration date",
   "IdIsExpire": "The ID has expired",
+  "LicenseIsExpire": "License Is Expire",
   "IdIsExpriredAndYouNotAuth": "You do not have permission to override identity expiration",
   "AddressIsExpriredAndYouNotAuth": "You do not have permission to override the address",
   "DriverIdExistRenter": "The Renter ID number cannot be duplicated",
   "PleaseCheckYourID": "Please check your ID number first",
-  "PleaseChooseYourDriver": "Please Choose Your Driver"
+  "PleaseChooseYourDriver": "Please Choose Your Driver",
+  "requirdfieldCurrentMeter": "Do not be lower than the current reading",
+  "TheValue": "Value",
+  "CheckUpNames": "Check up",
+  "checkUpMessageRequired": "The virtual examination process must be completed, and at least one photo and a maximum of twelve photos must be entered"
 }

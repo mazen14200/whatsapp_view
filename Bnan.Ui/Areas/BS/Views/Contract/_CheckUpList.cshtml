@@ -1,0 +1,44 @@
+﻿@using Bnan.Ui.ViewModels.BS;
+@model BSLayoutVM
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+@if (Model.CarsCheckUp != null)
+{
+    @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+    {
+        @foreach (var item in Model.CarsCheckUp)
+        {
+            <tr>
+                <td class="text-center">
+                    <textarea style="border: none;height: 24px; resize: none;" id="CheckUp_Reason_@item.CrMasSupContractCarCheckupCode" maxlength="100" name="CheckUp_Reason_@item.CrMasSupContractCarCheckupCode"></textarea>
+                </td>
+                <td class="tabel-data-checkbox-td">
+                    <label class="Tires" for="Tires">
+                        @item.CrMasSupContractCarCheckupEnName
+                    </label>
+                    <input class="Tires-input CheckUp" type="checkbox" name="CheckUp_@item.CrMasSupContractCarCheckupCode" value="Tires" id="CheckUp_@item.CrMasSupContractCarCheckupCode">
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        @foreach (var item in Model.CarsCheckUp)
+        {
+            <tr>
+                <td class="text-center">
+                    <textarea style="border: none;height: 24px; resize: none;" id="CheckUp_Reason_@item.CrMasSupContractCarCheckupCode" maxlength="100" name="CheckUp_Reason_@item.CrMasSupContractCarCheckupCode"></textarea>
+                </td>
+                <td class="tabel-data-checkbox-td">
+                    <label class="Tires" for="Tires">
+                        @item.CrMasSupContractCarCheckupArName
+                    </label>
+                    <input class="Tires-input CheckUp" type="checkbox" name="CheckUp_@item.CrMasSupContractCarCheckupCode" value="Tires" id="CheckUp_@item.CrMasSupContractCarCheckupCode">
+                </td>
+            </tr>
+        }
+    }
+}

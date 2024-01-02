@@ -1132,8 +1132,13 @@
   "Expirationdate": "نهايتها",
   "DriverIdExistRenter": "رقم الهوية للمستأجر لا يمكن تكراره",
   "IdIsExpire": "تاريخ صلاحية الهوية منتهي",
+  "LicenseIsExpire": "الرخصة منتهية",
   "IdIsExpriredAndYouNotAuth": "ليس لديك صلاحية تجاوز انتهاء الهوية",
   "AddressIsExpriredAndYouNotAuth": "ليس لديك صلاحية تجاوز العنوان",
   "PleaseCheckYourID": "الرجاء التحقق من رقم الهوية اولا",
-  "PleaseChooseYourDriver": "من فضلك اختار السائق الخاص"
+  "PleaseChooseYourDriver": "من فضلك اختار السائق الخاص",
+  "requirdfieldCurrentMeter": "لا تكون أقل من القراءة الحالية",
+  "TheValue": "القيمة",
+  "CheckUpNames": "بنود الفحص",
+  "checkUpMessageRequired": "يجب اتمام عملية الفحص الظاهري، وادخال صورة واحدة على الاقل و اثنى عشر صورة كحد اقصي"
 }

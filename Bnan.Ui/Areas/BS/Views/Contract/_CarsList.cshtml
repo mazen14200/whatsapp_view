@@ -15,7 +15,7 @@
     @foreach (var item in Model.CarsFilter)
     {
         <tr style="border-bottom: 1px solid #39629C;cursor: pointer;" class="next ">
-            <td data-serial-number="@item.CrCasCarInformationSerailNo">
+            <td data-serial-number="@item.CrCasCarInformationSerailNo" data-price-number="@item.CrCasCarInformationPriceNo">
                 <div class="row"
                      style="flex-direction: row-reverse;">
                     <div class="col-sm-12  col-md-12 col-lg-2 p-1">
@@ -47,8 +47,8 @@ else
 {
     @foreach (var item in Model.CarsFilter)
     {
-        <tr style="border-bottom: 1px solid #39629C;cursor: pointer;" class="next " data-serialNnumber="@item.CrCasCarInformationSerailNo">
-            <td data-serial-number="@item.CrCasCarInformationSerailNo">
+        <tr style="border-bottom: 1px solid #39629C;cursor: pointer;" class="next ">
+            <td data-serial-number="@item.CrCasCarInformationSerailNo" data-price-number="@item.CrCasCarInformationPriceNo">
                 <div class="row"
                      style="flex-direction: row-reverse;">
                     <div class="col-sm-12  col-md-12 col-lg-2 p-1">
