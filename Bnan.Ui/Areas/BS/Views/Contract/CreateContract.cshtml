@@ -2544,7 +2544,7 @@
 
                         var minAge = CarInformation.carPrice.crCasPriceCarBasicMinAge;
                         var maxAge = CarInformation.carPrice.crCasPriceCarBasicMaxAge;
-                        // All Values Bool to send it to backend to check auth user 
+                        // All Values Bool to send it to backend to check auth user
                         var id = true;
                         var address = true;
                         var license = true;
@@ -2556,11 +2556,11 @@
                             id = false;
                         }
                         // Driver Address
-                        if ( (AddressAr == null || AddressAr == "") && (AddressEn == null || AddressEn == "") ) {
+                        if ((AddressAr == null || AddressAr == "") && (AddressEn == null || AddressEn == "")) {
                             address = false;
                         }
                         // Driver license
-                        if ( licenseCode === '2' || ((licenseAr == "" || licenseAr == null) && (licenseEn == "" || licenseEn == null)) ) {
+                        if (licenseCode === '2' || ((licenseAr == "" || licenseAr == null) && (licenseEn == "" || licenseEn == null))) {
                             license = false;
                         }
                         // Driver employeer
@@ -2568,19 +2568,6 @@
                             employer = false;
                         }
                         
-
-
-
-
-                        console.log("minAge", minAge)
-                        console.log("maxAge", maxAge)
-                        console.log("licenseCode", licenseCode)
-                        console.log("licenseAr", licenseAr)
-                        console.log("licenseEn", licenseEn)
-                        console.log("license", license)
-                        console.log("DriverAge", DriverAge)
-                        console.log("isAgeInRange", isAgeInRange)
-                        console.log("employer", employer)
                         if (!(id && address && license && isAgeInRange && employer)) {
                             $.ajax({
                                 url: "/BS/Contract/CheckAuthDriver", // Replace YourController with your actual controller name
@@ -2599,16 +2586,46 @@
                                         return
                                     }
                                     else if (check == "license") {
-                                        toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
+                                        toastr.error('@localizer["LicenseIsExpriredAndYouNotAuth"]');
                                         return
                                     }
                                     else if (check == "age") {
-                                        toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
+                                        toastr.error('@localizer["AgeIsExpriredAndYouNotAuth"]');
                                         return
                                     }
                                     else if (check == "employer") {
-                                        toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
+                                        toastr.error('@localizer["EmployerIsExpriredAndYouNotAuth"]');
                                         return
+                                    }
+                                    else if (additionalDriver.checked) {
+                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                        next_fs.show();
+                                        current_fs.hide();
+                                        currentField = "add-driver";
+                                        NextField = "options";
+                                    }
+                                    else {
+                                        if (CarChoices.count == 0 && CarAdditionals.count == 0) {
+                                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                            next_fs = $(this).closest("fieldset").next().next();
+                                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                            next_fs = $(this).closest("fieldset").next().next().next();
+                                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                            next_fs.show();
+                                            current_fs.hide();
+                                            currentField = "check";
+                                            NextField = "payment";
+                                        }
+                                        else {
+                                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                            next_fs = $(this).closest("fieldset").next().next();
+                                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                            next_fs.show();
+                                            current_fs.hide();
+                                            currentField = "options";
+                                            NextField = "check";
+                                        }
+
                                     }
                                 }
                             });

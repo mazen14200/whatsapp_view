@@ -245,6 +245,21 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 check = "address";
                 return Json(check);
             }
+            else if (license == false && userContractValidity.CrMasUserContractValidityDrivingLicense == false)
+            {
+                check = "license";
+                return Json(check);
+            }
+            else if (age == false && userContractValidity.CrMasUserContractValidityAge == false)
+            {
+                check = "age";
+                return Json(check);
+            }
+            else if (employer == false && userContractValidity.CrMasUserContractValidityEmployer == false)
+            {
+                check = "employer";
+                return Json(check);
+            }
             else { return Json(check); }
         }
         [HttpGet]
