@@ -16,6 +16,7 @@ namespace Bnan.Core.Models
             CrCasLessorMemberships = new HashSet<CrCasLessorMembership>();
             CrCasOwners = new HashSet<CrCasOwner>();
             CrCasPriceCarBasics = new HashSet<CrCasPriceCarBasic>();
+            CrCasRenterContractAuthorizations = new HashSet<CrCasRenterContractAuthorization>();
             CrCasRenterLessors = new HashSet<CrCasRenterLessor>();
             CrCasRenterPrivateDriverInformations = new HashSet<CrCasRenterPrivateDriverInformation>();
             CrMasContractCompanies = new HashSet<CrMasContractCompany>();
@@ -60,6 +61,7 @@ namespace Bnan.Core.Models
         public virtual ICollection<CrCasLessorMembership> CrCasLessorMemberships { get; set; }
         public virtual ICollection<CrCasOwner> CrCasOwners { get; set; }
         public virtual ICollection<CrCasPriceCarBasic> CrCasPriceCarBasics { get; set; }
+        public virtual ICollection<CrCasRenterContractAuthorization> CrCasRenterContractAuthorizations { get; set; }
         public virtual ICollection<CrCasRenterLessor> CrCasRenterLessors { get; set; }
         public virtual ICollection<CrCasRenterPrivateDriverInformation> CrCasRenterPrivateDriverInformations { get; set; }
         public virtual ICollection<CrMasContractCompany> CrMasContractCompanies { get; set; }

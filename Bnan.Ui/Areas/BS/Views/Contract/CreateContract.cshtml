@@ -983,7 +983,7 @@
                                             </div>
                                             <div class="row">
                                                 <p style="color: red;" id="checkUpMessageRequired">
-                                                    
+
                                                 </p>
                                             </div>
 
@@ -2523,9 +2523,97 @@
                 }
                 else if (currentField === "driver") {
                     var driverName = $("#DriverName").text();
+
                     if (driverName != null && driverName != "") {
+                        var currentDate = new Date();
                         var additionalDriver = document.getElementById("addational-driver");
-                        if (additionalDriver.checked) {
+                        var ExpiryIdDateDriver = new Date(DriverInformation.expiryIdDate);
+                        var BirthDateDriver = new Date(DriverInformation.birthDate);
+                        var DriverAge = calculateAge(BirthDateDriver);
+
+                        var AddressAr = DriverInformation.postArNameConcenate;
+                        var AddressEn = DriverInformation.postEnNameConcenate;
+
+                        var licenseCode = DriverInformation.licenseCode;
+                        var licenseAr = DriverInformation.licenseArName;
+                        var licenseEn = DriverInformation.licenseEnName;
+
+                        var employerCode = DriverInformation.employerCode;
+                        var employerAr = DriverInformation.employerArName;
+                        var employerEn = DriverInformation.employerEnName;
+
+                        var minAge = CarInformation.carPrice.crCasPriceCarBasicMinAge;
+                        var maxAge = CarInformation.carPrice.crCasPriceCarBasicMaxAge;
+                        // All Values Bool to send it to backend to check auth user 
+                        var id = true;
+                        var address = true;
+                        var license = true;
+                        var isAgeInRange = DriverAge >= minAge && DriverAge <= maxAge;
+                        var employer = true;
+
+                        //ID Driver
+                        if (ExpiryIdDateDriver < currentDate) {
+                            id = false;
+                        }
+                        // Driver Address
+                        if ( (AddressAr == null || AddressAr == "") && (AddressEn == null || AddressEn == "") ) {
+                            address = false;
+                        }
+                        // Driver license
+                        if ( licenseCode === '2' || ((licenseAr == "" || licenseAr == null) && (licenseEn == "" || licenseEn == null)) ) {
+                            license = false;
+                        }
+                        // Driver employeer
+                        if (employerCode === '1800000002' || ((employerAr == "" || employerAr == null) && (employerEn == "" || employerEn == null))) {
+                            employer = false;
+                        }
+                        
+
+
+
+
+                        console.log("minAge", minAge)
+                        console.log("maxAge", maxAge)
+                        console.log("licenseCode", licenseCode)
+                        console.log("licenseAr", licenseAr)
+                        console.log("licenseEn", licenseEn)
+                        console.log("license", license)
+                        console.log("DriverAge", DriverAge)
+                        console.log("isAgeInRange", isAgeInRange)
+                        console.log("employer", employer)
+                        if (!(id && address && license && isAgeInRange && employer)) {
+                            $.ajax({
+                                url: "/BS/Contract/CheckAuthDriver", // Replace YourController with your actual controller name
+                                type: "GET",
+                                data: { id: id, address: address, license: license, age: isAgeInRange, employer: employer },
+                                success: function (data) {
+                                    var check = data;
+                                    toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+
+                                    if (check == "id") {
+                                        toastr.error('@localizer["IdIsExpriredAndYouNotAuth"]');
+                                        return;
+                                    }
+                                    else if (check == "address") {
+                                        toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
+                                        return
+                                    }
+                                    else if (check == "license") {
+                                        toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
+                                        return
+                                    }
+                                    else if (check == "age") {
+                                        toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
+                                        return
+                                    }
+                                    else if (check == "employer") {
+                                        toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
+                                        return
+                                    }
+                                }
+                            });
+                        }
+                        else if (additionalDriver.checked) {
                             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                             next_fs.show();
                             current_fs.hide();
@@ -2555,7 +2643,6 @@
                             }
 
                         }
-
                     }
                     else {
                         $('#requird_field_DriverID').text('@localizer["PleaseCheckYourID"]');
@@ -3082,6 +3169,23 @@
                     console.error("Error loading data:", textStatus, errorThrown);
                 }
             });
+        }
+
+        function calculateAge(birthDate) {
+            var BirthDateDriver = new Date(birthDate);
+            var currentDate = new Date();
+
+            var age = currentDate.getFullYear() - BirthDateDriver.getFullYear();
+
+            if (
+                currentDate.getMonth() < BirthDateDriver.getMonth() ||
+                (currentDate.getMonth() === BirthDateDriver.getMonth() &&
+                    currentDate.getDate() < BirthDateDriver.getDate())
+            ) {
+                age--;
+            }
+
+            return age;
         }
     </script>
 

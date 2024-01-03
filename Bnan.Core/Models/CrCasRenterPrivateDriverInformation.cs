@@ -5,6 +5,11 @@ namespace Bnan.Core.Models
 {
     public partial class CrCasRenterPrivateDriverInformation
     {
+        public CrCasRenterPrivateDriverInformation()
+        {
+            CrCasRenterContractBasics = new HashSet<CrCasRenterContractBasic>();
+        }
+
         public string CrCasRenterPrivateDriverInformationId { get; set; } = null!;
         public string CrCasRenterPrivateDriverInformationLessor { get; set; } = null!;
         public string? CrCasRenterPrivateDriverInformationIdtrype { get; set; }
@@ -39,5 +44,6 @@ namespace Bnan.Core.Models
         public virtual CrMasLessorInformation CrCasRenterPrivateDriverInformationLessorNavigation { get; set; } = null!;
         public virtual CrMasSupRenterDrivingLicense? CrCasRenterPrivateDriverInformationLicenseTypeNavigation { get; set; }
         public virtual CrMasSupRenterNationality? CrCasRenterPrivateDriverInformationNationalityNavigation { get; set; }
+        public virtual ICollection<CrCasRenterContractBasic> CrCasRenterContractBasics { get; set; }
     }
 }

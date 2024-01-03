@@ -9,6 +9,8 @@ namespace Bnan.Core.Models
         {
             CrCasBranchPosts = new HashSet<CrCasBranchPost>();
             CrCasCarInformations = new HashSet<CrCasCarInformation>();
+            CrCasRenterContractStatisticCrCasRenterContractStatisticsBranchCityNavigations = new HashSet<CrCasRenterContractStatistic>();
+            CrCasRenterContractStatisticCrCasRenterContractStatisticsRenterCityNavigations = new HashSet<CrCasRenterContractStatistic>();
             CrCasRenterLessors = new HashSet<CrCasRenterLessor>();
             CrMasRenterPosts = new HashSet<CrMasRenterPost>();
         }
@@ -32,6 +34,8 @@ namespace Bnan.Core.Models
         public virtual CrMasSupPostRegion? CrMasSupPostCityRegionsCodeNavigation { get; set; }
         public virtual ICollection<CrCasBranchPost> CrCasBranchPosts { get; set; }
         public virtual ICollection<CrCasCarInformation> CrCasCarInformations { get; set; }
+        public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatisticCrCasRenterContractStatisticsBranchCityNavigations { get; set; }
+        public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatisticCrCasRenterContractStatisticsRenterCityNavigations { get; set; }
         public virtual ICollection<CrCasRenterLessor> CrCasRenterLessors { get; set; }
         public virtual ICollection<CrMasRenterPost> CrMasRenterPosts { get; set; }
     }

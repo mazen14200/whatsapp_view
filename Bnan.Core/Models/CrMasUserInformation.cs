@@ -4,10 +4,13 @@ using System.Collections.Generic;
 
 namespace Bnan.Core.Models
 {
-    public partial class CrMasUserInformation :IdentityUser
+    public partial class CrMasUserInformation:IdentityUser
     {
         public CrMasUserInformation()
         {
+            CrCasAccountReceipts = new HashSet<CrCasAccountReceipt>();
+            CrCasRenterContractStatisticCrCasRenterContractStatisticsUserCloseNavigations = new HashSet<CrCasRenterContractStatistic>();
+            CrCasRenterContractStatisticCrCasRenterContractStatisticsUserOpenNavigations = new HashSet<CrCasRenterContractStatistic>();
             CrCasSysAdministrativeProcedures = new HashSet<CrCasSysAdministrativeProcedure>();
             CrMasUserBranchValidities = new HashSet<CrMasUserBranchValidity>();
             CrMasUserLogins = new HashSet<CrMasUserLogin>();
@@ -53,6 +56,9 @@ namespace Bnan.Core.Models
         public string? CrMasUserInformationReasons { get; set; }
         public virtual CrMasLessorInformation? CrMasUserInformationLessorNavigation { get; set; }
         public virtual CrMasUserContractValidity CrMasUserContractValidity { get; set; } = null!;
+        public virtual ICollection<CrCasAccountReceipt> CrCasAccountReceipts { get; set; }
+        public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatisticCrCasRenterContractStatisticsUserCloseNavigations { get; set; }
+        public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatisticCrCasRenterContractStatisticsUserOpenNavigations { get; set; }
         public virtual ICollection<CrCasSysAdministrativeProcedure> CrCasSysAdministrativeProcedures { get; set; }
         public virtual ICollection<CrMasUserBranchValidity> CrMasUserBranchValidities { get; set; }
         public virtual ICollection<CrMasUserLogin> CrMasUserLogins { get; set; }
@@ -61,6 +67,5 @@ namespace Bnan.Core.Models
         public virtual ICollection<CrMasUserMessage> CrMasUserMessageCrMasUserMessageUserSenderNavigations { get; set; }
         public virtual ICollection<CrMasUserProceduresValidation> CrMasUserProceduresValidations { get; set; }
         public virtual ICollection<CrMasUserSubValidation> CrMasUserSubValidations { get; set; }
-        
     }
 }

@@ -100,8 +100,10 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     PersonalArProfessions = BnanRenterInfo?.CrMasRenterInformationProfessionNavigation?.CrMasSupRenterProfessionsArName,
                     PersonalEnProfessions = BnanRenterInfo?.CrMasRenterInformationProfessionNavigation?.CrMasSupRenterProfessionsEnName,
                     PersonalEmail = BnanRenterInfo?.CrMasRenterInformationEmail,
+                    EmployerCode = BnanRenterInfo?.CrMasRenterInformationEmployerNavigation?.CrMasSupRenterEmployerCode,
                     EmployerArName = BnanRenterInfo?.CrMasRenterInformationEmployerNavigation?.CrMasSupRenterEmployerArName,
                     EmployerEnName = BnanRenterInfo?.CrMasRenterInformationEmployerNavigation?.CrMasSupRenterEmployerEnName,
+                    LicenseCode = BnanRenterInfo?.CrMasRenterInformationDrivingLicenseTypeNavigation?.CrMasSupRenterDrivingLicenseCode,
                     LicenseArName = BnanRenterInfo?.CrMasRenterInformationDrivingLicenseTypeNavigation?.CrMasSupRenterDrivingLicenseArName,
                     LicenseEnName = BnanRenterInfo?.CrMasRenterInformationDrivingLicenseTypeNavigation?.CrMasSupRenterDrivingLicenseEnName,
                     LicenseExpiryDate = BnanRenterInfo?.CrMasRenterInformationExpiryDrivingLicenseDate,
@@ -225,6 +227,26 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> CheckAuthDriver(bool id, bool address,bool license,bool age,bool employer)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var userContractValidity = _unitOfWork.CrMasUserContractValidity.Find(x => x.CrMasUserContractValidityUserId == userLogin.Id);
+            var check = "true";
+            if (id == false && userContractValidity.CrMasUserContractValidityId == false)
+            {
+                check = "id";
+                return Json(check);
+            }
+            else if (address == false && userContractValidity.CrMasUserContractValidityRenterAddress == false)
+            {
+                check = "address";
+                return Json(check);
+            }
+            else { return Json(check); }
+        }
         [HttpGet]
         public async Task<PartialViewResult> GetCarsByCategory(string selectedCategory, string selectedBranch)
         {

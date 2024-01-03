@@ -19,6 +19,7 @@ namespace Bnan.Core.Models
         }
 
         public virtual DbSet<CrCasAccountBank> CrCasAccountBanks { get; set; } = null!;
+        public virtual DbSet<CrCasAccountReceipt> CrCasAccountReceipts { get; set; } = null!;
         public virtual DbSet<CrCasAccountSalesPoint> CrCasAccountSalesPoints { get; set; } = null!;
         public virtual DbSet<CrCasBeneficiary> CrCasBeneficiaries { get; set; } = null!;
         public virtual DbSet<CrCasBranchDocument> CrCasBranchDocuments { get; set; } = null!;
@@ -35,6 +36,14 @@ namespace Bnan.Core.Models
         public virtual DbSet<CrCasPriceCarAdvantage> CrCasPriceCarAdvantages { get; set; } = null!;
         public virtual DbSet<CrCasPriceCarBasic> CrCasPriceCarBasics { get; set; } = null!;
         public virtual DbSet<CrCasPriceCarOption> CrCasPriceCarOptions { get; set; } = null!;
+        public virtual DbSet<CrCasRenterContractAdditional> CrCasRenterContractAdditionals { get; set; } = null!;
+        public virtual DbSet<CrCasRenterContractAdvantage> CrCasRenterContractAdvantages { get; set; } = null!;
+        public virtual DbSet<CrCasRenterContractAlert> CrCasRenterContractAlerts { get; set; } = null!;
+        public virtual DbSet<CrCasRenterContractAuthorization> CrCasRenterContractAuthorizations { get; set; } = null!;
+        public virtual DbSet<CrCasRenterContractBasic> CrCasRenterContractBasics { get; set; } = null!;
+        public virtual DbSet<CrCasRenterContractCarCheckup> CrCasRenterContractCarCheckups { get; set; } = null!;
+        public virtual DbSet<CrCasRenterContractChoice> CrCasRenterContractChoices { get; set; } = null!;
+        public virtual DbSet<CrCasRenterContractStatistic> CrCasRenterContractStatistics { get; set; } = null!;
         public virtual DbSet<CrCasRenterLessor> CrCasRenterLessors { get; set; } = null!;
         public virtual DbSet<CrCasRenterPrivateDriverInformation> CrCasRenterPrivateDriverInformations { get; set; } = null!;
         public virtual DbSet<CrCasSysAdministrativeProcedure> CrCasSysAdministrativeProcedures { get; set; } = null!;
@@ -93,6 +102,7 @@ namespace Bnan.Core.Models
         public virtual DbSet<CrMasUserMessage> CrMasUserMessages { get; set; } = null!;
         public virtual DbSet<CrMasUserProceduresValidation> CrMasUserProceduresValidations { get; set; } = null!;
         public virtual DbSet<CrMasUserSubValidation> CrMasUserSubValidations { get; set; } = null!;
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -179,6 +189,194 @@ namespace Bnan.Core.Models
                     .WithMany(p => p.CrCasAccountBanks)
                     .HasForeignKey(d => d.CrCasAccountBankNo)
                     .HasConstraintName("FK_CR_Cas_Account_Bank_CR_Mas_Sup_Account_Bank");
+            });
+
+            modelBuilder.Entity<CrCasAccountReceipt>(entity =>
+            {
+                entity.HasKey(e => e.CrCasAccountReceiptNo);
+
+                entity.ToTable("CR_Cas_Account_Receipt");
+
+                entity.Property(e => e.CrCasAccountReceiptNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountReceiptAccount)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_Account")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountReceiptArPdfFile)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Account_Receipt_Ar_PDF_File");
+
+                entity.Property(e => e.CrCasAccountReceiptBank)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_Bank")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountReceiptBranchCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_Branch_Code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountReceiptCar)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Account_Receipt_Car");
+
+                entity.Property(e => e.CrCasAccountReceiptDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CR_Cas_Account_Receipt_Date");
+
+                entity.Property(e => e.CrCasAccountReceiptEnPdfFile)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Account_Receipt_En_PDF_File");
+
+                entity.Property(e => e.CrCasAccountReceiptIsPassing)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_Is_Passing")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountReceiptLessorCode)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_Lessor_Code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountReceiptPassingDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CR_Cas_Account_Receipt_Passing_Date");
+
+                entity.Property(e => e.CrCasAccountReceiptPassingReference)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_Passing_Reference")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountReceiptPassingUser)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_Passing_User");
+
+                entity.Property(e => e.CrCasAccountReceiptPayment)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Receipt_Payment");
+
+                entity.Property(e => e.CrCasAccountReceiptPaymentMethod)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_Payment_Method")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountReceiptReasons)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Account_Receipt_Reasons");
+
+                entity.Property(e => e.CrCasAccountReceiptReceipt)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Receipt_Receipt");
+
+                entity.Property(e => e.CrCasAccountReceiptReferenceNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_Reference_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountReceiptReferenceType)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_Reference_Type")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountReceiptRenterId)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Account_Receipt_Renter_Id");
+
+                entity.Property(e => e.CrCasAccountReceiptRenterPreviousBalance)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Receipt_Renter_Previous_Balance");
+
+                entity.Property(e => e.CrCasAccountReceiptSalesPoint)
+                    .HasMaxLength(11)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_SalesPoint")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountReceiptSalesPointPreviousBalance)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Receipt_SalesPoint_Previous_Balance");
+
+                entity.Property(e => e.CrCasAccountReceiptType)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_Type")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountReceiptUser)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_User");
+
+                entity.Property(e => e.CrCasAccountReceiptUserPreviousBalance)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Receipt_User_Previous_Balance");
+
+                entity.Property(e => e.CrCasAccountReceiptYear)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Receipt_Year")
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.CrCasAccountReceiptAccountNavigation)
+                    .WithMany(p => p.CrCasAccountReceipts)
+                    .HasForeignKey(d => d.CrCasAccountReceiptAccount)
+                    .HasConstraintName("fk_CR_Cas_Account_Receipt_CR_Cas_Account_Bank");
+
+                entity.HasOne(d => d.CrCasAccountReceiptBankNavigation)
+                    .WithMany(p => p.CrCasAccountReceipts)
+                    .HasForeignKey(d => d.CrCasAccountReceiptBank)
+                    .HasConstraintName("fk_CR_Cas_Account_Receipt_CR_Mas_Sup_Account_Bank");
+
+                entity.HasOne(d => d.CrCasAccountReceiptCarNavigation)
+                    .WithMany(p => p.CrCasAccountReceipts)
+                    .HasForeignKey(d => d.CrCasAccountReceiptCar)
+                    .HasConstraintName("fk_CR_Cas_Account_Receipt_CR_Cas_Car_Information");
+
+                entity.HasOne(d => d.CrCasAccountReceiptPaymentMethodNavigation)
+                    .WithMany(p => p.CrCasAccountReceipts)
+                    .HasForeignKey(d => d.CrCasAccountReceiptPaymentMethod)
+                    .HasConstraintName("fk_CR_Cas_Account_Receipt_CR_Mas_Sup_Account_Payment_Method");
+
+                entity.HasOne(d => d.CrCasAccountReceiptReferenceTypeNavigation)
+                    .WithMany(p => p.CrCasAccountReceipts)
+                    .HasForeignKey(d => d.CrCasAccountReceiptReferenceType)
+                    .HasConstraintName("fk_CR_Cas_Account_Receipt_CR_Mas_Sup_Account_Reference");
+
+                entity.HasOne(d => d.CrCasAccountReceiptRenter)
+                    .WithMany(p => p.CrCasAccountReceipts)
+                    .HasForeignKey(d => d.CrCasAccountReceiptRenterId)
+                    .HasConstraintName("fk_CR_Cas_Account_Receipt_CR_Mas_Renter_Information");
+
+                entity.HasOne(d => d.CrCasAccountReceiptSalesPointNavigation)
+                    .WithMany(p => p.CrCasAccountReceipts)
+                    .HasForeignKey(d => d.CrCasAccountReceiptSalesPoint)
+                    .HasConstraintName("fk_CR_Cas_Account_Receipt_CR_Cas_Account_SalesPoint");
+
+                entity.HasOne(d => d.CrCasAccountReceiptUserNavigation)
+                    .WithMany(p => p.CrCasAccountReceipts)
+                    .HasForeignKey(d => d.CrCasAccountReceiptUser)
+                    .HasConstraintName("fk_CR_Cas_Account_Receipt_CR_Mas_User_Information");
+
+                entity.HasOne(d => d.CrCasAccountReceiptNavigation)
+                    .WithMany(p => p.CrCasAccountReceipts)
+                    .HasForeignKey(d => new { d.CrCasAccountReceiptLessorCode, d.CrCasAccountReceiptBranchCode })
+                    .HasConstraintName("fk_lessor");
             });
 
             modelBuilder.Entity<CrCasAccountSalesPoint>(entity =>
@@ -451,6 +649,9 @@ namespace Bnan.Core.Models
                 entity.HasKey(e => new { e.CrCasBranchInformationLessor, e.CrCasBranchInformationCode });
 
                 entity.ToTable("CR_Cas_Branch_Information");
+
+                entity.HasIndex(e => new { e.CrCasBranchInformationCode, e.CrCasBranchInformationLessor }, "uq_CR_Cas_Branch_Information")
+                    .IsUnique();
 
                 entity.Property(e => e.CrCasBranchInformationLessor)
                     .HasMaxLength(4)
@@ -1761,6 +1962,890 @@ namespace Bnan.Core.Models
                     .HasConstraintName("FK_CR_Cas_Price_Car_Options_CR_Cas_Price_Car_Basic");
             });
 
+            modelBuilder.Entity<CrCasRenterContractAdditional>(entity =>
+            {
+                entity.HasKey(e => new { e.CrCasRenterContractAdditionalNo, e.CrCasRenterContractAdditionalCode });
+
+                entity.ToTable("CR_Cas_Renter_Contract_Additional");
+
+                entity.Property(e => e.CrCasRenterContractAdditionalNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Additional_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractAdditionalCode)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Additional_Code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasContractAdditionalValue)
+                    .HasColumnType("decimal(7, 2)")
+                    .HasColumnName("CR_Cas_Contract_Additional_Value");
+
+                entity.HasOne(d => d.CrCasRenterContractAdditionalCodeNavigation)
+                    .WithMany(p => p.CrCasRenterContractAdditionals)
+                    .HasForeignKey(d => d.CrCasRenterContractAdditionalCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Additional_CR_Mas_Sup_Contract_Additional");
+
+                entity.HasOne(d => d.CrCasRenterContractAdditionalNoNavigation)
+                    .WithMany(p => p.CrCasRenterContractAdditionals)
+                    .HasForeignKey(d => d.CrCasRenterContractAdditionalNo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Additional_CR_Cas_Renter_Contract_Basic");
+            });
+
+            modelBuilder.Entity<CrCasRenterContractAdvantage>(entity =>
+            {
+                entity.HasKey(e => new { e.CrCasRenterContractAdvantagesNo, e.CrCasRenterContractAdvantagesCode });
+
+                entity.ToTable("CR_Cas_Renter_Contract_Advantages");
+
+                entity.Property(e => e.CrCasRenterContractAdvantagesNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Advantages_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractAdvantagesCode)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Advantages_Code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasContractAdvantagesValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Contract_Advantages_Value");
+
+                entity.HasOne(d => d.CrCasRenterContractAdvantagesCodeNavigation)
+                    .WithMany(p => p.CrCasRenterContractAdvantages)
+                    .HasForeignKey(d => d.CrCasRenterContractAdvantagesCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Advantages_CR_Mas_Sup_Car_Advantages");
+
+                entity.HasOne(d => d.CrCasRenterContractAdvantagesNoNavigation)
+                    .WithMany(p => p.CrCasRenterContractAdvantages)
+                    .HasForeignKey(d => d.CrCasRenterContractAdvantagesNo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Advantages_CR_Cas_Renter_Contract_Basic");
+            });
+
+            modelBuilder.Entity<CrCasRenterContractAlert>(entity =>
+            {
+                entity.HasKey(e => e.CrCasRenterContractAlertNo);
+
+                entity.ToTable("CR_Cas_Renter_Contract_Alert");
+
+                entity.Property(e => e.CrCasRenterContractAlertNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Alert_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractAlertBranch)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Alert_Branch")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractAlertContractActiviteStatus)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Alert_Contract_Activite_Status")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractAlertContractStatus)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Alert_Contract_Status")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractAlertDayDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Renter_Contract_Alert_Day_Date");
+
+                entity.Property(e => e.CrCasRenterContractAlertDayTime).HasColumnName("CR_Cas_Renter_Contract_Alert_Day_Time");
+
+                entity.Property(e => e.CrCasRenterContractAlertDays).HasColumnName("CR_Cas_Renter_Contract_Alert_Days");
+
+                entity.Property(e => e.CrCasRenterContractAlertEndDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Renter_Contract_Alert_End_Date");
+
+                entity.Property(e => e.CrCasRenterContractAlertEndTime).HasColumnName("CR_Cas_Renter_Contract_Alert_End_Time");
+
+                entity.Property(e => e.CrCasRenterContractAlertHour).HasColumnName("CR_Cas_Renter_Contract_Alert_Hour");
+
+                entity.Property(e => e.CrCasRenterContractAlertHourDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Renter_Contract_Alert_Hour_Date");
+
+                entity.Property(e => e.CrCasRenterContractAlertHourTime).HasColumnName("CR_Cas_Renter_Contract_Alert_Hour_Time");
+
+                entity.Property(e => e.CrCasRenterContractAlertLessor)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Alert_Lessor")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractAlertStatus)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Alert_Status")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractAlertStatusMsg)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Alert_Status_Msg");
+
+                entity.HasOne(d => d.CrCasRenterContractAlertNoNavigation)
+                    .WithOne(p => p.CrCasRenterContractAlert)
+                    .HasForeignKey<CrCasRenterContractAlert>(d => d.CrCasRenterContractAlertNo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Alert_CR_Cas_Renter_Contract_Basic");
+
+                entity.HasOne(d => d.CrCasRenterContractAlertNavigation)
+                    .WithMany(p => p.CrCasRenterContractAlerts)
+                    .HasPrincipalKey(p => new { p.CrCasBranchInformationCode, p.CrCasBranchInformationLessor })
+                    .HasForeignKey(d => new { d.CrCasRenterContractAlertBranch, d.CrCasRenterContractAlertLessor })
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Alert_CR_Cas_Branch_Information");
+            });
+
+            modelBuilder.Entity<CrCasRenterContractAuthorization>(entity =>
+            {
+                entity.HasKey(e => e.CrCasRenterContractAuthorizationContractNo);
+
+                entity.ToTable("CR_Cas_Renter_Contract_Authorization");
+
+                entity.Property(e => e.CrCasRenterContractAuthorizationContractNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Authorization_Contract_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractAuthorizationAction).HasColumnName("CR_Cas_Renter_Contract_Authorization_Action");
+
+                entity.Property(e => e.CrCasRenterContractAuthorizationDaysNo).HasColumnName("CR_Cas_Renter_Contract_Authorization_Days_No");
+
+                entity.Property(e => e.CrCasRenterContractAuthorizationEndDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CR_Cas_Renter_Contract_Authorization_End_Date");
+
+                entity.Property(e => e.CrCasRenterContractAuthorizationLessor)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Authorization_Lessor")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractAuthorizationNo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Authorization_No");
+
+                entity.Property(e => e.CrCasRenterContractAuthorizationStartDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CR_Cas_Renter_Contract_Authorization_Start_Date");
+
+                entity.Property(e => e.CrCasRenterContractAuthorizationStatus)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Authorization_Status")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractAuthorizationType).HasColumnName("CR_Cas_Renter_Contract_Authorization_Type");
+
+                entity.Property(e => e.CrCasRenterContractAuthorizationValue)
+                    .HasMaxLength(10)
+                    .HasColumnName("CR_Cas_Renter_Contract_Authorization_Value")
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.CrCasRenterContractAuthorizationContractNoNavigation)
+                    .WithOne(p => p.CrCasRenterContractAuthorization)
+                    .HasForeignKey<CrCasRenterContractAuthorization>(d => d.CrCasRenterContractAuthorizationContractNo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Authorization_CR_Cas_Renter_Contract_Basic");
+
+                entity.HasOne(d => d.CrCasRenterContractAuthorizationLessorNavigation)
+                    .WithMany(p => p.CrCasRenterContractAuthorizations)
+                    .HasForeignKey(d => d.CrCasRenterContractAuthorizationLessor)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Authorization_CR_Mas_Lessor_Information");
+            });
+
+            modelBuilder.Entity<CrCasRenterContractBasic>(entity =>
+            {
+                entity.HasKey(e => e.CrCasRenterContractBasicNo);
+
+                entity.ToTable("CR_Cas_Renter_Contract_Basic");
+
+                entity.Property(e => e.CrCasRenterContractBasicNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractBasicAdditionalDriverId)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Additional_Driver_Id");
+
+                entity.Property(e => e.CrCasRenterContractBasicAdditionalDriverValue)
+                    .HasColumnType("decimal(7, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Additional_Driver_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicAdditionalValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Additional_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicAllowCanceled)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Allow_Canceled");
+
+                entity.Property(e => e.CrCasRenterContractBasicAmountPaidAdvance)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Amount_Paid_Advance");
+
+                entity.Property(e => e.CrCasRenterContractBasicAmountRequired)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Amount_Required");
+
+                entity.Property(e => e.CrCasRenterContractBasicArPdfFile)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Ar_PDF_File");
+
+                entity.Property(e => e.CrCasRenterContractBasicArTga)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Ar_TGA");
+
+                entity.Property(e => e.CrCasRenterContractBasicAuthorizationValue)
+                    .HasColumnType("decimal(7, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Authorization_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicBranch)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Branch")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractBasicCarSerailNo)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Car_Serail_No");
+
+                entity.Property(e => e.CrCasRenterContractBasicCopy).HasColumnName("CR_Cas_Renter_Contract_Basic_Copy");
+
+                entity.Property(e => e.CrCasRenterContractBasicCurrentReadingMeter).HasColumnName("CR_Cas_Renter_Contract_Basic_Current_Reading_Meter");
+
+                entity.Property(e => e.CrCasRenterContractBasicDailyFreeKm).HasColumnName("CR_Cas_Renter_Contract_Basic_Daily_Free_KM");
+
+                entity.Property(e => e.CrCasRenterContractBasicDailyFreeKmUser).HasColumnName("CR_Cas_Renter_Contract_Basic_Daily_Free_KM_User");
+
+                entity.Property(e => e.CrCasRenterContractBasicDailyRent)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Daily_Rent");
+
+                entity.Property(e => e.CrCasRenterContractBasicDriverId)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Driver_Id");
+
+                entity.Property(e => e.CrCasRenterContractBasicEnPdfFile)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_En_PDF_File");
+
+                entity.Property(e => e.CrCasRenterContractBasicEnTga)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_En_TGA");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpectedDiscountValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Expected_Discount_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpectedEndDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Expected_End_Date");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpectedOptionsValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Expected_Options_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpectedPrivateDriverValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Expected_Private_Driver_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpectedRentValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Expected_Rent_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpectedRentalDays).HasColumnName("CR_Cas_Renter_Contract_Basic_Expected_Rental_Days");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpectedStartDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Expected_Start_Date");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpectedTaxValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Expected_Tax_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpectedTotal)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Expected_Total");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpectedValueAfterDiscount)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Expected_Value_After_Discount");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpectedValueBeforDiscount)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Expected_Value_Befor_Discount");
+
+                entity.Property(e => e.CrCasRenterContractBasicFreeHours).HasColumnName("CR_Cas_Renter_Contract_Basic_Free_Hours");
+
+                entity.Property(e => e.CrCasRenterContractBasicHourMax).HasColumnName("CR_Cas_Renter_Contract_Basic_Hour_Max");
+
+                entity.Property(e => e.CrCasRenterContractBasicHourValue)
+                    .HasColumnType("decimal(7, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Hour_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicIssuedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Issued_Date");
+
+                entity.Property(e => e.CrCasRenterContractBasicKmValue)
+                    .HasColumnType("decimal(7, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_KM_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicLessor)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Lessor")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractBasicMonthlyRent)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Monthly_Rent");
+
+                entity.Property(e => e.CrCasRenterContractBasicPreviousBalance)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Previous_Balance");
+
+                entity.Property(e => e.CrCasRenterContractBasicPrivateDriverId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Private_Driver_Id");
+
+                entity.Property(e => e.CrCasRenterContractBasicPrivateDriverValue)
+                    .HasColumnType("decimal(7, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Private_Driver_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicProcedures)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Procedures")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractBasicReasons)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Reasons");
+
+                entity.Property(e => e.CrCasRenterContractBasicRenterId)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Renter_Id");
+
+                entity.Property(e => e.CrCasRenterContractBasicSector)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Sector")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractBasicStatus)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Status")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractBasicTaxRate)
+                    .HasColumnType("decimal(5, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Tax_Rate");
+
+                entity.Property(e => e.CrCasRenterContractBasicTotalDailyFreeKm).HasColumnName("CR_Cas_Renter_Contract_Basic_Total_Daily_Free_KM");
+
+                entity.Property(e => e.CrCasRenterContractBasicTotalFreeHours).HasColumnName("CR_Cas_Renter_Contract_Basic_Total_Free_Hours");
+
+                entity.Property(e => e.CrCasRenterContractBasicUserDiscountRate)
+                    .HasColumnType("decimal(5, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_User_Discount_Rate");
+
+                entity.Property(e => e.CrCasRenterContractBasicUserFreeHours).HasColumnName("CR_Cas_Renter_Contract_Basic_User_Free_Hours");
+
+                entity.Property(e => e.CrCasRenterContractBasicUserInsert)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_User_Insert");
+
+                entity.Property(e => e.CrCasRenterContractBasicWeeklyRent)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Weekly_Rent");
+
+                entity.Property(e => e.CrCasRenterContractBasicYear)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Year")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractBasicYearlyRent)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Yearly_Rent");
+
+                entity.Property(e => e.CrCasRenterContractOffersReference)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Offers_Reference");
+
+                entity.Property(e => e.CrCasRenterContractPriceReference)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Price_Reference");
+
+                entity.Property(e => e.CrCasRenterContractUserReference)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_User_Reference");
+
+                entity.HasOne(d => d.CrCasRenterContractBasicCarSerailNoNavigation)
+                    .WithMany(p => p.CrCasRenterContractBasics)
+                    .HasForeignKey(d => d.CrCasRenterContractBasicCarSerailNo)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Basic_CR_Cas_Car_Information");
+
+                entity.HasOne(d => d.CrCasRenterContractBasicSectorNavigation)
+                    .WithMany(p => p.CrCasRenterContractBasics)
+                    .HasForeignKey(d => d.CrCasRenterContractBasicSector)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Basic_CR_Mas_Sup_Renter_Sector");
+
+                entity.HasOne(d => d.CrCasRenterContractBasicNavigation)
+                    .WithMany(p => p.CrCasRenterContractBasicCrCasRenterContractBasicNavigations)
+                    .HasForeignKey(d => new { d.CrCasRenterContractBasicAdditionalDriverId, d.CrCasRenterContractBasicLessor })
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Basic_CR_Cas_Renter_Lessor_Add_Driver");
+
+                entity.HasOne(d => d.CrCasRenterContractBasic1)
+                    .WithMany(p => p.CrCasRenterContractBasics)
+                    .HasPrincipalKey(p => new { p.CrCasBranchInformationCode, p.CrCasBranchInformationLessor })
+                    .HasForeignKey(d => new { d.CrCasRenterContractBasicBranch, d.CrCasRenterContractBasicLessor })
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Basic_CR_Cas_Branch_Information");
+
+                entity.HasOne(d => d.CrCasRenterContractBasic2)
+                    .WithMany(p => p.CrCasRenterContractBasicCrCasRenterContractBasic2s)
+                    .HasForeignKey(d => new { d.CrCasRenterContractBasicDriverId, d.CrCasRenterContractBasicLessor })
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Basic_CR_Cas_Renter_Lessor_Driver");
+
+                entity.HasOne(d => d.CrCasRenterContractBasic3)
+                    .WithMany(p => p.CrCasRenterContractBasics)
+                    .HasForeignKey(d => new { d.CrCasRenterContractBasicPrivateDriverId, d.CrCasRenterContractBasicLessor })
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Basic_CR_Cas_Renter_Lessor_Private_Driver");
+
+                entity.HasOne(d => d.CrCasRenterContractBasic4)
+                    .WithMany(p => p.CrCasRenterContractBasicCrCasRenterContractBasic4s)
+                    .HasForeignKey(d => new { d.CrCasRenterContractBasicRenterId, d.CrCasRenterContractBasicLessor })
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Basic_CR_Cas_Renter_Lessor");
+            });
+
+            modelBuilder.Entity<CrCasRenterContractCarCheckup>(entity =>
+            {
+                entity.HasKey(e => new { e.CrCasRenterContractCarCheckupNo, e.CrCasRenterContractCarCheckupCode, e.CrCasRenterContractCarCheckupType });
+
+                entity.ToTable("CR_Cas_Renter_Contract_Car_Checkup");
+
+                entity.Property(e => e.CrCasRenterContractCarCheckupNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Car_Checkup_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractCarCheckupCode)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Car_Checkup_Code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractCarCheckupType)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Car_Checkup_Type")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractCarCheckupReasons)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Cas_Renter_Contract_Car_Checkup_Reasons");
+
+                entity.Property(e => e.CrCasRenterContractCarCheckupStatus).HasColumnName("CR_Cas_Renter_Contract_Car_Checkup_Status");
+
+                entity.HasOne(d => d.CrCasRenterContractCarCheckupCodeNavigation)
+                    .WithMany(p => p.CrCasRenterContractCarCheckups)
+                    .HasForeignKey(d => d.CrCasRenterContractCarCheckupCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Car_Checkup_CR_Mas_Sup_Contract_Car_Checkup");
+
+                entity.HasOne(d => d.CrCasRenterContractCarCheckupNoNavigation)
+                    .WithMany(p => p.CrCasRenterContractCarCheckups)
+                    .HasForeignKey(d => d.CrCasRenterContractCarCheckupNo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Car_Checkup_CR_Cas_Renter_Contract_Basic");
+            });
+
+            modelBuilder.Entity<CrCasRenterContractChoice>(entity =>
+            {
+                entity.HasKey(e => new { e.CrCasRenterContractChoiceNo, e.CrCasRenterContractChoiceCode });
+
+                entity.ToTable("CR_Cas_Renter_Contract_Choice");
+
+                entity.Property(e => e.CrCasRenterContractChoiceNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Choice_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractChoiceCode)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Choice_Code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasContractChoiceValue)
+                    .HasColumnType("decimal(7, 2)")
+                    .HasColumnName("CR_Cas_Contract_Choice_Value");
+
+                entity.HasOne(d => d.CrCasRenterContractChoiceCodeNavigation)
+                    .WithMany(p => p.CrCasRenterContractChoices)
+                    .HasForeignKey(d => d.CrCasRenterContractChoiceCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Choice_CR_Mas_Sup_Contract_Options");
+
+                entity.HasOne(d => d.CrCasRenterContractChoiceNoNavigation)
+                    .WithMany(p => p.CrCasRenterContractChoices)
+                    .HasForeignKey(d => d.CrCasRenterContractChoiceNo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Choice_CR_Cas_Renter_Contract_Basic");
+            });
+
+            modelBuilder.Entity<CrCasRenterContractStatistic>(entity =>
+            {
+                entity.HasKey(e => e.CrCasRenterContractStatisticsNo);
+
+                entity.ToTable("CR_Cas_Renter_Contract_Statistics");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisicsDays).HasColumnName("CR_Cas_Renter_Contract_Statisics_Days");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsAdditionsHourValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Additions_Hour_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsAdditionsKmValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Additions_KM_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsAdditionsValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Additions_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsAgeNo)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Age_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsAuthorizationValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Authorization_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsBnanValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Bnan_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsBranch)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Branch")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsBranchCity)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Branch_City")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsBranchRegions)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Branch_Regions")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsBrand)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Brand")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsCarSerialNo)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Car_Serial_No");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsCarYear)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Car_Year")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsCategory)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Category")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsCompensationValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Compensation_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsContractAfterValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Contract_After_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsContractValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Contract_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Date");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsDayClose)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Day_Close")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsDayCount)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Day_Count")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsDayCreate)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Day_Create")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsDiscountValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Discount_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsExpensesValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Expenses_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsGender)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Gender")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsGmonthCreate)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_GMonth_Create")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsHmonthCreate)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_HMonth_Create")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsJobs)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Jobs")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsKm)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_KM")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsLessor)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Lessor")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsMembership)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Membership")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsModel)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Model")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsNationalities)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Nationalities")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsOptionsValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Options_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsRentValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Rent_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsRenter)
+                    .HasMaxLength(20)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Renter");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsRenterCity)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Renter_City")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsRenterRegions)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Renter_Regions")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsTaxValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Tax_Value");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsTimeClose)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Time_Close")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsTimeCreate)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Time_Create")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractStatisticsUserClose)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_User_Close");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsUserOpen)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_User_Open");
+
+                entity.Property(e => e.CrCasRenterContractStatisticsValueNo)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Statistics_Value_No")
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsBranchCityNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatisticCrCasRenterContractStatisticsBranchCityNavigations)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsBranchCity)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_Sup_Post_City_Brn");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsBranchRegionsNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatisticCrCasRenterContractStatisticsBranchRegionsNavigations)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsBranchRegions)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_Sup_Post_Regions_Brn");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsBrandNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatistics)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsBrand)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_Sup_Car_Brand");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsCarSerialNoNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatistics)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsCarSerialNo)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Cas_Car_Information");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsCategoryNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatistics)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsCategory)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_Sup_Car_Category");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsGenderNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatistics)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsGender)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_Sup_Renter_Gender");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsJobsNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatistics)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsJobs)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_Sup_Renter_Professions");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsMembershipNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatistics)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsMembership)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_Sup_Renter_Membership");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsModelNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatistics)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsModel)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_Sup_Car_Model");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsNationalitiesNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatistics)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsNationalities)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_Sup_Renter_Nationalities");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsNoNavigation)
+                    .WithOne(p => p.CrCasRenterContractStatistic)
+                    .HasForeignKey<CrCasRenterContractStatistic>(d => d.CrCasRenterContractStatisticsNo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Basic");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsRenterCityNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatisticCrCasRenterContractStatisticsRenterCityNavigations)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsRenterCity)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_Sup_Post_City_Renter");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsRenterRegionsNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatisticCrCasRenterContractStatisticsRenterRegionsNavigations)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsRenterRegions)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_Sup_Post_Regions_Renter");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsUserCloseNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatisticCrCasRenterContractStatisticsUserCloseNavigations)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsUserClose)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_User_Information_Close");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsUserOpenNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatisticCrCasRenterContractStatisticsUserOpenNavigations)
+                    .HasForeignKey(d => d.CrCasRenterContractStatisticsUserOpen)
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_User_Information_Open");
+
+                entity.HasOne(d => d.CrCasRenterContractStatistics)
+                    .WithMany(p => p.CrCasRenterContractStatistics)
+                    .HasPrincipalKey(p => new { p.CrCasBranchInformationCode, p.CrCasBranchInformationLessor })
+                    .HasForeignKey(d => new { d.CrCasRenterContractStatisticsBranch, d.CrCasRenterContractStatisticsLessor })
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Cas_Branch_Information");
+
+                entity.HasOne(d => d.CrCasRenterContractStatisticsNavigation)
+                    .WithMany(p => p.CrCasRenterContractStatistics)
+                    .HasForeignKey(d => new { d.CrCasRenterContractStatisticsRenter, d.CrCasRenterContractStatisticsLessor })
+                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Lessor");
+            });
+
             modelBuilder.Entity<CrCasRenterLessor>(entity =>
             {
                 entity.HasKey(e => new { e.CrCasRenterLessorId, e.CrCasRenterLessorCode });
@@ -1784,6 +2869,9 @@ namespace Bnan.Core.Models
                 entity.HasIndex(e => e.CrCasRenterLessorStatisticsNationalities, "IX_CR_Cas_Renter_Lessor_CR_Cas_Renter_Lessor_Statistics_Nationalities");
 
                 entity.HasIndex(e => e.CrCasRenterLessorStatisticsRegions, "IX_CR_Cas_Renter_Lessor_CR_Cas_Renter_Lessor_Statistics_Regions");
+
+                entity.HasIndex(e => new { e.CrCasRenterLessorId, e.CrCasRenterLessorCode }, "uq_CR_Cas_Renter_Lessor")
+                    .IsUnique();
 
                 entity.Property(e => e.CrCasRenterLessorId)
                     .HasMaxLength(20)
@@ -2868,17 +3956,17 @@ namespace Bnan.Core.Models
 
                 entity.HasIndex(e => e.CrMasRenterInformationDrivingLicenseType, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Driving_License_Type");
 
+                entity.HasIndex(e => e.CrMasRenterInformationEmployer, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Employer");
+
                 entity.HasIndex(e => e.CrMasRenterInformationGender, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Gender");
 
                 entity.HasIndex(e => e.CrMasRenterInformationIdtype, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_IDType");
 
-                entity.HasIndex(e => e.CrMasRenterInformationEmployer, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Employer");
-
                 entity.HasIndex(e => e.CrMasRenterInformationNationality, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Nationality");
 
-                entity.HasIndex(e => e.CrMasRenterInformationSector, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Sector");
-
                 entity.HasIndex(e => e.CrMasRenterInformationProfession, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Profession");
+
+                entity.HasIndex(e => e.CrMasRenterInformationSector, "IX_CR_Mas_Renter_Information_CR_Mas_Renter_Information_Sector");
 
                 entity.Property(e => e.CrMasRenterInformationId)
                     .HasMaxLength(20)
@@ -2929,6 +4017,12 @@ namespace Bnan.Core.Models
                     .HasMaxLength(100)
                     .HasColumnName("CR_Mas_Renter_Information_Email");
 
+                entity.Property(e => e.CrMasRenterInformationEmployer)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Mas_Renter_Information_Employer")
+                    .IsFixedLength();
+
                 entity.Property(e => e.CrMasRenterInformationEnName)
                     .HasMaxLength(110)
                     .HasColumnName("CR_Mas_Renter_Information_En_Name");
@@ -2966,12 +4060,6 @@ namespace Bnan.Core.Models
                     .HasMaxLength(50)
                     .HasColumnName("CR_Mas_Renter_Information_Issue_Place");
 
-                entity.Property(e => e.CrMasRenterInformationEmployer)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("CR_Mas_Renter_Information_Employer")
-                    .IsFixedLength();
-
                 entity.Property(e => e.CrMasRenterInformationMobile)
                     .HasMaxLength(20)
                     .IsUnicode(false)
@@ -2981,6 +4069,12 @@ namespace Bnan.Core.Models
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("CR_Mas_Renter_Information_Nationality")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrMasRenterInformationProfession)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Mas_Renter_Information_Profession")
                     .IsFixedLength();
 
                 entity.Property(e => e.CrMasRenterInformationReasons)
@@ -3028,12 +4122,6 @@ namespace Bnan.Core.Models
                     .HasColumnType("date")
                     .HasColumnName("CR_Mas_Renter_Information_UpDate_Workplace_Data");
 
-                entity.Property(e => e.CrMasRenterInformationProfession)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("CR_Mas_Renter_Information_Profession")
-                    .IsFixedLength();
-
                 entity.HasOne(d => d.CrMasRenterInformationBankNavigation)
                     .WithMany(p => p.CrMasRenterInformations)
                     .HasForeignKey(d => d.CrMasRenterInformationBank)
@@ -3043,6 +4131,11 @@ namespace Bnan.Core.Models
                     .WithMany(p => p.CrMasRenterInformations)
                     .HasForeignKey(d => d.CrMasRenterInformationDrivingLicenseType)
                     .HasConstraintName("FK_CR_Mas_Renter_Information_CR_Mas_Sup_Renter_Driving_License");
+
+                entity.HasOne(d => d.CrMasRenterInformationEmployerNavigation)
+                    .WithMany(p => p.CrMasRenterInformations)
+                    .HasForeignKey(d => d.CrMasRenterInformationEmployer)
+                    .HasConstraintName("FK_CR_Mas_Renter_Information_CR_Mas_Sup_Renter_Employer");
 
                 entity.HasOne(d => d.CrMasRenterInformationGenderNavigation)
                     .WithMany(p => p.CrMasRenterInformations)
@@ -3054,25 +4147,20 @@ namespace Bnan.Core.Models
                     .HasForeignKey(d => d.CrMasRenterInformationIdtype)
                     .HasConstraintName("FK_CR_Mas_Renter_Information_CR_Mas_Sup_Renter_IDType");
 
-                entity.HasOne(d => d.CrMasRenterInformationEmployerNavigation)
-                    .WithMany(p => p.CrMasRenterInformations)
-                    .HasForeignKey(d => d.CrMasRenterInformationEmployer)
-                    .HasConstraintName("FK_CR_Mas_Renter_Information_CR_Mas_Sup_Renter_Employer");
-
                 entity.HasOne(d => d.CrMasRenterInformationNationalityNavigation)
                     .WithMany(p => p.CrMasRenterInformations)
                     .HasForeignKey(d => d.CrMasRenterInformationNationality)
                     .HasConstraintName("FK_CR_Mas_Renter_Information_CR_Mas_Sup_Renter_Nationalities");
 
-                entity.HasOne(d => d.CrMasRenterInformationSectorNavigation)
-                    .WithMany(p => p.CrMasRenterInformations)
-                    .HasForeignKey(d => d.CrMasRenterInformationSector)
-                    .HasConstraintName("FK_CR_Mas_Renter_Information_CR_Mas_Sup_Renter_Sector");
-
                 entity.HasOne(d => d.CrMasRenterInformationProfessionNavigation)
                     .WithMany(p => p.CrMasRenterInformations)
                     .HasForeignKey(d => d.CrMasRenterInformationProfession)
                     .HasConstraintName("FK_CR_Mas_Renter_Information_CR_Mas_Sup_Renter_Professions");
+
+                entity.HasOne(d => d.CrMasRenterInformationSectorNavigation)
+                    .WithMany(p => p.CrMasRenterInformations)
+                    .HasForeignKey(d => d.CrMasRenterInformationSector)
+                    .HasConstraintName("FK_CR_Mas_Renter_Information_CR_Mas_Sup_Renter_Sector");
             });
 
             modelBuilder.Entity<CrMasRenterPost>(entity =>
@@ -5169,9 +6257,7 @@ namespace Bnan.Core.Models
                     .HasColumnType("decimal(13, 2)")
                     .HasColumnName("CR_Mas_User_Information_Total_Balance")
                     .HasDefaultValueSql("((0))");
-
-               
-
+                
                 entity.HasOne(d => d.CrMasUserInformationLessorNavigation)
                     .WithMany(p => p.CrMasUserInformations)
                     .HasForeignKey(d => d.CrMasUserInformationLessor)

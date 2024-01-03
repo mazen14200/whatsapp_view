@@ -7,6 +7,7 @@ namespace Bnan.Core.Models
     {
         public CrMasRenterInformation()
         {
+            CrCasAccountReceipts = new HashSet<CrCasAccountReceipt>();
             CrCasRenterLessors = new HashSet<CrCasRenterLessor>();
         }
 
@@ -46,13 +47,14 @@ namespace Bnan.Core.Models
 
         public virtual CrMasSupAccountBank? CrMasRenterInformationBankNavigation { get; set; }
         public virtual CrMasSupRenterDrivingLicense? CrMasRenterInformationDrivingLicenseTypeNavigation { get; set; }
+        public virtual CrMasSupRenterEmployer? CrMasRenterInformationEmployerNavigation { get; set; }
         public virtual CrMasSupRenterGender? CrMasRenterInformationGenderNavigation { get; set; }
         public virtual CrMasSupRenterIdtype? CrMasRenterInformationIdtypeNavigation { get; set; }
-        public virtual CrMasSupRenterEmployer? CrMasRenterInformationEmployerNavigation { get; set; }
         public virtual CrMasSupRenterNationality? CrMasRenterInformationNationalityNavigation { get; set; }
-        public virtual CrMasSupRenterSector? CrMasRenterInformationSectorNavigation { get; set; }
         public virtual CrMasSupRenterProfession? CrMasRenterInformationProfessionNavigation { get; set; }
+        public virtual CrMasSupRenterSector? CrMasRenterInformationSectorNavigation { get; set; }
         public virtual CrMasRenterPost CrMasRenterPost { get; set; } = null!;
+        public virtual ICollection<CrCasAccountReceipt> CrCasAccountReceipts { get; set; }
         public virtual ICollection<CrCasRenterLessor> CrCasRenterLessors { get; set; }
     }
 }

@@ -8,6 +8,7 @@ namespace Bnan.Core.Models
         public CrMasSupContractOption()
         {
             CrCasPriceCarOptions = new HashSet<CrCasPriceCarOption>();
+            CrCasRenterContractChoices = new HashSet<CrCasRenterContractChoice>();
         }
 
         public string CrMasSupContractOptionsCode { get; set; } = null!;
@@ -22,5 +23,6 @@ namespace Bnan.Core.Models
 
         public virtual CrMasSysGroup? CrMasSupContractOptionsGroupNavigation { get; set; }
         public virtual ICollection<CrCasPriceCarOption> CrCasPriceCarOptions { get; set; }
+        public virtual ICollection<CrCasRenterContractChoice> CrCasRenterContractChoices { get; set; }
     }
 }

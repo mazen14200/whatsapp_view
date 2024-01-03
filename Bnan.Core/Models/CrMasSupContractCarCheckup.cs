@@ -5,6 +5,11 @@ namespace Bnan.Core.Models
 {
     public partial class CrMasSupContractCarCheckup
     {
+        public CrMasSupContractCarCheckup()
+        {
+            CrCasRenterContractCarCheckups = new HashSet<CrCasRenterContractCarCheckup>();
+        }
+
         public string CrMasSupContractCarCheckupCode { get; set; } = null!;
         public string? CrMasSupContractCarCheckupArName { get; set; }
         public string? CrMasSupContractCarCheckupEnName { get; set; }
@@ -13,5 +18,7 @@ namespace Bnan.Core.Models
         public string? CrMasSupContractCarCheckupBlockImage { get; set; }
         public string? CrMasSupContractCarCheckupStatus { get; set; }
         public string? CrMasSupContractCarCheckupReasons { get; set; }
+
+        public virtual ICollection<CrCasRenterContractCarCheckup> CrCasRenterContractCarCheckups { get; set; }
     }
 }

@@ -7,6 +7,7 @@ namespace Bnan.Core.Models
     {
         public CrCasAccountBank()
         {
+            CrCasAccountReceipts = new HashSet<CrCasAccountReceipt>();
             CrCasAccountSalesPoints = new HashSet<CrCasAccountSalesPoint>();
         }
 
@@ -22,6 +23,7 @@ namespace Bnan.Core.Models
 
         public virtual CrMasLessorInformation? CrCasAccountBankLessorNavigation { get; set; }
         public virtual CrMasSupAccountBank? CrCasAccountBankNoNavigation { get; set; }
+        public virtual ICollection<CrCasAccountReceipt> CrCasAccountReceipts { get; set; }
         public virtual ICollection<CrCasAccountSalesPoint> CrCasAccountSalesPoints { get; set; }
     }
 }

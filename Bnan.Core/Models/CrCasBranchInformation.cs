@@ -7,10 +7,14 @@ namespace Bnan.Core.Models
     {
         public CrCasBranchInformation()
         {
+            CrCasAccountReceipts = new HashSet<CrCasAccountReceipt>();
             CrCasAccountSalesPoints = new HashSet<CrCasAccountSalesPoint>();
             CrCasBranchDocuments = new HashSet<CrCasBranchDocument>();
             CrCasCarDocumentsMaintenances = new HashSet<CrCasCarDocumentsMaintenance>();
             CrCasCarInformations = new HashSet<CrCasCarInformation>();
+            CrCasRenterContractAlerts = new HashSet<CrCasRenterContractAlert>();
+            CrCasRenterContractBasics = new HashSet<CrCasRenterContractBasic>();
+            CrCasRenterContractStatistics = new HashSet<CrCasRenterContractStatistic>();
             CrCasSysAdministrativeProcedures = new HashSet<CrCasSysAdministrativeProcedure>();
             CrMasUserBranchValidities = new HashSet<CrMasUserBranchValidity>();
         }
@@ -40,10 +44,14 @@ namespace Bnan.Core.Models
 
         public virtual CrMasLessorInformation CrCasBranchInformationLessorNavigation { get; set; } = null!;
         public virtual CrCasBranchPost CrCasBranchPost { get; set; } = null!;
+        public virtual ICollection<CrCasAccountReceipt> CrCasAccountReceipts { get; set; }
         public virtual ICollection<CrCasAccountSalesPoint> CrCasAccountSalesPoints { get; set; }
         public virtual ICollection<CrCasBranchDocument> CrCasBranchDocuments { get; set; }
         public virtual ICollection<CrCasCarDocumentsMaintenance> CrCasCarDocumentsMaintenances { get; set; }
         public virtual ICollection<CrCasCarInformation> CrCasCarInformations { get; set; }
+        public virtual ICollection<CrCasRenterContractAlert> CrCasRenterContractAlerts { get; set; }
+        public virtual ICollection<CrCasRenterContractBasic> CrCasRenterContractBasics { get; set; }
+        public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatistics { get; set; }
         public virtual ICollection<CrCasSysAdministrativeProcedure> CrCasSysAdministrativeProcedures { get; set; }
         public virtual ICollection<CrMasUserBranchValidity> CrMasUserBranchValidities { get; set; }
     }

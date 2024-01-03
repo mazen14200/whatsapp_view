@@ -18,11 +18,13 @@
         public DateTime? BirthDate { get; set; }
         public DateTime? ExpiryIdDate { get; set; }
         //Licence
+        public string? LicenseCode { get; set; }
         public string? LicenseArName { get; set; }
         public string? LicenseEnName { get; set; }
         public DateTime? LicenseIssuedDate { get; set; }
         public DateTime? LicenseExpiryDate { get; set; }
         //Employeer
+        public string? EmployerCode { get; set; }
         public string? EmployerArName { get; set; }
         public string? EmployerEnName { get; set; }
         //Post

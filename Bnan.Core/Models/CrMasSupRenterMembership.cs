@@ -8,6 +8,7 @@ namespace Bnan.Core.Models
         public CrMasSupRenterMembership()
         {
             CrCasLessorMemberships = new HashSet<CrCasLessorMembership>();
+            CrCasRenterContractStatistics = new HashSet<CrCasRenterContractStatistic>();
             CrCasRenterLessors = new HashSet<CrCasRenterLessor>();
         }
 
@@ -22,6 +23,7 @@ namespace Bnan.Core.Models
 
         public virtual CrMasSysGroup? CrMasSupRenterMembershipGroupCodeNavigation { get; set; }
         public virtual ICollection<CrCasLessorMembership> CrCasLessorMemberships { get; set; }
+        public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatistics { get; set; }
         public virtual ICollection<CrCasRenterLessor> CrCasRenterLessors { get; set; }
     }
 }
