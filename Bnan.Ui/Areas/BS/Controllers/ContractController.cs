@@ -59,6 +59,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                         "CrCasCarInformationCategoryNavigation", "CrCasCarDocumentsMaintenances" }).ToList();
             var categoryCars = carsAvailable.Select(item => item.CrCasCarInformationCategoryNavigation).Distinct().OrderBy(item => item.CrMasSupCarCategoryCode).ToList();
             var CheckupCars = _unitOfWork.CrMasSupContractCarCheckup.FindAll(x=>x.CrMasSupContractCarCheckupStatus == Status.Active).ToList();
+            ViewBag.StartDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm");
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
                 CrCasBranchInformations = branches,
@@ -185,7 +186,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         PersonalEnGender = elmRenterInfo?.CrElmPersonalEnGender,
                         PersonalArNationality = elmRenterInfo?.CrElmPersonalArNationality,
                         PersonalEnNationality = elmRenterInfo?.CrElmPersonalEnNationality,
-                        PersonalArProfessions = elmRenterInfo?.CrElmPersonalArNationality,
+                        PersonalArProfessions = elmRenterInfo?.CrElmPersonalArProfessions,
                         PersonalEnProfessions = elmRenterInfo?.CrElmPersonalEnProfessions,
                         PersonalEmail = elmRenterInfo?.CrElmPersonalEmail,
                         EmployerArName = elmRenterEmployeer?.CrElmEmployerArName,
@@ -299,9 +300,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
             
             carVM.CarInformation = carInfo;
             var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicDistributionCode == carInfo.CrCasCarInformationDistribution);
+            //var advantagesValue = _unitOfWork.CrCasPriceCarAdditional.FindAll(x => x.CrCasPriceCarAdditionalNo == carPrice.CrCasPriceCarBasicNo).Select(x=>x.CrCasPriceCarAdditionalValue).Sum();
             if (carPrice != null)
             {
                 carVM.CarPrice = carPrice;
+                carVM.AdvantagesTotalValue = 10;
                 return Json(carVM);
             }
             return Json(null);

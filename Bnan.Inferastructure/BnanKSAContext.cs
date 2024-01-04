@@ -197,6 +197,24 @@ namespace Bnan.Core.Models
 
                 entity.ToTable("CR_Cas_Account_Receipt");
 
+                entity.HasIndex(e => e.CrCasAccountReceiptAccount, "IX_CR_Cas_Account_Receipt_CR_Cas_Account_Receipt_Account");
+
+                entity.HasIndex(e => e.CrCasAccountReceiptBank, "IX_CR_Cas_Account_Receipt_CR_Cas_Account_Receipt_Bank");
+
+                entity.HasIndex(e => e.CrCasAccountReceiptCar, "IX_CR_Cas_Account_Receipt_CR_Cas_Account_Receipt_Car");
+
+                entity.HasIndex(e => new { e.CrCasAccountReceiptLessorCode, e.CrCasAccountReceiptBranchCode }, "IX_CR_Cas_Account_Receipt_CR_Cas_Account_Receipt_Lessor_Code_CR_Cas_Account_Receipt_Branch_Code");
+
+                entity.HasIndex(e => e.CrCasAccountReceiptPaymentMethod, "IX_CR_Cas_Account_Receipt_CR_Cas_Account_Receipt_Payment_Method");
+
+                entity.HasIndex(e => e.CrCasAccountReceiptReferenceType, "IX_CR_Cas_Account_Receipt_CR_Cas_Account_Receipt_Reference_Type");
+
+                entity.HasIndex(e => e.CrCasAccountReceiptRenterId, "IX_CR_Cas_Account_Receipt_CR_Cas_Account_Receipt_Renter_Id");
+
+                entity.HasIndex(e => e.CrCasAccountReceiptSalesPoint, "IX_CR_Cas_Account_Receipt_CR_Cas_Account_Receipt_SalesPoint");
+
+                entity.HasIndex(e => e.CrCasAccountReceiptUser, "IX_CR_Cas_Account_Receipt_CR_Cas_Account_Receipt_User");
+
                 entity.Property(e => e.CrCasAccountReceiptNo)
                     .HasMaxLength(22)
                     .IsUnicode(false)
@@ -1968,6 +1986,8 @@ namespace Bnan.Core.Models
 
                 entity.ToTable("CR_Cas_Renter_Contract_Additional");
 
+                entity.HasIndex(e => e.CrCasRenterContractAdditionalCode, "IX_CR_Cas_Renter_Contract_Additional_CR_Cas_Renter_Contract_Additional_Code");
+
                 entity.Property(e => e.CrCasRenterContractAdditionalNo)
                     .HasMaxLength(22)
                     .IsUnicode(false)
@@ -2002,6 +2022,8 @@ namespace Bnan.Core.Models
                 entity.HasKey(e => new { e.CrCasRenterContractAdvantagesNo, e.CrCasRenterContractAdvantagesCode });
 
                 entity.ToTable("CR_Cas_Renter_Contract_Advantages");
+
+                entity.HasIndex(e => e.CrCasRenterContractAdvantagesCode, "IX_CR_Cas_Renter_Contract_Advantages_CR_Cas_Renter_Contract_Advantages_Code");
 
                 entity.Property(e => e.CrCasRenterContractAdvantagesNo)
                     .HasMaxLength(22)
@@ -2038,6 +2060,8 @@ namespace Bnan.Core.Models
 
                 entity.ToTable("CR_Cas_Renter_Contract_Alert");
 
+                entity.HasIndex(e => new { e.CrCasRenterContractAlertBranch, e.CrCasRenterContractAlertLessor }, "IX_CR_Cas_Renter_Contract_Alert_CR_Cas_Renter_Contract_Alert_Branch_CR_Cas_Renter_Contract_Alert_Lessor");
+
                 entity.Property(e => e.CrCasRenterContractAlertNo)
                     .HasMaxLength(22)
                     .IsUnicode(false)
@@ -2063,26 +2087,20 @@ namespace Bnan.Core.Models
                     .IsFixedLength();
 
                 entity.Property(e => e.CrCasRenterContractAlertDayDate)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasColumnName("CR_Cas_Renter_Contract_Alert_Day_Date");
-
-                entity.Property(e => e.CrCasRenterContractAlertDayTime).HasColumnName("CR_Cas_Renter_Contract_Alert_Day_Time");
 
                 entity.Property(e => e.CrCasRenterContractAlertDays).HasColumnName("CR_Cas_Renter_Contract_Alert_Days");
 
                 entity.Property(e => e.CrCasRenterContractAlertEndDate)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasColumnName("CR_Cas_Renter_Contract_Alert_End_Date");
-
-                entity.Property(e => e.CrCasRenterContractAlertEndTime).HasColumnName("CR_Cas_Renter_Contract_Alert_End_Time");
 
                 entity.Property(e => e.CrCasRenterContractAlertHour).HasColumnName("CR_Cas_Renter_Contract_Alert_Hour");
 
                 entity.Property(e => e.CrCasRenterContractAlertHourDate)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasColumnName("CR_Cas_Renter_Contract_Alert_Hour_Date");
-
-                entity.Property(e => e.CrCasRenterContractAlertHourTime).HasColumnName("CR_Cas_Renter_Contract_Alert_Hour_Time");
 
                 entity.Property(e => e.CrCasRenterContractAlertLessor)
                     .HasMaxLength(4)
@@ -2119,6 +2137,8 @@ namespace Bnan.Core.Models
                 entity.HasKey(e => e.CrCasRenterContractAuthorizationContractNo);
 
                 entity.ToTable("CR_Cas_Renter_Contract_Authorization");
+
+                entity.HasIndex(e => e.CrCasRenterContractAuthorizationLessor, "IX_CR_Cas_Renter_Contract_Authorization_CR_Cas_Renter_Contract_Authorization_Lessor");
 
                 entity.Property(e => e.CrCasRenterContractAuthorizationContractNo)
                     .HasMaxLength(22)
@@ -2179,6 +2199,20 @@ namespace Bnan.Core.Models
                 entity.HasKey(e => e.CrCasRenterContractBasicNo);
 
                 entity.ToTable("CR_Cas_Renter_Contract_Basic");
+
+                entity.HasIndex(e => new { e.CrCasRenterContractBasicAdditionalDriverId, e.CrCasRenterContractBasicLessor }, "IX_CR_Cas_Renter_Contract_Basic_CR_Cas_Renter_Contract_Basic_Additional_Driver_Id_CR_Cas_Renter_Contract_Basic_Lessor");
+
+                entity.HasIndex(e => new { e.CrCasRenterContractBasicBranch, e.CrCasRenterContractBasicLessor }, "IX_CR_Cas_Renter_Contract_Basic_CR_Cas_Renter_Contract_Basic_Branch_CR_Cas_Renter_Contract_Basic_Lessor");
+
+                entity.HasIndex(e => e.CrCasRenterContractBasicCarSerailNo, "IX_CR_Cas_Renter_Contract_Basic_CR_Cas_Renter_Contract_Basic_Car_Serail_No");
+
+                entity.HasIndex(e => new { e.CrCasRenterContractBasicDriverId, e.CrCasRenterContractBasicLessor }, "IX_CR_Cas_Renter_Contract_Basic_CR_Cas_Renter_Contract_Basic_Driver_Id_CR_Cas_Renter_Contract_Basic_Lessor");
+
+                entity.HasIndex(e => new { e.CrCasRenterContractBasicPrivateDriverId, e.CrCasRenterContractBasicLessor }, "IX_CR_Cas_Renter_Contract_Basic_CR_Cas_Renter_Contract_Basic_Private_Driver_Id_CR_Cas_Renter_Contract_Basic_Lessor");
+
+                entity.HasIndex(e => new { e.CrCasRenterContractBasicRenterId, e.CrCasRenterContractBasicLessor }, "IX_CR_Cas_Renter_Contract_Basic_CR_Cas_Renter_Contract_Basic_Renter_Id_CR_Cas_Renter_Contract_Basic_Lessor");
+
+                entity.HasIndex(e => e.CrCasRenterContractBasicSector, "IX_CR_Cas_Renter_Contract_Basic_CR_Cas_Renter_Contract_Basic_Sector");
 
                 entity.Property(e => e.CrCasRenterContractBasicNo)
                     .HasMaxLength(22)
@@ -2454,6 +2488,8 @@ namespace Bnan.Core.Models
 
                 entity.ToTable("CR_Cas_Renter_Contract_Car_Checkup");
 
+                entity.HasIndex(e => e.CrCasRenterContractCarCheckupCode, "IX_CR_Cas_Renter_Contract_Car_Checkup_CR_Cas_Renter_Contract_Car_Checkup_Code");
+
                 entity.Property(e => e.CrCasRenterContractCarCheckupNo)
                     .HasMaxLength(22)
                     .IsUnicode(false)
@@ -2497,6 +2533,8 @@ namespace Bnan.Core.Models
 
                 entity.ToTable("CR_Cas_Renter_Contract_Choice");
 
+                entity.HasIndex(e => e.CrCasRenterContractChoiceCode, "IX_CR_Cas_Renter_Contract_Choice_CR_Cas_Renter_Contract_Choice_Code");
+
                 entity.Property(e => e.CrCasRenterContractChoiceNo)
                     .HasMaxLength(22)
                     .IsUnicode(false)
@@ -2531,6 +2569,38 @@ namespace Bnan.Core.Models
                 entity.HasKey(e => e.CrCasRenterContractStatisticsNo);
 
                 entity.ToTable("CR_Cas_Renter_Contract_Statistics");
+
+                entity.HasIndex(e => new { e.CrCasRenterContractStatisticsBranch, e.CrCasRenterContractStatisticsLessor }, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Branch_CR_Cas_Renter_Contract_Statistics_Lessor");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsBranchCity, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Branch_City");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsBranchRegions, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Branch_Regions");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsBrand, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Brand");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsCarSerialNo, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Car_Serial_No");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsCategory, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Category");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsGender, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Gender");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsJobs, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Jobs");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsMembership, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Membership");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsModel, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Model");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsNationalities, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Nationalities");
+
+                entity.HasIndex(e => new { e.CrCasRenterContractStatisticsRenter, e.CrCasRenterContractStatisticsLessor }, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Renter_CR_Cas_Renter_Contract_Statistics_Lessor");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsRenterCity, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Renter_City");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsRenterRegions, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_Renter_Regions");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsUserClose, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_User_Close");
+
+                entity.HasIndex(e => e.CrCasRenterContractStatisticsUserOpen, "IX_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Statistics_User_Open");
 
                 entity.Property(e => e.CrCasRenterContractStatisticsNo)
                     .HasMaxLength(22)
@@ -6257,7 +6327,8 @@ namespace Bnan.Core.Models
                     .HasColumnType("decimal(13, 2)")
                     .HasColumnName("CR_Mas_User_Information_Total_Balance")
                     .HasDefaultValueSql("((0))");
-                
+
+               
                 entity.HasOne(d => d.CrMasUserInformationLessorNavigation)
                     .WithMany(p => p.CrMasUserInformations)
                     .HasForeignKey(d => d.CrMasUserInformationLessor)
