@@ -300,15 +300,23 @@ namespace Bnan.Ui.Areas.BS.Controllers
             
             carVM.CarInformation = carInfo;
             var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicDistributionCode == carInfo.CrCasCarInformationDistribution);
-            //var advantagesValue = _unitOfWork.CrCasPriceCarAdditional.FindAll(x => x.CrCasPriceCarAdditionalNo == carPrice.CrCasPriceCarBasicNo).Select(x=>x.CrCasPriceCarAdditionalValue).Sum();
             if (carPrice != null)
             {
                 carVM.CarPrice = carPrice;
-                carVM.AdvantagesTotalValue = 10;
                 return Json(carVM);
             }
             return Json(null);
 
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAdvantages(string priceNumber)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            BSCarsInformationVM carVM = new BSCarsInformationVM();
+            var AdvantagesTotalValue = _unitOfWork.CrCasPriceCarAdvantage.FindAll(x => x.CrCasPriceCarAdvantagesNo == priceNumber).Select(x=>x.CrCasPriceCarAdvantagesValue).Sum();
+            if (AdvantagesTotalValue!=null) return Json(AdvantagesTotalValue);
+            return Json(null);
         }
 
         [HttpGet]

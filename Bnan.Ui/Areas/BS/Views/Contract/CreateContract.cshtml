@@ -1455,7 +1455,7 @@
                                                                 </div>
 
                                                             </div>
-                                                             <div class="row dropdown-content-row">
+                                                            <div class="row dropdown-content-row">
                                                                 <div class="col-auto pe-4">
                                                                     <p>: قيمة المميزات </p>
                                                                 </div>
@@ -2137,6 +2137,7 @@
         var CarChoices;
         var CarAdditionals;
         var CarCheckUp;
+        var AdvantagesValue;
 
         // For Renter
         async function GetRenterInformation(RenterId) {
@@ -2148,6 +2149,7 @@
                 });
 
                 RenterInformation = data;
+                console.log(data);
                 if (data != null) {
                     return true; // Renter exists
                 }
@@ -2181,6 +2183,7 @@
                     var RenterInformation = null;
                     var DriverInformation = null;
                     var AddDriverInformation = null;
+                    clearPaymentData();
                     // Update the initial value of RenterID
                     initialRenterID = $(this).val();
                 }
@@ -2797,6 +2800,7 @@
                     SerialNumberOfCar = $(this).find('td').data("serial-number");
                     PriceNumberOfCar = $(this).find('td').data("price-number");
                     GetCarInfo(SerialNumberOfCar);
+                    GetAdvantages(SerialNumberOfCar);
                     // Use Promises to ensure data is available before proceeding
                     Promise.all([getCarChoices(PriceNumberOfCar), getCarAdditional(PriceNumberOfCar)])
                         .then(([choicesData, additionalsData]) => {
@@ -2804,6 +2808,7 @@
                                 //Clear Data Of Driver And Add Driver To Return Check
                                 clearDataDriver();
                                 clearDataAddDriver();
+                                clearPaymentData();
                                 document.getElementById("addational-driver").checked = false;
                                 if (CarAdditionals.count == 0 && CarChoices.count == 0) {
                                     currentField = "check";
@@ -2906,6 +2911,7 @@
                                 //Clear Data Of Driver And Add Driver To Return Check
                                 clearDataDriver();
                                 clearDataAddDriver();
+                                clearPaymentData();
                                 document.getElementById("addational-driver").checked = false;
                                 $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                                 next_fs.show();
@@ -3428,6 +3434,21 @@
                 }
             });
         }
+        function GetAdvantages(priceNumber) {
+            console.log(priceNumber);
+            $.ajax({
+                url: "/BS/Contract/GetAdvantages",
+                type: "GET",
+                data: { priceNumber: priceNumber },
+                success: function (data) {
+                    AdvantagesValue = data;
+                    console.log(AdvantagesValue)
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error("Error loading data:", textStatus, errorThrown);
+                }
+            });
+        }
 
         function handleCurrentMeterInput() {
             // Assuming currentMeterInput is the ID of your input field
@@ -3474,7 +3495,7 @@
 
             // Add the total row
             var totalRow = $("<tr>");
-            totalRow.append("<td class='text-center' id='TotalChoices'></td>");
+            totalRow.append("<td class='text-center' id='TotalChoices'>0.00</td>");
             totalRow.append("<td class='text-center'>المجموع</td>");
             tbodyContainer.append(totalRow);
         }
@@ -3582,7 +3603,7 @@
 
             // Add the total row
             var totalRow = $("<tr>");
-            totalRow.append("<td class='text-center' id='TotalAdditionals'></td>");
+            totalRow.append("<td class='text-center' id='TotalAdditionals'>0.00</td>");
             totalRow.append("<td class='text-center'>المجموع</td>");
             tbodyContainer.append(totalRow);
         }
@@ -3702,79 +3723,83 @@
             var daysNo = document.getElementById('dayNo').value;
             var today = new Date();
             var RentalDayPrice = CarInformation.carPrice.crCasPriceCarBasicDailyRent;
-            console.log("daysNo",daysNo);
+            console.log("daysNo", daysNo);
             console.log("RentalDayPrice", RentalDayPrice);
             if (parseInt(daysNo) > 0) {
                 today.setDate(today.getDate() + parseInt(daysNo));
-                var options = {year: 'numeric',month: '2-digit',day: '2-digit',hour: '2-digit',minute: '2-digit'};
+                var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
                 var formattedEndDate = today.toLocaleDateString('ja-JP', options);
                 document.getElementById('EndDate').textContent = formattedEndDate;
-                document.getElementById('RentValue').textContent = parseInt(daysNo) * parseInt(RentalDayPrice);
-
-
+                document.getElementById('RentValue').textContent = (parseInt(daysNo) * parseInt(RentalDayPrice)).toFixed(2);
                 var TotalChoices = $("#TotalChoices").text();
                 if (parseInt(TotalChoices) != null && parseInt(TotalChoices) != 0 && parseInt(TotalChoices) != "") {
-                    document.getElementById('ChoicesValue').textContent = parseInt(TotalChoices) * parseInt(daysNo);
+                    document.getElementById('ChoicesValue').textContent = (parseInt(TotalChoices) * parseInt(daysNo)).toFixed(2);
                 }
-                else{
-                    document.getElementById('ChoicesValue').textContent = "0";
+                else {
+                    document.getElementById('ChoicesValue').textContent = "0.00";
                 }
 
                 var TotalAdditionals = $("#TotalAdditionals").text();
-                if (parseInt(TotalAdditionals) != null) {
-                    document.getElementById('AdditionalValue').textContent = TotalAdditionals;
+                if (parseInt(TotalAdditionals) != null && parseInt(TotalAdditionals) != "") {
+                    document.getElementById('AdditionalValue').textContent = parseInt(TotalAdditionals).toFixed(2);
                 }
                 else {
-                    document.getElementById('AdditionalValue').textContent = "0";
+                    document.getElementById('AdditionalValue').textContent = "0.00";
                 }
 
-                var AdvatagesValue = CarInformation.carPrice.crCasCarPriceBasicInFeesTamm;
-                if (parseInt(TotalAdditionals) != null) {
-                    document.getElementById('AdvatagesValue').textContent = TotalAdditionals;
+                var AdvatagesTotalValue = parseInt(AdvantagesValue);
+                if (AdvatagesTotalValue != null && AdvatagesTotalValue != "") {
+                    document.getElementById('AdvatagesValue').textContent = (AdvatagesTotalValue * parseInt(daysNo)).toFixed(2);
                 }
                 else {
-                    document.getElementById('AdvatagesValue').textContent = "0";
+                    document.getElementById('AdvatagesValue').textContent = "0.00";
                 }
 
                 var additionalDriver = document.getElementById("addational-driver");
                 if (additionalDriver.checked) {
                     var AddDriverValue = CarInformation.carPrice.crCasPriceCarBasicAdditionalDriverValue;
-                    if (parseInt(AddDriverValue)!=null) {
+                    if (parseInt(AddDriverValue) != null) {
                         document.getElementById('AddDriverValue').textContent = AddDriverValue;
                     }
-                    else{
-                        document.getElementById('AddDriverValue').textContent = "0";
+                    else {
+                        document.getElementById('AddDriverValue').textContent = "0.00";
                     }
                 }
-                
+
 
                 var privateDriverRadio1 = document.getElementById("PrivateDriver");
                 var privateDriverID = $("#driver-dropdown").val();
                 if (privateDriverRadio1.checked && privateDriverID == null) {
                     var privateDriverValue = CarInformation.carPrice.crCasPriceCarBasicPrivateDriverValue;
-                    if (parseInt(privateDriverValue)!=null) {
+                    if (parseInt(privateDriverValue) != null) {
                         document.getElementById('PrivateDriverValue').textContent = privateDriverValue;
                     }
-                    else{
-                        document.getElementById('PrivateDriverValue').textContent = "0";
+                    else {
+                        document.getElementById('PrivateDriverValue').textContent = "0.00";
                     }
                 }
 
 
                 var InFeesTamm = CarInformation.carPrice.crCasCarPriceBasicInFeesTamm;
-                if(parseInt(InFeesTamm)!=null){
+                if (parseInt(InFeesTamm) != null) {
                     document.getElementById('InFeesTammValue').textContent = InFeesTamm;
                 }
+                $("#payment-extra-details").show();
 
-            }else{
-                document.getElementById('EndDate').textContent = "";
-                document.getElementById('InFeesTammValue').textContent = "0";
-                document.getElementById('PrivateDriverValue').textContent = "0";
-                document.getElementById('AddDriverValue').textContent = "0";
-
-
+            } else {
+                clearPaymentData();
             }
 
+        }
+        function clearPaymentData() {
+            $("#payment-extra-details").hide();
+            document.getElementById('EndDate').textContent = "";
+            document.getElementById('InFeesTammValue').textContent = "0.00";
+            document.getElementById('PrivateDriverValue').textContent = "0.00";
+            document.getElementById('AddDriverValue').textContent = "0.00";
+            document.getElementById('AdvatagesValue').textContent = "0.00";
+            document.getElementById('AdditionalValue').textContent = "0.00";
+            document.getElementById('ChoicesValue').textContent = "0.00";
         }
     </script>
 

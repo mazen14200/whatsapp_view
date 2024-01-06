@@ -62,8 +62,8 @@ namespace Bnan.Core.Models
         public virtual CrMasSupCarDistribution? CrCasPriceCarBasicDistributionCodeNavigation { get; set; }
         public virtual CrMasLessorInformation? CrCasPriceCarBasicLessorCodeNavigation { get; set; }
         public virtual CrMasSupCarModel? CrCasPriceCarBasicModelCodeNavigation { get; set; }
-        public virtual ICollection<CrCasPriceCarAdditional> CrCasPriceCarAdditionals { get; set; }
-        public virtual ICollection<CrCasPriceCarAdvantage> CrCasPriceCarAdvantages { get; set; }
-        public virtual ICollection<CrCasPriceCarOption> CrCasPriceCarOptions { get; set; }
+        public virtual ICollection<CrCasPriceCarAdditional>? CrCasPriceCarAdditionals { get; set; }
+        public virtual ICollection<CrCasPriceCarAdvantage>? CrCasPriceCarAdvantages { get; set; }
+        public virtual ICollection<CrCasPriceCarOption>? CrCasPriceCarOptions { get; set; }
     }
 }

@@ -173,7 +173,7 @@ namespace Bnan.Inferastructure.Repository
                 CityCode = "1700000002";
             }
            
-            if (crMasRenterInformation != null) ageCode = GetAge(crMasRenterInformation.CrMasRenterInformationBirthDate.ToString());
+            if (crMasRenterInformation != null) ageCode = GetAge(crMasRenterInformation.CrMasRenterInformationBirthDate?.ToString("yyyy/MM/dd"));
             CrCasRenterLessor casRenterLessor = new CrCasRenterLessor
             {
                 CrCasRenterLessorId = crMasRenterInformation.CrMasRenterInformationId,
