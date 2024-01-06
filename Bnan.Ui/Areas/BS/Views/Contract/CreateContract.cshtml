@@ -1435,7 +1435,7 @@
 
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>۱٥۰٥.۰۰</p>
+                                                    <p id="contractValue">0.00</p>
                                                 </div>
                                                 <div class="col-auto">
                                                     <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="icon button to display more data" id="payment-extra-details">
@@ -3716,7 +3716,14 @@
 
             return age;
         }
-
+        var rentValue = 0;
+        var choicesValue = 0;
+        var additionalValue = 0;
+        var advantagesValueTotal = 0;
+        var additionalDriverValue = 0;
+        var privateDriverValue = 0;
+        var InFeesTammValue = 0;
+        var contractValue = 0;
         //Calculate Contract
         function CalculateContract() {
             var price = 0;
@@ -3730,39 +3737,51 @@
                 var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
                 var formattedEndDate = today.toLocaleDateString('ja-JP', options);
                 document.getElementById('EndDate').textContent = formattedEndDate;
-                document.getElementById('RentValue').textContent = (parseInt(daysNo) * parseInt(RentalDayPrice)).toFixed(2);
+
+                rentValue = parseInt(daysNo) * parseInt(RentalDayPrice);
+                document.getElementById('RentValue').textContent = rentValue.toFixed(2);
+
                 var TotalChoices = $("#TotalChoices").text();
                 if (parseInt(TotalChoices) != null && parseInt(TotalChoices) != 0 && parseInt(TotalChoices) != "") {
-                    document.getElementById('ChoicesValue').textContent = (parseInt(TotalChoices) * parseInt(daysNo)).toFixed(2);
+                    choicesValue = parseInt(TotalChoices) * parseInt(daysNo);
+                    document.getElementById('ChoicesValue').textContent = choicesValue.toFixed(2);
                 }
                 else {
                     document.getElementById('ChoicesValue').textContent = "0.00";
+                    choicesValue = 0;
                 }
 
                 var TotalAdditionals = $("#TotalAdditionals").text();
                 if (parseInt(TotalAdditionals) != null && parseInt(TotalAdditionals) != "") {
-                    document.getElementById('AdditionalValue').textContent = parseInt(TotalAdditionals).toFixed(2);
+                    additionalValue = parseInt(TotalAdditionals);
+                    document.getElementById('AdditionalValue').textContent = additionalValue.toFixed(2);
+
                 }
                 else {
                     document.getElementById('AdditionalValue').textContent = "0.00";
+                    additionalValue = 0;
                 }
 
                 var AdvatagesTotalValue = parseInt(AdvantagesValue);
                 if (AdvatagesTotalValue != null && AdvatagesTotalValue != "") {
-                    document.getElementById('AdvatagesValue').textContent = (AdvatagesTotalValue * parseInt(daysNo)).toFixed(2);
+                    advantagesValueTotal = AdvatagesTotalValue * parseInt(daysNo);
+                    document.getElementById('AdvatagesValue').textContent = advantagesValueTotal.toFixed(2);
                 }
                 else {
                     document.getElementById('AdvatagesValue').textContent = "0.00";
+                    advantagesValueTotal = 0;
                 }
 
                 var additionalDriver = document.getElementById("addational-driver");
                 if (additionalDriver.checked) {
                     var AddDriverValue = CarInformation.carPrice.crCasPriceCarBasicAdditionalDriverValue;
                     if (parseInt(AddDriverValue) != null) {
-                        document.getElementById('AddDriverValue').textContent = AddDriverValue;
+                        additionalDriverValue = AddDriverValue;
+                        document.getElementById('AddDriverValue').textContent = additionalDriverValue.toFixed(2);
                     }
                     else {
                         document.getElementById('AddDriverValue').textContent = "0.00";
+                        additionalDriverValue = 0;
                     }
                 }
 
@@ -3770,21 +3789,51 @@
                 var privateDriverRadio1 = document.getElementById("PrivateDriver");
                 var privateDriverID = $("#driver-dropdown").val();
                 if (privateDriverRadio1.checked && privateDriverID == null) {
-                    var privateDriverValue = CarInformation.carPrice.crCasPriceCarBasicPrivateDriverValue;
-                    if (parseInt(privateDriverValue) != null) {
-                        document.getElementById('PrivateDriverValue').textContent = privateDriverValue;
+                    var privateDriver = CarInformation.carPrice.crCasPriceCarBasicPrivateDriverValue;
+                    if (parseInt(privateDriver) != null) {
+                        privateDriverValue = privateDriver;
+                        document.getElementById('PrivateDriverValue').textContent = privateDriverValue.toFixed(2);
                     }
                     else {
                         document.getElementById('PrivateDriverValue').textContent = "0.00";
+                        privateDriverValue = 0;
                     }
                 }
 
 
                 var InFeesTamm = CarInformation.carPrice.crCasCarPriceBasicInFeesTamm;
+                // var OutFeesTamm = CarInformation.carPrice.crCasCarPriceBasicOutFeesTamm;
+                // var OutFeesTammInput = document.getElementById('Delegate-out-input');
+                // if(OutFeesTammInput.checked){
+                //     if (parseInt(OutFeesTamm) != null && parseInt(OutFeesTamm)!="") {
+                //         document.getElementById('InFeesTammValue').textContent = OutFeesTamm.toFixed(2);
+                //     }
+                // }
+                // else{
+                //     if (parseInt(InFeesTamm) != null) {
+                //         document.getElementById('InFeesTammValue').textContent = InFeesTamm;
+                //     }
+                // }
                 if (parseInt(InFeesTamm) != null) {
-                    document.getElementById('InFeesTammValue').textContent = InFeesTamm;
+                    InFeesTammValue = InFeesTamm;
+                    document.getElementById('InFeesTammValue').textContent = InFeesTammValue.toFixed(2);
                 }
+                else{
+                    document.getElementById('InFeesTammValue').textContent = "0.00";
+                    InFeesTammValue = 0;
+                }
+
+
+
+                // Contract Value Total
+                contractValue = rentValue + choicesValue + additionalValue + advantagesValueTotal + additionalDriverValue + privateDriverValue + InFeesTammValue;
+                document.getElementById('contractValue').textContent = contractValue.toFixed(2);
+
+
+
+
                 $("#payment-extra-details").show();
+                // $("#dropdown-content-payment").show();
 
             } else {
                 clearPaymentData();
@@ -3793,8 +3842,11 @@
         }
         function clearPaymentData() {
             $("#payment-extra-details").hide();
+            $("#dropdown-content-payment").hide();
             document.getElementById('EndDate').textContent = "";
             document.getElementById('InFeesTammValue').textContent = "0.00";
+            document.getElementById('contractValue').textContent = "0.00";
+            document.getElementById('RentValue').textContent = "0.00";
             document.getElementById('PrivateDriverValue').textContent = "0.00";
             document.getElementById('AddDriverValue').textContent = "0.00";
             document.getElementById('AdvatagesValue').textContent = "0.00";

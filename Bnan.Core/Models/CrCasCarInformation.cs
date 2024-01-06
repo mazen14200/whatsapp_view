@@ -75,10 +75,10 @@ namespace Bnan.Core.Models
         public virtual CrMasSupCarRegistration? CrCasCarInformationRegistrationNavigation { get; set; }
         public virtual CrMasSupCarColor? CrCasCarInformationSeatColorNavigation { get; set; }
         public virtual CrMasSupCarColor? CrCasCarInformationSecondaryColorNavigation { get; set; }
-        public virtual ICollection<CrCasAccountReceipt> CrCasAccountReceipts { get; set; }
-        public virtual ICollection<CrCasCarAdvantage> CrCasCarAdvantages { get; set; }
-        public virtual ICollection<CrCasCarDocumentsMaintenance> CrCasCarDocumentsMaintenances { get; set; }
-        public virtual ICollection<CrCasRenterContractBasic> CrCasRenterContractBasics { get; set; }
-        public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatistics { get; set; }
+        public virtual ICollection<CrCasAccountReceipt>? CrCasAccountReceipts { get; set; }
+        public virtual ICollection<CrCasCarAdvantage>? CrCasCarAdvantages { get; set; }
+        public virtual ICollection<CrCasCarDocumentsMaintenance>? CrCasCarDocumentsMaintenances { get; set; }
+        public virtual ICollection<CrCasRenterContractBasic>? CrCasRenterContractBasics { get; set; }
+        public virtual ICollection<CrCasRenterContractStatistic>? CrCasRenterContractStatistics { get; set; }
     }
 }
