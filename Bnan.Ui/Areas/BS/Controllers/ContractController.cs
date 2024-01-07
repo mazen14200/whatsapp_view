@@ -114,7 +114,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     MobileNumber = BnanRenterInfo?.CrMasRenterInformationMobile,
                     BirthDate = BnanRenterInfo?.CrMasRenterInformationBirthDate,
                     ExpiryIdDate = BnanRenterInfo?.CrMasRenterInformationExpiryIdDate,
-                    KeyCountry = BnanRenterInfo?.CrMasRenterInformationCountreyKey
+                    KeyCountry = BnanRenterInfo?.CrMasRenterInformationCountreyKey,
+                    Balance = LessorRenterInfo?.CrCasRenterLessorBalance
                 };
                 return Json(renterInformationsVM);
             }
@@ -200,7 +201,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         MobileNumber = elmRenterInfo?.CrElmPersonalMobile,
                         BirthDate = elmRenterInfo?.CrElmPersonalBirthDate,
                         ExpiryIdDate = elmRenterInfo?.CrElmPersonalExpiryIdDate,
-                        KeyCountry = elmRenterInfo?.CrElmPersonalCountryKey
+                        KeyCountry = elmRenterInfo?.CrElmPersonalCountryKey,
+                        Balance = 0
                     };
                     return Json(renterInformationsVM);
                 }

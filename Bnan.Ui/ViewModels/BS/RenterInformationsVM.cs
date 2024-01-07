@@ -17,6 +17,8 @@
         public string? KeyCountry { get; set; }
         public DateTime? BirthDate { get; set; }
         public DateTime? ExpiryIdDate { get; set; }
+        public decimal? Balance { get; set; }
+
         //Licence
         public string? LicenseCode { get; set; }
         public string? LicenseArName { get; set; }

@@ -16,6 +16,11 @@
 {
     <link href="~/BranchSys/CreateContract/english-style.css" rel="styleSheet">
 }
+<style>
+    .hideElement {
+        display: none !important;
+    }
+</style>
 
 <section class="section-mainCard" style="font-weight: 600;">
     <div class="row justify-content-center w-100 h-100">
@@ -1035,736 +1040,317 @@
                                 </div>
 
                             </fieldset>
-                            @*  <fieldset>
-                            <div class="form-card form-card7">
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col payment-col"
-                            style="display: flex; flex-direction: column;">
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="contract-number">رقم العقد</p>
 
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p> ٤٥-۱-٦۳٥٤-٥٤-٥٦</p>
-
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <label id="days-number" for="days-number-input">
-                            عدد
-                            الأيام
-                            </label>
-                            </div>
-                            <div class="col-auto">
-                            <input type="tel" class="form-control1"
-                            id="days-number-input" name="days-number"
-                            required>
-                            </div>
-                            <div class="row requird-field-row-last">
-                            <!-- <p class="requird-field">هذا الحقل مطلوب</p> -->
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="renting-price"> سعر الإيجار</p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p>۱٥۰۰.۰۰</p>
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-md-6" style=" display: flex;
-                            justify-content: flex-end;">
-                            <div class="Delegate-out d-flex gap-2">
-                            <label class="Delegate-out-label"
-                            for="Delegate-out">
-                            تفويض خارجي
-                            </label>
-                            <input class="Delegate-out-input"
-                            type="checkbox" value=""
-                            id="Delegate-out">
-
-                            </div>
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <label id="discount-percentage"
-                            for="discount-percentage-input">
-                            نسبة
-                            الخصم
-                            </label>
-                            </div>
-                            <div class="col-auto">
-                            <input type="tel" class="form-control1"
-                            id="discount-percentage-input"
-                            name="discount-percentage" required>
-                            </div>
-                            <div class="row requird-field-row-last">
-                            <!-- <p class="requird-field">هذا الحقل مطلوب</p> -->
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="Total contract">إجمالي العقد</p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p>۱٥۰٥.۰۰</p>
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="Total contract"> صافي العقد</p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p>۱۷۳۰.۷٥</p>
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <label id="amount-paid" for="amount-paid-input">
-                            المبلغ المدفوع
-                            </label>
-                            </div>
-                            <div class="col-auto">
-                            <input type="tel" class="form-control2"
-                            id="amount-paid-input" name="amount-paid"
-                            required>
-                            </div>
-                            <div class="row requird-field-row-last">
-                            <!-- <p class="requird-field">هذا الحقل مطلوب</p> -->
-                            </div>
-                            </div>
-                            </div>
-                            <div class="col payment-col"
-                            style="display: flex; flex-direction: column;">
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="start-date">تاريخ البداية</p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p>
-                            ۲۰۲۲/۲/٥
-                            </p>
-
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="end-date">تاريخ النهاية</p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p>
-                            ۲۰۲۲/۲/٥
-                            </p>
-
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="options">الخيارات </p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p>
-                            ۰۰.۰۰
-                            </p>
-
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="contract-value">قيمة العقد </p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p>
-                            ۱٥۰٥.۰۰
-                            </p>
-
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <label id="addational-hours"
-                            for="addational-hours-input">
-                            الساعات
-                            الإضافية
-                            </label>
-                            </div>
-                            <div class="col-auto">
-                            <input type="tel" class="form-control1"
-                            id="addational-hours-input"
-                            name="addational-hours" required>
-                            </div>
-                            <div class="row requird-field-row-last">
-                            <!-- <p class="requird-field">هذا الحقل مطلوب</p> -->
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="Tax-value
-                            "> قيمة الضريبة </p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p>
-                            ۲۲٥.۷٥
-                            </p>
-
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="previous-balance"> رصيد سابق</p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p>
-                            ۰۰.۹٦
-                            </p>
-
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <div class="row"
-                            style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="payment-method">طريقة الدفع</p>
-
-                            </div>
-
-                            <div class="col-auto ">
-                            <div class="offset">
-                            <select class="form-select-last"
-                            id="payment-method-select">
-                            <option selected disabled>
-                            </option>
-                            <option value=""> </option>
-                            <option value=""> </option>
-                            <option value=""> </option>
-                            </select>
-                            </div>
-                            </div>
-
-                            </div>
-                            </div>
-                            </div>
-                            </div>
-                            <div class="col payment-col"
-                            style="display: flex; flex-direction: column;">
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="start-time">وقت البداية</p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p> ۰٥:۲۷ </p>
-
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="start-time">وقت النهاية</p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p> ۰٥:۲۷ </p>
-
-                            </div>
-                            </div>
-                            <div class="row"
-                            style="flex-direction: row-reverse; justify-content: space-between;">
-                            <div class="col-auto d-flex p-0">
-                            <div class="col-auto personal-data">
-                            <p> ۰۰.۰۰ </p>
-
-                            </div>
-                            <div class="col-auto">
-                            <p id="start-time"> الإضافات</p>
-                            </div>
-                            </div>
-                            <div class="col-auto d-flex pe-0">
-                            <div class="col-auto personal-data">
-                            <p> ۱٥۰۰.۰۰</p>
-                            </div>
-                            <div class="col-auto">
-                            <p id="start-time"> السائق الإضافي</p>
-                            </div>
-                            </div>
-                            </div>
-                            <div class="row" style="height:37px">
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <label id="addational-kilos"
-                            for="addational-kilos-input">
-                            الكيلات الإضافية
-                            </label>
-                            </div>
-                            <div class="col-auto">
-                            <input type="tel" class="form-control1"
-                            id="addational-kilos-input"
-                            name="addational-kilos" required>
-                            </div>
-                            <div class="row requird-field-row-last">
-                            <!-- <p class="requird-field">هذا الحقل مطلوب</p> -->
-                            </div>
-                            </div>
-                            <div class="row" style="height:37px">
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="price"> المبلغ المطلوب</p>
-
-                            </div>
-                            <div class="col-auto personal-data">
-                            <p> ۱۷۲۹.۷۹ </p>
-
-                            </div>
-                            </div>
-                            <div class="row" style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <div class="row"
-                            style="flex-direction: row-reverse;">
-                            <div class="col-auto">
-                            <p id="selling-point"> نقطة البيع </p>
-
-                            </div>
-
-                            <div class="col-auto ">
-                            <div class="offset">
-                            <select class="form-select-last"
-                            id="selling-point-dropdown">
-                            <option selected disabled>
-                            </option>
-                            <option value=""> </option>
-                            <option value=""> </option>
-                            <option value=""> </option>
-                            </select>
-                            </div>
-                            </div>
-
-                            </div>
-                            </div>
-                            </div>
-                            </div>
-                            <div class="row p-2 row-step1 ">
-                            <div class="col-auto">
-                            <p id="notes">ملاحظات</p>
-                            </div>
-                            <div class="col-sm-5 col-md-5 col-lg-5">
-                            <textarea class="form-control"
-                            id="FormControl-last-Textarea" rows="1"
-                            minlength="100"></textarea>
-                            </div>
-
-                            </div>
-                            </div>
-                            </div>
-                            <div class="row button-row align-items-center"
-                            style="padding: 6px 7px 0px 20px;">
-                            <div class="button-card  gap-2">
-                            <button type="submit"
-                            class=" check-btn payment-button">
-                            حفظ
-                            </button>
-                            <button type="button" class=" check-btn payment-button"
-                            data-bs-toggle="modal" href="#paymentPopupModal">
-                            تفويض
-                            </button>
-                            <button type="button" class=" check-btn payment-button"
-                            data-bs-toggle="modal" href="#signaturePopupModal">
-                            توقيع
-                            المستأجر
-                            </button>
-
-                            </div>
-                            <div class="button-card">
-                            <input type="button" name="previous"
-                            class="previous action-button-previous"
-                            value="السابق" />
-                            <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
-                            class="previous action-button-previous"
-                            style="vertical-align: middle; margin-right: 10px;">
-                            </div>
-                            </div>
-                            </fieldset> *@
 
                             <fieldset>
                                 <div class="form-card form-card7">
-                                    <div class="row" style="flex-direction: row-reverse;">
-                                        <div class="col-md-6 col-lg-4 payment-col"
-                                             style="display: flex; flex-direction: column;">
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <p id="contract-number">رقم العقد</p>
-
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <p> ٤٥-۱-٦۳٥٤-٥٤-٥٦</p>
-
-                                                </div>
-                                            </div>
-                                            <div class="row align-items-baseline" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <label id="days-number" for="dayNo">
-                                                        عدد
-                                                        الأيام
-                                                    </label>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <input type="text" class="form-control1" id="dayNo" name="dayNo" oninput="this.value=this.value.replace(/[^0-9]/g,'');if(parseInt(this.value)> 365) this.value = '365';" onfocusout="CalculateContract()" maxlength="3" value="0" required>
-                                                    <div class="row requird-field-row-last">
-                                                        <p class="requird-field"></p>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <p id="renting-price"> قيمة العقد</p>
-
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <p id="contractValue">0.00</p>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="icon button to display more data" id="payment-extra-details">
-                                                    <div class="dropdown-content payment-dropdown-content" id="dropdown-content-payment">
-                                                        <div class="title-container">
-                                                            <img src="~/BranchSys/CreateContract/img/cancel.png" alt="cancle_icon" class="cancle-icon-dropdowen" id="close"></a>
-                                                            <p style="display: inline;">تفاصيل قيمة العقد</p>
-
-                                                        </div>
-                                                        <div class="data-container">
-                                                            <div class="row dropdown-content-row">
-                                                                <div class="col-auto pe-4">
-                                                                    <p>: قيمة الإيجار</p>
-                                                                </div>
-                                                                <div class="col personal-data">
-                                                                    <p id="RentValue">0</p>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="row dropdown-content-row">
-                                                                <div class="col-auto pe-4">
-                                                                    <p>: قيمة المميزات </p>
-                                                                </div>
-                                                                <div class="col personal-data">
-                                                                    <p id="AdvatagesValue">0</p>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="row dropdown-content-row">
-                                                                <div class="col-auto pe-4">
-                                                                    <p>: قيمة الخيارات </p>
-                                                                </div>
-                                                                <div class="col personal-data">
-                                                                    <p id="ChoicesValue">0</p>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="row dropdown-content-row">
-                                                                <div class="col-auto pe-4">
-                                                                    <p>: قيمة الاضافات  </p>
-                                                                </div>
-                                                                <div class="col personal-data">
-                                                                    <p id="AdditionalValue">0</p>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="row dropdown-content-row">
-                                                                <div class="col-auto pe-4">
-                                                                    <p>: قيمة السائق الاضافي </p>
-                                                                </div>
-                                                                <div class="col personal-data">
-                                                                    <p id="AddDriverValue">0</p>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="row dropdown-content-row">
-                                                                <div class="col-auto pe-4">
-                                                                    <p>: قيمة السائق الخاص</p>
-                                                                </div>
-                                                                <div class="col personal-data">
-                                                                    <p id="PrivateDriverValue">0</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row dropdown-content-row">
-                                                                <div class="col-auto pe-4">
-                                                                    <p>: قيمة التفويض</p>
-                                                                </div>
-                                                                <div class="col personal-data">
-                                                                    <p id="InFeesTammValue">0</p>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row align-items-baseline" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <label id="discount-percentage"
-                                                           for="discount-percentage-input">
-                                                        نسبة
-                                                        الخصم
-                                                    </label>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <input type="tel" class="form-control1"
-                                                           id="discount-percentage-input"
-                                                           name="discount-percentage" required>
-                                                    <div class="row requird-field-row-last">
-                                                        <p class="requird-field"> </p>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <p id="Total contract">إجمالي العقد</p>
-
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <p>۱٥۰٥.۰۰</p>
-                                                </div>
-                                            </div>
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <p id="Total contract"> صافي العقد</p>
-
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <p>۱۷۳۰.۷٥</p>
-                                                </div>
-                                            </div>
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <label id="amount-paid" for="amount-paid-input">
-                                                        المبلغ المدفوع
-                                                    </label>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <input type="tel" class="form-control2"
-                                                           id="amount-paid-input" name="amount-paid"
-                                                           required>
-                                                    <div class="row requird-field-row-last">
-                                                        <p class="requird-field"> </p>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-4 payment-col2"
-                                             style="display: flex; flex-direction: column;">
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <p id="start-date"> بدايته</p>
-
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <p id="StartDate">@ViewBag.StartDate </p>
-
-                                                </div>
-                                            </div>
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <p id="end-date">نهايته</p>
-
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <p id="EndDate"></p>
-
-                                                </div>
-                                            </div>
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-12" style=" display: flex;
-                                                                    justify-content: flex-end;">
-                                                    <div class="Delegate-out d-flex gap-2">
-                                                        <label class="Delegate-out-label"
-                                                               for="Delegate-out">
-                                                            تفويض خارجي
-                                                        </label>
-                                                        <input class="Delegate-out-input"
-                                                               type="checkbox" value=""
-                                                               id="Delegate-out">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row align-items-baseline" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <label id="addational-hours"
-                                                           for="addational-hours-input">
-                                                        الساعات
-                                                        الإضافية
-                                                    </label>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <input type="tel" class="form-control1"
-                                                           id="addational-hours-input"
-                                                           name="addational-hours" required>
-                                                    <div class="row requird-field-row-last">
-                                                        <p class="requird-field"> </p>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <p id="Tax-value
-                                                                            "> قيمة الضريبة </p>
-
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <p>
-                                                        ۲۲٥.۷٥
-                                                    </p>
-
-                                                </div>
-                                            </div>
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <p id="previous-balance"> رصيد سابق</p>
-
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <p>
-                                                        ۰۰.۹٦
-                                                    </p>
-
-                                                </div>
-                                            </div>
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <div class="row"
-                                                         style="flex-direction: row-reverse;">
-                                                        <div class="col-auto">
-                                                            <p id="payment-method">طريقة الدفع</p>
-
-                                                        </div>
-
-                                                        <div class="col-auto ">
-                                                            <div class="offset">
-                                                                <select class="form-select-last"
-                                                                        id="payment-method-select" name="payment-method-select">
-                                                                    <option selected disabled>
-                                                                    </option>
-                                                                    <option value="cash"> كاش</option>
-                                                                    <option value="visa"> فيزا</option>
-                                                                    <option value="mdai"> مدي</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col payment-col3"
-                                             style="display: flex; flex-direction: column;">
-                                            @* <div class="row" style="flex-direction: row-reverse;">
+                                    <div class="row flex-row-reverse">
+                                        <div class="col-md-6 col-lg-4 d-flex payment-col">
                                             <div class="col-auto">
-                                            <p id="start-time">وقت البداية</p>
+                                                <p id="contract-number">رقم العقد</p>
 
                                             </div>
                                             <div class="col-auto personal-data">
-                                            <p> ۰٥:۲۷ </p>
+                                                <p> ٤٥-۱-٦۳٥٤-٥٤-٥٦</p>
 
                                             </div>
-                                            </div>
-                                            <div class="row" style="flex-direction: row-reverse;">
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 d-flex  payment-col">
                                             <div class="col-auto">
-                                            <p id="start-time">وقت النهاية</p>
+                                                <p id="start-date">تاريخ البداية</p>
 
                                             </div>
                                             <div class="col-auto personal-data">
-                                            <p> ۰٥:۲۷ </p>
-
-                                            </div>
-                                            </div> *@
-
-                                            <div class="row space-row">
-                                            </div>
-                                            <div class="row align-items-baseline" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <label id="addational-kilos"
-                                                           for="addational-kilos-input">
-                                                        الكيلات الإضافية
-                                                    </label>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <input type="tel" class="form-control1"
-                                                           id="addational-kilos-input"
-                                                           name="addational-kilos" required>
-                                                    <div class="row requird-field-row-last">
-                                                        <p class="requird-field"> </p>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="row space-row">
-                                            </div>
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <p id="price"> المبلغ المطلوب</p>
-
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <p> ۱۷۲۹.۷۹ </p>
-
-                                                </div>
-                                            </div>
-                                            <div class="row" style="flex-direction: row-reverse;">
-                                                <div class="col-auto">
-                                                    <div class="row" style="flex-direction: row-reverse;">
-                                                        <div class="col-auto">
-                                                            <p id="selling-point"> نقطة البيع </p>
-
-                                                        </div>
-
-                                                        <div class="col-auto ">
-                                                            <div class="offset">
-                                                                <select class="form-select-last"
-                                                                        id="selling-point-dropdown" name="selling-point-dropdown">
-                                                                    <option selected disabled>
-                                                                    </option>
-                                                                    <option value=""> </option>
-                                                                    <option value=""> </option>
-                                                                    <option value=""> </option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
+                                                <p id="StartDate">@ViewBag.StartDate </p>
                                             </div>
                                         </div>
-                                        <div class="row p-2 row-step1 ">
+                                    </div>
+                                    <div class="row flex-row-reverse ">
+                                        <div class="col-md-6 col-lg-4 d-flex payment-col align-items-baseline">
                                             <div class="col-auto">
-                                                <p id="notes">ملاحظات</p>
+                                                <label id="days-number" for="days-number-input">
+                                                    عدد
+                                                    الأيام
+                                                </label>
                                             </div>
-                                            <div class="col-sm-5 col-md-5 col-lg-5">
-                                                <textarea class="form-control"
-                                                          id="FormControl-last-Textarea" rows="1"
-                                                          maxlength="100"></textarea>
+                                            <div class="col-auto">
+                                                <input type="text" class="form-control1" id="dayNo" name="dayNo" oninput="this.value=this.value.replace(/[^0-9]/g,'');if(parseInt(this.value)> 365) this.value = '365';" onfocusout="CalculateContract()" maxlength="3" value="0" autocomplete="off" required>                                                <div class="row requird-field-row-last">
+                                                    <p class="requird-field"></p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 d-flex  payment-col">
+                                            <div class="col-auto">
+                                                <p id="end-date">تاريخ النهاية</p>
+
+                                            </div>
+                                            <div class="col-auto personal-data">
+                                                <p id="EndDate"> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row flex-row-reverse align-items-baseline">
+                                        <div class="col-md-6 col-lg-4 d-flex payment-col align-items-baseline">
+                                            <div class="col-auto">
+                                                <p id="renting-price"> قيمة العقد</p>
+
+                                            </div>
+                                            <div class="col-auto personal-data">
+                                                <p id="contractValue">0.00</p>
+                                            </div>
+                                            <div class="col-auto">
+                                                <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="icon button to display more data" id="payment-extra-details">
+                                                <div class="dropdown-content payment-dropdown-content" id="dropdown-content-payment">
+                                                    <div class="title-container">
+                                                        <img src="~/BranchSys/CreateContract/img/cancel.png" alt="cancle_icon" class="cancle-icon-dropdowen" id="close">
+                                                        <p style="display: inline;">تفاصيل قيمة العقد</p>
+
+                                                    </div>
+                                                    <div class="data-container">
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto pe-4">
+                                                                <p>: قيمة الإيجار</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p id="RentValue">0</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto pe-4">
+                                                                <p>: قيمة المميزات </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p id="AdvatagesValue">0</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto pe-4">
+                                                                <p>: قيمة الخيارات </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p id="ChoicesValue">0</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto pe-4">
+                                                                <p>: قيمة الاضافات  </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p id="AdditionalValue">0</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto pe-4">
+                                                                <p>: قيمة السائق الاضافي </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p id="AddDriverValue">0</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto pe-4">
+                                                                <p>: قيمة السائق الخاص</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p id="PrivateDriverValue">0</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto pe-4">
+                                                                <p>: قيمة التفويض</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p id="InFeesTammValue">0</p>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 d-flex  payment-col ">
+                                            <div class="col-auto personal-data">
+                                                <input class="Delegate-out-input"
+                                                       type="checkbox" value="checked"
+                                                       id="Delegate-out">
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <label class="Delegate-out-label" for="Delegate-out" name="Delegate-out">
+                                                    تفويض خارجي
+                                                </label>
                                             </div>
 
                                         </div>
                                     </div>
+                                    <div class="row flex-row-reverse align-items-baseline">
+                                        <div class="col-md-6 col-lg-4 d-flex payment-col align-items-baseline">
+
+                                            <div class="col-auto">
+                                                <label id="discount-percentage" for="discount-percentage-input">نسبة الخصم</label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <input type="text" class="form-control1" id="Discount_Input" name="Discount_Input" oninput="handleDiscountInput(this)" onfocusout="CalculateDiscount()" min="0" max="100" value="0" autocomplete="off" >
+                                                <div class="row requird-field-row-last">
+                                                    <p class="requird_field_Discount"></p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 d-flex  payment-col align-items-baseline">
+                                            <div class="col-auto">
+                                                <label id="addational-hours"
+                                                       for="AdditionalHours"> الساعات الإضافية </label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <input type="tel" class="form-control1" id="AdditionalHours" name="AdditionalHours" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off">
+                                                <div class="row requird-field-row-last">
+                                                    <p class="requird-field"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 d-flex  payment-col align-items-baseline">
+                                            <div class="col-auto">
+                                                <label id="addational-kilos"
+                                                       for="AdditionalKilos">
+                                                    الكيلات الإضافية
+                                                </label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <input type="tel" class="form-control1" id="AdditionalKilos" name="addational-kilos" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off">
+                                                <div class="row requird-field-row-last">
+                                                    <p class="requird-field"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row flex-row-reverse">
+                                        <div class="col-md-6 col-lg-4 d-flex payment-col">
+                                            <div class="col-auto">
+                                                <p id="Total contract">إجمالي العقد</p>
+
+                                            </div>
+                                            <div class="col-auto personal-data">
+                                                <p id="totalContract">0.00</p>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 d-flex  payment-col">
+                                            <div class="col-auto">
+                                                <p id="Tax-value"> قيمة الضريبة </p>
+
+                                            </div>
+                                            <div class="col-auto personal-data">
+                                                <p id="Taxvalue">0.00</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row flex-row-reverse">
+                                        <div class="col-md-6 col-lg-4 d-flex payment-col">
+                                            <div class="col-auto">
+                                                <p id="Total_Contract"> صافي العقد</p>
+
+                                            </div>
+                                            <div class="col-auto personal-data">
+                                                <p id="TotalActualContract">0</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 d-flex  payment-col">
+                                            <div class="col-auto">
+                                                <p id="previous-balance"> رصيد سابق</p>
+
+                                            </div>
+                                            <div class="col-auto personal-data">
+                                                <p id="Balance">0.00</p>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 d-flex  payment-col">
+                                            <div class="col-auto">
+                                                <p id="price"> المبلغ المطلوب</p>
+
+                                            </div>
+                                            <div class="col-auto personal-data">
+                                                <p id="TotalAmount">0.00</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row flex-row-reverse">
+                                        <div class="col-md-6 col-lg-4 d-flex payment-col">
+                                            <div class="col-auto">
+                                                <label id="amount-paid" for="amount-paid-input">
+                                                    المبلغ المدفوع
+                                                </label>
+                                            </div>
+                                            <div class="col-auto personal-data">
+                                                <input type="tel" class="form-control2" id="amount-paid-input" name="amount-paid" autocomplete="off">
+                                                <div class="row requird-field-row-last">
+                                                    <p class="requird-field">هذا الحقل مطلوب</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 d-flex  payment-col">
+                                            <div class="col-auto">
+                                                <p id="payment-method">طريقة الدفع</p>
+
+                                            </div>
+                                            <div class="col-auto personal-data">
+                                                <div class="offset">
+                                                    <select class="form-select-last"
+                                                            id="payment-method-select" name="payment-method-select">
+                                                        <option selected disabled>
+                                                        </option>
+                                                        <option value="cash"> كاش</option>
+                                                        <option value="visa"> فيزا</option>
+                                                        <option value="mdai"> مدي</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 d-flex  payment-col">
+                                            <div class="col-auto">
+                                                <p id="selling-point"> نقطة البيع </p>
+
+                                            </div>
+                                            <div class="col-auto personal-data">
+                                                <div class="offset">
+                                                    <select class="form-select-last"
+                                                            id="selling-point-dropdown" name="selling-point-dropdown">
+                                                        <option selected disabled>
+                                                        </option>
+                                                        <option value=""> </option>
+                                                        <option value=""> </option>
+                                                        <option value=""> </option>
+                                                    </select>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row p-2 row-step1 ">
+                                        <div class="col-auto">
+                                            <p id="notes">ملاحظات</p>
+                                        </div>
+                                        <div class="col-sm-5 col-md-5 col-lg-5">
+                                            <textarea class="form-control"
+                                                      id="FormControl-last-Textarea" rows="1"
+                                                      maxlength="100"></textarea>
+                                        </div>
+
+                                    </div>
                                 </div>
+
                                 <div class="row button-row align-items-center"
                                      style="padding: 6px 7px 0px 20px;">
                                     <div class="button-card  gap-2">
@@ -1784,14 +1370,11 @@
 
                                     </div>
                                     <div class="button-card">
-                                        <input type="button" name="previous"
-                                               class="previous action-button-previous"
-                                               value="السابق" />
-                                        <img src="~/BranchSys/CreateContract/img/vector.png" alt="Button Image"
-                                             class="previous action-button-previous"
-                                             style="vertical-align: middle; margin-right: 10px;">
+                                        <input type="button" name="previous" class="previous action-button-previous" value="السابق" />
+                                        <img src="~/BranchSys/CreateContract/img/vector.png" alt="Button Image" class="previous action-button-previous" style="vertical-align: middle; margin-right: 10px;">
                                     </div>
                                 </div>
+
                             </fieldset>
                         </form>
                     </div>
@@ -2138,6 +1721,7 @@
         var CarAdditionals;
         var CarCheckUp;
         var AdvantagesValue;
+        var RenterBalance;
 
         // For Renter
         async function GetRenterInformation(RenterId) {
@@ -2838,7 +2422,9 @@
                             }
                             // This Check to If driverIsRenter Or not
                             else if (driverRadio1.checked) {
-                                // DriverInformation = RenterInformation;
+                                clearDataDriver();
+                                IsThereAdditionalDriver();
+                                DriverInformation = RenterInformation;
                                 var currentDate = new Date();
                                 var ExpiryIdDate = new Date(RenterInformation.expiryIdDate);
                                 $("#DriverCheckBtn").hide();
@@ -2909,6 +2495,7 @@
                             }
                             else {
                                 //Clear Data Of Driver And Add Driver To Return Check
+                                IsThereAdditionalDriver();
                                 clearDataDriver();
                                 clearDataAddDriver();
                                 clearPaymentData();
@@ -3229,6 +2816,15 @@
 
                     // Final check
                     if (imgs && currentMeter && allChecked) {
+                        //Get RenterBalance
+                        RenterBalance = RenterInformation.balance;
+                        if (RenterBalance!=null &&RenterBalance!="" &&RenterBalance!=0 &&RenterBalance!=undefined) {
+                            document.getElementById("Balance").textContent = RenterBalance.toFixed(2);
+                        }
+                        else{
+                            document.getElementById("Balance").textContent = "0.00";
+                            RenterBalance = 0;
+                        }
                         $("#checkUpMessageRequired").text('')
                         $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                         next_fs.show();
@@ -3376,6 +2972,7 @@
             $("#DriverLicenseIssued").text("");
             $("#DriverLicenseExpiration").text("");
             $("#DriverEmployer").text("");
+            document.getElementById("addational-driver").checked = false;
             CheckIfDriverIdExist = false;
             DriverInformation = null;
             $("#DriverCheckBtn").show();
@@ -3399,7 +2996,17 @@
             AddDriverInformation = null;
         }
 
-
+        function IsThereAdditionalDriver() {
+            var additionalDriver = CarInformation.carPrice.crCasPriceCarBasicIsAdditionalDriver;
+            console.log(additionalDriver);
+            if (additionalDriver == false) {
+                $("#addationalDriverDiv").addClass("hideElement");
+                console.log(555555);
+            }
+            else {
+                $("#addationalDriverDiv").removeClass("hideElement");
+            }
+        }
 
         function GetCodeCategory(categoryCode) {
             var selectedBranch = "@Model.SelectedBranch";
@@ -3722,8 +3329,13 @@
         var advantagesValueTotal = 0;
         var additionalDriverValue = 0;
         var privateDriverValue = 0;
-        var InFeesTammValue = 0;
+        var FeesTammValue = 0;
         var contractValue = 0;
+        var totalContract = 0;
+        var discountValue = 0;
+        var taxValue = 0;
+        var TotalActualContract = 0;
+        var TotalAmount = 0;
         //Calculate Contract
         function CalculateContract() {
             var price = 0;
@@ -3738,12 +3350,12 @@
                 var formattedEndDate = today.toLocaleDateString('ja-JP', options);
                 document.getElementById('EndDate').textContent = formattedEndDate;
 
-                rentValue = parseInt(daysNo) * parseInt(RentalDayPrice);
+                rentValue = parseInt(daysNo) * parseFloat(RentalDayPrice);
                 document.getElementById('RentValue').textContent = rentValue.toFixed(2);
 
                 var TotalChoices = $("#TotalChoices").text();
-                if (parseInt(TotalChoices) != null && parseInt(TotalChoices) != 0 && parseInt(TotalChoices) != "") {
-                    choicesValue = parseInt(TotalChoices) * parseInt(daysNo);
+                if (parseFloat(TotalChoices) != null && parseFloat(TotalChoices) != 0 && parseFloat(TotalChoices) != "") {
+                    choicesValue = parseFloat(TotalChoices) * parseInt(daysNo);
                     document.getElementById('ChoicesValue').textContent = choicesValue.toFixed(2);
                 }
                 else {
@@ -3752,8 +3364,8 @@
                 }
 
                 var TotalAdditionals = $("#TotalAdditionals").text();
-                if (parseInt(TotalAdditionals) != null && parseInt(TotalAdditionals) != "") {
-                    additionalValue = parseInt(TotalAdditionals);
+                if (parseFloat(TotalAdditionals) != null && parseFloat(TotalAdditionals) != "") {
+                    additionalValue = parseFloat(TotalAdditionals);
                     document.getElementById('AdditionalValue').textContent = additionalValue.toFixed(2);
 
                 }
@@ -3762,7 +3374,7 @@
                     additionalValue = 0;
                 }
 
-                var AdvatagesTotalValue = parseInt(AdvantagesValue);
+                var AdvatagesTotalValue = parseFloat(AdvantagesValue);
                 if (AdvatagesTotalValue != null && AdvatagesTotalValue != "") {
                     advantagesValueTotal = AdvatagesTotalValue * parseInt(daysNo);
                     document.getElementById('AdvatagesValue').textContent = advantagesValueTotal.toFixed(2);
@@ -3776,7 +3388,7 @@
                 if (additionalDriver.checked) {
                     var AddDriverValue = CarInformation.carPrice.crCasPriceCarBasicAdditionalDriverValue;
                     if (parseInt(AddDriverValue) != null) {
-                        additionalDriverValue = AddDriverValue;
+                        additionalDriverValue = parseFloat(AddDriverValue);
                         document.getElementById('AddDriverValue').textContent = additionalDriverValue.toFixed(2);
                     }
                     else {
@@ -3791,7 +3403,7 @@
                 if (privateDriverRadio1.checked && privateDriverID == null) {
                     var privateDriver = CarInformation.carPrice.crCasPriceCarBasicPrivateDriverValue;
                     if (parseInt(privateDriver) != null) {
-                        privateDriverValue = privateDriver;
+                        privateDriverValue = parseFloat(privateDriver);
                         document.getElementById('PrivateDriverValue').textContent = privateDriverValue.toFixed(2);
                     }
                     else {
@@ -3799,42 +3411,20 @@
                         privateDriverValue = 0;
                     }
                 }
-
-
-                var InFeesTamm = CarInformation.carPrice.crCasCarPriceBasicInFeesTamm;
-                // var OutFeesTamm = CarInformation.carPrice.crCasCarPriceBasicOutFeesTamm;
-                // var OutFeesTammInput = document.getElementById('Delegate-out-input');
-                // if(OutFeesTammInput.checked){
-                //     if (parseInt(OutFeesTamm) != null && parseInt(OutFeesTamm)!="") {
-                //         document.getElementById('InFeesTammValue').textContent = OutFeesTamm.toFixed(2);
-                //     }
-                // }
-                // else{
-                //     if (parseInt(InFeesTamm) != null) {
-                //         document.getElementById('InFeesTammValue').textContent = InFeesTamm;
-                //     }
-                // }
-                if (parseInt(InFeesTamm) != null) {
-                    InFeesTammValue = InFeesTamm;
-                    document.getElementById('InFeesTammValue').textContent = InFeesTammValue.toFixed(2);
-                }
-                else{
-                    document.getElementById('InFeesTammValue').textContent = "0.00";
-                    InFeesTammValue = 0;
-                }
-
+                //Get FeeTmm Out Or in value
+                getFeeTmm();
 
 
                 // Contract Value Total
-                contractValue = rentValue + choicesValue + additionalValue + advantagesValueTotal + additionalDriverValue + privateDriverValue + InFeesTammValue;
+                contractValue = rentValue + choicesValue + additionalValue + advantagesValueTotal + additionalDriverValue + privateDriverValue + FeesTammValue;
                 document.getElementById('contractValue').textContent = contractValue.toFixed(2);
 
-
-
-
+                // get discount and totalContract Value
+                CalculateDiscount();
+                // Get Tax value from TotalActualContract and get value of TotalActualContract
+                CalculateTax();
+                CalculateTotalAmount();
                 $("#payment-extra-details").show();
-                // $("#dropdown-content-payment").show();
-
             } else {
                 clearPaymentData();
             }
@@ -3852,6 +3442,95 @@
             document.getElementById('AdvatagesValue').textContent = "0.00";
             document.getElementById('AdditionalValue').textContent = "0.00";
             document.getElementById('ChoicesValue').textContent = "0.00";
+            document.getElementById("totalContract").textContent = "0.00";
+            document.getElementById('Taxvalue').textContent = "0.00";
+            document.getElementById('TotalActualContract').textContent = "0.00";
+            document.getElementById("TotalAmount").textContent = "0.00";
+            document.getElementById("Discount_Input").value = 0;
+            document.getElementById("Delegate-out").checked = false;
+            rentValue = 0;
+            choicesValue = 0;
+            additionalValue = 0;
+            advantagesValueTotal = 0;
+            additionalDriverValue = 0;
+            privateDriverValue = 0;
+            FeesTammValue = 0;
+            contractValue = 0;
+            totalContract = 0;
+            discountValue = 0;
+            taxValue = 0;
+            TotalActualContract = 0;
+            TotalAmount = 0;
+
+        }
+
+
+
+        //This Function Show if FeeTamm Is Out or In
+        $(document).ready(
+            function () {
+                $("#Delegate-out").click(function () {
+                    CalculateContract();
+                })
+            });
+        function getFeeTmm() {
+            var InFeesTamm = CarInformation.carPrice.crCasCarPriceBasicInFeesTamm;
+            var OutFeesTamm = CarInformation.carPrice.crCasCarPriceBasicOutFeesTamm;
+
+            var OutFeesTammInput = document.getElementById('Delegate-out');
+
+            if (OutFeesTammInput.checked) {
+                if (parseFloat(OutFeesTamm) != null && parseFloat(OutFeesTamm) != "") {
+                    FeesTammValue = parseFloat(OutFeesTamm);
+                    document.getElementById('InFeesTammValue').textContent = FeesTammValue.toFixed(2);
+                }
+                else {
+                    document.getElementById('InFeesTammValue').textContent = "0.00";
+                    FeesTammValue = 0;
+                }
+            }
+            else {
+                if (parseFloat(InFeesTamm) != null) {
+                    FeesTammValue = parseFloat(InFeesTamm);
+                    document.getElementById('InFeesTammValue').textContent = FeesTammValue.toFixed(2);
+                }
+                else {
+                    document.getElementById('InFeesTammValue').textContent = "0.00";
+                    FeesTammValue = 0;
+                }
+            }
+        }
+        function CalculateDiscount() {
+            var DiscountInput = document.getElementById("Discount_Input").value;
+            if (parseInt(DiscountInput) != null && parseInt(DiscountInput) != "" && parseInt(DiscountInput) != 0 && parseInt(DiscountInput) != undefined) {
+                discountValue = contractValue * (parseInt(DiscountInput) / 100);
+                totalContract = contractValue - discountValue;
+            }
+            else {
+                totalContract = contractValue;
+            }
+            document.getElementById("totalContract").textContent = totalContract.toFixed(2);
+            CalculateTax();
+            CalculateTotalAmount();
+        };
+
+        function CalculateTax(){
+            var TaxPercent = parseInt(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
+            if(TaxPercent!=null && TaxPercent!=""&&TaxPercent!=undefined&&TaxPercent!=0){
+                taxValue =totalContract * (TaxPercent / 100);
+                TotalActualContract = parseFloat(taxValue) + parseFloat(totalContract);
+            }
+            else{
+                taxValue = 0;
+                TotalActualContract = parseFloat(totalContract);
+            }
+            document.getElementById('Taxvalue').textContent = taxValue.toFixed(2);
+            document.getElementById('TotalActualContract').textContent = TotalActualContract.toFixed(2);
+        }
+        function CalculateTotalAmount(){
+            // Get Total Of amount Required
+            TotalAmount = parseFloat(RenterBalance) + parseFloat(TotalActualContract);
+            document.getElementById("TotalAmount").textContent = TotalAmount.toFixed(2);
         }
     </script>
 
@@ -3859,7 +3538,18 @@
 
     <script>
 
+        function handleDiscountInput(inputElement) {
+            // Remove non-numeric characters
+            inputElement.value = inputElement.value.replace(/[^0-9]/g, '');
 
+            // Ensure the value is between 0 and 100
+            const numericValue = parseInt(inputElement.value);
+            if (isNaN(numericValue)) {
+                inputElement.value = '0';
+            } else {
+                inputElement.value = Math.min(100, Math.max(0, numericValue));
+            }
+        }
 
     </script>
 }

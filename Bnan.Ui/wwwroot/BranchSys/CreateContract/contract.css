@@ -16,6 +16,11 @@ body {
     letter-spacing: 0.28px;
 }
 
+.content-row {
+    justify-content: center;
+    align-items: center;
+}
+
 nav {
     background-color: rgba(255, 206, 148, 1);
 }
@@ -32,7 +37,7 @@ nav {
     border: 1px solid #39629c9c;
     border-radius: 7px;
     box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
-    padding: 20px 10px 10px 10px;
+    padding: 20px 25px 10px 10px;
     box-sizing: border-box;
     width: 94%;
     /* margin: 0 3% 20px 3%; */
@@ -76,7 +81,6 @@ fieldset {
     border-top: transparent;
     border-radius: 9px;
 }
-
 
 .form-card {
     display: flex;
@@ -160,8 +164,19 @@ select.list-dt {
 
     #progressbar .active {
         color: #000000;
+        /* animation: animate .5s; */
+    }
+    /* @keyframes animate {
+    from {
+        transform: scale(1, 0);
+        opacity: 0;
     }
 
+    to {
+        transform: scale(1, 1);
+        opacity: 1;
+    }
+} */
     #progressbar li {
         list-style-type: none;
         font-size: 12px;
@@ -366,7 +381,7 @@ input[type="number"]:nth-child(n+4) {
     display: none;
     border: 1px solid #FF9626;
     border-radius: 8px;
-    width: 234px;
+    width: 245px;
     margin-top: 10px;
     position: absolute;
     left: 50%;
@@ -382,10 +397,9 @@ input[type="number"]:nth-child(n+4) {
 /* ////////////////global over 3 fieldsets */
 .requird-field {
     /* margin-bottom: 0px; */
-    font-size: 14px;
+    font-size: 10px;
     color: red;
     width: fit-content;
-    /* display: none; */
 }
 
 .requird-field-row {
@@ -471,7 +485,7 @@ input[type="number"]:nth-child(n+4) {
 
 /* /////////////global////////////// */
 .container-fluid {
-    height: 80%;
+    height: 85%;
 }
 
 .section-mainCard {
@@ -678,6 +692,7 @@ tabel-data-checkbox-td {
     width: 64px;
     resize: none;
     text-align: center;
+    padding: 1px;
 }
 
 .form-control2 {
@@ -946,16 +961,10 @@ canvas {
 .CurrentReadingg_row {
     padding-bottom: .25rem;
 }
+
 .payment-col {
-    gap: 5px
-}
-
-.payment-col2 {
-    gap: 9px
-}
-
-.payment-col3 {
-    gap: 7px
+    justify-content: flex-start;
+    flex-direction: row-reverse;
 }
 
 .title-container {
@@ -983,16 +992,26 @@ canvas {
     margin: 10px;
     border-radius: 8px;
 }
-
 /* /////////////////////media for the seacrh icon list on mobiles///////////////////////// */
 @media (max-width:575px) {
     .dropdown-content {
         right: 50%;
         transform: translateX(-90%);
     }
+
+    .payment-dropdown-content {
+        left: 180px;
+        transform: translateX(-90%);
+    }
 }
 
 /* ****************media****************** */
+@media (max-width: 320px) {
+
+    .form-select-last {
+        width: 110px;
+    }
+}
 
 @media (max-width: 375px) {
 
@@ -1026,14 +1045,25 @@ canvas {
 }
 
 
-/* ////////////////******************************&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ */
-@media (min-height: 740px) {
+/***************************************************cards-media**************************************************/
+@media (min-height: 700px) {
 
-    .form-card1,
     .form-card3,
     .form-card4,
     .form-card7 {
-        padding: 30px 50px 17px 12px;
+        gap: 2px;
+    }
+}
+
+@media (min-height: 740px) {
+    .form-card1 {
+        gap: 6px
+    }
+
+    .form-card3,
+    .form-card4,
+    .form-card7 {
+        gap: 6px;
     }
 }
 
@@ -1045,6 +1075,51 @@ canvas {
     }
 }
 
+@media (min-height: 780px) {
+
+    .form-card3,
+    .form-card4,
+    .form-card7 {
+        gap: 10px;
+    }
+
+    .table-scroll {
+        height: 420px;
+    }
+
+    .car-catogeries {
+        height: 420px;
+    }
+
+    .scrollable-content {
+        height: 420px;
+    }
+}
+
+@media (min-height: 810px) {
+    .form-card1 {
+        gap: 12px
+    }
+
+    .form-card3,
+    .form-card4,
+    .form-card7 {
+        gap: 12px;
+    }
+
+    .table-scroll {
+        height: 430px;
+    }
+
+    .car-catogeries {
+        height: 430px;
+    }
+
+    .scrollable-content {
+        height: 430px;
+    }
+}
+
 @media (min-height: 890px) {
 
 
@@ -1052,18 +1127,9 @@ canvas {
         padding-bottom: 300px;
     }
 
-    .form-card1,
-    .form-card3,
-    .form-card4,
-    .form-card7 {
-        padding: 40px 50px 17px 12px;
-        gap: 20px
-    }
-
-
     .form-card1 {
-        padding: 40px 50px 17px 12px;
-        gap: 25px
+        padding: 40px 20px 17px 12px;
+        gap: 20px
     }
 
     .form-card3,
@@ -1082,10 +1148,6 @@ canvas {
 
     .scrollable-content {
         height: 450px;
-    }
-
-    .payment-col {
-        gap: 20px
     }
 
     .content-row {
@@ -1097,37 +1159,34 @@ canvas {
     }
 }
 
-@media (min-height: 950px) {
-    body {
-        font-size: 20px;
-        font-weight: 500;
+@media (max-width: 991px) {
+    .space-row {
+        height: 0px;
     }
+}
+
+@media (min-height: 950px) {
 
     .form-card1 {
-        padding: 40px 50px 17px 12px;
         gap: 30px
     }
 
     .form-card3,
     .form-card4,
     .form-card7 {
-        gap: 15px
+        gap: 20px
     }
 
     .table-scroll {
-        height: 550px;
+        height: 500px;
     }
 
     .car-catogeries {
-        height: 550px;
+        height: 500px;
     }
 
     .scrollable-content {
-        height: 550px;
-    }
-
-    .payment-col {
-        gap: 15px
+        height: 500px;
     }
 
     .content-row {
