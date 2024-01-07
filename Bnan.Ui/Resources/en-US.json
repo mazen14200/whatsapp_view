@@ -1148,5 +1148,22 @@
   "requirdfieldCurrentMeter": "Do not be lower than the current reading",
   "TheValue": "Value",
   "CheckUpNames": "Check up",
-  "checkUpMessageRequired": "The virtual examination process must be completed, and at least one photo and a maximum of twelve photos must be entered"
+  "checkUpMessageRequired": "The virtual examination process must be completed, and at least one photo and a maximum of twelve photos must be entered",
+  "DontHaveAuthPayLessThanTotalAmount": "Sorry, you do not have the authority to provide less than the contract value",
+  "Delegation": "Delegation",
+  "SignatureTenant": "Signature Tenant",
+  "SalesPoint": "Sales Point",
+  "PaymentMethod": "Payment Method",
+  "AmountPaid": "Amount Paid",
+  "AmountRequired": "Amount Required",
+  "PreviousBalance": "Previous Balance",
+  "NetContract": "Net Contract",
+  "TaxValue ": "Tax Value",
+  "TotalContract": "Total Contract",
+  "ExternalDelegation": "External Delegation",
+  "AdditionalHours": "Additional Hours",
+  "AdditionalKm": "Additional Km"
+
+
+
 }

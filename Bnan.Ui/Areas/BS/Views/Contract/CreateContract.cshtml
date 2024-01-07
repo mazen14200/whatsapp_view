@@ -1,11 +1,22 @@
 ﻿@using Bnan.Core.Extensions;
 @using Bnan.Ui.ViewModels.BS;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
 @model BSLayoutVM
+@inject UserManager<CrMasUserInformation> userManager
+@inject SignInManager<CrMasUserInformation> signinManager
 @inject IViewLocalizer localizer
 @{
+    var user = await userManager.GetUserAsync(User);
     ViewData["Title"] = "CreateContract";
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    var userInfo = await userManager.Users
+          .Include(l => l.CrMasUserMainValidations)
+          .Include(l => l.CrMasUserSubValidations)
+          .Include(l => l.CrMasUserInformationLessorNavigation)
+          .Include(l => l.CrMasUserContractValidity)
+          .FirstOrDefaultAsync(l => l.UserName == user.UserName);
 }
 <link href="~/BranchSys/CreateContract/sb-admin-2.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -1027,12 +1038,12 @@
                                              class="next action-button"
                                              style="vertical-align: middle; margin-right: 10px;">
                                         <input type="button" name="next" class="next action-button"
-                                               value="التالي" />
+                                               value="@localizer["Next"]" />
                                     </div>
                                     <div class="button-card">
                                         <input type="button" name="previous"
                                                class="previous action-button-previous"
-                                               value="السابق" />
+                                               value="@localizer["Previous"]" />
                                         <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
                                              class="previous action-button-previous"
                                              style="vertical-align: middle; margin-right: 10px;">
@@ -1048,11 +1059,9 @@
                                         <div class="col-md-6 col-lg-4 d-flex payment-col">
                                             <div class="col-auto">
                                                 <p id="contract-number">رقم العقد</p>
-
                                             </div>
                                             <div class="col-auto personal-data">
-                                                <p> ٤٥-۱-٦۳٥٤-٥٤-٥٦</p>
-
+                                                <p>00-00-00-00-00</p>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
@@ -1184,7 +1193,7 @@
                                             </div>
                                             <div class="col-auto">
                                                 <label class="Delegate-out-label" for="Delegate-out" name="Delegate-out">
-                                                    تفويض خارجي
+                                                    @localizer["ExternalDelegation"]
                                                 </label>
                                             </div>
 
@@ -1194,10 +1203,10 @@
                                         <div class="col-md-6 col-lg-4 d-flex payment-col align-items-baseline">
 
                                             <div class="col-auto">
-                                                <label id="discount-percentage" for="discount-percentage-input">نسبة الخصم</label>
+                                                <label id="discount-percentage" for="discount-percentage-input">@localizer["DiscountRate"]</label>
                                             </div>
                                             <div class="col-auto">
-                                                <input type="text" class="form-control1" id="Discount_Input" name="Discount_Input" oninput="handleDiscountInput(this)" onfocusout="CalculateDiscount()" min="0" max="100" value="0" autocomplete="off" >
+                                                <input type="text" class="form-control1" id="Discount_Input" name="Discount_Input" oninput="handleDiscountInput(this)" onfocusout="CalculateDiscount()" min="0" max="100" value="0" autocomplete="off">
                                                 <div class="row requird-field-row-last">
                                                     <p class="requird_field_Discount"></p>
                                                 </div>
@@ -1207,10 +1216,10 @@
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col align-items-baseline">
                                             <div class="col-auto">
                                                 <label id="addational-hours"
-                                                       for="AdditionalHours"> الساعات الإضافية </label>
+                                                       for="AdditionalHours"> @localizer["AdditionalHours"] </label>
                                             </div>
                                             <div class="col-auto">
-                                                <input type="tel" class="form-control1" id="AdditionalHours" name="AdditionalHours" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off">
+                                                <input type="tel" class="form-control1" id="AdditionalHours" name="AdditionalHours" maxlength="2" oninput="handleAdditionalHoursInput(this)" min="0" max="99" value="0" autocomplete="off">
                                                 <div class="row requird-field-row-last">
                                                     <p class="requird-field"></p>
                                                 </div>
@@ -1220,11 +1229,11 @@
                                             <div class="col-auto">
                                                 <label id="addational-kilos"
                                                        for="AdditionalKilos">
-                                                    الكيلات الإضافية
+                                                    @localizer["AdditionalKm"]
                                                 </label>
                                             </div>
                                             <div class="col-auto">
-                                                <input type="tel" class="form-control1" id="AdditionalKilos" name="addational-kilos" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off">
+                                                <input type="tel" class="form-control1" id="AdditionalKilos" name="AdditionalKilos" maxlength="3" oninput="handleAdditionalKilosInput(this)" min="0" max="999" value="0" autocomplete="off">
                                                 <div class="row requird-field-row-last">
                                                     <p class="requird-field"></p>
                                                 </div>
@@ -1234,8 +1243,7 @@
                                     <div class="row flex-row-reverse">
                                         <div class="col-md-6 col-lg-4 d-flex payment-col">
                                             <div class="col-auto">
-                                                <p id="Total contract">إجمالي العقد</p>
-
+                                                <p id="Total contract">@localizer["TotalContract"]</p>
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <p id="totalContract">0.00</p>
@@ -1244,8 +1252,7 @@
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
                                             <div class="col-auto">
-                                                <p id="Tax-value"> قيمة الضريبة </p>
-
+                                                <p id="Tax-value"> @localizer["TaxValue"]</p>
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <p id="Taxvalue">0.00</p>
@@ -1256,7 +1263,7 @@
                                     <div class="row flex-row-reverse">
                                         <div class="col-md-6 col-lg-4 d-flex payment-col">
                                             <div class="col-auto">
-                                                <p id="Total_Contract"> صافي العقد</p>
+                                                <p id="Total_Contract"> @localizer["NetContract"]</p>
 
                                             </div>
                                             <div class="col-auto personal-data">
@@ -1265,8 +1272,7 @@
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
                                             <div class="col-auto">
-                                                <p id="previous-balance"> رصيد سابق</p>
-
+                                                <p id="previous-balance"> @localizer["PreviousBalance"]</p>
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <p id="Balance">0.00</p>
@@ -1275,33 +1281,28 @@
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
                                             <div class="col-auto">
-                                                <p id="price"> المبلغ المطلوب</p>
-
+                                                <p id="price"> @localizer["AmountRequired"]</p>
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <p id="TotalAmount">0.00</p>
-
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row flex-row-reverse">
                                         <div class="col-md-6 col-lg-4 d-flex payment-col">
                                             <div class="col-auto">
-                                                <label id="amount-paid" for="amount-paid-input">
-                                                    المبلغ المدفوع
-                                                </label>
+                                                <label id="amount-paid" for="AmountPayed">@localizer["AmountPaid"]</label>
                                             </div>
                                             <div class="col-auto personal-data">
-                                                <input type="tel" class="form-control2" id="amount-paid-input" name="amount-paid" autocomplete="off">
+                                                <input type="text" class="form-control1" style="width: 110px!important" id="AmountPayed" name="AmountPayed" oninput="handleAmountPayed(this)" onfocusout="CheckIfCanPayLessThanTotalAmount()" autocomplete="off">
                                                 <div class="row requird-field-row-last">
-                                                    <p class="requird-field">هذا الحقل مطلوب</p>
+                                                    <p class="requird_field_AmountPayed"></p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
                                             <div class="col-auto">
-                                                <p id="payment-method">طريقة الدفع</p>
-
+                                                <p id="payment-method">@localizer["PaymentMethod"]</p>
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <div class="offset">
@@ -1319,7 +1320,7 @@
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
                                             <div class="col-auto">
-                                                <p id="selling-point"> نقطة البيع </p>
+                                                <p id="selling-point"> @localizer["SalesPoint"] </p>
 
                                             </div>
                                             <div class="col-auto personal-data">
@@ -1340,34 +1341,28 @@
                                     </div>
                                     <div class="row p-2 row-step1 ">
                                         <div class="col-auto">
-                                            <p id="notes">ملاحظات</p>
+                                            <p id="notes">@localizer["reasons"]</p>
                                         </div>
                                         <div class="col-sm-5 col-md-5 col-lg-5">
-                                            <textarea class="form-control"
-                                                      id="FormControl-last-Textarea" rows="1"
-                                                      maxlength="100"></textarea>
+                                            <textarea class="form-control" id="FormControl-last-Textarea" rows="1" maxlength="100"></textarea>
                                         </div>
-
                                     </div>
                                 </div>
-
                                 <div class="row button-row align-items-center"
                                      style="padding: 6px 7px 0px 20px;">
                                     <div class="button-card  gap-2">
                                         <button type="submit"
                                                 class=" check-btn payment-button">
-                                            حفظ
+                                            @localizer["Save"]
                                         </button>
                                         <button type="button" class=" check-btn payment-button"
                                                 data-bs-toggle="modal" href="#paymentPopupModal">
-                                            تفويض
+                                            @localizer["Delegation"]
                                         </button>
                                         <button type="button" class=" check-btn payment-button"
                                                 data-bs-toggle="modal" href="#signaturePopupModal">
-                                            توقيع
-                                            المستأجر
+                                            @localizer["SignatureTenant"]
                                         </button>
-
                                     </div>
                                     <div class="button-card">
                                         <input type="button" name="previous" class="previous action-button-previous" value="السابق" />
@@ -2818,10 +2813,10 @@
                     if (imgs && currentMeter && allChecked) {
                         //Get RenterBalance
                         RenterBalance = RenterInformation.balance;
-                        if (RenterBalance!=null &&RenterBalance!="" &&RenterBalance!=0 &&RenterBalance!=undefined) {
+                        if (RenterBalance != null && RenterBalance != "" && RenterBalance != 0 && RenterBalance != undefined) {
                             document.getElementById("Balance").textContent = RenterBalance.toFixed(2);
                         }
-                        else{
+                        else {
                             document.getElementById("Balance").textContent = "0.00";
                             RenterBalance = 0;
                         }
@@ -3336,6 +3331,7 @@
         var taxValue = 0;
         var TotalActualContract = 0;
         var TotalAmount = 0;
+        var somethingIsNotOkay = true;
         //Calculate Contract
         function CalculateContract() {
             var price = 0;
@@ -3461,7 +3457,6 @@
             taxValue = 0;
             TotalActualContract = 0;
             TotalAmount = 0;
-
         }
 
 
@@ -3513,41 +3508,105 @@
             CalculateTax();
             CalculateTotalAmount();
         };
-
-        function CalculateTax(){
+        function CalculateTax() {
             var TaxPercent = parseInt(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
-            if(TaxPercent!=null && TaxPercent!=""&&TaxPercent!=undefined&&TaxPercent!=0){
-                taxValue =totalContract * (TaxPercent / 100);
+            if (TaxPercent != null && TaxPercent != "" && TaxPercent != undefined && TaxPercent != 0) {
+                taxValue = totalContract * (TaxPercent / 100);
                 TotalActualContract = parseFloat(taxValue) + parseFloat(totalContract);
             }
-            else{
+            else {
                 taxValue = 0;
                 TotalActualContract = parseFloat(totalContract);
             }
             document.getElementById('Taxvalue').textContent = taxValue.toFixed(2);
             document.getElementById('TotalActualContract').textContent = TotalActualContract.toFixed(2);
         }
-        function CalculateTotalAmount(){
+        function CalculateTotalAmount() {
             // Get Total Of amount Required
             TotalAmount = parseFloat(RenterBalance) + parseFloat(TotalActualContract);
             document.getElementById("TotalAmount").textContent = TotalAmount.toFixed(2);
         }
     </script>
 
-
-
     <script>
-
+        // Define the handleDiscountInput function
         function handleDiscountInput(inputElement) {
             // Remove non-numeric characters
             inputElement.value = inputElement.value.replace(/[^0-9]/g, '');
 
+            // Retrieve userDiscount from the model
+            var userDiscount = @Html.Raw(Json.Serialize(userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityDiscountRate));
+            console.log("userDiscount", userDiscount);
+
             // Ensure the value is between 0 and 100
             const numericValue = parseInt(inputElement.value);
-            if (isNaN(numericValue)) {
+            if (isNaN(numericValue) || isNaN(userDiscount)) {
                 inputElement.value = '0';
             } else {
-                inputElement.value = Math.min(100, Math.max(0, numericValue));
+                inputElement.value = Math.min(userDiscount, Math.max(0, numericValue));
+            }
+        }
+        function handleAdditionalHoursInput(inputElement) {
+            inputElement.value = inputElement.value.replace(/[^0-9]/g, '');
+            // Retrieve userDiscount from the model
+            var userAdditionalHours = @Html.Raw(Json.Serialize(userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityHour));
+            console.log("userAdditionalHours", userAdditionalHours);
+            // Ensure the value is between 0 and 100
+            const numericValue = parseInt(inputElement.value);
+            if (isNaN(numericValue) || isNaN(userAdditionalHours)) {
+                inputElement.value = '0';
+            } else {
+                inputElement.value = Math.min(userAdditionalHours, Math.max(0, numericValue));
+            }
+        }
+
+        function handleAdditionalKilosInput(inputElement) {
+            inputElement.value = inputElement.value.replace(/[^0-9]/g, '');
+            // Retrieve userDiscount from the model
+            var userAdditionalKilos = @Html.Raw(Json.Serialize(userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityKm));
+            console.log("userAdditionalKilos", userAdditionalKilos);
+            // Ensure the value is between 0 and 100
+            const numericValue = parseInt(inputElement.value);
+            if (isNaN(numericValue) || isNaN(userAdditionalKilos)) {
+                inputElement.value = '0';
+            } else {
+                inputElement.value = Math.min(userAdditionalKilos, Math.max(0, numericValue));
+            }
+        }
+        function handleAmountPayed(input) {
+            // Remove non-digit characters and additional decimal points
+            input.value = input.value.replace(/[^0-9\.]/g, '');
+            const decimalIndex = input.value.indexOf('.');
+            // Limit to 9 digits before and after the decimal point
+            if (decimalIndex !== -1) {
+                const digitsBeforeDecimal = input.value.substring(0, decimalIndex);
+                const digitsAfterDecimal = input.value.substring(decimalIndex + 1);
+
+                // Limit to 2 digits after the decimal point
+                input.value = digitsBeforeDecimal.substr(0, 9) + '.' + digitsAfterDecimal.substr(0, 2);
+
+                // Remove additional decimal points
+                if (input.value.indexOf('.', decimalIndex + 1) !== -1) {
+                    const lastValidIndex = input.value.lastIndexOf('.');
+                    input.value = input.value.substring(0, lastValidIndex) + input.value.substring(lastValidIndex + 1);
+                }
+            } else {
+                // Limit to 9 digits before the decimal point
+                input.value = input.value.substr(0, 9);
+            }
+        }
+
+        function CheckIfCanPayLessThanTotalAmount(){
+            var userAuthAmount = @Html.Raw(Json.Serialize(userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityLessContractValue));
+            var AmountPayed = document.getElementById("AmountPayed").value;
+            if (userAuthAmount == false && TotalAmount > AmountPayed) {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["DontHaveAuthPayLessThanTotalAmount"]');
+                $("#AmountPayed").css({"border": "2px solid red"});    //This For last Check When i submit Form
+                somethingIsNotOkay = false;
+            }
+            else{
+                $("#AmountPayed").css({ "border": "1px solid #faa64d" }); //This For last Check When i submit Form
             }
         }
 

@@ -1143,5 +1143,19 @@
   "requirdfieldCurrentMeter": "لا تكون أقل من القراءة الحالية",
   "TheValue": "القيمة",
   "CheckUpNames": "بنود الفحص",
-  "checkUpMessageRequired": "يجب اتمام عملية الفحص الظاهري، وادخال صورة واحدة على الاقل و اثنى عشر صورة كحد اقصي"
+  "checkUpMessageRequired": "يجب اتمام عملية الفحص الظاهري، وادخال صورة واحدة على الاقل و اثنى عشر صورة كحد اقصي",
+  "DontHaveAuthPayLessThanTotalAmount": "عفوا ليس لديك صلاحية المقدم اقل من قيمة العقد",
+  "Delegation": "تفويض",
+  "SignatureTenant": "توقيع المستأجر",
+  "SalesPoint": "نقطة البيع",
+  "PaymentMethod": "طريقة الدفع",
+  "AmountPaid": "المبلغ المدفوع",
+  "AmountRequired": "المبلغ المطلوب",
+  "PreviousBalance": "الرصيد السابق",
+  "NetContract": "صافي العقد",
+  "TaxValue ": "قيمة الضريبة",
+  "TotalContract": "اجمالي العقد",
+  "ExternalDelegation": "تفويض خارجي",
+  "AdditionalHours": "الساعات الاضافية",
+  "AdditionalKm": "الكيلوات الاضافية"
 }
