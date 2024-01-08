@@ -51,7 +51,7 @@
                 </div>
                 <div class="row justify-content-center h-100 content-row">
                     <div class="col-md-11 mx-0">
-                        <form id="msform" novalidate class="needs-validation">
+                        <form asp-area="BS" asp-action="CreateContract" asp-controller="Contract" id="msform" novalidate class="needs-validation">
                             <div class=" pe-4">
                                 <!-- progressbar -->
                                 <ul id="progressbar">
@@ -219,7 +219,7 @@
                                             <div class="offset">
                                                 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
                                                 {
-                                                    <select class="form-select" id="driver-dropdown">
+                                                    <select class="form-select" id="driver-dropdown" asp-for="Contract.PrivateDriverId">
                                                         <option selected disabled>@localizer["ChooseYourDriver"]</option>
                                                         @foreach (var driver in Model.Drivers)
                                                         {
@@ -229,7 +229,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <select class="form-select text-right" id="driver-dropdown">
+                                                    <select class="form-select text-right" id="driver-dropdown" asp-for="Contract.PrivateDriverId">
                                                         <option selected disabled>@localizer["ChooseYourDriver"]</option>
                                                         @foreach (var driver in Model.Drivers)
                                                         {
@@ -276,9 +276,7 @@
                                             <label for="FormControlTextarea1">@localizer["reasons"]</label>
                                         </div>
                                         <div class="col-sm-5 col-md-5 col-lg-5">
-                                            <textarea class="form-control" id="FormControlTextarea1"
-                                                      rows="1" maxlength="100" name="tenant-notes"
-                                                      type="text"></textarea>
+                                            <input class="form-control" asp-for="Contract.RenterReasons" rows="1" maxlength="100" type="text">
                                         </div>
 
                                     </div>
@@ -297,6 +295,8 @@
                                     <div class="row" style="flex-direction: row-reverse;">
                                         <!--Car Category-->
                                         <div class="col-sm-4 col-md-4 col-lg-3 car-catogeries " id="scrollContainer">
+                                            <input asp-for="Contract.SerialNo" hidden />
+                                            <input asp-for="Contract.PriceNo" hidden />
                                             <div class="d-flex " style="flex-direction:column; gap:4px">
                                                 <button type="button" class="btn customized-button" onclick="GetCodeCategory(`3400000000`)">@localizer["All"]</button>
                                                 @foreach (var category in Model.CarCategories)
@@ -598,15 +598,13 @@
                                             </p>
                                         </div>
                                     </div>
-
                                     <div class="row row-step3">
                                         <div class="col-auto">
                                             <label for="FormControlTextarea2">@localizer["reasons"]</label>
                                         </div>
                                         <div class="col-sm-5 col-md-5 col-lg-5">
-                                            <textarea class="form-control" id="FormControlTextarea2" maxlength="100" rows="1" name="driver-notes"></textarea>
+                                            <input class="form-control" asp-for="Contract.DriverReasons" maxlength="100">
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="row button-row">
@@ -881,7 +879,7 @@
                                             <label for="FormControlTextarea3">@localizer["reasons"]</label>
                                         </div>
                                         <div class="col-sm-5 col-md-5 col-lg-5">
-                                            <textarea class="form-control" id="FormControlTextarea3" maxlength="100" rows="1" name="addational-driver-notes"></textarea>
+                                            <input class="form-control" asp-for="Contract.AddDriverReasons" maxlength="100">
                                         </div>
                                     </div>
                                 </div>
@@ -919,6 +917,7 @@
                                                     </thead>
 
                                                     <tbody id="additionalBody">
+                                                        <input hidden id="AdditionalsList" name="AdditionalsList" />
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -940,6 +939,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="optionsBody">
+                                                        <input hidden id="ChoicesList" name="ChoicesList" />
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -978,7 +978,7 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <input type="tel" class="form-control1" style="width: 130px;" id="currentMeter" name="currentMeter" required maxlength="10">
+                                                    <input type="tel" class="form-control1" style="width: 130px;" asp-for="Contract.CurrentMeter" required maxlength="10">
                                                     <div class="row requird-field-row">
                                                         <span class="requird-field" id="requird_field_CurrentMeter"></span>
                                                     </div>
@@ -1058,7 +1058,7 @@
                                     <div class="row flex-row-reverse">
                                         <div class="col-md-6 col-lg-4 d-flex payment-col">
                                             <div class="col-auto">
-                                                <p id="contract-number">رقم العقد</p>
+                                                <p id="contract-number">@localizer["ContractNo"]</p>
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <p>00-00-00-00-00</p>
@@ -1066,11 +1066,11 @@
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
                                             <div class="col-auto">
-                                                <p id="start-date">تاريخ البداية</p>
+                                                <p id="start-date">@localizer["StartDate"]</p>
 
                                             </div>
                                             <div class="col-auto personal-data">
-                                                <p id="StartDate">@ViewBag.StartDate </p>
+                                                <p id="StartDate"> </p>
                                             </div>
                                         </div>
                                     </div>
@@ -1078,8 +1078,7 @@
                                         <div class="col-md-6 col-lg-4 d-flex payment-col align-items-baseline">
                                             <div class="col-auto">
                                                 <label id="days-number" for="days-number-input">
-                                                    عدد
-                                                    الأيام
+                                                    @localizer["DaysNo"]
                                                 </label>
                                             </div>
                                             <div class="col-auto">
@@ -1091,7 +1090,7 @@
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
                                             <div class="col-auto">
-                                                <p id="end-date">تاريخ النهاية</p>
+                                                <p id="end-date">@localizer["EndDate"]</p>
 
                                             </div>
                                             <div class="col-auto personal-data">
@@ -1102,7 +1101,7 @@
                                     <div class="row flex-row-reverse align-items-baseline">
                                         <div class="col-md-6 col-lg-4 d-flex payment-col align-items-baseline">
                                             <div class="col-auto">
-                                                <p id="renting-price"> قيمة العقد</p>
+                                                <p id="renting-price"> @localizer["ContractValue"]</p>
 
                                             </div>
                                             <div class="col-auto personal-data">
@@ -1119,7 +1118,7 @@
                                                     <div class="data-container">
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto pe-4">
-                                                                <p>: قيمة الإيجار</p>
+                                                                <p>: @localizer["RentalValue"]</p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p id="RentValue">0</p>
@@ -1128,7 +1127,7 @@
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto pe-4">
-                                                                <p>: قيمة المميزات </p>
+                                                                <p>: @localizer["AdvantagesValue"] </p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p id="AdvatagesValue">0</p>
@@ -1137,7 +1136,7 @@
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto pe-4">
-                                                                <p>: قيمة الخيارات </p>
+                                                                <p>: @localizer["ChoicesValue"] </p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p id="ChoicesValue">0</p>
@@ -1146,7 +1145,7 @@
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto pe-4">
-                                                                <p>: قيمة الاضافات  </p>
+                                                                <p>:@localizer["AdditionalValue"] </p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p id="AdditionalValue">0</p>
@@ -1155,7 +1154,7 @@
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto pe-4">
-                                                                <p>: قيمة السائق الاضافي </p>
+                                                                <p>: @localizer["AddDriverValue"] </p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p id="AddDriverValue">0</p>
@@ -1164,7 +1163,7 @@
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto pe-4">
-                                                                <p>: قيمة السائق الخاص</p>
+                                                                <p>: @localizer["PrivateDriverValue"]</p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p id="PrivateDriverValue">0</p>
@@ -1172,7 +1171,7 @@
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto pe-4">
-                                                                <p>: قيمة التفويض</p>
+                                                                <p>: @localizer["DelegationValue"]</p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p id="InFeesTammValue">0</p>
@@ -1206,7 +1205,7 @@
                                                 <label id="discount-percentage" for="discount-percentage-input">@localizer["DiscountRate"]</label>
                                             </div>
                                             <div class="col-auto">
-                                                <input type="text" class="form-control1" id="Discount_Input" name="Discount_Input" oninput="handleDiscountInput(this)" onfocusout="CalculateDiscount()" min="0" max="100" value="0" autocomplete="off">
+                                                <input type="text" class="form-control1" id="Discount_Input" name="Discount_Input" oninput="handleDiscountInput(this)" onfocusout="CalculateDiscount()" min="0" max="100" value="0" maxlength="5" autocomplete="off">
                                                 <div class="row requird-field-row-last">
                                                     <p class="requird_field_Discount"></p>
                                                 </div>
@@ -1300,19 +1299,42 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @{
+                                            if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() == 0)
+                                            {
+                                                Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "1");
+                                                Model.SalesPoint = Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointAccountBank == "00");
+                                            }
+                                            else if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() > 0 && Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointBank != "00").Count() == 0)
+                                            {
+                                                Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "3" || x.CrMasSupAccountPaymentMethodClassification == "1");
+                                                Model.SalesPoint = Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointAccountBank == "00");
+                                            }
+                                            else if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() > 0 && Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointBank != "00").Count() > 0)
+                                            {
+                                                Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "2" || x.CrMasSupAccountPaymentMethodClassification == "3" || x.CrMasSupAccountPaymentMethodClassification == "1");
+                                                // Model.SalesPoint = Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointAccountBank == "00");
+                                            }
+                                        }
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
                                             <div class="col-auto">
                                                 <p id="payment-method">@localizer["PaymentMethod"]</p>
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <div class="offset">
-                                                    <select class="form-select-last"
-                                                            id="payment-method-select" name="payment-method-select">
-                                                        <option selected disabled>
-                                                        </option>
-                                                        <option value="cash"> كاش</option>
-                                                        <option value="visa"> فيزا</option>
-                                                        <option value="mdai"> مدي</option>
+                                                    <select class="form-select-last" id="payment-method-select" name="payment-method-select" style="font-size:14px;">
+                                                        <option selected disabled></option>
+                                                        @foreach (var payment in Model.PaymentMethods)
+                                                        {
+                                                            @if ("@requestCulture?.RequestCulture.UICulture.Name" != "en-US")
+                                                            {
+                                                                <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@payment.CrMasSupAccountPaymentMethodCode">@payment.CrMasSupAccountPaymentMethodEnName</option>
+                                                            }
+                                                        }
                                                     </select>
                                                 </div>
 
@@ -1325,17 +1347,21 @@
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <div class="offset">
-                                                    <select class="form-select-last"
-                                                            id="selling-point-dropdown" name="selling-point-dropdown">
-                                                        <option selected disabled>
-                                                        </option>
-                                                        <option value=""> </option>
-                                                        <option value=""> </option>
-                                                        <option value=""> </option>
+                                                    <select class="form-select-last" id="selling-point-dropdown" name="selling-point-dropdown" style="font-size:14px;width:280px!important">
+                                                        <option selected disabled></option>
+                                                        @foreach (var sales in Model.SalesPoint)
+                                                        {
+                                                            @if ("@requestCulture?.RequestCulture.UICulture.Name" != "en-US")
+                                                            {
+                                                                <option value="@sales.CrCasAccountSalesPointCode" class="text-right">@sales.CrCasAccountSalesPointArName</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@sales.CrCasAccountSalesPointCode">@sales.CrCasAccountSalesPointEnName</option>
+                                                            }
+                                                        }
                                                     </select>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -1351,10 +1377,7 @@
                                 <div class="row button-row align-items-center"
                                      style="padding: 6px 7px 0px 20px;">
                                     <div class="button-card  gap-2">
-                                        <button type="submit"
-                                                class=" check-btn payment-button">
-                                            @localizer["Save"]
-                                        </button>
+                                        <button type="submit" class=" check-btn payment-button"> @localizer["Save"] </button>
                                         <button type="button" class=" check-btn payment-button"
                                                 data-bs-toggle="modal" href="#paymentPopupModal">
                                             @localizer["Delegation"]
@@ -2378,6 +2401,8 @@
                     var privateDriverID = $("#driver-dropdown").val();
                     SerialNumberOfCar = $(this).find('td').data("serial-number");
                     PriceNumberOfCar = $(this).find('td').data("price-number");
+                    $("#Contract_SerialNo").val(SerialNumberOfCar);
+                    $("#Contract_PriceNo").val(PriceNumberOfCar);
                     GetCarInfo(SerialNumberOfCar);
                     GetAdvantages(SerialNumberOfCar);
                     // Use Promises to ensure data is available before proceeding
@@ -2814,7 +2839,7 @@
                         //Get RenterBalance
                         RenterBalance = RenterInformation.balance;
                         if (RenterBalance != null && RenterBalance != "" && RenterBalance != 0 && RenterBalance != undefined) {
-                            document.getElementById("Balance").textContent = RenterBalance.toFixed(2);
+                            document.getElementById("Balance").textContent = RenterBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                         }
                         else {
                             document.getElementById("Balance").textContent = "0.00";
@@ -3028,7 +3053,7 @@
                 success: function (data) {
                     CarInformation = data;
                     console.log(data)
-                    $("#currentMeter").val(CarInformation.carInformation.crCasCarInformationCurrentMeter);
+                    $("#Contract_CurrentMeter").val(CarInformation.carInformation.crCasCarInformationCurrentMeter);
                     handleCurrentMeterInput();
                 },
                 error: function (xhr, textStatus, errorThrown) {
@@ -3054,7 +3079,7 @@
 
         function handleCurrentMeterInput() {
             // Assuming currentMeterInput is the ID of your input field
-            var currentMeterInput = $("#currentMeter");
+            var currentMeterInput = $("#Contract_CurrentMeter");
             var currentMeterFromDB = CarInformation.carInformation.crCasCarInformationCurrentMeter;
             var currentMeterValue = parseFloat(currentMeterFromDB) || 0;
 
@@ -3166,11 +3191,15 @@
 
             function updateTotal() {
                 var s = 0;
+                var selectedChoices = [];
+
                 $(".ChkChoicesList:checked").each(function () {
                     var dataVal = $(this).attr('data-val');
+                    selectedChoices.push($(this).val());
                     s += parseFloat(dataVal) || 0;
+                    console.log("selectedChoices", selectedChoices);
                 });
-
+                $("#ChoicesList").val(selectedChoices.join(','));
                 if (s > 0) {
                     $('#TotalChoices').text(s.toFixed(2));
                 } else {
@@ -3274,11 +3303,15 @@
 
             function updateTotal() {
                 var s = 0;
+                var selectedAdditionals = [];
+
                 $(".ChkAddList:checked").each(function () {
                     var dataVal = $(this).attr('data-val');
+                    selectedAdditionals.push($(this).val());
                     s += parseFloat(dataVal) || 0;
+                    console.log("selectedAdditionals", selectedAdditionals);
                 });
-
+                $("#AdditionalsList").val(selectedAdditionals.join(','));
                 if (s > 0) {
                     $('#TotalAdditionals').text(s.toFixed(2));
                 } else {
@@ -3341,18 +3374,20 @@
             console.log("daysNo", daysNo);
             console.log("RentalDayPrice", RentalDayPrice);
             if (parseInt(daysNo) > 0) {
-                today.setDate(today.getDate() + parseInt(daysNo));
                 var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+                var formattedstartDate = today.toLocaleDateString('ja-JP', options);
+                document.getElementById('StartDate').textContent = formattedstartDate;
+                today.setDate(today.getDate() + parseInt(daysNo));
                 var formattedEndDate = today.toLocaleDateString('ja-JP', options);
                 document.getElementById('EndDate').textContent = formattedEndDate;
 
                 rentValue = parseInt(daysNo) * parseFloat(RentalDayPrice);
-                document.getElementById('RentValue').textContent = rentValue.toFixed(2);
+                document.getElementById('RentValue').textContent = rentValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                 var TotalChoices = $("#TotalChoices").text();
                 if (parseFloat(TotalChoices) != null && parseFloat(TotalChoices) != 0 && parseFloat(TotalChoices) != "") {
                     choicesValue = parseFloat(TotalChoices) * parseInt(daysNo);
-                    document.getElementById('ChoicesValue').textContent = choicesValue.toFixed(2);
+                    document.getElementById('ChoicesValue').textContent = choicesValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 }
                 else {
                     document.getElementById('ChoicesValue').textContent = "0.00";
@@ -3362,7 +3397,7 @@
                 var TotalAdditionals = $("#TotalAdditionals").text();
                 if (parseFloat(TotalAdditionals) != null && parseFloat(TotalAdditionals) != "") {
                     additionalValue = parseFloat(TotalAdditionals);
-                    document.getElementById('AdditionalValue').textContent = additionalValue.toFixed(2);
+                    document.getElementById('AdditionalValue').textContent = additionalValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                 }
                 else {
@@ -3373,7 +3408,7 @@
                 var AdvatagesTotalValue = parseFloat(AdvantagesValue);
                 if (AdvatagesTotalValue != null && AdvatagesTotalValue != "") {
                     advantagesValueTotal = AdvatagesTotalValue * parseInt(daysNo);
-                    document.getElementById('AdvatagesValue').textContent = advantagesValueTotal.toFixed(2);
+                    document.getElementById('AdvatagesValue').textContent = advantagesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 }
                 else {
                     document.getElementById('AdvatagesValue').textContent = "0.00";
@@ -3385,7 +3420,7 @@
                     var AddDriverValue = CarInformation.carPrice.crCasPriceCarBasicAdditionalDriverValue;
                     if (parseInt(AddDriverValue) != null) {
                         additionalDriverValue = parseFloat(AddDriverValue);
-                        document.getElementById('AddDriverValue').textContent = additionalDriverValue.toFixed(2);
+                        document.getElementById('AddDriverValue').textContent = additionalDriverValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     }
                     else {
                         document.getElementById('AddDriverValue').textContent = "0.00";
@@ -3400,7 +3435,7 @@
                     var privateDriver = CarInformation.carPrice.crCasPriceCarBasicPrivateDriverValue;
                     if (parseInt(privateDriver) != null) {
                         privateDriverValue = parseFloat(privateDriver);
-                        document.getElementById('PrivateDriverValue').textContent = privateDriverValue.toFixed(2);
+                        document.getElementById('PrivateDriverValue').textContent = privateDriverValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     }
                     else {
                         document.getElementById('PrivateDriverValue').textContent = "0.00";
@@ -3413,7 +3448,7 @@
 
                 // Contract Value Total
                 contractValue = rentValue + choicesValue + additionalValue + advantagesValueTotal + additionalDriverValue + privateDriverValue + FeesTammValue;
-                document.getElementById('contractValue').textContent = contractValue.toFixed(2);
+                document.getElementById('contractValue').textContent = contractValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                 // get discount and totalContract Value
                 CalculateDiscount();
@@ -3477,7 +3512,7 @@
             if (OutFeesTammInput.checked) {
                 if (parseFloat(OutFeesTamm) != null && parseFloat(OutFeesTamm) != "") {
                     FeesTammValue = parseFloat(OutFeesTamm);
-                    document.getElementById('InFeesTammValue').textContent = FeesTammValue.toFixed(2);
+                    document.getElementById('InFeesTammValue').textContent = FeesTammValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 }
                 else {
                     document.getElementById('InFeesTammValue').textContent = "0.00";
@@ -3487,7 +3522,7 @@
             else {
                 if (parseFloat(InFeesTamm) != null) {
                     FeesTammValue = parseFloat(InFeesTamm);
-                    document.getElementById('InFeesTammValue').textContent = FeesTammValue.toFixed(2);
+                    document.getElementById('InFeesTammValue').textContent = FeesTammValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 }
                 else {
                     document.getElementById('InFeesTammValue').textContent = "0.00";
@@ -3497,14 +3532,14 @@
         }
         function CalculateDiscount() {
             var DiscountInput = document.getElementById("Discount_Input").value;
-            if (parseInt(DiscountInput) != null && parseInt(DiscountInput) != "" && parseInt(DiscountInput) != 0 && parseInt(DiscountInput) != undefined) {
-                discountValue = contractValue * (parseInt(DiscountInput) / 100);
+            if (parseFloat(DiscountInput) != null && parseFloat(DiscountInput) != "" && parseFloat(DiscountInput) != 0 && parseFloat(DiscountInput) != undefined) {
+                discountValue = contractValue * (parseFloat(DiscountInput) / 100);
                 totalContract = contractValue - discountValue;
             }
             else {
                 totalContract = contractValue;
             }
-            document.getElementById("totalContract").textContent = totalContract.toFixed(2);
+            document.getElementById("totalContract").textContent = totalContract.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             CalculateTax();
             CalculateTotalAmount();
         };
@@ -3518,32 +3553,51 @@
                 taxValue = 0;
                 TotalActualContract = parseFloat(totalContract);
             }
-            document.getElementById('Taxvalue').textContent = taxValue.toFixed(2);
-            document.getElementById('TotalActualContract').textContent = TotalActualContract.toFixed(2);
+            document.getElementById('Taxvalue').textContent = taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('TotalActualContract').textContent = TotalActualContract.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
         function CalculateTotalAmount() {
             // Get Total Of amount Required
             TotalAmount = parseFloat(RenterBalance) + parseFloat(TotalActualContract);
-            document.getElementById("TotalAmount").textContent = TotalAmount.toFixed(2);
+            document.getElementById("TotalAmount").textContent = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
     </script>
 
     <script>
         // Define the handleDiscountInput function
-        function handleDiscountInput(inputElement) {
-            // Remove non-numeric characters
-            inputElement.value = inputElement.value.replace(/[^0-9]/g, '');
+        function handleDiscountInput(input) {
+            // Remove non-digit characters and additional decimal points
+            input.value = input.value.replace(/[^0-9\.]/g, '');
+            const decimalIndex = input.value.indexOf('.');
+
+            // Limit to 9 digits before and after the decimal point
+            if (decimalIndex !== -1) {
+                const digitsBeforeDecimal = input.value.substring(0, decimalIndex);
+                const digitsAfterDecimal = input.value.substring(decimalIndex + 1);
+
+                // Limit to 2 digits after the decimal point
+                input.value = digitsBeforeDecimal.substr(0, 9) + '.' + digitsAfterDecimal.substr(0, 2);
+
+                // Remove additional decimal points
+                if (input.value.indexOf('.', decimalIndex + 1) !== -1) {
+                    const lastValidIndex = input.value.lastIndexOf('.');
+                    input.value = input.value.substring(0, lastValidIndex) + input.value.substring(lastValidIndex + 1);
+                }
+            } else {
+                // Limit to 2 digits before the decimal point
+                input.value = input.value.substr(0, 3);
+            }
 
             // Retrieve userDiscount from the model
             var userDiscount = @Html.Raw(Json.Serialize(userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityDiscountRate));
             console.log("userDiscount", userDiscount);
 
             // Ensure the value is between 0 and 100
-            const numericValue = parseInt(inputElement.value);
+            const numericValue = parseFloat(input.value);
             if (isNaN(numericValue) || isNaN(userDiscount)) {
-                inputElement.value = '0';
-            } else {
-                inputElement.value = Math.min(userDiscount, Math.max(0, numericValue));
+                input.value = '0';
+            } else if (!isNaN(userDiscount) && parseFloat(input.value) > parseFloat(userDiscount)) {
+                input.value = userDiscount.toFixed(2);
             }
         }
         function handleAdditionalHoursInput(inputElement) {
@@ -3596,16 +3650,16 @@
             }
         }
 
-        function CheckIfCanPayLessThanTotalAmount(){
+        function CheckIfCanPayLessThanTotalAmount() {
             var userAuthAmount = @Html.Raw(Json.Serialize(userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityLessContractValue));
             var AmountPayed = document.getElementById("AmountPayed").value;
             if (userAuthAmount == false && TotalAmount > AmountPayed) {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["DontHaveAuthPayLessThanTotalAmount"]');
-                $("#AmountPayed").css({"border": "2px solid red"});    //This For last Check When i submit Form
+                $("#AmountPayed").css({ "border": "2px solid red" });    //This For last Check When i submit Form
                 somethingIsNotOkay = false;
             }
-            else{
+            else {
                 $("#AmountPayed").css({ "border": "1px solid #faa64d" }); //This For last Check When i submit Form
             }
         }

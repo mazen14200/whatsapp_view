@@ -51,15 +51,28 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var checkBranch = branches.Find(x => x.CrCasBranchInformationCode == selectBranch);
             if (checkBranch == null) selectBranch = branches.FirstOrDefault().CrCasBranchInformationCode;
             var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
+            
             var drivers = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x => x.CrCasRenterPrivateDriverInformationLessor == lessorCode && x.CrCasRenterPrivateDriverInformationStatus == Status.Active).ToList();
+            
             var carsAvailable = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == selectBranch && x.CrCasCarInformationStatus == Status.Active &&
                                                                                  x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationOwnerStatus == Status.Active &&
                                                                                 (x.CrCasCarInformationForSaleStatus == Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale),
                                                                                 new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics",
                                                                                         "CrCasCarInformationCategoryNavigation", "CrCasCarDocumentsMaintenances" }).ToList();
+
             var categoryCars = carsAvailable.Select(item => item.CrCasCarInformationCategoryNavigation).Distinct().OrderBy(item => item.CrMasSupCarCategoryCode).ToList();
             var CheckupCars = _unitOfWork.CrMasSupContractCarCheckup.FindAll(x=>x.CrMasSupContractCarCheckupStatus == Status.Active).ToList();
             ViewBag.StartDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm");
+
+            //Check Account Bank And Sales Point and payment method
+            var AccountBanks = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankLessor == lessorCode&&x.CrCasAccountBankStatus==Status.Active, new[] { "CrCasAccountSalesPoints" }).ToList();
+            var PaymentMethod = _unitOfWork.CrMasSupAccountPaymentMethod.FindAll(x => x.CrMasSupAccountPaymentMethodStatus == Status.Active).ToList();
+            var SalesPoint = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == lessorCode &&
+                                                                             x.CrCasAccountSalesPointBrn == selectBranch &&
+                                                                             x.CrCasAccountSalesPointBankStatus == Status.Active &&
+                                                                             x.CrCasAccountSalesPointStatus == Status.Active &&
+                                                                             x.CrCasAccountSalesPointBranchStatus == Status.Active).ToList();
+            
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
                 CrCasBranchInformations = branches,
@@ -68,9 +81,17 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 Drivers = drivers,
                 CarCategories = categoryCars,
                 CarsFilter = carsAvailable,
-                CarsCheckUp= CheckupCars
+                CarsCheckUp= CheckupCars,
+                SalesPoint = SalesPoint,
+                AccountBanks=AccountBanks,
+                PaymentMethods=PaymentMethod
             };
             return View(bSLayoutVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateContract(BSLayoutVM bSLayoutVM, string ChoicesList,string AdditionalsList)
+        {
+            return View();
         }
         [HttpGet]
         public async Task<IActionResult> GetRenter(string RenterId)

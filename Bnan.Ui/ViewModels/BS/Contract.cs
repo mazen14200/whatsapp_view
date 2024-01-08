@@ -11,6 +11,13 @@ namespace Bnan.Ui.ViewModels.BS
         public string? DriverId { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public string? AdditionalDriverId { get; set; }
+        public string? PrivateDriverId { get; set; }
+        public string? RenterReasons { get; set; }
+        public string? DriverReasons { get; set; }
+        public string? AddDriverReasons { get; set; }
+        public string? SerialNo { get; set; }
+        public string? PriceNo { get; set; }
+        public string? CurrentMeter { get; set; }
 
     }
 }

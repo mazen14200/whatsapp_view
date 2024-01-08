@@ -1,4 +1,5 @@
 ﻿using Bnan.Core.Models;
+using Microsoft.CodeAnalysis.Options;
 using System.Text.Json.Serialization;
 
 namespace Bnan.Ui.ViewModels.BS
@@ -15,10 +16,14 @@ namespace Bnan.Ui.ViewModels.BS
         public List<CrMasSupCarCategory>? CarCategories { get; set; }
         public List<CrCasCarInformation>? CarsFilter { get; set; }
         public List<CrMasSupContractCarCheckup>? CarsCheckUp { get; set; }
+        public List<CrCasAccountBank>? AccountBanks { get; set; }
+        public List<CrCasAccountSalesPoint>? SalesPoint { get; set; }
+        public List<CrMasSupAccountPaymentMethod>? PaymentMethods { get; set; }
         public CrCasBranchInformation? CrCasBranchInformation { get; set; }
         public CrMasUserBranchValidity? CrMasUserBranchValidity { get; set; }
         public CrCasSysAdministrativeProcedure? CrCasSysAdministrativeProcedure { get; set; }
         public Contract? Contract { get; set; }
+
         public string? SelectedBranch { get; set; }
 
 
