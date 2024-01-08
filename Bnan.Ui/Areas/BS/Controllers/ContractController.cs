@@ -8,6 +8,7 @@ using Bnan.Ui.ViewModels.CAS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Options;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
@@ -89,8 +90,42 @@ namespace Bnan.Ui.Areas.BS.Controllers
             return View(bSLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateContract(BSLayoutVM bSLayoutVM, string ChoicesList,string AdditionalsList)
+        public async Task<IActionResult> CreateContract(BSLayoutVM bSLayoutVM, string ChoicesList,string AdditionalsList, Dictionary<string, string> Reasons)
         {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var ContractInfo = bSLayoutVM.Contract;
+
+
+            //Choices
+            var CheckChoices = true;
+            if (ChoicesList!=null&& ChoicesList.Length>0)
+            {
+                List<string> choiceCodes = ChoicesList.Split(',').ToList();
+                foreach (var item in choiceCodes) if (CheckChoices) CheckChoices = await _ContractServices.AddRenterContractChoice(lessorCode, ContractInfo.SerialNo, ContractInfo.PriceNo, item.Trim());
+            }
+            //Additional
+            var CheckAddditional = true;
+            if (AdditionalsList != null && AdditionalsList.Length > 0)
+            {
+                List<string> AdditionalsCode = AdditionalsList.Split(',').ToList();
+                foreach (var item in AdditionalsCode) if (CheckAddditional) CheckAddditional = await _ContractServices.AddRenterContractAdditional(lessorCode, ContractInfo.SerialNo, ContractInfo.PriceNo, item.Trim());
+            }
+            //CheckUp
+            var CheckCheckUpCar = true;
+            if (Reasons!=null)
+            {
+                foreach (var item in Reasons)
+                {
+                    string Code = item.Key; 
+                    string Reason = item.Value;
+                    if (CheckCheckUpCar) CheckCheckUpCar = await _ContractServices.AddRenterContractCheckUp(lessorCode, ContractInfo.SerialNo, ContractInfo.PriceNo, Code, Reason);
+                }
+            }
+            
+
+
+
             return View();
         }
         [HttpGet]

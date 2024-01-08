@@ -91,69 +91,69 @@ namespace Bnan.Inferastructure.Repository
         {
             if (crElmPost != null)
             {
-            var RegionCode = "";
-            var CityCode = "";
-            var concatenatedArAddress = "";
-            var concatenatedEnAddress = "";
-            var concatenatedArAddressShort = "";
-            var concatenatedEnAddressShort = "";
-            var buildingInfoAr = "";
-            var unitInfoAr = "";
-            var zipCodeAr = "";
-            var additionalNoAr = "";
-            var buildingInfoEn = "";
-            var unitInfoEn = "";
-            var zipCodeEn = "";
-            var additionalNoEn = "";
+                var RegionCode = "";
+                var CityCode = "";
+                var concatenatedArAddress = "";
+                var concatenatedEnAddress = "";
+                var concatenatedArAddressShort = "";
+                var concatenatedEnAddressShort = "";
+                var buildingInfoAr = "";
+                var unitInfoAr = "";
+                var zipCodeAr = "";
+                var additionalNoAr = "";
+                var buildingInfoEn = "";
+                var unitInfoEn = "";
+                var zipCodeEn = "";
+                var additionalNoEn = "";
 
 
-            RegionCode = GetRegion(crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostRegionsEnName);
-            CityCode = GetCity(crElmPost.CrElmPostCityArName, crElmPost.CrElmPostCityEnName, RegionCode);
-            buildingInfoAr = $"مبنى ({crElmPost.CrElmPostBuildingNo}) ";
-            unitInfoAr = $"وحدة ({crElmPost.CrElmPostUnitNo}) ";
-            zipCodeAr = $"الرمز البريدي ({crElmPost.CrElmPostZipCode}) ";
-            additionalNoAr = $"الرقم الاضافي ({crElmPost.CrElmPostAdditionalNo}) ";
-            buildingInfoEn = $"Building ({crElmPost.CrElmPostBuildingNo}) ";
-            unitInfoEn = $"Unit ({crElmPost.CrElmPostUnitNo}) ";
-            zipCodeEn = $"ZipCode ({crElmPost.CrElmPostZipCode}) ";
-            additionalNoEn = $"additionalNo ({crElmPost.CrElmPostAdditionalNo}) ";
+                RegionCode = GetRegion(crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostRegionsEnName);
+                CityCode = GetCity(crElmPost.CrElmPostCityArName, crElmPost.CrElmPostCityEnName, RegionCode);
+                buildingInfoAr = $"مبنى ({crElmPost.CrElmPostBuildingNo}) ";
+                unitInfoAr = $"وحدة ({crElmPost.CrElmPostUnitNo}) ";
+                zipCodeAr = $"الرمز البريدي ({crElmPost.CrElmPostZipCode}) ";
+                additionalNoAr = $"الرقم الاضافي ({crElmPost.CrElmPostAdditionalNo}) ";
+                buildingInfoEn = $"Building ({crElmPost.CrElmPostBuildingNo}) ";
+                unitInfoEn = $"Unit ({crElmPost.CrElmPostUnitNo}) ";
+                zipCodeEn = $"ZipCode ({crElmPost.CrElmPostZipCode}) ";
+                additionalNoEn = $"additionalNo ({crElmPost.CrElmPostAdditionalNo}) ";
 
-            concatenatedArAddress = string.Join(" - ", crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostCityArName, crElmPost.CrElmPostDistrictArName,
-                                                       crElmPost.CrElmPostStreetArName, buildingInfoAr, unitInfoAr, zipCodeAr, additionalNoAr);
+                concatenatedArAddress = string.Join(" - ", crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostCityArName, crElmPost.CrElmPostDistrictArName,
+                                                           crElmPost.CrElmPostStreetArName, buildingInfoAr, unitInfoAr, zipCodeAr, additionalNoAr);
 
-            concatenatedEnAddress = string.Join(" - ", crElmPost.CrElmPostRegionsEnName, crElmPost.CrElmPostCityEnName, crElmPost.CrElmPostDistrictEnName,
-                                                       crElmPost.CrElmPostStreetEnName, buildingInfoEn, unitInfoEn, zipCodeEn, additionalNoEn);
+                concatenatedEnAddress = string.Join(" - ", crElmPost.CrElmPostRegionsEnName, crElmPost.CrElmPostCityEnName, crElmPost.CrElmPostDistrictEnName,
+                                                           crElmPost.CrElmPostStreetEnName, buildingInfoEn, unitInfoEn, zipCodeEn, additionalNoEn);
 
-            concatenatedArAddressShort = string.Join(" - ", crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostCityArName, crElmPost.CrElmPostDistrictArName,
-                                                       crElmPost.CrElmPostStreetArName);
+                concatenatedArAddressShort = string.Join(" - ", crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostCityArName, crElmPost.CrElmPostDistrictArName,
+                                                           crElmPost.CrElmPostStreetArName);
 
-            concatenatedEnAddressShort = string.Join(" - ", crElmPost.CrElmPostRegionsEnName, crElmPost.CrElmPostCityEnName, crElmPost.CrElmPostDistrictEnName,
-                                                       crElmPost.CrElmPostStreetEnName);
+                concatenatedEnAddressShort = string.Join(" - ", crElmPost.CrElmPostRegionsEnName, crElmPost.CrElmPostCityEnName, crElmPost.CrElmPostDistrictEnName,
+                                                           crElmPost.CrElmPostStreetEnName);
 
-            CrMasRenterPost crMasRenterPost = new CrMasRenterPost
-            {
-                CrMasRenterPostCode = RenterID,
-                CrMasRenterPostShortCode = null,
-                CrMasRenterPostAdditionalNumbers = crElmPost.CrElmPostAdditionalNo.ToString(),
-                CrMasRenterPostCity = CityCode,
-                CrMasRenterPostRegions = RegionCode,
-                CrMasRenterPostArStreet = crElmPost.CrElmPostStreetArName,
-                CrMasRenterPostEnStreet = crElmPost.CrElmPostStreetEnName,
-                CrMasRenterPostArDistrict = crElmPost.CrElmPostDistrictArName,
-                CrMasRenterPostEnDistrict = crElmPost.CrElmPostDistrictEnName,
-                CrMasRenterPostZipCode = crElmPost.CrElmPostZipCode.ToString(),
-                CrMasRenterPostBuilding = crElmPost.CrElmPostBuildingNo.ToString(),
-                CrMasRenterPostUnitNo = crElmPost.CrElmPostUnitNo,
-                CrMasRenterPostArConcatenate = concatenatedArAddress,
-                CrMasRenterPostArShortConcatenate = concatenatedArAddressShort,
-                CrMasRenterPostEnConcatenate = concatenatedEnAddress,
-                CrMasRenterPostEnShortConcatenate = concatenatedEnAddressShort,
-                CrMasRenterPostStatus = Status.Active,
-                CrMasRenterPostUpDatePost = DateTime.Now.Date,
-                CrMasRenterPostReasons = ""
-            };
-            if (await _unitOfWork.CrMasRenterPost.AddAsync(crMasRenterPost) == null) return null;
-            return crMasRenterPost;
+                CrMasRenterPost crMasRenterPost = new CrMasRenterPost
+                {
+                    CrMasRenterPostCode = RenterID,
+                    CrMasRenterPostShortCode = null,
+                    CrMasRenterPostAdditionalNumbers = crElmPost.CrElmPostAdditionalNo.ToString(),
+                    CrMasRenterPostCity = CityCode,
+                    CrMasRenterPostRegions = RegionCode,
+                    CrMasRenterPostArStreet = crElmPost.CrElmPostStreetArName,
+                    CrMasRenterPostEnStreet = crElmPost.CrElmPostStreetEnName,
+                    CrMasRenterPostArDistrict = crElmPost.CrElmPostDistrictArName,
+                    CrMasRenterPostEnDistrict = crElmPost.CrElmPostDistrictEnName,
+                    CrMasRenterPostZipCode = crElmPost.CrElmPostZipCode.ToString(),
+                    CrMasRenterPostBuilding = crElmPost.CrElmPostBuildingNo.ToString(),
+                    CrMasRenterPostUnitNo = crElmPost.CrElmPostUnitNo,
+                    CrMasRenterPostArConcatenate = concatenatedArAddress,
+                    CrMasRenterPostArShortConcatenate = concatenatedArAddressShort,
+                    CrMasRenterPostEnConcatenate = concatenatedEnAddress,
+                    CrMasRenterPostEnShortConcatenate = concatenatedEnAddressShort,
+                    CrMasRenterPostStatus = Status.Active,
+                    CrMasRenterPostUpDatePost = DateTime.Now.Date,
+                    CrMasRenterPostReasons = ""
+                };
+                if (await _unitOfWork.CrMasRenterPost.AddAsync(crMasRenterPost) == null) return null;
+                return crMasRenterPost;
             }
             return null;
         }
@@ -172,7 +172,7 @@ namespace Bnan.Inferastructure.Repository
                 RegionCode = "11";
                 CityCode = "1700000002";
             }
-           
+
             if (crMasRenterInformation != null) ageCode = GetAge(crMasRenterInformation.CrMasRenterInformationBirthDate?.ToString("yyyy/MM/dd"));
             CrCasRenterLessor casRenterLessor = new CrCasRenterLessor
             {
@@ -206,6 +206,72 @@ namespace Bnan.Inferastructure.Repository
             if (await _unitOfWork.CrCasRenterLessor.AddAsync(casRenterLessor) == null) return null;
             return casRenterLessor;
         }
+
+        public async Task<bool> AddRenterContractChoice(string LessorCode, string SerialNo, string PriceNo, string Choice)
+        {
+            CrCasRenterContractChoice renterContractChoice = new CrCasRenterContractChoice();
+
+            var carInfo = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == SerialNo);
+            var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == PriceNo);
+            if (carInfo != null && carPrice != null)
+            {
+                var carChoice = _unitOfWork.CrCasPriceCarOption.Find(x => x.CrCasPriceCarOptionsNo == carPrice.CrCasPriceCarBasicNo && x.CrCasPriceCarOptionsCode == Choice);
+                if (carChoice != null)
+                {
+                    renterContractChoice.CrCasRenterContractChoiceNo = carChoice.CrCasPriceCarOptionsNo;
+                    renterContractChoice.CrCasRenterContractChoiceCode = carChoice.CrCasPriceCarOptionsCode;
+                    renterContractChoice.CrCasContractChoiceValue = carChoice.CrCasPriceCarOptionsValue;
+                }
+            }
+            if (renterContractChoice != null && _unitOfWork.CrCasRenterContractChoice.Add(renterContractChoice) != null) return true;
+            return false;
+        }
+
+        public async Task<bool> AddRenterContractAdditional(string LessorCode, string SerialNo, string PriceNo, string Additional)
+        {
+
+            CrCasRenterContractAdditional renterContractAdditional = new CrCasRenterContractAdditional();
+
+            var carInfo = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == SerialNo);
+            var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == PriceNo);
+            if (carInfo != null && carPrice != null)
+            {
+                var carAdditional = _unitOfWork.CrCasPriceCarAdditional.Find(x => x.CrCasPriceCarAdditionalNo == carPrice.CrCasPriceCarBasicNo && x.CrCasPriceCarAdditionalCode == Additional);
+                if (carAdditional != null)
+                {
+                    renterContractAdditional.CrCasRenterContractAdditionalNo = carAdditional.CrCasPriceCarAdditionalNo;
+                    renterContractAdditional.CrCasRenterContractAdditionalCode = carAdditional.CrCasPriceCarAdditionalCode;
+                    renterContractAdditional.CrCasContractAdditionalValue = carAdditional.CrCasPriceCarAdditionalValue;
+                }
+            }
+            if (renterContractAdditional != null && _unitOfWork.CrCasRenterContractAdditional.Add(renterContractAdditional) != null) return true;
+            return false;
+        }
+
+
+        public async Task<bool> AddRenterContractCheckUp(string LessorCode, string SerialNo, string PriceNo, string CheckUpCode,string Reasons)
+        {
+            CrCasRenterContractCarCheckup renterContractCarCheckup = new CrCasRenterContractCarCheckup();
+
+            var carInfo = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == SerialNo);
+            var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == PriceNo);
+            if (carInfo != null && carPrice != null)
+            {
+                var carCheckUp = _unitOfWork.CrMasSupContractCarCheckup.Find(x => x.CrMasSupContractCarCheckupCode == CheckUpCode);
+                if (carCheckUp != null)
+                {
+                    renterContractCarCheckup.CrCasRenterContractCarCheckupNo = carPrice.CrCasPriceCarBasicNo;
+                    renterContractCarCheckup.CrCasRenterContractCarCheckupCode = carCheckUp.CrMasSupContractCarCheckupCode;
+                    renterContractCarCheckup.CrCasRenterContractCarCheckupType = "1";
+                    renterContractCarCheckup.CrCasRenterContractCarCheckupReasons = Reasons;
+                }
+            }
+
+            if (renterContractCarCheckup != null && _unitOfWork.CrCasRenterContractCarCheckup.Add(renterContractCarCheckup) != null) return true;
+            return false;
+        }
+
+
         private string GetSector(string firstChar, string sectorType)
         {
             var sectorCode = "";
@@ -511,5 +577,7 @@ namespace Bnan.Inferastructure.Repository
             }
             return typeID;
         }
+
+
     }
 }

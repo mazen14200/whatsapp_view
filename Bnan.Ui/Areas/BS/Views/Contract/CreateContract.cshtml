@@ -3126,28 +3126,6 @@
             totalRow.append("<td class='text-center'>المجموع</td>");
             tbodyContainer.append(totalRow);
         }
-        // function GetCarChoices(priceNumber) {
-        //     console.log(priceNumber);
-        //     $.ajax({
-        //         url: "/BS/Contract/GetCarChoices",
-        //         type: "GET",
-        //         data: { priceNumber: priceNumber },
-        //         cache: false,
-        //         success: function (data) {
-        //             CarChoices = data;
-        //             console.log(CarChoices);
-        //             if (data && data.optionsList) {
-        //                 updateOptionsTable(data);
-        //             } else {
-        //                 console.error("Invalid data format:", data.optionsList);
-        //             }
-        //         },
-        //         error: function (xhr, textStatus, errorThrown) {
-        //             console.error("Error loading data:", textStatus, errorThrown);
-        //         }
-        //     });
-        // }
-        // Function to get CarChoices data
         function getCarChoices(priceNumber) {
             return new Promise((resolve, reject) => {
                 $.ajax({
@@ -3238,27 +3216,6 @@
             totalRow.append("<td class='text-center'>المجموع</td>");
             tbodyContainer.append(totalRow);
         }
-        // function GetCarAdditional(priceNumber) {
-        //     console.log(priceNumber);
-        //     $.ajax({
-        //         url: "/BS/Contract/GetCarAdditional",
-        //         type: "GET",
-        //         data: { priceNumber: priceNumber },
-        //         cache: false,
-        //         success: function (data) {
-        //             CarAdditionals = data;
-        //             console.log(CarAdditionals);
-        //             if (data && data.addList) {
-        //                 updateAdditionalTable(data);
-        //             } else {
-        //                 console.error("Invalid data format:", data.addList);
-        //             }
-        //         },
-        //         error: function (xhr, textStatus, errorThrown) {
-        //             console.error("Error loading data:", textStatus, errorThrown);
-        //         }
-        //     });
-        // }
         // Function to get CarAdditional data
         function getCarAdditional(priceNumber) {
             return new Promise((resolve, reject) => {
@@ -3434,7 +3391,7 @@
                 if (privateDriverRadio1.checked && privateDriverID == null) {
                     var privateDriver = CarInformation.carPrice.crCasPriceCarBasicPrivateDriverValue;
                     if (parseInt(privateDriver) != null) {
-                        privateDriverValue = parseFloat(privateDriver);
+                        privateDriverValue = parseFloat(privateDriver) * parseInt(daysNo);
                         document.getElementById('PrivateDriverValue').textContent = privateDriverValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     }
                     else {

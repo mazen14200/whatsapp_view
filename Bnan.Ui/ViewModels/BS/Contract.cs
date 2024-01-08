@@ -10,6 +10,7 @@ namespace Bnan.Ui.ViewModels.BS
         [RegularExpression(@"^[0-689]\d{9}$", ErrorMessage = "NotStartWith7")]
         public string? DriverId { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
+        [RegularExpression(@"^[0-689]\d{9}$", ErrorMessage = "NotStartWith7")]
         public string? AdditionalDriverId { get; set; }
         public string? PrivateDriverId { get; set; }
         public string? RenterReasons { get; set; }
