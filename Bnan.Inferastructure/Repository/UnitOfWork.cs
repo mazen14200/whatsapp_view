@@ -98,6 +98,8 @@ namespace Bnan.Inferastructure.Repository
         public IGenric<CrCasRenterContractAdditional> CrCasRenterContractAdditional { get; private set; }
         public IGenric<CrCasRenterContractCarCheckup> CrCasRenterContractCarCheckup { get; private set; }
         public IGenric<CrCasRenterContractBasic> CrCasRenterContractBasic { get; private set; }
+        public IGenric<CrCasRenterContractAdvantage> CrCasRenterContractAdvantage { get; private set; }
+        public IGenric<CrCasRenterContractAuthorization> CrCasRenterContractAuthorization { get; private set; }
 
 
         public UnitOfWork(BnanKSAContext context)
@@ -177,6 +179,8 @@ namespace Bnan.Inferastructure.Repository
             CrCasRenterContractAdditional = new BaseRepository<CrCasRenterContractAdditional>(_context);
             CrCasRenterContractCarCheckup = new BaseRepository<CrCasRenterContractCarCheckup>(_context);
             CrCasRenterContractBasic = new BaseRepository<CrCasRenterContractBasic>(_context);
+            CrCasRenterContractAdvantage = new BaseRepository<CrCasRenterContractAdvantage>(_context);
+            CrCasRenterContractAuthorization = new BaseRepository<CrCasRenterContractAuthorization>(_context);
         }
         public int Complete()
         {

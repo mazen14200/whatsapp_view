@@ -2178,9 +2178,8 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrCasRenterContractAuthorizationType).HasColumnName("CR_Cas_Renter_Contract_Authorization_Type");
 
                 entity.Property(e => e.CrCasRenterContractAuthorizationValue)
-                    .HasMaxLength(10)
-                    .HasColumnName("CR_Cas_Renter_Contract_Authorization_Value")
-                    .IsFixedLength();
+                    .HasColumnType("decimal(7, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Authorization_Value");
 
                 entity.HasOne(d => d.CrCasRenterContractAuthorizationContractNoNavigation)
                     .WithOne(p => p.CrCasRenterContractAuthorization)
@@ -2512,7 +2511,6 @@ namespace Bnan.Core.Models
                     .HasMaxLength(100)
                     .HasColumnName("CR_Cas_Renter_Contract_Car_Checkup_Reasons");
 
-                entity.Property(e => e.CrCasRenterContractCarCheckupStatus).HasColumnName("CR_Cas_Renter_Contract_Car_Checkup_Status");
 
                 entity.HasOne(d => d.CrCasRenterContractCarCheckupCodeNavigation)
                     .WithMany(p => p.CrCasRenterContractCarCheckups)

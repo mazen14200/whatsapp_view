@@ -8,7 +8,6 @@ namespace Bnan.Core.Models
         public string CrCasRenterContractCarCheckupNo { get; set; } = null!;
         public string CrCasRenterContractCarCheckupCode { get; set; } = null!;
         public string CrCasRenterContractCarCheckupType { get; set; } = null!;
-        public bool? CrCasRenterContractCarCheckupStatus { get; set; }
         public string? CrCasRenterContractCarCheckupReasons { get; set; }
 
         public virtual CrMasSupContractCarCheckup CrCasRenterContractCarCheckupCodeNavigation { get; set; } = null!;

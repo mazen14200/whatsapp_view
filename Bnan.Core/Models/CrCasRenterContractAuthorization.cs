@@ -11,7 +11,7 @@ namespace Bnan.Core.Models
         public string? CrCasRenterContractAuthorizationNo { get; set; }
         public DateTime? CrCasRenterContractAuthorizationStartDate { get; set; }
         public int? CrCasRenterContractAuthorizationDaysNo { get; set; }
-        public string? CrCasRenterContractAuthorizationValue { get; set; }
+        public decimal? CrCasRenterContractAuthorizationValue { get; set; }
         public DateTime? CrCasRenterContractAuthorizationEndDate { get; set; }
         public bool? CrCasRenterContractAuthorizationAction { get; set; }
         public string? CrCasRenterContractAuthorizationStatus { get; set; }

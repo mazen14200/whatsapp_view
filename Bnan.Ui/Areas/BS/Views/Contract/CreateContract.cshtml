@@ -918,6 +918,7 @@
 
                                                     <tbody id="additionalBody">
                                                         <input hidden id="AdditionalsList" name="AdditionalsList" />
+                                                        <input hidden asp-for="Contract.AdditionalTotal" />
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -940,6 +941,7 @@
                                                     </thead>
                                                     <tbody id="optionsBody">
                                                         <input hidden id="ChoicesList" name="ChoicesList" />
+                                                        <input hidden asp-for="Contract.OptionTotal" />
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1102,7 +1104,7 @@
                                         <div class="col-md-6 col-lg-4 d-flex payment-col align-items-baseline">
                                             <div class="col-auto">
                                                 <p id="renting-price"> @localizer["ContractValue"]</p>
-
+                                                <input hidden asp-for="Contract.ContractValueBeforeDiscount" />
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <p id="contractValue">0.00</p>
@@ -1131,6 +1133,7 @@
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p id="AdvatagesValue">0</p>
+                                                                <input hidden asp-for="Contract.AdvantagesTotalValue" />
                                                             </div>
 
                                                         </div>
@@ -1175,6 +1178,7 @@
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p id="InFeesTammValue">0</p>
+                                                                <input hidden asp-for="Contract.FeesTmmValue" />
                                                             </div>
 
                                                         </div>
@@ -1185,8 +1189,8 @@
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col ">
                                             <div class="col-auto personal-data">
-                                                <input class="Delegate-out-input" type="checkbox" value="checked" id="Delegate-out">
-
+                                                <input class="Delegate-out-input" type="checkbox" name="Contract_OutFeesTmm" id="Delegate-out" value="checked">
+                                                <input hidden asp-for="Contract.OutFeesTmm" />
                                             </div>
                                             <div class="col-auto">
                                                 <label class="Delegate-out-label" for="Delegate-out" name="Delegate-out">
@@ -1204,6 +1208,7 @@
                                             </div>
                                             <div class="col-auto">
                                                 <input type="text" class="form-control1" asp-for="Contract.UserDiscount" id="Discount_Input" oninput="handleDiscountInput(this)" onfocusout="CalculateDiscount()" min="0" max="100" value="0" maxlength="5" autocomplete="off">
+                                                <input hidden asp-for="Contract.DiscountValue" />
                                                 <div class="row requird-field-row-last">
                                                     <p class="requird_field_Discount"></p>
                                                 </div>
@@ -1212,8 +1217,7 @@
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col align-items-baseline">
                                             <div class="col-auto">
-                                                <label id="addational-hours"
-                                                       for="AdditionalHours"> @localizer["AdditionalHours"] </label>
+                                                <label id="addational-hours" for="AdditionalHours"> @localizer["AdditionalHours"] </label>
                                             </div>
                                             <div class="col-auto">
                                                 <input type="tel" class="form-control1" asp-for="Contract.UserAddHours" id="AdditionalHours"  maxlength="2" oninput="handleAdditionalHoursInput(this)" min="0" max="99" value="0" autocomplete="off">
@@ -1244,7 +1248,7 @@
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <p id="totalContract">0.00</p>
-
+                                                <input hidden asp-for="Contract.ContractValueAfterDiscount" />
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
@@ -1253,7 +1257,7 @@
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <p id="Taxvalue">0.00</p>
-
+                                                <input hidden asp-for="Contract.TaxValue" />
                                             </div>
                                         </div>
                                     </div>
@@ -1261,10 +1265,10 @@
                                         <div class="col-md-6 col-lg-4 d-flex payment-col">
                                             <div class="col-auto">
                                                 <p id="Total_Contract"> @localizer["NetContract"]</p>
-
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <p id="TotalActualContract">0</p>
+                                                <input hidden asp-for="Contract.TotalContractAmount" />
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
@@ -1386,7 +1390,7 @@
                                         </button>
                                     </div>
                                     <div class="button-card">
-                                        <input type="button" name="previous" class="previous action-button-previous" value="السابق" />
+                                        <input type="button" name="previous" class="previous action-button-previous" value="@localizer["Previous"]" />
                                         <img src="~/BranchSys/CreateContract/img/vector.png" alt="Button Image" class="previous action-button-previous" style="vertical-align: middle; margin-right: 10px;">
                                     </div>
                                 </div>
@@ -1710,6 +1714,7 @@
             driverRadio1.addEventListener("click", function () {
                 dropdownContainer.style.display = "none";
                 driverRadio2.checked = false;
+                $('#driver-dropdown option:first').prop('selected', true);
             });
 
             driverRadio2.addEventListener("click", function () {
@@ -3348,6 +3353,7 @@
                     document.getElementById('ChoicesValue').textContent = "0.00";
                     choicesValue = 0;
                 }
+                $("#Contract_OptionTotal").val(choicesValue);
 
                 var TotalAdditionals = $("#TotalAdditionals").text();
                 if (parseFloat(TotalAdditionals) != null && parseFloat(TotalAdditionals) != "") {
@@ -3359,6 +3365,7 @@
                     document.getElementById('AdditionalValue').textContent = "0.00";
                     additionalValue = 0;
                 }
+                $("#Contract_AdditionalTotal").val(additionalValue);
 
                 var AdvatagesTotalValue = parseFloat(AdvantagesValue);
                 if (AdvatagesTotalValue != null && AdvatagesTotalValue != "") {
@@ -3369,6 +3376,8 @@
                     document.getElementById('AdvatagesValue').textContent = "0.00";
                     advantagesValueTotal = 0;
                 }
+                $("#Contract_AdvantagesTotalValue").val(contractValue);
+
 
                 var additionalDriver = document.getElementById("addational-driver");
                 if (additionalDriver.checked) {
@@ -3404,7 +3413,7 @@
                 // Contract Value Total
                 contractValue = rentValue + choicesValue + additionalValue + advantagesValueTotal + additionalDriverValue + privateDriverValue + FeesTammValue;
                 document.getElementById('contractValue').textContent = contractValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
+                $("#Contract_ContractValueBeforeDiscount").val(contractValue);
                 // get discount and totalContract Value
                 CalculateDiscount();
                 // Get Tax value from TotalActualContract and get value of TotalActualContract
@@ -3461,7 +3470,6 @@
         function getFeeTmm() {
             var InFeesTamm = CarInformation.carPrice.crCasCarPriceBasicInFeesTamm;
             var OutFeesTamm = CarInformation.carPrice.crCasCarPriceBasicOutFeesTamm;
-
             var OutFeesTammInput = document.getElementById('Delegate-out');
 
             if (OutFeesTammInput.checked) {
@@ -3473,6 +3481,8 @@
                     document.getElementById('InFeesTammValue').textContent = "0.00";
                     FeesTammValue = 0;
                 }
+                $("#Contract_OutFeesTmm").val("true");
+                $("#Contract_FeesTmmValue").val(FeesTammValue);
             }
             else {
                 if (parseFloat(InFeesTamm) != null) {
@@ -3483,6 +3493,8 @@
                     document.getElementById('InFeesTammValue').textContent = "0.00";
                     FeesTammValue = 0;
                 }
+                $("#Contract_OutFeesTmm").val("false");
+                $("#Contract_FeesTmmValue").val(FeesTammValue);
             }
         }
         function CalculateDiscount() {
@@ -3492,9 +3504,13 @@
                 totalContract = contractValue - discountValue;
             }
             else {
-                totalContract = contractValue;
+                totalContract = contractValue; 
+                discountValue = 0;
+
             }
             document.getElementById("totalContract").textContent = totalContract.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#Contract_ContractValueAfterDiscount").val(totalContract);
+            $("#Contract_DiscountValue").val(discountValue);
             CalculateTax();
             CalculateTotalAmount();
         };
@@ -3510,11 +3526,13 @@
             }
             document.getElementById('Taxvalue').textContent = taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             document.getElementById('TotalActualContract').textContent = TotalActualContract.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#Contract_TaxValue").val(taxValue);
         }
         function CalculateTotalAmount() {
             // Get Total Of amount Required
             TotalAmount = parseFloat(RenterBalance) + parseFloat(TotalActualContract);
             document.getElementById("TotalAmount").textContent = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#Contract_TotalContractAmount").val(TotalAmount);
         }
     </script>
 

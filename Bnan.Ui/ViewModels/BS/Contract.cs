@@ -21,13 +21,22 @@ namespace Bnan.Ui.ViewModels.BS
         public string? PriceNo { get; set; }
         public string? CurrentMeter { get; set; }
         public string? DaysNo { get; set; }
-        public bool? OutFeesTmm { get; set; }
+        public string? OutFeesTmm { get; set; }
+        public string? FeesTmmValue { get; set; }
         public string? UserDiscount { get; set; }
         public string? UserAddHours { get; set; }
         public string? UserAddKm { get; set; }
         public string? AmountPayed { get; set; }
         public string? PaymentMethod { get; set; }
         public string? SalesPoint { get; set; }
+        public string? OptionTotal { get; set; }
+        public string? AdditionalTotal { get; set; }
+        public string? ContractValueBeforeDiscount { get; set; }
+        public string? DiscountValue { get; set; }
+        public string? ContractValueAfterDiscount { get; set; }
+        public string? TaxValue { get; set; }
+        public string? TotalContractAmount { get; set; }
+        public string? AdvantagesTotalValue { get; set; }
 
     }
 }

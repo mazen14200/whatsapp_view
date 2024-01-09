@@ -212,7 +212,7 @@ namespace Bnan.Inferastructure.Repository
             CrCasRenterContractChoice renterContractChoice = new CrCasRenterContractChoice();
 
             var carInfo = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo);
-            var carPrice =_unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == PriceNo);
+            var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == PriceNo);
             if (carInfo != null && carPrice != null)
             {
                 var carChoice = _unitOfWork.CrCasPriceCarOption.Find(x => x.CrCasPriceCarOptionsNo == carPrice.CrCasPriceCarBasicNo && x.CrCasPriceCarOptionsCode == Choice);
@@ -246,7 +246,19 @@ namespace Bnan.Inferastructure.Repository
             if (renterContractAdditional != null && _unitOfWork.CrCasRenterContractAdditional.Add(renterContractAdditional) != null) return true;
             return false;
         }
-        public async Task<bool> AddRenterContractCheckUp(string LessorCode, string ContractNo, string SerialNo, string PriceNo, string CheckUpCode,string Reasons)
+        public async Task<bool> AddRenterContractAdvantages(CrCasPriceCarAdvantage crCasPriceCarAdvantage, string ContractNo)
+        {
+            CrCasRenterContractAdvantage crCasRenterContractAdvantage = new CrCasRenterContractAdvantage();
+            if (crCasPriceCarAdvantage != null)
+            {
+                crCasRenterContractAdvantage.CrCasRenterContractAdvantagesNo = ContractNo;
+                crCasRenterContractAdvantage.CrCasRenterContractAdvantagesCode = crCasPriceCarAdvantage.CrCasPriceCarAdvantagesCode;
+                crCasRenterContractAdvantage.CrCasContractAdvantagesValue = crCasPriceCarAdvantage.CrCasPriceCarAdvantagesValue;
+                if (await _unitOfWork.CrCasRenterContractAdvantage.AddAsync(crCasRenterContractAdvantage) != null) return true;
+            }
+            return false;
+        }
+        public async Task<bool> AddRenterContractCheckUp(string LessorCode, string ContractNo, string SerialNo, string PriceNo, string CheckUpCode, string Reasons)
         {
             CrCasRenterContractCarCheckup renterContractCarCheckup = new CrCasRenterContractCarCheckup();
 
@@ -267,8 +279,33 @@ namespace Bnan.Inferastructure.Repository
             if (renterContractCarCheckup != null && _unitOfWork.CrCasRenterContractCarCheckup.Add(renterContractCarCheckup) != null) return true;
             return false;
         }
-        public async Task<bool> AddRenterContractBasic(string LessorCode, string BranchCode, string ContractNo, string RenterId, string DriverId, string PrivateDriver,
-                                                       string AdditionalDriver, string SerialNo, string PriceNo,string DaysNo, string Reasons)
+        public async Task<bool> AddRenterContractAuthrization(string ContractNo, string LessorCode, string AuthrizationType, string AuthrizationValue)
+        {
+            DateTime now = DateTime.Now;
+            CrCasRenterContractAuthorization authorization = new CrCasRenterContractAuthorization();
+
+            authorization.CrCasRenterContractAuthorizationContractNo = ContractNo;
+            authorization.CrCasRenterContractAuthorizationLessor = LessorCode;
+            if (AuthrizationType == "true") authorization.CrCasRenterContractAuthorizationType = true;
+            else authorization.CrCasRenterContractAuthorizationType = false;
+            authorization.CrCasRenterContractAuthorizationStartDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
+            authorization.CrCasRenterContractAuthorizationDaysNo = 365;
+            authorization.CrCasRenterContractAuthorizationValue = decimal.Parse(AuthrizationValue);
+            //authorization.CrCasRenterContractAuthorizationValue = AuthrizationValue;
+            authorization.CrCasRenterContractAuthorizationEndDate = authorization.CrCasRenterContractAuthorizationStartDate?.AddDays(Convert.ToDouble(authorization.CrCasRenterContractAuthorizationDaysNo));
+            authorization.CrCasRenterContractAuthorizationStatus = Status.Active;
+            //authorization.CrCasRenterContractAuthorizationAction = Status.Active;
+            authorization.CrCasRenterContractAuthorizationAction = true;
+
+
+            if (await _unitOfWork.CrCasRenterContractAuthorization.AddAsync(authorization) != null) return true;
+            return false;
+        }
+        public async Task<CrCasRenterContractBasic> AddRenterContractBasic(string LessorCode, string BranchCode, string ContractNo, string RenterId, string DriverId, string PrivateDriver,
+                                                       string AdditionalDriver, string SerialNo, string PriceNo, string DaysNo, string UserFreeHour, string UserFreeKm,
+                                                       string CurrentMeter, string OptionsTotal, string AdditionalTotal, string ContractValueAfterDiscount,
+                                                       string DiscountValue, string ContractValueBeforeDiscount, string TaxValue, string TotalAmount, string UserInsert,
+                                                       string Authrization, string UserDiscount, string AmountPayed, string Reasons)
         {
             DateTime now = DateTime.Now;
             CrCasRenterContractBasic renterContractBasic = new CrCasRenterContractBasic();
@@ -279,24 +316,79 @@ namespace Bnan.Inferastructure.Repository
 
 
             renterContractBasic.CrCasRenterContractBasicNo = ContractNo;
-            renterContractBasic.CrCasRenterContractBasicCopy = 1;
-            renterContractBasic.CrCasRenterContractBasicYear = DateTime.Now.Year.ToString("yy");
+            renterContractBasic.CrCasRenterContractBasicCopy = 0;
+            renterContractBasic.CrCasRenterContractBasicYear = DateTime.Now.ToString("yy");
             renterContractBasic.CrCasRenterContractBasicSector = masRenterInfo.CrMasRenterInformationSector;
-            renterContractBasic.CrCasRenterContractBasicProcedures = "501";
+            renterContractBasic.CrCasRenterContractBasicProcedures = "401";
             renterContractBasic.CrCasRenterContractBasicLessor = LessorCode;
             renterContractBasic.CrCasRenterContractBasicBranch = BranchCode;
             renterContractBasic.CrCasRenterContractBasicIssuedDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
             renterContractBasic.CrCasRenterContractBasicExpectedStartDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
             renterContractBasic.CrCasRenterContractBasicExpectedRentalDays = int.Parse(DaysNo);
             renterContractBasic.CrCasRenterContractBasicExpectedEndDate = renterContractBasic.CrCasRenterContractBasicExpectedStartDate?.AddDays(int.Parse(DaysNo));
+            renterContractBasic.CrCasRenterContractBasicAllowCanceled = renterContractBasic.CrCasRenterContractBasicExpectedEndDate?.AddHours(-Convert.ToDouble(carPrice.CrCasPriceCarBasicCancelHour));
             renterContractBasic.CrCasRenterContractBasicRenterId = RenterId;
             renterContractBasic.CrCasRenterContractBasicCarSerailNo = SerialNo;
             if (!string.IsNullOrEmpty(DriverId)) renterContractBasic.CrCasRenterContractBasicDriverId = DriverId;
             else renterContractBasic.CrCasRenterContractBasicDriverId = null;
-            if (!string.IsNullOrEmpty(AdditionalDriver)) renterContractBasic.CrCasRenterContractBasicAdditionalDriverId = AdditionalDriver;
+
+            if (!string.IsNullOrEmpty(AdditionalDriver))
+            {
+                renterContractBasic.CrCasRenterContractBasicAdditionalDriverId = AdditionalDriver;
+                renterContractBasic.CrCasRenterContractBasicAdditionalDriverValue = carPrice.CrCasPriceCarBasicAdditionalDriverValue;
+            }
             else renterContractBasic.CrCasRenterContractBasicAdditionalDriverId = null;
-            if (!string.IsNullOrEmpty(PrivateDriver)) renterContractBasic.CrCasRenterContractBasicPrivateDriverId = PrivateDriver;
+
+            if (!string.IsNullOrEmpty(PrivateDriver))
+            {
+                renterContractBasic.CrCasRenterContractBasicPrivateDriverId = PrivateDriver;
+                renterContractBasic.CrCasRenterContractBasicExpectedPrivateDriverValue = carPrice.CrCasPriceCarBasicPrivateDriverValue * int.Parse(DaysNo);
+            }
             else renterContractBasic.CrCasRenterContractBasicPrivateDriverId = null;
+            //Get Data From Car Price Info
+
+            // Hours
+            renterContractBasic.CrCasRenterContractBasicFreeHours = carPrice.CrCasPriceCarBasicFreeAdditionalHours;
+            renterContractBasic.CrCasRenterContractBasicUserFreeHours = int.Parse(UserFreeHour);
+            renterContractBasic.CrCasRenterContractBasicTotalFreeHours = renterContractBasic.CrCasRenterContractBasicFreeHours + renterContractBasic.CrCasRenterContractBasicUserFreeHours;
+            renterContractBasic.CrCasRenterContractBasicHourMax = carPrice.CrCasPriceCarBasicHourMax;
+            renterContractBasic.CrCasRenterContractBasicHourValue = carPrice.CrCasPriceCarBasicExtraHourValue;
+
+            // Km
+            renterContractBasic.CrCasRenterContractBasicDailyFreeKm = carPrice.CrCasPriceCarBasicNoDailyFreeKm;
+            renterContractBasic.CrCasRenterContractBasicDailyFreeKmUser = int.Parse(UserFreeKm);
+            renterContractBasic.CrCasRenterContractBasicTotalDailyFreeKm = renterContractBasic.CrCasRenterContractBasicDailyFreeKm + renterContractBasic.CrCasRenterContractBasicDailyFreeKmUser;
+            renterContractBasic.CrCasRenterContractBasicKmValue = carPrice.CrCasPriceCarBasicAdditionalKmValue;
+            //Rental Value
+            renterContractBasic.CrCasRenterContractBasicDailyRent = carPrice.CrCasPriceCarBasicDailyRent;
+            renterContractBasic.CrCasRenterContractBasicWeeklyRent = carPrice.CrCasPriceCarBasicWeeklyRent;
+            renterContractBasic.CrCasRenterContractBasicMonthlyRent = carPrice.CrCasPriceCarBasicMonthlyRent;
+            renterContractBasic.CrCasRenterContractBasicYearlyRent = carPrice.CrCasPriceCarBasicYearlyRent;
+            // Additionals
+            if (Authrization == "true") renterContractBasic.CrCasRenterContractBasicAuthorizationValue = carPrice.CrCasCarPriceBasicOutFeesTamm;
+            else renterContractBasic.CrCasRenterContractBasicAuthorizationValue = carPrice.CrCasCarPriceBasicInFeesTamm;
+            renterContractBasic.CrCasRenterContractBasicTaxRate = carPrice.CrCasPriceCarBasicRentalTaxRate;
+            renterContractBasic.CrCasRenterContractBasicUserDiscountRate = decimal.Parse(UserDiscount);
+            //Info From Payment Tab From Create Contract 
+            renterContractBasic.CrCasRenterContractBasicCurrentReadingMeter = int.Parse(CurrentMeter);
+            renterContractBasic.CrCasRenterContractBasicExpectedRentValue = carPrice.CrCasPriceCarBasicDailyRent * int.Parse(DaysNo);
+            renterContractBasic.CrCasRenterContractBasicExpectedOptionsValue = decimal.Parse(OptionsTotal);
+            renterContractBasic.CrCasRenterContractBasicAdditionalValue = decimal.Parse(AdditionalTotal);
+            renterContractBasic.CrCasRenterContractBasicExpectedPrivateDriverValue = carPrice.CrCasPriceCarBasicPrivateDriverValue * int.Parse(DaysNo);
+            renterContractBasic.CrCasRenterContractBasicExpectedValueBeforDiscount = decimal.Parse(ContractValueBeforeDiscount);
+            renterContractBasic.CrCasRenterContractBasicExpectedDiscountValue = decimal.Parse(DiscountValue);
+            renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount = decimal.Parse(ContractValueAfterDiscount);
+            renterContractBasic.CrCasRenterContractBasicExpectedTaxValue = decimal.Parse(TaxValue);
+            renterContractBasic.CrCasRenterContractBasicExpectedTotal = decimal.Parse(ContractValueAfterDiscount) + decimal.Parse(TaxValue);
+            renterContractBasic.CrCasRenterContractBasicPreviousBalance = renterlessorInfo.CrCasRenterLessorBalance;
+            renterContractBasic.CrCasRenterContractBasicAmountRequired = renterContractBasic.CrCasRenterContractBasicExpectedTotal + renterlessorInfo.CrCasRenterLessorBalance;
+            renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = decimal.Parse(AmountPayed);
+
+
+            renterContractBasic.CrCasRenterContractPriceReference = carPrice.CrCasPriceCarBasicNo;
+            renterContractBasic.CrCasRenterContractBasicUserInsert = UserInsert;
+            renterContractBasic.CrCasRenterContractBasicStatus = Status.Active;
+            renterContractBasic.CrCasRenterContractBasicReasons = Reasons;
 
 
 
@@ -304,8 +396,57 @@ namespace Bnan.Inferastructure.Repository
 
 
 
+            if (_unitOfWork.CrCasRenterContractBasic.Add(renterContractBasic) != null) return renterContractBasic;
+            else return null;
+        }
 
-            throw new NotImplementedException();
+
+        public async Task<bool> UpdateCarInformation(string SerialNo, string LessorCode, string BranchCode, int DaysNo, int CurrentMeter)
+        {
+            var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo && x.CrCasCarInformationLessor == LessorCode && x.CrCasCarInformationBranch == BranchCode);
+            if (car != null)
+            {
+                //if (car.CrCasCarInformationConractDaysNo != null) car.CrCasCarInformationConractDaysNo += DaysNo;
+                //else car.CrCasCarInformationConractDaysNo = DaysNo;
+                if (car.CrCasCarInformationConractCount != null) car.CrCasCarInformationConractCount += 1;
+                else car.CrCasCarInformationConractCount = 1;
+                car.CrCasCarInformationStatus = Status.Rented;
+                car.CrCasCarInformationCurrentMeter = CurrentMeter;
+                if (_unitOfWork.CrCasCarInformation.Update(car) != null) return true;
+            }
+            return false;
+        }
+        public async Task<bool> UpdateCarDocMaintainance(string SerialNo, string LessorCode, string BranchCode, int CurrentMeter)
+        {
+            var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo && x.CrCasCarInformationLessor == LessorCode && x.CrCasCarInformationBranch == BranchCode);
+            var CarDocMaintainances = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceSerailNo == car.CrCasCarInformationSerailNo && x.CrCasCarDocumentsMaintenanceLessor == LessorCode &&
+                                                                                            x.CrCasCarDocumentsMaintenanceBranch == BranchCode&&x.CrCasCarDocumentsMaintenanceStatus==Status.Active).ToList();
+            if (CarDocMaintainances != null)
+            {
+                foreach (var item in CarDocMaintainances)
+                {
+                    item.CrCasCarDocumentsMaintenanceCurrentMeter = CurrentMeter;
+                    item.CrCasCarDocumentsMaintenanceCarStatus = Status.Rented;
+                    _unitOfWork.CrCasCarDocumentsMaintenance.Update(item);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdateRenterLessor(string RenterId, string LessorCode, DateTime LastContract, decimal TotalPayed)
+        {
+            var RenterLessor= await _unitOfWork.CrCasRenterLessor.FindAsync(x=>x.CrCasRenterLessorId == RenterId&&x.CrCasRenterLessorCode==LessorCode);
+            if (RenterLessor != null)
+            {
+                RenterLessor.CrCasRenterLessorDateLastContractual = LastContract;
+                if (RenterLessor.CrCasRenterLessorContractCount != null) RenterLessor.CrCasRenterLessorContractCount += 1;
+                else RenterLessor.CrCasRenterLessorContractCount =1;
+                RenterLessor.CrCasRenterLessorBalance = -(TotalPayed);
+                RenterLessor.CrCasRenterLessorStatus = Status.Rented;
+               if(_unitOfWork.CrCasRenterLessor.Update(RenterLessor)!=null) return true;
+            }
+            return false;
         }
 
         private string GetSector(string firstChar, string sectorType)
