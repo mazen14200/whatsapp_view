@@ -73,7 +73,14 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                              x.CrCasAccountSalesPointBankStatus == Status.Active &&
                                                                              x.CrCasAccountSalesPointStatus == Status.Active &&
                                                                              x.CrCasAccountSalesPointBranchStatus == Status.Active).ToList();
-            
+            //Get ContractCode
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var sector = "1";
+            var autoinc = GetContractLastRecord("1", lessorCode, selectBranch).CrCasRenterContractBasicNo;
+            var BasicContractNo = y + "-" + sector + "-" + "90" + "-" + lessorCode + "-" + selectBranch + "-" + autoinc;
+            ViewBag.ContractNo=BasicContractNo;
+
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
                 CrCasBranchInformations = branches,
@@ -95,6 +102,14 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var ContractInfo = bSLayoutVM.Contract;
+            var Renter = _unitOfWork.CrMasRenterInformation.Find(x => x.CrMasRenterInformationId == ContractInfo.RenterId);
+            //Get ContractCode
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var sector = Renter.CrMasRenterInformationSector;
+            var autoinc = GetContractLastRecord("1", lessorCode, bSLayoutVM.SelectedBranch).CrCasRenterContractBasicNo;
+            var BasicContractNo= y + "-" + sector + "-" + "90" + "-" + lessorCode + "-" + bSLayoutVM.SelectedBranch+ "-" + autoinc;
+
 
 
             //Choices
@@ -102,14 +117,14 @@ namespace Bnan.Ui.Areas.BS.Controllers
             if (ChoicesList!=null&& ChoicesList.Length>0)
             {
                 List<string> choiceCodes = ChoicesList.Split(',').ToList();
-                foreach (var item in choiceCodes) if (CheckChoices) CheckChoices = await _ContractServices.AddRenterContractChoice(lessorCode, ContractInfo.SerialNo, ContractInfo.PriceNo, item.Trim());
+                foreach (var item in choiceCodes) if (CheckChoices) CheckChoices = await _ContractServices.AddRenterContractChoice(lessorCode, BasicContractNo, ContractInfo.SerialNo, ContractInfo.PriceNo, item.Trim());
             }
             //Additional
             var CheckAddditional = true;
             if (AdditionalsList != null && AdditionalsList.Length > 0)
             {
                 List<string> AdditionalsCode = AdditionalsList.Split(',').ToList();
-                foreach (var item in AdditionalsCode) if (CheckAddditional) CheckAddditional = await _ContractServices.AddRenterContractAdditional(lessorCode, ContractInfo.SerialNo, ContractInfo.PriceNo, item.Trim());
+                foreach (var item in AdditionalsCode) if (CheckAddditional) CheckAddditional = await _ContractServices.AddRenterContractAdditional(lessorCode, BasicContractNo, ContractInfo.SerialNo, ContractInfo.PriceNo, item.Trim());
             }
             //CheckUp
             var CheckCheckUpCar = true;
@@ -119,7 +134,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 {
                     string Code = item.Key; 
                     string Reason = item.Value;
-                    if (CheckCheckUpCar) CheckCheckUpCar = await _ContractServices.AddRenterContractCheckUp(lessorCode, ContractInfo.SerialNo, ContractInfo.PriceNo, Code, Reason);
+                    if (CheckCheckUpCar) CheckCheckUpCar = await _ContractServices.AddRenterContractCheckUp(lessorCode, BasicContractNo, ContractInfo.SerialNo, ContractInfo.PriceNo, Code, Reason);
                 }
             }
             
@@ -464,6 +479,30 @@ namespace Bnan.Ui.Areas.BS.Controllers
             }
             return Json(checkUpList);
         }
-        
+
+        public CrCasRenterContractBasic GetContractLastRecord(string Sector, string LessorCode, string BranchCode)
+        {
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var SectorCode = Sector;
+            var Lrecord = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == LessorCode &&
+                x.CrCasRenterContractBasicSector == SectorCode
+                && x.CrCasRenterContractBasicYear == y && x.CrCasRenterContractBasicBranch == BranchCode)
+                .Max(x => x.CrCasRenterContractBasicNo.Substring(x.CrCasRenterContractBasicNo.Length - 5, 5));
+
+            CrCasRenterContractBasic c = new CrCasRenterContractBasic();
+            if (Lrecord != null)
+            {
+                Int64 val = Int64.Parse(Lrecord) + 1;
+                c.CrCasRenterContractBasicNo = val.ToString("00000");
+            }
+            else
+            {
+                c.CrCasRenterContractBasicNo = "00001";
+            }
+
+            return c;
+        }
+
     }
 }

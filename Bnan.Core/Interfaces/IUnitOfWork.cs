@@ -87,6 +87,7 @@ namespace Bnan.Core.Interfaces
         public IGenric<CrCasRenterContractChoice> CrCasRenterContractChoice { get; }
         public IGenric<CrCasRenterContractAdditional> CrCasRenterContractAdditional { get; }
         public IGenric<CrCasRenterContractCarCheckup> CrCasRenterContractCarCheckup { get; }
+        public IGenric<CrCasRenterContractBasic> CrCasRenterContractBasic { get; }
         int Complete();
         Task<int> CompleteAsync();
     }

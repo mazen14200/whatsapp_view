@@ -67,7 +67,7 @@
                             </div>
                             <fieldset>
                                 <div class="form-card form-card1 h-100">
-
+                                    <input hidden asp-for="SelectedBranch"/>
                                     <div class="row row-step1 ">
                                         <div class="col-auto">
                                             <label for="national-number-step1"
@@ -1061,16 +1061,16 @@
                                                 <p id="contract-number">@localizer["ContractNo"]</p>
                                             </div>
                                             <div class="col-auto personal-data">
-                                                <p>00-00-00-00-00</p>
+                                                <input name="ContractNo" id="ContractNo" value="@ViewBag.ContractNo" hidden />
+                                                <p>@ViewBag.ContractNo</p>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
                                             <div class="col-auto">
                                                 <p id="start-date">@localizer["StartDate"]</p>
-
                                             </div>
                                             <div class="col-auto personal-data">
-                                                <p id="StartDate"> </p>
+                                                <p id="StartDate">@ViewBag.StartDate</p>
                                             </div>
                                         </div>
                                     </div>
@@ -1082,7 +1082,7 @@
                                                 </label>
                                             </div>
                                             <div class="col-auto">
-                                                <input type="text" class="form-control1" id="dayNo" name="dayNo" oninput="this.value=this.value.replace(/[^0-9]/g,'');if(parseInt(this.value)> 365) this.value = '365';" onfocusout="CalculateContract()" maxlength="3" value="0" autocomplete="off" required>                                                <div class="row requird-field-row-last">
+                                                <input type="text" class="form-control1" asp-for="Contract.DaysNo" id="dayNo" oninput="this.value=this.value.replace(/[^0-9]/g,'');if(parseInt(this.value)> 365) this.value = '365';" onfocusout="CalculateContract()" maxlength="3" value="0" autocomplete="off" required>                                                <div class="row requird-field-row-last">
                                                     <p class="requird-field"></p>
                                                 </div>
                                             </div>
@@ -1185,9 +1185,7 @@
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col ">
                                             <div class="col-auto personal-data">
-                                                <input class="Delegate-out-input"
-                                                       type="checkbox" value="checked"
-                                                       id="Delegate-out">
+                                                <input class="Delegate-out-input" type="checkbox" value="checked" id="Delegate-out">
 
                                             </div>
                                             <div class="col-auto">
@@ -1205,7 +1203,7 @@
                                                 <label id="discount-percentage" for="discount-percentage-input">@localizer["DiscountRate"]</label>
                                             </div>
                                             <div class="col-auto">
-                                                <input type="text" class="form-control1" id="Discount_Input" name="Discount_Input" oninput="handleDiscountInput(this)" onfocusout="CalculateDiscount()" min="0" max="100" value="0" maxlength="5" autocomplete="off">
+                                                <input type="text" class="form-control1" asp-for="Contract.UserDiscount" id="Discount_Input" oninput="handleDiscountInput(this)" onfocusout="CalculateDiscount()" min="0" max="100" value="0" maxlength="5" autocomplete="off">
                                                 <div class="row requird-field-row-last">
                                                     <p class="requird_field_Discount"></p>
                                                 </div>
@@ -1218,7 +1216,7 @@
                                                        for="AdditionalHours"> @localizer["AdditionalHours"] </label>
                                             </div>
                                             <div class="col-auto">
-                                                <input type="tel" class="form-control1" id="AdditionalHours" name="AdditionalHours" maxlength="2" oninput="handleAdditionalHoursInput(this)" min="0" max="99" value="0" autocomplete="off">
+                                                <input type="tel" class="form-control1" asp-for="Contract.UserAddHours" id="AdditionalHours"  maxlength="2" oninput="handleAdditionalHoursInput(this)" min="0" max="99" value="0" autocomplete="off">
                                                 <div class="row requird-field-row-last">
                                                     <p class="requird-field"></p>
                                                 </div>
@@ -1232,7 +1230,7 @@
                                                 </label>
                                             </div>
                                             <div class="col-auto">
-                                                <input type="tel" class="form-control1" id="AdditionalKilos" name="AdditionalKilos" maxlength="3" oninput="handleAdditionalKilosInput(this)" min="0" max="999" value="0" autocomplete="off">
+                                                <input type="tel" class="form-control1" asp-for="Contract.UserAddKm" id="AdditionalKilos"  maxlength="3" oninput="handleAdditionalKilosInput(this)" min="0" max="999" value="0" autocomplete="off">
                                                 <div class="row requird-field-row-last">
                                                     <p class="requird-field"></p>
                                                 </div>
@@ -1293,7 +1291,7 @@
                                                 <label id="amount-paid" for="AmountPayed">@localizer["AmountPaid"]</label>
                                             </div>
                                             <div class="col-auto personal-data">
-                                                <input type="text" class="form-control1" style="width: 110px!important" id="AmountPayed" name="AmountPayed" oninput="handleAmountPayed(this)" onfocusout="CheckIfCanPayLessThanTotalAmount()" autocomplete="off">
+                                                <input type="text" class="form-control1" asp-for="Contract.AmountPayed" style="width: 110px!important" id="AmountPayed" oninput="handleAmountPayed(this)" onfocusout="CheckIfCanPayLessThanTotalAmount()" autocomplete="off">
                                                 <div class="row requird-field-row-last">
                                                     <p class="requird_field_AmountPayed"></p>
                                                 </div>
@@ -1322,7 +1320,7 @@
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <div class="offset">
-                                                    <select class="form-select-last" id="payment-method-select" name="payment-method-select" style="font-size:14px;">
+                                                    <select class="form-select-last" asp-for="Contract.PaymentMethod" id="payment-method-select"  style="font-size:14px;">
                                                         <option selected disabled></option>
                                                         @foreach (var payment in Model.PaymentMethods)
                                                         {
@@ -1347,7 +1345,7 @@
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <div class="offset">
-                                                    <select class="form-select-last" id="selling-point-dropdown" name="selling-point-dropdown" style="font-size:14px;width:280px!important">
+                                                    <select class="form-select-last" asp-for="Contract.SalesPoint" id="selling-point-dropdown" style="font-size:14px;width:240px!important">
                                                         <option selected disabled></option>
                                                         @foreach (var sales in Model.SalesPoint)
                                                         {
@@ -1370,7 +1368,7 @@
                                             <p id="notes">@localizer["reasons"]</p>
                                         </div>
                                         <div class="col-sm-5 col-md-5 col-lg-5">
-                                            <textarea class="form-control" id="FormControl-last-Textarea" rows="1" maxlength="100"></textarea>
+                                            <textarea class="form-control" id="FormControl-last-Textarea" asp-for="Contract.PaymentReasons" rows="1" maxlength="100"></textarea>
                                         </div>
                                     </div>
                                 </div>

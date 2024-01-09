@@ -16,9 +16,18 @@ namespace Bnan.Ui.ViewModels.BS
         public string? RenterReasons { get; set; }
         public string? DriverReasons { get; set; }
         public string? AddDriverReasons { get; set; }
+        public string? PaymentReasons { get; set; }
         public string? SerialNo { get; set; }
         public string? PriceNo { get; set; }
         public string? CurrentMeter { get; set; }
+        public string? DaysNo { get; set; }
+        public bool? OutFeesTmm { get; set; }
+        public string? UserDiscount { get; set; }
+        public string? UserAddHours { get; set; }
+        public string? UserAddKm { get; set; }
+        public string? AmountPayed { get; set; }
+        public string? PaymentMethod { get; set; }
+        public string? SalesPoint { get; set; }
 
     }
 }

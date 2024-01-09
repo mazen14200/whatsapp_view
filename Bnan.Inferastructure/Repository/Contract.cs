@@ -207,18 +207,18 @@ namespace Bnan.Inferastructure.Repository
             return casRenterLessor;
         }
 
-        public async Task<bool> AddRenterContractChoice(string LessorCode, string SerialNo, string PriceNo, string Choice)
+        public async Task<bool> AddRenterContractChoice(string LessorCode, string ContractNo, string SerialNo, string PriceNo, string Choice)
         {
             CrCasRenterContractChoice renterContractChoice = new CrCasRenterContractChoice();
 
-            var carInfo = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == SerialNo);
-            var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == PriceNo);
+            var carInfo = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo);
+            var carPrice =_unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == PriceNo);
             if (carInfo != null && carPrice != null)
             {
                 var carChoice = _unitOfWork.CrCasPriceCarOption.Find(x => x.CrCasPriceCarOptionsNo == carPrice.CrCasPriceCarBasicNo && x.CrCasPriceCarOptionsCode == Choice);
                 if (carChoice != null)
                 {
-                    renterContractChoice.CrCasRenterContractChoiceNo = carChoice.CrCasPriceCarOptionsNo;
+                    renterContractChoice.CrCasRenterContractChoiceNo = ContractNo;
                     renterContractChoice.CrCasRenterContractChoiceCode = carChoice.CrCasPriceCarOptionsCode;
                     renterContractChoice.CrCasContractChoiceValue = carChoice.CrCasPriceCarOptionsValue;
                 }
@@ -226,20 +226,19 @@ namespace Bnan.Inferastructure.Repository
             if (renterContractChoice != null && _unitOfWork.CrCasRenterContractChoice.Add(renterContractChoice) != null) return true;
             return false;
         }
-
-        public async Task<bool> AddRenterContractAdditional(string LessorCode, string SerialNo, string PriceNo, string Additional)
+        public async Task<bool> AddRenterContractAdditional(string LessorCode, string ContractNo, string SerialNo, string PriceNo, string Additional)
         {
 
             CrCasRenterContractAdditional renterContractAdditional = new CrCasRenterContractAdditional();
 
-            var carInfo = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == SerialNo);
+            var carInfo = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo);
             var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == PriceNo);
             if (carInfo != null && carPrice != null)
             {
                 var carAdditional = _unitOfWork.CrCasPriceCarAdditional.Find(x => x.CrCasPriceCarAdditionalNo == carPrice.CrCasPriceCarBasicNo && x.CrCasPriceCarAdditionalCode == Additional);
                 if (carAdditional != null)
                 {
-                    renterContractAdditional.CrCasRenterContractAdditionalNo = carAdditional.CrCasPriceCarAdditionalNo;
+                    renterContractAdditional.CrCasRenterContractAdditionalNo = ContractNo;
                     renterContractAdditional.CrCasRenterContractAdditionalCode = carAdditional.CrCasPriceCarAdditionalCode;
                     renterContractAdditional.CrCasContractAdditionalValue = carAdditional.CrCasPriceCarAdditionalValue;
                 }
@@ -247,20 +246,18 @@ namespace Bnan.Inferastructure.Repository
             if (renterContractAdditional != null && _unitOfWork.CrCasRenterContractAdditional.Add(renterContractAdditional) != null) return true;
             return false;
         }
-
-
-        public async Task<bool> AddRenterContractCheckUp(string LessorCode, string SerialNo, string PriceNo, string CheckUpCode,string Reasons)
+        public async Task<bool> AddRenterContractCheckUp(string LessorCode, string ContractNo, string SerialNo, string PriceNo, string CheckUpCode,string Reasons)
         {
             CrCasRenterContractCarCheckup renterContractCarCheckup = new CrCasRenterContractCarCheckup();
 
-            var carInfo = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == SerialNo);
+            var carInfo = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo);
             var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == PriceNo);
             if (carInfo != null && carPrice != null)
             {
                 var carCheckUp = _unitOfWork.CrMasSupContractCarCheckup.Find(x => x.CrMasSupContractCarCheckupCode == CheckUpCode);
                 if (carCheckUp != null)
                 {
-                    renterContractCarCheckup.CrCasRenterContractCarCheckupNo = carPrice.CrCasPriceCarBasicNo;
+                    renterContractCarCheckup.CrCasRenterContractCarCheckupNo = ContractNo;
                     renterContractCarCheckup.CrCasRenterContractCarCheckupCode = carCheckUp.CrMasSupContractCarCheckupCode;
                     renterContractCarCheckup.CrCasRenterContractCarCheckupType = "1";
                     renterContractCarCheckup.CrCasRenterContractCarCheckupReasons = Reasons;
@@ -270,7 +267,46 @@ namespace Bnan.Inferastructure.Repository
             if (renterContractCarCheckup != null && _unitOfWork.CrCasRenterContractCarCheckup.Add(renterContractCarCheckup) != null) return true;
             return false;
         }
+        public async Task<bool> AddRenterContractBasic(string LessorCode, string BranchCode, string ContractNo, string RenterId, string DriverId, string PrivateDriver,
+                                                       string AdditionalDriver, string SerialNo, string PriceNo,string DaysNo, string Reasons)
+        {
+            DateTime now = DateTime.Now;
+            CrCasRenterContractBasic renterContractBasic = new CrCasRenterContractBasic();
+            var masRenterInfo = await _unitOfWork.CrMasRenterInformation.FindAsync(x => x.CrMasRenterInformationId == RenterId);
+            var renterlessorInfo = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId);
+            var carInfo = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo);
+            var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == PriceNo);
 
+
+            renterContractBasic.CrCasRenterContractBasicNo = ContractNo;
+            renterContractBasic.CrCasRenterContractBasicCopy = 1;
+            renterContractBasic.CrCasRenterContractBasicYear = DateTime.Now.Year.ToString("yy");
+            renterContractBasic.CrCasRenterContractBasicSector = masRenterInfo.CrMasRenterInformationSector;
+            renterContractBasic.CrCasRenterContractBasicProcedures = "501";
+            renterContractBasic.CrCasRenterContractBasicLessor = LessorCode;
+            renterContractBasic.CrCasRenterContractBasicBranch = BranchCode;
+            renterContractBasic.CrCasRenterContractBasicIssuedDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
+            renterContractBasic.CrCasRenterContractBasicExpectedStartDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
+            renterContractBasic.CrCasRenterContractBasicExpectedRentalDays = int.Parse(DaysNo);
+            renterContractBasic.CrCasRenterContractBasicExpectedEndDate = renterContractBasic.CrCasRenterContractBasicExpectedStartDate?.AddDays(int.Parse(DaysNo));
+            renterContractBasic.CrCasRenterContractBasicRenterId = RenterId;
+            renterContractBasic.CrCasRenterContractBasicCarSerailNo = SerialNo;
+            if (!string.IsNullOrEmpty(DriverId)) renterContractBasic.CrCasRenterContractBasicDriverId = DriverId;
+            else renterContractBasic.CrCasRenterContractBasicDriverId = null;
+            if (!string.IsNullOrEmpty(AdditionalDriver)) renterContractBasic.CrCasRenterContractBasicAdditionalDriverId = AdditionalDriver;
+            else renterContractBasic.CrCasRenterContractBasicAdditionalDriverId = null;
+            if (!string.IsNullOrEmpty(PrivateDriver)) renterContractBasic.CrCasRenterContractBasicPrivateDriverId = PrivateDriver;
+            else renterContractBasic.CrCasRenterContractBasicPrivateDriverId = null;
+
+
+
+
+
+
+
+
+            throw new NotImplementedException();
+        }
 
         private string GetSector(string firstChar, string sectorType)
         {
@@ -578,6 +614,6 @@ namespace Bnan.Inferastructure.Repository
             return typeID;
         }
 
-
+        
     }
 }
