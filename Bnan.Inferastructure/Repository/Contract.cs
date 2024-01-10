@@ -401,9 +401,11 @@ namespace Bnan.Inferastructure.Repository
         }
 
 
-        public async Task<bool> UpdateCarInformation(string SerialNo, string LessorCode, string BranchCode, int DaysNo, int CurrentMeter)
+        public async Task<bool> UpdateCarInformation(string SerialNo, string LessorCode, string BranchCode, DateTime LastContract, int DaysNo, int CurrentMeter, string ExpireMaintainceCount)
         {
             var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo && x.CrCasCarInformationLessor == LessorCode && x.CrCasCarInformationBranch == BranchCode);
+            
+
             if (car != null)
             {
                 //if (car.CrCasCarInformationConractDaysNo != null) car.CrCasCarInformationConractDaysNo += DaysNo;
@@ -411,44 +413,160 @@ namespace Bnan.Inferastructure.Repository
                 if (car.CrCasCarInformationConractCount != null) car.CrCasCarInformationConractCount += 1;
                 else car.CrCasCarInformationConractCount = 1;
                 car.CrCasCarInformationStatus = Status.Rented;
+                car.CrCasCarInformationLastContractDate = LastContract;
                 car.CrCasCarInformationCurrentMeter = CurrentMeter;
+                if (ExpireMaintainceCount != null && ExpireMaintainceCount != "0") car.CrCasCarInformationMaintenanceStatus = false;
                 if (_unitOfWork.CrCasCarInformation.Update(car) != null) return true;
             }
             return false;
         }
-        public async Task<bool> UpdateCarDocMaintainance(string SerialNo, string LessorCode, string BranchCode, int CurrentMeter)
+
+        public async Task<string> UpdateCarDocMaintainance(string SerialNo, string LessorCode, string BranchCode, int CurrentMeter)
         {
             var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo && x.CrCasCarInformationLessor == LessorCode && x.CrCasCarInformationBranch == BranchCode);
             var CarDocMaintainances = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceSerailNo == car.CrCasCarInformationSerailNo && x.CrCasCarDocumentsMaintenanceLessor == LessorCode &&
-                                                                                            x.CrCasCarDocumentsMaintenanceBranch == BranchCode&&x.CrCasCarDocumentsMaintenanceStatus==Status.Active).ToList();
+                                                                                            x.CrCasCarDocumentsMaintenanceBranch == BranchCode && x.CrCasCarDocumentsMaintenanceStatus == Status.Active &&
+                                                                                            x.CrCasCarDocumentsMaintenanceProceduresClassification == "13").ToList();
+
             if (CarDocMaintainances != null)
             {
                 foreach (var item in CarDocMaintainances)
                 {
                     item.CrCasCarDocumentsMaintenanceCurrentMeter = CurrentMeter;
                     item.CrCasCarDocumentsMaintenanceCarStatus = Status.Rented;
+                    if (CurrentMeter >= item.CrCasCarDocumentsMaintenanceKmEndsAt) item.CrCasCarDocumentsMaintenanceStatus = Status.Expire;
+                    if (CurrentMeter >= item.CrCasCarDocumentsMaintenanceKmAboutToFinish && CurrentMeter < item.CrCasCarDocumentsMaintenanceKmEndsAt) item.CrCasCarDocumentsMaintenanceStatus = Status.AboutToExpire;
                     _unitOfWork.CrCasCarDocumentsMaintenance.Update(item);
                 }
-                return true;
+                return CarDocMaintainances.Count().ToString();
             }
-            return false;
+            return null;
         }
 
         public async Task<bool> UpdateRenterLessor(string RenterId, string LessorCode, DateTime LastContract, decimal TotalPayed)
         {
-            var RenterLessor= await _unitOfWork.CrCasRenterLessor.FindAsync(x=>x.CrCasRenterLessorId == RenterId&&x.CrCasRenterLessorCode==LessorCode);
+            var RenterLessor = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == LessorCode);
             if (RenterLessor != null)
             {
                 RenterLessor.CrCasRenterLessorDateLastContractual = LastContract;
                 if (RenterLessor.CrCasRenterLessorContractCount != null) RenterLessor.CrCasRenterLessorContractCount += 1;
-                else RenterLessor.CrCasRenterLessorContractCount =1;
+                else RenterLessor.CrCasRenterLessorContractCount = 1;
                 RenterLessor.CrCasRenterLessorBalance = -(TotalPayed);
                 RenterLessor.CrCasRenterLessorStatus = Status.Rented;
-               if(_unitOfWork.CrCasRenterLessor.Update(RenterLessor)!=null) return true;
+                if (_unitOfWork.CrCasRenterLessor.Update(RenterLessor) != null) return true;
+            }
+            return false;
+        }
+        public async Task<bool> UpdateDriverStatus(string DriverId, string LessorCode)
+        {
+            var Driver = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == DriverId && x.CrCasRenterLessorCode == LessorCode);
+
+            if (Driver != null)
+            {
+                Driver.CrCasRenterLessorStatus = Status.Rented;
+                if (_unitOfWork.CrCasRenterLessor.Update(Driver) != null) return true;
+            }
+            return false;
+        }
+        public async Task<bool> UpdatePrivateDriverStatus(string PrivateDriverId, string LessorCode)
+        {
+            var PrivateDriver = await _unitOfWork.CrCasRenterPrivateDriverInformation.FindAsync(x => x.CrCasRenterPrivateDriverInformationId == PrivateDriverId && x.CrCasRenterPrivateDriverInformationLessor == LessorCode);
+
+            if (PrivateDriver != null)
+            {
+                PrivateDriver.CrCasRenterPrivateDriverInformationStatus = Status.Rented;
+                if (_unitOfWork.CrCasRenterPrivateDriverInformation.Update(PrivateDriver) != null) return true;
             }
             return false;
         }
 
+
+        public async Task<bool> UpdateBranchBalance(string BranchCode, string LessorCode, decimal AmountPaid)
+        {
+            var Branch = await _unitOfWork.CrCasBranchInformation.FindAsync(x => x.CrCasBranchInformationCode == BranchCode && x.CrCasBranchInformationLessor == LessorCode);
+            if (Branch != null)
+            {
+                if (Branch.CrCasBranchInformationAvailableBalance != null) Branch.CrCasBranchInformationAvailableBalance += AmountPaid;
+                else Branch.CrCasBranchInformationAvailableBalance = AmountPaid;
+                if (Branch.CrCasBranchInformationTotalBalance != null) Branch.CrCasBranchInformationTotalBalance += AmountPaid;
+                else Branch.CrCasBranchInformationTotalBalance = AmountPaid;
+
+                if (_unitOfWork.CrCasBranchInformation.Update(Branch) != null) return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdateSalesPointBalance(string BranchCode, string LessorCode, string SalesPointCode, decimal AmountPaid)
+        {
+            var SalesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x => x.CrCasAccountSalesPointCode == SalesPointCode &&
+                                                                                     x.CrCasAccountSalesPointLessor == LessorCode &&
+                                                                                     x.CrCasAccountSalesPointBrn == BranchCode);
+            if (SalesPoint != null)
+            {
+                if (SalesPoint.CrCasAccountSalesPointTotalAvailable != null) SalesPoint.CrCasAccountSalesPointTotalAvailable += AmountPaid;
+                else SalesPoint.CrCasAccountSalesPointTotalAvailable = AmountPaid;
+                if (SalesPoint.CrCasAccountSalesPointTotalBalance != null) SalesPoint.CrCasAccountSalesPointTotalBalance += AmountPaid;
+                else SalesPoint.CrCasAccountSalesPointTotalBalance = AmountPaid;
+                if (_unitOfWork.CrCasAccountSalesPoint.Update(SalesPoint) != null) return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo, decimal TotalPayed, string RenterId, string UserId, string PassingType)
+        {
+            CrCasAccountReceipt crCasAccountReceipt = new CrCasAccountReceipt();
+            var User = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == UserId && x.CrMasUserInformationLessor == LessorCode);
+            var Renter = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == LessorCode);
+            var SalesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x => x.CrCasAccountSalesPointCode == SalesPointNo && x.CrCasAccountSalesPointLessor == LessorCode && x.CrCasAccountSalesPointBrn == BranchCode,
+                                                                                new[] { "CrCasAccountSalesPointBankNavigation", "CrCasAccountSalesPointAccountBankNavigation" });
+            var AccountBank = await _unitOfWork.CrCasAccountBank.FindAsync(x => x.CrCasAccountBankCode == Account && x.CrCasAccountBankLessor == LessorCode, new[] { "CrCasAccountBankNoNavigation" });
+            //Get ContractCode
+            DateTime now = DateTime.Now;
+            var y = now.ToString("yy");
+            var sector = Renter.CrCasRenterLessorSector;
+            var autoinc = GetContractAccountReceipt(LessorCode, BranchCode).CrCasAccountReceiptNo;
+            var AccountReceiptNo = y + "-" + sector + "301" + "-" + LessorCode + BranchCode + "-" + autoinc;
+
+            crCasAccountReceipt.CrCasAccountReceiptNo = AccountReceiptNo;
+            crCasAccountReceipt.CrCasAccountReceiptYear = y;
+            crCasAccountReceipt.CrCasAccountReceiptType = "301"; //Create Contract
+            crCasAccountReceipt.CrCasAccountReceiptLessorCode = LessorCode;
+            crCasAccountReceipt.CrCasAccountReceiptBranchCode = BranchCode;
+            crCasAccountReceipt.CrCasAccountReceiptDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
+            crCasAccountReceipt.CrCasAccountReceiptPaymentMethod = PaymentMethod;
+            crCasAccountReceipt.CrCasAccountReceiptReferenceType = "10";
+            crCasAccountReceipt.CrCasAccountReceiptReferenceNo = ContractNo;
+            crCasAccountReceipt.CrCasAccountReceiptCar = SerialNo;
+            crCasAccountReceipt.CrCasAccountReceiptUser = UserId;
+
+            if (PassingType != "4")
+            {
+                crCasAccountReceipt.CrCasAccountReceiptBank = SalesPoint?.CrCasAccountSalesPointBankNavigation?.CrMasSupAccountBankCode;
+                crCasAccountReceipt.CrCasAccountReceiptAccount = SalesPoint?.CrCasAccountSalesPointAccountBankNavigation?.CrCasAccountBankCode;
+                crCasAccountReceipt.CrCasAccountReceiptSalesPoint = SalesPointNo;
+
+                if (SalesPoint.CrCasAccountSalesPointTotalBalance != null) crCasAccountReceipt.CrCasAccountReceiptSalesPointPreviousBalance = SalesPoint.CrCasAccountSalesPointTotalBalance;
+                else crCasAccountReceipt.CrCasAccountReceiptSalesPointPreviousBalance = 0;
+
+                if (User.CrMasUserInformationTotalBalance != null) crCasAccountReceipt.CrCasAccountReceiptUserPreviousBalance = User.CrMasUserInformationTotalBalance;
+                else crCasAccountReceipt.CrCasAccountReceiptUserPreviousBalance = 0;
+            }
+            else
+            {
+                crCasAccountReceipt.CrCasAccountReceiptBank = AccountBank?.CrCasAccountBankNoNavigation?.CrMasSupAccountBankCode;
+                crCasAccountReceipt.CrCasAccountReceiptAccount = AccountBank?.CrCasAccountBankCode;
+            }
+
+
+            crCasAccountReceipt.CrCasAccountReceiptRenterId = RenterId;
+            if (Renter.CrCasRenterLessorBalance != null) crCasAccountReceipt.CrCasAccountReceiptRenterPreviousBalance = Renter.CrCasRenterLessorBalance;
+            else crCasAccountReceipt.CrCasAccountReceiptRenterPreviousBalance = 0;
+            crCasAccountReceipt.CrCasAccountReceiptPayment = TotalPayed;
+            crCasAccountReceipt.CrCasAccountReceiptIsPassing = PassingType;
+
+            if (await _unitOfWork.CrCasAccountReceipt.AddAsync(crCasAccountReceipt) != null) return true;
+            return false;
+        }
         private string GetSector(string firstChar, string sectorType)
         {
             var sectorCode = "";
@@ -754,7 +872,61 @@ namespace Bnan.Inferastructure.Repository
             }
             return typeID;
         }
+        private CrCasAccountReceipt GetContractAccountReceipt(string LessorCode, string BranchCode)
+        {
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var Lrecord = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == LessorCode &&
+                                                                       x.CrCasAccountReceiptYear == y && x.CrCasAccountReceiptBranchCode == BranchCode)
+                                                             .Max(x => x.CrCasAccountReceiptNo.Substring(x.CrCasAccountReceiptNo.Length - 6, 6));
 
-        
+            CrCasAccountReceipt c = new CrCasAccountReceipt();
+            if (Lrecord != null)
+            {
+                Int64 val = Int64.Parse(Lrecord) + 1;
+                c.CrCasAccountReceiptNo = val.ToString("000000");
+            }
+            else
+            {
+                c.CrCasAccountReceiptNo = "000001";
+            }
+
+            return c;
+        }
+
+        public async Task<bool> UpdateBranchValidity(string BranchCode, string LessorCode, string UserId, string PaymentMethod, decimal AmountPaid)
+        {
+            var UserValidity = await _unitOfWork.CrMasUserBranchValidity.FindAsync(x => x.CrMasUserBranchValidityId == UserId && x.CrMasUserBranchValidityBranch == BranchCode && x.CrMasUserBranchValidityLessor == LessorCode);
+            if (PaymentMethod == "10")
+            {
+                if (UserValidity.CrMasUserBranchValidityBranchCashAvailable != null) UserValidity.CrMasUserBranchValidityBranchCashAvailable += AmountPaid;
+                else UserValidity.CrMasUserBranchValidityBranchCashAvailable = AmountPaid;
+                if (UserValidity.CrMasUserBranchValidityBranchCashBalance != null) UserValidity.CrMasUserBranchValidityBranchCashBalance += AmountPaid;
+                else UserValidity.CrMasUserBranchValidityBranchCashBalance = AmountPaid;
+            }
+            else if (PaymentMethod != "40" && PaymentMethod != "10")
+            {
+                if (UserValidity.CrMasUserBranchValidityBranchSalesPointBalance != null) UserValidity.CrMasUserBranchValidityBranchSalesPointAvailable += AmountPaid;
+                else UserValidity.CrMasUserBranchValidityBranchSalesPointAvailable = AmountPaid;
+                if (UserValidity.CrMasUserBranchValidityBranchSalesPointBalance != null) UserValidity.CrMasUserBranchValidityBranchSalesPointBalance += AmountPaid;
+                else UserValidity.CrMasUserBranchValidityBranchSalesPointBalance = AmountPaid;
+            }
+            if (_unitOfWork.CrMasUserBranchValidity.Update(UserValidity) != null) return true;
+            return false;
+        }
+
+        public async Task<bool> UpdateUserBalance(string BranchCode, string LessorCode, string UserId, string PaymentMethod, decimal AmountPaid)
+        {
+            var UserInformation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == UserId && x.CrMasUserInformationLessor == LessorCode);
+            if (UserInformation!=null)
+            {
+                if (UserInformation.CrMasUserInformationAvailableBalance != null) UserInformation.CrMasUserInformationAvailableBalance += AmountPaid;
+                else UserInformation.CrMasUserInformationAvailableBalance = AmountPaid;
+                if (UserInformation.CrMasUserInformationTotalBalance != null) UserInformation.CrMasUserInformationTotalBalance += AmountPaid;
+                else UserInformation.CrMasUserInformationTotalBalance = AmountPaid;
+                if (_unitOfWork.CrMasUserInformation.Update(UserInformation) != null) return true;
+            }
+            return false;
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Bnan.Core.Extensions;
 using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
+using Bnan.Inferastructure.Repository;
 using Bnan.Ui.Areas.Base.Controllers;
 using Bnan.Ui.ViewModels.BS;
 using Bnan.Ui.ViewModels.CAS;
@@ -106,22 +107,38 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var RenterLessor = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == ContractInfo.RenterId);
             var Car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == ContractInfo.SerialNo);
             var CarPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == ContractInfo.PriceNo);
-            //Get ContractCode
+            var Branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == bSLayoutVM.SelectedBranch&&x.CrCasBranchInformationLessor==lessorCode);
+            
             DateTime year = DateTime.Now;
             var y = year.ToString("yy");
             var sector = Renter.CrMasRenterInformationSector;
-            var autoinc = GetContractLastRecord("1", lessorCode, bSLayoutVM.SelectedBranch).CrCasRenterContractBasicNo;
-            var BasicContractNo = y + "-" + sector + "401" + "-" + lessorCode + bSLayoutVM.SelectedBranch + "-" + autoinc;
-            if (Renter != null && Car != null && CarPrice != null)
+            var autoinc = GetContractLastRecord("1", lessorCode, Branch.CrCasBranchInformationCode).CrCasRenterContractBasicNo;
+            var BasicContractNo = y + "-" + sector + "401" + "-" + lessorCode + Branch.CrCasBranchInformationCode + "-" + autoinc;
+            if (userLogin!=null&& Renter != null && Car != null && CarPrice != null&&Branch!=null)
             {
                 //Add Row in BasicContract Table 
-                var BasicContract = await _ContractServices.AddRenterContractBasic(lessorCode, bSLayoutVM.SelectedBranch, BasicContractNo, ContractInfo.RenterId, ContractInfo.DriverId,
+                var BasicContract = await _ContractServices.AddRenterContractBasic(lessorCode, Branch.CrCasBranchInformationCode, BasicContractNo, ContractInfo.RenterId, ContractInfo.DriverId,
                                                                                   ContractInfo.PrivateDriverId, ContractInfo.AdditionalDriverId, ContractInfo.SerialNo, ContractInfo.PriceNo,
                                                                                   ContractInfo.DaysNo, ContractInfo.UserAddHours, ContractInfo.UserAddKm, ContractInfo.CurrentMeter, ContractInfo.OptionTotal,
                                                                                   ContractInfo.AdditionalTotal, ContractInfo.ContractValueAfterDiscount, ContractInfo.DiscountValue, ContractInfo.ContractValueBeforeDiscount,
                                                                                   ContractInfo.TaxValue, ContractInfo.TotalContractAmount, userLogin.CrMasUserInformationCode, ContractInfo.OutFeesTmm,
                                                                                   ContractInfo.UserDiscount, ContractInfo.AmountPayed, ContractInfo.PaymentReasons);
 
+
+                //Account Receipt
+                var CheckAccountReceipt = true;
+                var passing = "";
+                if (BasicContract.CrCasRenterContractBasicAmountPaidAdvance > 0)
+                {
+                    if (ContractInfo.PaymentMethod == "30") passing = "4";
+                    else passing="1";
+
+
+                    CheckAccountReceipt = await _ContractServices.AddAccountReceipt(BasicContract.CrCasRenterContractBasicNo, lessorCode, BasicContract.CrCasRenterContractBasicBranch,
+                                                                                  ContractInfo.PaymentMethod, ContractInfo.AccountNo, BasicContract.CrCasRenterContractBasicCarSerailNo,
+                                                                                  ContractInfo.SalesPoint,(decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance,
+                                                                                  BasicContract.CrCasRenterContractBasicRenterId,userLogin.CrMasUserInformationCode, passing);
+                }
 
                 //Choices
                 var CheckChoices = true;
@@ -130,6 +147,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     List<string> choiceCodes = ChoicesList.Split(',').ToList();
                     foreach (var item in choiceCodes) if (CheckChoices) CheckChoices = await _ContractServices.AddRenterContractChoice(lessorCode, BasicContract.CrCasRenterContractBasicNo, ContractInfo.SerialNo, ContractInfo.PriceNo, item.Trim());
                 }
+
                 //Additional
                 var CheckAddditional = true;
                 if (AdditionalsList != null && AdditionalsList.Length > 0)
@@ -137,6 +155,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     List<string> AdditionalsCode = AdditionalsList.Split(',').ToList();
                     foreach (var item in AdditionalsCode) if (CheckAddditional) CheckAddditional = await _ContractServices.AddRenterContractAdditional(lessorCode, BasicContract.CrCasRenterContractBasicNo, ContractInfo.SerialNo, ContractInfo.PriceNo, item.Trim());
                 }
+
                 //Advantages
                 var CheckAdvantages = true;
                 if (decimal.Parse(ContractInfo.AdvantagesTotalValue) > 0)
@@ -144,6 +163,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     var AdavntagesCar = _unitOfWork.CrCasPriceCarAdvantage.FindAll(x => x.CrCasPriceCarAdvantagesNo == ContractInfo.PriceNo);
                     foreach (var item in AdavntagesCar) if (CheckAdvantages) CheckAdvantages = await _ContractServices.AddRenterContractAdvantages(item, BasicContract.CrCasRenterContractBasicNo);
                 }
+
                 //CheckUp
                 var CheckCheckUpCar = true;
                 if (Reasons != null)
@@ -155,21 +175,74 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         if (CheckCheckUpCar) CheckCheckUpCar = await _ContractServices.AddRenterContractCheckUp(lessorCode, BasicContract.CrCasRenterContractBasicNo, ContractInfo.SerialNo, ContractInfo.PriceNo, Code, Reason);
                     }
                 }
+
+
                 //Authrization
                 var CheckAuthrization = true;
-                CheckAuthrization = await _ContractServices.AddRenterContractAuthrization(BasicContract.CrCasRenterContractBasicNo, lessorCode, ContractInfo.OutFeesTmm, ContractInfo.FeesTmmValue);
+                CheckAuthrization = await _ContractServices.AddRenterContractAuthrization(BasicContract.CrCasRenterContractBasicNo, lessorCode,
+                                                                                          ContractInfo.OutFeesTmm, ContractInfo.FeesTmmValue);
+
+
+                //Update DocAndMaintainance Of Car
+                var CheckDocAndMaintainance = await _ContractServices.UpdateCarDocMaintainance(BasicContract.CrCasRenterContractBasicCarSerailNo, lessorCode,
+                                                                                               Branch.CrCasBranchInformationCode, int.Parse(ContractInfo.CurrentMeter));
+
                 //Update Information Of Car
                 var CheckCarInfo = true;
-                CheckCarInfo = await _ContractServices.UpdateCarInformation(BasicContract.CrCasRenterContractBasicCarSerailNo, lessorCode, bSLayoutVM.SelectedBranch,(int)(BasicContract.CrCasRenterContractBasicExpectedRentalDays),int.Parse(ContractInfo.CurrentMeter));
-                //Update DocAndMaintainance Of Car
-                var CheckDocAndMaintainance = true;
-                CheckDocAndMaintainance = await _ContractServices.UpdateCarDocMaintainance(BasicContract.CrCasRenterContractBasicCarSerailNo, lessorCode, bSLayoutVM.SelectedBranch, int.Parse(ContractInfo.CurrentMeter));
-                //Update RenterLessor Of Car
+                CheckCarInfo = await _ContractServices.UpdateCarInformation(BasicContract.CrCasRenterContractBasicCarSerailNo, lessorCode, Branch.CrCasBranchInformationCode,
+                                                                            (DateTime)BasicContract.CrCasRenterContractBasicIssuedDate, (int)(BasicContract.CrCasRenterContractBasicExpectedRentalDays),
+                                                                            int.Parse(ContractInfo.CurrentMeter), CheckDocAndMaintainance);
+
+                //Update RenterLessor Of Car Renter
                 var CheckRenterLessor = true;
                 CheckRenterLessor = await _ContractServices.UpdateRenterLessor(Renter.CrMasRenterInformationId, lessorCode, (DateTime)BasicContract.CrCasRenterContractBasicIssuedDate, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
+
+
+                //Update Driver and Private Driver and Add Driver 
+                var CheckPrivateDriver = true;
+                var CheckDriver = true;
+                var CheckAddDriver = true;
+                if (!string.IsNullOrEmpty(ContractInfo.PrivateDriverId)) CheckPrivateDriver = await _ContractServices.UpdatePrivateDriverStatus(ContractInfo.PrivateDriverId, lessorCode);
+                else
+                {
+                    //Update Driver
+                    if (!string.IsNullOrEmpty(ContractInfo.DriverId) && ContractInfo.DriverId.Trim() != ContractInfo.RenterId) CheckDriver = await _ContractServices.UpdateDriverStatus(ContractInfo.DriverId, lessorCode);
+                    //Update Add Driver
+                    if (!string.IsNullOrEmpty(ContractInfo.AdditionalDriverId)) CheckAddDriver = await _ContractServices.UpdateDriverStatus(ContractInfo.DriverId, lessorCode);
+                }
+
+                //Update Branch Balance , But first Check if passing equal 4 or not 
+                var CheckBranch = true;
+                if (passing!="4") CheckBranch = await _ContractServices.UpdateBranchBalance(Branch.CrCasBranchInformationCode, lessorCode, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
                
-                
-                if (BasicContract != null && CheckChoices && CheckAddditional && CheckAdvantages && CheckCheckUpCar && CheckAuthrization&& CheckCarInfo&& CheckDocAndMaintainance&& CheckRenterLessor)
+                //Update SalesPoint Balance , But first Check if passing equal 4 or not 
+                var CheckSalesPoint = true;
+                if (!string.IsNullOrEmpty(ContractInfo.SalesPoint) && passing != "4") CheckSalesPoint = await _ContractServices.UpdateSalesPointBalance(Branch.CrCasBranchInformationCode, lessorCode, ContractInfo.SalesPoint, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
+
+                // UpdateBranchValidity
+                var CheckBranchValidity = true;
+                if (passing != "4") CheckBranchValidity = await _ContractServices.UpdateBranchValidity(Branch.CrCasBranchInformationCode, lessorCode, userLogin.CrMasUserInformationCode, ContractInfo.PaymentMethod, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
+
+
+                // UpdateUserBalance
+                var CheckUserInformation = true;
+                if (passing != "4") CheckUserInformation = await _ContractServices.UpdateUserBalance(Branch.CrCasBranchInformationCode, lessorCode, userLogin.CrMasUserInformationCode, ContractInfo.PaymentMethod, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
+
+
+
+
+
+
+
+
+
+
+
+
+                if (BasicContract != null && CheckChoices && CheckAddditional && CheckAdvantages &&
+                    CheckCheckUpCar && CheckAuthrization && CheckCarInfo && CheckDocAndMaintainance!=null &&
+                    CheckRenterLessor&& CheckAccountReceipt&& CheckBranch&& CheckUserInformation&& 
+                    CheckSalesPoint&& CheckUserInformation)
                 {
                     try
                     {

@@ -29,6 +29,7 @@ namespace Bnan.Ui.ViewModels.BS
         public string? AmountPayed { get; set; }
         public string? PaymentMethod { get; set; }
         public string? SalesPoint { get; set; }
+        public string? AccountNo { get; set; }
         public string? OptionTotal { get; set; }
         public string? AdditionalTotal { get; set; }
         public string? ContractValueBeforeDiscount { get; set; }

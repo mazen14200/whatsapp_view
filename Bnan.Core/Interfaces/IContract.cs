@@ -22,9 +22,17 @@ namespace Bnan.Core.Interfaces
                                                        string DiscountValue, string ContractValueBeforeDiscount, string TaxValue, string TotalAmount, string UserInsert,
                                                        string Authrization,string UserDiscount, string AmountPayed, string Reasons);
         Task<bool> AddRenterContractAuthrization(string ContractNo,string LessorCode,string AuthrizationType,string AuthrizationValue);
-        Task<bool> UpdateCarInformation(string SerialNo, string LessorCode, string BranchCode, int DaysNo, int CurrentMeter);
-        Task<bool> UpdateCarDocMaintainance(string SerialNo, string LessorCode, string BranchCode, int CurrentMeter);
+        Task<bool> UpdateCarInformation(string SerialNo, string LessorCode, string BranchCode, DateTime LastContract, int DaysNo, int CurrentMeter,string ExpireMaintainceCount);
+        Task<string> UpdateCarDocMaintainance(string SerialNo, string LessorCode, string BranchCode, int CurrentMeter);
         Task<bool> UpdateRenterLessor(string RenterId, string LessorCode,DateTime LastContract,decimal TotalPayed);
+        Task<bool> UpdateDriverStatus(string DriverId, string LessorCode);
+        Task<bool> UpdatePrivateDriverStatus(string PrivateDriverId, string LessorCode);
+        Task<bool> AddAccountReceipt(string ContractNo, string LessorCode,string BranchCode,string PaymentMethod,string Account,string SerialNo,string SalesPointNo,
+                                     decimal TotalPayed,string RenterId,string UserId, string PassingType);
+        Task<bool> UpdateBranchBalance(string BranchCode, string LessorCode, decimal AmountPaid);
+        Task<bool> UpdateSalesPointBalance(string BranchCode, string LessorCode,string SalesPointCode, decimal AmountPaid);
+        Task<bool> UpdateBranchValidity(string BranchCode, string LessorCode,string UserId,string PaymentMethod, decimal AmountPaid);
+        Task<bool> UpdateUserBalance(string BranchCode, string LessorCode,string UserId,string PaymentMethod, decimal AmountPaid);
 
 
     }
