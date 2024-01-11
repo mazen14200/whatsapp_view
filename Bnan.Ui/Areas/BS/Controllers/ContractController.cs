@@ -196,7 +196,10 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 //Update RenterLessor Of Car Renter
                 var CheckRenterLessor = true;
                 CheckRenterLessor = await _ContractServices.UpdateRenterLessor(Renter.CrMasRenterInformationId, lessorCode, (DateTime)BasicContract.CrCasRenterContractBasicIssuedDate, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
-
+                
+                //Update Mas Renter Info Of Car Renter
+                var CheckMasRenter = true;
+                CheckMasRenter = await _ContractServices.UpdateMasRenter(Renter.CrMasRenterInformationId);
 
                 //Update Driver and Private Driver and Add Driver 
                 var CheckPrivateDriver = true;
@@ -228,9 +231,12 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 var CheckUserInformation = true;
                 if (passing != "4") CheckUserInformation = await _ContractServices.UpdateUserBalance(Branch.CrCasBranchInformationCode, lessorCode, userLogin.CrMasUserInformationCode, ContractInfo.PaymentMethod, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
 
+                // Add Renter Alert
+                var CheckRenterAlert = true;
 
-
-
+                CheckRenterAlert = await _ContractServices.AddRenterAlert(BasicContract.CrCasRenterContractBasicNo, lessorCode, Branch.CrCasBranchInformationCode,
+                                                                        (int)BasicContract.CrCasRenterContractBasicExpectedRentalDays, (DateTime)BasicContract.CrCasRenterContractBasicExpectedEndDate,
+                                                                        BasicContract.CrCasRenterContractBasicCarSerailNo, BasicContract.CrCasRenterContractPriceReference);
 
 
 
@@ -241,8 +247,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
                 if (BasicContract != null && CheckChoices && CheckAddditional && CheckAdvantages &&
                     CheckCheckUpCar && CheckAuthrization && CheckCarInfo && CheckDocAndMaintainance!=null &&
-                    CheckRenterLessor&& CheckAccountReceipt&& CheckBranch&& CheckUserInformation&& 
-                    CheckSalesPoint&& CheckUserInformation)
+                    CheckRenterLessor&& CheckAccountReceipt&& CheckBranch&& CheckSalesPoint&&
+                    CheckUserInformation&& CheckBranchValidity&& CheckMasRenter&& CheckAddDriver&& 
+                    CheckDriver&& CheckPrivateDriver&& CheckRenterAlert)
                 {
                     try
                     {
@@ -622,6 +629,10 @@ namespace Bnan.Ui.Areas.BS.Controllers
             }
 
             return c;
+        }
+        public async Task<IActionResult> GetSalesPoint(string PaymentMethod)
+        {
+            return Json(true);
         }
 
     }

@@ -2,6 +2,7 @@
 @using Bnan.Ui.ViewModels.BS;
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.EntityFrameworkCore;
+@using Newtonsoft.Json;
 @model BSLayoutVM
 @inject UserManager<CrMasUserInformation> userManager
 @inject SignInManager<CrMasUserInformation> signinManager
@@ -67,7 +68,7 @@
                             </div>
                             <fieldset>
                                 <div class="form-card form-card1 h-100">
-                                    <input hidden asp-for="SelectedBranch"/>
+                                    <input hidden asp-for="SelectedBranch" />
                                     <div class="row row-step1 ">
                                         <div class="col-auto">
                                             <label for="national-number-step1"
@@ -1084,8 +1085,8 @@
                                                 </label>
                                             </div>
                                             <div class="col-auto">
-                                                <input type="text" class="form-control1" asp-for="Contract.DaysNo" id="dayNo" oninput="this.value=this.value.replace(/[^0-9]/g,'');if(parseInt(this.value)> 365) this.value = '365';" onfocusout="CalculateContract()" maxlength="3" value="0" autocomplete="off" required>                                                <div class="row requird-field-row-last">
-                                                    <p class="requird-field"></p>
+                                                <input type="text" class="form-control1" asp-for="Contract.DaysNo" id="dayNo" oninput="this.value=this.value.replace(/[^0-9]/g,'');if(parseInt(this.value)> 365) this.value = '365';" onfocusout="CalculateContract()" maxlength="3" autocomplete="off" required>                                                <div class="row requird-field-row-last">
+                                                    <span class="requird-field" id="requird_field_DaysNo" asp-validation-for="@Model.Contract.DaysNo"></span>
                                                 </div>
                                             </div>
 
@@ -1220,7 +1221,7 @@
                                                 <label id="addational-hours" for="AdditionalHours"> @localizer["AdditionalHours"] </label>
                                             </div>
                                             <div class="col-auto">
-                                                <input type="tel" class="form-control1" asp-for="Contract.UserAddHours" id="AdditionalHours"  maxlength="2" oninput="handleAdditionalHoursInput(this)" min="0" max="99" value="0" autocomplete="off">
+                                                <input type="tel" class="form-control1" asp-for="Contract.UserAddHours" id="AdditionalHours" maxlength="2" oninput="handleAdditionalHoursInput(this)" min="0" max="99" value="0" autocomplete="off">
                                                 <div class="row requird-field-row-last">
                                                     <p class="requird-field"></p>
                                                 </div>
@@ -1234,7 +1235,7 @@
                                                 </label>
                                             </div>
                                             <div class="col-auto">
-                                                <input type="tel" class="form-control1" asp-for="Contract.UserAddKm" id="AdditionalKilos"  maxlength="3" oninput="handleAdditionalKilosInput(this)" min="0" max="999" value="0" autocomplete="off">
+                                                <input type="tel" class="form-control1" asp-for="Contract.UserAddKm" id="AdditionalKilos" maxlength="3" oninput="handleAdditionalKilosInput(this)" min="0" max="999" value="0" autocomplete="off">
                                                 <div class="row requird-field-row-last">
                                                     <p class="requird-field"></p>
                                                 </div>
@@ -1295,7 +1296,7 @@
                                                 <label id="amount-paid" for="AmountPayed">@localizer["AmountPaid"]</label>
                                             </div>
                                             <div class="col-auto personal-data">
-                                                <input type="text" class="form-control1" asp-for="Contract.AmountPayed" style="width: 110px!important" id="AmountPayed" oninput="handleAmountPayed(this)" onfocusout="CheckIfCanPayLessThanTotalAmount()" autocomplete="off">
+                                                <input type="text" class="form-control1" asp-for="Contract.AmountPayed" style="width: 110px!important" id="AmountPayed" oninput="handleAmountPayed(this)" autocomplete="off" readonly>
                                                 <div class="row requird-field-row-last">
                                                     <p class="requird_field_AmountPayed"></p>
                                                 </div>
@@ -1324,7 +1325,7 @@
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <div class="offset">
-                                                    <select class="form-select-last" asp-for="Contract.PaymentMethod" id="payment-method-select"  style="font-size:14px;">
+                                                    <select class="form-select-last" asp-for="Contract.PaymentMethod" style="font-size:14px;" disabled>
                                                         <option selected disabled></option>
                                                         @foreach (var payment in Model.PaymentMethods)
                                                         {
@@ -1339,31 +1340,31 @@
                                                         }
                                                     </select>
                                                 </div>
-
+                                                <span class="requird-field" id="requird_field_PaymentMethod" asp-validation-for="@Model.Contract.PaymentMethod"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4 d-flex  payment-col">
                                             <div class="col-auto">
                                                 <p id="selling-point"> @localizer["SalesPoint"] </p>
-
                                             </div>
                                             <div class="col-auto personal-data">
                                                 <div class="offset">
-                                                    <select class="form-select-last" asp-for="Contract.SalesPoint" id="selling-point-dropdown" style="font-size:14px;width:240px!important">
+                                                    <select class="form-select-last" asp-for="Contract.SalesPoint" style="font-size:14px;width:240px!important" disabled>
                                                         <option selected disabled></option>
-                                                        @foreach (var sales in Model.SalesPoint)
+                                                        @* @foreach (var sales in Model.SalesPoint)
                                                         {
-                                                            @if ("@requestCulture?.RequestCulture.UICulture.Name" != "en-US")
-                                                            {
-                                                                <option value="@sales.CrCasAccountSalesPointCode" class="text-right">@sales.CrCasAccountSalesPointArName</option>
-                                                            }
-                                                            else
-                                                            {
-                                                                <option value="@sales.CrCasAccountSalesPointCode">@sales.CrCasAccountSalesPointEnName</option>
-                                                            }
+                                                        @if ("@requestCulture?.RequestCulture.UICulture.Name" != "en-US")
+                                                        {
+                                                        <option value="@sales.CrCasAccountSalesPointCode" class="text-right">@sales.CrCasAccountSalesPointArName</option>
                                                         }
+                                                        else
+                                                        {
+                                                        <option value="@sales.CrCasAccountSalesPointCode">@sales.CrCasAccountSalesPointEnName</option>
+                                                        }
+                                                        } *@
                                                     </select>
                                                 </div>
+                                                <span class="requird-field" id="requird_field_SalesPoint" asp-validation-for="@Model.Contract.SalesPoint"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -1379,7 +1380,8 @@
                                 <div class="row button-row align-items-center"
                                      style="padding: 6px 7px 0px 20px;">
                                     <div class="button-card  gap-2">
-                                        <button type="submit" class=" check-btn payment-button"> @localizer["Save"] </button>
+                                        @*<input id="submitForm" type="button" class=" check-btn payment-button" value="@localizer["Save"]"> *@
+                                        <button type="submit" class=" check-btn payment-button">@localizer["Save"]</button>
                                         <button type="button" class=" check-btn payment-button"
                                                 data-bs-toggle="modal" href="#paymentPopupModal">
                                             @localizer["Delegation"]
@@ -2325,7 +2327,7 @@
             NextField = $("#progressbar li").eq($("fieldset").index(next_fs))[0].id;
             PreviousField = $("#progressbar li").eq($("fieldset").index(next_fs))[0].id;
             if ($("#msform").valid()) {
-                console.log(currentField);
+                console.log("Tab", currentField);
                 if (currentField === "tenant") {
                     if (renterName != null && renterName != "") {
                         var currentDate = new Date();
@@ -2515,6 +2517,8 @@
                                 $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                                 next_fs.show();
                                 current_fs.hide();
+                                currentField = "driver";
+                                NextField = "add-driver";
                             }
                             else {
                                 //Clear Data Of Driver And Add Driver To Return Check
@@ -2534,10 +2538,11 @@
                             console.error("Error loading data:", error);
                         });
                     //////////////////////////////////////////
+                    console.log("Tab Car", currentField);
                 }
                 else if (currentField === "driver") {
+                    console.log("Tab Driver", currentField);
                     var driverName = $("#DriverName").text();
-
                     if (driverName != null && driverName != "") {
                         var currentDate = new Date();
                         var additionalDriver = document.getElementById("addational-driver");
@@ -2582,6 +2587,7 @@
                             employer = false;
                         }
                         var check = "";
+                        var Authrize = true;
                         if (!(id && address && license && isAgeInRange && employer)) {
                             $.ajax({
                                 url: "/BS/Contract/CheckAuthDriver", // Replace YourController with your actual controller name
@@ -2592,98 +2598,106 @@
                                     if (check == "id") {
                                         toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                         toastr.error('@localizer["IdIsExpriredAndYouNotAuth"]');
+                                        Authrize = false;
                                         return;
                                     }
                                     else if (check == "address") {
                                         toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                         toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
+                                        Authrize = false;
                                         return
                                     }
                                     else if (check == "license") {
                                         toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                         toastr.error('@localizer["LicenseIsExpriredAndYouNotAuth"]');
+                                        Authrize = false;
                                         return
                                     }
                                     else if (check == "age") {
                                         toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                         toastr.error('@localizer["AgeIsExpriredAndYouNotAuth"]');
+                                        Authrize = false;
                                         return
                                     }
                                     else if (check == "employer") {
                                         toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                         toastr.error('@localizer["EmployerIsExpriredAndYouNotAuth"]');
+                                        Authrize = false;
                                         return
                                     }
-                                    else if (additionalDriver.checked) {
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs.show();
-                                        current_fs.hide();
-                                        currentField = "add-driver";
-                                        NextField = "options";
-                                        console.log(555555)
-                                    }
-                                    else if (CarChoices.count == 0 && CarAdditionals.count == 0) {
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs = $(this).closest("fieldset").next().next();
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs = $(this).closest("fieldset").next().next().next();
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs.show();
-                                        current_fs.hide();
-                                        currentField = "check";
-                                        NextField = "payment";
-                                        console.log(666666)
-                                    }
                                     else {
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs = $(this).closest("fieldset").next().next();
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs.show();
-                                        current_fs.hide();
-                                        currentField = "options";
-                                        NextField = "check";
+                                        if (additionalDriver.checked) {
+                                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                            next_fs.show();
+                                            current_fs.hide();
+                                            currentField = "add-driver";
+                                            NextField = "options";
+                                        }
+                                        else {
+                                            if (CarChoices.count == 0 && CarAdditionals.count == 0) {
+                                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                                next_fs = $(this).closest("fieldset").next().next();
+                                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                                next_fs = $(this).closest("fieldset").next().next().next();
+                                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                                next_fs.show();
+                                                current_fs.hide();
+                                                currentField = "check";
+                                                NextField = "payment";
+                                            }
+                                            else {
+                                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                                next_fs = $(this).closest("fieldset").next().next();
+                                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                                next_fs.show();
+                                                current_fs.hide();
+                                                currentField = "options";
+                                                NextField = "check";
+                                                console.log("xxxxxxxx2")
+                                            }
+                                        }
                                     }
-
-                                }
+                                },
                             });
                         }
-                        else if (additionalDriver.checked) {
-                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                            next_fs.show();
-                            current_fs.hide();
-                            currentField = "add-driver";
-                            NextField = "options";
-                            console.log(44444)
-                        }
                         else {
-                            if (CarChoices.count == 0 && CarAdditionals.count == 0) {
-                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                next_fs = $(this).closest("fieldset").next().next();
-                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                next_fs = $(this).closest("fieldset").next().next().next();
+                            if (additionalDriver.checked) {
                                 $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                                 next_fs.show();
                                 current_fs.hide();
-                                currentField = "check";
-                                NextField = "payment";
+                                currentField = "add-driver";
+                                NextField = "options";
                             }
                             else {
-                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                next_fs = $(this).closest("fieldset").next().next();
-                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                next_fs.show();
-                                current_fs.hide();
-                                currentField = "options";
-                                NextField = "check";
+                                if (CarChoices.count == 0 && CarAdditionals.count == 0) {
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs.show();
+                                    current_fs.hide();
+                                    currentField = "check";
+                                    NextField = "payment";
+                                }
+                                else {
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs.show();
+                                    current_fs.hide();
+                                    currentField = "options";
+                                    NextField = "check";
+                                    console.log("xxxxxxxx222")
+                                }
                             }
-
                         }
-
-
                     }
                     else {
                         $('#requird_field_DriverID').text('@localizer["PleaseCheckYourID"]');
                     }
+                    console.log("Last1", currentField);
+
                 }
                 else if (currentField === "add-driver") {
                     var addDriverName = $("#AddDriverName").text();
@@ -2803,7 +2817,7 @@
                     current_fs.hide();
                     currentField = "check";
                     NextField = "payment";
-                    console.log("555555");
+                    console.log("A7a555555");
 
                 }
                 else if (currentField === "check") {
@@ -2862,7 +2876,7 @@
                 //     next_fs.show();
                 //     current_fs.hide();
                 // }
-                console.log(currentField);
+                console.log("Last", currentField);
             }
         });
         $(".previous").click(function () {
@@ -3420,6 +3434,7 @@
                 CalculateTax();
                 CalculateTotalAmount();
                 $("#payment-extra-details").show();
+                $('#AmountPayed').prop('readonly', false);
             } else {
                 clearPaymentData();
             }
@@ -3443,6 +3458,12 @@
             document.getElementById("TotalAmount").textContent = "0.00";
             document.getElementById("Discount_Input").value = 0;
             document.getElementById("Delegate-out").checked = false;
+            $('#AmountPayed').prop('readonly', true);
+            $('#AmountPayed').val("");
+            document.getElementById('Contract_PaymentMethod').disabled = true;
+            document.getElementById('Contract_PaymentMethod').selectedIndex = 0;
+            document.getElementById('Contract_SalesPoint').disabled = true;
+            document.getElementById('Contract_SalesPoint').selectedIndex = 0;
             rentValue = 0;
             choicesValue = 0;
             additionalValue = 0;
@@ -3504,7 +3525,7 @@
                 totalContract = contractValue - discountValue;
             }
             else {
-                totalContract = contractValue; 
+                totalContract = contractValue;
                 discountValue = 0;
 
             }
@@ -3622,7 +3643,6 @@
                 input.value = input.value.substr(0, 9);
             }
         }
-
         function CheckIfCanPayLessThanTotalAmount() {
             var userAuthAmount = @Html.Raw(Json.Serialize(userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityLessContractValue));
             var AmountPayed = document.getElementById("AmountPayed").value;
@@ -3634,8 +3654,65 @@
             }
             else {
                 $("#AmountPayed").css({ "border": "1px solid #faa64d" }); //This For last Check When i submit Form
+                somethingIsNotOkay = true;
             }
         }
+
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#AmountPayed").focusout(function () {
+                var payed = document.getElementById('AmountPayed').value;
+                CheckIfCanPayLessThanTotalAmount();
+                console.log(somethingIsNotOkay);
+                if (parseFloat(payed) > 0 && somethingIsNotOkay) {
+                    document.getElementById('Contract_PaymentMethod').disabled = false;
+                    document.getElementById('Contract_PaymentMethod').selectedIndex = 0;
+                    document.getElementById('Contract_SalesPoint').disabled = false;
+                    document.getElementById('Contract_SalesPoint').selectedIndex = 0;
+                } else {
+                    document.getElementById('Contract_PaymentMethod').disabled = true;
+                    document.getElementById('Contract_PaymentMethod').selectedIndex = 0;
+                    document.getElementById('Contract_SalesPoint').disabled = true;
+                    document.getElementById('Contract_SalesPoint').selectedIndex = 0;
+                }
+            })
+        });
+        $(document).ready(function () {
+            $("#Contract_PaymentMethod").change(function () {
+                var PaymentMethod = $("#Contract_PaymentMethod").val();
+                console.log(PaymentMethod);
+
+                $.get("BS/Contract/GetSalesPoint", { PaymentMethod: PaymentMethod }, function (data) {
+                    // $("#CasherName").empty();
+                    // $.each(data, function (index, row) {
+                    //     $("#CasherName").append("<option value= '" + row.CR_Cas_Sup_SalesPoint_Code + "'>" + row.CR_Cas_Sup_SalesPoint_Ar_Name + "</option>")
+                    // });
+                });
+            })
+        });
+    </script>
+    @* <script>
+        // submit Form
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the form element
+            var form = document.getElementById('msform');
+            var AmountPayed = document.getElementById('AmountPayed');
+            var requird_field_AmountPayed = document.getElementById('requird_field_AmountPayed');
+
+            $("#submitForm").click(function (e) {
+                e.preventDefault();
+            })
+
+
+
+            form.submit();
+        });
+
+    </script> *@
+    <script>
 
     </script>
 }

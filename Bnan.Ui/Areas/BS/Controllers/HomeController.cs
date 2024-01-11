@@ -111,6 +111,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                 x.CrCasSysAdministrativeProceduresTargeted == userLogin.CrMasUserInformationCode &&
                                                                                 x.CrCasSysAdministrativeProceduresCode == "303" &&
                                                                                 x.CrCasSysAdministrativeProceduresStatus == Status.Insert).Count();
+            var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode && x.CrCasRenterContractBasicBranch == selectBranch).ToList();
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
                 CrCasBranchInformations = branches,
@@ -120,6 +121,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 SelectedBranch = selectBranch,
                 CrCasBranchInformation = branch,
                 CrMasUserBranchValidity = branchValidity,
+                BasicContracts=Contracts,
             };
             return View(bSLayoutVM);
         }

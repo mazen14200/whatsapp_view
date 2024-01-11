@@ -58,13 +58,13 @@
                                 <div class="chart-legend">
                                     <div class="chart-p">
                                         <div>
-                                            <p class="mb-2">@localizer["ExecutedContracts"] : <span>2000</span></p>
+                                            <p class="mb-2">@localizer["ExecutedContracts"] : <span>@Model.BasicContracts.FindAll(x=>x.CrCasRenterContractBasicStatus==Status.Active).Count()</span></p>
                                         </div>
                                         <div>
-                                            <p class="mb-2">@localizer["ClosedContracts"] : <span>5000</span></p>
+                                            <p class="mb-2">@localizer["ClosedContracts"] : <span>@Model.BasicContracts.FindAll(x=>x.CrCasRenterContractBasicStatus==Status.Closed).Count()</span></p>
                                         </div>
                                         <div>
-                                            <p class="mb-2">@localizer["CanceledContracts"] : <span>5000</span></p>
+                                            <p class="mb-2">@localizer["CanceledContracts"] : <span>@Model.BasicContracts.FindAll(x=>x.CrCasRenterContractBasicStatus==Status.Cancel).Count()</span></p>
                                         </div>
                                     </div>
                                     <br>
@@ -125,13 +125,13 @@
 
                                     }
                                     <p class="mb-2">
-                                        @localizer["EmployeeCustody"] : <span id="employee-custody">@totalResevedBalanceInBranch?.ToString("N2")</span>
+                                        @localizer["EmployeeCustody"] : <span id="employee-custody">@totalBalanceInBranch?.ToString("N2")</span>
                                     </p>
                                     <p class="mb-2">
                                         @localizer["AvailableBalance"] : <span id="Available-balance-employee">@totalAvaliableBalanceInBranch?.ToString("N2")</span>
                                     </p>
                                     <p class="mb-2">
-                                        @localizer["ReservedBalance"] : <span id="used-balance-employee">@totalBalanceInBranch?.ToString("N2")</span>
+                                        @localizer["ReservedBalance"] : <span id="used-balance-employee">@totalResevedBalanceInBranch?.ToString("N2")</span>
                                     </p>
                                     <!--  -->
                                 </div>

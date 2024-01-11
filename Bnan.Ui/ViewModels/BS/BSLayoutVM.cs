@@ -19,6 +19,7 @@ namespace Bnan.Ui.ViewModels.BS
         public List<CrCasAccountBank>? AccountBanks { get; set; }
         public List<CrCasAccountSalesPoint>? SalesPoint { get; set; }
         public List<CrMasSupAccountPaymentMethod>? PaymentMethods { get; set; }
+        public List<CrCasRenterContractBasic>? BasicContracts { get; set; }
         public CrCasBranchInformation? CrCasBranchInformation { get; set; }
         public CrMasUserBranchValidity? CrMasUserBranchValidity { get; set; }
         public CrCasSysAdministrativeProcedure? CrCasSysAdministrativeProcedure { get; set; }

@@ -20,6 +20,7 @@ namespace Bnan.Ui.ViewModels.BS
         public string? SerialNo { get; set; }
         public string? PriceNo { get; set; }
         public string? CurrentMeter { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public string? DaysNo { get; set; }
         public string? OutFeesTmm { get; set; }
         public string? FeesTmmValue { get; set; }
@@ -27,7 +28,9 @@ namespace Bnan.Ui.ViewModels.BS
         public string? UserAddHours { get; set; }
         public string? UserAddKm { get; set; }
         public string? AmountPayed { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public string? PaymentMethod { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public string? SalesPoint { get; set; }
         public string? AccountNo { get; set; }
         public string? OptionTotal { get; set; }

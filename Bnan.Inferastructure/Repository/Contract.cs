@@ -370,6 +370,7 @@ namespace Bnan.Inferastructure.Repository
             renterContractBasic.CrCasRenterContractBasicTaxRate = carPrice.CrCasPriceCarBasicRentalTaxRate;
             renterContractBasic.CrCasRenterContractBasicUserDiscountRate = decimal.Parse(UserDiscount);
             //Info From Payment Tab From Create Contract 
+            renterContractBasic.CrCasRenterContractBasicPrivateDriverValue = carPrice.CrCasPriceCarBasicPrivateDriverValue;
             renterContractBasic.CrCasRenterContractBasicCurrentReadingMeter = int.Parse(CurrentMeter);
             renterContractBasic.CrCasRenterContractBasicExpectedRentValue = carPrice.CrCasPriceCarBasicDailyRent * int.Parse(DaysNo);
             renterContractBasic.CrCasRenterContractBasicExpectedOptionsValue = decimal.Parse(OptionsTotal);
@@ -425,12 +426,16 @@ namespace Bnan.Inferastructure.Repository
         {
             var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo && x.CrCasCarInformationLessor == LessorCode && x.CrCasCarInformationBranch == BranchCode);
             var CarDocMaintainances = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceSerailNo == car.CrCasCarInformationSerailNo && x.CrCasCarDocumentsMaintenanceLessor == LessorCode &&
-                                                                                            x.CrCasCarDocumentsMaintenanceBranch == BranchCode && x.CrCasCarDocumentsMaintenanceStatus == Status.Active &&
-                                                                                            x.CrCasCarDocumentsMaintenanceProceduresClassification == "13").ToList();
+                                                                                            x.CrCasCarDocumentsMaintenanceBranch == BranchCode && x.CrCasCarDocumentsMaintenanceStatus == Status.Active).ToList();
 
             if (CarDocMaintainances != null)
             {
-                foreach (var item in CarDocMaintainances)
+                foreach (var item in CarDocMaintainances.Where(x => x.CrCasCarDocumentsMaintenanceProceduresClassification == "12"))
+                {
+                     item.CrCasCarDocumentsMaintenanceCarStatus = Status.Rented;
+                    _unitOfWork.CrCasCarDocumentsMaintenance.Update(item);
+                }
+                foreach (var item in CarDocMaintainances.Where(x=> x.CrCasCarDocumentsMaintenanceProceduresClassification == "13"))
                 {
                     item.CrCasCarDocumentsMaintenanceCurrentMeter = CurrentMeter;
                     item.CrCasCarDocumentsMaintenanceCarStatus = Status.Rented;
@@ -438,7 +443,7 @@ namespace Bnan.Inferastructure.Repository
                     if (CurrentMeter >= item.CrCasCarDocumentsMaintenanceKmAboutToFinish && CurrentMeter < item.CrCasCarDocumentsMaintenanceKmEndsAt) item.CrCasCarDocumentsMaintenanceStatus = Status.AboutToExpire;
                     _unitOfWork.CrCasCarDocumentsMaintenance.Update(item);
                 }
-                return CarDocMaintainances.Count().ToString();
+                return CarDocMaintainances.Where(x => x.CrCasCarDocumentsMaintenanceProceduresClassification == "13").Count().ToString();
             }
             return null;
         }
@@ -454,6 +459,16 @@ namespace Bnan.Inferastructure.Repository
                 RenterLessor.CrCasRenterLessorBalance = -(TotalPayed);
                 RenterLessor.CrCasRenterLessorStatus = Status.Rented;
                 if (_unitOfWork.CrCasRenterLessor.Update(RenterLessor) != null) return true;
+            }
+            return false;
+        }
+        public async Task<bool> UpdateMasRenter(string RenterId)
+        {
+            var Renter = await _unitOfWork.CrMasRenterInformation.FindAsync(x => x.CrMasRenterInformationId == RenterId);
+            if (Renter != null)
+            {
+                Renter.CrMasRenterInformationStatus = Status.Rented;
+                if (_unitOfWork.CrMasRenterInformation.Update(Renter) != null) return true;
             }
             return false;
         }
@@ -926,6 +941,26 @@ namespace Bnan.Inferastructure.Repository
                 else UserInformation.CrMasUserInformationTotalBalance = AmountPaid;
                 if (_unitOfWork.CrMasUserInformation.Update(UserInformation) != null) return true;
             }
+            return false;
+        }
+
+        public async Task<bool> AddRenterAlert(string ContractNo, string LessorCode, string BranchCode, int RentalDays, DateTime ContractEndDate, string SerialNo, string PriceNo)
+        {
+            CrCasRenterContractAlert crCasRenterContractAlert = new CrCasRenterContractAlert();
+            var carPrice = await _unitOfWork.CrCasPriceCarBasic.FindAsync(x => x.CrCasPriceCarBasicNo == PriceNo);
+
+            crCasRenterContractAlert.CrCasRenterContractAlertNo = ContractNo;
+            crCasRenterContractAlert.CrCasRenterContractAlertLessor = LessorCode;
+            crCasRenterContractAlert.CrCasRenterContractAlertBranch = BranchCode;
+            crCasRenterContractAlert.CrCasRenterContractAlertDays =RentalDays;
+            crCasRenterContractAlert.CrCasRenterContractAlertHour =4;
+            crCasRenterContractAlert.CrCasRenterContractAlertDayDate = ContractEndDate.AddDays(-1);
+            crCasRenterContractAlert.CrCasRenterContractAlertDayDate = ContractEndDate.AddHours(-4);
+            crCasRenterContractAlert.CrCasRenterContractAlertStatus = "0";
+            if (RentalDays == 1) crCasRenterContractAlert.CrCasRenterContractAlertContractActiviteStatus = "1";
+            else if (RentalDays>=2) crCasRenterContractAlert.CrCasRenterContractAlertContractActiviteStatus = "2";
+            crCasRenterContractAlert.CrCasRenterContractAlertContractStatus = Status.Active;
+            if (await _unitOfWork.CrCasRenterContractAlert.AddAsync(crCasRenterContractAlert) != null) return true;
             return false;
         }
     }
