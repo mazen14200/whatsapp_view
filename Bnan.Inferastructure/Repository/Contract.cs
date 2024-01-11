@@ -383,7 +383,10 @@ namespace Bnan.Inferastructure.Repository
             renterContractBasic.CrCasRenterContractBasicExpectedTotal = decimal.Parse(ContractValueAfterDiscount) + decimal.Parse(TaxValue);
             renterContractBasic.CrCasRenterContractBasicPreviousBalance = renterlessorInfo.CrCasRenterLessorBalance;
             renterContractBasic.CrCasRenterContractBasicAmountRequired = renterContractBasic.CrCasRenterContractBasicExpectedTotal + renterlessorInfo.CrCasRenterLessorBalance;
-            renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = decimal.Parse(AmountPayed);
+            if (!string.IsNullOrEmpty(AmountPayed)) renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = decimal.Parse(AmountPayed);
+            else renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = 0;
+
+
 
 
             renterContractBasic.CrCasRenterContractPriceReference = carPrice.CrCasPriceCarBasicNo;
@@ -955,7 +958,8 @@ namespace Bnan.Inferastructure.Repository
             crCasRenterContractAlert.CrCasRenterContractAlertDays =RentalDays;
             crCasRenterContractAlert.CrCasRenterContractAlertHour =4;
             crCasRenterContractAlert.CrCasRenterContractAlertDayDate = ContractEndDate.AddDays(-1);
-            crCasRenterContractAlert.CrCasRenterContractAlertDayDate = ContractEndDate.AddHours(-4);
+            crCasRenterContractAlert.CrCasRenterContractAlertHourDate = ContractEndDate.AddHours(-4);
+            crCasRenterContractAlert.CrCasRenterContractAlertEndDate = ContractEndDate;
             crCasRenterContractAlert.CrCasRenterContractAlertStatus = "0";
             if (RentalDays == 1) crCasRenterContractAlert.CrCasRenterContractAlertContractActiviteStatus = "1";
             else if (RentalDays>=2) crCasRenterContractAlert.CrCasRenterContractAlertContractActiviteStatus = "2";

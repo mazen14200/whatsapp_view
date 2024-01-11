@@ -490,7 +490,10 @@
             const pieChartData = {
                 labels: ['@localizer["ExpiredContract"]', '@localizer["ExpiresToday"]', '@localizer["ExpiresTomorrow"]', '@localizer["ExpiresLater"]'],
                 datasets: [{
-                    data: [342, 313, 245, 210],
+                    data: [@Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="3").Count(),
+                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="1").Count(),
+                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="2").Count(),
+                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="0").Count()],
                     backgroundColor: ['rgba(242, 143, 36, 1)', '#9966FF', 'rgba(242, 36, 36, 1)', 'rgba(1, 5, 83, 1)']
                 }]
             };

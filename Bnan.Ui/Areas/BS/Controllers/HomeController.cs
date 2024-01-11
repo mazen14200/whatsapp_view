@@ -112,6 +112,16 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                 x.CrCasSysAdministrativeProceduresCode == "303" &&
                                                                                 x.CrCasSysAdministrativeProceduresStatus == Status.Insert).Count();
             var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode && x.CrCasRenterContractBasicBranch == selectBranch).ToList();
+            var AlertContract = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertContractStatus == Status.Active).ToList();
+
+            ViewBag.AlertToday = AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "1").Count();
+            ViewBag.AlertTommorow = AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "0").Count();
+            ViewBag.AlertLater = AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "2").Count();
+            ViewBag.AlertExpire = AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "3").Count();
+            
+
+
+
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
                 CrCasBranchInformations = branches,
@@ -122,6 +132,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 CrCasBranchInformation = branch,
                 CrMasUserBranchValidity = branchValidity,
                 BasicContracts=Contracts,
+                AlertContract=AlertContract
             };
             return View(bSLayoutVM);
         }
