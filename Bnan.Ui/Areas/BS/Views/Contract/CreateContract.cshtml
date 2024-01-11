@@ -3683,12 +3683,16 @@
         $(document).ready(function () {
             $("#Contract_PaymentMethod").change(function () {
                 var PaymentMethod = $("#Contract_PaymentMethod").val();
+                var BranchCode = $("#SelectedBranch").val();
                 console.log(PaymentMethod);
+                console.log(BranchCode);
 
-                $.get("BS/Contract/GetSalesPoint", { PaymentMethod: PaymentMethod }, function (data) {
-                    // $("#CasherName").empty();
+                $.get("BS/Contract/GetSalesPoint", { PaymentMethod: PaymentMethod, BranchCode: BranchCode }, function (data) {
+                    $("#Contract_SalesPoint").empty();
+                    console.log(data);
+
                     // $.each(data, function (index, row) {
-                    //     $("#CasherName").append("<option value= '" + row.CR_Cas_Sup_SalesPoint_Code + "'>" + row.CR_Cas_Sup_SalesPoint_Ar_Name + "</option>")
+                    //     $("#Contract_SalesPoint").append("<option value= '" + row.CR_Cas_Sup_SalesPoint_Code + "'>" + row.CR_Cas_Sup_SalesPoint_Ar_Name + "</option>")
                     // });
                 });
             })

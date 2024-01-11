@@ -630,9 +630,39 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             return c;
         }
-        public async Task<IActionResult> GetSalesPoint(string PaymentMethod)
+        [HttpGet]
+        public async Task<IActionResult> GetSalesPoint(string PaymentMethod,string BranchCode)
         {
-            return Json(true);
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            List<CrCasAccountSalesPoint> SalesPoints = new List<CrCasAccountSalesPoint>();
+            List<CrCasAccountBank> AccountBank = new List<CrCasAccountBank>();
+            var Type = "";
+            if (PaymentMethod != null)
+            {
+                if (PaymentMethod == "10")
+                {
+                    SalesPoints = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == lessorCode && x.CrCasAccountSalesPointBrn == BranchCode &&
+                                                                         x.CrCasAccountSalesPointStatus == Status.Active && x.CrCasAccountSalesPointBankStatus == Status.Active &&
+                                                                         x.CrCasAccountSalesPointBranchStatus == Status.Active &&x.CrCasAccountSalesPointBank=="00").ToList();
+                    Type = "1";
+                }
+                else if (PaymentMethod=="20" || PaymentMethod=="22" || PaymentMethod=="21" || PaymentMethod=="23")
+                {
+                    SalesPoints = _unitOfWork.CrCasAccountSalesPoint.FindAll(x=> x.CrCasAccountSalesPointLessor == lessorCode && x.CrCasAccountSalesPointBrn == BranchCode &&
+                                                                         x.CrCasAccountSalesPointStatus == Status.Active && x.CrCasAccountSalesPointBankStatus == Status.Active &&
+                                                                         x.CrCasAccountSalesPointBranchStatus == Status.Active && x.CrCasAccountSalesPointBank != "00").ToList();
+                    Type = "1";
+                }
+                else
+                {
+                    AccountBank = _unitOfWork.CrCasAccountBank.FindAll(x=>x.CrCasAccountBankLessor==lessorCode&&x.CrCasAccountBankStatus==Status.Active&&
+                                                                       x.CrCasAccountBankNo!="00").ToList();
+                    Type = "2";
+                }
+            }
+            var result = new { SalesPoints = SalesPoints, AccountBank = AccountBank, Type = Type };
+            return Json(result);
         }
 
     }
