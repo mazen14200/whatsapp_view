@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\BranchSys\ٌRenters\**" />
     <Compile Remove="wwwroot\pages\**" />
+    <Content Remove="wwwroot\BranchSys\ٌRenters\**" />
     <Content Remove="wwwroot\pages\**" />
+    <EmbeddedResource Remove="wwwroot\BranchSys\ٌRenters\**" />
     <EmbeddedResource Remove="wwwroot\pages\**" />
+    <None Remove="wwwroot\BranchSys\ٌRenters\**" />
     <None Remove="wwwroot\pages\**" />
   </ItemGroup>
 
@@ -65,6 +69,14 @@
     <None Include="wwwroot\BranchSys\CreateContract\img\undraw_profile_2.svg" />
     <None Include="wwwroot\BranchSys\CreateContract\img\undraw_profile_3.svg" />
     <None Include="wwwroot\BranchSys\CreateContract\img\undraw_rocket.svg" />
+    <None Include="wwwroot\BranchSys\Renters\img\undraw_posting_photo.svg" />
+    <None Include="wwwroot\BranchSys\Renters\img\undraw_profile.svg" />
+    <None Include="wwwroot\BranchSys\Renters\img\undraw_profile_1.svg" />
+    <None Include="wwwroot\BranchSys\Renters\img\undraw_profile_2.svg" />
+    <None Include="wwwroot\BranchSys\Renters\img\undraw_profile_3.svg" />
+    <None Include="wwwroot\BranchSys\Renters\img\undraw_rocket.svg" />
+    <None Include="wwwroot\BranchSys\Renters\js\tenant.js" />
+    <None Include="wwwroot\BranchSys\Renters\js\validation.js" />
     <None Include="wwwroot\LoginAndSystems\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <None Include="wwwroot\LoginAndSystems\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
     <None Include="wwwroot\LoginAndSystems\fonts\font-awesome-4.7.0\less\animated.less" />

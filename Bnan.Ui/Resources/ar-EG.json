@@ -121,6 +121,7 @@
   "Expire": "منتهي",
   "Avaliable": "متاحه",
   "UnAvaliable": "غير متاحه",
+  "Tenant": "مستأجر",
 
   // component title
   "Branch Data": "بيانات الفروع",
@@ -1168,5 +1169,13 @@
   "AdditionalValue": "قيمة الاضافات",
   "AddDriverValue": "قيمة السائق الاضافي",
   "PrivateDriverValue": "قيمة السائق الخاص",
-  "DelegationValue": "قيمة التفويض"
+  "DelegationValue": "قيمة التفويض",
+  //Renters In BS
+  "TradedAmount": "المبالغ المتداولة",
+  "Canceled": "ملغى",
+  "Closed": "مغلق",
+  "Sector": "القطاع",
+  "StartDateLic": "بدايتها",
+  "EndDateLic": "نهايتها",
+  "RenterInformation": "بيانات المستأجر"
 }

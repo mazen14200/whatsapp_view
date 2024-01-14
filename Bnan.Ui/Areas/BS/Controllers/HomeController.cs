@@ -112,7 +112,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                 x.CrCasSysAdministrativeProceduresCode == "303" &&
                                                                                 x.CrCasSysAdministrativeProceduresStatus == Status.Insert).Count();
             var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode && x.CrCasRenterContractBasicBranch == selectBranch).ToList();
-            var AlertContract = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertContractStatus == Status.Active).ToList();
+            var AlertContract = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertContractStatus == Status.Active&&x.CrCasRenterContractAlertBranch==selectBranch).ToList();
 
             ViewBag.AlertToday = AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "1").Count();
             ViewBag.AlertTommorow = AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "0").Count();

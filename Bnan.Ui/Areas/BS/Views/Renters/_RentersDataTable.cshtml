@@ -1,0 +1,65 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
+@model BSLayoutVM
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+
+
+
+<table class="table table-bordered table-hover" id="myTable">
+    <thead>
+        <tr>
+            <th scope="col">@localizer["Status"]</th>
+            <th scope="col">@localizer["Evaluation"]</th>
+            <th scope="col">@localizer["ContractCount"]</th>
+            <th scope="col">@localizer["TradedAmount"]</th>
+            <th scope="col">@localizer["Balance"]</th>
+            <th scope="col">@localizer["LastVisit"]</th>
+            <th scope="col">@localizer["Name"]</th>
+            <th scope="col">@localizer["RenterDriverID"]</th>
+            <th scope="col">@localizer["No"]</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            int no = 1;
+        }
+        @foreach (var item in Model.RentersLessor)
+        {
+            <tr onclick="location.href='@Url.Action("Details", "Renters", new { id = item.CrCasRenterLessorId })'">
+                <td>
+                    @if (@item.CrCasRenterLessorStatus == Status.Active)
+                    {
+                        @localizer["Active"]
+                    }
+                    else if (@item.CrCasRenterLessorStatus == Status.Rented)
+                    {
+                        @localizer["Tenant"]
+                    }
+                </td>
+                <td>@item.CrCasRenterLessorEvaluationValue</td>
+                <td>@item.CrCasRenterLessorContractCount</td>
+                <td>@item.CrCasRenterLessorContractTradedAmount?.ToString("N2")</td>
+                <td>@item.CrCasRenterLessorBalance?.ToString("N2")</td>
+                <td>@item.CrCasRenterLessorDateLastContractual</td>
+                @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                {
+                    <td>@item.CrCasRenterLessorNavigation?.CrMasRenterInformationArName</td>
+                }
+                else
+                {
+                    <td>@item.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName</td>
+                }
+                <td>@item.CrCasRenterLessorId</td>
+                <td scope="row">@no</td>
+            </tr>
+            no++;
+        }
+        
+    </tbody>
+</table>

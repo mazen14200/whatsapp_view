@@ -132,6 +132,7 @@
   "Expire": "Expire",
   "Avaliable": "Avaliable",
   "UnAvaliable": "Un Avaliable",
+  "Tenant": "Tenant",
 
   // component title
   "Branch Data": "Branches Data",
@@ -1173,8 +1174,14 @@
   "AdditionalValue": "AdditionalValue",
   "AddDriverValue": "AddDriver Value",
   "PrivateDriverValue": "Private Driver Value",
-  "DelegationValue": "Delegation Value"
-
-
+  "DelegationValue": "Delegation Value",
+  //
+  "TradedAmount": "Traded Amount",
+  "Canceled": "Canceled",
+  "Closed": "Closed",
+  "Sector": "Sector",
+  "StartDateLic": "Start Date",
+  "EndDateLic": "End Date",
+  "RenterInformation": "Renter Information"
 
 }
