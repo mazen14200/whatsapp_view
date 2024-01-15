@@ -397,7 +397,7 @@ input[type="number"]:nth-child(n+4) {
 /* ////////////////global over 3 fieldsets */
 .requird-field {
     /* margin-bottom: 0px; */
-    font-size: 10px;
+    font-size: 14px;
     color: red;
     width: fit-content;
 }

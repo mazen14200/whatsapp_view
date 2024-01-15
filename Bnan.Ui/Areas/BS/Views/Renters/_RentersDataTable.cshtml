@@ -13,13 +13,37 @@
 <table class="table table-bordered table-hover" id="myTable">
     <thead>
         <tr>
-            <th scope="col">@localizer["Status"]</th>
-            <th scope="col">@localizer["Evaluation"]</th>
+            @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+            {
+                <th scope="col" class="text-right">@localizer["Status"]</th>
+            }
+            else
+            {
+                <th scope="col" class="text-left">@localizer["Status"]</th>
+
+            }
+            @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+            {
+                <th scope="col" class="text-right">@localizer["Evaluation"]</th>
+            }
+            else
+            {
+                <th scope="col" class="text-left">@localizer["Evaluation"]</th>
+
+            }
             <th scope="col">@localizer["ContractCount"]</th>
             <th scope="col">@localizer["TradedAmount"]</th>
             <th scope="col">@localizer["Balance"]</th>
             <th scope="col">@localizer["LastVisit"]</th>
-            <th scope="col">@localizer["Name"]</th>
+            @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+            {
+                <th scope="col" class="text-right">@localizer["Name"]</th>
+            }
+            else
+            {
+                <th scope="col" class="text-left">@localizer["Name"]</th>
+
+            }
             <th scope="col">@localizer["RenterDriverID"]</th>
             <th scope="col">@localizer["No"]</th>
         </tr>
@@ -32,34 +56,60 @@
         @foreach (var item in Model.RentersLessor)
         {
             <tr onclick="location.href='@Url.Action("Details", "Renters", new { id = item.CrCasRenterLessorId })'">
-                <td>
-                    @if (@item.CrCasRenterLessorStatus == Status.Active)
-                    {
-                        @localizer["Active"]
-                    }
-                    else if (@item.CrCasRenterLessorStatus == Status.Rented)
-                    {
-                        @localizer["Tenant"]
-                    }
-                </td>
-                <td>@item.CrCasRenterLessorEvaluationValue</td>
-                <td>@item.CrCasRenterLessorContractCount</td>
-                <td>@item.CrCasRenterLessorContractTradedAmount?.ToString("N2")</td>
-                <td>@item.CrCasRenterLessorBalance?.ToString("N2")</td>
-                <td>@item.CrCasRenterLessorDateLastContractual</td>
                 @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                 {
-                    <td>@item.CrCasRenterLessorNavigation?.CrMasRenterInformationArName</td>
+                    <td class="text-right">
+                        @if (@item.CrCasRenterLessorStatus == Status.Active)
+                        {
+                            @localizer["Active"]
+                        }
+                        else if (@item.CrCasRenterLessorStatus == Status.Rented)
+                        {
+                            @localizer["Tenant"]
+                        }
+                    </td>
                 }
                 else
                 {
-                    <td>@item.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName</td>
+                    <td class="text-left">
+                        @if (@item.CrCasRenterLessorStatus == Status.Active)
+                        {
+                            @localizer["Active"]
+                        }
+                        else if (@item.CrCasRenterLessorStatus == Status.Rented)
+                        {
+                            @localizer["Tenant"]
+                        }
+                    </td>
+                }
+                @{
+                    var Evaluation = Model.Evaluations.Find(x => x.CrMasSysEvaluationsCode == item.CrCasRenterLessorDealingMechanism);
+                }
+                @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                {
+                    <td class="text-right">@Evaluation.CrMasSysEvaluationsArDescription</td>
+                }
+                else
+                {
+                    <td class="text-left">@Evaluation.CrMasSysEvaluationsEnDescription</td>
+                }
+                <td>@item.CrCasRenterLessorContractCount</td>
+                <td>@item.CrCasRenterLessorContractTradedAmount?.ToString("N2")</td>
+                <td>@item.CrCasRenterLessorBalance?.ToString("N2")</td>
+                <td>@item.CrCasRenterLessorDateLastContractual?.ToString("yyyy/MM/dd")</td>
+                @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                {
+                    <td class="text-right">@item.CrCasRenterLessorNavigation?.CrMasRenterInformationArName</td>
+                }
+                else
+                {
+                    <td class="text-left">@item.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName</td>
                 }
                 <td>@item.CrCasRenterLessorId</td>
                 <td scope="row">@no</td>
             </tr>
             no++;
         }
-        
+
     </tbody>
 </table>

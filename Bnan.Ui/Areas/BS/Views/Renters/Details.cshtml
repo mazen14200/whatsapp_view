@@ -13,7 +13,6 @@
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-@* <link href="https://fonts.googleapis.com/css?family=Cairo:500,400,700" rel="stylesheet"> *@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
 
 
@@ -24,13 +23,13 @@
 }
 
 
-<section class="section-mainCard" style="font-weight: 600;">
+<section class="section-mainCard" >
     <div class="row justify-content-center w-100 h-100">
         <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
             <div class="card main-card ">
                 <div class="row pt-2">
                     <a asp-action="Index" asp-area="BS" asp-controller="Home" style="width: fit-content;">
-                        <img src="~/BranchSys/Renters/img/cancel.png"  alt="cancle_icon" class="cancle-icon">
+                        <img src="~/BranchSys/Renters/img/cancel.png" alt="cancle_icon" class="cancle-icon">
                     </a>
                 </div>
                 <div class="row layout-row">
@@ -163,7 +162,7 @@
                                         <div class="row" style="flex-direction:row-reverse">
                                             <div class="col-md-4 d-flex data-col  ">
                                                 <div class="col-auto">
-                                                   
+
                                                     <P>@localizer["RenterDriverDaysCount"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
@@ -200,7 +199,7 @@
                                                     <P>@localizer["StartDateLic"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P>@Model.Renter?.CrCasRenterLessorNavigation.CrMasRenterInformationDrivingLicenseDate?.ToString("dd/MM/yyyy")</P>
+                                                    <P>@Model.Renter?.CrCasRenterLessorNavigation.CrMasRenterInformationDrivingLicenseDate?.ToString("yyyy/MM/dd")</P>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 d-flex data-col ">
@@ -208,7 +207,7 @@
                                                     <P>@localizer["EndDateLic"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P>@Model.Renter?.CrCasRenterLessorNavigation.CrMasRenterInformationExpiryDrivingLicenseDate?.ToString("dd/MM/yyyy")</P>
+                                                    <P>@Model.Renter?.CrCasRenterLessorNavigation.CrMasRenterInformationExpiryDrivingLicenseDate?.ToString("yyyy/MM/dd")</P>
                                                 </div>
                                             </div>
                                         </div>
@@ -231,33 +230,55 @@
                                                 </div>
                                             </div>
                                         </div>
-                                            <div class="row table-row">
-                                                <div class="col table-scroll table-scroll-details w-100  ">
-                                                    <table class="table table-bordered table-hover"
-                                                           id="Table-details">
-                                                        <thead>
-                                                            <tr>
+                                        <div class="row table-row">
+                                            <div class="col table-scroll table-scroll-details w-100  ">
+                                                <table class="table table-bordered table-hover"
+                                                       id="Table-details">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">@localizer["File"] </th>
 
-                                                                <th scope="col">@localizer["Status"] </th>
-                                                                <th scope="col">@localizer["ContractValue"]</th>
-                                                                <th scope="col">@localizer["Car"]</th>
-                                                                <th scope="col">@localizer["EndDate"] </th>
-                                                                <th scope="col">@localizer["StartDate"] </th>
-                                                                <th scope="col">@localizer["CompanyContractNo"]</th>
-                                                                <th scope="col">@localizer["No"]</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @{
-                                                                int no = 1;
-                                                            }
-                                                            @foreach (var item in Model.RenterContracts)
+                                                            @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                                             {
-                                                                <tr>
-                                                                    <td>
-                                                                        <a href="#">
-                                                                            <img src="~/BranchSys/Renters/img/Rectangle 193.png" alt="pdf">
-                                                                        </a>@if (item.CrCasRenterContractBasicStatus == Status.Active)
+                                                                <th scope="col" class="text-right">@localizer["Status"]</th>
+                                                            }
+                                                            else
+                                                            {
+                                                                <th scope="col" class="text-left">@localizer["Status"]</th>
+
+                                                            }
+                                                            <th scope="col">@localizer["ContractValue"]</th>
+                                                            @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                                            {
+                                                                <th scope="col" class="text-right">@localizer["Car"]</th>
+                                                            }
+                                                            else
+                                                            {
+                                                                <th scope="col" class="text-left">@localizer["Car"]</th>
+
+                                                            }
+                                                            <th scope="col">@localizer["EndDate"] </th>
+                                                            <th scope="col">@localizer["StartDate"] </th>
+                                                            <th scope="col">@localizer["CompanyContractNo"]</th>
+                                                            <th scope="col">@localizer["No"]</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @{
+                                                            int no = 1;
+                                                        }
+                                                        @foreach (var item in Model.RenterContracts)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="#">
+                                                                        <img src="~/BranchSys/Renters/img/Rectangle 193.png" alt="pdf">
+                                                                    </a>
+                                                                </td>
+                                                                @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                                                {
+                                                                    <td class="text-right">
+                                                                       @if (item.CrCasRenterContractBasicStatus == Status.Active)
                                                                         {
                                                                             @localizer["existing"]
                                                                         }
@@ -274,36 +295,63 @@
                                                                             @localizer["Closed"]
                                                                         }
                                                                     </td>
-                                                                    <td>@item.CrCasRenterContractBasicExpectedTotal?.ToString("N2")</td>
-                                                                    <td>
-                                                                        @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td class="text-left">
+                                                                       @if (item.CrCasRenterContractBasicStatus == Status.Active)
                                                                         {
-                                                                            @item.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateArName
+                                                                            @localizer["existing"]
                                                                         }
-                                                                        else
+                                                                        else if (item.CrCasRenterContractBasicStatus == Status.Expire)
                                                                         {
-                                                                            @item.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateEnName
+                                                                            @localizer["Expired"]
+                                                                        }
+                                                                        else if (item.CrCasRenterContractBasicStatus == Status.Cancel)
+                                                                        {
+                                                                            @localizer["Canceled"]
+                                                                        }
+                                                                        else if (item.CrCasRenterContractBasicStatus == Status.Closed)
+                                                                        {
+                                                                            @localizer["Closed"]
                                                                         }
                                                                     </td>
-                                                                    <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
-                                                                <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
-                                                                    <td>@item.CrCasRenterContractBasicNo</td>
-                                                                    <td scope="row">@no</td>
-                                                                </tr>
-                                                                no++;
-                                                            }
+                                                                }
 
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+
+                                                                <td>@item.CrCasRenterContractBasicExpectedTotal?.ToString("N2")</td>
+                                                                
+                                                                    @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                                                    {
+                                                                    <td class="text-right">
+                                                                        @item.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateArName
+                                                                    </td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                    <td class="text-left">
+                                                                        @item.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateEnName
+                                                                    </td>
+                                                                    }
+                                                                <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
+                                                                <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
+                                                                <td>@item.CrCasRenterContractBasicNo</td>
+                                                                <td scope="row">@no</td>
+                                                            </tr>
+                                                            no++;
+                                                        }
+
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                        
+                                        </div>
+
 
                                     </div>
                                     <div class="row button-row pt-3 pb-1 ps-4">
                                         <div class="button-card55">
                                             <a href="tenant.html" class="">
-                                                <a asp-action="Index" asp-area="BS" asp-controller="Renters" class="btn btn-custom">@localizer["Back"]</a>
+                                                <a asp-action="Index" asp-area="BS" asp-controller="Renters" class="btn btn-custom">@localizer["Backk"]</a>
                                             </a>
                                         </div>
                                         <div class="button-card55">

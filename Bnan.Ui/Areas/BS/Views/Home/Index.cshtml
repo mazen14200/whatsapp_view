@@ -26,7 +26,13 @@
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
 }
-
+<style>
+    .legend-item{
+        font-size: .7rem;
+        color: #000000;
+        font-weight: bold;
+    }
+</style>
 <!--  Chart -->
 <div class=" col-lg-9 col-xl-9">
 
@@ -194,7 +200,7 @@
     </div>
 
 </div>
-<footer class="fixed-bottom-xl" style="margin-top:3px">
+<footer class="fixed-bottom-xl" style="margin-top:1.95%">
     <div class="before-footer-widget">
         <svg width: 100%; height:auto viewbox="0 0 2444 132">
             <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
@@ -381,17 +387,16 @@
             var myChart = new Chart(barChart2, {
                 type: "bar",
                 data: {
-                    labels: ['@localizer["CASH"]', '@localizer["Mada"]', '@localizer["Visa"]', '@localizer["Express"]', '@localizer["MasterCard"] ', '@localizer["transformation"]'],
+                    labels: ['@localizer["CASH"]', '@localizer["Mada"]', '@localizer["Visa"]', '@localizer["Express"]', '@localizer["MasterCard"] '],
                     datasets: [
                         {
-                            data: [100, 60, 50, 45, 40, 30],
+                            data: [@ViewBag.CashBalance, @ViewBag.MadaaBalance, @ViewBag.VisaBalance, @ViewBag.ExpressBalance, @ViewBag.MasterBalance],
                             backgroundColor: [
                                 "rgba(255, 99, 132, 1)",
                                 "rgba(54, 162, 235, 1)",
                                 "rgba(255, 206, 86, 1)",
                                 "rgba(75, 192, 192, 1)",
-                                "rgba(153, 102, 255, 1)",
-                                "rgba(255, 159, 64, 1)"
+                                "rgba(153, 102, 255, 1)"
                             ],
 
                         }
@@ -436,17 +441,16 @@
             var chartId = new Chart(chrt, {
                 type: "bar",
                 data: {
-                    labels: ['@localizer["CASH"]', '@localizer["Mada"]', '@localizer["Visa"]', '@localizer["Express"]', '@localizer["MasterCard"] ', '@localizer["transformation"]'],
+                    labels: ['@localizer["CASH"]', '@localizer["Mada"]', '@localizer["Visa"]', '@localizer["Express"]', '@localizer["MasterCard"]'],
                     datasets: [
                         {
-                            data: [100, 50, 45, 60, 40, 30],
+                            data: [@ViewBag.UserCashBalance, @ViewBag.UserMadaaBalance, @ViewBag.UserVisaBalance, @ViewBag.UserExpressBalance, @ViewBag.UserMasterBalance],
                             backgroundColor: [
                                 "rgba(255, 99, 132, 1)",
                                 "rgba(54, 162, 235, 1)",
                                 "rgba(255, 206, 86, 1)",
                                 "rgba(75, 192, 192, 1)",
-                                "rgba(153, 102, 255, 1)",
-                                "rgba(255, 159, 64, 1)"
+                                "rgba(153, 102, 255, 1)"
                             ],
 
 
@@ -491,10 +495,10 @@
                 labels: ['@localizer["ExpiredContract"]', '@localizer["ExpiresToday"]', '@localizer["ExpiresTomorrow"]', '@localizer["ExpiresLater"]'],
                 datasets: [{
                     data: [@Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="3").Count(),
+                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="0").Count(),
                             @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="1").Count(),
-                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="2").Count(),
-                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="0").Count()],
-                    backgroundColor: ['rgba(242, 143, 36, 1)', '#9966FF', 'rgba(242, 36, 36, 1)', 'rgba(1, 5, 83, 1)']
+                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="2").Count()],
+                    backgroundColor: ['rgba(242, 36, 36, 1)', '#9966FF', 'rgba(242, 143, 36, 1)', 'rgba(54, 162, 235, 1)']
                 }]
             };
 
@@ -518,7 +522,24 @@
                     }
                 }
             });
+
+
+            const legendContainer = document.querySelector('.chart-legend');
+            const legendItems = pieChartData.labels.map((label, index) => {
+                const dataset = pieChartData.datasets[0];
+                const backgroundColor = dataset.backgroundColor[index];
+                const legendItem = document.createElement('div');
+                legendItem.classList.add('legend-item');
+                legendItem.innerHTML = `${label}<span style="background-color:${backgroundColor}"></span>`;
+                return legendItem;
+            });
+
+            legendItems.forEach(item => {
+                legendContainer.appendChild(item);
+            });
+
         });
+        
 
     </script>
 

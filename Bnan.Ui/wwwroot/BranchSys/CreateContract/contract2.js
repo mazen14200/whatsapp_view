@@ -73,3 +73,99 @@ close.addEventListener('click', function () {
         dropdownPay.style.display = 'none';
     }
 })
+
+// Renter
+// ///////////////timer function/////////////////////
+// ///////////////timer function/////////////////////
+
+//var interval1;
+
+//function TimerFunctionRenter(reset) {
+//    if (reset || !interval1) {
+//        if (interval1) {
+//            clearInterval(interval1);
+//        }
+
+//        var display = document.querySelector('#RenterTimerDiv');
+//        var timer = 90, minutes, seconds;
+
+//        interval1 = setInterval(function () {
+//            minutes = parseInt(timer / 60, 10);
+//            seconds = parseInt(timer % 60, 10);
+
+//            minutes = minutes < 10 ? "0" + minutes : minutes;
+//            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+//            display.textContent = minutes + ":" + seconds;
+
+//            if (--timer < 0) {
+//                timer = 0;
+//                clearInterval(interval1);
+//                $('#checkModalToggle').modal('hide');
+//            }
+//        }, 1000);
+//    }
+//}
+
+
+
+
+//Driver
+//var interval2;
+
+//function TimerFunctionDriver(reset) {
+//    if (reset || !interval2) {
+//        if (interval2) {
+//            clearInterval(interval2);
+//        }
+
+//        var display = document.querySelector('#DriverTimerDiv');
+//        var timer = 90, minutes, seconds;
+
+//        interval2 = setInterval(function () {
+//            minutes = parseInt(timer / 60, 10);
+//            seconds = parseInt(timer % 60, 10);
+
+//            minutes = minutes < 10 ? "0" + minutes : minutes;
+//            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+//            display.textContent = minutes + ":" + seconds;
+
+//            if (--timer < 0) {
+//                timer = 0;
+//                clearInterval(interval2);
+//                $('#checkModalToggleDriver').modal('hide');
+//            }
+//        }, 1000);
+//    }
+//}
+
+//Add Driver
+//var interval3;
+
+//function TimerFunctionAddDriver(reset) {
+//    if (reset || !interval3) {
+//        if (interval) {
+//            clearInterval(interval3);
+//        }
+
+//        var display = document.querySelector('#AddDriverTimerDiv');
+//        var timer = 90, minutes, seconds;
+
+//        interval3 = setInterval(function () {
+//            minutes = parseInt(timer / 60, 10);
+//            seconds = parseInt(timer % 60, 10);
+
+//            minutes = minutes < 10 ? "0" + minutes : minutes;
+//            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+//            display.textContent = minutes + ":" + seconds;
+
+//            if (--timer < 0) {
+//                timer = 0;
+//                clearInterval(interval3);
+//                $('#checkModalToggleAddDriver').modal('hide');
+//            }
+//        }, 1000);
+//    }
+//}

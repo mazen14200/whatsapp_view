@@ -114,13 +114,22 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode && x.CrCasRenterContractBasicBranch == selectBranch).ToList();
             var AlertContract = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertContractStatus == Status.Active&&x.CrCasRenterContractAlertBranch==selectBranch).ToList();
 
-            ViewBag.AlertToday = AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "1").Count();
-            ViewBag.AlertTommorow = AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "0").Count();
-            ViewBag.AlertLater = AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "2").Count();
-            ViewBag.AlertExpire = AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "3").Count();
-            
-
-
+           //For Charts 
+           var AccountReceipt= _unitOfWork.CrCasAccountReceipt.FindAll(x=>x.CrCasAccountReceiptLessorCode==lessorCode&&x.CrCasAccountReceiptBranchCode==selectBranch&&
+                                                                          x.CrCasAccountReceiptIsPassing!="4"&& x.CrCasAccountReceiptPaymentMethod!="30"&&
+                                                                          x.CrCasAccountReceiptPaymentMethod!="40").ToList();
+            //For Branch
+            ViewBag.CashBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "10").Sum(x => x.CrCasAccountReceiptPayment);
+            ViewBag.MadaaBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "20").Sum(x => x.CrCasAccountReceiptPayment);
+            ViewBag.VisaBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "21").Sum(x => x.CrCasAccountReceiptPayment);
+            ViewBag.MasterBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "22").Sum(x => x.CrCasAccountReceiptPayment);
+            ViewBag.ExpressBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "23").Sum(x => x.CrCasAccountReceiptPayment);
+            //For User
+            ViewBag.UserCashBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "10" &&x.CrCasAccountReceiptUser==userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
+            ViewBag.UserMadaaBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "20" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
+            ViewBag.UserVisaBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "21" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
+            ViewBag.UserMasterBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "22" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
+            ViewBag.UserExpressBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "23" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
 
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {

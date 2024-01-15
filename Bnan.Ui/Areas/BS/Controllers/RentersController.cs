@@ -57,13 +57,15 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
 
             var RenterAll = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == userLogin.CrMasUserInformationLessor, new[] { "CrCasRenterLessorNavigation" }).ToList();
+            var mecahnizmEvaluations = _unitOfWork.CrMasSysEvaluation.FindAll(x => x.CrMasSysEvaluationsStatus == Status.Active).ToList();
 
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
                 CrCasBranchInformations = branches,
                 SelectedBranch = selectBranch,
                 CrCasBranchInformation = branch,
-                RentersLessor= RenterAll
+                RentersLessor= RenterAll,
+                Evaluations = mecahnizmEvaluations,
             };
             return View(bSLayoutVM);
         }
@@ -76,16 +78,17 @@ namespace Bnan.Ui.Areas.BS.Controllers
             if (!string.IsNullOrEmpty(status))
             {
                 var RenterAll = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == userLogin.CrMasUserInformationLessor, new[] { "CrCasRenterLessorNavigation" }).ToList();
+                var mecahnizmEvaluations = _unitOfWork.CrMasSysEvaluation.FindAll(x => x.CrMasSysEvaluationsStatus == Status.Active).ToList();
+                bSLayoutVM.Evaluations = mecahnizmEvaluations;
+
                 if (status == Status.All) {
                     bSLayoutVM.RentersLessor = RenterAll.FindAll(x => x.CrCasRenterLessorId.Contains(search) || x.CrCasRenterLessorNavigation.CrMasRenterInformationArName.Contains(search) || x.CrCasRenterLessorNavigation.CrMasRenterInformationEnName.Contains(search)).ToList();
                     return PartialView("_RentersDataTable", bSLayoutVM);
                 }
-
                 bSLayoutVM.RentersLessor = RenterAll.Where(x => x.CrCasRenterLessorStatus == status&&
                                                               ( x.CrCasRenterLessorId.Contains(search) ||
                                                                 x.CrCasRenterLessorNavigation.CrMasRenterInformationArName.Contains(search) ||
                                                                 x.CrCasRenterLessorNavigation.CrMasRenterInformationEnName.Contains(search))).ToList();
-               
                 return PartialView("_RentersDataTable", bSLayoutVM);
             }
             return PartialView();

@@ -102,6 +102,7 @@ namespace Bnan.Inferastructure.Repository
         public IGenric<CrCasRenterContractAuthorization> CrCasRenterContractAuthorization { get; private set; }
         public IGenric<CrCasAccountReceipt> CrCasAccountReceipt { get; private set; }
         public IGenric<CrCasRenterContractAlert> CrCasRenterContractAlert { get; private set; }
+        public IGenric<CrMasSysEvaluation> CrMasSysEvaluation { get; private set; }
 
 
         public UnitOfWork(BnanKSAContext context)
@@ -185,6 +186,7 @@ namespace Bnan.Inferastructure.Repository
             CrCasRenterContractAuthorization = new BaseRepository<CrCasRenterContractAuthorization>(_context);
             CrCasAccountReceipt = new BaseRepository<CrCasAccountReceipt>(_context);
             CrCasRenterContractAlert = new BaseRepository<CrCasRenterContractAlert>(_context);
+            CrMasSysEvaluation = new BaseRepository<CrMasSysEvaluation>(_context);
         }
         public int Complete()
         {

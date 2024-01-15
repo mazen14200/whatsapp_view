@@ -202,7 +202,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
                 //Update RenterLessor Of Car Renter
                 var CheckRenterLessor = true;
-                CheckRenterLessor = await _ContractServices.UpdateRenterLessor(Renter.CrMasRenterInformationId, lessorCode, (DateTime)BasicContract.CrCasRenterContractBasicIssuedDate, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
+                CheckRenterLessor = await _ContractServices.UpdateRenterLessor(Renter.CrMasRenterInformationId, lessorCode, (DateTime)BasicContract.CrCasRenterContractBasicIssuedDate,
+                                                                              (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance, ContractInfo.RenterReasons);
                 
                 //Update Mas Renter Info Of Car Renter
                 var CheckMasRenter = true;
@@ -216,9 +217,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 else
                 {
                     //Update Driver
-                    if (!string.IsNullOrEmpty(ContractInfo.DriverId) && ContractInfo.DriverId.Trim() != ContractInfo.RenterId) CheckDriver = await _ContractServices.UpdateDriverStatus(ContractInfo.DriverId, lessorCode);
+                    if (!string.IsNullOrEmpty(ContractInfo.DriverId) && ContractInfo.DriverId.Trim() != ContractInfo.RenterId) CheckDriver = await _ContractServices.UpdateDriverStatus(ContractInfo.DriverId, lessorCode,ContractInfo.DriverReasons);
                     //Update Add Driver
-                    if (!string.IsNullOrEmpty(ContractInfo.AdditionalDriverId)) CheckAddDriver = await _ContractServices.UpdateDriverStatus(ContractInfo.DriverId, lessorCode);
+                    if (!string.IsNullOrEmpty(ContractInfo.AdditionalDriverId)) CheckAddDriver = await _ContractServices.UpdateDriverStatus(ContractInfo.DriverId, lessorCode, ContractInfo.AddDriverReasons);
                 }
 
                 //Update Branch Balance , But first Check if passing equal 4 or not 

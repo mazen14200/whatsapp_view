@@ -48,42 +48,47 @@ namespace Bnan.Inferastructure.Repository
             if (crElmEmployer != null) employerCode = GetEmployer(firstChar, crElmEmployer.CrElmEmployerArName, crElmEmployer.CrElmEmployerEnName);
             else employerCode = "1800000002";
             var typeID = GetTypeID(firstChar, sectorCode);
-            CrMasRenterInformation renterInformation = new CrMasRenterInformation
-            {
-                CrMasRenterInformationId = RenterID,
-                CrMasRenterInformationArName = crElmPersonal.CrElmPersonalArName,
-                CrMasRenterInformationEnName = crElmPersonal.CrElmPersonalEnName,
-                CrMasRenterInformationCopyId = crElmPersonal.CrElmPersonalIdCopy,
-                CrMasRenterInformationBirthDate = crElmPersonal.CrElmPersonalBirthDate,
-                CrMasRenterInformationIssueIdDate = crElmPersonal.CrElmPersonalIssuedIdDate,
-                CrMasRenterInformationExpiryIdDate = crElmPersonal.CrElmPersonalExpiryIdDate,
-                CrMasRenterInformationCountreyKey = crElmPersonal.CrElmPersonalCountryKey,
-                CrMasRenterInformationMobile = crElmPersonal.CrElmPersonalMobile,
-                CrMasRenterInformationEmail = crElmPersonal.CrElmPersonalEmail,
-                CrMasRenterInformationUpDateLicenseData = DateTime.Now.Date,
-                CrMasRenterInformationUpDatePersonalData = DateTime.Now.Date,
-                CrMasRenterInformationUpDateWorkplaceData = DateTime.Now.Date,
-                CrMasRenterInformationCommunicationLanguage = "1",
-                CrMasRenterInformationIssuePlace = crElmPersonal.CrElmPersonalIssuedPlace,
-                CrMasRenterInformationRenterIdImage = null,
-                CrMasRenterInformationRenterLicenseImage = null,
-                CrMasRenterInformationBank = null,
-                CrMasRenterInformationIban = null,
-                CrMasRenterInformationSector = sectorCode,
-                CrMasRenterInformationNationality = nationalityCode,
-                CrMasRenterInformationGender = genderCode,
-                CrMasRenterInformationDrivingLicenseType = licenceCode,
-                CrMasRenterInformationEmployer = employerCode,
-                CrMasRenterInformationProfession = professionsCode,
-                CrMasRenterInformationStatus = "A",
-                CrMasRenterInformationIdtype = typeID,
-                CrMasRenterInformationDrivingLicenseNo = crElmLicense?.CrElmLicenseNo,
-                CrMasRenterInformationDrivingLicenseDate = crElmLicense?.CrElmLicenseIssuedDate,
-                CrMasRenterInformationExpiryDrivingLicenseDate = crElmLicense?.CrElmLicenseExpiryDate,
-                CrMasRenterInformationSignature = null,
-                CrMasRenterInformationTaxNo = null,
-                CrMasRenterInformationReasons = null
-            };
+            CrMasRenterInformation renterInformation = new CrMasRenterInformation();
+
+            renterInformation.CrMasRenterInformationId = RenterID;
+            renterInformation.CrMasRenterInformationArName = crElmPersonal.CrElmPersonalArName;
+            renterInformation.CrMasRenterInformationEnName = crElmPersonal.CrElmPersonalEnName;
+            renterInformation.CrMasRenterInformationCopyId = crElmPersonal.CrElmPersonalIdCopy;
+            renterInformation.CrMasRenterInformationBirthDate = crElmPersonal.CrElmPersonalBirthDate;
+            renterInformation.CrMasRenterInformationIssueIdDate = crElmPersonal.CrElmPersonalIssuedIdDate;
+            renterInformation.CrMasRenterInformationExpiryIdDate = crElmPersonal.CrElmPersonalExpiryIdDate;
+            renterInformation.CrMasRenterInformationCountreyKey = crElmPersonal.CrElmPersonalCountryKey;
+            renterInformation.CrMasRenterInformationMobile = crElmPersonal.CrElmPersonalMobile;
+            renterInformation.CrMasRenterInformationEmail = crElmPersonal.CrElmPersonalEmail;
+            renterInformation.CrMasRenterInformationUpDateLicenseData = DateTime.Now.Date;
+            renterInformation.CrMasRenterInformationUpDatePersonalData = DateTime.Now.Date;
+            renterInformation.CrMasRenterInformationUpDateWorkplaceData = DateTime.Now.Date;
+            renterInformation.CrMasRenterInformationCommunicationLanguage = "1";
+            renterInformation.CrMasRenterInformationIssuePlace = crElmPersonal.CrElmPersonalIssuedPlace;
+            renterInformation.CrMasRenterInformationRenterIdImage = null;
+            renterInformation.CrMasRenterInformationRenterLicenseImage = null;
+            renterInformation.CrMasRenterInformationBank = null;
+            renterInformation.CrMasRenterInformationIban = null;
+            renterInformation.CrMasRenterInformationSector = sectorCode;
+            renterInformation.CrMasRenterInformationNationality = nationalityCode;
+            renterInformation.CrMasRenterInformationGender = genderCode;
+            renterInformation.CrMasRenterInformationDrivingLicenseType = licenceCode;
+            renterInformation.CrMasRenterInformationEmployer = employerCode;
+            renterInformation.CrMasRenterInformationProfession = professionsCode;
+            renterInformation.CrMasRenterInformationStatus = "A";
+            renterInformation.CrMasRenterInformationIdtype = typeID;
+
+            renterInformation.CrMasRenterInformationDrivingLicenseNo = crElmLicense?.CrElmLicenseNo;
+            renterInformation.CrMasRenterInformationDrivingLicenseDate = crElmLicense?.CrElmLicenseIssuedDate;
+            renterInformation.CrMasRenterInformationExpiryDrivingLicenseDate = crElmLicense?.CrElmLicenseExpiryDate;
+
+
+
+            renterInformation.CrMasRenterInformationSignature = "~/images/common/DefualtUserSignature.png";
+            renterInformation.CrMasRenterInformationTaxNo = "";
+            renterInformation.CrMasRenterInformationReasons = "";
+
+
             if (await _unitOfWork.CrMasRenterInformation.AddAsync(renterInformation) == null) return null;
             return renterInformation;
         }
@@ -109,14 +114,16 @@ namespace Bnan.Inferastructure.Repository
 
                 RegionCode = GetRegion(crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostRegionsEnName);
                 CityCode = GetCity(crElmPost.CrElmPostCityArName, crElmPost.CrElmPostCityEnName, RegionCode);
-                buildingInfoAr = $"مبنى ({crElmPost.CrElmPostBuildingNo}) ";
-                unitInfoAr = $"وحدة ({crElmPost.CrElmPostUnitNo}) ";
-                zipCodeAr = $"الرمز البريدي ({crElmPost.CrElmPostZipCode}) ";
-                additionalNoAr = $"الرقم الاضافي ({crElmPost.CrElmPostAdditionalNo}) ";
-                buildingInfoEn = $"Building ({crElmPost.CrElmPostBuildingNo}) ";
-                unitInfoEn = $"Unit ({crElmPost.CrElmPostUnitNo}) ";
-                zipCodeEn = $"ZipCode ({crElmPost.CrElmPostZipCode}) ";
-                additionalNoEn = $"additionalNo ({crElmPost.CrElmPostAdditionalNo}) ";
+                
+                buildingInfoAr = crElmPost.CrElmPostBuildingNo != null ? $"مبنى ({crElmPost.CrElmPostBuildingNo}) " : string.Empty;
+                unitInfoAr = crElmPost.CrElmPostUnitNo != null ? $"وحدة ({crElmPost.CrElmPostUnitNo}) " : string.Empty;
+                zipCodeAr = crElmPost.CrElmPostZipCode != null ? $"الرمز البريدي ({crElmPost.CrElmPostZipCode}) " : string.Empty;
+                additionalNoAr = crElmPost.CrElmPostAdditionalNo != null ? $"الرقم الاضافي ({crElmPost.CrElmPostAdditionalNo}) " : string.Empty;
+
+                buildingInfoEn = crElmPost.CrElmPostBuildingNo != null ? $"Building ({crElmPost.CrElmPostBuildingNo}) " : string.Empty;
+                unitInfoEn = crElmPost.CrElmPostUnitNo != null ? $"Unit ({crElmPost.CrElmPostUnitNo}) " : string.Empty;
+                zipCodeEn = crElmPost.CrElmPostZipCode != null ? $"ZipCode ({crElmPost.CrElmPostZipCode}) " : string.Empty;
+                additionalNoEn = crElmPost.CrElmPostAdditionalNo != null ? $"additionalNo ({crElmPost.CrElmPostAdditionalNo}) " : string.Empty;
 
                 concatenatedArAddress = string.Join(" - ", crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostCityArName, crElmPost.CrElmPostDistrictArName,
                                                            crElmPost.CrElmPostStreetArName, buildingInfoAr, unitInfoAr, zipCodeAr, additionalNoAr);
@@ -326,11 +333,19 @@ namespace Bnan.Inferastructure.Repository
             renterContractBasic.CrCasRenterContractBasicExpectedStartDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
             renterContractBasic.CrCasRenterContractBasicExpectedRentalDays = int.Parse(DaysNo);
             renterContractBasic.CrCasRenterContractBasicExpectedEndDate = renterContractBasic.CrCasRenterContractBasicExpectedStartDate?.AddDays(int.Parse(DaysNo));
-            renterContractBasic.CrCasRenterContractBasicAllowCanceled = renterContractBasic.CrCasRenterContractBasicExpectedEndDate?.AddHours(-Convert.ToDouble(carPrice.CrCasPriceCarBasicCancelHour));
+            renterContractBasic.CrCasRenterContractBasicAllowCanceled = renterContractBasic.CrCasRenterContractBasicExpectedStartDate?.AddHours(Convert.ToDouble(carPrice.CrCasPriceCarBasicCancelHour));
             renterContractBasic.CrCasRenterContractBasicRenterId = RenterId;
             renterContractBasic.CrCasRenterContractBasicCarSerailNo = SerialNo;
-            if (!string.IsNullOrEmpty(DriverId)) renterContractBasic.CrCasRenterContractBasicDriverId = DriverId;
-            else renterContractBasic.CrCasRenterContractBasicDriverId = null;
+            if (RenterId!=DriverId)
+            {
+                if (!string.IsNullOrEmpty(DriverId)) renterContractBasic.CrCasRenterContractBasicDriverId = DriverId;
+                else renterContractBasic.CrCasRenterContractBasicDriverId = null;
+            }
+            else
+            {
+                renterContractBasic.CrCasRenterContractBasicDriverId = null;
+            }
+
 
             if (!string.IsNullOrEmpty(AdditionalDriver))
             {
@@ -408,7 +423,7 @@ namespace Bnan.Inferastructure.Repository
         public async Task<bool> UpdateCarInformation(string SerialNo, string LessorCode, string BranchCode, DateTime LastContract, int DaysNo, int CurrentMeter, string ExpireMaintainceCount)
         {
             var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo && x.CrCasCarInformationLessor == LessorCode && x.CrCasCarInformationBranch == BranchCode);
-            
+
 
             if (car != null)
             {
@@ -435,10 +450,10 @@ namespace Bnan.Inferastructure.Repository
             {
                 foreach (var item in CarDocMaintainances.Where(x => x.CrCasCarDocumentsMaintenanceProceduresClassification == "12"))
                 {
-                     item.CrCasCarDocumentsMaintenanceCarStatus = Status.Rented;
+                    item.CrCasCarDocumentsMaintenanceCarStatus = Status.Rented;
                     _unitOfWork.CrCasCarDocumentsMaintenance.Update(item);
                 }
-                foreach (var item in CarDocMaintainances.Where(x=> x.CrCasCarDocumentsMaintenanceProceduresClassification == "13"))
+                foreach (var item in CarDocMaintainances.Where(x => x.CrCasCarDocumentsMaintenanceProceduresClassification == "13"))
                 {
                     item.CrCasCarDocumentsMaintenanceCurrentMeter = CurrentMeter;
                     item.CrCasCarDocumentsMaintenanceCarStatus = Status.Rented;
@@ -451,7 +466,7 @@ namespace Bnan.Inferastructure.Repository
             return null;
         }
 
-        public async Task<bool> UpdateRenterLessor(string RenterId, string LessorCode, DateTime LastContract, decimal TotalPayed)
+        public async Task<bool> UpdateRenterLessor(string RenterId, string LessorCode, DateTime LastContract, decimal TotalPayed, string RenterReasons)
         {
             var RenterLessor = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == LessorCode);
             if (RenterLessor != null)
@@ -461,6 +476,8 @@ namespace Bnan.Inferastructure.Repository
                 else RenterLessor.CrCasRenterLessorContractCount = 1;
                 RenterLessor.CrCasRenterLessorBalance = -(TotalPayed);
                 RenterLessor.CrCasRenterLessorStatus = Status.Rented;
+                RenterLessor.CrCasRenterLessorReasons = RenterReasons;
+                RenterLessor.CrCasRenterLessorContractExtension = 0;
                 if (_unitOfWork.CrCasRenterLessor.Update(RenterLessor) != null) return true;
             }
             return false;
@@ -475,7 +492,7 @@ namespace Bnan.Inferastructure.Repository
             }
             return false;
         }
-        public async Task<bool> UpdateDriverStatus(string DriverId, string LessorCode)
+        public async Task<bool> UpdateDriverStatus(string DriverId, string LessorCode, string Reasons)
         {
             var Driver = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == DriverId && x.CrCasRenterLessorCode == LessorCode);
 
@@ -580,6 +597,7 @@ namespace Bnan.Inferastructure.Repository
             if (Renter.CrCasRenterLessorBalance != null) crCasAccountReceipt.CrCasAccountReceiptRenterPreviousBalance = Renter.CrCasRenterLessorBalance;
             else crCasAccountReceipt.CrCasAccountReceiptRenterPreviousBalance = 0;
             crCasAccountReceipt.CrCasAccountReceiptPayment = TotalPayed;
+            crCasAccountReceipt.CrCasAccountReceiptReceipt = 0;
             crCasAccountReceipt.CrCasAccountReceiptIsPassing = PassingType;
 
             if (await _unitOfWork.CrCasAccountReceipt.AddAsync(crCasAccountReceipt) != null) return true;
@@ -936,7 +954,7 @@ namespace Bnan.Inferastructure.Repository
         public async Task<bool> UpdateUserBalance(string BranchCode, string LessorCode, string UserId, string PaymentMethod, decimal AmountPaid)
         {
             var UserInformation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == UserId && x.CrMasUserInformationLessor == LessorCode);
-            if (UserInformation!=null)
+            if (UserInformation != null)
             {
                 if (UserInformation.CrMasUserInformationAvailableBalance != null) UserInformation.CrMasUserInformationAvailableBalance += AmountPaid;
                 else UserInformation.CrMasUserInformationAvailableBalance = AmountPaid;
@@ -955,17 +973,19 @@ namespace Bnan.Inferastructure.Repository
             crCasRenterContractAlert.CrCasRenterContractAlertNo = ContractNo;
             crCasRenterContractAlert.CrCasRenterContractAlertLessor = LessorCode;
             crCasRenterContractAlert.CrCasRenterContractAlertBranch = BranchCode;
-            crCasRenterContractAlert.CrCasRenterContractAlertDays =RentalDays;
-            crCasRenterContractAlert.CrCasRenterContractAlertHour =4;
+            crCasRenterContractAlert.CrCasRenterContractAlertDays = RentalDays;
+            crCasRenterContractAlert.CrCasRenterContractAlertHour = 4;
             crCasRenterContractAlert.CrCasRenterContractAlertDayDate = ContractEndDate.AddDays(-1);
             crCasRenterContractAlert.CrCasRenterContractAlertHourDate = ContractEndDate.AddHours(-4);
             crCasRenterContractAlert.CrCasRenterContractAlertEndDate = ContractEndDate;
             crCasRenterContractAlert.CrCasRenterContractAlertStatus = "0";
             if (RentalDays == 1) crCasRenterContractAlert.CrCasRenterContractAlertContractActiviteStatus = "1";
-            else if (RentalDays>=2) crCasRenterContractAlert.CrCasRenterContractAlertContractActiviteStatus = "2";
+            else if (RentalDays >= 2) crCasRenterContractAlert.CrCasRenterContractAlertContractActiviteStatus = "2";
             crCasRenterContractAlert.CrCasRenterContractAlertContractStatus = Status.Active;
             if (await _unitOfWork.CrCasRenterContractAlert.AddAsync(crCasRenterContractAlert) != null) return true;
             return false;
         }
+
+
     }
 }
