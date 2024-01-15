@@ -26,38 +26,14 @@ namespace Bnan.Ui.Areas.BS.Controllers
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
-            var userInformation = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationLessor == lessorCode && x.CrMasUserInformationCode == userLogin.CrMasUserInformationCode, new[] { "CrMasUserBranchValidities.CrMasUserBranchValidity1" });
-            var branchesValidite = userInformation.CrMasUserBranchValidities.Where(x => x.CrMasUserBranchValidityBranchStatus == Status.Active);
-            List<CrCasBranchInformation> branches = new List<CrCasBranchInformation>();
-            if (branchesValidite != null)
-            {
-                foreach (var item in branchesValidite)
-                {
-                    branches.Add(item.CrMasUserBranchValidity1);
-                }
-            }
-            else
-            {
-                return RedirectToAction("Logout", "Account", new { area = "Identity" });
-            }
+            var bSLayoutVM = await GetBranchesAndLayout();
 
-            var selectBranch = userLogin.CrMasUserInformationDefaultBranch;
-            if (selectBranch == null || selectBranch == "000") selectBranch = "100";
-            var checkBranch = branches.Find(x => x.CrCasBranchInformationCode == selectBranch);
-            if (checkBranch == null) selectBranch = branches.FirstOrDefault().CrCasBranchInformationCode;
-            var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
 
             var adminstrive = _unitOfWork.CrCasSysAdministrativeProcedure.Find(x => x.CrCasSysAdministrativeProceduresLessor == lessorCode &&
                                                                                  x.CrCasSysAdministrativeProceduresTargeted == userLogin.CrMasUserInformationCode &&
                                                                                  x.CrCasSysAdministrativeProceduresCode == "303" &&
                                                                                  x.CrCasSysAdministrativeProceduresStatus == Status.Insert);
-            BSLayoutVM bSLayoutVM = new BSLayoutVM()
-            {
-                CrCasBranchInformations = branches,
-                SelectedBranch = selectBranch,
-                CrCasBranchInformation = branch,
-                CrCasSysAdministrativeProcedure = adminstrive
-            };
+            bSLayoutVM.CrCasSysAdministrativeProcedure = adminstrive;
             return View(bSLayoutVM);
         }
         [HttpPost]

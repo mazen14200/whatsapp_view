@@ -34,39 +34,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
             if (CultureInfo.CurrentUICulture.Name == "en-US") await ViewData.SetPageTitleAsync("Branches", "Renters", "", "", "", userLogin.CrMasUserInformationEnName);
             else await ViewData.SetPageTitleAsync("الفروع", "المستأجرين", "", "", "", userLogin.CrMasUserInformationArName);
             var lessorCode = userLogin.CrMasUserInformationLessor;
-
-            var userInformation = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationLessor == lessorCode && x.CrMasUserInformationCode == userLogin.CrMasUserInformationCode, new[] { "CrMasUserBranchValidities.CrMasUserBranchValidity1" });
-            var branchesValidite = userInformation.CrMasUserBranchValidities.Where(x => x.CrMasUserBranchValidityBranchStatus == Status.Active);
-            List<CrCasBranchInformation> branches = new List<CrCasBranchInformation>();
-            if (branchesValidite != null)
-            {
-                foreach (var item in branchesValidite)
-                {
-                    branches.Add(item.CrMasUserBranchValidity1);
-                }
-            }
-            else
-            {
-                return RedirectToAction("Logout", "Account", new { area = "Identity" });
-            }
-
-            var selectBranch = userLogin.CrMasUserInformationDefaultBranch;
-            if (selectBranch == null || selectBranch == "000") selectBranch = "100";
-            var checkBranch = branches.Find(x => x.CrCasBranchInformationCode == selectBranch);
-            if (checkBranch == null) selectBranch = branches.FirstOrDefault().CrCasBranchInformationCode;
-            var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
-
+            var bSLayoutVM = await GetBranchesAndLayout();
             var RenterAll = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == userLogin.CrMasUserInformationLessor, new[] { "CrCasRenterLessorNavigation" }).ToList();
             var mecahnizmEvaluations = _unitOfWork.CrMasSysEvaluation.FindAll(x => x.CrMasSysEvaluationsStatus == Status.Active).ToList();
-
-            BSLayoutVM bSLayoutVM = new BSLayoutVM()
-            {
-                CrCasBranchInformations = branches,
-                SelectedBranch = selectBranch,
-                CrCasBranchInformation = branch,
-                RentersLessor= RenterAll,
-                Evaluations = mecahnizmEvaluations,
-            };
+            bSLayoutVM.RentersLessor = RenterAll;
+            bSLayoutVM.Evaluations= mecahnizmEvaluations;
             return View(bSLayoutVM);
         }
 

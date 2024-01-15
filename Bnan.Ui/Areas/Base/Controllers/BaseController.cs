@@ -2,6 +2,7 @@
 using Bnan.Core.Extensions;
 using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
+using Bnan.Ui.ViewModels.BS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -136,6 +137,33 @@ namespace Bnan.Ui.Areas.Base.Controllers
         public async Task<bool> CheckAuth(string branchCode, string salespoint,string Balance,string CarsCount,string status)
         {
             return false;
+        }
+
+
+        public async Task<BSLayoutVM> GetBranchesAndLayout()
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var userInformation = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationLessor == lessorCode && x.CrMasUserInformationCode == userLogin.CrMasUserInformationCode, new[] { "CrMasUserBranchValidities.CrMasUserBranchValidity1" });
+            var branchesValidite = userInformation.CrMasUserBranchValidities.Where(x => x.CrMasUserBranchValidityBranchStatus == Status.Active);
+
+            List<CrCasBranchInformation> branches = branchesValidite != null
+                ? branchesValidite.Select(item => item.CrMasUserBranchValidity1).ToList()
+                : new List<CrCasBranchInformation>();
+
+            var selectBranch = userLogin.CrMasUserInformationDefaultBranch;
+            if (selectBranch == null || selectBranch == "000") selectBranch = "100";
+            var checkBranch = branches.Find(x => x.CrCasBranchInformationCode == selectBranch);
+            if (checkBranch == null) selectBranch = branches.FirstOrDefault()?.CrCasBranchInformationCode;
+
+            var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
+
+            return new BSLayoutVM
+            {
+                CrCasBranchInformations = branches,
+                SelectedBranch = selectBranch,
+                CrCasBranchInformation = branch
+            };
         }
     }
 }

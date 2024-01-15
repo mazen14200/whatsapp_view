@@ -16,10 +16,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
 
 
-<link href="~/BranchSys/Renters/css/style.css" rel="styleSheet">
+<link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
 @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
 {
-    <link href="~/BranchSys/Renters/css/English_style.css" rel="styleSheet">
+    <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">
 }
 
 
@@ -29,7 +29,7 @@
             <div class="card main-card ">
                 <div class="row pt-2">
                     <a asp-action="Index" asp-area="BS" asp-controller="Home" style="width: fit-content;">
-                        <img src="~/BranchSys/Renters/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+                        <img src="~/BranchSys/Pages/img/cancel.png" alt="cancle_icon" class="cancle-icon">
                     </a>
                 </div>
                 <div class="row layout-row">
@@ -272,7 +272,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <a href="#">
-                                                                        <img src="~/BranchSys/Renters/img/Rectangle 193.png" alt="pdf">
+                                                                        <img src="~/BranchSys/Pages/img/Rectangle 193.png" alt="pdf">
                                                                     </a>
                                                                 </td>
                                                                 @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
@@ -350,7 +350,7 @@
                                     </div>
                                     <div class="row button-row pt-3 pb-1 ps-4">
                                         <div class="button-card55">
-                                            <a href="tenant.html" class="">
+                                            <a  class="">
                                                 <a asp-action="Index" asp-area="BS" asp-controller="Renters" class="btn btn-custom">@localizer["Backk"]</a>
                                             </a>
                                         </div>

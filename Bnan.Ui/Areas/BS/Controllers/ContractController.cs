@@ -34,30 +34,12 @@ namespace Bnan.Ui.Areas.BS.Controllers
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
-            var userInformation = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationLessor == lessorCode && x.CrMasUserInformationCode == userLogin.CrMasUserInformationCode, new[] { "CrMasUserBranchValidities.CrMasUserBranchValidity1" });
-            var branchesValidite = userInformation.CrMasUserBranchValidities.Where(x => x.CrMasUserBranchValidityBranchStatus == Status.Active);
-            List<CrCasBranchInformation> branches = new List<CrCasBranchInformation>();
-            if (branchesValidite != null)
-            {
-                foreach (var item in branchesValidite)
-                {
-                    branches.Add(item.CrMasUserBranchValidity1);
-                }
-            }
-            else
-            {
-                return RedirectToAction("Logout", "Account", new { area = "Identity" });
-            }
-
-            var selectBranch = userLogin.CrMasUserInformationDefaultBranch;
-            if (selectBranch == null || selectBranch == "000") selectBranch = "100";
-            var checkBranch = branches.Find(x => x.CrCasBranchInformationCode == selectBranch);
-            if (checkBranch == null) selectBranch = branches.FirstOrDefault().CrCasBranchInformationCode;
-            var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
+            
+            var bSLayoutVM = await GetBranchesAndLayout();
 
             var drivers = _unitOfWork.CrCasRenterPrivateDriverInformation.FindAll(x => x.CrCasRenterPrivateDriverInformationLessor == lessorCode && x.CrCasRenterPrivateDriverInformationStatus == Status.Active).ToList();
 
-            var carsAvailable = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == selectBranch && x.CrCasCarInformationStatus == Status.Active &&
+            var carsAvailable = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch && x.CrCasCarInformationStatus == Status.Active &&
                                                                                  x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationOwnerStatus == Status.Active &&
                                                                                 (x.CrCasCarInformationForSaleStatus == Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale),
                                                                                 new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics",
@@ -71,7 +53,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var AccountBanks = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankLessor == lessorCode && x.CrCasAccountBankStatus == Status.Active, new[] { "CrCasAccountSalesPoints" }).ToList();
             var PaymentMethod = _unitOfWork.CrMasSupAccountPaymentMethod.FindAll(x => x.CrMasSupAccountPaymentMethodStatus == Status.Active).ToList();
             var SalesPoint = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == lessorCode &&
-                                                                             x.CrCasAccountSalesPointBrn == selectBranch &&
+                                                                             x.CrCasAccountSalesPointBrn == bSLayoutVM.SelectedBranch &&
                                                                              x.CrCasAccountSalesPointBankStatus == Status.Active &&
                                                                              x.CrCasAccountSalesPointStatus == Status.Active &&
                                                                              x.CrCasAccountSalesPointBranchStatus == Status.Active).ToList();
@@ -79,23 +61,18 @@ namespace Bnan.Ui.Areas.BS.Controllers
             DateTime year = DateTime.Now;
             var y = year.ToString("yy");
             var sector = "1";
-            var autoinc = GetContractLastRecord("1", lessorCode, selectBranch).CrCasRenterContractBasicNo;
-            var BasicContractNo = y + "-" + sector + "401" + "-" + lessorCode + selectBranch + "-" + autoinc;
+            var autoinc = GetContractLastRecord("1", lessorCode, bSLayoutVM.SelectedBranch).CrCasRenterContractBasicNo;
+            var BasicContractNo = y + "-" + sector + "401" + "-" + lessorCode + bSLayoutVM.SelectedBranch + "-" + autoinc;
             ViewBag.ContractNo = BasicContractNo;
 
-            BSLayoutVM bSLayoutVM = new BSLayoutVM()
-            {
-                CrCasBranchInformations = branches,
-                SelectedBranch = selectBranch,
-                CrCasBranchInformation = branch,
-                Drivers = drivers,
-                CarCategories = categoryCars,
-                CarsFilter = carsAvailable,
-                CarsCheckUp = CheckupCars,
-                SalesPoint = SalesPoint,
-                AccountBanks = AccountBanks,
-                PaymentMethods = PaymentMethod
-            };
+            bSLayoutVM.Drivers = drivers;
+            bSLayoutVM.CarCategories = categoryCars;
+            bSLayoutVM.CarsFilter = carsAvailable;
+            bSLayoutVM.CarsCheckUp = CheckupCars;
+            bSLayoutVM.SalesPoint = SalesPoint;
+            bSLayoutVM.AccountBanks = AccountBanks;
+            bSLayoutVM.PaymentMethods = PaymentMethod;
+
             return View(bSLayoutVM);
         }
         [HttpPost]

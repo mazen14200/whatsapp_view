@@ -1,0 +1,49 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
+@model BSLayoutVM
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+
+
+
+
+<table class="table table-bordered table-hover" id="reportTable">
+    <thead>
+        <tr>
+            @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+            {
+                <th scope="col" class="text-right">@localizer["Status"]</th>
+            }
+            else
+            {
+                <th scope="col" class="text-left">@localizer["Status"]</th>
+
+            }
+            <th scope="col">رصيد سابق</th>
+            <th scope="col">مدين </th>
+            <th scope="col">دائن</th>
+            <th scope="col">طريقة الدفع</th>
+            <th scope="col"> المرجع</th>
+            <th scope="col">تاريخه</th>
+            <th scope="col">رقم القيد</th>
+            <th scope="col">م</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>عهدة</td>
+            <td>1.000.000.00</td>
+            <td>00.00</td>
+            <td>1.000.000.00</td>
+            <td>نقدًا</td>
+            <td>عقد</td>
+            <td>  13/2/2023 </td>
+            <td class="contract_number" data-bs-toggle="modal" data-bs-target="#myModal">23-1-60-5001-1020136</td>
+            <td scope="row">1</td>
+        </tr>
+    </tbody>
+</table>

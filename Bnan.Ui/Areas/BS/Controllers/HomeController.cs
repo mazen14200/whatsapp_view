@@ -37,67 +37,41 @@ namespace Bnan.Ui.Areas.BS.Controllers
             if (CultureInfo.CurrentUICulture.Name== "en-US") await ViewData.SetPageTitleAsync("Branches", "", "", "", "", userLogin.CrMasUserInformationEnName);
             else await ViewData.SetPageTitleAsync("الفروع", "", "", "", "", userLogin.CrMasUserInformationArName);
             var lessorCode = userLogin.CrMasUserInformationLessor;
-            var userInformation = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationLessor == lessorCode && x.CrMasUserInformationCode == userLogin.CrMasUserInformationCode, new[] { "CrMasUserBranchValidities.CrMasUserBranchValidity1" });
-            var branchesValidite = userInformation.CrMasUserBranchValidities.Where(x => x.CrMasUserBranchValidityBranchStatus == Status.Active&&x.CrMasUserBranchValidityBranchRecStatus!=Status.Deleted);
-            List<CrCasBranchInformation> branches = new List<CrCasBranchInformation>();
-            if (branchesValidite != null)
-            {
-                foreach (var item in branchesValidite)
-                {
-                    branches.Add(item.CrMasUserBranchValidity1);
-                }
-            }
-            else
-            {
-                return RedirectToAction("Logout", "Account", new { area = "Identity" });
-            }
+            var bSLayoutVM = await GetBranchesAndLayout();
 
 
+            var Cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationStatus != Status.Deleted && x.CrCasCarInformationStatus != Status.Sold && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch, new[] { "CrCasCarInformationDistributionNavigation" }).ToList();
+            var carsRented = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch && x.CrCasCarInformationStatus == Status.Rented, new[] { "CrCasCarInformationDistributionNavigation" }).ToList();
 
-
-
-            var selectBranch = userLogin.CrMasUserInformationDefaultBranch;
-            if (selectBranch == null || selectBranch == "000")
-            {
-                selectBranch = "100";
-                 await  ChangeBranch(selectBranch);
-            }
-            var checkBranch = branches.Find(x => x.CrCasBranchInformationCode == selectBranch);
-            if (checkBranch == null) selectBranch = branches.FirstOrDefault().CrCasBranchInformationCode;
-            var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
-
-            var Cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationStatus != Status.Deleted && x.CrCasCarInformationStatus != Status.Sold && x.CrCasCarInformationBranch == selectBranch, new[] { "CrCasCarInformationDistributionNavigation" }).ToList();
-            var carsRented = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == selectBranch && x.CrCasCarInformationStatus == Status.Rented, new[] { "CrCasCarInformationDistributionNavigation" }).ToList();
-
-            var carsAvailable = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == selectBranch && x.CrCasCarInformationStatus == Status.Active &&
+            var carsAvailable = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch && x.CrCasCarInformationStatus == Status.Active &&
                                                                                 x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationBranchStatus == Status.Active &&
                                                                                 x.CrCasCarInformationOwnerStatus == Status.Active &&
                                                                                (x.CrCasCarInformationForSaleStatus == Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale),
                                                                                new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics" }).ToList();
-            var carsUnAvailable = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == selectBranch && (x.CrCasCarInformationStatus == Status.Hold ||
+            var carsUnAvailable = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch && (x.CrCasCarInformationStatus == Status.Hold ||
                                                                                 x.CrCasCarInformationStatus == Status.Maintaince || x.CrCasCarInformationPriceStatus == false ||
                                                                                 x.CrCasCarInformationBranchStatus != Status.Active || x.CrCasCarInformationOwnerStatus != Status.Active ||
                                                                                (x.CrCasCarInformationStatus == Status.Active && x.CrCasCarInformationForSaleStatus == Status.ForSale)),
                                                                                new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics" }).ToList();
-            var documentsMaintenance = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == selectBranch, new[] { "CrCasCarDocumentsMaintenanceProceduresNavigation" }).ToList();
+            var documentsMaintenance = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == bSLayoutVM.SelectedBranch, new[] { "CrCasCarDocumentsMaintenanceProceduresNavigation" }).ToList();
             ViewBag.carCount = Cars.Count();
             ViewBag.AvaliableCars = carsAvailable.Count();
             ViewBag.UnAvaliableCars = carsUnAvailable.Count();
             ViewBag.RentedCars = carsRented.Count();
             var userInfo = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == userLogin.CrMasUserInformationCode, new[] { "CrMasUserBranchValidities" });
-            var branchValidity = userInfo.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityBranch == selectBranch);
+            var branchValidity = userInfo.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityBranch == bSLayoutVM.SelectedBranch);
 
-            var Documents = _unitOfWork.CrCasBranchDocument.FindAll(x => x.CrCasBranchDocumentsLessor == lessorCode && x.CrCasBranchDocumentsBranch == selectBranch).ToList();
+            var Documents = _unitOfWork.CrCasBranchDocument.FindAll(x => x.CrCasBranchDocumentsLessor == lessorCode && x.CrCasBranchDocumentsBranch == bSLayoutVM.SelectedBranch).ToList();
             ViewBag.CompanyDocumentsRenewedBS = Documents.Where(x => x.CrCasBranchDocumentsStatus == Status.Renewed).Count();
             ViewBag.CompanyDocumentsAboutExpireBS = Documents.Where(x => x.CrCasBranchDocumentsStatus == Status.AboutToExpire).Count();
             ViewBag.CompanyDocumentsExpiredBS = Documents.Where(x => x.CrCasBranchDocumentsStatus == Status.Expire).Count();
 
-            var DocumentsCar = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == selectBranch && x.CrCasCarDocumentsMaintenanceProceduresClassification == "12").ToList();
+            var DocumentsCar = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == bSLayoutVM.SelectedBranch && x.CrCasCarDocumentsMaintenanceProceduresClassification == "12").ToList();
             ViewBag.CompanyDocumentsCarRenewedBS = DocumentsCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.Renewed).Count();
             ViewBag.CompanyDocumentsCarAboutExpireBS = DocumentsCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire).Count();
             ViewBag.CompanyDocumentsCarExpiredBS = DocumentsCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.Expire).Count();
 
-            var MaintainceCar = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == selectBranch && x.CrCasCarDocumentsMaintenanceProceduresClassification == "13").ToList();
+            var MaintainceCar = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == bSLayoutVM.SelectedBranch && x.CrCasCarDocumentsMaintenanceProceduresClassification == "13").ToList();
             ViewBag.CompanyMaintainceCarRenewedBS = MaintainceCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.Renewed).Count();
             ViewBag.CompanyMaintainceCarAboutExpireBS = MaintainceCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire).Count();
             ViewBag.CompanyMaintainceCarExpiredBS = MaintainceCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.Expire).Count();
@@ -111,11 +85,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                 x.CrCasSysAdministrativeProceduresTargeted == userLogin.CrMasUserInformationCode &&
                                                                                 x.CrCasSysAdministrativeProceduresCode == "303" &&
                                                                                 x.CrCasSysAdministrativeProceduresStatus == Status.Insert).Count();
-            var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode && x.CrCasRenterContractBasicBranch == selectBranch).ToList();
-            var AlertContract = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertContractStatus == Status.Active&&x.CrCasRenterContractAlertBranch==selectBranch).ToList();
+            var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode && x.CrCasRenterContractBasicBranch == bSLayoutVM.SelectedBranch).ToList();
+            var AlertContract = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertContractStatus == Status.Active&&x.CrCasRenterContractAlertBranch== bSLayoutVM.SelectedBranch).ToList();
 
            //For Charts 
-           var AccountReceipt= _unitOfWork.CrCasAccountReceipt.FindAll(x=>x.CrCasAccountReceiptLessorCode==lessorCode&&x.CrCasAccountReceiptBranchCode==selectBranch&&
+           var AccountReceipt= _unitOfWork.CrCasAccountReceipt.FindAll(x=>x.CrCasAccountReceiptLessorCode==lessorCode&&x.CrCasAccountReceiptBranchCode== bSLayoutVM.SelectedBranch &&
                                                                           x.CrCasAccountReceiptIsPassing!="4"&& x.CrCasAccountReceiptPaymentMethod!="30"&&
                                                                           x.CrCasAccountReceiptPaymentMethod!="40").ToList();
             //For Branch
@@ -131,18 +105,14 @@ namespace Bnan.Ui.Areas.BS.Controllers
             ViewBag.UserMasterBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "22" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
             ViewBag.UserExpressBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "23" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
 
-            BSLayoutVM bSLayoutVM = new BSLayoutVM()
-            {
-                CrCasBranchInformations = branches,
-                RentedCars = null,
-                AvaliableCars = null,
-                UnAvaliableCars = null,
-                SelectedBranch = selectBranch,
-                CrCasBranchInformation = branch,
-                CrMasUserBranchValidity = branchValidity,
-                BasicContracts=Contracts,
-                AlertContract=AlertContract
-            };
+
+            bSLayoutVM.RentedCars = null;
+            bSLayoutVM.UnAvaliableCars = null;
+            bSLayoutVM.AvaliableCars = null;
+            bSLayoutVM.CrMasUserBranchValidity = branchValidity;
+            bSLayoutVM.BasicContracts = Contracts;
+            bSLayoutVM.AlertContract = AlertContract;
+           
             return View(bSLayoutVM);
         }
         public async Task<IActionResult> ChangeBranch(string selectedBranch)
