@@ -31,5 +31,8 @@ namespace Bnan.Core.Extensions
         public static string Cancel { get; set; } = "Q";
         public static string UnDeleted { get; set; } = "UD";
         public static string UnHold { get; set; } = "UH";
+        public static string Custody { get; set; } = "1";
+        public static string Booked { get; set; } = "2";
+        public static string Transfer { get; set; } = "3";
     }
 }

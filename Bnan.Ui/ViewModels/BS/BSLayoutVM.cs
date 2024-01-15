@@ -27,7 +27,10 @@ namespace Bnan.Ui.ViewModels.BS
         public List<CrCasRenterContractBasic>? RenterContracts { get; set; }
         public List<CrMasSysEvaluation>? Evaluations { get; set; }
 
-        //Renter Lessor PAge
+        //Report PAge
+        public List<CrCasAccountReceipt>? AccountReceipts { get; set; }
+        public decimal? TotalDebit { get; set; }
+        public decimal? TotalCreditor { get; set; }
 
         public CrCasBranchInformation? CrCasBranchInformation { get; set; }
         public CrMasUserBranchValidity? CrMasUserBranchValidity { get; set; }

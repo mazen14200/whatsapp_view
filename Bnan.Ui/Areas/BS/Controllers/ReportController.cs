@@ -29,16 +29,62 @@ namespace Bnan.Ui.Areas.BS.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            
             //To Set Title 
             var titles = await setTitle("501", "5501012", "5");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
-            var bsLayoutVM= await GetBranchesAndLayout();
+            var bsLayoutVM = await GetBranchesAndLayout();
 
+            var userInfo = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == userLogin.CrMasUserInformationCode, new[] { "CrMasUserBranchValidities" });
+            var branchValidity = userInfo.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityBranch == bsLayoutVM.SelectedBranch);
+            var accountReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == lessorCode &&
+                                                                            x.CrCasAccountReceiptBranchCode == bsLayoutVM.SelectedBranch && x.CrCasAccountReceiptIsPassing != "4" &&
+                                                                            x.CrCasAccountReceiptPaymentMethod != "30" && x.CrCasAccountReceiptPaymentMethod != "40",
+                                                                            new[] { "CrCasAccountReceiptPaymentMethodNavigation", "CrCasAccountReceiptReferenceTypeNavigation" }).ToList();
+
+            var lastAccountReceipt = accountReceipts.OrderByDescending(x => x.CrCasAccountReceiptDate).FirstOrDefault();
+            var ToDate = lastAccountReceipt?.CrCasAccountReceiptDate;
+            var FromDate = ToDate?.AddDays(-30);
+            ViewBag.ToDate = ToDate?.ToString("yyyy-MM-dd");
+            ViewBag.FromDate = FromDate?.ToString("yyyy-MM-dd");
+
+            var filterByDateAccountReceipt = accountReceipts.Where(x => x.CrCasAccountReceiptDate >= FromDate && x.CrCasAccountReceiptDate <= ToDate).ToList();
+
+
+            bsLayoutVM.CrMasUserBranchValidity = branchValidity;
+            bsLayoutVM.AccountReceipts = filterByDateAccountReceipt;
+            bsLayoutVM.TotalCreditor = bsLayoutVM.AccountReceipts.Sum(x => x.CrCasAccountReceiptPayment);
+            bsLayoutVM.TotalDebit = bsLayoutVM.AccountReceipts.Sum(x => x.CrCasAccountReceiptReceipt);
             return View(bsLayoutVM);
         }
+        [HttpGet]
+        public async Task<PartialViewResult> GetReceiptsByStatus(string status, string StartDate, string EndDate, string branchCode)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            BSLayoutVM bSLayoutVM = new BSLayoutVM();
+
+            var accountReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == lessorCode &&
+                                                                            x.CrCasAccountReceiptBranchCode == branchCode && x.CrCasAccountReceiptIsPassing != "4" &&
+                                                                            x.CrCasAccountReceiptPaymentMethod != "30" && x.CrCasAccountReceiptPaymentMethod != "40",
+                                                                            new[] { "CrCasAccountReceiptPaymentMethodNavigation", "CrCasAccountReceiptReferenceTypeNavigation" }).ToList();
+            if (status == Status.All) bSLayoutVM.AccountReceipts = accountReceipts.Where(x => x.CrCasAccountReceiptDate?.Date >= DateTime.Parse(StartDate) &&
+                                                                                         x.CrCasAccountReceiptDate?.Date <= DateTime.Parse(EndDate)).ToList();
+
+
+
+            else bSLayoutVM.AccountReceipts = accountReceipts.Where(x => x.CrCasAccountReceiptDate?.Date >= DateTime.Parse(StartDate) &&
+                                                                         x.CrCasAccountReceiptDate?.Date <= DateTime.Parse(EndDate) &&
+                                                                         x.CrCasAccountReceiptIsPassing == status).ToList();
+
+            bSLayoutVM.TotalCreditor = bSLayoutVM.AccountReceipts.Sum(x => x.CrCasAccountReceiptPayment);
+            bSLayoutVM.TotalDebit = bSLayoutVM.AccountReceipts.Sum(x => x.CrCasAccountReceiptReceipt);
+
+            return PartialView("_ReportsData", bSLayoutVM);
+        }
+
+
     }
 }
