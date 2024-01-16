@@ -41,7 +41,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var branchValidity = userInfo.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityBranch == bsLayoutVM.SelectedBranch);
             var accountReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == lessorCode &&
                                                                             x.CrCasAccountReceiptBranchCode == bsLayoutVM.SelectedBranch && x.CrCasAccountReceiptIsPassing != "4" &&
-                                                                            x.CrCasAccountReceiptPaymentMethod != "30" && x.CrCasAccountReceiptPaymentMethod != "40",
+                                                                            x.CrCasAccountReceiptPaymentMethod != "30" && x.CrCasAccountReceiptPaymentMethod != "40" &&
+                                                                            x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode,
                                                                             new[] { "CrCasAccountReceiptPaymentMethodNavigation", "CrCasAccountReceiptReferenceTypeNavigation" }).ToList();
 
             var lastAccountReceipt = accountReceipts.OrderByDescending(x => x.CrCasAccountReceiptDate).FirstOrDefault();
@@ -68,7 +69,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             var accountReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == lessorCode &&
                                                                             x.CrCasAccountReceiptBranchCode == branchCode && x.CrCasAccountReceiptIsPassing != "4" &&
-                                                                            x.CrCasAccountReceiptPaymentMethod != "30" && x.CrCasAccountReceiptPaymentMethod != "40",
+                                                                            x.CrCasAccountReceiptPaymentMethod != "30" && x.CrCasAccountReceiptPaymentMethod != "40" &&
+                                                                            x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode,
                                                                             new[] { "CrCasAccountReceiptPaymentMethodNavigation", "CrCasAccountReceiptReferenceTypeNavigation" }).ToList();
             if (status == Status.All) bSLayoutVM.AccountReceipts = accountReceipts.Where(x => x.CrCasAccountReceiptDate?.Date >= DateTime.Parse(StartDate) &&
                                                                                          x.CrCasAccountReceiptDate?.Date <= DateTime.Parse(EndDate)).ToList();
@@ -84,7 +86,41 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             return PartialView("_ReportsData", bSLayoutVM);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetReceiptDetails(string ReceiptNo)
+        {
+            var receipt = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptNo == ReceiptNo, new[] {
+                                                                                                                            "CrCasAccountReceiptReferenceTypeNavigation",
+                                                                                                                            "CrCasAccountReceiptBankNavigation",
+                                                                                                                            "CrCasAccountReceiptSalesPointNavigation",
+                                                                                                                            "CrCasAccountReceiptPaymentMethodNavigation",
+                                                                                                                             "CrCasAccountReceiptAccountNavigation"});
+            var userRecevied = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == receipt.CrCasAccountReceiptPassingUser);
+            if (receipt == null) return Json(false);
+            ReceiptDetailsVM receiptDetails = new ReceiptDetailsVM()
+            {
+                ReceiptNo = ReceiptNo,
+                Date = receipt.CrCasAccountReceiptDate?.ToString("yyyy/MM/dd"),
+                Creditor = receipt.CrCasAccountReceiptPayment?.ToString("N2"),
+                ReferenceNo = receipt.CrCasAccountReceiptReferenceNo,
+                ReferenceTypeAr = receipt.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceArName,
+                ReferenceTypeEn = receipt.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceEnName,
+                AccountBankCode = receipt.CrCasAccountReceiptAccountNavigation?.CrCasAccountBankCode,
+                BankAr = receipt.CrCasAccountReceiptBankNavigation?.CrMasSupAccountBankArName,
+                BankEn = receipt.CrCasAccountReceiptBankNavigation?.CrMasSupAccountBankEnName,
+                SalesPointAr = receipt.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointArName,
+                SalesPointEn = receipt.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointEnName,
+                PaymentMethodAr = receipt.CrCasAccountReceiptPaymentMethodNavigation?.CrMasSupAccountPaymentMethodArName,
+                PaymentMethodEn = receipt.CrCasAccountReceiptPaymentMethodNavigation?.CrMasSupAccountPaymentMethodEnName,
+                CustodyNo = receipt.CrCasAccountReceiptPassingReference,
+                StatusReceipt = receipt.CrCasAccountReceiptIsPassing,
+                UserReceivedAr = userRecevied?.CrMasUserInformationArName,
+                UserReceivedEn = userRecevied?.CrMasUserInformationEnName,
+                ReceivedDate = receipt.CrCasAccountReceiptPassingDate?.ToString("yyyy/MM/dd")
+            };
 
+            return Json(receiptDetails);
+        }
 
     }
 }

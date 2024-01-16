@@ -62,7 +62,7 @@
                         <div class="col-md-11 mx-0">
 
                             <form id="report-form">
-                                <input asp-for="SelectedBranch" id="Branch" hidden/>
+                                <input asp-for="SelectedBranch" id="Branch" hidden />
                                 <fieldset>
                                     <div class="form-card">
                                         <div class="row " style="flex-direction:row-reverse">
@@ -98,7 +98,7 @@
                                                     <P>@localizer["CreditorTotal"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P id="Creditor">@Model.TotalCreditor?.ToString("N2")</P>
+                                                    <P id="CreditorTotal">@Model.TotalCreditor?.ToString("N2")</P>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-lg-3 d-flex" style="flex-direction:row-reverse">
@@ -147,7 +147,7 @@
                                         </div>
                                         <div class="row table-row">
                                             <div class="col table-scroll w-100 report_table" id="ReportsData">
-                                                <partial name="_ReportsData"/>
+                                                <partial name="_ReportsData" />
                                             </div>
                                         </div>
                                     </div>
@@ -160,6 +160,147 @@
         </div>
     </div>
 </section>
+
+
+
+<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header " style="border-bottom:0px">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                <h5 class="modal-title card-title">بيانات تفاصيل القيد</h5>
+            </div>
+            <div class="modal-body p-0">
+                <div class="data-details">
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <p>@localizer["ReceiptNo"]</p>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p id="ReceiptNo"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <p>@localizer["Date"]</p>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p id="Date"></p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["Creditor"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="Creditor"></P>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["ReferenceNo"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="ReferenceNo"></P>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["ReferenceType"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="ReferenceType"></P>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["AccountBankCode"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p id="AccountBankCode"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P> @localizer["Bank"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="Bank"></P>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <p> @localizer["SalesPoint"] </p>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p id="SalesPoint"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P> @localizer["PaymentMethod"] </P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="PaymentMethod"></P>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <p>@localizer["CustodyNo"]</p>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="CustodyNo"></P>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["StatusReceipt"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="StatusReceipt"></P>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <p> @localizer["UserReceived"]</p>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="UserReceived"></P>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["ReceivedDate"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p id="ReceivedDate"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <footer class="fixed-bottom-xl">
     <div class="before-footer-widget">
         <svg width: 100%; height:auto viewbox="0 0 2444 132">
@@ -170,8 +311,6 @@
     </div>
 </footer>
 @section scripts {
-
-
     <script>
         // Function to handle both radio button click and form submission
         function applyFilters() {
@@ -179,7 +318,6 @@
             var startDate = $("#start-date").val();
             var endDate = $("#end-date").val();
             var branchCode = $("#Branch").val();
-
             $.ajax({
                 type: "GET",
                 data: {
@@ -197,8 +335,6 @@
                     // Update elements in your view
                     $("#Debit").text(parseFloat(totalDebit).toFixed(2));
                     $("#Creditor").text(parseFloat(totalCreditor).toFixed(2));
-                    console.log(totalCreditor);
-                    console.log(totalDebit);
                 },
             });
         }
@@ -210,6 +346,67 @@
 
         $("#filterDateBtn").on("click", function () {
             applyFilters();
+        });
+    </script>
+    <script>
+        function getDetails(ReceiptNo) {
+                if (ReceiptNo != null && ReceiptNo != "" & ReceiptNo != undefined) {
+                    $.ajax({
+                        type: "GET",
+                        data: {
+                            ReceiptNo: ReceiptNo,
+                        },
+                        url: "@Url.Action("GetReceiptDetails", "Report", new { Area = "BS" })",
+                        success: function (response) {
+                            if (response != null) {
+                                $("#ReceiptNo").text(response.receiptNo);
+                                $("#Date").text(response.date);
+                                $("#Creditor").text(response.creditor);
+                                $("#ReferenceNo").text(response.referenceNo);
+                                $("#AccountBankCode").text(response.accountBankCode);
+
+                                if ("@requestCulture?.RequestCulture.UICulture.Name" == "ar-EG") {
+                                    $("#ReferenceType").text(response.referenceTypeAr);
+                                    $("#Bank").text(response.bankAr);
+                                    $("#SalesPoint").text(response.salesPointAr);
+                                    $("#PaymentMethod").text(response.paymentMethodAr);
+                                    $("#UserReceived").text(response.userReceivedAr);
+                                }
+                                else {
+                                    $("#ReferenceType").text(response.referenceTypeEn);
+                                    $("#Bank").text(response.bankEn);
+                                    $("#SalesPoint").text(response.salesPointEn);
+                                    $("#PaymentMethod").text(response.paymentMethodEn);
+                                    $("#UserReceived").text(response.userReceivedEn);
+                                }
+
+                                $("#ReceivedDate").text(response.receivedDate);
+                                $("#CustodyNo").text(response.custodyNo);
+                                if (response.statusReceipt == @Status.Custody) {
+                                    $("#StatusReceipt").text('@localizer["Custody"]');
+                                }
+                                else if (response.statusReceipt == @Status.Booked) {
+                                    $("#StatusReceipt").text('@localizer["booked"]');
+                                }
+                                else if (response.statusReceipt == @Status.Transfer) {
+                                    $("#StatusReceipt").text('@localizer["Transfer"]');
+                                }
+                            }
+                            $('#myModal').modal('show');
+                        },
+                    });
+                }
+        }
+        // Initial call on document ready
+        $('#ReportsData').on('click', '.modal-trigger', function () {
+            var receiptNo = $(this).data('id');
+            getDetails(receiptNo);
+        });
+
+        $(document).ready(function () {
+            $('.close').click(function () {
+                $('#myModal').modal('hide');
+            });
         });
     </script>
 }

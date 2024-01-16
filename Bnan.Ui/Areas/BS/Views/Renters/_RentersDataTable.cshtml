@@ -13,37 +13,20 @@
 <table class="table table-bordered table-hover" id="myTable">
     <thead>
         <tr>
-            @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
-            {
-                <th scope="col" class="text-right">@localizer["Status"]</th>
-            }
-            else
-            {
-                <th scope="col" class="text-left">@localizer["Status"]</th>
-
-            }
-            @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
-            {
-                <th scope="col" class="text-right">@localizer["Evaluation"]</th>
-            }
-            else
-            {
-                <th scope="col" class="text-left">@localizer["Evaluation"]</th>
-
-            }
+            <th scope="col" class="@(requestCulture?.RequestCulture.UICulture.Name == "ar-EG" ? "text-right" : "text-left")">
+                @localizer["Status"]
+            </th>
+            <th scope="col">@localizer["Evaluation"]</th>
+            <th scope="col" class="@(requestCulture?.RequestCulture.UICulture.Name == "ar-EG" ? "text-right" : "text-left")">
+                @localizer["DealingMechanism"]
+            </th>
             <th scope="col">@localizer["ContractCount"]</th>
             <th scope="col">@localizer["TradedAmount"]</th>
             <th scope="col">@localizer["Balance"]</th>
             <th scope="col">@localizer["LastVisit"]</th>
-            @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
-            {
-                <th scope="col" class="text-right">@localizer["Name"]</th>
-            }
-            else
-            {
-                <th scope="col" class="text-left">@localizer["Name"]</th>
-
-            }
+            <th scope="col" class="@(requestCulture?.RequestCulture.UICulture.Name == "ar-EG" ? "text-right" : "text-left")">
+                @localizer["Name"]
+            </th>
             <th scope="col">@localizer["RenterDriverID"]</th>
             <th scope="col">@localizer["No"]</th>
         </tr>
@@ -82,6 +65,7 @@
                         }
                     </td>
                 }
+                <td>@item.CrCasRenterLessorEvaluationValue?.ToString("N2")</td>
                 @{
                     var Evaluation = Model.Evaluations.Find(x => x.CrMasSysEvaluationsCode == item.CrCasRenterLessorDealingMechanism);
                 }

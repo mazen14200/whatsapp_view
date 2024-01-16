@@ -39,7 +39,7 @@
         {
             @foreach (var item in Model.AccountReceipts)
             {
-                <tr>
+                <tr class="modal-trigger" data-id="@item.CrCasAccountReceiptNo">
                     @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                     {
                         <td class="text-right">
@@ -103,6 +103,7 @@
         
     </tbody>
 </table>
+
 
 <input id="TotalCreditor" value="@Model.TotalCreditor" hidden />
 <input id="TotalDebit" value="@Model.TotalDebit" hidden />

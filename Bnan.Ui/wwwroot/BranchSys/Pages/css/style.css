@@ -244,8 +244,9 @@ position: sticky;
 top: 0;
 /* /// background-color:rgba(223, 221, 221, 0.274);*/
 }
-.table td{
-color: #39629C;
+.table td {
+    color: #39629C;
+    font-weight: 600;
 }
 .table tbody tr{
 cursor: pointer;

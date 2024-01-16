@@ -1111,7 +1111,7 @@
   "RentalDays": "ايام التأجير",
   "KilometersCut": "الكيلوات المقطوعه",
   "AmountsTraded": " المبالغ المتداولة",
-  "DealingMechanism": "آالية التعامل",
+  "DealingMechanism": "آلية التعامل",
   "MemberShip": "العضوية",
   "Birthdate": "تاريخ الميلاد",
   "Verification": "تحقق",
@@ -1193,5 +1193,11 @@
   "Creditor": "دائن",
   "Debit": "مدين",
   "ReceiptNo": "رقم القيد",
-  "ReferenceType": "نوع المرجع"
+  "ReferenceType": "نوع المرجع",
+  "ReferenceNo": "رقم المرجع",
+  "Bank": "البنك",
+  "CustodyNo": "رقم تسليم العهدة",
+  "StatusReceipt": "حالة القيد",
+  "UserReceived": "المستلم",
+  "ReceivedDate": "تاريخ التسليم"
 }
