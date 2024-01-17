@@ -100,7 +100,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
             return PartialView("_CustodyData", bSLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> SendCustody(BSLayoutVM bSLayout , List<string> ReceiptsNo,string SalesPoint, string ReferenceNo,string Reasons)
+        public async Task<IActionResult> SendCustody(BSLayoutVM bSLayout , List<string> ReceiptsNo, string ReferenceNo,string Reasons,
+                                                     string TotalReceived,string TotalPayment, string TotalReceipt)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -130,10 +131,44 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     }
                 }
             }
-            if (adminstritive!=null && checkUpdateReceipt) if (await _unitOfWork.CompleteAsync()>1) _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+
+            // Table Changes When Submit Form 
+            // User Informaion
+            var CheckUpdateUserInfo = true;
+            CheckUpdateUserInfo = await _custodyService.UpdateUserInfo(userLogin.CrMasUserInformationCode, lessorCode, TotalPayment);
+
+            // User Informaion
+            var CheckUpdateBranch = true;
+            CheckUpdateBranch = await _custodyService.UpdateBranch(bSLayout.SelectedBranch, lessorCode, TotalPayment);
+
+
+
+
+            // SalesPoint
+            var CheckUpdateSalesPoint=true;
+            var SalesPoint = _unitOfWork.CrCasAccountSalesPoint.Find(x => x.CrCasAccountSalesPointCode == bSLayout.SalesPointSelected &&
+                                                                        x.CrCasAccountSalesPointLessor == lessorCode &&
+                                                                        x.CrCasAccountSalesPointBrn == bSLayout.SelectedBranch);
+
+            if (SalesPoint != null) CheckUpdateSalesPoint = await _custodyService.UpdateSalesPoint(lessorCode, bSLayout.SelectedBranch, SalesPoint.CrCasAccountSalesPointCode, TotalPayment);
+            else CheckUpdateSalesPoint = false;
+
+            // BranchValidity
+            var CheckUpdateBranchValidity = true;
+
+            CheckUpdateBranchValidity= await _custodyService.UpdateBranchValidity(userLogin.CrMasUserInformationCode,lessorCode,
+                                                                                  bSLayout.SelectedBranch,SalesPoint.CrCasAccountSalesPointBank,TotalPayment);
+
+
+
+
+
+
+
+            if (adminstritive!=null && checkUpdateReceipt&&
+                CheckUpdateUserInfo&& CheckUpdateBranch &&
+                CheckUpdateSalesPoint&& CheckUpdateBranchValidity) if (await _unitOfWork.CompleteAsync()>1) _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
             else _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
-            
-            
             return RedirectToAction("Index", "Home");
         }
 

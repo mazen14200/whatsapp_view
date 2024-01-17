@@ -76,6 +76,9 @@
                                 <input hidden id="SalesPoint" name="SalesPoint" />
                                 <input hidden id="ReferenceNo" name="ReferenceNo" value="@ViewBag.ReceiptPassingReferenceNo" />
                                 <input hidden id="ReceiptsNo" name="ReceiptsNo" />
+                                <input hidden id="TotalPayment" name="TotalPayment" />
+                                <input hidden id="TotalReceipt" name="TotalReceipt" />
+                                <input hidden id="TotalReceived" name="TotalReceived" />
                                 <fieldset>
 
                                     <div class="form-card details-card">
@@ -231,6 +234,9 @@
             document.getElementById('totalPayments').textContent = newTotalPayments.toFixed(2);
             document.getElementById('totalTransfer').textContent = (newTotalPayments - newTotalReceipts).toFixed(2);
             $("#ReceiptsNo").val(checkedReceiptNos);
+            $("#TotalPayment").val(newTotalPayments);
+            $("#TotalReceipt").val(newTotalReceipts);
+            $("#TotalReceived").val(newTotalPayments - newTotalReceipts);
         }
     </script>
 }

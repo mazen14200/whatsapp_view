@@ -106,8 +106,8 @@ namespace Bnan.Inferastructure.Repository
             foreach (var Receipt in ReceiptsNo)
             {
                 var R = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptNo == Receipt);
-                Creditor += (decimal)R.CrCasAccountReceiptPayment;
-                Debit += (decimal)R.CrCasAccountReceiptReceipt;
+                Creditor += (decimal)(R.CrCasAccountReceiptPayment??0);
+                Debit += (decimal)(R.CrCasAccountReceiptReceipt??0);
             }
             CrCasSysAdministrativeProcedure crCasSysAdministrativeProcedure = new CrCasSysAdministrativeProcedure()
             {
