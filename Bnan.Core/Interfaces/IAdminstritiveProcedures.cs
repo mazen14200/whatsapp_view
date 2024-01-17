@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bnan.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,7 @@ namespace Bnan.Core.Interfaces
             DateTime? DocumentStartDate, DateTime? DocumentEndDate, string? CarFrom, string? CarTo, string ArDescription, string EnDescription, string Status, string? Reasons);
         Task<bool> SaveAdminstritiveForRepairCar(string userCode , string LessorCode, string BranchCode, string? Targeted, DateTime? DocumentDate,
                                                  string ArDescription, string EnDescription, string Status, string? Reasons);
+
+        Task<CrCasSysAdministrativeProcedure> SaveAdminstritiveCustody(string userCode, string LessorCode, string BranchCode, string? Targeted, List<string> ReceiptsNo, string? Reasons);
     }
 }

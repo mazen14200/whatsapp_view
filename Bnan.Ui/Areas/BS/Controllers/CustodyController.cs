@@ -20,12 +20,14 @@ namespace Bnan.Ui.Areas.BS.Controllers
         private readonly IToastNotification _toastNotification;
         private readonly IStringLocalizer<CustodyController> _localizer;
         private readonly IAdminstritiveProcedures _adminstritiveProcedures;
+        private readonly ICustody _custodyService;
 
-        public CustodyController(IStringLocalizer<CustodyController> localizer, IUnitOfWork unitOfWork, UserManager<CrMasUserInformation> userManager, IMapper mapper, IToastNotification toastNotification, IAdminstritiveProcedures adminstritiveProcedures) : base(userManager, unitOfWork, mapper)
+        public CustodyController(IStringLocalizer<CustodyController> localizer, IUnitOfWork unitOfWork, UserManager<CrMasUserInformation> userManager, IMapper mapper, IToastNotification toastNotification, IAdminstritiveProcedures adminstritiveProcedures, ICustody custodyService) : base(userManager, unitOfWork, mapper)
         {
             _localizer = localizer;
             _toastNotification = toastNotification;
             _adminstritiveProcedures = adminstritiveProcedures;
+            _custodyService = custodyService;
         }
         public async Task<IActionResult> Index()
         {
@@ -97,30 +99,42 @@ namespace Bnan.Ui.Areas.BS.Controllers
             }
             return PartialView("_CustodyData", bSLayoutVM);
         }
-
+        [HttpPost]
         public async Task<IActionResult> SendCustody(BSLayoutVM bSLayout , List<string> ReceiptsNo,string SalesPoint, string ReferenceNo,string Reasons)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
-            decimal Creditor = 0;
-            decimal Debit = 0;
-            foreach (var Receipt in ReceiptsNo)
-            {
-                var R = await _unitOfWork.CrCasAccountReceipt.FindAsync(x=>x.CrCasAccountReceiptNo == Receipt);
-                Creditor +=(decimal)R.CrCasAccountReceiptPayment;
-                Debit += (decimal)R.CrCasAccountReceiptReceipt;
-            }
+            
+            
 
             // Save Adminstrive Procedures
-            await _adminstritiveProcedures.SaveAdminstritive(userLogin.CrMasUserInformationCode, "1", "304", "30", userLogin.CrMasUserInformationLessor, bSLayout.SelectedBranch,
-            userLogin.CrMasUserInformationCode, Debit, Creditor, null, null, null, null, null, null, "استلام عهدة", "Receiving Custody", "I", Reasons);
-
-
-
-
-            _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
-
-            return RedirectToAction("Index","Home");
+           var adminstritive= await _adminstritiveProcedures.SaveAdminstritiveCustody(userLogin.CrMasUserInformationCode, userLogin.CrMasUserInformationLessor, bSLayout.SelectedBranch,
+                                                                                     userLogin.CrMasUserInformationCode, ReceiptsNo, Reasons);
+            var checkUpdateReceipt = true;
+            if (adminstritive!=null)
+            {
+                foreach (var Receipt in ReceiptsNo)
+                {
+                    if (checkUpdateReceipt)
+                    {
+                        var R = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptNo == Receipt);
+                        if (R != null)
+                        {
+                            checkUpdateReceipt = await _custodyService.UpdateAccountReceipt(R.CrCasAccountReceiptNo, adminstritive.CrCasSysAdministrativeProceduresNo, Reasons);
+                        }
+                        else
+                        {
+                            checkUpdateReceipt = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (adminstritive!=null && checkUpdateReceipt) if (await _unitOfWork.CompleteAsync()>1) _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            else _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            
+            
+            return RedirectToAction("Index", "Home");
         }
 
         public CrCasSysAdministrativeProcedure GetContractLastRecord(string Sector, string LessorCode, string BranchCode)
