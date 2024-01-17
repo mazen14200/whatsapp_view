@@ -687,6 +687,23 @@
             }
         });
     </script>
+    <!--Custody Auth-->
+    <script>
+        var CashAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityBranch==Model.SelectedBranch)?.CrMasUserBranchValidityBranchCashAvailable';
+        var SalesPointAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityBranch==Model.SelectedBranch)?.CrMasUserBranchValidityBranchSalesPointAvailable';
+        var TransferAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityBranch==Model.SelectedBranch)?.CrMasUserBranchValidityBranchTransferAvailable';
+        var total = parseFloat(CashAvailable) + parseFloat(SalesPointAvailable) + parseFloat(TransferAvailable);
+        document.getElementById('pulse-button-brunch').addEventListener('click', function () {
+            console.log(total)
+            if (total > 0) {
+                window.location.href = "/BS/Custody/Index";
+            } else {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageExistCustody"]');
+                return; // Prevent further execution
+            }
+        });
+    </script>
     <!--Authrization-->
     <script>
         document.getElementById("CreateContract").addEventListener('click', function () {

@@ -1,0 +1,162 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
+@model BSLayoutVM
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+
+
+
+
+
+<div class="row g-0" style="flex-direction:row-reverse">
+    <div class="col-md-6 col-lg-4 col-xl-4 d-flex data-col ">
+        <div class="col-auto ps-0">
+            <P>إجمالي نقطة البيع</P>
+        </div>
+        <div class="col-auto personal-data">
+            <P>@Model.SalesPointBalanceTotal</P>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4 col-xl-3  d-flex data-col">
+        <div class="col-auto ps-0">
+            <P> الرصيد المتاح</P>
+        </div>
+        <div class="col-auto personal-data">
+            <P>@Model.SalesPointBalanceAvaliable</P>
+        </div>
+    </div>
+    <div class="col-md-4 d-flex data-col">
+        <div class="col-auto ps-0">
+            <P>الرصيد المحجوز </P>
+        </div>
+        <div class="col-auto personal-data">
+            <P>@Model.SalesPointBalanceResereved</P>
+        </div>
+    </div>
+</div>
+<div class="row g-0" style="flex-direction:row-reverse">
+    <div class="col-md-6 col-lg-4 col-xl-4 d-flex data-col " style="flex-wrap: wrap;">
+        <div class="col-auto ps-0">
+            <P>إجمالي رصيد الموظف</P>
+        </div>
+        <div class="col-auto personal-data">
+            <P>@Model.UserBalanceTotal</P>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4 col-xl-3  d-flex data-col">
+        <div class="col-auto ps-0">
+            <P>الرصيد المتاح</P>
+        </div>
+        <div class="col-auto personal-data">
+            <P>@Model.UserBalanceAvaliable</P>
+        </div>
+    </div>
+    <div class="col-md-4 d-flex data-col">
+        <div class="col-auto ps-0">
+            <P> الرصيد المحجوز </P>
+        </div>
+        <div class="col-auto personal-data">
+            <P>@Model.UserBalanceResereved</P>
+        </div>
+    </div>
+</div>
+<div class="row g-0" style="flex-direction:row-reverse">
+    <div class="col-md-6 col-lg-4 col-xl-4 d-flex data-col ">
+        <div class="col-auto ps-0">
+            <P> إجمالي الدائن</P>
+        </div>
+        <div class="col-auto personal-data">
+            <P id="totalPayments">0.00</P>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4 col-xl-3  d-flex data-col">
+        <div class="col-auto ps-0">
+            <P> إجمالي المدين</P>
+        </div>
+        <div class="col-auto personal-data">
+            <P id="totalReceipts">0.00</P>
+        </div>
+    </div>
+    <div class="col-md-4 d-flex data-col">
+        <div class="col-auto ps-0">
+            <P>إجمالي المسلم </P>
+        </div>
+        <div class="col-auto personal-data">
+            <P id="totalTransfer">0.00</P>
+        </div>
+    </div>
+</div>
+
+<div class="row g-0 pb-2">
+    <div class="col d-flex" style="justify-content:flex-start;flex-direction:row-reverse">
+        <div class="col-auto">
+            <label for="FormControlTextarea2">الملاحظات</label>
+        </div>
+        <div class="col-sm-5 col-md-5 col-lg-5">
+
+            <input class="form-control" id="Reasons" maxlength="100" rows="1" name="Reasons">
+        </div>
+    </div>
+</div>
+<div class="row table-row">
+    <div class="col table-scroll table-scroll-details w-100  ">
+        <table class="table table-bordered table-hover" id="Table-details">
+            <thead>
+                <tr>
+                    <th scope="col">مدين</th>
+                    <th scope="col">دائن</th>
+                    <th scope="col">طريقة الدفع </th>
+                    <th scope="col">المرجع</th>
+                    <th scope="col">رقم المرجع </th>
+                    <th scope="col">تاريخ القيد</th>
+                    <th scope="col">رقم القيد</th>
+                    <th scope="col">م</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int no = 1;
+                }
+                @if (Model.CustodyReceipts != null && Model.CustodyReceipts.Count() != 0)
+                {
+                    @foreach (var item in Model.CustodyReceipts)
+                    {
+                        <tr>
+                            <td id="Receipt_@item.CrCasAccountReceiptNo">@item.CrCasAccountReceiptReceipt?.ToString("N2")</td>
+                            <td id="Payment_@item.CrCasAccountReceiptNo">@item.CrCasAccountReceiptPayment?.ToString("N2")</td>
+                            @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                            {
+                                <td class="text-right">@item.CrCasAccountReceiptPaymentMethodNavigation?.CrMasSupAccountPaymentMethodArName</td>
+                            }
+                            else
+                            {
+                                <td class="text-left">@item.CrCasAccountReceiptPaymentMethodNavigation?.CrMasSupAccountPaymentMethodEnName</td>
+                            }
+                            @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                            {
+                                <td class="text-right">@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceArName</td>
+                            }
+                            else
+                            {
+                                <td class="text-left">@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceArName</td>
+                            }
+                            <td>@item.CrCasAccountReceiptReferenceNo</td>
+                            <td>@item.CrCasAccountReceiptDate?.ToString("yyyy/MM/dd")</td>
+                            <td>
+                                <label class="form-check-label" for="contract-number-@item.CrCasAccountReceiptNo">@item.CrCasAccountReceiptNo</label>
+                                <input class="form-check-input custody-input" type="checkbox" value="@item.CrCasAccountReceiptNo" id="contract-number-@item.CrCasAccountReceiptNo" name="checked-contract" onclick="handleCheckboxChange(this)">
+                            </td>
+                            <td scope="row">@no</td>
+                        </tr>
+                        no++;
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

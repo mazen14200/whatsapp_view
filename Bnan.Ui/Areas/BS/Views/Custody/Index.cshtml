@@ -1,0 +1,236 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
+@using Newtonsoft.Json;
+@model BSLayoutVM
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+
+
+<link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
+@if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+{
+    <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">
+}
+
+@{
+    var branchValidity = Model.CrMasUserBranchValidity;
+    var totalAvaliableBalanceInBranch = branchValidity?.CrMasUserBranchValidityBranchCashAvailable +
+    branchValidity?.CrMasUserBranchValidityBranchSalesPointAvailable +
+    branchValidity?.CrMasUserBranchValidityBranchTransferAvailable;
+
+    var totalResevedBalanceInBranch = branchValidity?.CrMasUserBranchValidityBranchCashReserved +
+    branchValidity?.CrMasUserBranchValidityBranchSalesPointReserved +
+    branchValidity?.CrMasUserBranchValidityBranchTransferReserved;
+
+    var totalBalanceInBranch = branchValidity?.CrMasUserBranchValidityBranchSalesPointBalance +
+    branchValidity?.CrMasUserBranchValidityBranchCashBalance +
+    branchValidity?.CrMasUserBranchValidityBranchTransferBalance;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+<section class="section-mainCard">
+    <div class="row justify-content-center w-100 h-100">
+        <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
+            <div class="card main-card ">
+                <div class="row pt-2">
+                    <a asp-action="Index" asp-area="BS" asp-controller="Home" style="width: fit-content;">
+                        <img src="~/BranchSys/Pages/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+                    </a>
+                </div>
+                <div class="row layout-row custody-layout-row">
+
+                    <div class="row" style="flex-direction: row-reverse;">
+                        <div class="col justify-content-center d-flex title-row">
+                            <h1 class="card-title">
+                                تسليم عهدة
+                            </h1>
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-center h-100 content-row">
+
+                        <div class="col-md-11 mx-0">
+                            <form id="custody-form" class="needs-validation" asp-action="SendCustody" asp-controller="Custody" asp-area="BS" novalidate>
+
+                                <input hidden asp-for="SelectedBranch" id="branch" />
+                                <input hidden id="SalesPoint" name="SalesPoint" />
+                                <input hidden id="ReferenceNo" name="ReferenceNo" value="@ViewBag.ReceiptPassingReferenceNo" />
+                                <input hidden id="ReceiptsNo" name="ReceiptsNo" />
+                                <fieldset>
+
+                                    <div class="form-card details-card">
+
+                                        <div class="row g-0 pt-2" style="flex-direction:row-reverse">
+                                            <div class="col-md-auto col-lg-auto col-xl-4 d-flex data-col " style="flex-wrap: wrap;">
+                                                <div class="col-auto ps-0">
+                                                    <P>رقم العهدة</P>
+                                                </div>
+                                                <div class="col-auto ps-0 personal-data">
+                                                    <P>@ViewBag.ReceiptPassingReferenceNo</P>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 col-xl-3  d-flex data-col">
+                                                <div class="col-auto ps-0">
+                                                    <P>التاريخ</P>
+                                                </div>
+                                                <div class="col-auto ps-0 personal-data">
+                                                    <P>@ViewBag.Date</P>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 col-xl-5    d-flex" style="flex-direction: row-reverse;">
+                                                <div class="col-auto ps-0">
+                                                    <label for="selling-point-drop">نقطة البيع</label>
+
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 col-xl-6 personal-data">
+                                                    <div id="dropdown-container ">
+                                                        <div class="">
+                                                            <select class="form-select form-select p-0" id="selling-point-drop" asp-for="SalesPointSelected" required>
+                                                                <option selected disabled></option>
+                                                                @foreach (var item in Model.SalesPointHaveBalance)
+                                                                {
+                                                                    if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                                                    {
+                                                                        <option class="text-right" value="@item.CrCasAccountSalesPointCode">
+                                                                            @item.CrCasAccountSalesPointArName
+                                                                        </option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option class="text-left" value="@item.CrCasAccountSalesPointCode">
+                                                                            @item.CrCasAccountSalesPointArName
+                                                                        </option>
+                                                                    }
+                                                                }
+                                                            </select>
+                                                            <div class="row requird-field-row-last">
+                                                                <span class="requird-field" asp-validation-for="@Model.SalesPointSelected"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div id="CustodyData">
+                                            <partial name="_CustodyData" />
+                                        </div>
+                                    </div>
+                                    <div class="row button-row pt-3 pb-1 ps-4">
+                                        <div class="button-card55">
+                                            <button type="submit" class="btn btn-custom">حفظ</button>
+                                        </div>
+                                        <div class="button-card55">
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="fixed-bottom-xl">
+    <div class="before-footer-widget">
+        <svg width: 100%; height:auto viewbox="0 0 2444 132">
+            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+            </path>
+        </svg>
+    </div>
+</footer>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Attach a change event handler to the select element
+            $('#selling-point-drop').change(function () {
+                // Get the selected value
+                var salesPoint = $(this).val();
+                var branch = $("#branch").val();
+                //Store SalesPoint Code in Hidden Input
+                $("#SalesPointSelected").val(salesPoint);
+                $.ajax({
+                    type: "GET",
+                    data: {
+                        branchCode: branch,
+                        salesPointCode: salesPoint
+                    },
+                    url: "@Url.Action("GetDetailsByBranch", "Custody", new { Area = "BS" })",
+                    success: function (response) {
+                        $("#CustodyData").html(response);
+                    },
+                });
+            });
+        });
+    </script>
+    <script>
+        var checkedReceiptNos = [];
+
+        // Define a function to handle checkbox changes
+        function handleCheckboxChange(checkbox) {
+            // Get the row of the clicked checkbox
+            var row = checkbox.closest('tr');
+
+            var receiptNo = row.querySelector('.custody-input').value;
+            if (checkbox.checked) {
+                // Checkbox is checked, add receiptNo to the array
+                checkedReceiptNos.push(receiptNo);
+            } else {
+                // Checkbox is unchecked, remove receiptNo from the array
+                var index = checkedReceiptNos.indexOf(receiptNo);
+                if (index !== -1) {
+                    checkedReceiptNos.splice(index, 1);
+                }
+            }
+
+            var receiptReceiptText = row.querySelector('td[id^="Receipt_' + receiptNo + '"]').textContent;
+            var receiptPaymentText = row.querySelector('td[id^="Payment_' + receiptNo + '"]').textContent;
+            var receiptReceipt = parseFloat(receiptReceiptText.replace(/,/g, "")) || 0;
+            var receiptPayment = parseFloat(receiptPaymentText.replace(/,/g, "")) || 0;
+            // Calculate the total by adding the current value with the existing total
+            var totalReceipts = parseFloat(document.getElementById('totalReceipts').textContent);
+            var totalPayments = parseFloat(document.getElementById('totalPayments').textContent);
+            // Check the state of the checkbox
+            if (checkbox.checked) {
+                // Checkbox is checked, add the values
+                var newTotalReceipts = totalReceipts + receiptReceipt;
+                var newTotalPayments = totalPayments + receiptPayment;
+            } else {
+                // Checkbox is unchecked, subtract the values
+                var newTotalReceipts = totalReceipts - receiptReceipt;
+                var newTotalPayments = totalPayments - receiptPayment;
+            }
+            // Update the total amount display
+            document.getElementById('totalReceipts').textContent = newTotalReceipts.toFixed(2);
+            document.getElementById('totalPayments').textContent = newTotalPayments.toFixed(2);
+            document.getElementById('totalTransfer').textContent = (newTotalPayments - newTotalReceipts).toFixed(2);
+            $("#ReceiptsNo").val(checkedReceiptNos);
+        }
+    </script>
+}

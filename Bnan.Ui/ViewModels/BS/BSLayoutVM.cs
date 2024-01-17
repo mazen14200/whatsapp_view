@@ -1,5 +1,6 @@
 ﻿using Bnan.Core.Models;
 using Microsoft.CodeAnalysis.Options;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Bnan.Ui.ViewModels.BS
@@ -31,7 +32,20 @@ namespace Bnan.Ui.ViewModels.BS
         public List<CrCasAccountReceipt>? AccountReceipts { get; set; }
         public decimal? TotalDebit { get; set; }
         public decimal? TotalCreditor { get; set; }
-
+        // Custody Page
+        public List<CrCasAccountSalesPoint>? SalesPointHaveBalance { get; set; }
+        public decimal? SalesPointBalanceTotal { get; set; }
+        public decimal? SalesPointBalanceResereved { get; set; }
+        public decimal? SalesPointBalanceAvaliable { get; set; }
+        public decimal? UserBalanceTotal { get; set; }
+        public decimal? UserBalanceResereved { get; set; }
+        public decimal? UserBalanceAvaliable { get; set; }
+        public decimal? CreditorTotal { get; set; }
+        public decimal? DebitTotal { get; set; }
+        public decimal? TransaferTotal { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string SalesPointSelected { get; set; }
+        public List<CrCasAccountReceipt>? CustodyReceipts { get; set; }
         public CrCasBranchInformation? CrCasBranchInformation { get; set; }
         public CrMasUserBranchValidity? CrMasUserBranchValidity { get; set; }
         public CrCasSysAdministrativeProcedure? CrCasSysAdministrativeProcedure { get; set; }
