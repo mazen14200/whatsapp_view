@@ -15,6 +15,6 @@ namespace Bnan.Core.Interfaces
         Task<bool> SaveAdminstritiveForRepairCar(string userCode , string LessorCode, string BranchCode, string? Targeted, DateTime? DocumentDate,
                                                  string ArDescription, string EnDescription, string Status, string? Reasons);
 
-        Task<CrCasSysAdministrativeProcedure> SaveAdminstritiveCustody(string userCode, string LessorCode, string BranchCode, string? Targeted, List<string> ReceiptsNo, string? Reasons);
+        Task<CrCasSysAdministrativeProcedure> SaveAdminstritiveCustody(string userCode, string LessorCode, string BranchCode, string? Targeted, string Creditor, string Debit, string? Reasons);
     }
 }

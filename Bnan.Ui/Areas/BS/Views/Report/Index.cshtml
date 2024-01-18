@@ -294,6 +294,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <p> @localizer["reasons"]</p>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="Reasons"></P>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -350,52 +360,53 @@
     </script>
     <script>
         function getDetails(ReceiptNo) {
-                if (ReceiptNo != null && ReceiptNo != "" & ReceiptNo != undefined) {
-                    $.ajax({
-                        type: "GET",
-                        data: {
-                            ReceiptNo: ReceiptNo,
-                        },
-                        url: "@Url.Action("GetReceiptDetails", "Report", new { Area = "BS" })",
-                        success: function (response) {
-                            if (response != null) {
-                                $("#ReceiptNo").text(response.receiptNo);
-                                $("#Date").text(response.date);
-                                $("#Creditor").text(response.creditor);
-                                $("#ReferenceNo").text(response.referenceNo);
-                                $("#AccountBankCode").text(response.accountBankCode);
+            if (ReceiptNo != null && ReceiptNo != "" & ReceiptNo != undefined) {
+                $.ajax({
+                    type: "GET",
+                    data: {
+                        ReceiptNo: ReceiptNo,
+                    },
+                    url: "@Url.Action("GetReceiptDetails", "Report", new { Area = "BS" })",
+                    success: function (response) {
+                        if (response != null) {
+                            $("#ReceiptNo").text(response.receiptNo);
+                            $("#Date").text(response.date);
+                            $("#Creditor").text(response.creditor);
+                            $("#ReferenceNo").text(response.referenceNo);
+                            $("#AccountBankCode").text(response.accountBankCode);
+                            $("#Reasons").text(response.reasons);
 
-                                if ("@requestCulture?.RequestCulture.UICulture.Name" == "ar-EG") {
-                                    $("#ReferenceType").text(response.referenceTypeAr);
-                                    $("#Bank").text(response.bankAr);
-                                    $("#SalesPoint").text(response.salesPointAr);
-                                    $("#PaymentMethod").text(response.paymentMethodAr);
-                                    $("#UserReceived").text(response.userReceivedAr);
-                                }
-                                else {
-                                    $("#ReferenceType").text(response.referenceTypeEn);
-                                    $("#Bank").text(response.bankEn);
-                                    $("#SalesPoint").text(response.salesPointEn);
-                                    $("#PaymentMethod").text(response.paymentMethodEn);
-                                    $("#UserReceived").text(response.userReceivedEn);
-                                }
-
-                                $("#ReceivedDate").text(response.receivedDate);
-                                $("#CustodyNo").text(response.custodyNo);
-                                if (response.statusReceipt == @Status.Custody) {
-                                    $("#StatusReceipt").text('@localizer["Custody"]');
-                                }
-                                else if (response.statusReceipt == @Status.Booked) {
-                                    $("#StatusReceipt").text('@localizer["booked"]');
-                                }
-                                else if (response.statusReceipt == @Status.Transfer) {
-                                    $("#StatusReceipt").text('@localizer["Transfer"]');
-                                }
+                            if ("@requestCulture?.RequestCulture.UICulture.Name" == "ar-EG") {
+                                $("#ReferenceType").text(response.referenceTypeAr);
+                                $("#Bank").text(response.bankAr);
+                                $("#SalesPoint").text(response.salesPointAr);
+                                $("#PaymentMethod").text(response.paymentMethodAr);
+                                $("#UserReceived").text(response.userReceivedAr);
                             }
-                            $('#myModal').modal('show');
-                        },
-                    });
-                }
+                            else {
+                                $("#ReferenceType").text(response.referenceTypeEn);
+                                $("#Bank").text(response.bankEn);
+                                $("#SalesPoint").text(response.salesPointEn);
+                                $("#PaymentMethod").text(response.paymentMethodEn);
+                                $("#UserReceived").text(response.userReceivedEn);
+                            }
+
+                            $("#ReceivedDate").text(response.receivedDate);
+                            $("#CustodyNo").text(response.custodyNo);
+                            if (response.statusReceipt == @Status.Custody) {
+                                $("#StatusReceipt").text('@localizer["Custody"]');
+                            }
+                            else if (response.statusReceipt == @Status.Booked) {
+                                $("#StatusReceipt").text('@localizer["booked"]');
+                            }
+                            else if (response.statusReceipt == @Status.Transfer) {
+                                $("#StatusReceipt").text('@localizer["Transfer"]');
+                            }
+                        }
+                        $('#myModal').modal('show');
+                    },
+                });
+            }
         }
         // Initial call on document ready
         $('#ReportsData').on('click', '.modal-trigger', function () {

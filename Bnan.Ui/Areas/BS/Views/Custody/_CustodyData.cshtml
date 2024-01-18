@@ -15,59 +15,59 @@
 <div class="row g-0" style="flex-direction:row-reverse">
     <div class="col-md-6 col-lg-4 col-xl-4 d-flex data-col ">
         <div class="col-auto ps-0">
-            <P>إجمالي نقطة البيع</P>
+            <P>@localizer["TotalBalanceOfSalesPoint"]</P>
         </div>
         <div class="col-auto personal-data">
-            <P>@Model.SalesPointBalanceTotal</P>
+            <P>@Model.SalesPointBalanceTotal?.ToString("N2")</P>
         </div>
     </div>
     <div class="col-md-6 col-lg-4 col-xl-3  d-flex data-col">
         <div class="col-auto ps-0">
-            <P> الرصيد المتاح</P>
+            <P>@localizer["AvailableBalance"]</P>
         </div>
         <div class="col-auto personal-data">
-            <P>@Model.SalesPointBalanceAvaliable</P>
+            <P>@Model.SalesPointBalanceAvaliable?.ToString("N2")</P>
         </div>
     </div>
     <div class="col-md-4 d-flex data-col">
         <div class="col-auto ps-0">
-            <P>الرصيد المحجوز </P>
+            <P>@localizer["ReservedBalance"]</P>
         </div>
         <div class="col-auto personal-data">
-            <P>@Model.SalesPointBalanceResereved</P>
+            <P>@Model.SalesPointBalanceResereved?.ToString("N2")</P>
         </div>
     </div>
 </div>
 <div class="row g-0" style="flex-direction:row-reverse">
     <div class="col-md-6 col-lg-4 col-xl-4 d-flex data-col " style="flex-wrap: wrap;">
         <div class="col-auto ps-0">
-            <P>إجمالي رصيد الموظف</P>
+            <P>@localizer["EmployeeTotalBalance"]</P>
         </div>
         <div class="col-auto personal-data">
-            <P>@Model.UserBalanceTotal</P>
+            <P>@Model.UserBalanceTotal?.ToString("N2")</P>
         </div>
     </div>
     <div class="col-md-6 col-lg-4 col-xl-3  d-flex data-col">
         <div class="col-auto ps-0">
-            <P>الرصيد المتاح</P>
+            <P>@localizer["AvailableBalance"]</P>
         </div>
         <div class="col-auto personal-data">
-            <P>@Model.UserBalanceAvaliable</P>
+            <P>@Model.UserBalanceAvaliable?.ToString("N2")</P>
         </div>
     </div>
     <div class="col-md-4 d-flex data-col">
         <div class="col-auto ps-0">
-            <P> الرصيد المحجوز </P>
+            <P>@localizer["ReservedBalance"]</P>
         </div>
         <div class="col-auto personal-data">
-            <P>@Model.UserBalanceResereved</P>
+            <P>@Model.UserBalanceResereved?.ToString("N2")</P>
         </div>
     </div>
 </div>
 <div class="row g-0" style="flex-direction:row-reverse">
     <div class="col-md-6 col-lg-4 col-xl-4 d-flex data-col ">
         <div class="col-auto ps-0">
-            <P> إجمالي الدائن</P>
+            <P>@localizer["CreditorTotal"]</P>
         </div>
         <div class="col-auto personal-data">
             <P id="totalPayments">0.00</P>
@@ -75,7 +75,7 @@
     </div>
     <div class="col-md-6 col-lg-4 col-xl-3  d-flex data-col">
         <div class="col-auto ps-0">
-            <P> إجمالي المدين</P>
+            <P>@localizer["DebitTotal"]</P>
         </div>
         <div class="col-auto personal-data">
             <P id="totalReceipts">0.00</P>
@@ -83,7 +83,7 @@
     </div>
     <div class="col-md-4 d-flex data-col">
         <div class="col-auto ps-0">
-            <P>إجمالي المسلم </P>
+            <P>@localizer["TotalCustody"] </P>
         </div>
         <div class="col-auto personal-data">
             <P id="totalTransfer">0.00</P>
@@ -94,11 +94,10 @@
 <div class="row g-0 pb-2">
     <div class="col d-flex" style="justify-content:flex-start;flex-direction:row-reverse">
         <div class="col-auto">
-            <label for="FormControlTextarea2">الملاحظات</label>
+            <label for="FormControlTextarea2">@localizer["reasons"]</label>
         </div>
         <div class="col-sm-5 col-md-5 col-lg-5">
-
-            <input class="form-control" id="Reasons" maxlength="100" rows="1" name="Reasons">
+            <input class="form-control text-right" id="Reasons" maxlength="100" rows="1" name="Reasons">
         </div>
     </div>
 </div>
@@ -107,14 +106,18 @@
         <table class="table table-bordered table-hover" id="Table-details">
             <thead>
                 <tr>
-                    <th scope="col">مدين</th>
-                    <th scope="col">دائن</th>
-                    <th scope="col">طريقة الدفع </th>
-                    <th scope="col">المرجع</th>
-                    <th scope="col">رقم المرجع </th>
-                    <th scope="col">تاريخ القيد</th>
-                    <th scope="col">رقم القيد</th>
-                    <th scope="col">م</th>
+                    <th scope="col">@localizer["Debit"]</th>
+                    <th scope="col">@localizer["Creditor"]</th>
+                    <th scope="col" class="@(requestCulture?.RequestCulture.UICulture.Name == "ar-EG" ? "text-right" : "text-left")">
+                        @localizer["PaymentMethod"]
+                    </th>
+                    <th scope="col" class="@(requestCulture?.RequestCulture.UICulture.Name == "ar-EG" ? "text-right" : "text-left")">
+                        @localizer["Reference"]
+                    </th>
+                    <th scope="col">@localizer["ReferenceNo"]</th>
+                    <th scope="col">@localizer["ReceiptDate"]</th>
+                    <th scope="col">@localizer["ReceiptNo"]</th>
+                    <th scope="col">@localizer["No"]</th>
                 </tr>
             </thead>
             <tbody>

@@ -51,7 +51,7 @@
                             {
                                 @localizer["booked"]
                             }
-                            else if (@item.CrCasAccountReceiptIsPassing == Status.Transfer)
+                            else if (@item.CrCasAccountReceiptIsPassing == Status.Transfer || @item.CrCasAccountReceiptIsPassing == Status.Change)
                             {
                                 @localizer["Transfer"]
                             }

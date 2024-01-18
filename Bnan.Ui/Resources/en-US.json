@@ -445,7 +445,9 @@
   "toastMessageEmployeeHaveBalance": "A employee with a balance cannot be deleted",
   "toastMessageExistFeedBox": "There is no box feeding",
   "toastMessageExistCustody": "Sorry.....there is no balance available for delivery of the deposit",
-
+  "PleaseChooseAtLeastOneValue": "Sorry.....you must choose at least one value ",
+  "toastMessageExistRenters": "Sorry.....there is no renters in company",
+  "toastMessageExistReceipts": "Sorry.....there is no receipts in branch",
   // LessorImages
   "LessorsImages Hint": "The page allows you to display lessors data , and modify lessors images",
   "Edit Lessor Images Data": "Edit",
@@ -1205,6 +1207,13 @@
   "CustodyNo": "Custody No",
   "StatusReceipt": "Status Receipt",
   "UserReceived": "User Received",
-  "ReceivedDate": "Received Date"
+  "ReceivedDate": "Received Date",
+  //ReceivingCustody
+  "ReceivingCustody": "Receiving Custody",
+  "TotalBalanceOfSalesPoint": "SalesPoint Total Balance",
+  "EmployeeTotalBalance": "Employee Total Balance",
+  "TotalCustody": "Total Amount",
+  "ReceiptDate": "Receipt Date"
+
 
 }

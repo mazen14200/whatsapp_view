@@ -90,7 +90,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 return RedirectToAction("Index");
             }
             var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicRenterId == id && x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation" }).ToList();
-            BSLayoutVM bSLayoutVM = new BSLayoutVM();
+            var bSLayoutVM = await GetBranchesAndLayout();
             bSLayoutVM.Renter = Renter;
             bSLayoutVM.RenterContracts = Contracts;
             return View(bSLayoutVM);

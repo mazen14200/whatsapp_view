@@ -449,6 +449,9 @@
   "toastMessageEmployeeHaveBalance": "لا يمكن حذف موظف لديه رصيد",
   "toastMessageExistFeedBox": "عفواً ..... لا يوجد تغذية صندوق",
   "toastMessageExistCustody": "عفواً ..... لا يوجد رصيد متاح لتسليم العهدة ",
+  "PleaseChooseAtLeastOneValue": "عفواً ..... يجب اختيار قيمة واحدة على الاقل ",
+  "toastMessageExistRenters": "عفواً ..... لا يوجد مستأجرين بالشركة",
+  "toastMessageExistReceipts": "عفواً ..... لا يوجد قيود بالفرع ",
 
 
   // LessorImages
@@ -1061,7 +1064,7 @@
   "ExecutedContracts": "العقود المنفذة",
   "ClosedContracts": "العقود المغلقة",
   "CanceledContracts": "العقود الملغاة",
-  "BranchCustody": "عهدة الفرع",
+  "BranchCustody": "رصيد الفرع",
   "AvailableBalance": "الرصيد المتاح",
   "ReservedBalance": "الرصيد المحجوز",
   "EmployeeCustody": "رصيد الموظف",
@@ -1185,8 +1188,8 @@
   // FinancelReport
   "FinancelReport": "التقرير المالي",
   "UserBalanceInBranch": "رصيد الموظف بالفرع",
-  "CreditorTotal": "مجموع الدائن",
-  "DebitTotal": "مجموع المدين",
+  "CreditorTotal": "إجمالي الدائن",
+  "DebitTotal": "إجمالي المدين",
   "Show": "عرض",
   "Custody": "عهدة",
   "booked": "محجوز",
@@ -1197,8 +1200,14 @@
   "ReferenceType": "نوع المرجع",
   "ReferenceNo": "رقم المرجع",
   "Bank": "البنك",
-  "CustodyNo": "رقم تسليم العهدة",
+  "CustodyNo": "رقم العهدة",
   "StatusReceipt": "حالة القيد",
   "UserReceived": "المستلم",
-  "ReceivedDate": "تاريخ التسليم"
+  "ReceivedDate": "تاريخ التسليم",
+  //ReceivingCustody
+  "ReceivingCustody": "تسليم عهدة",
+  "TotalBalanceOfSalesPoint": "إجمالي نقطة البيع",
+  "EmployeeTotalBalance": "إجمالي رصيد الموظف",
+  "TotalCustody": "إجمالي المسلم",
+  "ReceiptDate": "تاريخ القيد"
 }

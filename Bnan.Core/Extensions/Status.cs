@@ -27,12 +27,13 @@ namespace Bnan.Core.Extensions
         public static string Reject { get; set; } = "Z";
         public static string All { get; set; } = "All";
         public static string Save { get; set; } = "S";
-        public static string Closed { get; set; } = "C";
-        public static string Cancel { get; set; } = "Q";
+        public static string Closed { get; set; } = "F";
+        public static string Cancel { get; set; } = "C";
         public static string UnDeleted { get; set; } = "UD";
         public static string UnHold { get; set; } = "UH";
         public static string Custody { get; set; } = "1";
         public static string Booked { get; set; } = "2";
         public static string Transfer { get; set; } = "3";
+        public static string Change { get; set; } = "4";
     }
 }

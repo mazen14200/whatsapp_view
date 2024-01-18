@@ -35,6 +35,9 @@ namespace Bnan.Inferastructure.Repository
             var branch = await _unitOfWork.CrCasBranchInformation.FindAsync(x => x.CrCasBranchInformationLessor == lessorCode && x.CrCasBranchInformationCode == BranchCode);
             if (branch != null)
             {
+                if (branch.CrCasBranchInformationAvailableBalance == null) branch.CrCasBranchInformationAvailableBalance = 0;
+                if (branch.CrCasBranchInformationReservedBalance == null) branch.CrCasBranchInformationReservedBalance = 0;
+
                 branch.CrCasBranchInformationAvailableBalance -= decimal.Parse(Creditor);
                 branch.CrCasBranchInformationReservedBalance += decimal.Parse(Creditor);
                 if (_unitOfWork.CrCasBranchInformation.Update(branch) != null) return true;

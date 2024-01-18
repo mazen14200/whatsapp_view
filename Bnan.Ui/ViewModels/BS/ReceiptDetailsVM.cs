@@ -20,6 +20,7 @@
         public string? UserReceivedAr { get; set; }
         public string? UserReceivedEn { get; set; }
         public string? ReceivedDate { get; set; }
+        public string? Reasons { get; set; }
 
     }
 }

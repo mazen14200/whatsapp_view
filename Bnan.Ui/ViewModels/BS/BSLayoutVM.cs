@@ -44,7 +44,7 @@ namespace Bnan.Ui.ViewModels.BS
         public decimal? DebitTotal { get; set; }
         public decimal? TransaferTotal { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
-        public string SalesPointSelected { get; set; }
+        public string? SalesPointSelected { get; set; }
         public List<CrCasAccountReceipt>? CustodyReceipts { get; set; }
         public CrCasBranchInformation? CrCasBranchInformation { get; set; }
         public CrMasUserBranchValidity? CrMasUserBranchValidity { get; set; }

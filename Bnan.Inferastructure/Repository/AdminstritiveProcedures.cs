@@ -81,7 +81,7 @@ namespace Bnan.Inferastructure.Repository
             return true;
         }
 
-        public async Task<CrCasSysAdministrativeProcedure> SaveAdminstritiveCustody(string userCode, string LessorCode, string BranchCode, string? Targeted, List<string> ReceiptsNo, string? Reasons)
+        public async Task<CrCasSysAdministrativeProcedure> SaveAdminstritiveCustody(string userCode, string LessorCode, string BranchCode, string? Targeted, string Creditor,string Debit, string? Reasons)
         {
             DateTime year = DateTime.Now;
             var y = year.ToString("yy");
@@ -101,14 +101,14 @@ namespace Bnan.Inferastructure.Repository
                 Serial = "000001";
             }
             var procedure = _unitOfWork.CrMasSysProcedure.Find(x => x.CrMasSysProceduresCode == "304");
-            decimal Creditor = 0;
-            decimal Debit = 0;
-            foreach (var Receipt in ReceiptsNo)
-            {
-                var R = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptNo == Receipt);
-                Creditor += (decimal)(R.CrCasAccountReceiptPayment??0);
-                Debit += (decimal)(R.CrCasAccountReceiptReceipt??0);
-            }
+            //decimal Creditor = 0;
+            //decimal Debit = 0;
+            //foreach (var Receipt in ReceiptsNo)
+            //{
+            //    var R = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptNo == Receipt);
+            //    Creditor += (decimal)(R.CrCasAccountReceiptPayment??0);
+            //    Debit += (decimal)(R.CrCasAccountReceiptReceipt??0);
+            //}
             CrCasSysAdministrativeProcedure crCasSysAdministrativeProcedure = new CrCasSysAdministrativeProcedure()
             {
                 CrCasSysAdministrativeProceduresNo = y + "-" + "1" + "304" + "-" + LessorCode + BranchCode + "-" + Serial,
@@ -121,8 +121,8 @@ namespace Bnan.Inferastructure.Repository
                 CrCasSysAdministrativeProceduresDate = DateTime.Now.Date,
                 CrCasSysAdministrativeProceduresTime = DateTime.Now.TimeOfDay,
                 CrCasSysAdministrativeProceduresTargeted = Targeted,
-                CrCasSysAdministrativeProceduresDebit = Debit,
-                CrCasSysAdministrativeProceduresCreditor = Creditor,
+                CrCasSysAdministrativeProceduresDebit = decimal.Parse(Debit),
+                CrCasSysAdministrativeProceduresCreditor =decimal.Parse(Creditor),
                 CrCasSysAdministrativeProceduresUserInsert = userCode,
                 CrCasSysAdministrativeProceduresArDescription = procedure.CrMasSysProceduresArName,
                 CrCasSysAdministrativeProceduresEnDescription = procedure.CrMasSysProceduresEnName,

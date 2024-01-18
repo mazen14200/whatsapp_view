@@ -85,8 +85,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                 x.CrCasSysAdministrativeProceduresTargeted == userLogin.CrMasUserInformationCode &&
                                                                                 x.CrCasSysAdministrativeProceduresCode == "303" &&
                                                                                 x.CrCasSysAdministrativeProceduresStatus == Status.Insert).Count();
+
             var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode && x.CrCasRenterContractBasicBranch == bSLayoutVM.SelectedBranch).ToList();
-            var AlertContract = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertContractStatus == Status.Active&&x.CrCasRenterContractAlertBranch== bSLayoutVM.SelectedBranch).ToList();
+            var AlertContract = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertLessor == lessorCode&& x.CrCasRenterContractAlertBranch== bSLayoutVM.SelectedBranch).ToList();
 
            //For Charts 
            var AccountReceipt= _unitOfWork.CrCasAccountReceipt.FindAll(x=>x.CrCasAccountReceiptLessorCode==lessorCode&&x.CrCasAccountReceiptBranchCode== bSLayoutVM.SelectedBranch &&
@@ -105,7 +106,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
             ViewBag.UserMasterBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "22" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
             ViewBag.UserExpressBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "23" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
 
-
+            ViewBag.RenterLessorCount = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == lessorCode).Count();
+            ViewBag.AcccountReceiptCount = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == lessorCode &&
+                                                                                     x.CrCasAccountReceiptBranchCode==bSLayoutVM.SelectedBranch).Count();
             bSLayoutVM.RentedCars = null;
             bSLayoutVM.UnAvaliableCars = null;
             bSLayoutVM.AvaliableCars = null;

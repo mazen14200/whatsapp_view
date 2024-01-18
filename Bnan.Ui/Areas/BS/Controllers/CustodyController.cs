@@ -49,8 +49,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
             ViewBag.ReceiptPassingReferenceNo = ReferenceNo;
             ViewBag.Date = year.ToString("yyyy/MM/dd");
             var salesPoint = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointBrn == bsLayoutVM.SelectedBranch &&
-                                                                             x.CrCasAccountSalesPointLessor == lessorCode&&
-                                                                             x.CrCasAccountSalesPointTotalAvailable>0).ToList();
+                                                                             x.CrCasAccountSalesPointLessor == lessorCode &&
+                                                                             x.CrCasAccountSalesPointTotalAvailable > 0).ToList();
             bsLayoutVM.SalesPointHaveBalance = salesPoint;
             return View(bsLayoutVM);
         }
@@ -69,7 +69,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             bSLayoutVM.SalesPointBalanceTotal = salesPoint.CrCasAccountSalesPointTotalBalance;
             bSLayoutVM.SalesPointBalanceResereved = salesPoint.CrCasAccountSalesPointTotalReserved;
             bSLayoutVM.SalesPointBalanceAvaliable = salesPoint.CrCasAccountSalesPointTotalAvailable;
-            if (salesPoint.CrCasAccountSalesPointBank=="00")
+            if (salesPoint.CrCasAccountSalesPointBank == "00")
             {
                 bSLayoutVM.UserBalanceTotal = UserBranchValidity.CrMasUserBranchValidityBranchCashBalance;
                 bSLayoutVM.UserBalanceAvaliable = UserBranchValidity.CrMasUserBranchValidityBranchCashAvailable;
@@ -77,7 +77,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 bSLayoutVM.CustodyReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptBank == "00" &&
                                                                                        x.CrCasAccountReceiptLessorCode == lessorCode &&
                                                                                        x.CrCasAccountReceiptBranchCode == branchCode &&
-                                                                                       x.CrCasAccountReceiptIsPassing == "1"&&
+                                                                                       x.CrCasAccountReceiptIsPassing == "1" &&
                                                                                        x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode,
                                                                                        new[] {
                                                                                            "CrCasAccountReceiptPaymentMethodNavigation",
@@ -91,7 +91,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 bSLayoutVM.CustodyReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptBank != "00" &&
                                                                                        x.CrCasAccountReceiptLessorCode == lessorCode &&
                                                                                        x.CrCasAccountReceiptBranchCode == branchCode &&
-                                                                                       x.CrCasAccountReceiptIsPassing == "1"&&
+                                                                                       x.CrCasAccountReceiptIsPassing == "1" &&
                                                                                        x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode,
                                                                                        new[] {
                                                                                            "CrCasAccountReceiptPaymentMethodNavigation",
@@ -100,21 +100,24 @@ namespace Bnan.Ui.Areas.BS.Controllers
             return PartialView("_CustodyData", bSLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> SendCustody(BSLayoutVM bSLayout , List<string> ReceiptsNo, string ReferenceNo,string Reasons,
-                                                     string TotalReceived,string TotalPayment, string TotalReceipt)
+        public async Task<IActionResult> SendCustody(BSLayoutVM bSLayout, List<string> ReceiptsNo, string ReferenceNo, string Reasons,
+                                                     string TotalReceived, string TotalPayment, string TotalReceipt)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
-            
-            
+
+
 
             // Save Adminstrive Procedures
-           var adminstritive= await _adminstritiveProcedures.SaveAdminstritiveCustody(userLogin.CrMasUserInformationCode, userLogin.CrMasUserInformationLessor, bSLayout.SelectedBranch,
-                                                                                     userLogin.CrMasUserInformationCode, ReceiptsNo, Reasons);
+            var adminstritive = await _adminstritiveProcedures.SaveAdminstritiveCustody(userLogin.CrMasUserInformationCode, userLogin.CrMasUserInformationLessor, bSLayout.SelectedBranch,
+                                                                                      userLogin.CrMasUserInformationCode, TotalReceived, TotalPayment, Reasons);
             var checkUpdateReceipt = true;
-            if (adminstritive!=null)
+            if (adminstritive != null)
             {
-                foreach (var Receipt in ReceiptsNo)
+
+                string[] receiptValues = ReceiptsNo[0].Split(',');
+
+                foreach (var Receipt in receiptValues)
                 {
                     if (checkUpdateReceipt)
                     {
@@ -130,6 +133,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         }
                     }
                 }
+
+
             }
 
             // Table Changes When Submit Form 
@@ -145,7 +150,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
 
             // SalesPoint
-            var CheckUpdateSalesPoint=true;
+            var CheckUpdateSalesPoint = true;
             var SalesPoint = _unitOfWork.CrCasAccountSalesPoint.Find(x => x.CrCasAccountSalesPointCode == bSLayout.SalesPointSelected &&
                                                                         x.CrCasAccountSalesPointLessor == lessorCode &&
                                                                         x.CrCasAccountSalesPointBrn == bSLayout.SelectedBranch);
@@ -156,8 +161,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
             // BranchValidity
             var CheckUpdateBranchValidity = true;
 
-            CheckUpdateBranchValidity= await _custodyService.UpdateBranchValidity(userLogin.CrMasUserInformationCode,lessorCode,
-                                                                                  bSLayout.SelectedBranch,SalesPoint.CrCasAccountSalesPointBank,TotalPayment);
+            CheckUpdateBranchValidity = await _custodyService.UpdateBranchValidity(userLogin.CrMasUserInformationCode, lessorCode,
+                                                                                  bSLayout.SelectedBranch, SalesPoint.CrCasAccountSalesPointBank, TotalPayment);
 
 
 
@@ -165,10 +170,10 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
 
 
-            if (adminstritive!=null && checkUpdateReceipt&&
-                CheckUpdateUserInfo&& CheckUpdateBranch &&
-                CheckUpdateSalesPoint&& CheckUpdateBranchValidity) if (await _unitOfWork.CompleteAsync()>1) _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
-            else _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            if (adminstritive != null && checkUpdateReceipt &&
+                CheckUpdateUserInfo && CheckUpdateBranch &&
+                CheckUpdateSalesPoint && CheckUpdateBranchValidity) if (await _unitOfWork.CompleteAsync() > 1) _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                else _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
             return RedirectToAction("Index", "Home");
         }
 
@@ -178,7 +183,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var y = year.ToString("yy");
             var SectorCode = Sector;
             var Lrecord = _unitOfWork.CrCasSysAdministrativeProcedure.FindAll(x => x.CrCasSysAdministrativeProceduresLessor == LessorCode &&
-                 x.CrCasSysAdministrativeProceduresYear == y && x.CrCasSysAdministrativeProceduresBranch == BranchCode&&x.CrCasSysAdministrativeProceduresCode=="304")
+                 x.CrCasSysAdministrativeProceduresYear == y && x.CrCasSysAdministrativeProceduresBranch == BranchCode && x.CrCasSysAdministrativeProceduresCode == "304")
                 .Max(x => x.CrCasSysAdministrativeProceduresNo?.Substring(x.CrCasSysAdministrativeProceduresNo.Length - 6, 6));
 
             CrCasSysAdministrativeProcedure c = new CrCasSysAdministrativeProcedure();

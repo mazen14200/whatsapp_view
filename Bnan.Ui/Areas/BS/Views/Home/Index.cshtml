@@ -64,13 +64,13 @@
                                 <div class="chart-legend">
                                     <div class="chart-p" style="margin-top: 14%;">
                                         <div>
-                                            <p class="mb-2">@localizer["ExecutedContracts"] : <span>@Model.BasicContracts.FindAll(x=>x.CrCasRenterContractBasicStatus==Status.Active).Count()</span></p>
+                                            <p class="mb-2">@localizer["ExecutedContracts"] : <span>@Model.AlertContract.Count()</span></p>
                                         </div>
                                         <div>
-                                            <p class="mb-2">@localizer["ClosedContracts"] : <span>@Model.BasicContracts.FindAll(x=>x.CrCasRenterContractBasicStatus==Status.Closed).Count()</span></p>
+                                            <p class="mb-2">@localizer["ClosedContracts"] : <span>@Model.AlertContract.FindAll(x=>x.CrCasRenterContractAlertContractStatus==Status.Closed).Count()</span></p>
                                         </div>
                                         <div>
-                                            <p class="mb-2">@localizer["CanceledContracts"] : <span>@Model.BasicContracts.FindAll(x=>x.CrCasRenterContractBasicStatus==Status.Cancel).Count()</span></p>
+                                            <p class="mb-2">@localizer["CanceledContracts"] : <span>@Model.AlertContract.FindAll(x=>x.CrCasRenterContractAlertContractStatus==Status.Cancel).Count()</span></p>
                                         </div>
                                     </div>
                                     <br>
@@ -239,25 +239,25 @@
         <div class="row justify-content-center  ">
             <!-- Second row of buttons -->
             <div class="col-sm-6 col-md-6 col-lg-3 mb-1 ">
-                <button type="button" class="btn btn-secondary neonShadow " id="pulse-button-brunch">
-                    <img src="~/BranchSys/img/Rectangle 36.png" class="anm" id="brunch_button-img">
+                <button type="button" class="btn btn-secondary" id="CustodyBtn">
+                    <img src="~/BranchSys/img/Rectangle 36.png"  id="anmCustody">
                     @localizer["TheCovenant"]
                 </button>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3 mb-1">
                 <a class="btn btn-secondary" id="pulse-button-employee">
-                    <img src="~/BranchSys/img/Rectangle 33.png" id="anmFeedBox" class="">
+                    <img src="~/BranchSys/img/Rectangle 33.png" id="anmFeedBox"s>
                     @localizer["Feedbox"]
                 </a>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3  mb-1  ">
-                <a asp-area="BS" asp-action="Index" asp-controller="Report" class="btn btn-secondary ">
+                <a  class="btn btn-secondary " id="ReportBtn">
                     <img src="~/BranchSys/img/Rectangle 32.png">
                     @localizer["FinancialReport"]
                 </a>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3  mb-1 ">
-                <a class="btn btn-secondary " asp-area="BS" asp-action="Index" asp-controller="Renters">
+                <a class="btn btn-secondary" id="RenterBtn">
                     <img src="~/BranchSys/img/Rectangle 34.png">
                     @localizer["Tenants"]
                 </a>
@@ -494,10 +494,10 @@
             const pieChartData = {
                 labels: ['@localizer["ExpiredContract"]', '@localizer["ExpiresToday"]', '@localizer["ExpiresTomorrow"]', '@localizer["ExpiresLater"]'],
                 datasets: [{
-                    data: [@Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="3").Count(),
-                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="0").Count(),
-                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="1").Count(),
-                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="2").Count()],
+                    data: [@Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="3"&&x.CrCasRenterContractAlertContractStatus=="A").Count(),
+                        @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="0"&&x.CrCasRenterContractAlertContractStatus=="A").Count(),
+                        @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="1"&&x.CrCasRenterContractAlertContractStatus=="A").Count(),
+                        @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="2"&&x.CrCasRenterContractAlertContractStatus=="A").Count()],
                     backgroundColor: ['rgba(242, 36, 36, 1)', '#9966FF', 'rgba(242, 143, 36, 1)', 'rgba(54, 162, 235, 1)']
                 }]
             };
@@ -660,9 +660,9 @@
     </script>
     <script>
         $(document).ready(function () {
-            var model = '@ViewBag.Adminstritive';
+            var model1 = '@ViewBag.Adminstritive';
             // Check the value of the model variable
-            if (model === '0') {
+            if (model1 === '0') {
                 // If model is 0, remove the class neonShadow
                 $('#pulse-button-employee').removeClass('neonShadow');
                 $('#anmFeedBox').removeClass('anm');
@@ -673,12 +673,30 @@
             }
         });
     </script>
+    <script>
+        $(document).ready(function () {
+            var Limit = '@user.CrMasUserInformationCreditLimit';
+            var TotalBalance = '@user.CrMasUserInformationTotalBalance';
+            console.log("Limit", Limit)
+            console.log("TotalBalance", TotalBalance)
+            // Check the value of the model variable
+            if (parseFloat(TotalBalance) <= parseFloat(Limit)) {
+                // If model is 0, remove the class neonShadow
+                $('#CustodyBtn').removeClass('neonShadow');
+                $('#anmCustody').removeClass('anm');
+            } else {
+                // If model is not 0, add the class neonShadow
+                $('#CustodyBtn').addClass('neonShadow');
+                $('#anmCustody').addClass('anm');
+            }
+        });
+    </script>
 
     <script>
-        var model = '@ViewBag.Adminstritive';
+        var model2 = '@ViewBag.Adminstritive';
         document.getElementById('pulse-button-employee').addEventListener('click', function () {
-            console.log(model)
-            if (model == '0') {
+            console.log("Adminstritive",model2)
+            if (model2 == '0') {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["toastMessageExistFeedBox"]');
                 return; // Prevent further execution
@@ -687,13 +705,39 @@
             }
         });
     </script>
+    <script>
+        var RenterLessorCount = '@ViewBag.RenterLessorCount';
+        document.getElementById('RenterBtn').addEventListener('click', function () {
+            console.log(RenterLessorCount)
+            if (RenterLessorCount == '0') {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageExistRenters"]');
+                return; // Prevent further execution
+            } else {
+                window.location.href = "/BS/Renters/Index";
+            }
+        });
+    </script>
+    <script>
+        var AcccountReceiptCount = '@ViewBag.AcccountReceiptCount';
+        document.getElementById('ReportBtn').addEventListener('click', function () {
+            console.log(AcccountReceiptCount)
+            if (AcccountReceiptCount == '0') {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageExistReceipts"]');
+                return; // Prevent further execution
+            } else {
+                window.location.href = "/BS/Report/Index";
+            }
+        });
+    </script>
     <!--Custody Auth-->
     <script>
         var CashAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityBranch==Model.SelectedBranch)?.CrMasUserBranchValidityBranchCashAvailable';
         var SalesPointAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityBranch==Model.SelectedBranch)?.CrMasUserBranchValidityBranchSalesPointAvailable';
-        var TransferAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityBranch==Model.SelectedBranch)?.CrMasUserBranchValidityBranchTransferAvailable';
-        var total = parseFloat(CashAvailable) + parseFloat(SalesPointAvailable) + parseFloat(TransferAvailable);
-        document.getElementById('pulse-button-brunch').addEventListener('click', function () {
+        // var TransferAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityBranch==Model.SelectedBranch)?.CrMasUserBranchValidityBranchTransferAvailable';
+        var total = parseFloat(CashAvailable) + parseFloat(SalesPointAvailable);
+        document.getElementById('CustodyBtn').addEventListener('click', function () {
             console.log(total)
             if (total > 0) {
                 window.location.href = "/BS/Custody/Index";
