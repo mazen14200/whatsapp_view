@@ -20,6 +20,19 @@
 @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
 {
     <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">
+    <style>
+        .mgCenter{
+            margin-left: 140px
+        }
+    </style>
+}
+else
+{
+    <style>
+        .mgCenter {
+            margin-right: 140px
+        }
+    </style>
 }
 
 @{
@@ -168,7 +181,7 @@
         <div class="modal-content">
             <div class="modal-header " style="border-bottom:0px">
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-                <h5 class="modal-title card-title">بيانات تفاصيل القيد</h5>
+                <h5 class="modal-title card-title text-center mgCenter">@localizer["DetailsOfContract"]</h5>
             </div>
             <div class="modal-body p-0">
                 <div class="data-details">

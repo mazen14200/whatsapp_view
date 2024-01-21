@@ -27,7 +27,7 @@
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
 }
 <style>
-    .legend-item{
+    .legend-item {
         font-size: .7rem;
         color: #000000;
         font-weight: bold;
@@ -131,13 +131,13 @@
 
                                     }
                                     <p class="mb-2">
-                                        @localizer["EmployeeCustody"] : <span id="employee-custody">@totalBalanceInBranch?.ToString("N2")</span>
+                                        @localizer["EmployeeCustody"] : <span id="employee-custody">@((totalBalanceInBranch ?? 0).ToString("N2"))</span>
                                     </p>
                                     <p class="mb-2">
-                                        @localizer["AvailableBalance"] : <span id="Available-balance-employee">@totalAvaliableBalanceInBranch?.ToString("N2")</span>
+                                        @localizer["AvailableBalance"] : <span id="Available-balance-employee">@((totalAvaliableBalanceInBranch ?? 0).ToString("N2"))</span>
                                     </p>
                                     <p class="mb-2">
-                                        @localizer["ReservedBalance"] : <span id="used-balance-employee">@totalResevedBalanceInBranch?.ToString("N2")</span>
+                                        @localizer["ReservedBalance"] : <span id="used-balance-employee">@((totalResevedBalanceInBranch ?? 0).ToString("N2"))</span>
                                     </p>
                                     <!--  -->
                                 </div>
@@ -240,18 +240,18 @@
             <!-- Second row of buttons -->
             <div class="col-sm-6 col-md-6 col-lg-3 mb-1 ">
                 <button type="button" class="btn btn-secondary" id="CustodyBtn">
-                    <img src="~/BranchSys/img/Rectangle 36.png"  id="anmCustody">
+                    <img src="~/BranchSys/img/Rectangle 36.png" id="anmCustody">
                     @localizer["TheCovenant"]
                 </button>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3 mb-1">
                 <a class="btn btn-secondary" id="pulse-button-employee">
-                    <img src="~/BranchSys/img/Rectangle 33.png" id="anmFeedBox"s>
+                    <img src="~/BranchSys/img/Rectangle 33.png" id="anmFeedBox" s>
                     @localizer["Feedbox"]
                 </a>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3  mb-1  ">
-                <a  class="btn btn-secondary " id="ReportBtn">
+                <a class="btn btn-secondary " id="ReportBtn">
                     <img src="~/BranchSys/img/Rectangle 32.png">
                     @localizer["FinancialReport"]
                 </a>
@@ -265,6 +265,7 @@
         </div>
     </div>
 </footer>
+
 @section Scripts {
     <!--Charts-->
     <script>
@@ -316,13 +317,24 @@
                             },
                             ticks: {
                                 font: {
-                                    size: 13 // Change the font size of the tick labels
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 12,
+                                    weight: 'bold' // Change the font weight (e.g., 'normal', 'bold', 'bolder', 'lighter', or numeric value)
+                                    // Change the font size
                                 }
                             }
                         },
                         y: {
                             grid: {
                                 display: false // Remove horizontal lines
+                            },
+                            ticks: {
+                                font: {
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 12,
+                                    weight: 'bold' // Change the font weight (e.g., 'normal', 'bold', 'bolder', 'lighter', or numeric value)
+                                    // Change the font size
+                                }
                             },
                             beginAtZero: true,
                         }
@@ -380,17 +392,38 @@
     </script>
 
     <script>
+
         $(document).ready(function () {
             // Bar Chart 2
             //Branch
+            var paymentMethodsBranchData = @Html.Raw(Json.Serialize(Model.PaymentMethodsBranch));
+            console.log(paymentMethodsBranchData);
+            var labelsBranch;
+            if ('@requestCulture?.RequestCulture.UICulture.Name' == "en-US") {
+
+                labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
+                    return paymentMethod.enName;
+                });
+            }
+            else{
+                labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
+                    return paymentMethod.arName;
+                });
+            }
+
+
+            var data = paymentMethodsBranchData.map(function (paymentMethod) {
+                return paymentMethod.value;
+            });
+
             var barChart2 = document.getElementById("barChart2").getContext("2d");
             var myChart = new Chart(barChart2, {
                 type: "bar",
                 data: {
-                    labels: ['@localizer["CASH"]', '@localizer["Mada"]', '@localizer["Visa"]', '@localizer["Express"]', '@localizer["MasterCard"] '],
+                    labels: labelsBranch,
                     datasets: [
                         {
-                            data: [@ViewBag.CashBalance, @ViewBag.MadaaBalance, @ViewBag.VisaBalance, @ViewBag.ExpressBalance, @ViewBag.MasterBalance],
+                            data: data,
                             backgroundColor: [
                                 "rgba(255, 99, 132, 1)",
                                 "rgba(54, 162, 235, 1)",
@@ -414,6 +447,14 @@
                         x: {
                             grid: {
                                 display: false // Remove vertical lines
+                            },
+                            ticks: {
+                                font: {
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 12,
+                                    weight: 'bold' // Change the font weight (e.g., 'normal', 'bold', 'bolder', 'lighter', or numeric value)
+                                    // Change the font size
+                                }
                             }
                         },
                         y: {
@@ -423,7 +464,10 @@
                             beginAtZero: true,
                             ticks: {
                                 font: {
-                                    size: 13 // Change the font size of the tick labels
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 12,
+                                    weight: 'bold' // Change the font weight (e.g., 'normal', 'bold', 'bolder', 'lighter', or numeric value)
+                                    // Change the font size
                                 }
                             }
                         }
@@ -437,14 +481,31 @@
     <script>
         $(document).ready(function () {
             //Employee Balance
+            var paymentMethodsUserData = @Html.Raw(Json.Serialize(Model.PaymentMethodsUser));
+            console.log(paymentMethodsUserData);
+            var labelsUser;
+            if ('@requestCulture?.RequestCulture.UICulture.Name' == "en-US") {
+
+                labelsUser = paymentMethodsUserData.map(function (paymentMethod) {
+                    return paymentMethod.enName;
+                });
+            }
+            else {
+                labelsUser = paymentMethodsUserData.map(function (paymentMethod) {
+                    return paymentMethod.arName;
+                });
+            }
+            var dataUser = paymentMethodsUserData.map(function (paymentMethod) {
+                return paymentMethod.value;
+            });
             var chrt = document.getElementById("chartId").getContext("2d");
             var chartId = new Chart(chrt, {
                 type: "bar",
                 data: {
-                    labels: ['@localizer["CASH"]', '@localizer["Mada"]', '@localizer["Visa"]', '@localizer["Express"]', '@localizer["MasterCard"]'],
+                    labels: labelsUser,
                     datasets: [
                         {
-                            data: [@ViewBag.UserCashBalance, @ViewBag.UserMadaaBalance, @ViewBag.UserVisaBalance, @ViewBag.UserExpressBalance, @ViewBag.UserMasterBalance],
+                            data: dataUser,
                             backgroundColor: [
                                 "rgba(255, 99, 132, 1)",
                                 "rgba(54, 162, 235, 1)",
@@ -467,6 +528,14 @@
                         x: {
                             grid: {
                                 display: false // Remove vertical lines
+                            },
+                            ticks: {
+                                font: {
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 12,
+                                    weight: 'bold' // Change the font weight (e.g., 'normal', 'bold', 'bolder', 'lighter', or numeric value)
+                                    // Change the font size
+                                }
                             }
                         },
                         y: {
@@ -476,7 +545,10 @@
                             beginAtZero: true,
                             ticks: {
                                 font: {
-                                    size: 13 // Change the font size of the tick labels
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 12,
+                                    weight: 'bold' // Change the font weight (e.g., 'normal', 'bold', 'bolder', 'lighter', or numeric value)
+                                    // Change the font size
                                 }
                             }
                         }
@@ -495,9 +567,9 @@
                 labels: ['@localizer["ExpiredContract"]', '@localizer["ExpiresToday"]', '@localizer["ExpiresTomorrow"]', '@localizer["ExpiresLater"]'],
                 datasets: [{
                     data: [@Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="3"&&x.CrCasRenterContractAlertContractStatus=="A").Count(),
-                        @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="0"&&x.CrCasRenterContractAlertContractStatus=="A").Count(),
-                        @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="1"&&x.CrCasRenterContractAlertContractStatus=="A").Count(),
-                        @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="2"&&x.CrCasRenterContractAlertContractStatus=="A").Count()],
+        @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="0"&&x.CrCasRenterContractAlertContractStatus=="A").Count(),
+        @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="1"&&x.CrCasRenterContractAlertContractStatus=="A").Count(),
+        @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="2"&&x.CrCasRenterContractAlertContractStatus=="A").Count()],
                     backgroundColor: ['rgba(242, 36, 36, 1)', '#9966FF', 'rgba(242, 143, 36, 1)', 'rgba(54, 162, 235, 1)']
                 }]
             };
@@ -539,7 +611,7 @@
             });
 
         });
-        
+
 
     </script>
 
@@ -676,7 +748,7 @@
     <script>
         $(document).ready(function () {
             var Limit = '@user.CrMasUserInformationCreditLimit';
-            var TotalBalance = '@user.CrMasUserInformationTotalBalance';
+            var TotalBalance = '@user.CrMasUserInformationAvailableBalance';
             console.log("Limit", Limit)
             console.log("TotalBalance", TotalBalance)
             // Check the value of the model variable
@@ -695,7 +767,7 @@
     <script>
         var model2 = '@ViewBag.Adminstritive';
         document.getElementById('pulse-button-employee').addEventListener('click', function () {
-            console.log("Adminstritive",model2)
+            console.log("Adminstritive", model2)
             if (model2 == '0') {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["toastMessageExistFeedBox"]');

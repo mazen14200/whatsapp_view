@@ -1,0 +1,159 @@
+﻿@using System.Globalization;
+@using Bnan.Core.Extensions;
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@model IEnumerable<CrCasSysAdministrativeProcedure>
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+<style>
+    .email {
+        text-align: end;
+    }
+</style>
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" style="width:100%">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["ReceviedCustodyNo"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["FromDate"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["ToDate"]</th>
+                    <th aria-label="Office: activate to sort column ascending">@localizer["SalesPoint"]</th>
+                    <th aria-label="Start date: activate to sort column ascending">@localizer["Creditor"]</th>
+                    <th aria-label="Start date: activate to sort column ascending">@localizer["Debit"]</th>
+                    <th aria-label="Start date: activate to sort column ascending">@localizer["UserName"]</th>
+                    <th aria-label="Start date: activate to sort column ascending">@localizer["Status"]</th>
+                    <th aria-label="Start date: activate to sort column ascending">@localizer["UserRecevied"]</th>
+                    <th aria-label="Start date: activate to sort column ascending">@localizer["DateReceived"]</th>
+                    <th aria-label="Start date: activate to sort column ascending">@localizer["reasons"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@no</td>
+                        <td>@item.CrCasSysAdministrativeProceduresNo</td>
+                        <td>@item.CrCasSysAdministrativeProceduresDocStartDate</td>
+                        <td>@item.CrCasSysAdministrativeProceduresDocEndDate</td>
+                        <td></td>
+                        <td>@item.CrCasSysAdministrativeProceduresCreditor</td>
+                        <td>@item.CrCasSysAdministrativeProceduresDebit</td>
+                        <td>@item.CrCasSysAdministrativeProceduresUserInsertNavigation?.CrMasUserInformationArName</td>
+                        
+                        <td>
+                            @if (item.CrCasSysAdministrativeProceduresStatus == Status.Active)
+                            {
+                                @localizer["UnderProcedure"]
+                            }
+                            else if (item.CrCasSysAdministrativeProceduresStatus == Status.Accept)
+                            {
+                                @localizer["Accept"]
+                            }
+                            else if (item.CrCasSysAdministrativeProceduresStatus == Status.Reject)
+                            {
+                                @localizer["Reject"]
+                            }
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@item.CrCasSysAdministrativeProceduresReasons</td>
+
+                    </tr>
+                    no++;
+
+                }
+
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+
+    @*  <div class="col-sm-12">
+        <table id="basic-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Id"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Owner"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Commercial_No"]</th>
+                    <th aria-label="Office: activate to sort column ascending">@localizer["NumberOfCars"]</th>
+                    <th aria-label="Start date: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrCasOwnersStatus == "D" || item.CrCasOwnersStatus == "H")
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "Owners", new { id = item.CrCasOwnersCode })'" style="cursor:pointer; color:red ">
+                            <td>@no</td>
+                            <td>@item.CrCasOwnersCode</td>
+                            <td>@item.CrCasOwnersArName</td>
+                            <td>@item.CrCasOwnersCommercialNo</td>
+                            <td>@item.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus!=Status.Sold&&x.CrCasCarInformationStatus!=Status.Deleted).Count()</td>
+                            <td>
+                                @if (@item.CrCasOwnersStatus == "H")
+                                {
+                                    @localizer["Stoped"]
+                                }
+                                else if (@item.CrCasOwnersStatus == "D")
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else
+                                {
+                                    @localizer["Active"]
+
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "Owners", new { id = item.CrCasOwnersCode })'" style="cursor:pointer; ">
+                            <td>@no</td>
+                            <td>@item.CrCasOwnersCode</td>
+                            <td>@item.CrCasOwnersArName</td>
+                            <td>@item.CrCasOwnersCommercialNo</td>
+                            <td>@item.CrCasCarInformations.Where(x=>x.CrCasCarInformationStatus!=Status.Sold&&x.CrCasCarInformationStatus!=Status.Deleted).Count()</td>
+                            <td>
+                                @if (@item.CrCasOwnersStatus == "H")
+                                {
+                                    @localizer["Stoped"]
+                                }
+                                else if (@item.CrCasOwnersStatus == "D")
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else
+                                {
+                                    @localizer["Active"]
+
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+
+                }
+            </tbody>
+        </table>
+    </div> *@
+}

@@ -93,29 +93,114 @@ namespace Bnan.Ui.Areas.BS.Controllers
            var AccountReceipt= _unitOfWork.CrCasAccountReceipt.FindAll(x=>x.CrCasAccountReceiptLessorCode==lessorCode&&x.CrCasAccountReceiptBranchCode== bSLayoutVM.SelectedBranch &&
                                                                           x.CrCasAccountReceiptIsPassing!="4"&& x.CrCasAccountReceiptPaymentMethod!="30"&&
                                                                           x.CrCasAccountReceiptPaymentMethod!="40").ToList();
-            //For Branch
-            ViewBag.CashBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "10").Sum(x => x.CrCasAccountReceiptPayment);
-            ViewBag.MadaaBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "20").Sum(x => x.CrCasAccountReceiptPayment);
-            ViewBag.VisaBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "21").Sum(x => x.CrCasAccountReceiptPayment);
-            ViewBag.MasterBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "22").Sum(x => x.CrCasAccountReceiptPayment);
-            ViewBag.ExpressBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "23").Sum(x => x.CrCasAccountReceiptPayment);
-            //For User
-            ViewBag.UserCashBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "10" &&x.CrCasAccountReceiptUser==userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
-            ViewBag.UserMadaaBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "20" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
-            ViewBag.UserVisaBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "21" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
-            ViewBag.UserMasterBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "22" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
-            ViewBag.UserExpressBalance = AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "23" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
+
+            var PaymentMethods = _unitOfWork.CrMasSupAccountPaymentMethod.FindAll(x => x.CrMasSupAccountPaymentMethodStatus == Status.Active &&
+                                                                                       (x.CrMasSupAccountPaymentMethodClassification == "1" || x.CrMasSupAccountPaymentMethodClassification == "2")).ToList();
+           
+            List<PaymentMethodBranchDataVM> paymentMethodBranch= new List<PaymentMethodBranchDataVM>();
+            foreach (var paymentMethod in PaymentMethods)
+            {
+                // Assuming you have properties for Arabic and English names in your CrMasSupAccountPaymentMethod model
+                string code = paymentMethod.CrMasSupAccountPaymentMethodCode; // Replace with the actual property name
+                string arabicName = paymentMethod.CrMasSupAccountPaymentMethodArName; // Replace with the actual property name
+                string englishName = paymentMethod.CrMasSupAccountPaymentMethodEnName; // Replace with the actual property name
+
+                // Get the corresponding balance based on payment method
+                decimal balance = 0;
+
+                switch (paymentMethod.CrMasSupAccountPaymentMethodCode)
+                {
+                    case "10":
+                        balance = (decimal)AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "10").Sum(x => x.CrCasAccountReceiptPayment);
+                        break;
+                    case "20":
+                        balance = (decimal)AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "20").Sum(x => x.CrCasAccountReceiptPayment);
+                        break;
+                    case "21":
+                        balance = (decimal)AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "21").Sum(x => x.CrCasAccountReceiptPayment);
+                        break;
+                    case "22":
+                        balance = (decimal)AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "22").Sum(x => x.CrCasAccountReceiptPayment);
+                        break;
+                    case "23":
+                        balance = (decimal)AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "23").Sum(x => x.CrCasAccountReceiptPayment);
+                        break;
+                        // Add more cases for other payment methods if needed
+                }
+
+                // Create PaymentMethodData object and add it to the list
+                paymentMethodBranch.Add(new PaymentMethodBranchDataVM
+                {
+                    Code = code,
+                    ArName = arabicName,
+                    EnName = englishName,
+                    Value = balance
+                });
+            }
+
+            List<PaymentMethodBranchDataVM> paymentMethodUser = new List<PaymentMethodBranchDataVM>();
+            foreach (var paymentMethod in PaymentMethods)
+            {
+                // Assuming you have properties for Arabic and English names in your CrMasSupAccountPaymentMethod model
+                string code = paymentMethod.CrMasSupAccountPaymentMethodCode; // Replace with the actual property name
+                string arabicName = paymentMethod.CrMasSupAccountPaymentMethodArName; // Replace with the actual property name
+                string englishName = paymentMethod.CrMasSupAccountPaymentMethodEnName; // Replace with the actual property name
+
+                // Get the corresponding balance based on payment method
+                decimal balance = 0;
+
+                switch (paymentMethod.CrMasSupAccountPaymentMethodCode)
+                {
+                    case "10":
+                        balance = (decimal)AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "10" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
+                        break;
+                    case "20":
+                        balance = (decimal)AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "20" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
+                        break;
+                    case "21":
+                        balance = (decimal)AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "21" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
+                        break;
+                    case "22":
+                        balance = (decimal)AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "22" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
+                        break;
+                    case "23":
+                        balance = (decimal)AccountReceipt.Where(x => x.CrCasAccountReceiptPaymentMethod == "23" && x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode).Sum(x => x.CrCasAccountReceiptPayment);
+                        break;
+                        // Add more cases for other payment methods if needed
+                }
+
+                // Create PaymentMethodData object and add it to the list
+                paymentMethodUser.Add(new PaymentMethodBranchDataVM
+                {
+                    Code = code,
+                    ArName = arabicName,
+                    EnName = englishName,
+                    Value = balance
+                });
+            };
+
+
+
+
+            
 
             ViewBag.RenterLessorCount = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == lessorCode).Count();
             ViewBag.AcccountReceiptCount = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == lessorCode &&
                                                                                      x.CrCasAccountReceiptBranchCode==bSLayoutVM.SelectedBranch).Count();
+
+
+            
+            
             bSLayoutVM.RentedCars = null;
             bSLayoutVM.UnAvaliableCars = null;
             bSLayoutVM.AvaliableCars = null;
             bSLayoutVM.CrMasUserBranchValidity = branchValidity;
             bSLayoutVM.BasicContracts = Contracts;
             bSLayoutVM.AlertContract = AlertContract;
-           
+            bSLayoutVM.PaymentMethodsBranch = paymentMethodBranch.OrderBy(x=>x.Code).ToList();
+            bSLayoutVM.PaymentMethodsUser = paymentMethodUser.OrderBy(x=>x.Code).ToList();
+
+
             return View(bSLayoutVM);
         }
         public async Task<IActionResult> ChangeBranch(string selectedBranch)

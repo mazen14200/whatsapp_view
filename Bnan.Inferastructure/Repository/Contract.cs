@@ -114,7 +114,7 @@ namespace Bnan.Inferastructure.Repository
 
                 RegionCode = GetRegion(crElmPost.CrElmPostRegionsArName, crElmPost.CrElmPostRegionsEnName);
                 CityCode = GetCity(crElmPost.CrElmPostCityArName, crElmPost.CrElmPostCityEnName, RegionCode);
-                
+
                 buildingInfoAr = crElmPost.CrElmPostBuildingNo != null ? $"مبنى ({crElmPost.CrElmPostBuildingNo}) " : string.Empty;
                 unitInfoAr = crElmPost.CrElmPostUnitNo != null ? $"وحدة ({crElmPost.CrElmPostUnitNo}) " : string.Empty;
                 zipCodeAr = crElmPost.CrElmPostZipCode != null ? $"الرمز البريدي ({crElmPost.CrElmPostZipCode}) " : string.Empty;
@@ -336,7 +336,7 @@ namespace Bnan.Inferastructure.Repository
             renterContractBasic.CrCasRenterContractBasicAllowCanceled = renterContractBasic.CrCasRenterContractBasicExpectedStartDate?.AddHours(Convert.ToDouble(carPrice.CrCasPriceCarBasicCancelHour));
             renterContractBasic.CrCasRenterContractBasicRenterId = RenterId;
             renterContractBasic.CrCasRenterContractBasicCarSerailNo = SerialNo;
-            if (RenterId!=DriverId)
+            if (RenterId != DriverId)
             {
                 if (!string.IsNullOrEmpty(DriverId)) renterContractBasic.CrCasRenterContractBasicDriverId = DriverId;
                 else renterContractBasic.CrCasRenterContractBasicDriverId = null;
@@ -352,14 +352,23 @@ namespace Bnan.Inferastructure.Repository
                 renterContractBasic.CrCasRenterContractBasicAdditionalDriverId = AdditionalDriver;
                 renterContractBasic.CrCasRenterContractBasicAdditionalDriverValue = carPrice.CrCasPriceCarBasicAdditionalDriverValue;
             }
-            else renterContractBasic.CrCasRenterContractBasicAdditionalDriverId = null;
+            else
+            {
+                renterContractBasic.CrCasRenterContractBasicAdditionalDriverId = null;
+                renterContractBasic.CrCasRenterContractBasicAdditionalDriverValue = 0;
 
+            };
+            renterContractBasic.CrCasRenterContractBasicPrivateDriverValue = carPrice.CrCasPriceCarBasicPrivateDriverValue ?? 0;
             if (!string.IsNullOrEmpty(PrivateDriver))
             {
                 renterContractBasic.CrCasRenterContractBasicPrivateDriverId = PrivateDriver;
-                renterContractBasic.CrCasRenterContractBasicExpectedPrivateDriverValue = carPrice.CrCasPriceCarBasicPrivateDriverValue * int.Parse(DaysNo);
+                renterContractBasic.CrCasRenterContractBasicExpectedPrivateDriverValue = renterContractBasic.CrCasRenterContractBasicPrivateDriverValue * int.Parse(DaysNo);
             }
-            else renterContractBasic.CrCasRenterContractBasicPrivateDriverId = null;
+            else
+            {
+                renterContractBasic.CrCasRenterContractBasicPrivateDriverId = null;
+                renterContractBasic.CrCasRenterContractBasicExpectedPrivateDriverValue = 0;
+            };
             //Get Data From Car Price Info
 
             // Hours
@@ -385,12 +394,10 @@ namespace Bnan.Inferastructure.Repository
             renterContractBasic.CrCasRenterContractBasicTaxRate = carPrice.CrCasPriceCarBasicRentalTaxRate;
             renterContractBasic.CrCasRenterContractBasicUserDiscountRate = decimal.Parse(UserDiscount);
             //Info From Payment Tab From Create Contract 
-            renterContractBasic.CrCasRenterContractBasicPrivateDriverValue = carPrice.CrCasPriceCarBasicPrivateDriverValue;
             renterContractBasic.CrCasRenterContractBasicCurrentReadingMeter = int.Parse(CurrentMeter);
             renterContractBasic.CrCasRenterContractBasicExpectedRentValue = carPrice.CrCasPriceCarBasicDailyRent * int.Parse(DaysNo);
             renterContractBasic.CrCasRenterContractBasicExpectedOptionsValue = decimal.Parse(OptionsTotal);
             renterContractBasic.CrCasRenterContractBasicAdditionalValue = decimal.Parse(AdditionalTotal);
-            renterContractBasic.CrCasRenterContractBasicExpectedPrivateDriverValue = carPrice.CrCasPriceCarBasicPrivateDriverValue * int.Parse(DaysNo);
             renterContractBasic.CrCasRenterContractBasicExpectedValueBeforDiscount = decimal.Parse(ContractValueBeforeDiscount);
             renterContractBasic.CrCasRenterContractBasicExpectedDiscountValue = decimal.Parse(DiscountValue);
             renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount = decimal.Parse(ContractValueAfterDiscount);
@@ -499,6 +506,7 @@ namespace Bnan.Inferastructure.Repository
             if (Driver != null)
             {
                 Driver.CrCasRenterLessorStatus = Status.Rented;
+                Driver.CrCasRenterLessorReasons = Reasons;
                 if (_unitOfWork.CrCasRenterLessor.Update(Driver) != null) return true;
             }
             return false;
@@ -547,7 +555,7 @@ namespace Bnan.Inferastructure.Repository
             return false;
         }
 
-        public async Task<bool> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo, decimal TotalPayed, string RenterId, string UserId, string PassingType)
+        public async Task<bool> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo, decimal TotalPayed, string RenterId, string UserId, string PassingType, string Reasons)
         {
             CrCasAccountReceipt crCasAccountReceipt = new CrCasAccountReceipt();
             var User = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == UserId && x.CrMasUserInformationLessor == LessorCode);
@@ -599,6 +607,7 @@ namespace Bnan.Inferastructure.Repository
             crCasAccountReceipt.CrCasAccountReceiptPayment = TotalPayed;
             crCasAccountReceipt.CrCasAccountReceiptReceipt = 0;
             crCasAccountReceipt.CrCasAccountReceiptIsPassing = PassingType;
+            crCasAccountReceipt.CrCasAccountReceiptReasons = Reasons;
 
             if (await _unitOfWork.CrCasAccountReceipt.AddAsync(crCasAccountReceipt) != null) return true;
             return false;

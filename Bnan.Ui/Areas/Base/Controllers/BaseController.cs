@@ -156,7 +156,7 @@ namespace Bnan.Ui.Areas.Base.Controllers
             var checkBranch = branches.Find(x => x.CrCasBranchInformationCode == selectBranch);
             if (checkBranch == null) selectBranch = branches.FirstOrDefault()?.CrCasBranchInformationCode;
 
-            var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch);
+            var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch&&x.CrCasBranchInformationLessor==lessorCode);
 
             return new BSLayoutVM
             {

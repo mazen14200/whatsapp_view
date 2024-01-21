@@ -32,7 +32,24 @@
     .hideElement {
         display: none !important;
     }
+    
 </style>
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+  <style>
+      .form-control{
+            text-align: left !important;
+      }
+    </style>
+}
+else
+{
+    <style>
+      .form-control{
+            text-align: right !important;
+      }
+    </style>
+}
 
 <section class="section-mainCard" style="font-weight: 600;">
     <div class="row justify-content-center w-100 h-100">
@@ -276,8 +293,8 @@
                                         <div class="col-auto">
                                             <label for="FormControlTextarea1">@localizer["reasons"]</label>
                                         </div>
-                                        <div class="col-sm-5 col-md-5 col-lg-5 text-right">
-                                            <input class="form-control" asp-for="Contract.RenterReasons" rows="1" maxlength="100" type="text">
+                                        <div class="col-sm-7 col-md-7 col-lg-7">
+                                            <input class="form-control text-right" asp-for="Contract.RenterReasons" rows="1" maxlength="100" type="text">
                                         </div>
 
                                     </div>
@@ -603,7 +620,7 @@
                                         <div class="col-auto">
                                             <label for="FormControlTextarea2">@localizer["reasons"]</label>
                                         </div>
-                                        <div class="col-sm-5 col-md-5 col-lg-5">
+                                        <div class="col-sm-7 col-md-7 col-lg-7">
                                             <input class="form-control text-right" asp-for="Contract.DriverReasons" maxlength="100">
                                         </div>
                                     </div>
@@ -1951,7 +1968,7 @@
                 }, 1000);
             }
         }
-       
+
 
 
         // For Driver///////////////////////
@@ -2079,14 +2096,15 @@
                         $("#DriverGender").text(DriverInformation.personalEnGender);
                         $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
                         if (DriverInformation.licenseEnName != "" && DriverInformation.licenseEnName != null && DriverInformation.licenseEnName != undefined) {
-                            $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
-                            $("#DriverLicenseIssued").text('');
-                            $("#DriverLicenseExpiration").text('');
-                        }
-                        else {
                             $("#DriverLicenseType").text(DriverInformation.licenseEnName);
                             $("#DriverLicenseIssued").text(licenseIssuedDate);
                             $("#DriverLicenseExpiration").text(licenseExpiryDate);
+                        }
+                        else {
+                            $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
+                            $("#DriverLicenseIssued").text('');
+                            $("#DriverLicenseExpiration").text('');
+
                         }
 
                         $("#DriverEmployer").text(DriverInformation.employerEnName);
@@ -2113,14 +2131,14 @@
                         $("#DriverGender").text(DriverInformation.personalArGender);
                         $("#DriverNationality").text(DriverInformation.personalArNationality);
                         if (DriverInformation.licenseArName != "" && DriverInformation.licenseArName != null && DriverInformation.licenseArName != undefined) {
-                            $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
-                            $("#DriverLicenseIssued").text('');
-                            $("#DriverLicenseExpiration").text('');
-                        }
-                        else {
                             $("#DriverLicenseType").text(DriverInformation.licenseArName);
                             $("#DriverLicenseIssued").text(licenseIssuedDate);
                             $("#DriverLicenseExpiration").text(licenseExpiryDate);
+                        }
+                        else {
+                            $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
+                            $("#DriverLicenseIssued").text('');
+                            $("#DriverLicenseExpiration").text('');
                         }
                         $("#DriverEmployer").text(DriverInformation.employerArName);
                         $("#birth-date-driver").val(birthdate);
@@ -2192,7 +2210,7 @@
                 }, 1000);
             }
         }
-        
+
 
 
 
@@ -2316,14 +2334,14 @@
                         $("#AddDriverGender").text(AddDriverInformation.personalEnGender);
                         $("#AddDriverProffessions").text(AddDriverInformation.personalEnProfessions);
                         if (AddDriverInformation.licenseEnName != "" && AddDriverInformation.licenseEnName != null && AddDriverInformation.licenseEnName != undefined) {
-                            $("#AddDriverLicenseType").text('@localizer["notfound"]').css("color", "red");
-                            $("#AddDriverLicenseIssued").text('');
-                            $("#AddDriverLicenseExpiration").text('');
-                        }
-                        else {
                             $("#AddDriverLicenseIssued").text(licenseIssuedDate);
                             $("#AddDriverLicenseExpiration").text(licenseExpiryDate);
                             $("#AddDriverLicenseType").text(AddDriverInformation.licenseEnName);
+                        }
+                        else {
+                            $("#AddDriverLicenseType").text('@localizer["notfound"]').css("color", "red");
+                            $("#AddDriverLicenseIssued").text('');
+                            $("#AddDriverLicenseExpiration").text('');
                         }
 
                         $("#AddDriverEmployer").text(AddDriverInformation.employerEnName);
@@ -2350,14 +2368,14 @@
                         $("#AddDriverGender").text(AddDriverInformation.personalArGender);
                         $("#AddDriverNationality").text(AddDriverInformation.personalArNationality);
                         if (AddDriverInformation.licenseArName != "" && AddDriverInformation.licenseArName != null && AddDriverInformation.licenseArName != undefined) {
-                            $("#AddDriverLicenseType").text('@localizer["notfound"]').css("color", "red");
-                            $("#AddDriverLicenseIssued").text('');
-                            $("#AddDriverLicenseExpiration").text('');
-                        }
-                        else {
                             $("#AddDriverLicenseType").text(AddDriverInformation.licenseArName);
                             $("#AddDriverLicenseIssued").text(licenseIssuedDate);
                             $("#AddDriverLicenseExpiration").text(licenseExpiryDate);
+                        }
+                        else {
+                            $("#AddDriverLicenseType").text('@localizer["notfound"]').css("color", "red");
+                            $("#AddDriverLicenseIssued").text('');
+                            $("#AddDriverLicenseExpiration").text('');
                         }
                         $("#AddDriverEmployer").text(AddDriverInformation.employerArName);
                         $("#birth-date-additionalDriver").val(birthdate);
@@ -2600,14 +2618,14 @@
                                     $("#DriverGender").text(DriverInformation.personalEnGender);
                                     $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
                                     if (DriverInformation.licenseEnName != "" && DriverInformation.licenseEnName != null && DriverInformation.licenseEnName != undefined) {
-                                        $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
-                                        $("#DriverLicenseIssued").text('');
-                                        $("#DriverLicenseExpiration").text('');
-                                    }
-                                    else {
                                         $("#DriverLicenseType").text(DriverInformation.licenseEnName);
                                         $("#DriverLicenseIssued").text(licenseIssuedDate);
                                         $("#DriverLicenseExpiration").text(licenseExpiryDate);
+                                    }
+                                    else {
+                                        $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
+                                        $("#DriverLicenseIssued").text('');
+                                        $("#DriverLicenseExpiration").text('');
                                     }
                                     $("#DriverEmployer").text(DriverInformation.employerEnName);
                                     $("#birth-date-driver").val(birthdate);
@@ -2636,14 +2654,14 @@
                                     $("#DriverGender").text(RenterInformation.personalArGender);
                                     $("#DriverNationality").text(RenterInformation.personalArNationality);
                                     if (DriverInformation.licenseArName != "" && DriverInformation.licenseArName != null && DriverInformation.licenseArName != undefined) {
-                                        $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
-                                        $("#DriverLicenseIssued").text('');
-                                        $("#DriverLicenseExpiration").text('');
-                                    }
-                                    else {
                                         $("#DriverLicenseType").text(DriverInformation.licenseArName);
                                         $("#DriverLicenseIssued").text(licenseIssuedDate);
                                         $("#DriverLicenseExpiration").text(licenseExpiryDate);
+                                    }
+                                    else {
+                                        $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
+                                        $("#DriverLicenseIssued").text('');
+                                        $("#DriverLicenseExpiration").text('');
                                     }
                                     $("#DriverEmployer").text(RenterInformation.employerArName);
                                     $("#birth-date-driver").val(birthdate);

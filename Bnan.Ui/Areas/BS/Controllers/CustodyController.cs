@@ -110,7 +110,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             // Save Adminstrive Procedures
             var adminstritive = await _adminstritiveProcedures.SaveAdminstritiveCustody(userLogin.CrMasUserInformationCode, userLogin.CrMasUserInformationLessor, bSLayout.SelectedBranch,
-                                                                                      userLogin.CrMasUserInformationCode, TotalReceived, TotalPayment, Reasons);
+                                                                                      userLogin.CrMasUserInformationCode, TotalReceived, TotalPayment, Reasons, ReceiptsNo);
             var checkUpdateReceipt = true;
             if (adminstritive != null)
             {

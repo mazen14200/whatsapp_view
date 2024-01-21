@@ -122,6 +122,7 @@
   "Avaliable": "متاحه",
   "UnAvaliable": "غير متاحه",
   "Tenant": "مستأجر",
+  "Allowed": "مقبول",
 
   // component title
   "Branch Data": "بيانات الفروع",
@@ -581,7 +582,8 @@
   "HintSureTodeleteRefrence": "سيترتب على حذف بيانات المرجع عدم وجودها على النظام",
   "HintSureToHoldRefrence": "سيترتب على إيقاف بيانات المرجع إيقافها على النظام",
 
-
+  //
+  "Receipt Confirmation Hint": "تمكنك الصفحة من عرض  بيانات السند ",
   //ContractAdditional Services
   "ContractAdditional Data": "بيانات الاضافات بالعقود",
   "ContractAdditional Hint": "تمكنك الصفحة من عرض و إضافة و تعديل بيانات الاضافات بالعقود.",
@@ -1209,5 +1211,12 @@
   "TotalBalanceOfSalesPoint": "إجمالي نقطة البيع",
   "EmployeeTotalBalance": "إجمالي رصيد الموظف",
   "TotalCustody": "إجمالي المسلم",
-  "ReceiptDate": "تاريخ القيد"
+  "ReceiptDate": "تاريخ القيد",
+  "DetailsOfContract": "تفاصيل بيانات القيد",
+  //
+  "ReceviedCustodyNo": "رقم تسليم العهدة",
+  "FromDate": "من تاريخ",
+  "ToDate": "الي تاريخ",
+  "UserRecevied": "مستلم العهدة",
+  "DateReceived": "تاريخ الاستلام"
 }

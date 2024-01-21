@@ -133,6 +133,7 @@
   "Avaliable": "Avaliable",
   "UnAvaliable": "Un Avaliable",
   "Tenant": "Tenant",
+  "Allowed": "Allowed",
 
   // component title
   "Branch Data": "Branches Data",
@@ -568,6 +569,8 @@
   "Edit Refrence Hint": "The page allows you to edit Account Reference data",
   "Edit Refrence Data": "Edit",
 
+  //
+  "Receipt Confirmation Hint": "The page enables you to view, add and modify reference data ",
 
   "HintSureToRetriveHRefrence": "The retrieval of Account Reference data will result to be restored in the system.",
   "HintSureToRetriveDRefrence": "The retrieval of Account Reference data will result to be restored in the system.",
@@ -1213,7 +1216,14 @@
   "TotalBalanceOfSalesPoint": "SalesPoint Total Balance",
   "EmployeeTotalBalance": "Employee Total Balance",
   "TotalCustody": "Total Amount",
-  "ReceiptDate": "Receipt Date"
+  "ReceiptDate": "Receipt Date",
+  "DetailsOfContract": "Details Of Receipt Data",
+  //
+  "ReceviedCustodyNo": "Custody Received No",
+  "FromDate": "From Date",
+  "ToDate": "To Date",
+  "UserRecevied": "User Recevied",
+  "DateReceived": "Date Received"
 
 
 }

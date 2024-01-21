@@ -46,6 +46,8 @@ namespace Bnan.Ui.ViewModels.BS
         [Required(ErrorMessage = "requiredFiled")]
         public string? SalesPointSelected { get; set; }
         public List<CrCasAccountReceipt>? CustodyReceipts { get; set; }
+        public List<PaymentMethodBranchDataVM>? PaymentMethodsBranch { get; set; }
+        public List<PaymentMethodBranchDataVM>? PaymentMethodsUser { get; set; }
         public CrCasBranchInformation? CrCasBranchInformation { get; set; }
         public CrMasUserBranchValidity? CrMasUserBranchValidity { get; set; }
         public CrCasSysAdministrativeProcedure? CrCasSysAdministrativeProcedure { get; set; }

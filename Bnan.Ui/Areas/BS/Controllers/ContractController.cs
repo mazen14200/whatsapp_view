@@ -100,7 +100,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                   ContractInfo.DaysNo, ContractInfo.UserAddHours, ContractInfo.UserAddKm, ContractInfo.CurrentMeter, ContractInfo.OptionTotal,
                                                                                   ContractInfo.AdditionalTotal, ContractInfo.ContractValueAfterDiscount, ContractInfo.DiscountValue, ContractInfo.ContractValueBeforeDiscount,
                                                                                   ContractInfo.TaxValue, ContractInfo.TotalContractAmount, userLogin.CrMasUserInformationCode, ContractInfo.OutFeesTmm,
-                                                                                  ContractInfo.UserDiscount, ContractInfo.AmountPayed, ContractInfo.PaymentReasons);
+                                                                                  ContractInfo.UserDiscount, ContractInfo.AmountPayed, ContractInfo.RenterReasons);
 
 
                 //Account Receipt
@@ -121,7 +121,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     CheckAccountReceipt = await _ContractServices.AddAccountReceipt(BasicContract.CrCasRenterContractBasicNo, lessorCode, BasicContract.CrCasRenterContractBasicBranch,
                                                                                   ContractInfo.PaymentMethod, ContractInfo.AccountNo, BasicContract.CrCasRenterContractBasicCarSerailNo,
                                                                                   ContractInfo.SalesPoint,(decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance,
-                                                                                  BasicContract.CrCasRenterContractBasicRenterId,userLogin.CrMasUserInformationCode, passing);
+                                                                                  BasicContract.CrCasRenterContractBasicRenterId,userLogin.CrMasUserInformationCode, passing, ContractInfo.PaymentReasons);
                 }
 
                 //Choices
