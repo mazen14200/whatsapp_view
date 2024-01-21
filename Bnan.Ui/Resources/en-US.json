@@ -1110,6 +1110,8 @@
   "HintFeedBox": "You can accept or reject your box being fed to the current branch",
   "Accept": "Accept",
   "Reject": "Reject",
+  "Accepted": "Accepted",
+  "Rejected": "Rejected",
   ///Create Contract
   "Driver": "Driver",
   "AdditionalAndChoices": "Additional And Choices",
@@ -1223,7 +1225,8 @@
   "FromDate": "From Date",
   "ToDate": "To Date",
   "UserRecevied": "User Recevied",
-  "DateReceived": "Date Received"
+  "DateReceived": "Date Received",
+  "UnderProcedure": "Under Procedure"
 
 
 }

@@ -14,7 +14,7 @@
         text-align: end;
     }
 </style>
-@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+@if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
 {
     <div class="col-sm-12">
         <table id="basic-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" style="width:100%">
@@ -58,11 +58,11 @@
                             }
                             else if (item.CrCasSysAdministrativeProceduresStatus == Status.Accept)
                             {
-                                @localizer["Accept"]
+                                @localizer["Accepted"]
                             }
                             else if (item.CrCasSysAdministrativeProceduresStatus == Status.Reject)
                             {
-                                @localizer["Reject"]
+                                @localizer["Rejected"]
                             }
                         </td>
                         <td></td>

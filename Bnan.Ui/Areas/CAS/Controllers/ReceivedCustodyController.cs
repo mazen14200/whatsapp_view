@@ -41,9 +41,32 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         }
 
         public async Task<IActionResult> Index()
-        {
+        { 
+            //sidebar Active
+            ViewBag.id = "#sidebarAcount";
+            ViewBag.no = "1";
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var titles = await setTitle("204", "2204002", "2");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
+            var adminstritives= _unitOfWork.CrCasSysAdministrativeProcedure.FindAll(x=>x.CrCasSysAdministrativeProceduresLessor== lessorCode && x.CrCasSysAdministrativeProceduresCode=="304", new[] { "CrCasSysAdministrativeProceduresUserInsertNavigation" }).ToList();
+            return View(adminstritives);
+        }
 
-            return View();
+
+        [HttpGet]
+        public async Task<PartialViewResult> GetCustodyStatus(string status)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+
+            if (!string.IsNullOrEmpty(status))
+            {
+                var AdminstritiveAll = _unitOfWork.CrCasSysAdministrativeProcedure.FindAll(x => x.CrCasSysAdministrativeProceduresLessor == lessorCode &&x.CrCasSysAdministrativeProceduresCode=="304", new[] { "CrCasSysAdministrativeProceduresUserInsertNavigation" }).ToList();
+                if (status == Status.All) return PartialView("_CustodyData", AdminstritiveAll);
+                return PartialView("_CustodyData", AdminstritiveAll.Where(l => l.CrCasSysAdministrativeProceduresStatus == status));
+            }
+            return PartialView();
         }
     }
 }

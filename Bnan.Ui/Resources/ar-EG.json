@@ -1104,6 +1104,8 @@
   "HintFeedBox": "يمكنك قبول أو رفض تغذية الصندوق الخاص بك بالفرع الحالي",
   "Accept": "قبول",
   "Reject": "رفض",
+  "Accepted": "مقبول",
+  "Rejected": "مرفوض",
 
   ///Create Contract
   "Driver": "السائق",
@@ -1218,5 +1220,6 @@
   "FromDate": "من تاريخ",
   "ToDate": "الي تاريخ",
   "UserRecevied": "مستلم العهدة",
-  "DateReceived": "تاريخ الاستلام"
+  "DateReceived": "تاريخ الاستلام",
+  "UnderProcedure": "تحت الاجراء"
 }

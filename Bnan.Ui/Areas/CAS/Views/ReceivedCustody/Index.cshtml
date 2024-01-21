@@ -56,11 +56,15 @@
                 </div>
                 <div class="form-check form-check-inline">
                     <input type="radio" id="customRadioActive" name="customRadio" value="A" class="form-check-input">
-                    <label class="form-check-label" for="customRadioActive">@localizer["Active"]</label>
+                    <label class="form-check-label" for="customRadioActive">@localizer["UnderProcedure"]</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadioStoped" name="customRadio" value="H" class="form-check-input">
-                    <label class="form-check-label" for="customRadioStoped">@localizer["Allowed"]</label>
+                    <input type="radio" id="customRadioActive" name="customRadio" value="Q" class="form-check-input">
+                    <label class="form-check-label" for="customRadioActive">@localizer["Accepted"]</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadioStoped" name="customRadio" value="Z" class="form-check-input">
+                    <label class="form-check-label" for="customRadioStoped">@localizer["Rejected"]</label>
                 </div>
             </div>
         </div>
@@ -80,7 +84,7 @@
                 data: {
                     status: status
                 },
-                url: "@Url.Action("GetCustodyStatus", "ReceviedCustody", new { Area = "CAS" })",
+                url: "@Url.Action("GetCustodyStatus", "ReceivedCustody", new { Area = "CAS" })",
                 success: function (response) {
                     $(".dataTable").html(response);
                     set_basic_datatable();

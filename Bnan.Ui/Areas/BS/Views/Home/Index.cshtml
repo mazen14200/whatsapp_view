@@ -93,13 +93,13 @@
                             <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 branch-chart-data">
                                 <div class="data chart-p">
                                     <p class="mb-2">
-                                        @localizer["BranchCustody"] : <span id="brunch-custody">@Model.CrCasBranchInformation?.CrCasBranchInformationTotalBalance?.ToString("N2")</span>
+                                        @localizer["BranchCustody"] : <span id="brunch-custody">@((Model.CrCasBranchInformation?.CrCasBranchInformationTotalBalance ?? 0).ToString("N2"))</span>
                                     </p>
                                     <p class="mb-2">
-                                        @localizer["AvailableBalance"] : <span id="Available-balance-brunch">@Model.CrCasBranchInformation?.CrCasBranchInformationAvailableBalance?.ToString("N2")</span>
+                                        @localizer["AvailableBalance"] : <span id="Available-balance-brunch">@((Model.CrCasBranchInformation?.CrCasBranchInformationAvailableBalance ?? 0).ToString("N2"))</span>
                                     </p>
                                     <p class="mb-2">
-                                        @localizer["ReservedBalance"] : <span id="used-balance-brunch">@Model.CrCasBranchInformation?.CrCasBranchInformationReservedBalance?.ToString("N2")</span>
+                                        @localizer["ReservedBalance"] : <span id="used-balance-brunch">@((Model.CrCasBranchInformation?.CrCasBranchInformationReservedBalance ?? 0).ToString("N2"))</span>
                                     </p>
                                     <!--  -->
                                 </div>
