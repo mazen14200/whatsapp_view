@@ -1,5 +1,6 @@
 ﻿@using Bnan.Core.Extensions
-@model IEnumerable<CrCasSysAdministrativeProcedure>
+@using Bnan.Ui.ViewModels.CAS;
+@model IEnumerable<AdmintritiveCustodyVM>
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
@@ -55,7 +56,7 @@
                     <label class="form-check-label" for="customRadioAll">@localizer["All"]</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadioActive" name="customRadio" value="A" class="form-check-input">
+                    <input type="radio" id="customRadioActive" name="customRadio" value="I" class="form-check-input">
                     <label class="form-check-label" for="customRadioActive">@localizer["UnderProcedure"]</label>
                 </div>
                 <div class="form-check form-check-inline">

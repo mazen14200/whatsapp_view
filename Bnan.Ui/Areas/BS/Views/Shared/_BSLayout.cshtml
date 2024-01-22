@@ -30,7 +30,7 @@
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -376,7 +376,7 @@
 
 </body>
 
-</html>
+</>
 <script>
     @*Expireation pop up modal*@
         $(document).ready(function () {
@@ -446,4 +446,13 @@
                 logout();
             });
         });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var inputFields = document.querySelectorAll('input');
+
+        inputFields.forEach(function (input) {
+            input.setAttribute('autocomplete', 'off');
+        });
+    });
 </script>

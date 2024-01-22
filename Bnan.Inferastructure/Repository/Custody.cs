@@ -1,4 +1,6 @@
-﻿using Bnan.Core.Interfaces;
+﻿using Bnan.Core.Extensions;
+using Bnan.Core.Interfaces;
+using Bnan.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,6 +90,178 @@ namespace Bnan.Inferastructure.Repository
                 }
                 if (_unitOfWork.CrMasUserBranchValidity.Update(UserBranchValididy) != null) return true;
 
+            }
+            return false;
+        }
+        public async Task<bool> AddAccountReceiptReceivedCustody(string AdmintritiveNo, string lessorCode, string BranchCode,
+                                                                 string TotalAmount,string reasons)
+        {
+
+            CrCasAccountReceipt receipt = new CrCasAccountReceipt();
+            var adminstritive = await _unitOfWork.CrCasSysAdministrativeProcedure.FindAsync(x => x.CrCasSysAdministrativeProceduresNo == AdmintritiveNo);
+            var accountReceipt= _unitOfWork.CrCasAccountReceipt.Find(x=>x.CrCasAccountReceiptPassingReference == AdmintritiveNo);
+            var SalesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x => x.CrCasAccountSalesPointCode == accountReceipt.CrCasAccountReceiptSalesPoint);
+            receipt.CrCasAccountReceiptNo = adminstritive.CrCasSysAdministrativeProceduresNo;
+            receipt.CrCasAccountReceiptYear = DateTime.Now.ToString("yy");
+            receipt.CrCasAccountReceiptType = "302";
+            receipt.CrCasAccountReceiptLessorCode = lessorCode;
+            receipt.CrCasAccountReceiptBranchCode = BranchCode;
+            receipt.CrCasAccountReceiptDate = DateTime.Now;
+            if (SalesPoint.CrCasAccountSalesPointAccountBank == "00") receipt.CrCasAccountReceiptPaymentMethod = "10";
+            else receipt.CrCasAccountReceiptPaymentMethod = "40";
+            receipt.CrCasAccountReceiptReferenceType = "15";
+            receipt.CrCasAccountReceiptReferenceNo = adminstritive.CrCasSysAdministrativeProceduresNo;
+            receipt.CrCasAccountReceiptReceipt =decimal.Parse(TotalAmount);
+            receipt.CrCasAccountReceiptBank =SalesPoint.CrCasAccountSalesPointBank;
+            receipt.CrCasAccountReceiptAccount = SalesPoint.CrCasAccountSalesPointAccountBank;
+            receipt.CrCasAccountReceiptSalesPoint = SalesPoint.CrCasAccountSalesPointCode;
+            receipt.CrCasAccountReceiptRenterPreviousBalance = SalesPoint.CrCasAccountSalesPointTotalBalance;
+            receipt.CrCasAccountReceiptUser = adminstritive.CrCasSysAdministrativeProceduresTargeted.Trim();
+            receipt.CrCasAccountReceiptIsPassing = "3";
+            receipt.CrCasAccountReceiptPassingDate = DateTime.Now;
+            receipt.CrCasAccountReceiptReasons = reasons;
+            if (await _unitOfWork.CrCasAccountReceipt.AddAsync(receipt) != null) return true;
+            return false;
+        }
+
+        public async Task<bool> UpdateAdminstritive(string AdminstritiveNo, string UserCode,string Status,string Reasons)
+        {
+            var Adminstritive= await _unitOfWork.CrCasSysAdministrativeProcedure.FindAsync(x=>x.CrCasSysAdministrativeProceduresNo==AdminstritiveNo);
+            if (Adminstritive != null)
+            {
+                Adminstritive.CrCasSysAdministrativeProceduresStatus = Status;
+                Adminstritive.CrCasSysAdministrativeProceduresUserInsert = UserCode;
+                if ( _unitOfWork.CrCasSysAdministrativeProcedure.Update(Adminstritive)!=null) return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdateBranchReceivedCustody(string BranchCode, string lessorCode, string TotalAmount, string status)
+        {
+            var branch = await _unitOfWork.CrCasBranchInformation.FindAsync(x => x.CrCasBranchInformationLessor == lessorCode && x.CrCasBranchInformationCode == BranchCode);
+            if (branch != null)
+            {
+                if (branch.CrCasBranchInformationAvailableBalance == null) branch.CrCasBranchInformationAvailableBalance = 0;
+                if (branch.CrCasBranchInformationReservedBalance == null) branch.CrCasBranchInformationReservedBalance = 0;
+                if (status==Status.Accept)
+                {
+                    branch.CrCasBranchInformationReservedBalance -= decimal.Parse(TotalAmount);
+                    branch.CrCasBranchInformationTotalBalance -= decimal.Parse(TotalAmount);
+                }
+                else
+                {
+                    branch.CrCasBranchInformationReservedBalance -= decimal.Parse(TotalAmount);
+                    branch.CrCasBranchInformationAvailableBalance += decimal.Parse(TotalAmount);
+                }
+                
+                if (_unitOfWork.CrCasBranchInformation.Update(branch) != null) return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdateSalesPointReceivedCustody(string lessorCode, string BranchCode, string AdminstritiveNo, string TotalAmount, string status)
+        {
+            var accountReceipt = _unitOfWork.CrCasAccountReceipt.Find(x => x.CrCasAccountReceiptPassingReference == AdminstritiveNo);
+            var SalesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x => x.CrCasAccountSalesPointCode == accountReceipt.CrCasAccountReceiptSalesPoint);
+
+            if (SalesPoint != null)
+            {
+                if (status == Status.Accept)
+                {
+                    SalesPoint.CrCasAccountSalesPointTotalBalance -= decimal.Parse(TotalAmount);
+                    SalesPoint.CrCasAccountSalesPointTotalReserved -= decimal.Parse(TotalAmount);
+                }
+                else
+                {
+                    SalesPoint.CrCasAccountSalesPointTotalAvailable += decimal.Parse(TotalAmount);
+                    SalesPoint.CrCasAccountSalesPointTotalReserved -= decimal.Parse(TotalAmount);
+                }
+               
+                if (_unitOfWork.CrCasAccountSalesPoint.Update(SalesPoint) != null) return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdateUserInfoReceivedCustody(string UserCode, string lessorCode, string TotalAmount, string status)
+        {
+            var user = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationLessor == lessorCode && x.CrMasUserInformationCode == UserCode);
+            if (user != null)
+            {
+                if (status == Status.Accept)
+                {
+                    user.CrMasUserInformationTotalBalance -= decimal.Parse(TotalAmount);
+                    user.CrMasUserInformationReservedBalance -= decimal.Parse(TotalAmount);
+                }
+                else
+                {
+                    user.CrMasUserInformationAvailableBalance += decimal.Parse(TotalAmount);
+                    user.CrMasUserInformationReservedBalance -= decimal.Parse(TotalAmount);
+                }
+                
+                if (_unitOfWork.CrMasUserInformation.Update(user) != null) return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdateBranchValidityReceivedCustody(string UserCode, string lessorCode, string BranchCode, string AdminstritiveNo, string TotalAmount, string status)
+        {
+            var UserBranchValididy = await _unitOfWork.CrMasUserBranchValidity.FindAsync(x => x.CrMasUserBranchValidityId == UserCode && x.CrMasUserBranchValidityLessor == lessorCode &&
+                                                                               x.CrMasUserBranchValidityBranch == BranchCode);
+
+            var accountReceipt = _unitOfWork.CrCasAccountReceipt.Find(x => x.CrCasAccountReceiptPassingReference == AdminstritiveNo);
+            var SalesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x => x.CrCasAccountSalesPointCode == accountReceipt.CrCasAccountReceiptSalesPoint);
+
+
+            if (UserBranchValididy != null && SalesPoint.CrCasAccountSalesPointBank != "" && SalesPoint.CrCasAccountSalesPointBank != null)
+            {
+                if (SalesPoint.CrCasAccountSalesPointBank == "00")
+                {
+                    if (status == Status.Accept)
+                    {
+                        UserBranchValididy.CrMasUserBranchValidityBranchCashBalance -= decimal.Parse(TotalAmount);
+                        UserBranchValididy.CrMasUserBranchValidityBranchCashReserved -= decimal.Parse(TotalAmount);
+                    }
+                    else
+                    {
+                        UserBranchValididy.CrMasUserBranchValidityBranchCashAvailable += decimal.Parse(TotalAmount);
+                        UserBranchValididy.CrMasUserBranchValidityBranchCashReserved -= decimal.Parse(TotalAmount);
+                    }
+                    
+                }
+                else
+                {
+                    if (status == Status.Accept)
+                    {
+                        UserBranchValididy.CrMasUserBranchValidityBranchSalesPointBalance -= decimal.Parse(TotalAmount);
+                        UserBranchValididy.CrMasUserBranchValidityBranchSalesPointReserved -= decimal.Parse(TotalAmount);
+                    }
+                    else
+                    {
+                        UserBranchValididy.CrMasUserBranchValidityBranchSalesPointAvailable += decimal.Parse(TotalAmount);
+                        UserBranchValididy.CrMasUserBranchValidityBranchSalesPointReserved -= decimal.Parse(TotalAmount);
+                    }
+                    
+                }
+                if (_unitOfWork.CrMasUserBranchValidity.Update(UserBranchValididy) != null) return true;
+
+            }
+            return false;
+        }
+
+        public bool UpdateAccountReceiptReceivedCustody(string AdminstritiveNo,string status, string Reasons)
+        {
+            var AccountReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x=>x.CrCasAccountReceiptPassingReference== AdminstritiveNo);
+            var PasssingNo = "";
+            if (status == Status.Accept) PasssingNo = "3";
+            else PasssingNo = "1";
+            if (AccountReceipts!=null &&AccountReceipts.Count()!=0)
+            {
+                foreach (var AccountReceipt in AccountReceipts)
+                {
+                    AccountReceipt.CrCasAccountReceiptIsPassing = PasssingNo;
+                    AccountReceipt.CrCasAccountReceiptReasons = Reasons;
+                    if (_unitOfWork.CrCasAccountReceipt.Update(AccountReceipt) != null) return true;
+                }
             }
             return false;
         }
