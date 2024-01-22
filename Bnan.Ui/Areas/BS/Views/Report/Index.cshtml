@@ -415,6 +415,9 @@ else
                             else if (response.statusReceipt == @Status.Transfer) {
                                 $("#StatusReceipt").text('@localizer["Transfer"]');
                             }
+                            else if (response.statusReceipt == @Status.Change) {
+                                $("#StatusReceipt").text('@localizer["TransferAuto"]');
+                            }
                         }
                         $('#myModal').modal('show');
                     },

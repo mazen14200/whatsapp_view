@@ -53,9 +53,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             }
             // Exclude the current user from the list
             var usersByLessor = await _userService.GetAllUsersByLessor(userLessor.CrMasUserInformationLessor);
-            var usersWithOutMangerAndCurrentUser = usersByLessor.Where(x => x.CrMasUserInformationCode != ("CAS" + userLessor.CrMasUserInformationLessor)  &&
+            var usersWithOutMangerAndCurrentUser = usersByLessor.Where(x => x.CrMasUserInformationCode != ("CAS" + userLessor.CrMasUserInformationLessor) &&
                                                                             x.CrMasUserInformationCode != userLessor.CrMasUserInformationCode &&
-                                                                            x.CrMasUserInformationStatus==Status.Active &&
+                                                                            x.CrMasUserInformationStatus == Status.Active &&
                                                                             x.CrMasUserInformationAuthorizationBranch == true);
 
             List<CrMasUserInformation> ListUsers = new List<CrMasUserInformation>();
@@ -65,7 +65,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 foreach (var item in usersWithOutMangerAndCurrentUser)
                 {
                     var proc = _unitOfWork.CrCasSysAdministrativeProcedure.Find(a => a.CrCasSysAdministrativeProceduresLessor == userLessor.CrMasUserInformationLessor &&
-                     a.CrCasSysAdministrativeProceduresCode == "303" && a.CrCasSysAdministrativeProceduresStatus ==Status.Insert
+                     a.CrCasSysAdministrativeProceduresCode == "303" && a.CrCasSysAdministrativeProceduresStatus == Status.Insert
                      && a.CrCasSysAdministrativeProceduresTargeted == item.CrMasUserInformationCode);
                     if (proc == null)
                     {
@@ -84,9 +84,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             //To Set Title;
             var titles = await setTitle("204", "2204001", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "اضافة", "Create", titles[3]);
-           
-            ViewBag.Date = DateTime.Now.Date.ToString("dd/MM/yyyy"); 
-            var currentUser = _unitOfWork.CrMasUserInformation.Find(x=>x.CrMasUserInformationCode==id);
+
+            ViewBag.Date = DateTime.Now.Date.ToString("dd/MM/yyyy");
+            var currentUser = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == id);
             if (currentUser == null)
             {
                 _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
@@ -96,17 +96,13 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             return View(currentUser);
         }
         [HttpPost]
-        public async Task<IActionResult> Send(CrMasUserInformation Model,string FeedValue,string Reasons)
+        public async Task<IActionResult> Send(CrMasUserInformation Model, string FeedValue, string Reasons)
         {
             var userLogin = await _userManager.GetUserAsync(User);
-            if (ModelState.IsValid)
-            {
-                await _adminstritiveProcedures.SaveAdminstritive(userLogin.CrMasUserInformationCode, "1", "303", "30", userLogin.CrMasUserInformationLessor, "100",
-                Model.CrMasUserInformationCode, decimal.Parse(FeedValue), null, null, null, null, null, null, null, "تغذية صندوق", "Feed Box", "I", Reasons);
-                _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
-                return RedirectToAction("FeedBox");
-            }
-            _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            var result = await _adminstritiveProcedures.SaveAdminstritive(userLogin.CrMasUserInformationCode, "1", "303", "30", userLogin.CrMasUserInformationLessor, "100",
+            Model.CrMasUserInformationCode, decimal.Parse(FeedValue), null, null, null, null, null, null, null, "تغذية صندوق", "Feed Box", "I", Reasons);
+            if (result) _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            else _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
             return RedirectToAction("FeedBox");
         }
     }

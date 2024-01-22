@@ -2,6 +2,7 @@
 using Bnan.Core.Extensions;
 using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
+using Bnan.Inferastructure.Extensions;
 using Bnan.Inferastructure.Repository;
 using Bnan.Ui.Areas.Base.Controllers;
 using Bnan.Ui.ViewModels.BS;
@@ -32,6 +33,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
         }
         public async Task<IActionResult> CreateContract()
         {
+            //To Set Title 
+            var titles = await setTitle("501", "5501001", "5");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             

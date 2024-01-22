@@ -93,10 +93,34 @@
             <div class="row mt-3">
                 <div class="row">
                     <div class="col-md-1">
+                        <label class="form-label" for="CrCasCarInformationSerailNo">@localizer["FromDate"]</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" asp-for="CrCasSysAdministrativeProceduresDocStartDate" readonly />
+                    </div>
+
+                    <div class="col-md-1">
+                        <label class="form-label" for="CrCasCarInformationDistribution">@localizer["ToDate"]</label>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" asp-for="CrCasSysAdministrativeProceduresDocEndDate" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="row">
+                    <div class="col-md-1">
                         <label class="form-label" for="CrCasCarInformationSerailNo">@localizer["reasons"]</label>
                     </div>
                     <div class="col-md-5">
-                        <input type="text" class="form-control" asp-for="CrCasSysAdministrativeProceduresReasons" />
+                        @if (Model.CrCasSysAdministrativeProceduresStatus == Status.Insert)
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasSysAdministrativeProceduresReasons" />
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasSysAdministrativeProceduresReasons"  readonly/>
+                        }
                     </div>
                 </div>
             </div>
@@ -160,13 +184,16 @@
         </div>
 
         <div class="mt-4" id="buttonContainer">
-
-            <a class="btn btn-primary ms-1" id="Accept">
-                @localizer["Accept"]
-            </a>
-            <a class="btn btn-primary ms-1" id="Reject">
-                @localizer["Reject"]
-            </a>
+            @if (Model.CrCasSysAdministrativeProceduresStatus==Status.Insert)
+            {
+                <a class="btn btn-primary ms-1" id="Accept">
+                    @localizer["Accept"]
+                </a>
+                <a class="btn btn-primary ms-1" id="Reject">
+                    @localizer["Reject"]
+                </a>
+            }
+            
             <a type="button" class="btn btn-danger ms-2" asp-area="CAS" asp-controller="ReceivedCustody" asp-action="Index">
                 @localizer["Back"]
             </a>

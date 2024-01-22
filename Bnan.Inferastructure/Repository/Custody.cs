@@ -260,8 +260,9 @@ namespace Bnan.Inferastructure.Repository
                 {
                     AccountReceipt.CrCasAccountReceiptIsPassing = PasssingNo;
                     AccountReceipt.CrCasAccountReceiptReasons = Reasons;
-                    if (_unitOfWork.CrCasAccountReceipt.Update(AccountReceipt) != null) return true;
+                    _unitOfWork.CrCasAccountReceipt.Update(AccountReceipt);
                 }
+                return true;
             }
             return false;
         }

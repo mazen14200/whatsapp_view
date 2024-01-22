@@ -55,7 +55,7 @@ namespace Bnan.Core.Models
         public string? CrMasUserInformationStatus { get; set; }
         public string? CrMasUserInformationReasons { get; set; }
         public virtual CrMasLessorInformation? CrMasUserInformationLessorNavigation { get; set; }
-        public virtual CrMasUserContractValidity CrMasUserContractValidity { get; set; } = null!;
+        public virtual CrMasUserContractValidity? CrMasUserContractValidity { get; set; } = null!;
         public virtual ICollection<CrCasAccountReceipt> CrCasAccountReceipts { get; set; }
         public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatisticCrCasRenterContractStatisticsUserCloseNavigations { get; set; }
         public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatisticCrCasRenterContractStatisticsUserOpenNavigations { get; set; }

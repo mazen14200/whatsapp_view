@@ -598,6 +598,8 @@ namespace Bnan.Inferastructure.Repository
             {
                 crCasAccountReceipt.CrCasAccountReceiptBank = AccountBank?.CrCasAccountBankNoNavigation?.CrMasSupAccountBankCode;
                 crCasAccountReceipt.CrCasAccountReceiptAccount = AccountBank?.CrCasAccountBankCode;
+                if (User.CrMasUserInformationTotalBalance != null) crCasAccountReceipt.CrCasAccountReceiptUserPreviousBalance = User.CrMasUserInformationTotalBalance;
+                else crCasAccountReceipt.CrCasAccountReceiptUserPreviousBalance = 0;
             }
 
 

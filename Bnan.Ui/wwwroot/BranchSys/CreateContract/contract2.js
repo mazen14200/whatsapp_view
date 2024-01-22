@@ -34,7 +34,7 @@ function ImgUpload() {
 
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    var html = "<div class='upload__img-box'><div style='background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'><img src='~/BranchSys/CreateContract/img/delete.png'></div></div></div>";
+                    var html = "<div class='upload__img-box'><div style='background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'><img src='/BranchSys/CreateContract/delete.png'></div></div></div>";
                     imgWrap.append(html);
                     iterator++;
                 }

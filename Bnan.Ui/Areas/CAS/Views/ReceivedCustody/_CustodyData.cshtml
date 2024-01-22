@@ -23,8 +23,8 @@
                 <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                 <th aria-label="Position: activate to sort column ascending">@localizer["ReceviedCustodyNo"]</th>
                 <th aria-label="Position: activate to sort column ascending">@localizer["Date"]</th>
-                <th aria-label="Position: activate to sort column ascending">@localizer["FromDate"]</th>
-                <th aria-label="Position: activate to sort column ascending">@localizer["ToDate"]</th>
+               @*  <th aria-label="Position: activate to sort column ascending">@localizer["FromDate"]</th>
+                <th aria-label="Position: activate to sort column ascending">@localizer["ToDate"]</th> *@
                 <th aria-label="Office: activate to sort column ascending">@localizer["SalesPoint"]</th>
                 <th aria-label="Start date: activate to sort column ascending">@localizer["Creditor"]</th>
                 <th aria-label="Start date: activate to sort column ascending">@localizer["Debit"]</th>
@@ -46,8 +46,8 @@
                     <td>@no</td>
                     <td>@item.CrCasSysAdministrativeProceduresNo</td>
                     <td>@item.CrCasSysAdministrativeProceduresDate</td>
-                    <td>@item.CrCasSysAdministrativeProceduresDocStartDate</td>
-                    <td>@item.CrCasSysAdministrativeProceduresDocEndDate</td>
+                    @* <td>@item.CrCasSysAdministrativeProceduresDocStartDate</td>
+                    <td>@item.CrCasSysAdministrativeProceduresDocEndDate</td> *@
                     <td>
                         @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                         {
@@ -97,7 +97,7 @@
                             }
                         }
                     </td>
-                    <td></td>
+                    <td>@item.DatePassing</td>
                     <td>@item.CrCasSysAdministrativeProceduresReasons</td>
                 </tr>
                 no++;

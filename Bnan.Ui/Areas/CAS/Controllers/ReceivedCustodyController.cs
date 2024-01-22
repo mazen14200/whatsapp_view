@@ -108,6 +108,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     newAdmins.UserInsertNavigation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted);
                     newAdmins.UserReceviedNavigation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresUserInsert);
                     newAdmins.CrCasSysAdministrativeProceduresStatus = item.CrCasSysAdministrativeProceduresStatus;
+                    newAdmins.DatePassing = SalesPointAccountReceipt.CrCasAccountReceiptPassingDate?.ToString("yyyy/MM/dd");
                     newAdmins.CrCasSysAdministrativeProceduresReasons = item.CrCasSysAdministrativeProceduresReasons;
                     admintritives.Add(newAdmins);
                 }
