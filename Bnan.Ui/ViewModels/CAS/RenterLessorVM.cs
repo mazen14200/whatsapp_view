@@ -1,4 +1,5 @@
 ﻿using Bnan.Core.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bnan.Ui.ViewModels.CAS
 {
@@ -31,6 +32,18 @@ namespace Bnan.Ui.ViewModels.CAS
         public string? CrCasRenterLessorDealingMechanism { get; set; }
         public string? CrCasRenterLessorStatus { get; set; }
         public string? CrCasRenterLessorReasons { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? BankSelected { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? TransferDate { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? FromAccountBankSelected { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? Amount { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? RenterInformationIban { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? FromBank { get; set; }
         public virtual CrMasLessorInformation CrCasRenterLessorCodeNavigation { get; set; } = null!;
         public virtual CrMasSupRenterIdtype? CrCasRenterLessorIdtrypeNavigation { get; set; }
         public virtual CrMasSupRenterMembership? CrCasRenterLessorMembershipNavigation { get; set; }
@@ -44,5 +57,7 @@ namespace Bnan.Ui.ViewModels.CAS
         public virtual ICollection<CrCasRenterContractBasic>? CrCasRenterContractBasicCrCasRenterContractBasic4s { get; set; }
         public virtual ICollection<CrCasRenterContractStatistic>? CrCasRenterContractStatistics { get; set; }
         public virtual CrMasSysEvaluation? CrMasSysEvaluation { get; set; }
+        public virtual List<CrMasSupAccountBank>? Banks { get; set; }
+        public virtual List<CrCasAccountBank>? AccountBanks { get; set; }
     }
 }

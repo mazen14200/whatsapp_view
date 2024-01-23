@@ -1,1 +1,254 @@
-﻿
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.CAS
+@model Bnan.Ui.ViewModels.CAS.RenterLessorVM
+@inject IViewLocalizer localizer
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = localizer["TransferToTenant Data"];
+    ViewData["Page-Hint"] = localizer["TransferToTenant Edit Hint"];
+}
+<style>
+
+    .row {
+        align-items: center;
+    }
+
+    .col-md-1 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 auto;
+        flex: 0 0 auto;
+        width: 10% !important;
+        margin-left: -40px;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+</style>
+<div class="sub-container-form">
+    <form id="form" class="needs-validation" novalidate asp-area="CAS" asp-controller="TransferToTenant" asp-action="TransferTo" enctype="multipart/form-data">
+        <input type="hidden" id="status" name="status" />
+        <div class="form-contain">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">@localizer["TransferNo"]</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">@localizer["Id"]</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" asp-for="CrCasRenterLessorId" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label">@localizer["Name"]</label>
+                </div>
+                <div class="col-md-5">
+                    @if (requestCulture.RequestCulture.UICulture.Name == "ar-EG")
+                    {
+                        <input type="text" class="form-control" asp-for="CrCasRenterLessorNavigation.CrMasRenterInformationArName" readonly />
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control" asp-for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName" readonly />
+                    }
+                </div>
+
+            </div>
+            <div class="row mt-2">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label" for="CrCasCarInformationSerailNo">@localizer["AccountNo"]</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" asp-for="RenterInformationIban" maxlength="50" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'')" />
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="@Model.RenterInformationIban" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label" for="CrCasCarInformationDistribution">@localizer["Bank"]</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select valid" asp-for="BankSelected" required>
+                            <option selected disabled></option>
+                            @foreach (var item in Model.Banks)
+                            {
+                                if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                {
+                                    <option class="text-right" value="@item.CrMasSupAccountBankCode">
+                                        @item.CrMasSupAccountBankArName
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option class="text-left" value="@item.CrMasSupAccountBankCode">
+                                        @item.CrMasSupAccountBankEnName
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="@Model.BankSelected" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label" for="CrCasCarInformationSerailNo">@localizer["Date"]</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" class="form-control" asp-for="TransferDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="@Model.TransferDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label" for="CrCasCarInformationDistribution">@localizer["FromAccount"]</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select valid" asp-for="FromAccountBankSelected" onchange="GetAccountNo()" required>
+                            <option selected disabled></option>
+                            @foreach (var item in Model.AccountBanks)
+                            {
+                                if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                {
+                                    <option class="text-right" value="@item.CrCasAccountBankCode">
+                                        @item.CrCasAccountBankArName
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option class="text-left" value="@item.CrCasAccountBankCode">
+                                        @item.CrCasAccountBankEnName
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="@Model.FromAccountBankSelected" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label" for="CrCasCarInformationDistribution">@localizer["FromAccountNo"]</label>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="FromAccountNo" name="FromAccountNo" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label" for="CrCasCarInformationDistribution">@localizer["Bank"]</label>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="FromBankk" name="FromBankk" readonly />
+                        <input type="text" asp-for="FromBank" hidden />
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label" for="CrCasCarInformationDistribution">@localizer["AmountTransfer"]</label>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control" asp-for="Amount" maxlength="7" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span asp-validation-for="@Model.Amount" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label" for="CrCasCarInformationSerailNo">@localizer["reasons"]</label>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="reasons" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-4" id="buttonContainer">
+            <button class="btn btn-primary ms-1" type="submit">@localizer["Save"]</button>
+            <a type="button" class="btn btn-danger ms-2" asp-area="CAS" asp-controller="TransferToTenant" asp-action="Index">
+                @localizer["Back"]
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+
+    <script>
+        function GetAccountNo() {
+            var selectedBankCode = $("#FromAccountBankSelected").val();
+            console.log(selectedBankCode)
+
+            $.ajax({
+                type: "GET",
+                data: {
+                    AccountNo: selectedBankCode
+                },
+                url: "@Url.Action("GetAccountBankNo", "TransferToTenant", new { Area = "CAS" })",
+                success: function (response) {
+                    console.log(response)
+                    $("#FromAccountNo").val(response.accountIban);
+                    if ("@requestCulture?.RequestCulture.UICulture.Name" == "ar-EG") {
+                        $("#FromBank").val(response.bankNo);
+                        $("#FromBankk").val(response.arBank);
+                    }
+                    else {
+                        $("#FromBank").val(response.bankNo);
+                        $("#FromBankk").val(response.arBank);
+
+                    }
+                },
+            })
+        }
+    </script>
+
+}

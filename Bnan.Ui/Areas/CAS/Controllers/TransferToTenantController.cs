@@ -51,14 +51,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("204", "2204003", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var RenterAvaiable = _unitOfWork.CrCasRenterLessor.FindAll(x=>x.CrCasRenterLessorCode== lessorCode&&
-                                                                          x.CrCasRenterLessorBalance<0&&
-                                                                          x.CrCasRenterLessorStatus==Status.Active, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic4s",
+            var RenterAvaiable = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == lessorCode &&
+                                                                          x.CrCasRenterLessorBalance < 0 &&
+                                                                          x.CrCasRenterLessorStatus == Status.Active, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic4s",
                                                                                                                            "CrCasRenterLessorNavigation" }).ToList();
             var RenterAvaiableVM = _mapper.Map<List<RenterLessorVM>>(RenterAvaiable);
             foreach (var item in RenterAvaiableVM)
             {
-                item.CrMasSysEvaluation = _unitOfWork.CrMasSysEvaluation.Find(x =>x.CrMasSysEvaluationsCode==item.CrCasRenterLessorDealingMechanism);
+                item.CrMasSysEvaluation = _unitOfWork.CrMasSysEvaluation.Find(x => x.CrMasSysEvaluationsCode == item.CrCasRenterLessorDealingMechanism);
             }
             return View(RenterAvaiableVM);
         }
@@ -72,12 +72,30 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("204", "2204003", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تحويل", "Transfer", titles[3]);
 
-            var Renter = _unitOfWork.CrCasRenterLessor.Find(x =>x.CrCasRenterLessorId==id&& x.CrCasRenterLessorCode == lessorCode, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic4s",
+            var Renter = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == id && x.CrCasRenterLessorCode == lessorCode, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic4s",
                                                                                                                            "CrCasRenterLessorNavigation" });
             var RenterVM = _mapper.Map<RenterLessorVM>(Renter);
 
             RenterVM.CrMasSysEvaluation = _unitOfWork.CrMasSysEvaluation.Find(x => x.CrMasSysEvaluationsCode == RenterVM.CrCasRenterLessorDealingMechanism);
+            RenterVM.Banks = _unitOfWork.CrMasSupAccountBanks.FindAll(x => x.CrMasSupAccountBankStatus == Status.Active&&x.CrMasSupAccountBankCode!="00").ToList();
+            RenterVM.AccountBanks = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankStatus == Status.Active&&x.CrCasAccountBankNo!="00" && x.CrCasAccountBankLessor == lessorCode).ToList();
             return View(RenterVM);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAccountBankNo(string AccountNo)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var account= await _unitOfWork.CrCasAccountBank.FindAsync(x=>x.CrCasAccountBankCode == AccountNo&&x.CrCasAccountBankLessor== lessorCode, new[] { "CrCasAccountBankNoNavigation" });
+            var result = new
+            {
+                accountNo = account.CrCasAccountBankCode,
+                accountIban = account.CrCasAccountBankIban,
+                bankNo = account.CrCasAccountBankNoNavigation?.CrMasSupAccountBankCode,
+                arBank = account.CrCasAccountBankNoNavigation?.CrMasSupAccountBankArName,
+                enBank = account.CrCasAccountBankNoNavigation?.CrMasSupAccountBankEnName,
+            };
+            return Json(result);
         }
     }
 }
