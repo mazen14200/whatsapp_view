@@ -41,7 +41,6 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var branchValidity = userInfo.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityBranch == bsLayoutVM.SelectedBranch);
             var accountReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == lessorCode &&
                                                                             x.CrCasAccountReceiptBranchCode == bsLayoutVM.SelectedBranch &&
-                                                                            x.CrCasAccountReceiptPaymentMethod != "40" &&
                                                                             x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode,
                                                                             new[] { "CrCasAccountReceiptPaymentMethodNavigation", "CrCasAccountReceiptReferenceTypeNavigation" }).ToList();
 
@@ -69,7 +68,6 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             var accountReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == lessorCode &&
                                                                             x.CrCasAccountReceiptBranchCode == branchCode &&
-                                                                            x.CrCasAccountReceiptPaymentMethod != "40" &&
                                                                             x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode,
                                                                             new[] { "CrCasAccountReceiptPaymentMethodNavigation", "CrCasAccountReceiptReferenceTypeNavigation" }).ToList();
             if (status == Status.All) bSLayoutVM.AccountReceipts = accountReceipts.Where(x => x.CrCasAccountReceiptDate?.Date >= DateTime.Parse(StartDate) &&

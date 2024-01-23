@@ -286,7 +286,7 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2204003")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Transfer To Renter"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="Index" asp-controller="TransferToTenant">@localizer["Transfer To Renter"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2204004")?.CrMasUserSubValidationAuthorization == true)

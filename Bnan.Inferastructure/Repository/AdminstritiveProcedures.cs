@@ -113,6 +113,7 @@ namespace Bnan.Inferastructure.Repository
             }
             var endDate = Receipts.OrderByDescending(x=>x.CrCasAccountReceiptDate).FirstOrDefault().CrCasAccountReceiptDate;
             var startDate = Receipts.OrderBy(x=>x.CrCasAccountReceiptDate).FirstOrDefault().CrCasAccountReceiptDate;
+            var SalesPointNo = Receipts.OrderBy(x=>x.CrCasAccountReceiptDate).FirstOrDefault().CrCasAccountReceiptSalesPoint;
             CrCasSysAdministrativeProcedure crCasSysAdministrativeProcedure = new CrCasSysAdministrativeProcedure()
             {
                 CrCasSysAdministrativeProceduresNo = y + "-" + "1" + "304" + "-" + LessorCode + BranchCode + "-" + Serial,
@@ -130,7 +131,8 @@ namespace Bnan.Inferastructure.Repository
                 CrCasSysAdministrativeProceduresUserInsert = userCode,
                 CrCasSysAdministrativeProceduresArDescription = procedure.CrMasSysProceduresArName,
                 CrCasSysAdministrativeProceduresEnDescription = procedure.CrMasSysProceduresEnName,
-                CrCasSysAdministrativeProceduresDocStartDate=startDate,
+                CrCasSysAdministrativeProceduresDocNo = SalesPointNo,
+                CrCasSysAdministrativeProceduresDocStartDate =startDate,
                 CrCasSysAdministrativeProceduresDocEndDate=endDate,
                 CrCasSysAdministrativeProceduresStatus = Status.Insert,
                 CrCasSysAdministrativeProceduresReasons = Reasons,

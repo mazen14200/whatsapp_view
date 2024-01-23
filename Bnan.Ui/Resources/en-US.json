@@ -483,6 +483,7 @@
   "ContractCompany Hint": "The page allows you to search and display documents company data",
   "CActive": "Active",
   "OnExpired": "About to expire",
+  "OnExpiredd": "On Expired",
   "Expired": "Expired",
   "NotRegister": "New",
   "CompanyContractNo": "Contract No",
@@ -1118,6 +1119,7 @@
   "CheckUp": "Check Up",
   "Payment": "Payment",
   "LastVisit": "Last Visit",
+  "FirstVisit": "First Visit",
   "LastContract": "Last Contract",
   "ContractCountt": "Contract Count",
   "RenterId": "Renter Id",
@@ -1231,6 +1233,7 @@
   "ReceviedCustodyDetails Data": "Recevied Custody",
   "ReceviedCustodyDetails Hint": "The Page Allow you to accept or reject custody",
   "SalesPointBalance": "SalesPoint Balance",
-  "CustodyTotal": "Custody Total"
-
+  "CustodyTotal": "Custody Total",
+  "TransferToTenant Data": "Transfer To Tenant",
+  "TransferToTenant Hint": "This page enables you to search and view data for tenants available for bank transfer"
 }

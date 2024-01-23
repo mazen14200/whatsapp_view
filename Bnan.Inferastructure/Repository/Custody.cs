@@ -1,6 +1,7 @@
 ﻿using Bnan.Core.Extensions;
 using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,6 @@ namespace Bnan.Inferastructure.Repository
             var receipt = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptNo == ReceiptNo);
             if (receipt != null)
             {
-                receipt.CrCasAccountReceiptPassingDate = DateTime.Now.Date;
                 receipt.CrCasAccountReceiptIsPassing = "2";
                 receipt.CrCasAccountReceiptPassingReference = ReferenceNo;
                 receipt.CrCasAccountReceiptReasons = Reasons;
@@ -47,22 +47,22 @@ namespace Bnan.Inferastructure.Repository
             return false;
         }
 
-        public async Task<bool> UpdateUserInfo( string UserCode, string lessorCode,string Creditor)
+        public async Task<bool> UpdateUserInfo(string UserCode, string lessorCode, string Creditor)
         {
             var user = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationLessor == lessorCode && x.CrMasUserInformationCode == UserCode);
             if (user != null)
             {
                 user.CrMasUserInformationAvailableBalance -= decimal.Parse(Creditor);
                 user.CrMasUserInformationReservedBalance += decimal.Parse(Creditor);
-                if (_unitOfWork.CrMasUserInformation.Update(user) !=null) return true;
+                if (_unitOfWork.CrMasUserInformation.Update(user) != null) return true;
             }
             return false;
         }
-        public async Task<bool> UpdateSalesPoint(string lessorCode, string BranchCode ,string SalesPointCode, string Creditor)
+        public async Task<bool> UpdateSalesPoint(string lessorCode, string BranchCode, string SalesPointCode, string Creditor)
         {
             var SalesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x => x.CrCasAccountSalesPointLessor == lessorCode &&
                                                                                x.CrCasAccountSalesPointCode == SalesPointCode &&
-                                                                               x.CrCasAccountSalesPointBrn==BranchCode);
+                                                                               x.CrCasAccountSalesPointBrn == BranchCode);
             if (SalesPoint != null)
             {
                 SalesPoint.CrCasAccountSalesPointTotalAvailable -= decimal.Parse(Creditor);
@@ -76,9 +76,9 @@ namespace Bnan.Inferastructure.Repository
         {
             var UserBranchValididy = await _unitOfWork.CrMasUserBranchValidity.FindAsync(x => x.CrMasUserBranchValidityId == UserCode && x.CrMasUserBranchValidityLessor == lessorCode &&
                                                                                            x.CrMasUserBranchValidityBranch == BranchCode);
-            if (UserBranchValididy!=null&& BankNo!=""&& BankNo!= null)
+            if (UserBranchValididy != null && BankNo != "" && BankNo != null)
             {
-                if (BankNo=="00")
+                if (BankNo == "00")
                 {
                     UserBranchValididy.CrMasUserBranchValidityBranchCashAvailable -= decimal.Parse(Creditor);
                     UserBranchValididy.CrMasUserBranchValidityBranchCashReserved += decimal.Parse(Creditor);
@@ -94,14 +94,15 @@ namespace Bnan.Inferastructure.Repository
             return false;
         }
         public async Task<bool> AddAccountReceiptReceivedCustody(string AdmintritiveNo, string lessorCode, string BranchCode,
-                                                                 string TotalAmount,string reasons)
+                                                                 string TotalAmount, string reasons)
         {
 
             CrCasAccountReceipt receipt = new CrCasAccountReceipt();
             var adminstritive = await _unitOfWork.CrCasSysAdministrativeProcedure.FindAsync(x => x.CrCasSysAdministrativeProceduresNo == AdmintritiveNo);
-            var accountReceipt= _unitOfWork.CrCasAccountReceipt.Find(x=>x.CrCasAccountReceiptPassingReference == AdmintritiveNo);
+            var accountReceipt = _unitOfWork.CrCasAccountReceipt.Find(x => x.CrCasAccountReceiptPassingReference == AdmintritiveNo);
             var SalesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x => x.CrCasAccountSalesPointCode == accountReceipt.CrCasAccountReceiptSalesPoint);
-            receipt.CrCasAccountReceiptNo = adminstritive.CrCasSysAdministrativeProceduresNo;
+            var UserTarget = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == adminstritive.CrCasSysAdministrativeProceduresTargeted.Trim());
+            receipt.CrCasAccountReceiptNo = GetAccountReceiptNo(adminstritive.CrCasSysAdministrativeProceduresBranch,UserTarget.CrMasUserInformationCode);
             receipt.CrCasAccountReceiptYear = DateTime.Now.ToString("yy");
             receipt.CrCasAccountReceiptType = "302";
             receipt.CrCasAccountReceiptLessorCode = lessorCode;
@@ -111,27 +112,30 @@ namespace Bnan.Inferastructure.Repository
             else receipt.CrCasAccountReceiptPaymentMethod = "40";
             receipt.CrCasAccountReceiptReferenceType = "15";
             receipt.CrCasAccountReceiptReferenceNo = adminstritive.CrCasSysAdministrativeProceduresNo;
-            receipt.CrCasAccountReceiptReceipt =decimal.Parse(TotalAmount);
-            receipt.CrCasAccountReceiptBank =SalesPoint.CrCasAccountSalesPointBank;
+            receipt.CrCasAccountReceiptReceipt = decimal.Parse(TotalAmount);
+            receipt.CrCasAccountReceiptPayment = 0;
+            receipt.CrCasAccountReceiptBank = SalesPoint.CrCasAccountSalesPointBank;
             receipt.CrCasAccountReceiptAccount = SalesPoint.CrCasAccountSalesPointAccountBank;
             receipt.CrCasAccountReceiptSalesPoint = SalesPoint.CrCasAccountSalesPointCode;
-            receipt.CrCasAccountReceiptRenterPreviousBalance = SalesPoint.CrCasAccountSalesPointTotalBalance;
-            receipt.CrCasAccountReceiptUser = adminstritive.CrCasSysAdministrativeProceduresTargeted.Trim();
+            receipt.CrCasAccountReceiptSalesPointPreviousBalance = SalesPoint.CrCasAccountSalesPointTotalBalance;
+            receipt.CrCasAccountReceiptUser = UserTarget.CrMasUserInformationCode;
+            receipt.CrCasAccountReceiptUserPreviousBalance = UserTarget.CrMasUserInformationTotalBalance;
             receipt.CrCasAccountReceiptIsPassing = "3";
+            receipt.CrCasAccountReceiptPassingUser = adminstritive.CrCasSysAdministrativeProceduresUserInsert;
             receipt.CrCasAccountReceiptPassingDate = DateTime.Now;
             receipt.CrCasAccountReceiptReasons = reasons;
             if (await _unitOfWork.CrCasAccountReceipt.AddAsync(receipt) != null) return true;
             return false;
         }
 
-        public async Task<bool> UpdateAdminstritive(string AdminstritiveNo, string UserCode,string Status,string Reasons)
+        public async Task<bool> UpdateAdminstritive(string AdminstritiveNo, string UserCode, string Status, string Reasons)
         {
-            var Adminstritive= await _unitOfWork.CrCasSysAdministrativeProcedure.FindAsync(x=>x.CrCasSysAdministrativeProceduresNo==AdminstritiveNo);
+            var Adminstritive = await _unitOfWork.CrCasSysAdministrativeProcedure.FindAsync(x => x.CrCasSysAdministrativeProceduresNo == AdminstritiveNo);
             if (Adminstritive != null)
             {
                 Adminstritive.CrCasSysAdministrativeProceduresStatus = Status;
                 Adminstritive.CrCasSysAdministrativeProceduresUserInsert = UserCode;
-                if ( _unitOfWork.CrCasSysAdministrativeProcedure.Update(Adminstritive)!=null) return true;
+                if (_unitOfWork.CrCasSysAdministrativeProcedure.Update(Adminstritive) != null) return true;
             }
             return false;
         }
@@ -143,7 +147,7 @@ namespace Bnan.Inferastructure.Repository
             {
                 if (branch.CrCasBranchInformationAvailableBalance == null) branch.CrCasBranchInformationAvailableBalance = 0;
                 if (branch.CrCasBranchInformationReservedBalance == null) branch.CrCasBranchInformationReservedBalance = 0;
-                if (status==Status.Accept)
+                if (status == Status.Accept)
                 {
                     branch.CrCasBranchInformationReservedBalance -= decimal.Parse(TotalAmount);
                     branch.CrCasBranchInformationTotalBalance -= decimal.Parse(TotalAmount);
@@ -153,7 +157,7 @@ namespace Bnan.Inferastructure.Repository
                     branch.CrCasBranchInformationReservedBalance -= decimal.Parse(TotalAmount);
                     branch.CrCasBranchInformationAvailableBalance += decimal.Parse(TotalAmount);
                 }
-                
+
                 if (_unitOfWork.CrCasBranchInformation.Update(branch) != null) return true;
             }
             return false;
@@ -176,7 +180,7 @@ namespace Bnan.Inferastructure.Repository
                     SalesPoint.CrCasAccountSalesPointTotalAvailable += decimal.Parse(TotalAmount);
                     SalesPoint.CrCasAccountSalesPointTotalReserved -= decimal.Parse(TotalAmount);
                 }
-               
+
                 if (_unitOfWork.CrCasAccountSalesPoint.Update(SalesPoint) != null) return true;
             }
             return false;
@@ -197,7 +201,7 @@ namespace Bnan.Inferastructure.Repository
                     user.CrMasUserInformationAvailableBalance += decimal.Parse(TotalAmount);
                     user.CrMasUserInformationReservedBalance -= decimal.Parse(TotalAmount);
                 }
-                
+
                 if (_unitOfWork.CrMasUserInformation.Update(user) != null) return true;
             }
             return false;
@@ -226,7 +230,7 @@ namespace Bnan.Inferastructure.Repository
                         UserBranchValididy.CrMasUserBranchValidityBranchCashAvailable += decimal.Parse(TotalAmount);
                         UserBranchValididy.CrMasUserBranchValidityBranchCashReserved -= decimal.Parse(TotalAmount);
                     }
-                    
+
                 }
                 else
                 {
@@ -240,7 +244,7 @@ namespace Bnan.Inferastructure.Repository
                         UserBranchValididy.CrMasUserBranchValidityBranchSalesPointAvailable += decimal.Parse(TotalAmount);
                         UserBranchValididy.CrMasUserBranchValidityBranchSalesPointReserved -= decimal.Parse(TotalAmount);
                     }
-                    
+
                 }
                 if (_unitOfWork.CrMasUserBranchValidity.Update(UserBranchValididy) != null) return true;
 
@@ -248,16 +252,18 @@ namespace Bnan.Inferastructure.Repository
             return false;
         }
 
-        public bool UpdateAccountReceiptReceivedCustody(string AdminstritiveNo,string status, string Reasons)
+        public bool UpdateAccountReceiptReceivedCustody(string AdminstritiveNo, string status, string Reasons)
         {
-            var AccountReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x=>x.CrCasAccountReceiptPassingReference== AdminstritiveNo);
+            var AccountReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptPassingReference == AdminstritiveNo);
             var PasssingNo = "";
             if (status == Status.Accept) PasssingNo = "3";
             else PasssingNo = "1";
-            if (AccountReceipts!=null &&AccountReceipts.Count()!=0)
+            if (AccountReceipts != null && AccountReceipts.Count() != 0)
             {
                 foreach (var AccountReceipt in AccountReceipts)
                 {
+                    if (status == Status.Reject) AccountReceipt.CrCasAccountReceiptPassingReference = null;
+                    if(status==Status.Accept) AccountReceipt.CrCasAccountReceiptPassingDate = DateTime.Now.Date;
                     AccountReceipt.CrCasAccountReceiptIsPassing = PasssingNo;
                     AccountReceipt.CrCasAccountReceiptReasons = Reasons;
                     _unitOfWork.CrCasAccountReceipt.Update(AccountReceipt);
@@ -265,6 +271,29 @@ namespace Bnan.Inferastructure.Repository
                 return true;
             }
             return false;
+        }
+
+        public string GetAccountReceiptNo(string BranchCode, string UserCode)
+        {
+            var userLogin = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == UserCode);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var Lrecord = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == userLogin.CrMasUserInformationLessor &&
+                x.CrCasAccountReceiptType == "302"
+                && x.CrCasAccountReceiptYear == y).Max(x => x.CrCasAccountReceiptNo.Substring(x.CrCasAccountReceiptNo.Length - 6, 6));
+            string Serial;
+            if (Lrecord != null)
+            {
+                Int64 val = Int64.Parse(Lrecord) + 1;
+                Serial = val.ToString("000000");
+            }
+            else
+            {
+                Serial = "000001";
+            }
+            var receipt = y + "-" + "1" + "302" + "-" + lessorCode + BranchCode + "-" + Serial;
+            return receipt;
         }
     }
 }

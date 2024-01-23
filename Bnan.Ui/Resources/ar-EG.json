@@ -488,6 +488,7 @@
   "ContractCompany Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات عقود الشركات ",
   "CActive": "قائم",
   "OnExpired": "علي وشك الانتهاء",
+  "OnExpiredd": "علي وشك",
   "Expired": "منتهي",
   "NotRegister": "لم يسجل",
   "CompanyContractNo": "رقم العقد",
@@ -1114,6 +1115,7 @@
   "Payment": "الدفع",
   "RenterId": "رقم الهوية",
   "LastVisit": "اخر زيارة",
+  "FirstVisit": "اول زيارة",
   "LastContract": "اخر عقد",
   "ContractCountt": "عدد العقود",
   "RentalDays": "ايام التأجير",
@@ -1226,5 +1228,7 @@
   "ReceviedCustodyDetails Data": "استلام عهدة",
   "ReceviedCustodyDetails Hint": "تمكنك هذه الصفحة من قبول او رفض العهدة",
   "SalesPointBalance": "رصيد نقطة البيع",
-  "CustodyTotal": "اجمالي العهدة"
+  "CustodyTotal": "اجمالي العهدة",
+  "TransferToTenant Data": "تحويل من مستأجر",
+  "TransferToTenant Hint": "تمكنك هذه الصفحة البحث وعرض بيانات المستأجرين المتاحين للتحويل البنكي"
 }

@@ -70,6 +70,34 @@
             width: 7px;
             background-color: #fa5c7c;
         }
+
+        .alert {
+            color: #fff;
+            background-color: #FF992E;
+            flex-direction: row-reverse;
+            font-size: .7rem;
+            font-weight: 600;
+            margin-bottom: 0;
+            border: 1px solid #4e73df;
+            padding: 0.5rem 0.6rem;
+        }
+
+        .dropdown-item-custom {
+            display: flex;
+            flex-direction: row-reverse;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e3e6f0;
+            font-size: .7rem;
+            flex-direction: row-reverse;
+        }
+
+        .ended-Docs-Num {
+            color: red;
+        }
+
+        .Not-ended-Docs-Num {
+            color: #FF992E;
+        }
     </style>
 
 </head>
@@ -229,39 +257,63 @@
                             <span class="noti-icon-badge"></span>
                         </a>
                         <!-- Dropdown - Alerts -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in"
-                             aria-labelledby="alertsDropdown">
-                            <h6 class="dropdown-header text-right" style="background-color: #FF992E">
-                                @localizer["Notifications"]
-                            </h6>
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <p class="notify-details" style="text-align:right;margin-right:0">
-                                    <span style="float:right">@localizer["ContractBranch"]</span>
-                                    <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyDocumentsAboutExpireBS</small>
-                                    <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyDocumentsExpiredBS</small>
-                                </p>
+                        <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                            <div class="row alert">
+                                <div class="col-6" style="text-align:end;">
+                                    @localizer["Notifications"]
+                                </div>
+                               
+                                <div class="col-4">
+                                    @localizer["OnExpiredd"]
+                                </div>
+                                <div class="col-2">
+                                    @localizer["Expired"]
+                                </div>
+                            </div>
+                            <a class="dropdown-item dropdown-item-custom ">
+                                <div class="col-md-7 p-0" style="text-align:end;">
+                                    @localizer["ContractBranch"]
+                                </div>
+                                <div class="col-md-3 Not-ended-Docs-Num">
+                                    @ViewBag.CompanyDocumentsExpiredBS
+                                </div>
+                                <div class="col-md-2 ended-Docs-Num">
+                                    @ViewBag.CompanyDocumentsAboutExpireBS
+                                </div>
                             </a>
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <p class="notify-details" style="text-align:right;margin-right:0">
-                                    <span style="float:right">@localizer["CarsDocuments"]</span>
-                                    <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyDocumentsCarAboutExpireBS</small>
-                                    <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyDocumentsCarExpiredBS</small>
-                                </p>
+                            <a class="dropdown-item dropdown-item-custom ">
+                                <div class="col-md-7 p-0" style="text-align:end;">
+                                    @localizer["CarsDocuments"]
+                                </div>
+                                <div class="col-md-3 Not-ended-Docs-Num">
+                                    @ViewBag.CompanyDocumentsCarExpiredBS
+                                </div>
+                                <div class="col-md-2 ended-Docs-Num">
+                                    @ViewBag.CompanyDocumentsCarAboutExpireBS
+                                </div>
                             </a>
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <p class="notify-details" style="text-align:right;margin-right:0">
-                                    <span style="float:right">@localizer["CarsFixed"]</span>
-                                    <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.CompanyMaintainceCarAboutExpireBS</small>
-                                    <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.CompanyMaintainceCarExpiredBS</small>
-                                </p>
+                            <a class="dropdown-item dropdown-item-custom ">
+                                <div class="col-md-7 p-0" style="text-align:end;">
+                                    @localizer["CarsFixed"]
+                                </div>
+                                <div class="col-md-3 Not-ended-Docs-Num">
+                                    @ViewBag.CompanyMaintainceCarExpiredBS
+                                </div>
+                                <div class="col-md-2 ended-Docs-Num">
+                                    @ViewBag.CompanyMaintainceCarAboutExpireBS
+                                </div>
                             </a>
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <p class="notify-details" style="text-align:right;margin-right:0">
-                                    <span style="float:right">اسعار السيارات</span>
-                                    <small class="text-muted" style="float:left;margin-left:15px;color:orange!important">@ViewBag.PriceCarAboutExpireBS</small>
-                                    <small class="text-muted" style="float:left;margin-left:15px;color:red!important">@ViewBag.PriceCarExpiredBS</small>
-                                </p>
+                            <a class="dropdown-item dropdown-item-custom ">
+                                <div class="col-md-7 p-0" style="text-align:end;">
+                                    @localizer["CarPrice"]
+                                </div>
+                                
+                                <div class="col-md-3 Not-ended-Docs-Num">
+                                    @ViewBag.PriceCarExpiredBS
+                                </div>
+                                <div class="col-md-2 ended-Docs-Num">
+                                    @ViewBag.PriceCarAboutExpireBS
+                                </div>
                             </a>
                         </div>
                     </li>

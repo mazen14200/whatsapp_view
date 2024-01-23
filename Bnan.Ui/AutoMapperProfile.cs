@@ -97,6 +97,9 @@ namespace Bnan.Inferastructure
             CreateMap<CrCasPriceCarBasic, CarPriceVM>();
             CreateMap<CarPriceVM, CrCasPriceCarBasic>();
 
+            CreateMap<CrCasRenterLessor, RenterLessorVM>();
+            CreateMap<RenterLessorVM, CrCasRenterLessor>();
+
         }
 
     }
