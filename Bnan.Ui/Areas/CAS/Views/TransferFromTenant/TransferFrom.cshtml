@@ -6,24 +6,24 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    ViewData["Page-title"] = localizer["TransferToTenant Data"];
-    ViewData["Page-Hint"] = localizer["TransferToTenant Edit Hint"];
+    ViewData["Page-title"] = localizer["TransferFromTenant Data"];
+    ViewData["Page-Hint"] = localizer["TransferFromTenant Edit Hint"];
 }
 <style>
 
-   
+
 </style>
 <div class="sub-container-form">
     <form id="form" class="needs-validation" novalidate asp-area="CAS" asp-controller="TransferToTenant" asp-action="TransferTo" enctype="multipart/form-data">
         <input type="hidden" id="status" name="status" />
         <div class="form-contain">
             <div class="row">
-                    <div class="col-md-1">
-                        <label class="form-label">@localizer["TransferNo"]</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" asp-for="AdminstritiveNo" class="form-control" readonly />
-                    </div>
+                <div class="col-md-1">
+                    <label class="form-label">@localizer["TransferNo"]</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" asp-for="AdminstritiveNo" class="form-control" readonly />
+                </div>
             </div>
             <div class="row mt-2">
                 <div class="row">
@@ -116,7 +116,7 @@
             <div class="row mt-2">
                 <div class="row">
                     <div class="col-md-1">
-                        <label class="form-label" for="CrCasCarInformationDistribution">@localizer["FromAccount"]</label>
+                        <label class="form-label" for="CrCasCarInformationDistribution">@localizer["ToAccount"]</label>
                     </div>
                     <div class="col-md-3">
                         <select class="form-select valid" asp-for="FromAccountBankSelected" onchange="GetAccountNo()" required>
@@ -148,7 +148,7 @@
             <div class="row mt-2">
                 <div class="row">
                     <div class="col-md-1">
-                        <label class="form-label" for="CrCasCarInformationDistribution">@localizer["FromAccountNo"]</label>
+                        <label class="form-label" for="CrCasCarInformationDistribution">@localizer["ToAccountNo"]</label>
                     </div>
                     <div class="col-md-5">
                         <input type="text" class="form-control" id="FromAccountNo" name="FromAccountNo" readonly />
@@ -253,19 +253,7 @@
             } else {
                 // Limit to 7 digits before the decimal point
                 input.value = input.value.substr(0, 7);
-            }
-
-            // Retrieve userDiscount from the model
-            var amount = @Html.Raw(Json.Serialize(Model?.Amount));
-            console.log("amount", amount);
-
-            // Ensure the value is between 0 and 100
-            const numericValue = parseFloat(input.value);
-            if (isNaN(numericValue) || isNaN(amount)) {
-                input.value = '0';
-            } else if (!isNaN(amount) && parseFloat(input.value) > parseFloat(amount)) {
-                input.value = amount;
-            }
+            }   
         }
     </script>
 

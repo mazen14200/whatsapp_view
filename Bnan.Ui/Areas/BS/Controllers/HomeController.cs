@@ -91,8 +91,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
            //For Charts 
            var AccountReceipt= _unitOfWork.CrCasAccountReceipt.FindAll(x=>x.CrCasAccountReceiptLessorCode==lessorCode&&x.CrCasAccountReceiptBranchCode== bSLayoutVM.SelectedBranch &&
-                                                                          x.CrCasAccountReceiptIsPassing!="4"&& x.CrCasAccountReceiptPaymentMethod!="30"&&
-                                                                          x.CrCasAccountReceiptPaymentMethod!="40").ToList();
+                                                                          x.CrCasAccountReceiptIsPassing=="1"&& x.CrCasAccountReceiptPaymentMethod!="30" ).ToList();
 
             var PaymentMethods = _unitOfWork.CrMasSupAccountPaymentMethod.FindAll(x => x.CrMasSupAccountPaymentMethodStatus == Status.Active &&
                                                                                        (x.CrMasSupAccountPaymentMethodClassification == "1" || x.CrMasSupAccountPaymentMethodClassification == "2")).ToList();

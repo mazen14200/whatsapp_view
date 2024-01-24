@@ -1235,10 +1235,16 @@
   "SalesPointBalance": "SalesPoint Balance",
   "CustodyTotal": "Custody Total",
   "TransferToTenant Data": "Transfer To Tenant",
+  "TransferFromTenant Data": "Transfer From Tenant",
   "TransferToTenant Hint": "This page enables you to search and view data for tenants available for bank transfer",
+  "TransferFromTenant Hint": "This page enables you to search and view data for tenants available for bank transfer",
   "TransferToTenant Edit Hint": "This page enables you to perform the transfer process",
+  "TransferFromTenant Edit Hint": "This page enables you From perform the transfer process",
+
   "FromAccount": "From Account",
+  "ToAccount": "To Account",
   "FromAccountNo": "From Account No",
+  "ToAccountNo": "To Account No",
   "AmountTransfer": "Amount Transfer",
   "TransferNo": "Transfer No",
   "AccountNo": "AccountNo"

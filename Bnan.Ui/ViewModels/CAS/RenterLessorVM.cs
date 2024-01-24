@@ -44,6 +44,8 @@ namespace Bnan.Ui.ViewModels.CAS
         public string? RenterInformationIban { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public string? FromBank { get; set; }
+        public string? AdminstritiveNo { get; set; }
+        public string? Reasons { get; set; }
         public virtual CrMasLessorInformation CrCasRenterLessorCodeNavigation { get; set; } = null!;
         public virtual CrMasSupRenterIdtype? CrCasRenterLessorIdtrypeNavigation { get; set; }
         public virtual CrMasSupRenterMembership? CrCasRenterLessorMembershipNavigation { get; set; }

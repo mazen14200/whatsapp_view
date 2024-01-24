@@ -25,13 +25,13 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         private readonly IToastNotification _toastNotification;
         private readonly IStringLocalizer<TransferToTenantController> _localizer;
         private readonly IAdminstritiveProcedures _adminstritiveProcedures;
-        private readonly ICustody _Custody;
+        private readonly ITransferToFromRenter _tranferToRenter;
 
 
         public TransferToTenantController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork,
              IMapper mapper, IUserService userService, IAccountBank accountBank,
              IUserLoginsService userLoginsService, IToastNotification toastNotification,
-             IStringLocalizer<TransferToTenantController> localizer, IAdminstritiveProcedures adminstritiveProcedures, ICustody custody) :
+             IStringLocalizer<TransferToTenantController> localizer, IAdminstritiveProcedures adminstritiveProcedures, ITransferToFromRenter tranferToRenter) :
              base(userManager, unitOfWork, mapper)
         {
             _userService = userService;
@@ -39,7 +39,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             _toastNotification = toastNotification;
             _localizer = localizer;
             _adminstritiveProcedures = adminstritiveProcedures;
-            _Custody = custody;
+            _tranferToRenter = tranferToRenter;
         }
         public async Task<IActionResult> Index()
         {
@@ -76,10 +76,63 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                                                                                                                            "CrCasRenterLessorNavigation" });
             var RenterVM = _mapper.Map<RenterLessorVM>(Renter);
 
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var Lrecord = _unitOfWork.CrCasSysAdministrativeProcedure.FindAll(x => x.CrCasSysAdministrativeProceduresLessor == lessorCode &&
+                x.CrCasSysAdministrativeProceduresCode == "305"
+                && x.CrCasSysAdministrativeProceduresSector == "1"
+                && x.CrCasSysAdministrativeProceduresYear == y).Max(x => x.CrCasSysAdministrativeProceduresNo.Substring(x.CrCasSysAdministrativeProceduresNo.Length - 6, 6));
+            string Serial;
+            if (Lrecord != null)
+            {
+                Int64 val = Int64.Parse(Lrecord) + 1;
+                Serial = val.ToString("000000");
+            }
+            else
+            {
+                Serial = "000001";
+            }
+            RenterVM.AdminstritiveNo = y + "-" + "1" + "305" + "-" + lessorCode + "100" + "-" + Serial;
             RenterVM.CrMasSysEvaluation = _unitOfWork.CrMasSysEvaluation.Find(x => x.CrMasSysEvaluationsCode == RenterVM.CrCasRenterLessorDealingMechanism);
             RenterVM.Banks = _unitOfWork.CrMasSupAccountBanks.FindAll(x => x.CrMasSupAccountBankStatus == Status.Active&&x.CrMasSupAccountBankCode!="00").ToList();
             RenterVM.AccountBanks = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankStatus == Status.Active&&x.CrCasAccountBankNo!="00" && x.CrCasAccountBankLessor == lessorCode).ToList();
+            RenterVM.RenterInformationIban = Renter.CrCasRenterLessorNavigation.CrMasRenterInformationIban;
+            RenterVM.BankSelected = Renter.CrCasRenterLessorNavigation.CrMasRenterInformationBank;
+            RenterVM.Amount = Renter.CrCasRenterLessorBalance.ToString();
             return View(RenterVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> TransferTo(RenterLessorVM renterLessorVM)
+        {
+            
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+
+
+            var Renter = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == renterLessorVM.CrCasRenterLessorId && x.CrCasRenterLessorCode == lessorCode, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic4s",
+                                                                                                                           "CrCasRenterLessorNavigation" });
+            var AddAdminstritive = await _tranferToRenter.SaveAdminstritiveTransferRenter(renterLessorVM.AdminstritiveNo, userLogin.CrMasUserInformationCode,"305","30", lessorCode, Renter.CrCasRenterLessorId,
+                                                                                   0, decimal.Parse(renterLessorVM.Amount),renterLessorVM.Reasons);
+
+            var CheckAddReceipt = true;
+            CheckAddReceipt = await _tranferToRenter.AddAccountReceiptTransferToRenter(AddAdminstritive.CrCasSysAdministrativeProceduresNo, Renter.CrCasRenterLessorId, userLogin.CrMasUserInformationCode, lessorCode,
+                                                                                        renterLessorVM.FromBank, renterLessorVM.FromAccountBankSelected, renterLessorVM.Amount,
+                                                                                        renterLessorVM.Reasons);
+            var CheckUpdateMasRenter = true;
+            CheckUpdateMasRenter = await _tranferToRenter.UpdateRenterInformation(Renter.CrCasRenterLessorId, renterLessorVM.RenterInformationIban, renterLessorVM.BankSelected);
+
+
+            var CheckUpdateRenterLessor = true;
+            CheckUpdateRenterLessor = await _tranferToRenter.UpdateCasRenterLessor(Renter.CrCasRenterLessorId, lessorCode, renterLessorVM.Amount);
+
+
+            if (AddAdminstritive!=null&& CheckAddReceipt&& CheckUpdateMasRenter&& CheckUpdateRenterLessor)
+            {
+                if (await _unitOfWork.CompleteAsync() > 1) _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                else _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            }
+
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public async Task<IActionResult> GetAccountBankNo(string AccountNo)
