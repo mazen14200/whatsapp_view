@@ -14,7 +14,7 @@
 
 </style>
 <div class="sub-container-form">
-    <form id="form" class="needs-validation" novalidate asp-area="CAS" asp-controller="TransferToTenant" asp-action="TransferTo" enctype="multipart/form-data">
+    <form id="form" class="needs-validation" novalidate asp-area="CAS" asp-controller="TransferFromTenant" asp-action="TransferFrom" enctype="multipart/form-data">
         <input type="hidden" id="status" name="status" />
         <div class="form-contain">
             <div class="row">
@@ -217,7 +217,7 @@
                 data: {
                     AccountNo: selectedBankCode
                 },
-                url: "@Url.Action("GetAccountBankNo", "TransferToTenant", new { Area = "CAS" })",
+                url: "@Url.Action("GetAccountBankNo", "TransferFromTenant", new { Area = "CAS" })",
                 success: function (response) {
                     console.log(response)
                     $("#FromAccountNo").val(response.accountIban);

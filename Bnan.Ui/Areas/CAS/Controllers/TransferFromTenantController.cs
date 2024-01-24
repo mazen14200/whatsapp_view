@@ -99,6 +99,57 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             RenterVM.BankSelected = Renter.CrCasRenterLessorNavigation.CrMasRenterInformationBank;
             return View(RenterVM);
         }
+        [HttpPost]
+        public async Task<IActionResult> TransferFrom(RenterLessorVM renterLessorVM)
+        {
+
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+
+
+            var Renter = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == renterLessorVM.CrCasRenterLessorId && x.CrCasRenterLessorCode == lessorCode, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic4s",
+                                                                                                                           "CrCasRenterLessorNavigation" });
+            var AddAdminstritive = await _tranferToRenter.SaveAdminstritiveTransferRenter(renterLessorVM.AdminstritiveNo, userLogin.CrMasUserInformationCode, "305", "30", lessorCode, Renter.CrCasRenterLessorId,
+                                                                                   0, decimal.Parse(renterLessorVM.Amount), renterLessorVM.Reasons);
+
+            var CheckAddReceipt = true;
+            CheckAddReceipt = await _tranferToRenter.AddAccountReceiptTransferToRenter(AddAdminstritive.CrCasSysAdministrativeProceduresNo, Renter.CrCasRenterLessorId, userLogin.CrMasUserInformationCode, "302","16", lessorCode,
+                                                                                        renterLessorVM.FromBank, renterLessorVM.FromAccountBankSelected,"0", renterLessorVM.Amount,
+                                                                                        renterLessorVM.Reasons);
+            var CheckUpdateMasRenter = true;
+            CheckUpdateMasRenter = await _tranferToRenter.UpdateRenterInformation(Renter.CrCasRenterLessorId, renterLessorVM.RenterInformationIban, renterLessorVM.BankSelected);
+
+
+            var CheckUpdateRenterLessor = true;
+            var AmountMinus = (-decimal.Parse(renterLessorVM.Amount)).ToString();
+
+            CheckUpdateRenterLessor = await _tranferToRenter.UpdateCasRenterLessor(Renter.CrCasRenterLessorId, lessorCode, AmountMinus);
+
+
+            if (AddAdminstritive != null && CheckAddReceipt && CheckUpdateMasRenter && CheckUpdateRenterLessor)
+            {
+                if (await _unitOfWork.CompleteAsync() > 1) _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                else _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            }
+
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAccountBankNo(string AccountNo)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var account = await _unitOfWork.CrCasAccountBank.FindAsync(x => x.CrCasAccountBankCode == AccountNo && x.CrCasAccountBankLessor == lessorCode, new[] { "CrCasAccountBankNoNavigation" });
+            var result = new
+            {
+                accountNo = account.CrCasAccountBankCode,
+                accountIban = account.CrCasAccountBankIban,
+                bankNo = account.CrCasAccountBankNoNavigation?.CrMasSupAccountBankCode,
+                arBank = account.CrCasAccountBankNoNavigation?.CrMasSupAccountBankArName,
+                enBank = account.CrCasAccountBankNoNavigation?.CrMasSupAccountBankEnName,
+            };
+            return Json(result);
+        }
 
 
     }

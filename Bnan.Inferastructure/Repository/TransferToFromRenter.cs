@@ -3,6 +3,7 @@ using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,21 +23,21 @@ namespace Bnan.Inferastructure.Repository
             _unitOfWork = unitOfWork;
             _userManager = userManager;
         }
-        public async Task<bool> AddAccountReceiptTransferToRenter(string AdmintritiveNo,string RenterId, string userCode, string lessorCode, string BankNo, string AccountNo, string TotalAmount, string reasons)
+        public async Task<bool> AddAccountReceiptTransferToRenter(string AdmintritiveNo,string RenterId, string userCode,string ProcedureCode,string ReferenceType, string lessorCode, string BankNo, string AccountNo, string TotalAmountPayment, string TotalAmountReceipt, string reasons)
         {
             CrCasAccountReceipt receipt = new CrCasAccountReceipt();
             var Renter = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId);
             var User = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == userCode);
-            receipt.CrCasAccountReceiptNo = GetAccountReceiptNo("100", userCode);
+            receipt.CrCasAccountReceiptNo = GetAccountReceiptNo("100", userCode, ProcedureCode);
             receipt.CrCasAccountReceiptYear = DateTime.Now.ToString("yy");
-            receipt.CrCasAccountReceiptType = "301";
+            receipt.CrCasAccountReceiptType = ProcedureCode;
             receipt.CrCasAccountReceiptLessorCode = lessorCode;
             receipt.CrCasAccountReceiptBranchCode = "100";
             receipt.CrCasAccountReceiptDate = DateTime.Now;
-            receipt.CrCasAccountReceiptReferenceType = "17";
+            receipt.CrCasAccountReceiptReferenceType = ReferenceType;
             receipt.CrCasAccountReceiptReferenceNo = AdmintritiveNo;
-            receipt.CrCasAccountReceiptReceipt = 0;
-            receipt.CrCasAccountReceiptPayment = decimal.Parse(TotalAmount);
+            receipt.CrCasAccountReceiptReceipt = decimal.Parse(TotalAmountReceipt);
+            receipt.CrCasAccountReceiptPayment = decimal.Parse(TotalAmountPayment);
             receipt.CrCasAccountReceiptBank = BankNo;
             receipt.CrCasAccountReceiptAccount = AccountNo;
             receipt.CrCasAccountReceiptUser = userCode;
@@ -75,14 +76,14 @@ namespace Bnan.Inferastructure.Repository
 
 
 
-        public string GetAccountReceiptNo(string BranchCode, string UserCode)
+        public string GetAccountReceiptNo(string BranchCode, string UserCode,string ProcedureCode)
         {
             var userLogin = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == UserCode);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             DateTime year = DateTime.Now;
             var y = year.ToString("yy");
             var Lrecord = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == userLogin.CrMasUserInformationLessor &&
-                x.CrCasAccountReceiptType == "301"
+                x.CrCasAccountReceiptType == ProcedureCode
                 && x.CrCasAccountReceiptYear == y).Max(x => x.CrCasAccountReceiptNo.Substring(x.CrCasAccountReceiptNo.Length - 6, 6));
             string Serial;
             if (Lrecord != null)
@@ -94,7 +95,7 @@ namespace Bnan.Inferastructure.Repository
             {
                 Serial = "000001";
             }
-            var receipt = y + "-" + "1" + "301" + "-" + lessorCode + BranchCode + "-" + Serial;
+            var receipt = y + "-" + "1" + ProcedureCode + "-" + lessorCode + BranchCode + "-" + Serial;
             return receipt;
         }
 
