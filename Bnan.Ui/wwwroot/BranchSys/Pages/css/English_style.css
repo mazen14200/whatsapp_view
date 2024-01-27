@@ -7,13 +7,15 @@ body {
 }
 
 .form-check-inline {
-
     gap: 10px;
 }
 
 .cancle-icon {
-
     margin-right: 25px;
+}
+
+textarea {
+    direction: ltr;
 }
 
 .table-scroll {
@@ -27,17 +29,14 @@ body {
 
 #Table-details {
     direction: rtl;
-
 }
 
 #extensionTable {
     direction: rtl;
-
 }
 
 #reportTable {
     direction: rtl;
-
 }
 
 .table-row {
@@ -55,9 +54,9 @@ body {
 }
 
 .form-outline .fa-search {
-    
     right: 10px;
 }
+
 @media (max-width:960px) {
     .pdf_img {
         top: 75px;
@@ -65,29 +64,30 @@ body {
         right: 10px;
     }
 }
+
 @media (max-width:770px) {
-    .pdf_img{
-       
+    .pdf_img {
         position: static;
-    }      
+    }
 }
+
 @media (max-width:320px) {
     .pdf_img {
         width: 45px;
     }
 }
 
-  @media (max-width:350px) {
+@media (max-width:350px) {
     .form-select-last {
         width: 100px;
     }
 }
+
 @media(min-width:1000px) {
 
-    .dropdown-content-extension{
+    .dropdown-content-extension {
         width: 140%;
         right: -90px;
         left: 90px;
-
     }
 }

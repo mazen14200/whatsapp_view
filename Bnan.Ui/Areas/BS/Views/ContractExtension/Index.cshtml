@@ -1,0 +1,222 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
+@using Newtonsoft.Json;
+@model BSLayoutVM
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+<link rel="stylesheet" href="~/css/toastr.css" />
+
+
+<link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
+@if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+{
+    <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">
+}
+
+<section class="section-mainCard">
+    <div class="row justify-content-center w-100 h-100">
+        <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
+            <div class="card main-card ">
+                <div class="row pt-2">
+                    <a href="#" style="width: fit-content;">
+                        <img src="~/BranchSys/Pages/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+                    </a>
+                </div>
+                <div class="row layout-row">
+
+                    <div class="row" style="flex-direction: row-reverse;">
+                        <div class="col justify-content-center d-flex title-row">
+                            <h1 class="card-title">
+                                بيانات العقود القائمة
+                            </h1>
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-center h-100 content-row">
+
+                        <div class="col-md-11 mx-0">
+
+                            <form id="contract-extension-form">
+
+                                <fieldset>
+                                    <div class="form-card">
+                                        <div class="row pb-4 seacrh-row align-items-baseline" style="flex-direction: row-reverse;flex-wrap: wrap;">
+                                            <div class="col-auto">
+                                                <label for="search"> بحث</label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="form-outline" data-mdb-input-init>
+                                                    <span class="fa fa-search"></span>
+                                                    <input type="search" id="search"
+                                                           class="form-control"
+                                                           name="search"
+                                                           aria-label="Search" autofocus />
+                                                </div>
+                                            </div>
+
+
+
+
+                                        </div>
+                                        <div class="row table-row">
+                                            <div class="col table-scroll w-100  ">
+                                                <table class="table table-bordered table-hover" id="extensionTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">العقد</th>
+                                                            <th scope="col">السيارة</th>
+                                                            <th scope="col">المستأجر</th>
+                                                            <th scope="col"> المتبقي</th>
+                                                            <th scope="col"> تاريخه </th>
+                                                            <th scope="col">رقم العقد</th>
+                                                            <th scope="col">م</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+
+                                                            <td> <a href="#"><img src="~/BranchSys/Pages/img/Rectangle 193.png" alt="pdf file link"></a></td>
+                                                            <td class="car">مازدا - سي اكس 30 - سماوي - 2021-دددد</td>
+                                                            <td class="name">نايف هشام هشام المعمر</td>
+                                                            <td>3</td>
+                                                            <td>13/2/2023</td>
+                                                            <td>23-1-60-5001-1020136</td>
+                                                            <td scope="row">1</td>
+
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td></td>
+                                                            <td class="car"></td>
+                                                            <td class="name"></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td scope="row">2</td>
+
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td scope="row">3</td>
+
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td scope="row">4</td>
+
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td scope="row">5</td>
+
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td scope="row">6</td>
+
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td scope="row">7</td>
+
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td scope="row">8</td>
+
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td scope="row">9</td>
+
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td scope="row">10</td>
+
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td scope="row">11</td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </fieldset>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

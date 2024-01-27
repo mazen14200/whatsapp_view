@@ -218,10 +218,10 @@
                 </button>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3  ">
-                <button type="button" class="btn btn-secondary mb-2">
+                <a class="btn btn-secondary mb-2" id="ExtensionContract">
                     <img src="~/BranchSys/img/Rectangle 31.png">
                     @localizer["ContractExtension"]
-                </button>
+                </a>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3  ">
                 <button type="button" class="btn btn-secondary mb-2" id="ContractSettlement">
@@ -246,7 +246,7 @@
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3 mb-1">
                 <a class="btn btn-secondary" id="pulse-button-employee">
-                    <img src="~/BranchSys/img/Rectangle 33.png" id="anmFeedBox" s>
+                    <img src="~/BranchSys/img/Rectangle 33.png" id="anmFeedBox">
                     @localizer["Feedbox"]
                 </a>
             </div>
@@ -903,6 +903,86 @@
             }
             else {
                 window.location.href = "/BS/Contract/CreateContract";
+            }
+        })
+
+    </script>
+    <script>
+        document.getElementById("ExtensionContract").addEventListener('click', function () {
+            var ExtensionAuth = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityExtension";
+            var userStatus = "@userInfo?.CrMasUserInformationStatus";
+            var lessorStatus = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorInformationStatus";
+            var BranchStatus = "@Model?.CrCasBranchInformation?.CrCasBranchInformationStatus";
+            var CompanyContract = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.Where(x=>x.CrMasContractCompanyStatus==Status.Expire||x.CrMasContractCompanyStatus==Status.Renewed).Count()";
+            var CompanyDocuments = "@userInfo?.CrMasUserInformationLessorNavigation?.CrCasBranchDocuments.Where(x=>x.CrCasBranchDocumentsStatus==Status.Expire || x.CrCasBranchDocumentsStatus==Status.Renewed).Count()";
+            var checkContractValidity = "";
+            var selectedBranch = "@Model?.SelectedBranch";
+            if (ExtensionAuth.toLowerCase() === "false" || ExtensionAuth == null || ExtensionAuth == "") {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessage"]');
+                return
+            }
+            else if (userStatus !== "@Status.Active") {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageUserHold"]');
+                return
+            }
+            else if (BranchStatus !== "@Status.Active") {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageBranchHold"]');
+                return
+            }
+            else if (lessorStatus !== "@Status.Active") {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageLessorHold"]');
+                return
+            }
+            else if (CompanyContract > 0) {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageCompanyContractExpired"]');
+                return
+            }
+            else if (CompanyDocuments > 0) {
+                $.ajax({
+                    url: "/BS/Home/CheckCompanyDocuments", // Replace YourController with your actual controller name
+                    type: "GET",
+                    data: { selectedBranch: selectedBranch },
+                    success: function (data) {
+                        var checkContract = data;
+                        if (checkContract == "100") {
+                            toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                            toastr.error('@localizer["toastMessageCompanyDocumentRegister"]');
+                            return
+                        }
+                        else if (checkContract == "101") {
+                            toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                            toastr.error('@localizer["toastMessageCompanyDocumentChamber"]');
+                            return
+                        }
+                        else if (checkContract == "102") {
+                            toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                            toastr.error('@localizer["toastMessageCompanyDocumentTransferPermission"]');
+                            return
+                        }
+                        else if (checkContract == "103") {
+                            toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                            toastr.error('@localizer["toastMessageCompanyDocumentLicenceMunicipale"]');
+                            return
+                        }
+                        else if (checkContract == "104") {
+                            toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                            toastr.error('@localizer["toastMessageCompanyDocumentLicenceAddress"]');
+                            return
+                        }
+                        else {
+                            window.location.href = "/BS/ContractExtension/Index";
+                        }
+                    }
+                });
+
+            }
+            else {
+                window.location.href = "/BS/ContractExtension/Index";
             }
         })
 
