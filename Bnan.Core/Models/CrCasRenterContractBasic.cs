@@ -5,16 +5,8 @@ namespace Bnan.Core.Models
 {
     public partial class CrCasRenterContractBasic
     {
-        public CrCasRenterContractBasic()
-        {
-            CrCasRenterContractAdditionals = new HashSet<CrCasRenterContractAdditional>();
-            CrCasRenterContractAdvantages = new HashSet<CrCasRenterContractAdvantage>();
-            CrCasRenterContractCarCheckups = new HashSet<CrCasRenterContractCarCheckup>();
-            CrCasRenterContractChoices = new HashSet<CrCasRenterContractChoice>();
-        }
-
         public string CrCasRenterContractBasicNo { get; set; } = null!;
-        public int? CrCasRenterContractBasicCopy { get; set; }
+        public int CrCasRenterContractBasicCopy { get; set; }
         public string? CrCasRenterContractBasicYear { get; set; }
         public string? CrCasRenterContractBasicSector { get; set; }
         public string? CrCasRenterContractBasicProcedures { get; set; }
@@ -79,12 +71,5 @@ namespace Bnan.Core.Models
         public virtual CrCasCarInformation? CrCasRenterContractBasicCarSerailNoNavigation { get; set; }
         public virtual CrCasRenterLessor? CrCasRenterContractBasicNavigation { get; set; }
         public virtual CrMasSupRenterSector? CrCasRenterContractBasicSectorNavigation { get; set; }
-        public virtual CrCasRenterContractAlert CrCasRenterContractAlert { get; set; } = null!;
-        public virtual CrCasRenterContractAuthorization CrCasRenterContractAuthorization { get; set; } = null!;
-        public virtual CrCasRenterContractStatistic CrCasRenterContractStatistic { get; set; } = null!;
-        public virtual ICollection<CrCasRenterContractAdditional> CrCasRenterContractAdditionals { get; set; }
-        public virtual ICollection<CrCasRenterContractAdvantage> CrCasRenterContractAdvantages { get; set; }
-        public virtual ICollection<CrCasRenterContractCarCheckup> CrCasRenterContractCarCheckups { get; set; }
-        public virtual ICollection<CrCasRenterContractChoice> CrCasRenterContractChoices { get; set; }
     }
 }

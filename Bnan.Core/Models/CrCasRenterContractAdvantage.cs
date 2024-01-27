@@ -10,6 +10,5 @@ namespace Bnan.Core.Models
         public decimal? CrCasContractAdvantagesValue { get; set; }
 
         public virtual CrMasSupCarAdvantage CrCasRenterContractAdvantagesCodeNavigation { get; set; } = null!;
-        public virtual CrCasRenterContractBasic CrCasRenterContractAdvantagesNoNavigation { get; set; } = null!;
     }
 }

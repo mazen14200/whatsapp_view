@@ -11,6 +11,5 @@ namespace Bnan.Core.Models
         public string? CrCasRenterContractCarCheckupReasons { get; set; }
 
         public virtual CrMasSupContractCarCheckup CrCasRenterContractCarCheckupCodeNavigation { get; set; } = null!;
-        public virtual CrCasRenterContractBasic CrCasRenterContractCarCheckupNoNavigation { get; set; } = null!;
     }
 }

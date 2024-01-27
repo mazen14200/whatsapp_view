@@ -16,7 +16,6 @@ namespace Bnan.Core.Models
         public bool? CrCasRenterContractAuthorizationAction { get; set; }
         public string? CrCasRenterContractAuthorizationStatus { get; set; }
 
-        public virtual CrCasRenterContractBasic CrCasRenterContractAuthorizationContractNoNavigation { get; set; } = null!;
         public virtual CrMasLessorInformation? CrCasRenterContractAuthorizationLessorNavigation { get; set; }
     }
 }

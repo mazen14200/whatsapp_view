@@ -19,6 +19,5 @@ namespace Bnan.Core.Models
         public string? CrCasRenterContractAlertContractStatus { get; set; }
 
         public virtual CrCasBranchInformation? CrCasRenterContractAlertNavigation { get; set; }
-        public virtual CrCasRenterContractBasic CrCasRenterContractAlertNoNavigation { get; set; } = null!;
     }
 }

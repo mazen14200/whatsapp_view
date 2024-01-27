@@ -124,6 +124,7 @@ namespace Bnan.Core.Models
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
             modelBuilder.Entity<CrMasUserInformation>().Ignore(x => x.Email).Ignore(x => x.EmailConfirmed)
                 .Ignore(x => x.NormalizedEmail).Ignore(x => x.PhoneNumber).Ignore(x => x.PhoneNumberConfirmed);
+
             modelBuilder.Entity<CrCasAccountBank>(entity =>
             {
                 entity.HasKey(e => e.CrCasAccountBankCode);
@@ -667,6 +668,9 @@ namespace Bnan.Core.Models
                 entity.HasKey(e => new { e.CrCasBranchInformationLessor, e.CrCasBranchInformationCode });
 
                 entity.ToTable("CR_Cas_Branch_Information");
+
+                //entity.HasIndex(e => new { e.CrCasBranchInformationCode, e.CrCasBranchInformationLessor }, "AK_CR_Cas_Branch_Information_CR_Cas_Branch_Information_Code_CR_Cas_Branch_Information_Lessor")
+                //    .IsUnique();
 
                 entity.HasIndex(e => new { e.CrCasBranchInformationCode, e.CrCasBranchInformationLessor }, "uq_CR_Cas_Branch_Information")
                     .IsUnique();
@@ -2009,12 +2013,6 @@ namespace Bnan.Core.Models
                     .HasForeignKey(d => d.CrCasRenterContractAdditionalCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_CR_Cas_Renter_Contract_Additional_CR_Mas_Sup_Contract_Additional");
-
-                entity.HasOne(d => d.CrCasRenterContractAdditionalNoNavigation)
-                    .WithMany(p => p.CrCasRenterContractAdditionals)
-                    .HasForeignKey(d => d.CrCasRenterContractAdditionalNo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Additional_CR_Cas_Renter_Contract_Basic");
             });
 
             modelBuilder.Entity<CrCasRenterContractAdvantage>(entity =>
@@ -2046,12 +2044,6 @@ namespace Bnan.Core.Models
                     .HasForeignKey(d => d.CrCasRenterContractAdvantagesCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_CR_Cas_Renter_Contract_Advantages_CR_Mas_Sup_Car_Advantages");
-
-                entity.HasOne(d => d.CrCasRenterContractAdvantagesNoNavigation)
-                    .WithMany(p => p.CrCasRenterContractAdvantages)
-                    .HasForeignKey(d => d.CrCasRenterContractAdvantagesNo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Advantages_CR_Cas_Renter_Contract_Basic");
             });
 
             modelBuilder.Entity<CrCasRenterContractAlert>(entity =>
@@ -2119,12 +2111,6 @@ namespace Bnan.Core.Models
                     .IsUnicode(false)
                     .HasColumnName("CR_Cas_Renter_Contract_Alert_Status_Msg");
 
-                entity.HasOne(d => d.CrCasRenterContractAlertNoNavigation)
-                    .WithOne(p => p.CrCasRenterContractAlert)
-                    .HasForeignKey<CrCasRenterContractAlert>(d => d.CrCasRenterContractAlertNo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Alert_CR_Cas_Renter_Contract_Basic");
-
                 entity.HasOne(d => d.CrCasRenterContractAlertNavigation)
                     .WithMany(p => p.CrCasRenterContractAlerts)
                     .HasPrincipalKey(p => new { p.CrCasBranchInformationCode, p.CrCasBranchInformationLessor })
@@ -2181,12 +2167,6 @@ namespace Bnan.Core.Models
                     .HasColumnType("decimal(7, 2)")
                     .HasColumnName("CR_Cas_Renter_Contract_Authorization_Value");
 
-                entity.HasOne(d => d.CrCasRenterContractAuthorizationContractNoNavigation)
-                    .WithOne(p => p.CrCasRenterContractAuthorization)
-                    .HasForeignKey<CrCasRenterContractAuthorization>(d => d.CrCasRenterContractAuthorizationContractNo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Authorization_CR_Cas_Renter_Contract_Basic");
-
                 entity.HasOne(d => d.CrCasRenterContractAuthorizationLessorNavigation)
                     .WithMany(p => p.CrCasRenterContractAuthorizations)
                     .HasForeignKey(d => d.CrCasRenterContractAuthorizationLessor)
@@ -2195,7 +2175,7 @@ namespace Bnan.Core.Models
 
             modelBuilder.Entity<CrCasRenterContractBasic>(entity =>
             {
-                entity.HasKey(e => e.CrCasRenterContractBasicNo);
+                entity.HasKey(e => new { e.CrCasRenterContractBasicNo, e.CrCasRenterContractBasicCopy });
 
                 entity.ToTable("CR_Cas_Renter_Contract_Basic");
 
@@ -2218,6 +2198,8 @@ namespace Bnan.Core.Models
                     .IsUnicode(false)
                     .HasColumnName("CR_Cas_Renter_Contract_Basic_No")
                     .IsFixedLength();
+
+                entity.Property(e => e.CrCasRenterContractBasicCopy).HasColumnName("CR_Cas_Renter_Contract_Basic_Copy");
 
                 entity.Property(e => e.CrCasRenterContractBasicAdditionalDriverId)
                     .HasMaxLength(20)
@@ -2264,8 +2246,6 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrCasRenterContractBasicCarSerailNo)
                     .HasMaxLength(20)
                     .HasColumnName("CR_Cas_Renter_Contract_Basic_Car_Serail_No");
-
-                entity.Property(e => e.CrCasRenterContractBasicCopy).HasColumnName("CR_Cas_Renter_Contract_Basic_Copy");
 
                 entity.Property(e => e.CrCasRenterContractBasicCurrentReadingMeter).HasColumnName("CR_Cas_Renter_Contract_Basic_Current_Reading_Meter");
 
@@ -2511,18 +2491,11 @@ namespace Bnan.Core.Models
                     .HasMaxLength(100)
                     .HasColumnName("CR_Cas_Renter_Contract_Car_Checkup_Reasons");
 
-
                 entity.HasOne(d => d.CrCasRenterContractCarCheckupCodeNavigation)
                     .WithMany(p => p.CrCasRenterContractCarCheckups)
                     .HasForeignKey(d => d.CrCasRenterContractCarCheckupCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_CR_Cas_Renter_Contract_Car_Checkup_CR_Mas_Sup_Contract_Car_Checkup");
-
-                entity.HasOne(d => d.CrCasRenterContractCarCheckupNoNavigation)
-                    .WithMany(p => p.CrCasRenterContractCarCheckups)
-                    .HasForeignKey(d => d.CrCasRenterContractCarCheckupNo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Car_Checkup_CR_Cas_Renter_Contract_Basic");
             });
 
             modelBuilder.Entity<CrCasRenterContractChoice>(entity =>
@@ -2554,12 +2527,6 @@ namespace Bnan.Core.Models
                     .HasForeignKey(d => d.CrCasRenterContractChoiceCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_CR_Cas_Renter_Contract_Choice_CR_Mas_Sup_Contract_Options");
-
-                entity.HasOne(d => d.CrCasRenterContractChoiceNoNavigation)
-                    .WithMany(p => p.CrCasRenterContractChoices)
-                    .HasForeignKey(d => d.CrCasRenterContractChoiceNo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Choice_CR_Cas_Renter_Contract_Basic");
             });
 
             modelBuilder.Entity<CrCasRenterContractStatistic>(entity =>
@@ -2875,12 +2842,6 @@ namespace Bnan.Core.Models
                     .WithMany(p => p.CrCasRenterContractStatistics)
                     .HasForeignKey(d => d.CrCasRenterContractStatisticsNationalities)
                     .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Mas_Sup_Renter_Nationalities");
-
-                entity.HasOne(d => d.CrCasRenterContractStatisticsNoNavigation)
-                    .WithOne(p => p.CrCasRenterContractStatistic)
-                    .HasForeignKey<CrCasRenterContractStatistic>(d => d.CrCasRenterContractStatisticsNo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_CR_Cas_Renter_Contract_Statistics_CR_Cas_Renter_Contract_Basic");
 
                 entity.HasOne(d => d.CrCasRenterContractStatisticsRenterCityNavigation)
                     .WithMany(p => p.CrCasRenterContractStatisticCrCasRenterContractStatisticsRenterCityNavigations)
@@ -6199,6 +6160,8 @@ namespace Bnan.Core.Models
 
                 entity.HasIndex(e => e.CrMasUserInformationLessor, "IX_CR_Mas_User_Information_CR_Mas_User_Information_Lessor");
 
+               
+
                 entity.Property(e => e.CrMasUserInformationCode)
                     .HasMaxLength(10)
                     .IsUnicode(false)
@@ -6326,7 +6289,6 @@ namespace Bnan.Core.Models
                     .HasColumnName("CR_Mas_User_Information_Total_Balance")
                     .HasDefaultValueSql("((0))");
 
-               
                 entity.HasOne(d => d.CrMasUserInformationLessorNavigation)
                     .WithMany(p => p.CrMasUserInformations)
                     .HasForeignKey(d => d.CrMasUserInformationLessor)

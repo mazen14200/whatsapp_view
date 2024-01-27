@@ -10,6 +10,5 @@ namespace Bnan.Core.Models
         public decimal? CrCasContractChoiceValue { get; set; }
 
         public virtual CrMasSupContractOption CrCasRenterContractChoiceCodeNavigation { get; set; } = null!;
-        public virtual CrCasRenterContractBasic CrCasRenterContractChoiceNoNavigation { get; set; } = null!;
     }
 }

@@ -62,7 +62,6 @@ namespace Bnan.Core.Models
         public virtual CrMasSupCarModel? CrCasRenterContractStatisticsModelNavigation { get; set; }
         public virtual CrMasSupRenterNationality? CrCasRenterContractStatisticsNationalitiesNavigation { get; set; }
         public virtual CrCasRenterLessor? CrCasRenterContractStatisticsNavigation { get; set; }
-        public virtual CrCasRenterContractBasic CrCasRenterContractStatisticsNoNavigation { get; set; } = null!;
         public virtual CrMasSupPostCity? CrCasRenterContractStatisticsRenterCityNavigation { get; set; }
         public virtual CrMasSupPostRegion? CrCasRenterContractStatisticsRenterRegionsNavigation { get; set; }
         public virtual CrMasUserInformation? CrCasRenterContractStatisticsUserCloseNavigation { get; set; }

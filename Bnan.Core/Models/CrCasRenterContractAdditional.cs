@@ -10,6 +10,5 @@ namespace Bnan.Core.Models
         public decimal? CrCasContractAdditionalValue { get; set; }
 
         public virtual CrMasSupContractAdditional CrCasRenterContractAdditionalCodeNavigation { get; set; } = null!;
-        public virtual CrCasRenterContractBasic CrCasRenterContractAdditionalNoNavigation { get; set; } = null!;
     }
 }
