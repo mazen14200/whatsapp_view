@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Bnan.Core.Models;
 using Bnan.Ui.ViewModels;
+using Bnan.Ui.ViewModels.BS;
 using Bnan.Ui.ViewModels.CAS;
 using Bnan.Ui.ViewModels.Identitiy;
 using Bnan.Ui.ViewModels.MAS;
@@ -99,6 +100,9 @@ namespace Bnan.Inferastructure
 
             CreateMap<CrCasRenterLessor, RenterLessorVM>();
             CreateMap<RenterLessorVM, CrCasRenterLessor>();
+
+            CreateMap<CrCasRenterContractBasic, ContractForExtensionVM>();
+            CreateMap<ContractForExtensionVM, CrCasRenterContractBasic>();
 
         }
 

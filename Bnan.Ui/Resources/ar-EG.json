@@ -33,7 +33,8 @@
   //Accounts
   "Accounts": "الحسابات",
   "Cash Feeding": "تغذيه الصندوق",
-  "Receipt Confirmation": "استلام عهده",
+  "Receipt Confirmation": "استسلام عهدة",
+  "Receipt Confirmationn": "عرض بيانات العهد ",
   "Transfer To Renter": "تحويل الى مستاجر",
   "Transfer From Renter": "تحويل من مستاجر",
   "Tax Dues": "مستحقات القيمة المضافة",
@@ -584,7 +585,7 @@
   "HintSureToHoldRefrence": "سيترتب على إيقاف بيانات المرجع إيقافها على النظام",
 
   //
-  "Receipt Confirmation Hint": "تمكنك الصفحة من عرض  بيانات السند ",
+  "Receipt Confirmation Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات العهد و الإنجليزي  ",
   //ContractAdditional Services
   "ContractAdditional Data": "بيانات الاضافات بالعقود",
   "ContractAdditional Hint": "تمكنك الصفحة من عرض و إضافة و تعديل بيانات الاضافات بالعقود.",
@@ -1241,5 +1242,8 @@
   "FromAccountNo": "من رقم حساب",
   "ToAccountNo": "الى رقم حساب",
   "AmountTransfer": "المبلغ المحول",
-  "TransferNo": "رقم التحويل"
+  "TransferNo": "رقم التحويل",
+  //
+  "ContractExtensionTitle": "بيانات العقود القائمة",
+  "Remaining": "المتبقي"
 }

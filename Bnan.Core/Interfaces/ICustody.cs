@@ -20,7 +20,7 @@ namespace Bnan.Core.Interfaces
         Task<bool> UpdateBranchReceivedCustody(string BranchCode, string lessorCode, string TotalAmount, string status);
         Task<bool> UpdateSalesPointReceivedCustody(string lessorCode, string BranchCode, string AdminstritiveNo, string TotalAmount, string status);
         bool UpdateAccountReceiptReceivedCustody(string AdminstritiveNo,string status, string Reasons);
-        Task<bool> UpdateAdminstritive(string AdminstritiveNo, string UserCode, string Status, string Reasons);
+        Task<bool> UpdateAdminstritive(string AdminstritiveNo, string UserCode, string status, string Reasons);
 
     }
 }

@@ -52,6 +52,10 @@ namespace Bnan.Ui.ViewModels.BS
         public CrMasUserBranchValidity? CrMasUserBranchValidity { get; set; }
         public CrCasSysAdministrativeProcedure? CrCasSysAdministrativeProcedure { get; set; }
         public Contract? Contract { get; set; }
+        //Extension Contract
+        public List<ContractForExtensionVM>? ExtensionContracts { get; set; }
+        public CrCasRenterContractBasic? ExtensionContract { get; set; }
+
 
         public string? SelectedBranch { get; set; }
 

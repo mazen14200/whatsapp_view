@@ -26,7 +26,7 @@
         <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
             <div class="card main-card ">
                 <div class="row pt-2">
-                    <a href="#" style="width: fit-content;">
+                    <a asp-area="BS" asp-action="Index" asp-controller="Home" style="width: fit-content;">
                         <img src="~/BranchSys/Pages/img/cancel.png" alt="cancle_icon" class="cancle-icon">
                     </a>
                 </div>
@@ -35,7 +35,7 @@
                     <div class="row" style="flex-direction: row-reverse;">
                         <div class="col justify-content-center d-flex title-row">
                             <h1 class="card-title">
-                                بيانات العقود القائمة
+                                @localizer["Remaining"]
                             </h1>
                         </div>
 
@@ -50,160 +50,18 @@
                                     <div class="form-card">
                                         <div class="row pb-4 seacrh-row align-items-baseline" style="flex-direction: row-reverse;flex-wrap: wrap;">
                                             <div class="col-auto">
-                                                <label for="search"> بحث</label>
+                                                <label for="search"> @localizer["search"]</label>
                                             </div>
                                             <div class="col-auto">
                                                 <div class="form-outline" data-mdb-input-init>
                                                     <span class="fa fa-search"></span>
-                                                    <input type="search" id="search"
-                                                           class="form-control"
-                                                           name="search"
-                                                           aria-label="Search" autofocus />
+                                                    <input type="search" id="search" class="form-control" name="search" aria-label="Search" autofocus />
                                                 </div>
                                             </div>
-
-
-
-
                                         </div>
                                         <div class="row table-row">
-                                            <div class="col table-scroll w-100  ">
-                                                <table class="table table-bordered table-hover" id="extensionTable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">العقد</th>
-                                                            <th scope="col">السيارة</th>
-                                                            <th scope="col">المستأجر</th>
-                                                            <th scope="col"> المتبقي</th>
-                                                            <th scope="col"> تاريخه </th>
-                                                            <th scope="col">رقم العقد</th>
-                                                            <th scope="col">م</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-
-                                                            <td> <a href="#"><img src="~/BranchSys/Pages/img/Rectangle 193.png" alt="pdf file link"></a></td>
-                                                            <td class="car">مازدا - سي اكس 30 - سماوي - 2021-دددد</td>
-                                                            <td class="name">نايف هشام هشام المعمر</td>
-                                                            <td>3</td>
-                                                            <td>13/2/2023</td>
-                                                            <td>23-1-60-5001-1020136</td>
-                                                            <td scope="row">1</td>
-
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td></td>
-                                                            <td class="car"></td>
-                                                            <td class="name"></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td scope="row">2</td>
-
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td scope="row">3</td>
-
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td scope="row">4</td>
-
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td scope="row">5</td>
-
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td scope="row">6</td>
-
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td scope="row">7</td>
-
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td scope="row">8</td>
-
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td scope="row">9</td>
-
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td scope="row">10</td>
-
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td scope="row">11</td>
-
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                            <div class="col table-scroll w-100  dataTable">
+                                                <partial name="_ContractExtension" />
                                             </div>
                                         </div>
 
@@ -220,3 +78,37 @@
         </div>
     </div>
 </section>
+
+<footer class="fixed-bottom-xl">
+    <div class="before-footer-widget">
+        <svg width: 100%; height:auto viewbox="0 0 2444 132">
+            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+            </path>
+        </svg>
+    </div>
+</footer>
+@section scripts {
+  
+    <script>
+        //get AccountBank By Status and Search function
+        function GetContractFilter(search) {
+            $.ajax({
+                type: "GET",
+                data: {
+                    search: search
+                },
+                url: "@Url.Action("GetContractBySearch", "ContractExtension", new { Area = "BS" })",
+                success: function (response) {
+                    $(".dataTable").html(response);
+                },
+            });
+        }
+
+        //on Change Search Input
+        $("#search").on("input", function () {
+            var searchValue = $(this).val();
+            GetContractFilter(searchValue);
+        });
+    </script>
+    }

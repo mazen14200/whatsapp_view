@@ -113,14 +113,7 @@
                         <label class="form-label" for="CrCasCarInformationSerailNo">@localizer["reasons"]</label>
                     </div>
                     <div class="col-md-5">
-                        @if (Model.CrCasSysAdministrativeProceduresStatus == Status.Insert)
-                        {
-                            <input type="text" class="form-control" asp-for="CrCasSysAdministrativeProceduresReasons" />
-                        }
-                        else
-                        {
-                            <input type="text" class="form-control" asp-for="CrCasSysAdministrativeProceduresReasons"  readonly/>
-                        }
+                           <input type="text" class="form-control" id="Reasons" name="Reasons" />
                     </div>
                 </div>
             </div>
@@ -193,7 +186,6 @@
                     @localizer["Reject"]
                 </a>
             }
-            
             <a type="button" class="btn btn-danger ms-2" asp-area="CAS" asp-controller="ReceivedCustody" asp-action="Index">
                 @localizer["Back"]
             </a>

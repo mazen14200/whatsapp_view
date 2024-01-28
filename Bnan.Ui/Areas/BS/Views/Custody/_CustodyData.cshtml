@@ -97,7 +97,7 @@
             <label for="FormControlTextarea2">@localizer["reasons"]</label>
         </div>
         <div class="col-sm-5 col-md-5 col-lg-5">
-            <input class="form-control text-right" id="Reasons" maxlength="100" rows="1" name="Reasons">
+            <input class="form-control @(requestCulture?.RequestCulture.UICulture.Name == "ar-EG" ? "text-right" : "text-left")" id="Reasons" maxlength="100" rows="1" name="Reasons">
         </div>
     </div>
 </div>
@@ -145,7 +145,7 @@
                             }
                             else
                             {
-                                <td class="text-left">@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceArName</td>
+                                <td class="text-left">@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceEnName</td>
                             }
                             <td>@item.CrCasAccountReceiptReferenceNo</td>
                             <td>@item.CrCasAccountReceiptDate?.ToString("yyyy/MM/dd")</td>

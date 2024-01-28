@@ -160,7 +160,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public async Task<IActionResult> ActionCustody(AdmintritiveCustodyVM custodyVM, string status)
+        public async Task<IActionResult> ActionCustody(AdmintritiveCustodyVM custodyVM, string status,string Reasons)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -169,7 +169,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             if (Adminstritive != null)
             {
                 var CheckAdminstritive = true;
-                CheckAdminstritive = await _Custody.UpdateAdminstritive(Adminstritive.CrCasSysAdministrativeProceduresNo, userLogin.CrMasUserInformationCode, status, custodyVM.CrCasSysAdministrativeProceduresReasons);
+                CheckAdminstritive = await _Custody.UpdateAdminstritive(Adminstritive.CrCasSysAdministrativeProceduresNo, userLogin.CrMasUserInformationCode, status, Reasons);
 
 
                 var CheckAddReceipt = true;
@@ -183,7 +183,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (status==Status.Accept)
                 {
                     CheckAddReceipt = await _Custody.AddAccountReceiptReceivedCustody(Adminstritive.CrCasSysAdministrativeProceduresNo,
-                                                                                  lessorCode, Adminstritive.CrCasSysAdministrativeProceduresBranch, custodyVM.TotalAmount, custodyVM.CrCasSysAdministrativeProceduresReasons);
+                                                                                  lessorCode, Adminstritive.CrCasSysAdministrativeProceduresBranch, custodyVM.TotalAmount, Reasons);
                 }
                 
 

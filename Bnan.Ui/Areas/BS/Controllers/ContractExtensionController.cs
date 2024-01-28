@@ -35,7 +35,45 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var bsLayoutVM = await GetBranchesAndLayout();
+            var contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicStatus == Status.Active &&
+                                                                           x.CrCasRenterContractBasicBranch == bsLayoutVM.SelectedBranch &&
+                                                                           x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation" });
+            var contractMap = _mapper.Map<List<ContractForExtensionVM>>(contracts);
+            foreach (var contract in contractMap)
+            {
+                var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode&&
+                x.CrCasRenterContractAuthorizationContractNo==contract.CrCasRenterContractBasicNo);
+                if (authContract != null) contract.AuthEndDate=authContract.CrCasRenterContractAuthorizationEndDate;
+            }
+            bsLayoutVM.ExtensionContracts = contractMap.Where(x=>x.AuthEndDate>DateTime.Now).ToList();
             return View(bsLayoutVM);
+        }
+
+        [HttpGet]
+        public async Task<PartialViewResult> GetContractBySearch(string search)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var bsLayoutVM = await GetBranchesAndLayout();
+            if (!string.IsNullOrEmpty(search))
+            {
+                var contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicStatus == Status.Active &&
+                                                                           x.CrCasRenterContractBasicBranch == bsLayoutVM.SelectedBranch &&
+                                                                           x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation" });
+                var contractMap = _mapper.Map<List<ContractForExtensionVM>>(contracts);
+                foreach (var contract in contractMap)
+                {
+                    var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode &&
+                    x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);
+                    if (authContract != null) contract.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
+                }
+                bsLayoutVM.ExtensionContracts = contractMap.Where(x => x.AuthEndDate > DateTime.Now&&
+                                                                                               (x.CrCasRenterContractBasicNo.Contains(search) ||
+                                                                                                x.CrCasRenterContractBasic4.CrCasRenterLessorNavigation.CrMasRenterInformationArName.Contains(search) ||
+                                                                                                x.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName.Contains(search))).ToList();
+                return PartialView("_ContractExtension", bsLayoutVM.ExtensionContracts);
+            }
+            return PartialView();
         }
     }
 }

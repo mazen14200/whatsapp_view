@@ -108,7 +108,7 @@ namespace Bnan.Inferastructure.Repository
             receipt.CrCasAccountReceiptLessorCode = lessorCode;
             receipt.CrCasAccountReceiptBranchCode = BranchCode;
             receipt.CrCasAccountReceiptDate = DateTime.Now;
-            if (SalesPoint.CrCasAccountSalesPointAccountBank == "00") receipt.CrCasAccountReceiptPaymentMethod = "10";
+            if (SalesPoint.CrCasAccountSalesPointBank == "00") receipt.CrCasAccountReceiptPaymentMethod = "10";
             else receipt.CrCasAccountReceiptPaymentMethod = "40";
             receipt.CrCasAccountReceiptReferenceType = "15";
             receipt.CrCasAccountReceiptReferenceNo = adminstritive.CrCasSysAdministrativeProceduresNo;
@@ -128,13 +128,17 @@ namespace Bnan.Inferastructure.Repository
             return false;
         }
 
-        public async Task<bool> UpdateAdminstritive(string AdminstritiveNo, string UserCode, string Status, string Reasons)
+        public async Task<bool> UpdateAdminstritive(string AdminstritiveNo, string UserCode, string status, string Reasons)
         {
             var Adminstritive = await _unitOfWork.CrCasSysAdministrativeProcedure.FindAsync(x => x.CrCasSysAdministrativeProceduresNo == AdminstritiveNo);
             if (Adminstritive != null)
             {
-                Adminstritive.CrCasSysAdministrativeProceduresStatus = Status;
+                Adminstritive.CrCasSysAdministrativeProceduresStatus = status;
                 Adminstritive.CrCasSysAdministrativeProceduresUserInsert = UserCode;
+                if (status==Status.Reject)
+                {
+                    if (!string.IsNullOrEmpty(Reasons)) Adminstritive.CrCasSysAdministrativeProceduresReasons = Reasons;
+                }
                 if (_unitOfWork.CrCasSysAdministrativeProcedure.Update(Adminstritive) != null) return true;
             }
             return false;

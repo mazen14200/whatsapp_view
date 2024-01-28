@@ -35,6 +35,7 @@
   "Accounts": "Accounts",
   "Cash Feeding": "Cash Feeding",
   "Receipt Confirmation": "Receipt Confirmation",
+  "Receipt Confirmationn": "View Custody Receipt Data",
   "Transfer To Renter": "Transfer To Renter",
   "Transfer From Renter": "Transfer From Renter",
   "Tax Dues": "Tax Dues",
@@ -571,7 +572,7 @@
   "Edit Refrence Data": "Edit",
 
   //
-  "Receipt Confirmation Hint": "The page enables you to view, add and modify reference data ",
+  "Receipt Confirmation Hint": "This Page Enables You To Search And View Covenant Data ",
 
   "HintSureToRetriveHRefrence": "The retrieval of Account Reference data will result to be restored in the system.",
   "HintSureToRetriveDRefrence": "The retrieval of Account Reference data will result to be restored in the system.",
@@ -1247,6 +1248,8 @@
   "ToAccountNo": "To Account No",
   "AmountTransfer": "Amount Transfer",
   "TransferNo": "Transfer No",
-  "AccountNo": "AccountNo"
-
+  "AccountNo": "AccountNo",
+  //
+  "ContractExtensionTitle": "Data existing contracts",
+  "Remaining": "Remaining"
 }

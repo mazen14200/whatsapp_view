@@ -42,7 +42,7 @@
             }
             @foreach (var item in Model)
             {
-                <tr onclick="location.href='@Url.Action("Details", "ReceivedCustody", new { id = item.CrCasSysAdministrativeProceduresNo })'">
+                <tr onclick="@(item.CrCasSysAdministrativeProceduresStatus != Status.Reject ? $"location.href='{Url.Action("Details", "ReceivedCustody", new { id = item.CrCasSysAdministrativeProceduresNo })}'" : null)">
                     <td>@no</td>
                     <td>@item.CrCasSysAdministrativeProceduresNo</td>
                     <td>@item.CrCasSysAdministrativeProceduresDate</td>

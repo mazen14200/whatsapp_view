@@ -6,7 +6,7 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    ViewData["Page-title"] = @localizer["Receipt Confirmation"];
+    ViewData["Page-title"] = @localizer["Receipt Confirmationn"];
     ViewData["Page-Hint"] = @localizer["Receipt Confirmation Hint"];
 }
 <style>
