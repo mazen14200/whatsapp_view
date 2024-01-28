@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using NToastNotify;
+using System.Diagnostics.Contracts;
+
 namespace Bnan.Ui.Areas.BS.Controllers
 {
     [Area("BS")]
@@ -55,25 +57,60 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var bsLayoutVM = await GetBranchesAndLayout();
-            if (!string.IsNullOrEmpty(search))
-            {
-                var contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicStatus == Status.Active &&
+            var contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicStatus == Status.Active &&
                                                                            x.CrCasRenterContractBasicBranch == bsLayoutVM.SelectedBranch &&
                                                                            x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation" });
-                var contractMap = _mapper.Map<List<ContractForExtensionVM>>(contracts);
-                foreach (var contract in contractMap)
-                {
-                    var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode &&
-                    x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);
-                    if (authContract != null) contract.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
-                }
+            var contractMap = _mapper.Map<List<ContractForExtensionVM>>(contracts);
+            foreach (var contract in contractMap)
+            {
+                var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode &&
+                x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);
+                if (authContract != null) contract.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
+            }
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                
                 bsLayoutVM.ExtensionContracts = contractMap.Where(x => x.AuthEndDate > DateTime.Now&&
                                                                                                (x.CrCasRenterContractBasicNo.Contains(search) ||
                                                                                                 x.CrCasRenterContractBasic4.CrCasRenterLessorNavigation.CrMasRenterInformationArName.Contains(search) ||
-                                                                                                x.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName.Contains(search))).ToList();
-                return PartialView("_ContractExtension", bsLayoutVM.ExtensionContracts);
+                                                                                                x.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName.Contains(search) ||
+                                                                                                x.CrCasRenterContractBasic4.CrCasRenterLessorNavigation.CrMasRenterInformationEnName.ToLower().Contains(search) ||
+                                                                                                x.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName.ToLower().Contains(search))).ToList();
+                return PartialView("_ContractExtension", bsLayoutVM);
             }
-            return PartialView();
+            bsLayoutVM.ExtensionContracts= contractMap.Where(x => x.AuthEndDate > DateTime.Now ).ToList();
+            return PartialView("_ContractExtension", bsLayoutVM);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Create(string id)
+        {
+            //To Set Title 
+            var titles = await setTitle("501", "5501002", "5");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var bsLayoutVM = await GetBranchesAndLayout();
+            var contract = await _unitOfWork.CrCasRenterContractBasic.FindAsync(x => x.CrCasRenterContractBasicNo == id,
+                                                                                     new[] { "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", 
+                                                                                             "CrCasRenterContractBasicCarSerailNoNavigation"});
+            var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode &&
+                x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);
+            var contractMap = _mapper.Map<ContractForExtensionVM>(contract);
+            var PaymentMethod = _unitOfWork.CrMasSupAccountPaymentMethod.FindAll(x => x.CrMasSupAccountPaymentMethodStatus == Status.Active).ToList();
+            var SalesPoint = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == lessorCode &&
+                                                                             x.CrCasAccountSalesPointBrn == bsLayoutVM.SelectedBranch &&
+                                                                             x.CrCasAccountSalesPointBankStatus == Status.Active &&
+                                                                             x.CrCasAccountSalesPointStatus == Status.Active &&
+                                                                             x.CrCasAccountSalesPointBranchStatus == Status.Active).ToList();
+
+            contractMap.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
+            contractMap.AuthType = authContract.CrCasRenterContractAuthorizationType;
+            bsLayoutVM.ExtensionContract = contractMap;
+            bsLayoutVM.SalesPoint = SalesPoint;
+            bsLayoutVM.PaymentMethods = PaymentMethod;
+            return View(bsLayoutVM);
         }
     }
+
 }

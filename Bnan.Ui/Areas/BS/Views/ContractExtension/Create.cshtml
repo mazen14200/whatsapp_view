@@ -1,0 +1,511 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
+@using Newtonsoft.Json;
+@model BSLayoutVM
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+<link href="~/BranchSys/CreateContract/sb-admin-2.min.css" rel="stylesheet">
+
+
+<link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
+@if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+{
+    <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">
+}
+<section class="section-mainCard">
+    <div class="row justify-content-center w-100 h-100">
+        <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
+            <div class="card main-card ">
+                <div class="row pt-2">
+                    <a asp-action="Index" asp-area="BS" asp-controller="Home" style="width: fit-content;">
+                        <img src="~/BranchSys/Pages/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+                    </a>
+                </div>
+                <div class="row layout-row">
+
+                    <div class="row" style="flex-direction: row-reverse;">
+                        <div class="col justify-content-center d-flex title-row">
+                            <h1 class="card-title">
+                                تمديد العقد
+                            </h1>
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-center h-100 content-row">
+
+                        <div class="col-md-11 mx-0">
+
+                            <form id="contract-extension2-form" class="needs-validation" novalidate>
+
+                                <fieldset>
+                                    <div class="form-card extension2-card">
+                                        <a href="https://drive.google.com/file/d/1q2Mb1uLGjLIvRphej_9X4zHhc9OuCcyB/view" target="_blank" class="pdf-anchor"><img src="~/BranchSys/Pages/img/pdf.png" alt="pdf for contract details" class="pdf_img"></a>
+                                        <div class="row g-0 " style="flex-direction: row-reverse;align-items: flex-start;">
+                                            <div class=" col-md-7 col-lg-7 d-flex " style="flex-direction:row-reverse;flex-wrap:wrap">
+                                                <div class="col-auto ">
+                                                    <P>رقم العقد</P>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P>@Model.ExtensionContract.CrCasRenterContractBasicNo</P>
+                                                </div>
+                                                <div class="col-lg-6 col-md-12 seacrh-icon-col">
+                                                    <div class="col-sm-12  d-flex justify-content-end">
+
+                                                        <img src="~/BranchSys/Pages/img/seacrh-icon.png"
+                                                             alt="seacrh-icon Image" id="hover-image-extension2">
+                                                    </div>
+                                                    <div class="dropdown-content  dropdown-content-extension" id="dropdown-content-extension2">
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-4 ">
+                                                                <p>النهاية المتوقعة</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ExtensionContract.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd")</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-4 ">
+                                                                <p>الأيام المتبقية</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@((Model.ExtensionContract.CrCasRenterContractBasicExpectedEndDate - DateTime.Now)?.Days)</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-4 ">
+                                                                <p>نوع التفويض</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>
+                                                                    @if (Model.ExtensionContract.AuthType == true)
+                                                                    {
+                                                                        @localizer["InFees"]
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @localizer["OutFees"]
+                                                                    }
+                                                                </p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-4 ">
+                                                                <p>  المستأجر </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                                                                {
+                                                                    <p>@Model.ExtensionContract.CrCasRenterContractBasic4?.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>@Model.ExtensionContract.CrCasRenterContractBasic4?.CrCasRenterLessorNavigation.CrMasRenterInformationArName</p>
+                                                                }
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-4 ">
+                                                                <p> السيارة</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                                                                {
+                                                                    <p>@Model.ExtensionContract.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateEnName</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>@Model.ExtensionContract.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateArName</p>
+                                                                }
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-4 ">
+                                                                <p>نسبة الخصم</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ExtensionContract.CrCasRenterContractBasicUserDiscountRate %</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-4 ">
+                                                                <p> قيمة الضريبة </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ExtensionContract.CrCasRenterContractBasicExpectedTaxValue</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto col-lg-3 d-flex "
+                                                 style="flex-direction:row-reverse;align-items: center;">
+                                                <div class="col-auto">
+                                                    <P>نهاية التفويض</P>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P>@Model.ExtensionContract.AuthEndDate?.ToString("yyyy/MM/dd")</P>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row " style="flex-direction: row-reverse;">
+                                            <div class=" col-md-auto col-lg-4 d-flex "
+                                                 style="flex-direction:row-reverse;align-items: center;">
+                                                <div class="col-auto">
+                                                    <P> صافى العقد</P>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P>@Model.ExtensionContract.CrCasRenterContractBasicExpectedTotal?.ToString("N2")</P>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto col-lg-4 d-flex "
+                                                 style="flex-direction:row-reverse;align-items: center;">
+                                                <div class="col-auto">
+                                                    <P>المدفوع</P>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P>@Model.ExtensionContract.CrCasRenterContractBasicAmountPaidAdvance?.ToString("N2")</P>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row flex-row-reverse">
+                                            <div class="col-md-auto col-lg-4 d-flex " style="flex-direction:row-reverse;align-items: baseline;">
+                                                <div class="col-auto">
+                                                    <label id="days-number" for="days-number-input">
+                                                        عدد أيام التمديد
+                                                    </label>
+                                                </div>
+                                                <div class="col-auto ps-0">
+                                                    <input type="text" class="form-control form-control1"
+                                                           id="dayNo" asp-for="ExtensionContract.DaysNo" aria-describedby="inputGroupPrepend" autocomplete="off"
+                                                           oninput="this.value=this.value.replace(/[^0-9]/g,'');if(parseInt(this.value)> 365) this.value = '365';" onfocusout="CalculateContract()" maxlength="3" autofocus required>
+
+
+                                                    <div class="row requird-field-row-last">
+                                                        <div class="invalid-feedback" style="display: none;">
+                                                            هذا الحقل مطلوب
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class=" col-md-auto col-lg-3  d-flex "
+                                                 style="flex-direction:row-reverse;align-items: center;">
+                                                <div class="col-auto">
+                                                    <P>نهايته</P>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P id="EndDate"> @Model.ExtensionContract.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd")</P>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto col-lg-4 d-flex "
+                                                 style="flex-direction:row-reverse;align-items: center;">
+                                                <div class="col-auto">
+                                                    <P>إجمالي أيام العقد </P>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P id="ExpectedDaysNo">@Model.ExtensionContract.CrCasRenterContractBasicExpectedRentalDays</P>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row " style="flex-direction: row-reverse;">
+                                            <div class="col-md-auto col-lg-4 d-flex "
+                                                 style="flex-direction:row-reverse;align-items: center;">
+                                                <div class="col-auto">
+                                                    <P>إجمالي العقد</P>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P id="RentValue">0.00</P>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-auto col-lg-3 d-flex "
+                                                 style="flex-direction:row-reverse;align-items: center;">
+                                                <div class="col-auto">
+                                                    <P>قيمة الخصم</P>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P id="DiscountValue">0.00</P>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto col-lg-4 d-flex "
+                                                 style="flex-direction:row-reverse;align-items: center;">
+                                                <div class="col-auto">
+                                                    <P>قيمة الضريبة</P>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P id="TaxValue">0.00</P>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="flex-direction: row-reverse;">
+                                            <div class="col-md-auto col-lg-4 d-flex "
+                                                 style="flex-direction:row-reverse;align-items: center;">
+                                                <div class="col-auto">
+                                                    <P>صافي العقد</P>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P id="TotalContract">0.00</P>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-auto col-lg-3 d-flex "
+                                                 style="flex-direction:row-reverse;align-items: center;">
+                                                <div class="col-auto">
+                                                    <P>رصيد سابق</P>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P>@Model.ExtensionContract.CrCasRenterContractBasicPreviousBalance?.ToString("N2")</P>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto col-lg-4 d-flex "
+                                                 style="flex-direction:row-reverse;align-items: center;">
+                                                <div class="col-auto">
+                                                    <P>المبلغ المطلوب</P>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P id="TotalAmount">0.00</P>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="flex-direction: row-reverse;">
+                                            <div class="col-md-auto col-lg-4 d-flex "
+                                                 style="flex-direction:row-reverse;">
+                                                <div class="col-auto">
+                                                    <label id="amount-paid" for="amount-paid-input">
+                                                        المبلغ المدفوع
+                                                    </label>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <input type="text" class="form-control form-control2"
+                                                           id="amount-paid-input" name="amount-paid" autocomplete="off"
+                                                           required>
+                                                    <div class="row requird-field-row-last">
+                                                        <div class="invalid-feedback" style="display: none;">
+                                                            هذا الحقل مطلوب
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-4 col-xl-4 d-flex " style="flex-direction:row-reverse;flex-wrap: nowrap;">
+                                                <div class="col-auto d-flex ps-0" style="justify-content: flex-end;">
+                                                    <label id="payment-method" for="payment-method-select">طريقة الدفع</label>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="offset">
+                                                        <select class="form-select-last" asp-for="ExtensionContract.PaymentMethod" style="font-size:14px;" >
+                                                            <option selected disabled></option>
+                                                            @foreach (var payment in Model.PaymentMethods)
+                                                            {
+                                                                @if ("@requestCulture?.RequestCulture.UICulture.Name" != "en-US")
+                                                                {
+                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode">@payment.CrMasSupAccountPaymentMethodEnName</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <span class="requird-field" id="requird_field_PaymentMethod" asp-validation-for="@Model.Contract.PaymentMethod"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto col-lg-4 d-flex " style="flex-direction:row-reverse;">
+
+                                                <div class="col-auto d-flex ps-0 " style="justify-content: flex-end;">
+                                                    <label id="selling-point" for="selling-point-dropdown"> نقطة البيع </label>
+
+                                                </div>
+
+                                                <div class="col-auto">
+                                                    <div class="offset">
+                                                        <select class="form-select-last" asp-for="ExtensionContract.SalesPoint" style="font-size:14px;width:240px!important" >
+                                                        </select>
+                                                    </div>
+                                                    <span class="requird-field" id="requird_field_SalesPoint" asp-validation-for="@Model.ExtensionContract.SalesPoint"></span>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="row p-2" style="flex-direction:row-reverse">
+                                            <div class="col-auto">
+                                                <label id="notes" for="FormControl-last-Textarea">ملاحظات</label>
+                                            </div>
+                                            <div class="col-sm-10 col-md-5 col-lg-5">
+                                                <textarea class="form-control"
+                                                          rows="1"
+                                                          maxlength="100" name="notes"></textarea>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row button-row pt-3 pb-2 ps-4"
+                                         style=" justify-content: space-between;">
+                                        <div class="button-card gap-4 ">
+                                            <a class="btn btn-custom" asp-action="Index" asp-area="BS" asp-controller="ContractExtension">رجوع</a>
+                                            <button class="btn btn-custom" type="submit">حفظ</button>
+                                        </div>
+                                        <div class="button-card"></div>
+                                    </div>
+
+                                </fieldset>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="fixed-bottom-xl">
+    <div class="before-footer-widget">
+        <svg width: 100%; height:auto viewbox="0 0 2444 132">
+            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+            </path>
+        </svg>
+    </div>
+
+</footer>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const image = document.getElementById('hover-image-extension2');
+        const dropdown = document.getElementById('dropdown-content-extension2');
+
+        image.addEventListener('click', function () {
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            } else {
+                dropdown.style.display = 'block';
+            }
+        });
+    </script>
+    <script>
+        var rentValue = 0;
+        var choicesValue = 0;
+        var additionalValue = 0;
+        var advantagesValueTotal = 0;
+        var additionalDriverValue = 0;
+        var privateDriverValue = 0;
+        var FeesTammValue = 0;
+        var contractValue = 0;
+        var totalContract = 0;
+        var discountValue = 0;
+        var taxValue = 0;
+        var TotalActualContract = 0;
+        var TotalAmount = 0;
+        var somethingIsNotOkay = true;
+        function CalculateContract() {
+            var price = 0;
+            var daysNo = document.getElementById('dayNo').value;
+            var oldDaysNo = '@Model.ExtensionContract.CrCasRenterContractBasicExpectedRentalDays';
+            var ExpectedDaysNo = parseInt(daysNo) + parseInt(oldDaysNo);
+            var today = new Date();
+            var RentalDayPrice = "@Model.ExtensionContract.CrCasRenterContractBasicDailyRent";
+            console.log("daysNo", daysNo);
+            console.log("RentalDayPrice", RentalDayPrice);
+            console.log("oldDaysNo", oldDaysNo);
+            if (parseInt(daysNo) > 0) {
+                var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+                var formattedstartDate = "@Model.ExtensionContract.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd HH:mm:ss")";
+                var StartDate = new Date(formattedstartDate);
+                StartDate.setDate(StartDate.getDate() + parseInt(ExpectedDaysNo));
+                var formattedEndDate = StartDate.toLocaleDateString('ja-JP', options);
+                console.log("formattedEndDate", formattedEndDate);
+
+                document.getElementById('EndDate').textContent = formattedEndDate;
+                document.getElementById('ExpectedDaysNo').textContent = ExpectedDaysNo.toString();
+
+                choicesValue = "@Model.ExtensionContract.CrCasRenterContractBasicExpectedOptionsValue";
+                var AdditionalValueForDay = "@Model.ExtensionContract.CrCasRenterContractBasicAdditionalValue";
+                additionalValue = parseFloat(AdditionalValueForDay) * parseInt(ExpectedDaysNo);
+                var privateDriverValueForDay = '@Model.ExtensionContract.CrCasRenterContractBasicExpectedPrivateDriverValue';
+                privateDriverValue = parseFloat(privateDriverValueForDay) * parseInt(ExpectedDaysNo);
+                additionalDriverValue = parseFloat('@Model.ExtensionContract.CrCasRenterContractBasicExpectedPrivateDriverValue');
+                FeesTammValue = parseFloat('@Model.ExtensionContract.CrCasRenterContractBasicAuthorizationValue');
+
+                var totalRental = parseInt(ExpectedDaysNo) * parseFloat(RentalDayPrice);
+                rentValue = parseFloat(totalRental) + parseFloat(choicesValue) + parseFloat(additionalValue) + parseFloat(privateDriverValue) + parseFloat(additionalDriverValue) + parseFloat(FeesTammValue);
+
+
+
+                console.log("rentValue", rentValue);
+                console.log("totalRental", totalRental);
+                document.getElementById('RentValue').textContent = rentValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+
+                // // Contract Value Total
+                // // get discount and totalContract Value
+                CalculateDiscount();
+                // // Get Tax value from TotalActualContract and get value of TotalActualContract
+                CalculateTax();
+                CalculateTotalAmount();
+                // $('#AmountPayed').prop('readonly', false);
+            }
+
+        }
+
+        function CalculateDiscount() {
+            var DiscountInput = "@Model.ExtensionContract.CrCasRenterContractBasicUserDiscountRate";
+            console.log("RateDis", DiscountInput);
+
+            if (parseFloat(DiscountInput) != null && parseFloat(DiscountInput) != "" && parseFloat(DiscountInput) != 0 && parseFloat(DiscountInput) != undefined) {
+                discountValue = rentValue * (parseFloat(DiscountInput) / 100);
+            }
+            else {
+                discountValue = 0;
+            }
+            console.log("discountValue", discountValue);
+
+            document.getElementById('DiscountValue').textContent = discountValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            CalculateTax();
+            CalculateTotalAmount();
+        };
+        function CalculateTax() {
+            var TaxPercent = parseInt("@Model.ExtensionContract.CrCasRenterContractBasicTaxRate");
+            console.log("TaxPercent", TaxPercent);
+
+            if (TaxPercent != null && TaxPercent != "" && TaxPercent != undefined && TaxPercent != 0) {
+                taxValue = rentValue * (TaxPercent / 100);
+            }
+            else {
+                taxValue = 0;
+            }
+            console.log("taxValue", taxValue);
+            document.getElementById('TaxValue').textContent = taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        function CalculateTotalAmount() {
+            // Get Total Of amount Required
+            var RenterBalance = '@Model.ExtensionContract.CrCasRenterContractBasicPreviousBalance'
+            totalContract = parseFloat(discountValue) + parseFloat(taxValue) + parseFloat(rentValue);
+            console.log("totalContract", totalContract);
+            document.getElementById('TotalContract').textContent = totalContract.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            TotalAmount = parseFloat(RenterBalance) + parseFloat(totalContract);
+            document.getElementById("TotalAmount").textContent = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            
+        }
+    </script>
+}

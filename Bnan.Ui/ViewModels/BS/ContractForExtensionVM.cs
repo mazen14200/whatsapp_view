@@ -63,6 +63,10 @@ namespace Bnan.Ui.ViewModels.BS
         public string? CrCasRenterContractBasicStatus { get; set; }
         public string? CrCasRenterContractBasicReasons { get; set; }
         public DateTime? AuthEndDate { get; set; }
+        public bool? AuthType { get; set; }
+        public string? SalesPoint { get; set; }
+        public string? PaymentMethod { get; set; }
+        public string? DaysNo { get; set; }
 
         public virtual CrCasRenterLessor? CrCasRenterContractBasic4 { get; set; }
         public virtual CrCasCarInformation? CrCasRenterContractBasicCarSerailNoNavigation { get; set; }
