@@ -1,4 +1,5 @@
 ﻿using Bnan.Core.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bnan.Ui.ViewModels.BS
 {
@@ -66,7 +67,16 @@ namespace Bnan.Ui.ViewModels.BS
         public bool? AuthType { get; set; }
         public string? SalesPoint { get; set; }
         public string? PaymentMethod { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public string? DaysNo { get; set; }
+        public string? AmountPayed { get; set; }
+        public decimal? CasRenterPreviousBalance { get; set; }
+        public string? RentValue { get; set; }
+        public string? DiscountValue { get; set; }
+        public string? TaxValue { get; set; }
+        public string? TotalContract { get; set; }
+        public string? TotalAmount { get; set; }
+
 
         public virtual CrCasRenterLessor? CrCasRenterContractBasic4 { get; set; }
         public virtual CrCasCarInformation? CrCasRenterContractBasicCarSerailNoNavigation { get; set; }

@@ -488,7 +488,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var carInfo = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationSerailNo == serialNumber);
 
             carVM.CarInformation = carInfo;
-            var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicDistributionCode == carInfo.CrCasCarInformationDistribution);
+            var carPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == carInfo.CrCasCarInformationPriceNo);
             if (carPrice != null)
             {
                 carVM.CarPrice = carPrice;
