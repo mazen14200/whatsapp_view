@@ -111,7 +111,7 @@ else
                                                     <P>@localizer["CreditorTotal"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P id="CreditorTotal">@Model.TotalCreditor?.ToString("N2")</P>
+                                                    <P id="Creditor">@Model.TotalCreditor?.ToString("N2")</P>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-lg-3 d-flex" style="flex-direction:row-reverse">
@@ -356,6 +356,8 @@ else
                     var totalCreditor = $("#TotalCreditor").val();
                     var totalDebit = $("#TotalDebit").val();
                     // Update elements in your view
+                    console.log("totalCreditor", totalCreditor)
+                    console.log("totalDebit", totalDebit)
                     $("#Debit").text(parseFloat(totalDebit).toFixed(2));
                     $("#Creditor").text(parseFloat(totalCreditor).toFixed(2));
                 },

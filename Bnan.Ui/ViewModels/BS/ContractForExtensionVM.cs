@@ -65,7 +65,9 @@ namespace Bnan.Ui.ViewModels.BS
         public string? CrCasRenterContractBasicReasons { get; set; }
         public DateTime? AuthEndDate { get; set; }
         public bool? AuthType { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public string? SalesPoint { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public string? PaymentMethod { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public string? DaysNo { get; set; }

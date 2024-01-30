@@ -1188,6 +1188,7 @@
   "TradedAmount": "المبالغ المتداولة",
   "Canceled": "ملغى",
   "Closed": "مغلق",
+  "Extension": "ممدد",
   "Sector": "القطاع",
   "StartDateLic": "بدايتها",
   "EndDateLic": "نهايتها",
@@ -1247,5 +1248,13 @@
   "TransferNo": "رقم التحويل",
   //
   "ContractExtensionTitle": "بيانات العقود القائمة",
-  "Remaining": "المتبقي"
+  "Remaining": "المتبقي",
+  "ExpectedEndDate": "النهاية المتوقعة",
+  "DaysRemaining": "الايام المتبقية",
+  "AuthType": "نوع التفويض",
+  "EndAuth": "نهاية التفويض",
+  "Netcontract": "صافى العقد",
+  "ExtensionDays": "عدد أيام التمديد",
+  "TotalContractDays": "إجمالي أيام العقد",
+  "DiscountValue": "قيمة الخصم",
 }

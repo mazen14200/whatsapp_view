@@ -1192,6 +1192,7 @@
   //
   "TradedAmount": "Traded Amount",
   "Canceled": "Canceled",
+  "Extension": "Extended ",
   "Closed": "Closed",
   "Sector": "Sector",
   "StartDateLic": "Start Date",
@@ -1253,5 +1254,14 @@
   "AccountNo": "AccountNo",
   //
   "ContractExtensionTitle": "Data existing contracts",
-  "Remaining": "Remaining"
+  "Remaining": "Remaining",
+  "ExpectedEndDate": "Expected End Date",
+  "DaysRemaining": "Remaining Days",
+  "AuthType": "Authrization Type",
+  "EndAuth": "End Authrization",
+  "Netcontract": "Net Contract",
+  "ExtensionDays": "Extension Days",
+  "TotalContractDays": "Total Contract Days",
+  "DiscountValue": "DiscountValue"
+
 }

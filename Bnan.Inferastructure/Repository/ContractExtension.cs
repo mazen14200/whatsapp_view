@@ -55,6 +55,8 @@ namespace Bnan.Inferastructure.Repository
             renterContractBasic.CrCasRenterContractBasicUserDiscountRate = Contract.CrCasRenterContractBasicUserDiscountRate;
             renterContractBasic.CrCasRenterContractBasicCurrentReadingMeter = Contract.CrCasRenterContractBasicCurrentReadingMeter;
             renterContractBasic.CrCasRenterContractBasicAdditionalValue = Contract.CrCasRenterContractBasicAdditionalValue;
+            renterContractBasic.CrCasRenterContractPriceReference = Contract.CrCasRenterContractPriceReference;
+            renterContractBasic.CrCasRenterContractBasicCarSerailNo = Contract.CrCasRenterContractBasicCarSerailNo;
             ////////////////
             ///       
             renterContractBasic.CrCasRenterContractBasicCopy += 1;
@@ -74,7 +76,7 @@ namespace Bnan.Inferastructure.Repository
 
             renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount = renterContractBasic.CrCasRenterContractBasicExpectedValueBeforDiscount +
                                                                                      renterContractBasic.CrCasRenterContractBasicExpectedDiscountValue;
-            renterContractBasic.CrCasRenterContractBasicExpectedTaxValue = renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount * Contract.CrCasRenterContractBasicTaxRate;
+            renterContractBasic.CrCasRenterContractBasicExpectedTaxValue = renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount * (Contract.CrCasRenterContractBasicTaxRate/100);
 
             renterContractBasic.CrCasRenterContractBasicExpectedTotal = renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount +
                                                                         renterContractBasic.CrCasRenterContractBasicExpectedTaxValue;
@@ -113,7 +115,7 @@ namespace Bnan.Inferastructure.Repository
             {
                 if (RenterLessor.CrCasRenterLessorContractCount != null) RenterLessor.CrCasRenterLessorContractCount += 1;
                 else RenterLessor.CrCasRenterLessorContractCount = 1;
-                RenterLessor.CrCasRenterLessorBalance = -(TotalPayed);
+                RenterLessor.CrCasRenterLessorBalance -= (TotalPayed);
                 RenterLessor.CrCasRenterLessorContractExtension += 1;
                 if (_unitOfWork.CrCasRenterLessor.Update(RenterLessor) != null) return true;
             }
@@ -121,7 +123,7 @@ namespace Bnan.Inferastructure.Repository
         }
         public async Task<bool> UpdateStatusOldContract(string ContractNo)
         {
-            var Contract = await _unitOfWork.CrCasRenterContractBasic.FindAsync(x => x.CrCasRenterContractBasicNo == ContractNo);
+            var Contract = await _unitOfWork.CrCasRenterContractBasic.FindAsync(x => x.CrCasRenterContractBasicNo == ContractNo&&x.CrCasRenterContractBasicStatus==Status.Active);
             if (Contract != null)
             {
                 Contract.CrCasRenterContractBasicStatus = Status.Extension;
@@ -213,7 +215,7 @@ namespace Bnan.Inferastructure.Repository
             crCasAccountReceipt.CrCasAccountReceiptBranchCode = BranchCode;
             crCasAccountReceipt.CrCasAccountReceiptDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
             crCasAccountReceipt.CrCasAccountReceiptPaymentMethod = PaymentMethod;
-            crCasAccountReceipt.CrCasAccountReceiptReferenceType = "10";
+            crCasAccountReceipt.CrCasAccountReceiptReferenceType = "11";
             crCasAccountReceipt.CrCasAccountReceiptReferenceNo = ContractNo;
             crCasAccountReceipt.CrCasAccountReceiptCar = SerialNo;
             crCasAccountReceipt.CrCasAccountReceiptUser = UserId;

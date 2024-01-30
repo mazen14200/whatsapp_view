@@ -32,7 +32,7 @@
     <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">
 }
 <style>
-    .form-control[readonly]{
+    .form-control[readonly] {
         background-color: white;
     }
 </style>
@@ -50,7 +50,7 @@
                     <div class="row" style="flex-direction: row-reverse;">
                         <div class="col justify-content-center d-flex title-row">
                             <h1 class="card-title">
-                                تمديد العقد
+                                @localizer["ContractExtension"]
                             </h1>
                         </div>
 
@@ -76,7 +76,7 @@
                                         <div class="row g-0 " style="flex-direction: row-reverse;align-items: flex-start;">
                                             <div class=" col-md-7 col-lg-7 d-flex " style="flex-direction:row-reverse;flex-wrap:wrap">
                                                 <div class="col-auto ">
-                                                    <P>رقم العقد</P>
+                                                    <P>@localizer["ContractNo"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <P>@Model.ExtensionContract.CrCasRenterContractBasicNo</P>
@@ -90,7 +90,7 @@
                                                     <div class="dropdown-content  dropdown-content-extension" id="dropdown-content-extension2">
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-4 ">
-                                                                <p>النهاية المتوقعة</p>
+                                                                <p>@localizer["ExpectedEndDate"]</p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p>@Model.ExtensionContract.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd")</p>
@@ -98,7 +98,7 @@
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-4 ">
-                                                                <p>الأيام المتبقية</p>
+                                                                <p>@localizer["DaysRemaining"]</p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p>@((Model.ExtensionContract.CrCasRenterContractBasicExpectedEndDate - DateTime.Now)?.Days)</p>
@@ -107,7 +107,7 @@
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-4 ">
-                                                                <p>نوع التفويض</p>
+                                                                <p>@localizer["AuthType"]</p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p>
@@ -125,7 +125,7 @@
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-4 ">
-                                                                <p>  المستأجر </p>
+                                                                <p>@localizer["Renterr"]</p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
@@ -141,7 +141,7 @@
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-4 ">
-                                                                <p> السيارة</p>
+                                                                <p> @localizer["Car"]</p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
@@ -157,7 +157,7 @@
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-4 ">
-                                                                <p>نسبة الخصم</p>
+                                                                <p>@localizer["DiscountRate"]</p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p>@Model.ExtensionContract.CrCasRenterContractBasicUserDiscountRate %</p>
@@ -165,7 +165,7 @@
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-4 ">
-                                                                <p> قيمة الضريبة </p>
+                                                                <p>@localizer["TaxValue"]</p>
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p>@Model.ExtensionContract.CrCasRenterContractBasicExpectedTaxValue</p>
@@ -177,7 +177,7 @@
                                             <div class="col-md-auto col-lg-3 d-flex "
                                                  style="flex-direction:row-reverse;align-items: center;">
                                                 <div class="col-auto">
-                                                    <P>نهاية التفويض</P>
+                                                    <P>@localizer["EndAuth"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <P>@Model.ExtensionContract.AuthEndDate?.ToString("yyyy/MM/dd")</P>
@@ -188,7 +188,7 @@
                                             <div class=" col-md-auto col-lg-4 d-flex "
                                                  style="flex-direction:row-reverse;align-items: center;">
                                                 <div class="col-auto">
-                                                    <P> صافى العقد</P>
+                                                    <P> @localizer["Netcontract"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <P>@Model.ExtensionContract.CrCasRenterContractBasicExpectedTotal?.ToString("N2")</P>
@@ -197,7 +197,7 @@
                                             <div class="col-md-auto col-lg-4 d-flex "
                                                  style="flex-direction:row-reverse;align-items: center;">
                                                 <div class="col-auto">
-                                                    <P>المدفوع</P>
+                                                    <P>@localizer["AmountPaid"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <P>@Model.ExtensionContract.CrCasRenterContractBasicAmountPaidAdvance?.ToString("N2")</P>
@@ -208,29 +208,20 @@
                                             <div class="col-md-auto col-lg-4 d-flex " style="flex-direction:row-reverse;align-items: baseline;">
                                                 <div class="col-auto">
                                                     <label id="days-number" for="days-number-input">
-                                                        عدد أيام التمديد
+                                                        @localizer["ExtensionDays"]
                                                     </label>
                                                 </div>
                                                 <div class="col-auto ps-0">
                                                     <input type="text" class="form-control form-control1"
-                                                           id="dayNo"  aria-describedby="inputGroupPrepend" autocomplete="off"
+                                                           id="dayNo" asp-for="ExtensionContract.DaysNo" aria-describedby="inputGroupPrepend" autocomplete="off"
                                                            oninput="this.value=this.value.replace(/[^0-9]/g,'');if(parseInt(this.value)> 365) this.value = '365';" onfocusout="CalculateContract()" maxlength="3" autofocus required>
-
-
-                                                    <div class="row requird-field-row-last">
-                                                        <div class="invalid-feedback" style="display: none;">
-                                                            هذا الحقل مطلوب
-                                                        </div>
-                                                    </div>
-
+                                                    <span class="requird-field" id="requird_field_PaymentMethod" asp-validation-for="@Model.ExtensionContract.DaysNo"></span>
                                                 </div>
-
                                             </div>
-
                                             <div class=" col-md-auto col-lg-3  d-flex "
                                                  style="flex-direction:row-reverse;align-items: center;">
                                                 <div class="col-auto">
-                                                    <P>نهايته</P>
+                                                    <P>@localizer["EndDate"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <P id="EndDate"></P>
@@ -239,7 +230,7 @@
                                             <div class="col-md-auto col-lg-4 d-flex "
                                                  style="flex-direction:row-reverse;align-items: center;">
                                                 <div class="col-auto">
-                                                    <P>إجمالي أيام العقد </P>
+                                                    <P>@localizer["TotalContractDays"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <P id="ExpectedDaysNo"></P>
@@ -250,7 +241,7 @@
                                             <div class="col-md-auto col-lg-4 d-flex "
                                                  style="flex-direction:row-reverse;align-items: center;">
                                                 <div class="col-auto">
-                                                    <P>إجمالي العقد</P>
+                                                    <P>@localizer["TotalContract"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <P id="RentValue">0.00</P>
@@ -260,7 +251,7 @@
                                             <div class="col-md-auto col-lg-3 d-flex "
                                                  style="flex-direction:row-reverse;align-items: center;">
                                                 <div class="col-auto">
-                                                    <P>قيمة الخصم</P>
+                                                    <P>@localizer["DiscountValue"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <P id="DiscountValue">0.00</P>
@@ -269,7 +260,7 @@
                                             <div class="col-md-auto col-lg-4 d-flex "
                                                  style="flex-direction:row-reverse;align-items: center;">
                                                 <div class="col-auto">
-                                                    <P>قيمة الضريبة</P>
+                                                    <P>@localizer["TaxValue"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <P id="TaxValue">0.00</P>
@@ -280,7 +271,7 @@
                                             <div class="col-md-auto col-lg-4 d-flex "
                                                  style="flex-direction:row-reverse;align-items: center;">
                                                 <div class="col-auto">
-                                                    <P>صافي العقد</P>
+                                                    <P>@localizer["NetContract"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <P id="TotalContract">0.00</P>
@@ -291,7 +282,7 @@
                                             <div class="col-md-auto col-lg-3 d-flex "
                                                  style="flex-direction:row-reverse;align-items: center;">
                                                 <div class="col-auto">
-                                                    <P>رصيد سابق</P>
+                                                    <P>@localizer["PreviousBalance"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <P>@Model.ExtensionContract.CasRenterPreviousBalance?.ToString("N2")</P>
@@ -300,7 +291,7 @@
                                             <div class="col-md-auto col-lg-4 d-flex "
                                                  style="flex-direction:row-reverse;align-items: center;">
                                                 <div class="col-auto">
-                                                    <P>المبلغ المطلوب</P>
+                                                    <P>@localizer["AmountRequired"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <P id="TotalAmount">0.00</P>
@@ -312,7 +303,7 @@
                                                  style="flex-direction:row-reverse;">
                                                 <div class="col-auto">
                                                     <label id="amount-paid" for="amount-paid-input">
-                                                        المبلغ المدفوع
+                                                        @localizer["AmountPaid"]
                                                     </label>
                                                 </div>
                                                 <div class="col-auto">
@@ -341,7 +332,7 @@
                                             }
                                             <div class="col-md-4 col-xl-4 d-flex " style="flex-direction:row-reverse;flex-wrap: nowrap;">
                                                 <div class="col-auto d-flex ps-0" style="justify-content: flex-end;">
-                                                    <label id="payment-method" for="payment-method-select">طريقة الدفع</label>
+                                                    <label id="payment-method" for="payment-method-select">@localizer["PaymentMethod"]</label>
                                                 </div>
                                                 <div class="col-auto">
                                                     <div class="offset">
@@ -349,13 +340,13 @@
                                                             <option selected disabled></option>
                                                             @foreach (var payment in Model.PaymentMethods)
                                                             {
-                                                                @if ("@requestCulture?.RequestCulture.UICulture.Name" != "en-US")
+                                                                if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                                                 {
                                                                     <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode">@payment.CrMasSupAccountPaymentMethodEnName</option>
+                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-left">@payment.CrMasSupAccountPaymentMethodEnName</option>
                                                                 }
                                                             }
                                                         </select>
@@ -366,7 +357,7 @@
                                             <div class="col-md-auto col-lg-4 d-flex " style="flex-direction:row-reverse;">
 
                                                 <div class="col-auto d-flex ps-0 " style="justify-content: flex-end;">
-                                                    <label id="selling-point" for="selling-point-dropdown"> نقطة البيع </label>
+                                                    <label id="selling-point" for="selling-point-dropdown">@localizer["SalesPoint"]</label>
 
                                                 </div>
 
@@ -383,7 +374,7 @@
                                         </div>
                                         <div class="row p-2" style="flex-direction:row-reverse">
                                             <div class="col-auto">
-                                                <label id="notes" for="FormControl-last-Textarea">ملاحظات</label>
+                                                <label id="notes" for="FormControl-last-Textarea">@localizer["reasons"]</label>
                                             </div>
                                             <div class="col-sm-10 col-md-5 col-lg-5">
                                                 <input class="form-control" maxlength="100" id="reasons" name="reasons">
@@ -393,8 +384,8 @@
                                     </div>
                                     <div class="row button-row pt-3 pb-2 ps-4" style=" justify-content: space-between;">
                                         <div class="button-card gap-4 ">
-                                            <a class="btn btn-custom" asp-action="Index" asp-area="BS" asp-controller="ContractExtension">رجوع</a>
-                                            <a class="btn btn-custom" id="submitForm">حفظ</a>
+                                            <a class="btn btn-custom" asp-action="Index" asp-area="BS" asp-controller="ContractExtension">@localizer["Backk"]</a>
+                                            <a class="btn btn-custom" id="submitForm">@localizer["Save"]</a>
                                         </div>
                                         <div class="button-card"></div>
                                     </div>
@@ -671,7 +662,7 @@
                         $.each(data.accountBank, function (index, row) {
                             if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
 
-                                $("#ExtensionContract_SalesPoint").append("<option value= '" + row.crCasAccountBankCode + "'>" + row.crCasAccountBankEnName + "</option>")
+                                $("#ExtensionContract_SalesPoint").append("<option class='text-left' value= '" + row.crCasAccountBankCode + "'>" + row.crCasAccountBankEnName + "</option>")
                             }
                             else {
                                 $("#ExtensionContract_SalesPoint").append("<option class='text-right' value= '" + row.crCasAccountBankCode + "'>" + row.crCasAccountBankArName + "</option>")
