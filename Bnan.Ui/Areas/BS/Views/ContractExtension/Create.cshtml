@@ -68,6 +68,7 @@
                                 <input hidden asp-for="ExtensionContract.TaxValue" />
                                 <input hidden asp-for="ExtensionContract.DiscountValue" />
                                 <input hidden asp-for="ExtensionContract.RentValue" />
+                                <input hidden asp-for="ExtensionContract.DaysNo" />
 
                                 <fieldset>
                                     <div class="form-card extension2-card">
@@ -212,7 +213,7 @@
                                                 </div>
                                                 <div class="col-auto ps-0">
                                                     <input type="text" class="form-control form-control1"
-                                                           id="dayNo" asp-for="ExtensionContract.DaysNo" aria-describedby="inputGroupPrepend" autocomplete="off"
+                                                           id="dayNo"  aria-describedby="inputGroupPrepend" autocomplete="off"
                                                            oninput="this.value=this.value.replace(/[^0-9]/g,'');if(parseInt(this.value)> 365) this.value = '365';" onfocusout="CalculateContract()" maxlength="3" autofocus required>
 
 
@@ -466,6 +467,7 @@
             console.log("RentalDayPrice", RentalDayPrice);
             console.log("oldDaysNo", oldDaysNo);
             if (parseInt(daysNo) > 0) {
+                $("#ExtensionContract_DaysNo").val(ExpectedDaysNo);
                 var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
                 var formattedstartDate = "@Model.ExtensionContract.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd HH:mm:ss")";
                 var StartDate = new Date(formattedstartDate);

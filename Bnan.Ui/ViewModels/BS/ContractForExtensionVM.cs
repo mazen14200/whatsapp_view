@@ -76,6 +76,7 @@ namespace Bnan.Ui.ViewModels.BS
         public string? TaxValue { get; set; }
         public string? TotalContract { get; set; }
         public string? TotalAmount { get; set; }
+        public string? AccountNo { get; set; }
 
 
         public virtual CrCasRenterLessor? CrCasRenterContractBasic4 { get; set; }

@@ -133,6 +133,7 @@ namespace Bnan.Inferastructure
             builder.Services.AddScoped<IContract, Contract>();
             builder.Services.AddScoped<ICustody, Custody>();
             builder.Services.AddScoped<ITransferToFromRenter, TransferToFromRenter>();
+            builder.Services.AddScoped<IContractExtension, ContractExtension>();
 
             return builder;
         }
