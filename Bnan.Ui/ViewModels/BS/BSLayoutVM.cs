@@ -22,6 +22,7 @@ namespace Bnan.Ui.ViewModels.BS
         public List<CrMasSupAccountPaymentMethod>? PaymentMethods { get; set; }
         public List<CrCasRenterContractBasic>? BasicContracts { get; set; }
         public List<CrCasRenterContractAlert>? AlertContract { get; set; }
+        public CrMasUserInformation UserInformation { get; set; }
         //Renter Lessor PAge
         public List<CrCasRenterLessor>? RentersLessor { get; set; }
         public CrCasRenterLessor? Renter { get; set; }

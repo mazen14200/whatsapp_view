@@ -162,7 +162,8 @@ namespace Bnan.Ui.Areas.Base.Controllers
             {
                 CrCasBranchInformations = branches,
                 SelectedBranch = selectBranch,
-                CrCasBranchInformation = branch
+                CrCasBranchInformation = branch,
+                UserInformation = userInformation,
             };
         }
     }

@@ -31,6 +31,10 @@
     .hideElement {
         display: none !important;
     }
+
+    .selected {
+        border: 3px solid #39629C; /* Add your desired border style for selected rows */
+    }
 </style>
 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
 {
@@ -48,6 +52,7 @@ else
         }
     </style>
 }
+
 <div class="container-fluid mt-5" id="grad1">
     <section class="section-mainCard" style="font-weight: 600;">
         <div class="row justify-content-center w-100 h-100">
@@ -340,6 +345,10 @@ else
                                     </div>
                                     <div class="row button-row">
                                         <div class="button-card">
+                                            <img src="~/BranchSys/CreateContract/Group.png" alt="Button Image"
+                                                 class="next action-button"
+                                                 style="vertical-align: middle; ">
+                                            <input type="button" name="next" class="next action-button" value="@localizer["Next"]" />
                                         </div>
                                         <div class="button-card">
                                             <input type="button" name="previous"
@@ -365,8 +374,15 @@ else
                                                     <span class="requird-field" id="requird_field_DriverID" asp-validation-for="@Model.Contract.DriverId"></span>
                                                 </div>
                                             </div>
+                                            <!--ForTest-->
                                             <div class="col-sm-3 col-md-3 col-lg-3">
                                                 <input type="text" class="form-control" id="PriceNo" readonly >
+                                            </div>
+                                            <div class="col-sm-1 col-md-1 col-lg-1">
+                                                <input type="text" class="form-control" id="TaxRate" readonly >
+                                            </div>
+                                            <div class="col-sm-1 col-md-1 col-lg-1">
+                                                <input type="text" class="form-control" id="RentValue" readonly>
                                             </div>
 
                                             <div class="col-auto seacrh-icon-col">
@@ -2545,11 +2561,13 @@ else
                     var driverRadio1 = document.getElementById("RenterIsdriver");
                     var privateDriverRadio1 = document.getElementById("PrivateDriver");
                     var privateDriverID = $("#driver-dropdown").val();
+
                     SerialNumberOfCar = $(this).find('td').data("serial-number");
                     PriceNumberOfCar = $(this).find('td').data("price-number");
+
                     $("#Contract_SerialNo").val(SerialNumberOfCar);
                     $("#Contract_PriceNo").val(PriceNumberOfCar);
-                    GetCarInfo(SerialNumberOfCar);
+                    // GetCarInfo(SerialNumberOfCar);
                     GetAdvantages(SerialNumberOfCar);
                     // Use Promises to ensure data is available before proceeding
                     Promise.all([getCarChoices(PriceNumberOfCar), getCarAdditional(PriceNumberOfCar)])
@@ -2597,8 +2615,10 @@ else
                                 var birthdate = RenterInformation.birthDate ? RenterInformation.birthDate.split('T')[0] : null;
                                 var licenseExpiryDate = RenterInformation.licenseExpiryDate ? RenterInformation.licenseExpiryDate.split('T')[0] : null;
                                 var licenseIssuedDate = RenterInformation.licenseIssuedDate ? RenterInformation.licenseIssuedDate.split('T')[0] : null;
+                                $("#PriceNo").val(CarInformation.carPrice.crCasPriceCarBasicNo);
+                                $("#TaxRate").val(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
+                                $("#RentValue").val(CarInformation.carPrice.crCasPriceCarBasicDailyRent);
                                 if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
-                                    $("#PriceNo").val(PriceNumberOfCar);
                                     if (DriverInformation.postEnNameConcenate != "" && DriverInformation.postEnNameConcenate != null && DriverInformation.postEnNameConcenate != undefined) {
                                         $("#DriverAddress").text(DriverInformation.postEnNameConcenate);
                                     }
@@ -2635,7 +2655,6 @@ else
                                     $("#birth-date-driver").val(birthdate);
                                 }
                                 else {
-                                    $("#PriceNo").val(PriceNumberOfCar);
                                     if (RenterInformation.postArNameConcenate != "" && RenterInformation.postArNameConcenate != null && RenterInformation.postArNameConcenate != undefined) {
                                         $("#DriverAddress").text(RenterInformation.postArNameConcenate);
                                     }
@@ -2679,6 +2698,9 @@ else
                             }
                             else {
                                 //Clear Data Of Driver And Add Driver To Return Check
+                                $("#PriceNo").val(CarInformation.carPrice.crCasPriceCarBasicNo);
+                                $("#TaxRate").val(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
+                                $("#RentValue").val(CarInformation.carPrice.crCasPriceCarBasicDailyRent);
                                 IsThereAdditionalDriver();
                                 clearDataDriver();
                                 clearDataAddDriver();
@@ -3195,10 +3217,11 @@ else
             console.log(additionalDriver);
             if (additionalDriver == false) {
                 $("#addationalDriverDiv").addClass("hideElement");
-                console.log(555555);
+                console.log("Hide");
             }
             else {
                 $("#addationalDriverDiv").removeClass("hideElement");
+                console.log("Appear");
             }
         }
 
@@ -3218,6 +3241,9 @@ else
                 }
             });
         }
+
+
+
         function GetCarInfo(serialNumber) {
             console.log(serialNumber);
             $.ajax({
@@ -3235,6 +3261,15 @@ else
                 }
             });
         }
+
+        $(".CarSelected").click(function(){
+            // Remove "selected" class from all rows
+            $(".CarSelected").removeClass("selected");
+            // Add "selected" class to the clicked row
+            $(this).addClass("selected");
+            SerialNumberOfCar = $(this).find('td').data("serial-number");
+            GetCarInfo(SerialNumberOfCar);
+        })
         function GetAdvantages(priceNumber) {
             console.log(priceNumber);
             $.ajax({
