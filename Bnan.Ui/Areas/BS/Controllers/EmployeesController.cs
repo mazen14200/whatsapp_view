@@ -37,12 +37,20 @@ namespace Bnan.Ui.Areas.BS.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
-        {
-            return View();
+        public async Task<IActionResult> MyAccount()
+        { //To Set Title 
+            var titles = await setTitle("501", "5501013", "5");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
+            var bsLayoutVM = await GetBranchesAndLayout();
+            var userLogin = await _userManager.GetUserAsync(User);
+            var user = await _userService.GetUserByUserNameAsync(userLogin.CrMasUserInformationCode);
+            var CallingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active).ToList();
+            bsLayoutVM.UserInformation = user;
+            bsLayoutVM.CallingKeys = CallingKeys;
+            return View(bsLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(BSLayoutVM model, IFormFile Profile_Photo, IFormFile Signature_file)
+        public async Task<IActionResult> Edit(BSLayoutVM model, IFormFile Profile_Photo, IFormFile signature_img)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var user = await _userService.GetUserByUserNameAsync(userLogin.CrMasUserInformationCode);
@@ -55,10 +63,30 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 string fileNameImg = "Image";
                 filePathImage = await Profile_Photo.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
             }
-            else
+            else if (Profile_Photo == null&&string.IsNullOrEmpty(user.CrMasUserInformationPicture))
             {
                 filePathImage = "~/images/common/user.jpg";
             }
+            else
+            {
+                filePathImage = user.CrMasUserInformationPicture;
+            }
+
+            if (signature_img != null)
+            {
+                string fileNameSignture = "Signture";
+                filePathSignture = await signature_img.SaveImageAsync(_webHostEnvironment, foldername, fileNameSignture, ".png");
+            }
+            else if(signature_img == null && string.IsNullOrEmpty(user.CrMasUserInformationSignature))
+            {
+                filePathSignture = "~/images/common/DefualtUserSignature.png";
+            }
+            else
+            {
+                filePathSignture=user.CrMasUserInformationSignature;
+            }
+
+
             if (user != null)
             {
                 user.CrMasUserInformationDefaultLanguage = UserModel.CrMasUserInformationDefaultLanguage;
@@ -66,7 +94,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 user.CrMasUserInformationEmail = UserModel.CrMasUserInformationEmail;
                 user.CrMasUserInformationRemindMe = UserModel.CrMasUserInformationRemindMe;
                 user.CrMasUserInformationExitTimer = UserModel.CrMasUserInformationExitTimer;
+                user.CrMasUserInformationCallingKey = UserModel.CrMasUserInformationCallingKey;
                 user.CrMasUserInformationPicture = filePathImage;
+                user.CrMasUserInformationSignature = filePathSignture;
                 try
                 {
                     await _userService.UpdateAsync(user);
@@ -90,9 +120,6 @@ namespace Bnan.Ui.Areas.BS.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangePassword(string Current, string New, string Confirm)
         {
-            string currentCulture = CultureInfo.CurrentCulture.Name;
-
-
             var userLogin = await _userManager.GetUserAsync(User);
             var user = await _userService.GetUserByUserNameAsync(userLogin.CrMasUserInformationCode);
             //// Check current password 

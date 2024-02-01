@@ -1,0 +1,337 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
+@using Newtonsoft.Json;
+@model BSLayoutVM
+@inject UserManager<CrMasUserInformation> userManager
+@inject SignInManager<CrMasUserInformation> signinManager
+@inject IViewLocalizer localizer
+@{
+    var user = await userManager.GetUserAsync(User);
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    var userInfo = await userManager.Users
+          .Include(l => l.CrMasUserMainValidations)
+          .Include(l => l.CrMasUserSubValidations)
+          .Include(l => l.CrMasUserInformationLessorNavigation)
+          .Include(l => l.CrMasUserContractValidity)
+          .FirstOrDefaultAsync(l => l.UserName == user.UserName);
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+<link rel="stylesheet" href="~/css/toastr.css" />
+
+
+<link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
+@if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+{
+    <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">
+}
+
+<section class="section-mainCard">
+    <div class="row justify-content-center w-100 h-100">
+        <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
+            <div class="card main-card ">
+                <div class="row pt-2">
+                    <a asp-action="Index" asp-controller="Home" asp-area="BS" style="width: fit-content;">
+                        <img src="~/BranchSys/Pages/img/cancel.png"  alt="cancle_icon" class="cancle-icon">
+                    </a>
+                </div>
+                <div class="row layout-row">
+
+                    <div class="row" style="flex-direction: row-reverse;">
+                        <div class="col justify-content-center d-flex title-row">
+                            <h1 class="card-title">
+                                @localizer["MyAccount Data"]
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center h-100 content-row">
+
+                        <div class="col-md-11 mx-0">
+
+                            <form id="myForm" asp-area="BS" asp-action="Edit" asp-controller="Employees" method="post" enctype="multipart/form-data">
+
+                                <fieldset>
+                                    <div class="form-card">
+
+                                        <div>
+                                            <div class="row flex-row-reverse ">
+                                                <div class="col-md-6">
+                                                    <div class="row account-modal-rows">
+                                                        <div class="col-lg-4 account-titles">
+                                                            <p> @localizer["EmployeeNo"]</p>
+                                                        </div>
+                                                        <div class="col-auto personal-data">
+                                                            <p> @Model.UserInformation.CrMasUserInformationCode </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row account-modal-rows">
+                                                        <div class="col-lg-4 account-titles">
+                                                            <p>@localizer["UserName"]</p>
+                                                        </div>
+                                                        <div class="col-auto personal-data">
+                                                            @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+                                                            {
+                                                                <p> @Model.UserInformation.CrMasUserInformationArName </p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p> @Model.UserInformation.CrMasUserInformationEnName </p>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="row account-modal-rows">
+                                                        <div class="col-lg-4 account-titles">
+                                                            <p> @localizer["TaskName"] </p>
+                                                        </div>
+                                                        <div class="col-auto personal-data">
+                                                            @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+                                                            {
+                                                                <p> @Model.UserInformation.CrMasUserInformationTasksArName </p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p> @Model.UserInformation.CrMasUserInformationTasksEnName </p>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="row account-modal-rows">
+                                                        <div class="col-lg-4 account-titles">
+                                                            <p> @localizer["CreditLimit"] </p>
+                                                        </div>
+                                                        <div class="col-auto personal-data">
+                                                            <p>@Model.UserInformation.CrMasUserInformationCreditLimit</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 profile-image-col flex-wrap">
+                                                    <div class="profile-Image-div Profile_Image">
+                                                        <img alt="Profile Image" src="@Url.Content(Model.UserInformation.CrMasUserInformationPicture?.ToString())"
+                                                             class="profileImage" id="User_Profile_img">
+                                                        <div>
+                                                            <div class="upload_Icon_div">
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                     width="24" height="24"
+                                                                     viewBox="0 0 24 24" fill="none" id="upload_icon">
+                                                                    <path d="M3 9.8541C3 8.83011 3.83011 8 4.8541 8C5.55638 8 6.19839 7.60322 6.51246 6.97508L7.33333 5.33333C7.44329 5.11342 7.49827 5.00346 7.56062 4.90782C7.8859 4.40882 8.41668 4.08078 9.00848 4.01299C9.1219 4 9.24484 4 9.49071 4H14.5093C14.7552 4 14.8781 4 14.9915 4.01299C15.5833 4.08078 16.1141 4.40882 16.4394 4.90782C16.5017 5.00346 16.5567 5.11342 16.6667 5.33333L17.4875 6.97508C17.8016 7.60322 18.4436 8 19.1459 8C20.1699 8 21 8.83011 21 9.8541V14.8571C21 16.8619 21 17.8643 20.5402 18.5961C20.3004 18.9777 19.9777 19.3004 19.5961 19.5402C18.8643 20 17.8619 20 15.8571 20H8.14286C6.1381 20 5.13571 20 4.4039 19.5402C4.02229 19.3004 3.69961 18.9777 3.45983 18.5961C3 17.8643 3 16.8619 3 14.8571V9.8541Z"
+                                                                          fill="#FF9626" stroke="#FF9626"
+                                                                          stroke-width="2" />
+                                                                    <circle cx="12" cy="13" r="4"
+                                                                            fill="white"
+                                                                            fill-opacity="0.32" />
+                                                                </svg>
+                                                            </div>
+                                                            <input id="profile-image-upload" type="file"
+                                                                   name="Profile_Photo" class="profile_input d-none">
+                                                        </div>
+                                                    </div>
+                                                    <div class="signture_pen">
+                                                        <div class="signture_img" id="signture_img">
+                                                            <img alt="signture_img" src="@Url.Content(Model.UserInformation.CrMasUserInformationSignature?.ToString())" style="width: 60px; height: 50px;">
+                                                        </div>
+                                                        <div class="svg-container" id="svg-container">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 width="24" height="24"
+                                                                 viewBox="0 0 24 24" fill="none">
+                                                                <path class="svg-path"
+                                                                      fill-rule="evenodd"
+                                                                      clip-rule="evenodd"
+                                                                      d="M19.06 3.58988L20.41 4.93988C21.2 5.71988 21.2 6.98988 20.41 7.76988L7.18 20.9999H3V16.8199L13.4 6.40988L16.23 3.58988C17.01 2.80988 18.28 2.80988 19.06 3.58988ZM5 18.9999L6.41 19.0599L16.23 9.22988L14.82 7.81988L5 17.6399V18.9999Z"
+                                                                      fill="#FF9626"
+                                                                      fill-opacity="0.32" />
+                                                            </svg>
+                                                            <input type="file" name="signature_img" id="signature_img_input" class="d-none">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row flex-row-reverse">
+                                                <div class="col-md-12">
+                                                    <div class="row account-modal-rows">
+                                                        <div class="col-lg-2 account-titles">
+                                                            <label for="lang">@localizer["Language"]</label>
+                                                        </div>
+                                                        <div class="col-lg-1  personal-data">
+                                                            <select class="form-select account-select" asp-for="@Model.UserInformation.CrMasUserInformationDefaultLanguage" id="language">
+                                                                <option value="AR">
+                                                                    @localizer["Arabic"]
+                                                                </option>
+                                                                <option value="EN">
+                                                                    @localizer["English"]
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="row account-modal-rows pt-lg-3">
+                                                        <div class="col-lg-2 account-titles">
+                                                            <label for="phone">@localizer["RenterDriverMobile"]</label>
+                                                        </div>
+                                                        <div class="col-lg-2 personal-data">
+
+                                                            <select id="country-code" asp-for="@Model.UserInformation.CrMasUserInformationCallingKey">
+                                                                @foreach (var item in Model.CallingKeys)
+                                                                {
+                                                                    <option value="@item.CrMasSysCallingKeysNo" selected="@(item.CrMasSysCallingKeysNo.Trim() == Model.UserInformation.CrMasUserInformationCallingKey ? "selected" : null)">+@item.CrMasSysCallingKeysNo</option>
+
+                                                                }
+                                                            </select>
+                                                            <input type="tel" id="phone" asp-for="@Model.UserInformation.CrMasUserInformationMobileNo" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="20" class="account-select" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="row account-modal-rows pt-lg-2">
+
+                                                        <div class="col-lg-2 account-titles">
+                                                            <label for="Email">@localizer["Email"] </label>
+                                                        </div>
+                                                        <div class="col-lg-2 personal-data">
+                                                            <input type="email" id="Email" asp-for="@Model.UserInformation.CrMasUserInformationEmail" class="account-select" maxlength="50" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="row account-modal-rows pt-lg-2">
+
+                                                        <div class="col-lg-2 account-titles">
+                                                            <label for="pass_hint">
+                                                                @localizer["RemindMe"]
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-2 personal-data">
+                                                            <input type="text" id="pass_hint" asp-for="@Model.UserInformation.CrMasUserInformationRemindMe" maxlength="50" class="account-select" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="row account-modal-rows pt-lg-2">
+
+                                                        <div class="col-lg-2 account-titles">
+                                                            <label for="auto_logOut">
+                                                                @localizer["AutoLogout"]
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-1 personal-data">
+                                                            <input type="number" id="auto_logOut" asp-for="@Model.UserInformation.CrMasUserInformationExitTimer" class="account-select" autocomplete="off"
+                                                                   min="1" max="10"
+                                                                   oninput="if (this.value > 10) this.value = 10;"
+                                                                   onblur="if (this.value === '') this.value = 1;">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row button-row pt-3 pb-1 ps-4">
+                                        <div class="button-card55">
+                                            <button type="submit" class="btn btn-custom">@localizer["Save"]</button>
+                                        </div>
+                                        <div class="button-card55">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="fixed-bottom-xl">
+    <div class="before-footer-widget">
+        <svg width: 100%; height:auto viewbox="0 0 2444 132">
+            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+            </path>
+        </svg>
+    </div>
+</footer>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="js/Upload_Img.js"></script>
+    <script>
+        // =============
+        // == variables==============================================================================================================
+        // =============
+
+        const signture_img = document.getElementById("signture_img");
+        var profileImageUpload = document.getElementById('profile-image-upload');
+        var signature_img_input = document.getElementById('signature_img_input');
+        var svgContainer = document.getElementById('svg-container')
+        var imageRemoved = false;
+
+
+        // =============
+        // == Profile Photo ==============================================================================================================
+        // =============
+
+        function previewFile() {
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader = new FileReader();
+            var Profile = document.querySelector('#User_Profile_img');
+
+
+            reader.addEventListener("load", function () {
+                Profile.src = reader.result;
+                imageRemoved = false;
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var uploadIcon = document.getElementById('upload_icon');
+            uploadIcon.addEventListener('click', function () {
+                profileImageUpload.click();
+            });
+        });
+
+        profileImageUpload.addEventListener('change', function () {
+            previewFile()
+        })
+
+        // =============
+        // == signature Photo ==============================================================================================================
+        // =============
+        document.addEventListener('DOMContentLoaded', function () {
+            svgContainer.addEventListener('click', function () {
+                signature_img_input.click()
+            })
+        });
+
+        signature_img_input.addEventListener('click', function () {
+            const fileInput = document.getElementById("signature_img_input");
+
+            fileInput.addEventListener("change", function () {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function () {
+                    const image = document.createElement("img");
+                    image.src = reader.result;
+                    image.style.width = '95px';
+
+                    signture_img.innerHTML = ``;
+                    signture_img.appendChild(image);
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            })
+
+        })
+
+
+    </script>
+}

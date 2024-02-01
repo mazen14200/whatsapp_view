@@ -49,9 +49,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             else adminstrive.CrCasSysAdministrativeProceduresStatus = Status.Reject;
             adminstrive.CrCasSysAdministrativeProceduresReasons= reasons;
             if (await _unitOfWork.CompleteAsync() > 0) return Json(true);
-
             return Json(false);
-
         }
 
         public IActionResult SuccesssMessageForFeedBox()

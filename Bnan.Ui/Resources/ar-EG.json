@@ -1,4 +1,7 @@
 {
+
+  "Arabic": "العربية",
+  "English": "الانجليزية",
   // CAS System SideBar
   "BnanCompany": "بنان لإدارة شركات ومكاتب تأجير السيارات",
   "EmployeeNo": "رقم الموظف",
@@ -771,7 +774,7 @@
   "Owners": "صلاحية الملاك ",
   "AdminAuth": "صلاحية الادارة ",
   "ValiditySystem": "صلاحيات الأنظمة",
-
+  "Language": "اللغة الافتراضية",
 
   //RenterDriver Services
   "RenterDriver Data": "بيانات السائقين",
@@ -862,7 +865,6 @@
   "CrMasUserContractValidityKm": "الكليوات المجانية",
   "CrMasUserContractValidityHour": "الساعات المجانية",
   "RemindMe": "تلميح كلمة السر",
-  "Language": "اللغه الافتراضية",
   "Contractss": "عقد التأجير",
   //SalesPoint
   "SalesPoint Hint": ".تمكنك الصفحة من البحث و اضافة و تعديل بيانات نقاط البيع",
