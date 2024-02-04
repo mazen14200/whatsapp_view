@@ -16,11 +16,13 @@ namespace Bnan.Ui.Areas.BS.Controllers
     public class FeedBoxController : BaseController
     {
         private readonly IToastNotification _toastNotification;
+        private readonly IFeedBoxBS _feedBox;
         private readonly IStringLocalizer<FeedBoxController> _localizer;
-        public FeedBoxController(IStringLocalizer<FeedBoxController> localizer, IUnitOfWork unitOfWork, UserManager<CrMasUserInformation> userManager, IMapper mapper, IToastNotification toastNotification) : base(userManager, unitOfWork, mapper)
+        public FeedBoxController(IStringLocalizer<FeedBoxController> localizer, IUnitOfWork unitOfWork, UserManager<CrMasUserInformation> userManager, IMapper mapper, IToastNotification toastNotification, IFeedBoxBS feedBox) : base(userManager, unitOfWork, mapper)
         {
             _localizer = localizer;
             _toastNotification = toastNotification;
+            _feedBox = feedBox;
         }
         public async Task<IActionResult> Index()
         {
@@ -37,7 +39,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             return View(bSLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> AcceptOrNot(string status,string reasons)
+        public async Task<IActionResult> AcceptOrNot(string AdministrativeNo, string status, string reasons)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -45,11 +47,39 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                  x.CrCasSysAdministrativeProceduresTargeted == userLogin.CrMasUserInformationCode &&
                                                                                  x.CrCasSysAdministrativeProceduresCode == "303" &&
                                                                                  x.CrCasSysAdministrativeProceduresStatus == Status.Insert);
-            if (status == Status.Accept) adminstrive.CrCasSysAdministrativeProceduresStatus = Status.Accept;
-            else adminstrive.CrCasSysAdministrativeProceduresStatus = Status.Reject;
-            adminstrive.CrCasSysAdministrativeProceduresReasons= reasons;
-            if (await _unitOfWork.CompleteAsync() > 0) return Json(true);
-            return Json(false);
+
+            var CheckUpdateAdminstrive = true;
+            var CheckAddReceipt = true;
+            var CheckUpdateUser = true;
+            var CheckUpdateBranch = true;
+            var CheckUpdateSalesPoint = true;
+            var CheckUpdateBranchValidity = true;
+
+            CheckUpdateAdminstrive = await _feedBox.UpdateAdminstritive(adminstrive.CrCasSysAdministrativeProceduresNo, userLogin.CrMasUserInformationCode, status, reasons);
+            if (status == Status.Accept)
+            {
+                CheckAddReceipt = await _feedBox.AddAccountReceipt(adminstrive.CrCasSysAdministrativeProceduresNo, lessorCode, userLogin.CrMasUserInformationCode,
+                                                                   userLogin.CrMasUserInformationDefaultBranch, (decimal)adminstrive.CrCasSysAdministrativeProceduresDebit, reasons);
+
+                CheckUpdateUser = await _feedBox.UpdateUserInfo(userLogin.CrMasUserInformationCode, lessorCode, (decimal)adminstrive.CrCasSysAdministrativeProceduresDebit);
+
+
+                CheckUpdateBranch = await _feedBox.UpdateBranch(userLogin.CrMasUserInformationDefaultBranch, lessorCode, (decimal)adminstrive.CrCasSysAdministrativeProceduresDebit);
+
+                CheckUpdateSalesPoint = await _feedBox.UpdateSalesPoint(lessorCode, userLogin.CrMasUserInformationDefaultBranch, (decimal)adminstrive.CrCasSysAdministrativeProceduresDebit);
+
+                CheckUpdateBranchValidity = await _feedBox.UpdateBranchValidity(userLogin.CrMasUserInformationCode, lessorCode, userLogin.CrMasUserInformationDefaultBranch, (decimal)adminstrive.CrCasSysAdministrativeProceduresDebit);
+            }
+            if (CheckUpdateAdminstrive && CheckAddReceipt && CheckUpdateBranch &&
+                   CheckUpdateSalesPoint && CheckUpdateUser && CheckUpdateBranchValidity)
+            {
+                if (await _unitOfWork.CompleteAsync()>0) _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                else _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            }
+            else _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+
+            return RedirectToAction("Index", "Home");
+
         }
 
         public IActionResult SuccesssMessageForFeedBox()

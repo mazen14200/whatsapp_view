@@ -3584,7 +3584,7 @@ else
                 document.getElementById('RentValue').textContent = rentValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                 var TotalChoices = $("#TotalChoices").text();
-                if (parseFloat(TotalChoices) != null && parseFloat(TotalChoices) != 0 && parseFloat(TotalChoices) != "") {
+                if (TotalChoices != null && TotalChoices != 0 && TotalChoices != "" && TotalChoices != undefined) {
                     choicesValue = parseFloat(TotalChoices) * parseInt(daysNo);
                     document.getElementById('ChoicesValue').textContent = choicesValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 }
@@ -3597,7 +3597,7 @@ else
 
                 var TotalAdditionals = $("#TotalAdditionals").text();
                 console.log("TotalAdditionals", TotalAdditionals);
-                if (TotalAdditionals != null && TotalAdditionals != ""&& TotalAdditionals!=undefined) {
+                if (TotalAdditionals != null && TotalAdditionals != 0 && TotalAdditionals != "" && TotalAdditionals != undefined) {
                     additionalValue = parseFloat(TotalAdditionals);
                     document.getElementById('AdditionalValue').textContent = additionalValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
