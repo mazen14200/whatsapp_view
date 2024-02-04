@@ -111,7 +111,7 @@ else
                                                     <P>@localizer["CreditorTotal"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P id="Creditor">@Model.TotalCreditor?.ToString("N2")</P>
+                                                    <P id="CreditorTotal">@Model.TotalCreditor?.ToString("N2")</P>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-lg-3 d-flex" style="flex-direction:row-reverse">
@@ -119,7 +119,7 @@ else
                                                     <P> @localizer["DebitTotal"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P id="Debit">@Model.TotalDebit?.ToString("N2")</P>
+                                                    <P id="DebitTotal">@Model.TotalDebit?.ToString("N2")</P>
                                                 </div>
                                             </div>
                                         </div>
@@ -358,8 +358,8 @@ else
                     // Update elements in your view
                     console.log("totalCreditor", totalCreditor)
                     console.log("totalDebit", totalDebit)
-                    $("#Debit").text(parseFloat(totalDebit).toFixed(2));
-                    $("#Creditor").text(parseFloat(totalCreditor).toFixed(2));
+                    $("#DebitTotal").text(parseFloat(totalDebit).toFixed(2));
+                    $("#CreditorTotal").text(parseFloat(totalCreditor).toFixed(2));
                 },
             });
         }
@@ -384,6 +384,7 @@ else
                     url: "@Url.Action("GetReceiptDetails", "Report", new { Area = "BS" })",
                     success: function (response) {
                         if (response != null) {
+                            console.log(response)
                             $("#ReceiptNo").text(response.receiptNo);
                             $("#Date").text(response.date);
                             $("#Creditor").text(response.creditor);

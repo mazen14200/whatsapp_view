@@ -381,9 +381,6 @@ else
                                             <div class="col-sm-1 col-md-1 col-lg-1">
                                                 <input type="text" class="form-control" id="TaxRate" readonly>
                                             </div>
-                                            <div class="col-sm-1 col-md-1 col-lg-1">
-                                                <input type="text" class="form-control" id="RentValue" readonly>
-                                            </div>
                                             <div class="col-auto seacrh-icon-col">
                                                 <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="seacrh-icon Image"
                                                      id="hover-image-driver">
@@ -2577,8 +2574,7 @@ else
                     if (SerialNumberOfCar != null && PriceNumberOfCar != null) {
                         $("#Contract_SerialNo").val(SerialNumberOfCar);
                         $("#Contract_PriceNo").val(PriceNumberOfCar);
-                        // GetCarInfo(SerialNumberOfCar);
-                        GetAdvantages(SerialNumberOfCar);
+                        GetAdvantages(PriceNumberOfCar);
                         // Use Promises to ensure data is available before proceeding
                         Promise.all([getCarChoices(PriceNumberOfCar), getCarAdditional(PriceNumberOfCar)])
                             .then(([choicesData, additionalsData]) => {
@@ -3298,7 +3294,7 @@ else
                 data: { priceNumber: priceNumber },
                 success: function (data) {
                     AdvantagesValue = data;
-                    console.log(AdvantagesValue)
+                    console.log("AdvantagesValue1",AdvantagesValue)
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.error("Error loading data:", textStatus, errorThrown);
@@ -3596,10 +3592,12 @@ else
                     document.getElementById('ChoicesValue').textContent = "0.00";
                     choicesValue = 0;
                 }
+                console.log("choicesValue", choicesValue);
                 $("#Contract_OptionTotal").val(choicesValue);
 
                 var TotalAdditionals = $("#TotalAdditionals").text();
-                if (parseFloat(TotalAdditionals) != null && parseFloat(TotalAdditionals) != "") {
+                console.log("TotalAdditionals", TotalAdditionals);
+                if (TotalAdditionals != null && TotalAdditionals != ""&& TotalAdditionals!=undefined) {
                     additionalValue = parseFloat(TotalAdditionals);
                     document.getElementById('AdditionalValue').textContent = additionalValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -3609,8 +3607,11 @@ else
                     additionalValue = 0;
                 }
                 $("#Contract_AdditionalTotal").val(additionalValue);
-
+                console.log("additionalValue", additionalValue);
                 var AdvatagesTotalValue = parseFloat(AdvantagesValue);
+                console.log("AdvantagesValue", AdvantagesValue);
+                console.log("AdvatagesTotalValue", AdvatagesTotalValue);
+
                 if (AdvatagesTotalValue != null && AdvatagesTotalValue != "") {
                     advantagesValueTotal = AdvatagesTotalValue * parseInt(daysNo);
                     document.getElementById('AdvatagesValue').textContent = advantagesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -3619,7 +3620,8 @@ else
                     document.getElementById('AdvatagesValue').textContent = "0.00";
                     advantagesValueTotal = 0;
                 }
-                $("#Contract_AdvantagesTotalValue").val(contractValue);
+                $("#Contract_AdvantagesTotalValue").val(advantagesValueTotal);
+                console.log("advantagesValueTotal", advantagesValueTotal);
 
 
                 var additionalDriver = document.getElementById("addational-driver");
