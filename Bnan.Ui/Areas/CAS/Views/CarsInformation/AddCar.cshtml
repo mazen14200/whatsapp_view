@@ -401,8 +401,8 @@
                         <label class="form-label" for="CrCasCarInformationSecondaryColor">@localizer["SecondryColor"]</label>
                     </div>
                     <div class="col-md-1 colSecondaryColor">
-                        <select class="form-select colSecondaryColorSelect" asp-for="CrCasCarInformationSecondaryColor" style="width:83%" dir="rtl" required>
-                            <option value="" selected></option> <!-- Add an empty option as the first option -->
+                        <select class="form-select colSecondaryColorSelect" asp-for="CrCasCarInformationSecondaryColor" style="width:83%" dir="rtl">
+                            <option selected></option> <!-- Add an empty option as the first option -->
                             @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                             {
                                 @foreach (var SecondryColor in (List<SelectListItem>)ViewData["ColorsAr"])
@@ -421,7 +421,6 @@
                         </select>
                         <div style="margin-top:2px">
                             <div style="height: 1.35em">
-                                <span asp-validation-for="CrCasCarInformationSecondaryColor" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -431,8 +430,8 @@
                         <label class="form-label" for="CrCasCarInformationSeatColor">@localizer["MattressColor"]</label>
                     </div>
                     <div class="col-md-1">
-                        <select class="form-select" asp-for="CrCasCarInformationSeatColor" style="width: 100%;" dir="rtl" required>
-                            <option value="" selected></option>
+                        <select class="form-select" asp-for="CrCasCarInformationSeatColor" style="width: 100%;" dir="rtl" >
+                            <option selected></option>
                             @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                             {
                                 @foreach (var MattressColor in (List<SelectListItem>)ViewData["ColorsAr"])
@@ -451,7 +450,6 @@
                         </select>
                         <div style="margin-top:2px">
                             <div style="height: 1.35em">
-                                <span asp-validation-for="CrCasCarInformationSeatColor" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -460,8 +458,8 @@
                         <label class="form-label" for="CrCasCarInformationFloorColor">@localizer["FloorColor"]</label>
                     </div>
                     <div class="col-md-1 colFloorColor">
-                        <select class="form-select" asp-for="CrCasCarInformationFloorColor" style="width: 95%;" dir="rtl" required>
-                            <option value="" selected></option>
+                        <select class="form-select" asp-for="CrCasCarInformationFloorColor" style="width: 95%;" dir="rtl" >
+                            <option selected></option>
                             @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                             {
                                 @foreach (var FloorColor in (List<SelectListItem>)ViewData["ColorsAr"])
@@ -480,7 +478,6 @@
                         </select>
                         <div style="margin-top:2px">
                             <div style="height: 1.35em">
-                                <span asp-validation-for="CrCasCarInformationFloorColor" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -635,29 +632,31 @@
             var form = document.getElementById('form');
             $("#submitButton").click(function (e) {
                 e.preventDefault();
+                if ($("#form").valid()) {
+                    // Get the selected checkboxes and their IDs
+                    var checkboxes = document.querySelectorAll('.checkbox-Advantages');
+                    var data = [];
+                    checkboxes.forEach(function (checkbox) {
+                        var id = checkbox.getAttribute('data-id');
+                        var value = checkbox.value;
+                        var checked = checkbox.checked;
+                        data.push({ Id: id, Value: checked });
+                    });
+                    console.log(form);
+                    console.log(data);
+                    console.log(checkboxes);
+                    // Create a hidden input field with the data
+                    var hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', 'hidden');
+                    hiddenInput.setAttribute('name', 'CheckboxAdvantagesWithData');
+                    hiddenInput.value = JSON.stringify(data);
 
-                // Get the selected checkboxes and their IDs
-                var checkboxes = document.querySelectorAll('.checkbox-Advantages');
-                var data = [];
-                checkboxes.forEach(function (checkbox) {
-                    var id = checkbox.getAttribute('data-id');
-                    var value = checkbox.value;
-                    var checked = checkbox.checked;
-                    data.push({ Id: id, Value: checked });
-                });
-                console.log(form);
-                console.log(data);
-                console.log(checkboxes);
-                // Create a hidden input field with the data
-                var hiddenInput = document.createElement('input');
-                hiddenInput.setAttribute('type', 'hidden');
-                hiddenInput.setAttribute('name', 'CheckboxAdvantagesWithData');
-                hiddenInput.value = JSON.stringify(data);
-
-                //// Append the hidden input field to the form BEFORE checking validity
-                form.appendChild(hiddenInput);
-                console.log(hiddenInput);
-                form.submit();
+                    //// Append the hidden input field to the form BEFORE checking validity
+                    form.appendChild(hiddenInput);
+                    console.log(hiddenInput);
+                    form.submit();
+                }
+               
 
                 //var allInputsValid = true;
                 //var inputs = form.querySelectorAll('input[type="text"]');

@@ -8,12 +8,12 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\**" />
-    <Compile Remove="PathFile\FollowUpContract\**" />
+    <Compile Remove="PathFile\**" />
     <EmbeddedResource Remove="Migrations\**" />
-    <EmbeddedResource Remove="PathFile\FollowUpContract\**" />
+    <EmbeddedResource Remove="PathFile\**" />
     <None Remove="C:\Users\ahmed\.nuget\packages\microsoft.net.compilers\1.0.0\build\..\tools\**" />
     <None Remove="Migrations\**" />
-    <None Remove="PathFile\FollowUpContract\**" />
+    <None Remove="PathFile\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,10 +44,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bnan.Core\Bnan.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="PathFile\" />
   </ItemGroup>
 
 </Project>
