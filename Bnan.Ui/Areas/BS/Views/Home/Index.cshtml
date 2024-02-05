@@ -567,10 +567,10 @@
             const pieChartData = {
                 labels: ['@localizer["ExpiredContract"]', '@localizer["ExpiresToday"]', '@localizer["ExpiresTomorrow"]', '@localizer["ExpiresLater"]'],
                 datasets: [{
-                    data: [@Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="3"&&x.CrCasRenterContractAlertContractStatus=="A").Count(),
-        @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="0"&&x.CrCasRenterContractAlertContractStatus=="A").Count(),
-        @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="1"&&x.CrCasRenterContractAlertContractStatus=="A").Count(),
-        @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="2"&&x.CrCasRenterContractAlertContractStatus=="A").Count()],
+                    data: [@Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="3").Count(),
+                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="0").Count(),
+                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="1").Count(),
+                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="2").Count()],
                     backgroundColor: ['rgba(242, 36, 36, 1)', '#9966FF', 'rgba(242, 143, 36, 1)', 'rgba(54, 162, 235, 1)']
                 }]
             };

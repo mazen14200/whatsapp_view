@@ -3640,9 +3640,15 @@ else
 
                 var privateDriverRadio1 = document.getElementById("PrivateDriver");
                 var privateDriverID = $("#driver-dropdown").val();
-                if (privateDriverRadio1.checked && privateDriverID == null) {
+                console.log("privateDriverRadio1", privateDriverRadio1)
+                console.log("privateDriverRadio1.Checked", privateDriverRadio1.checked)
+                console.log("privateDriverID", privateDriverID)
+
+                if (privateDriverRadio1.checked && privateDriverID != null) {
                     var privateDriver = CarInformation.carPrice.crCasPriceCarBasicPrivateDriverValue;
-                    if (parseInt(privateDriver) != null) {
+                    console.log("privateDriver", privateDriver)
+                    console.log("parseInt(privateDriver)", parseInt(privateDriver))
+                    if (privateDriver != null) {
                         privateDriverValue = parseFloat(privateDriver) * parseInt(daysNo);
                         document.getElementById('PrivateDriverValue').textContent = privateDriverValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     }
@@ -3650,6 +3656,10 @@ else
                         document.getElementById('PrivateDriverValue').textContent = "0.00";
                         privateDriverValue = 0;
                     }
+                }
+                else{
+                    privateDriverValue = 0;
+                    document.getElementById('PrivateDriverValue').textContent = "0.00";
                 }
                 //Get FeeTmm Out Or in value
                 getFeeTmm();
@@ -3687,7 +3697,7 @@ else
             document.getElementById('Taxvalue').textContent = "0.00";
             document.getElementById('TotalActualContract').textContent = "0.00";
             document.getElementById("TotalAmount").textContent = "0.00";
-            document.getElementById("dayNo").textContent = "";
+            document.getElementById("dayNo").value = "";
             document.getElementById("Discount_Input").value = 0;
             document.getElementById("Delegate-out").checked = false;
             $('#AmountPayed').prop('readonly', true);
