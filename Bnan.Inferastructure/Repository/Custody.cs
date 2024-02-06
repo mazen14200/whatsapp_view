@@ -19,14 +19,13 @@ namespace Bnan.Inferastructure.Repository
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> UpdateAccountReceipt(string ReceiptNo, string ReferenceNo, string Reasons)
+        public async Task<bool> UpdateAccountReceipt(string ReceiptNo, string ReferenceNo)
         {
             var receipt = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptNo == ReceiptNo);
             if (receipt != null)
             {
                 receipt.CrCasAccountReceiptIsPassing = "2";
                 receipt.CrCasAccountReceiptPassingReference = ReferenceNo;
-                receipt.CrCasAccountReceiptReasons = Reasons;
                 if (_unitOfWork.CrCasAccountReceipt.Update(receipt) != null) return true;
             }
             return false;

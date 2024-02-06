@@ -9,7 +9,7 @@ namespace Bnan.Core.Interfaces
 {
     public interface ICustody
     {
-        Task<bool> UpdateAccountReceipt(string ReceiptNo,string ReferenceNo, string Reasons);
+        Task<bool> UpdateAccountReceipt(string ReceiptNo,string ReferenceNo);
         Task<bool> UpdateUserInfo(string UserCode, string lessorCode, string Creditor);
         Task<bool> UpdateBranch(string BranchCode, string lessorCode,string Creditor);
         Task<bool> UpdateSalesPoint(string lessorCode, string BranchCode, string SalesPointCode, string Creditor);

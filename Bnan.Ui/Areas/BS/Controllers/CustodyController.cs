@@ -117,7 +117,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         var R = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptNo == Receipt);
                         if (R != null)
                         {
-                            checkUpdateReceipt = await _custodyService.UpdateAccountReceipt(R.CrCasAccountReceiptNo, adminstritive.CrCasSysAdministrativeProceduresNo, Reasons);
+                            checkUpdateReceipt = await _custodyService.UpdateAccountReceipt(R.CrCasAccountReceiptNo, adminstritive.CrCasSysAdministrativeProceduresNo);
                         }
                         else
                         {
