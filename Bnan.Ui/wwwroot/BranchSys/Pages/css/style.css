@@ -1141,8 +1141,6 @@ flex-direction: row-reverse;
 }
 .notes_box {
     direction: rtl;
-    height: 40px;
-    overflow-y: scroll;
 }
 /***************************************************SettlementCard5**************************************************/
 .payment-input {
