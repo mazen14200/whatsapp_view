@@ -1139,7 +1139,11 @@ flex-direction: row-reverse;
 #SettlementTable .form-check-label {
     color: #000;
 }
-
+.notes_box {
+    direction: rtl;
+    height: 40px;
+    overflow-y: scroll;
+}
 /***************************************************SettlementCard5**************************************************/
 .payment-input {
     border: 1px solid #faa64d;

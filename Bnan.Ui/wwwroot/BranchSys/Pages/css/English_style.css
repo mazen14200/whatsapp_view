@@ -56,7 +56,9 @@ textarea {
 .form-outline .fa-search {
     right: 10px;
 }
-
+.notes_box {
+    direction: ltr;
+}
 @media (max-width:960px) {
     .pdf_img {
         top: 75px;
