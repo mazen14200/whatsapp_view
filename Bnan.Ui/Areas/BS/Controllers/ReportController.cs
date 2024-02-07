@@ -54,7 +54,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
 
             bsLayoutVM.CrMasUserBranchValidity = branchValidity;
-            bsLayoutVM.AccountReceipts = filterByDateAccountReceipt;
+            bsLayoutVM.AccountReceipts = filterByDateAccountReceipt.OrderBy(x=>x.CrCasAccountReceiptDate).ToList();
             bsLayoutVM.TotalCreditor = bsLayoutVM.AccountReceipts.Where(x=>x.CrCasAccountReceiptIsPassing!="4").Sum(x => x.CrCasAccountReceiptPayment);
             bsLayoutVM.TotalDebit = bsLayoutVM.AccountReceipts.Where(x => x.CrCasAccountReceiptIsPassing != "4").Sum(x => x.CrCasAccountReceiptReceipt);
             return View(bsLayoutVM);
@@ -69,7 +69,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var accountReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == lessorCode &&
                                                                             x.CrCasAccountReceiptBranchCode == branchCode &&
                                                                             x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode,
-                                                                            new[] { "CrCasAccountReceiptPaymentMethodNavigation", "CrCasAccountReceiptReferenceTypeNavigation" }).ToList();
+                                                                            new[] { "CrCasAccountReceiptPaymentMethodNavigation", "CrCasAccountReceiptReferenceTypeNavigation" }).OrderBy(x => x.CrCasAccountReceiptDate).ToList();
             if (status == Status.All) bSLayoutVM.AccountReceipts = accountReceipts.Where(x => x.CrCasAccountReceiptDate?.Date >= DateTime.Parse(StartDate) &&
                                                                                          x.CrCasAccountReceiptDate?.Date <= DateTime.Parse(EndDate)).ToList();
 
