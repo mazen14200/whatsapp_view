@@ -2101,7 +2101,7 @@ else
             });
         });
         // Modal Submit Code from Mobile
-        ///////////////////////////////////////////////the-Modal-6-digit-vaildation/////////////////////
+        ///////////////////////////////////////////////the-Modal-6-digit-vaildation///////////////////
         function openThirdPopupDriver() {
             var currentDate = new Date();
             var ExpiryIdDate = new Date(DriverInformation.expiryIdDate);
@@ -2137,7 +2137,7 @@ else
                         $("#DriverNationality").text(DriverInformation.personalEnNationality);
                         $("#DriverGender").text(DriverInformation.personalEnGender);
                         $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
-                        if (DriverInformation.licenseEnName != "" && DriverInformation.licenseEnName != null && DriverInformation.licenseEnName != undefined) {
+                        if (DriverInformation.licenseEnName != "" && DriverInformation.licenseEnName != null && DriverInformation.licenseEnName != undefined && DriverInformation.licenseCode != "2") {
                             $("#DriverLicenseType").text(DriverInformation.licenseEnName);
                             $("#DriverLicenseIssued").text(licenseIssuedDate);
                             $("#DriverLicenseExpiration").text(licenseExpiryDate);
@@ -2172,7 +2172,7 @@ else
                         $("#DriverProffessions").text(DriverInformation.personalArProfessions);
                         $("#DriverGender").text(DriverInformation.personalArGender);
                         $("#DriverNationality").text(DriverInformation.personalArNationality);
-                        if (DriverInformation.licenseArName != "" && DriverInformation.licenseArName != null && DriverInformation.licenseArName != undefined) {
+                        if (DriverInformation.licenseArName != "" && DriverInformation.licenseArName != null && DriverInformation.licenseArName != undefined && DriverInformation.licenseCode != "2") {
                             $("#DriverLicenseType").text(DriverInformation.licenseArName);
                             $("#DriverLicenseIssued").text(licenseIssuedDate);
                             $("#DriverLicenseExpiration").text(licenseExpiryDate);
@@ -2286,17 +2286,19 @@ else
                 if ($(this).val() !== initialAddDriver) {
                     // Clear previous data and style
                     $("#requird_field_Birthdate_driver").text('').css("color", "");
-                    $("#birth-date-driver").val(null);
-                    $("#AddDriverAddress").text("");
+                    $("#birth-date-additionalDriver").val(null);
                     $("#AddDriverEmail").text("");
                     $("#AddDriverName").text("");
                     $("#AddDriverNationality").text("");
                     $("#AddDriverGender").text("");
                     $("#AddDriverProffessions").text("");
-                    $("#AddDriverLicenseType").text("");
                     $("#AddDriverLicenseIssued").text("");
                     $("#AddDriverLicenseExpiration").text("");
                     $("#AddDriverLicenseExpirationMessage").text("").css("color", "");
+                    $("#AddDriverAddress").text('').css("color", "");
+                    $("#AddDriverLicenseType").text('').css("color", "");
+                    $("#requird_field_BirthDate_AddDriver").text('@localizer["IdIsExpire"]').css("color", "red");
+
                     $("#AddDriverEmployer").text("");
                     CheckIfAddDriverIdExist = false;
                     AddDriverInformation = null;
@@ -2375,7 +2377,7 @@ else
                         $("#AddDriverNationality").text(AddDriverInformation.personalEnNationality);
                         $("#AddDriverGender").text(AddDriverInformation.personalEnGender);
                         $("#AddDriverProffessions").text(AddDriverInformation.personalEnProfessions);
-                        if (AddDriverInformation.licenseEnName != "" && AddDriverInformation.licenseEnName != null && AddDriverInformation.licenseEnName != undefined) {
+                        if (AddDriverInformation.licenseEnName != "" && AddDriverInformation.licenseEnName != null && AddDriverInformation.licenseEnName != undefined && AddDriverInformation.licenseCode != "2") {
                             $("#AddDriverLicenseIssued").text(licenseIssuedDate);
                             $("#AddDriverLicenseExpiration").text(licenseExpiryDate);
                             $("#AddDriverLicenseType").text(AddDriverInformation.licenseEnName);
@@ -2409,7 +2411,7 @@ else
                         $("#AddDriverProffessions").text(AddDriverInformation.personalArProfessions);
                         $("#AddDriverGender").text(AddDriverInformation.personalArGender);
                         $("#AddDriverNationality").text(AddDriverInformation.personalArNationality);
-                        if (AddDriverInformation.licenseArName != "" && AddDriverInformation.licenseArName != null && AddDriverInformation.licenseArName != undefined) {
+                        if (AddDriverInformation.licenseArName != "" && AddDriverInformation.licenseArName != null && AddDriverInformation.licenseArName != undefined && AddDriverInformation.licenseCode != "2") {
                             $("#AddDriverLicenseType").text(AddDriverInformation.licenseArName);
                             $("#AddDriverLicenseIssued").text(licenseIssuedDate);
                             $("#AddDriverLicenseExpiration").text(licenseExpiryDate);
@@ -2671,7 +2673,7 @@ else
                                     $("#DriverNationality").text(DriverInformation.personalEnNationality);
                                     $("#DriverGender").text(DriverInformation.personalEnGender);
                                     $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
-                                    if (DriverInformation.licenseEnName != "" && DriverInformation.licenseEnName != null && DriverInformation.licenseEnName != undefined) {
+                                    if (DriverInformation.licenseEnName != "" && DriverInformation.licenseEnName != null && DriverInformation.licenseEnName != undefined && DriverInformation.licenseCode != "2") {
                                         $("#DriverLicenseType").text(DriverInformation.licenseEnName);
                                         $("#DriverLicenseIssued").text(licenseIssuedDate);
                                         $("#DriverLicenseExpiration").text(licenseExpiryDate);
@@ -2707,7 +2709,7 @@ else
                                     $("#DriverProffessions").text(RenterInformation.personalArProfessions);
                                     $("#DriverGender").text(RenterInformation.personalArGender);
                                     $("#DriverNationality").text(RenterInformation.personalArNationality);
-                                    if (DriverInformation.licenseArName != "" && DriverInformation.licenseArName != null && DriverInformation.licenseArName != undefined) {
+                                    if (DriverInformation.licenseArName != "" && DriverInformation.licenseArName != null && DriverInformation.licenseArName != undefined && DriverInformation.licenseCode != "2") {
                                         $("#DriverLicenseType").text(DriverInformation.licenseArName);
                                         $("#DriverLicenseIssued").text(licenseIssuedDate);
                                         $("#DriverLicenseExpiration").text(licenseExpiryDate);
@@ -2963,52 +2965,58 @@ else
                             employer = false;
                         }
                         if (!(id && address && license && isAgeInRange && employer)) {
-                            $.ajax({
-                                url: "/BS/Contract/CheckAuthDriver", // Replace YourController with your actual controller name
-                                type: "GET",
-                                data: { id: id, address: address, license: license, age: isAgeInRange, employer: employer },
-                                success: function (data) {
-                                    var check = data;
-                                    toastr.options = { "positionClass": '@localizer["toastPostion"]', };
 
-                                    if (check == "id") {
-                                        toastr.error('@localizer["IdIsExpriredAndYouNotAuth"]');
-                                        return;
-                                    }
-                                    else if (check == "address") {
-                                        toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
-                                        return
-                                    }
-                                    else if (check == "license") {
-                                        toastr.error('@localizer["LicenseIsExpriredAndYouNotAuth"]');
-                                        return
-                                    }
-                                    else if (check == "age") {
-                                        toastr.error('@localizer["AgeIsExpriredAndYouNotAuth"]');
-                                        return
-                                    }
-                                    else if (check == "employer") {
-                                        toastr.error('@localizer["EmployerIsExpriredAndYouNotAuth"]');
-                                        return
-                                    }
-                                    else if (CarChoices.count == 0 && CarAdditionals.count == 0) {
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs = $(this).closest("fieldset").next().next();
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs.show();
-                                        current_fs.hide();
-                                        currentField = "check";
-                                        NextField = "payment"
-                                    }
-                                    else {
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs.show();
-                                        current_fs.hide();
-                                        currentField = "options"
-                                        NextField = "check"
-                                    }
+
+                            if (id == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityId" == "False") {
+                                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                                toastr.error('@localizer["IdIsExpriredAndYouNotAuth"]');
+                                console.log("Iddddd")
+                                return;
+                            }
+                            else if (address == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityRenterAddress" == "False") {
+                                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                                toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
+                                console.log("address")
+                                return
+                            }
+                            else if (license == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityDrivingLicense" == "False") {
+                                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                                toastr.error('@localizer["LicenseIsExpriredAndYouNotAuth"]');
+                                console.log("license")
+                                return
+                            }
+                            else if (isAgeInRange == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityAge" == "False") {
+                                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                                toastr.error('@localizer["AgeIsExpriredAndYouNotAuth"]');
+                                console.log("isAgeInRange")
+                                return
+                            }
+                            else if (employer == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityEmployer" == "False") {
+                                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                                toastr.error('@localizer["EmployerIsExpriredAndYouNotAuth"]');
+                                console.log("employer")
+                                return
+                            }
+                            else {
+                                if (CarChoices.count == 0 && CarAdditionals.count == 0) {
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs.show();
+                                    current_fs.hide();
+                                    currentField = "check";
+                                    NextField = "payment"
                                 }
-                            });
+                                else {
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs.show();
+                                    current_fs.hide();
+                                    currentField = "options"
+                                    NextField = "check"
+                                }
+                            }
+
+
                         }
                         else if (CarChoices.count == 0 && CarAdditionals.count == 0) {
                             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
@@ -3237,18 +3245,20 @@ else
         function clearDataAddDriver() {
             $("#Contract_AdditionalDriverId").val("");
             $("#Contract_AdditionalDriverId").prop("readonly", false);
-            $("#requird_field_Birthdate_AddDriver").text('').css("color", "");
             $("#birth-date-additionalDriver").val(null);
-            $("#AddDriverAddress").text("");
             $("#AddDriverEmail").text("");
             $("#AddDriverName").text("");
             $("#AddDriverNationality").text("");
             $("#AddDriverGender").text("");
             $("#AddDriverProffessions").text("");
-            $("#AddDriverLicenseType").text("");
             $("#AddDriverLicenseIssued").text("");
             $("#AddDriverLicenseExpiration").text("");
             $("#AddDriverEmployer").text("");
+            $("#AddDriverAddress").text('').css("color", "");
+            $("#AddDriverLicenseType").text('').css("color", "");
+            $("#AddDriverLicenseExpirationMessage").text('').css("color", "");
+            $("#requird_field_BirthDate_AddDriver").text('').css("color", "");
+
             CheckIfAddDriverIdExist = false;
             AddDriverInformation = null;
         }
