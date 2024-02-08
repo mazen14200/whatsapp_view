@@ -222,6 +222,26 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationConcatenateEnName})";
                     }
                 }
+                if (item.CrCasSysAdministrativeProceduresCode == "217")
+                {
+                    // if 217 then it is Offer Car 
+                    var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarInformationLessor == lessorCode);
+                    if (car != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({car.CrCasCarInformationConcatenateArName})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationConcatenateEnName})";
+                    }
+                }
+                if (item.CrCasSysAdministrativeProceduresCode == "218")
+                {
+                    // if 218 then it is Confirm Offer Car 
+                    var car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo.Trim() == item.CrCasSysAdministrativeProceduresTargeted.Trim() && x.CrCasCarInformationLessor == lessorCode);
+                    if (car != null)
+                    {
+                        item.NameOfTargetAr = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresArName} ({car.CrCasCarInformationConcatenateArName})";
+                        item.NameOfTargetEn = $"{item.CrCasSysAdministrativeProceduresCodeNavigation.CrMasSysProceduresEnName} ({car.CrCasCarInformationConcatenateEnName})";
+                    }
+                }
                 if (item.CrCasSysAdministrativeProceduresCode == "219")
                 {
                     // if 219 then it is Car Price

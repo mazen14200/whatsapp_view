@@ -22,8 +22,8 @@
             <tr role="row">
                 <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                 <th aria-label="Position: activate to sort column ascending">@localizer["ReceviedCustodyNo"]</th>
-                <th aria-label="Position: activate to sort column ascending">@localizer["Date"]</th>
-               @*  <th aria-label="Position: activate to sort column ascending">@localizer["FromDate"]</th>
+              @*<th aria-label="Position: activate to sort column ascending">@localizer["Date"]</th>
+                <th aria-label="Position: activate to sort column ascending">@localizer["FromDate"]</th>
                 <th aria-label="Position: activate to sort column ascending">@localizer["ToDate"]</th> *@
                 <th aria-label="Office: activate to sort column ascending">@localizer["SalesPoint"]</th>
                 <th aria-label="Start date: activate to sort column ascending">@localizer["Creditor"]</th>
@@ -45,8 +45,8 @@
                 <tr onclick="@(item.CrCasSysAdministrativeProceduresStatus != Status.Reject ? $"location.href='{Url.Action("Details", "ReceivedCustody", new { id = item.CrCasSysAdministrativeProceduresNo })}'" : null)">
                     <td>@no</td>
                     <td>@item.CrCasSysAdministrativeProceduresNo</td>
-                    <td>@item.CrCasSysAdministrativeProceduresDate</td>
-                    @* <td>@item.CrCasSysAdministrativeProceduresDocStartDate</td>
+                    @*<td>@item.CrCasSysAdministrativeProceduresDate</td>
+                     <td>@item.CrCasSysAdministrativeProceduresDocStartDate</td>
                     <td>@item.CrCasSysAdministrativeProceduresDocEndDate</td> *@
                     <td>
                         @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")

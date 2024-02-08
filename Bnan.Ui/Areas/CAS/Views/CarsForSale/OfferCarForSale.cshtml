@@ -6,9 +6,7 @@
 
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-
-    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? $"~{Context.Request.Path.Value}?Procedureid={HttpContextAccessor.HttpContext.Request.Query["Procedureid"]}&BranchId={HttpContextAccessor.HttpContext.Request.Query["BranchId"]}" : $"~{Context.Request.Path.Value}?Procedureid={HttpContextAccessor.HttpContext.Request.Query["Procedureid"]}&BranchId={HttpContextAccessor.HttpContext.Request.Query["BranchId"]}";
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
     ViewData["Page-title"] = localizer["CarForSale Edit Data"];
     ViewData["Page-Hint"] = localizer["CarForSale Edit Hint"];
 }
@@ -84,7 +82,7 @@
                     <input type="text" class="form-control" readonly asp-for="CrCasCarInformationConcatenateArName" />
                 </div>
             </div>
-            @if (Model.CrCasCarInformationStatus == Status.Active && (Model.CrCasCarInformationForSaleStatus == Status.ForSale || Model.CrCasCarInformationForSaleStatus == Status.RendAndForSale))
+            @if (Model.CrCasCarInformationStatus != Status.Deleted && Model.CrCasCarInformationStatus != Status.Sold && Model.CrCasCarInformationStatus != Status.Hold && (Model.CrCasCarInformationForSaleStatus == Status.ForSale || Model.CrCasCarInformationForSaleStatus == Status.RendAndForSale))
             {
                 @*Document Branch*@
                 <div class="row mt-2">
@@ -116,7 +114,7 @@
                         <label class="form-label">@localizer["Date"]</label>
                     </div>
                     <div class="col-md-2 col-8 dateRelative">
-                        <input type="text" class="form-control dateInput" value="@ViewBag.date" readonly>
+                        <input type="text" class="form-control dateInput" value="@ViewBag.OfferDate" readonly>
                     </div>
 
                 </div>
@@ -136,6 +134,71 @@
                     </div>
                     <div class="col-md-2 col-8">
                         <input type="text" class="form-control" value="@ViewBag.ForRent" readonly>
+                    </div>
+                </div>
+                @*Reasons*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["reasons"]</label>
+                    </div>
+                    <div class="col-md-5 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarInformationReasons" autocomplete="off" maxlength="100">
+                    </div>
+                </div>
+            }
+            else if (Model.CrCasCarInformationStatus == Status.Sold)
+            {
+                @*Document Branch*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["SerialNumber"]</label>
+                    </div>
+                    <div class="col-md-2 col-11">
+                        <input type="text" class="form-control" asp-for="CrCasCarInformationSerailNo" readonly>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Car"]</label>
+                    </div>
+                    <div class="col-md-3 col-11">
+                        @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarInformationConcatenateArName" readonly>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" asp-for="CrCasCarInformationConcatenateEnName" readonly>
+                        }
+                    </div>
+                </div>
+                @*Date of Repair*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["OfferDate"]</label>
+                    </div>
+                    <div class="col-md-2 col-8 dateRelative">
+                        <input type="text" class="form-control dateInput" value="@ViewBag.OfferDate" readonly>
+                    </div>
+
+                </div>
+                @*Date of Repair*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["SoldDate"]</label>
+                    </div>
+                    <div class="col-md-2 col-8 dateRelative">
+                        <input type="text" class="form-control dateInput" value="@ViewBag.SoldDate" readonly>
+                    </div>
+
+                </div>
+                @*Value Offer*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["OfferValueSale"]</label>
+                    </div>
+                    <div class="col-md-2 col-8">
+                        <input type="text" class="form-control" value="@ViewBag.offerValue" readonly>
                     </div>
                 </div>
                 @*Reasons*@
@@ -224,8 +287,8 @@
             @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
         </div>
         <div class="mt-3" id="buttonContainer">
-            
-           @if (Model.CrCasCarInformationStatus == Status.Active && (Model.CrCasCarInformationForSaleStatus == Status.ForSale || Model.CrCasCarInformationForSaleStatus == Status.RendAndForSale))
+
+            @if (Model.CrCasCarInformationStatus != Status.Deleted && Model.CrCasCarInformationStatus != Status.Sold && Model.CrCasCarInformationStatus != Status.Hold && (Model.CrCasCarInformationForSaleStatus == Status.ForSale || Model.CrCasCarInformationForSaleStatus == Status.RendAndForSale))
             {
                 <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Save" data-bs-targett="#centermodalActive">
                     @localizer["ReactiveOffer"]
@@ -233,6 +296,10 @@
                 <a type="button" class="btn btn-primary ms-1" data-bs-toggle="modal" data-error="@Status.Hold" data-bs-targett="#centermodalConfirmOffer">
                     @localizer["ConfirmOffer"]
                 </a>
+            }
+            else if (Model.CrCasCarInformationStatus == Status.Sold)
+            {
+                
             }
             else
             {
@@ -250,8 +317,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h4>@localizer["SureToRetriveHold"]</h4>
-                    <p>@localizer["HintSureToRetriveH"]</p>
+                    <h4>@localizer["CancelOffer"]</h4>
+                    <p>@localizer["HintCancelOffer"]</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
@@ -265,8 +332,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h4>@localizer["SureToRetriveHold"]</h4>
-                    <p>@localizer["HintSureToRetriveH"]</p>
+                    <h4>@localizer["ConfirmOffers"]</h4>
+                    <p>@localizer["HindConfirmOffer"]</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">@localizer["Cancel"]</button>
@@ -312,10 +379,11 @@
             })
             function updateCarForSaleStatus(status) {
                 var code = document.getElementById("CrCasCarInformationSerailNo").value;
+                var reasons = document.getElementById("CrCasCarInformationReasons").value;
                 $.ajax({
                     type: "POST",
                     url: "/CAS/CarsForSale/EditStatusOfSaleCar",
-                    data: { status: status, code: code },
+                    data: { status: status, code: code, reasons: reasons },
                     success: function (result) {
                         $('.modal').modal('hide');
                         window.location.href = "/CAS/CarsForSale/SuccesssMessageForCarsInformation";

@@ -1,0 +1,164 @@
+﻿@using Bnan.Core.Extensions;
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@model IEnumerable<CrCasCarInformation>
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = localizer["Cars Data"];
+    ViewData["Page-Hint"] = localizer["CarsForSale Hint"];
+}
+
+
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["SerialNumber"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Branch"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Car"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["CurrentMeter"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["ContractCount"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    if (item.CrCasCarInformationStatus == Status.Active && (item.CrCasCarInformationForSaleStatus == Status.ForSale || item.CrCasCarInformationForSaleStatus == Status.RendAndForSale))
+                    {
+                        <tr onclick="location.href='@Url.Action("OfferCarForSale", "CarsForSale", new { id = item.CrCasCarInformationSerailNo })'" style="color:red; cursor:pointer">
+                            <td>@no</td>
+                            <td>@item.CrCasCarInformationSerailNo</td>
+                            <td>@item.CrCasCarInformation1.CrCasBranchInformationEnShortName</td>
+                            <td>@item.CrCasCarInformationConcatenateEnName</td>
+                            <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationLastContractDate</td>
+                            <td>
+                                @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.ForSale)
+                                {
+                                    @localizer["ForSale"]
+                                }
+                                else if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.RendAndForSale)
+                                {
+                                    @localizer["ForSaleAndRent"]
+                                }
+
+                            </td>
+                        </tr>
+                        no++;
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("OfferCarForSale", "CarsForSale", new { id = item.CrCasCarInformationSerailNo })'">
+                            <td>@no</td>
+                            <td>@item.CrCasCarInformationSerailNo</td>
+                            <td>@item.CrCasCarInformation1.CrCasBranchInformationEnShortName</td>
+                            <td>@item.CrCasCarInformationConcatenateEnName</td>
+                            <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationLastContractDate</td>
+                            <td>
+                                @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.Active)
+                                {
+                                    @localizer["Avaliable"]
+                                }
+                                else if (item.CrCasCarInformationStatus == Status.Sold)
+                                {
+                                    @localizer["Sold"]
+                                }
+                            </td>
+                        </tr>
+                        no++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["SerialNumber"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Branch"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Car"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["CurrentMeter"]</th>
+                    <th aria-label="position: activate to sort column ascending">@localizer["ContractCount"]</th>
+                    <th aria-label="position: activate to sort column ascending">@localizer["LastDateContract"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    if (item.CrCasCarInformationStatus == Status.Active && (item.CrCasCarInformationForSaleStatus == Status.ForSale || item.CrCasCarInformationForSaleStatus == Status.RendAndForSale))
+                    {
+                        <tr onclick="location.href='@Url.Action("OfferCarForSale", "CarsForSale", new { id = item.CrCasCarInformationSerailNo })'" style="color:red; cursor:pointer">
+                            <td>@no</td>
+                            <td>@item.CrCasCarInformationSerailNo</td>
+                            <td>@item.CrCasCarInformation1.CrCasBranchInformationArShortName</td>
+                            <td>@item.CrCasCarInformationConcatenateArName</td>
+                            <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationLastContractDate</td>
+                            <td>
+                                @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.ForSale)
+                                {
+                                    @localizer["ForSale"]
+                                }
+                                else if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.RendAndForSale)
+                                {
+                                    @localizer["ForSaleAndRent"]
+                                }
+
+                            </td>
+                        </tr>
+                        no++;
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("OfferCarForSale", "CarsForSale", new { id = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;">
+                            <td>@no</td>
+                            <td>@item.CrCasCarInformationSerailNo</td>
+                            <td>@item.CrCasCarInformation1.CrCasBranchInformationArShortName</td>
+                            <td>@item.CrCasCarInformationConcatenateArName</td>
+                            <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
+                            <td>@item.CrCasCarInformationLastContractDate</td>
+                            <td>
+                                @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.Active)
+                                {
+                                    @localizer["Avaliable"]
+                                }
+                                else if (item.CrCasCarInformationStatus == Status.Sold)
+                                {
+                                    @localizer["Sold"]
+                                }
+                            </td>
+                        </tr>
+
+                        no++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+}
