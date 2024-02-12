@@ -153,7 +153,7 @@
                             </div>
 
                             <!-- item-->
-                            <a class="dropdown-item notify-item" data-toggle="modal" data-target="#AccountModal">
+                            <a class="dropdown-item notify-item" asp-area="BS" asp-controller="Employees" asp-action="MyAccount">
                                 <i class="mdi mdi-account-circle me-1"></i>
                                 <span>@localizer["My Account"]</span>
                             </a>
@@ -478,7 +478,6 @@
                                 <div class="col-md-6 profile-image-col flex-wrap">
                                     <div class="profile-Image-div" id="Profile_Image">
                                         <img alt="Profile Image" src="@Url.Content(Model.UserInformation.CrMasUserInformationPicture?.ToString())" class="profileImage" id="User_Profile_img" name="User_Profile_img">
-                                        <input type="text" id="Profile_Photo_Old" name="Profile_Photo_Old" hidden>
                                         <div class="upload_Icon_div">
                                             <a data-toggle="modal" data-target="#Profile_Pic_Modal">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

@@ -28,6 +28,12 @@ namespace Bnan.Inferastructure.Repository
             var benficty = _unitOfWork.CrCasBeneficiary.Find(x => x.CrCasBeneficiaryCode == lessor.CrMasLessorInformationGovernmentNo && x.CrCasBeneficiaryLessorCode == lessor.CrMasLessorInformationCode);
             var distribution = _unitOfWork.CrMasSupCarDistribution.Find(x => x.CrMasSupCarDistributionCode == model.CrCasCarInformationDistribution);
             var color = _unitOfWork.CrMasSupCarColor.Find(x => x.CrMasSupCarColorCode == model.CrCasCarInformationMainColor);
+            if (string.IsNullOrEmpty(model.CrCasCarInformationSecondaryColor)) model.CrCasCarInformationSecondaryColor = null;
+            if (string.IsNullOrEmpty(model.CrCasCarInformationSeatColor)) model.CrCasCarInformationSeatColor = null;
+            if (string.IsNullOrEmpty(model.CrCasCarInformationFloorColor)) model.CrCasCarInformationFloorColor = null;
+
+
+
             CrCasCarInformation casCarInformation = new CrCasCarInformation()
             {
                 CrCasCarInformationSerailNo = model.CrCasCarInformationSerailNo,

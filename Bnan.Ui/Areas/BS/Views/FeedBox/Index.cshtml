@@ -50,17 +50,17 @@
                         <div class="col-11 mx-0">
                             @if (Model.CrCasSysAdministrativeProcedure != null)
                             {
-                                <form id="msform">
+                                <form id="msform" asp-action="AcceptOrNot" asp-controller="FeedBox" asp-area="BS">
+                                    <input hidden name="AdministrativeNo" asp-for="@Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresNo">
+                                    <input hidden id="status" name="status">
                                     <fieldset style="padding-bottom: 0;">
                                         <div class="form-card">
                                             <div class="row data-row ">
                                                 <div class="col-auto">
                                                     <p id="feed-number"> @localizer["FeedNo"] </p>
-
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <p>@Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresNo</p>
-
                                                 </div>
 
                                             </div>
@@ -106,7 +106,7 @@
                                                 </div>
                                                 <div class="col-sm-5 col-md-5 col-lg-5">
                                                     <input class="form-control"
-                                                           id="exampleFormControlTextarea1" rows="1" maxlength="100" name="exampleFormControlTextarea1" asp-for="CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresReasons">
+                                                           id="reasons" rows="1" maxlength="100" name="reasons" asp-for="CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresReasons">
                                                 </div>
 
                                             </div>
@@ -157,20 +157,27 @@
 @section Scripts {
 
     <script>
+        // function AcceptOrNot(status) {
+        //     var reasons = $("#exampleFormControlTextarea1").val();
+        //     $.ajax({
+        //         url: "/BS/FeedBox/AcceptOrNot", // Update with your controller and action
+        //         type: "POST",
+        //         data: { status: status, reasons: reasons },
+        //         success: function (result) {
+        //             window.location.href = "/BS/FeedBox/SuccesssMessageForFeedBox";
+        //         },
+        //         error: function () {
+        //             // Handle errors if necessary
+        //             console.log("Error occurred");
+        //         }
+        //     });
+        // }
         function AcceptOrNot(status) {
-            var reasons = $("#exampleFormControlTextarea1").val();
-            $.ajax({
-                url: "/BS/FeedBox/AcceptOrNot", // Update with your controller and action
-                type: "POST",
-                data: { status: status, reasons: reasons },
-                success: function (result) {
-                    window.location.href = "/BS/FeedBox/SuccesssMessageForFeedBox";
-                },
-                error: function () {
-                    // Handle errors if necessary
-                    console.log("Error occurred");
-                }
-            });
+            // Set the value of the hidden input field
+            document.getElementById('status').value = status;
+
+            // Submit the form
+            document.getElementById('msform').submit();
         }
     </script>
 }

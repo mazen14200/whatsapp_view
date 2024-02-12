@@ -8,9 +8,12 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\**" />
+    <Compile Remove="PathFile\**" />
     <EmbeddedResource Remove="Migrations\**" />
+    <EmbeddedResource Remove="PathFile\**" />
     <None Remove="C:\Users\ahmed\.nuget\packages\microsoft.net.compilers\1.0.0\build\..\tools\**" />
     <None Remove="Migrations\**" />
+    <None Remove="PathFile\**" />
   </ItemGroup>
 
   <ItemGroup>

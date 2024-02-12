@@ -1,4 +1,6 @@
 {
+  "Arabic": "Arabic",
+  "English": "English",
   // CAS System SideBar
   "BnanCompany": "Bnan for managing car rental companies and offices",
   "EmployeeNo": "Employee No.",
@@ -136,7 +138,7 @@
   "UnAvaliable": "Un Avaliable",
   "Tenant": "Tenant",
   "Allowed": "Allowed",
-
+  "NotOffered": "Not Offered",
   // component title
   "Branch Data": "Branches Data",
   "Branch Hint": "The page allows you to Search and Display Branches data",
@@ -234,6 +236,7 @@
   "Edit User Data": "Update Employee Data",
   "Picture": "Picture",
   "Signture": "Signture",
+  "Language": "Default sLanguage",
 
   //lessor page
   "Lessors Data": "Lessors Data",
@@ -382,7 +385,11 @@
   "HintSureToHold": "Stopping employee data will result in reducing some powers, with the possibility of handing over the financial covenant",
   "SureToHold": "Confirm Hold",
   "HintSureTodeleteContractsCompany": "Deleting the company contract will result in the suspension of this contract and all its details",
-
+  "CancelOffer": "Confirm Cancellation",
+  "ConfirmOffers": "Confirm execution of the sale",
+  "HintCancelOffer": "Canceling the offer for sale will result in the possibility of renting the car",
+  "ConfirmOffer": "Confirm the sale",
+  "HindConfirmOffer": "Implementing the sale process will entail removing it from the company’s property while maintaining all previous financial and administrative procedures",
   // modal for Branch
   "SureToRetriveHoldBranch": "Confirm Activation",
   "HintSureToRetriveHBranch": "Retrieving the activation of the branch data will entail activating the cars, points of sale, and documents associated with the branch.",
@@ -969,7 +976,7 @@
   // Cars
   "Cars Data": "Cars Information",
   "Car Data": "Car Information",
-  "Cars Hint": "The page allows you to display, add, and modify Cars information.",
+  "Cars Hint": "This page enables you to view data on cars offered, not offered for sale, and sold ones.",
   "SerialNumber": "Serial Number",
   "ContractCount": "Contracts",
   "DaysCount": "Days",
@@ -978,6 +985,7 @@
   "Maintaince": "Maintaince",
   "Repair": "Repair",
   "ForSale": "For Sale",
+  "ForSaleOnly": "For Sale",
   "Sold": "Sold",
   "Add Car Data": "Add Car",
   "Add Car Hint": "The page allows you to Add Car information.",
@@ -1024,13 +1032,14 @@
   "CarsForSale Hint": "The page allows you to search the data of the cars to be display for sale ",
   "RepairCar Edit Data": "Car Repair",
   "RepairCar Edit Hint": "This Page Enables You to Update Car Repair Data",
-  "CarForSale Edit Data": "Car Data",
-  "CarForSale Edit Hint": "The page allows you to offer car",
+  "CarForSale Edit Data": "Updating sales procedures data",
+  "CarForSale Edit Hint": "This page allows you to update the vehicle selling procedures data",
   "reasonsForRepair": "Description repair",
   "OfferValueSale": "Price",
   "ForSaleAndRent": "Allow To rent",
   "ReactiveOffer": "Cancel Offer",
-  "ConfirmOffer": "Confirm Offer",
+  "OfferDate": "Offer Date",
+  "SoldDate": "Sold Date",
   "Yes": "Yes",
   "Noo": "No",
   "BranchHold": "Branch Hold",

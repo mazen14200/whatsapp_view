@@ -45,10 +45,6 @@
 
 
 
-
-
-
-
 <section class="section-mainCard">
     <div class="row justify-content-center w-100 h-100">
         <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
@@ -108,8 +104,8 @@
                                                 </div>
                                                 <div class="col-md-6 col-lg-6 col-xl-6 personal-data">
                                                     <div id="dropdown-container ">
-                                                        <div class="">
-                                                            <select class="form-select form-select p-0" id="selling-point-drop" asp-for="SalesPointSelected" required>
+                                                        <div>
+                                                            <select class="form-select form-select pb-0" id="selling-point-drop" style="font-size: .8rem;" asp-for="SalesPointSelected" required>
                                                                 <option selected disabled></option>
                                                                 @foreach (var item in Model.SalesPointHaveBalance)
                                                                 {

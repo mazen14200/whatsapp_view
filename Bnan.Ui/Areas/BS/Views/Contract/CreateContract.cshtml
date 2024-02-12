@@ -345,18 +345,10 @@ else
                                     </div>
                                     <div class="row button-row">
                                         <div class="button-card">
-                                            <img src="~/BranchSys/CreateContract/Group.png" alt="Button Image"
-                                                 class="next action-button"
-                                                 style="vertical-align: middle; ">
-                                            <input type="button" name="next" class="next action-button" value="@localizer["Next"]" />
                                         </div>
                                         <div class="button-card">
-                                            <input type="button" name="previous"
-                                                   class="previous action-button-previous"
-                                                   value="@localizer["Previous"]" />
-                                            <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
-                                                 class="previous action-button-previous"
-                                                 style="vertical-align: middle; ">
+                                            <input type="button" name="previous" class="previous action-button-previous" value="@localizer["Previous"]" />
+                                            <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image" class="previous action-button-previous" style="vertical-align: middle; ">
                                         </div>
                                     </div>
 
@@ -381,9 +373,7 @@ else
                                             <div class="col-sm-1 col-md-1 col-lg-1">
                                                 <input type="text" class="form-control" id="TaxRate" readonly>
                                             </div>
-                                            <div class="col-sm-1 col-md-1 col-lg-1">
-                                                <input type="text" class="form-control" id="RentValue" readonly>
-                                            </div>
+                                            <!--ForTest-->
                                             <div class="col-auto seacrh-icon-col">
                                                 <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="seacrh-icon Image"
                                                      id="hover-image-driver">
@@ -671,7 +661,6 @@ else
                                 <!--AddDriver-->
                                 <fieldset>
                                     <div class="form-card form-card4">
-
                                         <div class="row row-step4 ">
                                             <div class="col-auto">
                                                 <label for="national-number-additionalDriver"
@@ -685,6 +674,14 @@ else
                                                     <span class="requird-field" id="requird_field_AdditionalDriverId" asp-validation-for="@Model.Contract.AdditionalDriverId"></span>
                                                 </div>
                                             </div>
+                                            <!--ForTest-->
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <input type="text" class="form-control" id="PriceNo2" readonly>
+                                            </div>
+                                            <div class="col-sm-1 col-md-1 col-lg-1">
+                                                <input type="text" class="form-control" id="TaxRate2" readonly>
+                                            </div>
+                                            <!--ForTest-->
                                             <div class="col-auto seacrh-icon-col">
                                                 <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="seacrh-icon Image"
                                                      id="hover-image-Add-driver">
@@ -803,6 +800,20 @@ else
                                             <div class="col-auto" style="margin-bottom: 32px;">
                                                 <button type="button" class="check-btn" data-bs-toggle="modal" id="AddDriverCheckBtn" onclick="TimerFunctionAddDriver(true)">@localizer["Verification"]</button>
                                             </div>
+                                            <!--ForTest-->
+                                            <div class="col-auto">
+                                                <label for="national-number-driver" class="col-form-label">الخيارات</label>
+                                            </div>
+                                            <div class="col-sm-1 col-md-1 col-lg-1">
+                                                <input type="text" class="form-control" id="ChoicesTest2" readonly>
+                                            </div>
+                                            <div class="col-auto">
+                                                <label for="national-number-driver" class="col-form-label">الاضافات</label>
+                                            </div>
+                                            <div class="col-sm-1 col-md-1 col-lg-1">
+                                                <input type="text" class="form-control" id="AdditionalTest2" readonly>
+                                            </div>
+                                            <!--ForTest-->
                                         </div>
                                         <div class="row row-step4">
                                             <div class="col-auto">
@@ -2090,7 +2101,7 @@ else
             });
         });
         // Modal Submit Code from Mobile
-        ///////////////////////////////////////////////the-Modal-6-digit-vaildation/////////////////////
+        ///////////////////////////////////////////////the-Modal-6-digit-vaildation///////////////////
         function openThirdPopupDriver() {
             var currentDate = new Date();
             var ExpiryIdDate = new Date(DriverInformation.expiryIdDate);
@@ -2126,7 +2137,7 @@ else
                         $("#DriverNationality").text(DriverInformation.personalEnNationality);
                         $("#DriverGender").text(DriverInformation.personalEnGender);
                         $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
-                        if (DriverInformation.licenseEnName != "" && DriverInformation.licenseEnName != null && DriverInformation.licenseEnName != undefined) {
+                        if (DriverInformation.licenseEnName != "" && DriverInformation.licenseEnName != null && DriverInformation.licenseEnName != undefined && DriverInformation.licenseCode != "2") {
                             $("#DriverLicenseType").text(DriverInformation.licenseEnName);
                             $("#DriverLicenseIssued").text(licenseIssuedDate);
                             $("#DriverLicenseExpiration").text(licenseExpiryDate);
@@ -2161,7 +2172,7 @@ else
                         $("#DriverProffessions").text(DriverInformation.personalArProfessions);
                         $("#DriverGender").text(DriverInformation.personalArGender);
                         $("#DriverNationality").text(DriverInformation.personalArNationality);
-                        if (DriverInformation.licenseArName != "" && DriverInformation.licenseArName != null && DriverInformation.licenseArName != undefined) {
+                        if (DriverInformation.licenseArName != "" && DriverInformation.licenseArName != null && DriverInformation.licenseArName != undefined && DriverInformation.licenseCode != "2") {
                             $("#DriverLicenseType").text(DriverInformation.licenseArName);
                             $("#DriverLicenseIssued").text(licenseIssuedDate);
                             $("#DriverLicenseExpiration").text(licenseExpiryDate);
@@ -2275,17 +2286,19 @@ else
                 if ($(this).val() !== initialAddDriver) {
                     // Clear previous data and style
                     $("#requird_field_Birthdate_driver").text('').css("color", "");
-                    $("#birth-date-driver").val(null);
-                    $("#AddDriverAddress").text("");
+                    $("#birth-date-additionalDriver").val(null);
                     $("#AddDriverEmail").text("");
                     $("#AddDriverName").text("");
                     $("#AddDriverNationality").text("");
                     $("#AddDriverGender").text("");
                     $("#AddDriverProffessions").text("");
-                    $("#AddDriverLicenseType").text("");
                     $("#AddDriverLicenseIssued").text("");
                     $("#AddDriverLicenseExpiration").text("");
                     $("#AddDriverLicenseExpirationMessage").text("").css("color", "");
+                    $("#AddDriverAddress").text('').css("color", "");
+                    $("#AddDriverLicenseType").text('').css("color", "");
+                    $("#requird_field_BirthDate_AddDriver").text('@localizer["IdIsExpire"]').css("color", "red");
+
                     $("#AddDriverEmployer").text("");
                     CheckIfAddDriverIdExist = false;
                     AddDriverInformation = null;
@@ -2364,7 +2377,7 @@ else
                         $("#AddDriverNationality").text(AddDriverInformation.personalEnNationality);
                         $("#AddDriverGender").text(AddDriverInformation.personalEnGender);
                         $("#AddDriverProffessions").text(AddDriverInformation.personalEnProfessions);
-                        if (AddDriverInformation.licenseEnName != "" && AddDriverInformation.licenseEnName != null && AddDriverInformation.licenseEnName != undefined) {
+                        if (AddDriverInformation.licenseEnName != "" && AddDriverInformation.licenseEnName != null && AddDriverInformation.licenseEnName != undefined && AddDriverInformation.licenseCode != "2") {
                             $("#AddDriverLicenseIssued").text(licenseIssuedDate);
                             $("#AddDriverLicenseExpiration").text(licenseExpiryDate);
                             $("#AddDriverLicenseType").text(AddDriverInformation.licenseEnName);
@@ -2398,7 +2411,7 @@ else
                         $("#AddDriverProffessions").text(AddDriverInformation.personalArProfessions);
                         $("#AddDriverGender").text(AddDriverInformation.personalArGender);
                         $("#AddDriverNationality").text(AddDriverInformation.personalArNationality);
-                        if (AddDriverInformation.licenseArName != "" && AddDriverInformation.licenseArName != null && AddDriverInformation.licenseArName != undefined) {
+                        if (AddDriverInformation.licenseArName != "" && AddDriverInformation.licenseArName != null && AddDriverInformation.licenseArName != undefined && AddDriverInformation.licenseCode != "2") {
                             $("#AddDriverLicenseType").text(AddDriverInformation.licenseArName);
                             $("#AddDriverLicenseIssued").text(licenseIssuedDate);
                             $("#AddDriverLicenseExpiration").text(licenseExpiryDate);
@@ -2574,167 +2587,172 @@ else
                     var privateDriverRadio1 = document.getElementById("PrivateDriver");
                     var privateDriverID = $("#driver-dropdown").val();
 
-                    if (SerialNumberOfCar != null && PriceNumberOfCar != null) {
-                        $("#Contract_SerialNo").val(SerialNumberOfCar);
-                        $("#Contract_PriceNo").val(PriceNumberOfCar);
-                        // GetCarInfo(SerialNumberOfCar);
-                        GetAdvantages(SerialNumberOfCar);
-                        // Use Promises to ensure data is available before proceeding
-                        Promise.all([getCarChoices(PriceNumberOfCar), getCarAdditional(PriceNumberOfCar)])
-                            .then(([choicesData, additionalsData]) => {
-                                if (privateDriverRadio1.checked) {
-                                    //Clear Data Of Driver And Add Driver To Return Check
-                                    clearDataDriver();
-                                    clearDataAddDriver();
-                                    clearPaymentData();
-                                    document.getElementById("addational-driver").checked = false;
-                                    if (CarAdditionals.count == 0 && CarChoices.count == 0) {
-                                        currentField = "check";
-                                        NextField = "payment";
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs = $(this).closest("fieldset").next().next();
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs = $(this).closest("fieldset").next().next().next();
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs = $(this).closest("fieldset").next().next().next().next();
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs.show();
-                                        current_fs.hide();
-                                        console.log(55555)
-                                    }
-                                    else {
-                                        currentField = "options";
-                                        NextField = "check";
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs = $(this).closest("fieldset").next().next();
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs = $(this).closest("fieldset").next().next().next();
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs.show();
-                                        current_fs.hide();
-                                    }
-                                }
-                                // This Check to If driverIsRenter Or not
-                                else if (driverRadio1.checked) {
-                                    clearDataDriver();
-                                    IsThereAdditionalDriver();
-                                    DriverInformation = RenterInformation;
-                                    var currentDate = new Date();
-                                    var ExpiryIdDate = new Date(RenterInformation.expiryIdDate);
-                                    $("#DriverCheckBtn").hide();
-                                    var birthdate = RenterInformation.birthDate ? RenterInformation.birthDate.split('T')[0] : null;
-                                    var licenseExpiryDate = RenterInformation.licenseExpiryDate ? RenterInformation.licenseExpiryDate.split('T')[0] : null;
-                                    var licenseIssuedDate = RenterInformation.licenseIssuedDate ? RenterInformation.licenseIssuedDate.split('T')[0] : null;
-                                    $("#PriceNo").val(CarInformation.carPrice.crCasPriceCarBasicNo);
-                                    $("#TaxRate").val(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
-                                    $("#RentValue").val(CarInformation.carPrice.crCasPriceCarBasicDailyRent);
-                                    $("#AdditionalTest").val(CarAdditionals.count);
-                                    $("#ChoicesTest").val(CarChoices.count);
-                                    if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
-                                        if (DriverInformation.postEnNameConcenate != "" && DriverInformation.postEnNameConcenate != null && DriverInformation.postEnNameConcenate != undefined) {
-                                            $("#DriverAddress").text(DriverInformation.postEnNameConcenate);
-                                        }
-                                        else {
-                                            $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
-                                        }
-                                        if (DriverInformation.personalEmail != "" && DriverInformation.personalEmail != null && DriverInformation.personalEmail != undefined) {
-                                            $("#DriverEmail").text(DriverInformation.personalEmail);
-                                        }
-                                        else {
-                                            $("#DriverEmail").text('@localizer["notfound"]');
-                                        }
-                                        if (ExpiryIdDate < currentDate) {
-                                            $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
-                                        }
-                                        $("#Contract_DriverId").val(DriverInformation.renterID);
-                                        $("#Contract_DriverId").prop("readonly", true);
+                    SerialNumberOfCar = $(this).find('td').data("serial-number");
+                    PriceNumberOfCar = $(this).find('td').data("price-number");
+                    $("#Contract_SerialNo").val(SerialNumberOfCar);
+                    $("#Contract_PriceNo").val(PriceNumberOfCar);
+                    console.log("SerialNumberOfCar", SerialNumberOfCar);
+                    console.log("PriceNumberOfCar", PriceNumberOfCar);
 
-                                        $("#DriverName").text(DriverInformation.personalEnName);
-                                        $("#DriverNationality").text(DriverInformation.personalEnNationality);
-                                        $("#DriverGender").text(DriverInformation.personalEnGender);
-                                        $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
-                                        if (DriverInformation.licenseEnName != "" && DriverInformation.licenseEnName != null && DriverInformation.licenseEnName != undefined) {
-                                            $("#DriverLicenseType").text(DriverInformation.licenseEnName);
-                                            $("#DriverLicenseIssued").text(licenseIssuedDate);
-                                            $("#DriverLicenseExpiration").text(licenseExpiryDate);
-                                        }
-                                        else {
-                                            $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
-                                            $("#DriverLicenseIssued").text('');
-                                            $("#DriverLicenseExpiration").text('');
-                                        }
-                                        $("#DriverEmployer").text(DriverInformation.employerEnName);
-                                        $("#birth-date-driver").val(birthdate);
-                                    }
-                                    else {
-                                        if (RenterInformation.postArNameConcenate != "" && RenterInformation.postArNameConcenate != null && RenterInformation.postArNameConcenate != undefined) {
-                                            $("#DriverAddress").text(RenterInformation.postArNameConcenate);
-                                        }
-                                        else {
-                                            $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
-                                        }
-                                        if (RenterInformation.personalEmail != "" && RenterInformation.personalEmail != null && RenterInformation.personalEmail != undefined) {
-                                            $("#DriverEmail").text(RenterInformation.personalEmail);
-                                        }
-                                        else {
-                                            $("#DriverEmail").text('@localizer["notfound"]');
-                                        }
-                                        if (ExpiryIdDate < currentDate) {
-                                            $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
-                                        }
-                                        $("#Contract_DriverId").val(RenterInformation.renterID);
-                                        $("#Contract_DriverId").prop("readonly", true);
-
-                                        $("#DriverName").text(RenterInformation.personalArName);
-                                        $("#DriverProffessions").text(RenterInformation.personalArProfessions);
-                                        $("#DriverGender").text(RenterInformation.personalArGender);
-                                        $("#DriverNationality").text(RenterInformation.personalArNationality);
-                                        if (DriverInformation.licenseArName != "" && DriverInformation.licenseArName != null && DriverInformation.licenseArName != undefined) {
-                                            $("#DriverLicenseType").text(DriverInformation.licenseArName);
-                                            $("#DriverLicenseIssued").text(licenseIssuedDate);
-                                            $("#DriverLicenseExpiration").text(licenseExpiryDate);
-                                        }
-                                        else {
-                                            $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
-                                            $("#DriverLicenseIssued").text('');
-                                            $("#DriverLicenseExpiration").text('');
-                                        }
-                                        $("#DriverEmployer").text(RenterInformation.employerArName);
-                                        $("#birth-date-driver").val(birthdate);
-                                    }
+                    GetAdvantages(PriceNumberOfCar);
+                    // GetCarInfo(SerialNumberOfCar);
+                    // Use Promises to ensure data is available before proceeding
+                    Promise.all([getCarChoices(PriceNumberOfCar), getCarAdditional(PriceNumberOfCar), GetCarInfo(SerialNumberOfCar)])
+                        .then(([choicesData, additionalsData, carInformation]) => {
+                            if (privateDriverRadio1.checked) {
+                                //Clear Data Of Driver And Add Driver To Return Check
+                                clearDataDriver();
+                                clearDataAddDriver();
+                                clearPaymentData();
+                                document.getElementById("addational-driver").checked = false;
+                                if (CarAdditionals.count == 0 && CarChoices.count == 0) {
+                                    currentField = "check";
+                                    NextField = "payment";
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next().next().next();
                                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                                     next_fs.show();
                                     current_fs.hide();
-                                    currentField = "driver";
-                                    NextField = "add-driver";
+                                    console.log(55555)
                                 }
                                 else {
-                                    //Clear Data Of Driver And Add Driver To Return Check
-                                    $("#PriceNo").val(CarInformation.carPrice.crCasPriceCarBasicNo);
-                                    $("#TaxRate").val(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
-                                    $("#RentValue").val(CarInformation.carPrice.crCasPriceCarBasicDailyRent);
-                                    $("#AdditionalTest").val(CarAdditionals.count);
-                                    $("#ChoicesTest").val(CarChoices.count);
-                                    IsThereAdditionalDriver();
-                                    clearDataDriver();
-                                    clearDataAddDriver();
-                                    clearPaymentData();
-                                    document.getElementById("addational-driver").checked = false;
+                                    currentField = "options";
+                                    NextField = "check";
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next().next();
                                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                                     next_fs.show();
                                     current_fs.hide();
-                                    currentField = "driver";
-                                    NextField = "add-driver";
                                 }
-                            })
-                            .catch((error) => {
-                                console.error("Error loading data:", error);
-                            });
-                    }
-                    else{
-                        toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                        toastr.error('@localizer["PleaseChooseCar"]');
-                    }
+                            }
+                            // This Check to If driverIsRenter Or not
+                            else if (driverRadio1.checked) {
+                                clearDataDriver();
+                                IsThereAdditionalDriver();
+                                DriverInformation = RenterInformation;
+                                var currentDate = new Date();
+                                var ExpiryIdDate = new Date(RenterInformation.expiryIdDate);
+                                $("#DriverCheckBtn").hide();
+                                var birthdate = RenterInformation.birthDate ? RenterInformation.birthDate.split('T')[0] : null;
+                                var licenseExpiryDate = RenterInformation.licenseExpiryDate ? RenterInformation.licenseExpiryDate.split('T')[0] : null;
+                                var licenseIssuedDate = RenterInformation.licenseIssuedDate ? RenterInformation.licenseIssuedDate.split('T')[0] : null;
+                                //For Test
+                                $("#PriceNo").val(CarInformation.carPrice.crCasPriceCarBasicNo);
+                                $("#TaxRate").val(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
+                                // $("#RentValue").val(CarInformation.carPrice.crCasPriceCarBasicDailyRent);
+                                $("#AdditionalTest").val(CarAdditionals.count);
+                                $("#ChoicesTest").val(CarChoices.count);
+                                //For Test
+
+                                if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                                    if (DriverInformation.postEnNameConcenate != "" && DriverInformation.postEnNameConcenate != null && DriverInformation.postEnNameConcenate != undefined) {
+                                        $("#DriverAddress").text(DriverInformation.postEnNameConcenate);
+                                    }
+                                    else {
+                                        $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
+                                    }
+                                    if (DriverInformation.personalEmail != "" && DriverInformation.personalEmail != null && DriverInformation.personalEmail != undefined) {
+                                        $("#DriverEmail").text(DriverInformation.personalEmail);
+                                    }
+                                    else {
+                                        $("#DriverEmail").text('@localizer["notfound"]');
+                                    }
+                                    if (ExpiryIdDate < currentDate) {
+                                        $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
+                                    }
+                                    $("#Contract_DriverId").val(DriverInformation.renterID);
+                                    $("#Contract_DriverId").prop("readonly", true);
+
+                                    $("#DriverName").text(DriverInformation.personalEnName);
+                                    $("#DriverNationality").text(DriverInformation.personalEnNationality);
+                                    $("#DriverGender").text(DriverInformation.personalEnGender);
+                                    $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
+                                    if (DriverInformation.licenseEnName != "" && DriverInformation.licenseEnName != null && DriverInformation.licenseEnName != undefined && DriverInformation.licenseCode != "2") {
+                                        $("#DriverLicenseType").text(DriverInformation.licenseEnName);
+                                        $("#DriverLicenseIssued").text(licenseIssuedDate);
+                                        $("#DriverLicenseExpiration").text(licenseExpiryDate);
+                                    }
+                                    else {
+                                        $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
+                                        $("#DriverLicenseIssued").text('');
+                                        $("#DriverLicenseExpiration").text('');
+                                    }
+                                    $("#DriverEmployer").text(DriverInformation.employerEnName);
+                                    $("#birth-date-driver").val(birthdate);
+                                }
+                                else {
+                                    if (RenterInformation.postArNameConcenate != "" && RenterInformation.postArNameConcenate != null && RenterInformation.postArNameConcenate != undefined) {
+                                        $("#DriverAddress").text(RenterInformation.postArNameConcenate);
+                                    }
+                                    else {
+                                        $("#DriverAddress").text('@localizer["notfound"]').css("color", "red");
+                                    }
+                                    if (RenterInformation.personalEmail != "" && RenterInformation.personalEmail != null && RenterInformation.personalEmail != undefined) {
+                                        $("#DriverEmail").text(RenterInformation.personalEmail);
+                                    }
+                                    else {
+                                        $("#DriverEmail").text('@localizer["notfound"]');
+                                    }
+                                    if (ExpiryIdDate < currentDate) {
+                                        $("#requird_field_Birthdate_driver").text('@localizer["IdIsExpire"]').css("color", "red");
+                                    }
+                                    $("#Contract_DriverId").val(RenterInformation.renterID);
+                                    $("#Contract_DriverId").prop("readonly", true);
+
+                                    $("#DriverName").text(RenterInformation.personalArName);
+                                    $("#DriverProffessions").text(RenterInformation.personalArProfessions);
+                                    $("#DriverGender").text(RenterInformation.personalArGender);
+                                    $("#DriverNationality").text(RenterInformation.personalArNationality);
+                                    if (DriverInformation.licenseArName != "" && DriverInformation.licenseArName != null && DriverInformation.licenseArName != undefined && DriverInformation.licenseCode != "2") {
+                                        $("#DriverLicenseType").text(DriverInformation.licenseArName);
+                                        $("#DriverLicenseIssued").text(licenseIssuedDate);
+                                        $("#DriverLicenseExpiration").text(licenseExpiryDate);
+                                    }
+                                    else {
+                                        $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
+                                        $("#DriverLicenseIssued").text('');
+                                        $("#DriverLicenseExpiration").text('');
+                                    }
+                                    $("#DriverEmployer").text(RenterInformation.employerArName);
+                                    $("#birth-date-driver").val(birthdate);
+                                }
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs.show();
+                                current_fs.hide();
+                                currentField = "driver";
+                                NextField = "add-driver";
+                            }
+                            else {
+                                //Clear Data Of Driver And Add Driver To Return Check
+                                //ForTest
+                                $("#PriceNo").val(CarInformation.carPrice.crCasPriceCarBasicNo);
+                                $("#TaxRate").val(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
+                                // $("#RentValue").val(CarInformation.carPrice.crCasPriceCarBasicDailyRent);
+                                $("#AdditionalTest").val(CarAdditionals.count);
+                                $("#ChoicesTest").val(CarChoices.count);
+                                //ForTest
+                                IsThereAdditionalDriver();
+                                clearDataDriver();
+                                clearDataAddDriver();
+                                clearPaymentData();
+                                document.getElementById("addational-driver").checked = false;
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs.show();
+                                current_fs.hide();
+                                currentField = "driver";
+                                NextField = "add-driver";
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error loading data:", error);
+                        });
+
 
                     //////////////////////////////////////////
                     console.log("Tab Car", currentField);
@@ -2743,6 +2761,12 @@ else
                     console.log("Tab Driver", currentField);
                     var driverName = $("#DriverName").text();
                     if (driverName != null && driverName != "") {
+                        //ForTest
+                        $("#PriceNo2").val(CarInformation.carPrice.crCasPriceCarBasicNo);
+                        $("#TaxRate2").val(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
+                        $("#AdditionalTest2").val(CarAdditionals.count);
+                        $("#ChoicesTest2").val(CarChoices.count);
+                        //ForTest
                         var currentDate = new Date();
                         var additionalDriver = document.getElementById("addational-driver");
                         var ExpiryIdDateDriver = new Date(DriverInformation.expiryIdDate);
@@ -2794,8 +2818,8 @@ else
                             console.log("license", license, "@user.CrMasUserContractValidity.CrMasUserContractValidityDrivingLicense")
                             console.log("isAgeInRange", isAgeInRange, "@user.CrMasUserContractValidity.CrMasUserContractValidityAge")
                             console.log("employer", employer, "@user.CrMasUserContractValidity.CrMasUserContractValidityEmployer")
-                            
-                            if (id==false && "@user.CrMasUserContractValidity.CrMasUserContractValidityId"=="False") {
+
+                            if (id == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityId" == "False") {
                                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                 toastr.error('@localizer["IdIsExpriredAndYouNotAuth"]');
                                 console.log("Iddddd")
@@ -2941,52 +2965,58 @@ else
                             employer = false;
                         }
                         if (!(id && address && license && isAgeInRange && employer)) {
-                            $.ajax({
-                                url: "/BS/Contract/CheckAuthDriver", // Replace YourController with your actual controller name
-                                type: "GET",
-                                data: { id: id, address: address, license: license, age: isAgeInRange, employer: employer },
-                                success: function (data) {
-                                    var check = data;
-                                    toastr.options = { "positionClass": '@localizer["toastPostion"]', };
 
-                                    if (check == "id") {
-                                        toastr.error('@localizer["IdIsExpriredAndYouNotAuth"]');
-                                        return;
-                                    }
-                                    else if (check == "address") {
-                                        toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
-                                        return
-                                    }
-                                    else if (check == "license") {
-                                        toastr.error('@localizer["LicenseIsExpriredAndYouNotAuth"]');
-                                        return
-                                    }
-                                    else if (check == "age") {
-                                        toastr.error('@localizer["AgeIsExpriredAndYouNotAuth"]');
-                                        return
-                                    }
-                                    else if (check == "employer") {
-                                        toastr.error('@localizer["EmployerIsExpriredAndYouNotAuth"]');
-                                        return
-                                    }
-                                    else if (CarChoices.count == 0 && CarAdditionals.count == 0) {
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs = $(this).closest("fieldset").next().next();
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs.show();
-                                        current_fs.hide();
-                                        currentField = "check";
-                                        NextField = "payment"
-                                    }
-                                    else {
-                                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                                        next_fs.show();
-                                        current_fs.hide();
-                                        currentField = "options"
-                                        NextField = "check"
-                                    }
+
+                            if (id == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityId" == "False") {
+                                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                                toastr.error('@localizer["IdIsExpriredAndYouNotAuth"]');
+                                console.log("Iddddd")
+                                return;
+                            }
+                            else if (address == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityRenterAddress" == "False") {
+                                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                                toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
+                                console.log("address")
+                                return
+                            }
+                            else if (license == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityDrivingLicense" == "False") {
+                                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                                toastr.error('@localizer["LicenseIsExpriredAndYouNotAuth"]');
+                                console.log("license")
+                                return
+                            }
+                            else if (isAgeInRange == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityAge" == "False") {
+                                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                                toastr.error('@localizer["AgeIsExpriredAndYouNotAuth"]');
+                                console.log("isAgeInRange")
+                                return
+                            }
+                            else if (employer == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityEmployer" == "False") {
+                                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                                toastr.error('@localizer["EmployerIsExpriredAndYouNotAuth"]');
+                                console.log("employer")
+                                return
+                            }
+                            else {
+                                if (CarChoices.count == 0 && CarAdditionals.count == 0) {
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs = $(this).closest("fieldset").next().next();
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs.show();
+                                    current_fs.hide();
+                                    currentField = "check";
+                                    NextField = "payment"
                                 }
-                            });
+                                else {
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    next_fs.show();
+                                    current_fs.hide();
+                                    currentField = "options"
+                                    NextField = "check"
+                                }
+                            }
+
+
                         }
                         else if (CarChoices.count == 0 && CarAdditionals.count == 0) {
                             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
@@ -3215,18 +3245,20 @@ else
         function clearDataAddDriver() {
             $("#Contract_AdditionalDriverId").val("");
             $("#Contract_AdditionalDriverId").prop("readonly", false);
-            $("#requird_field_Birthdate_AddDriver").text('').css("color", "");
             $("#birth-date-additionalDriver").val(null);
-            $("#AddDriverAddress").text("");
             $("#AddDriverEmail").text("");
             $("#AddDriverName").text("");
             $("#AddDriverNationality").text("");
             $("#AddDriverGender").text("");
             $("#AddDriverProffessions").text("");
-            $("#AddDriverLicenseType").text("");
             $("#AddDriverLicenseIssued").text("");
             $("#AddDriverLicenseExpiration").text("");
             $("#AddDriverEmployer").text("");
+            $("#AddDriverAddress").text('').css("color", "");
+            $("#AddDriverLicenseType").text('').css("color", "");
+            $("#AddDriverLicenseExpirationMessage").text('').css("color", "");
+            $("#requird_field_BirthDate_AddDriver").text('').css("color", "");
+
             CheckIfAddDriverIdExist = false;
             AddDriverInformation = null;
         }
@@ -3263,33 +3295,54 @@ else
 
 
 
+        // function GetCarInfo(serialNumber) {
+        //     console.log(serialNumber);
+        //     $.ajax({
+        //         url: "/BS/Contract/GetCarInformation",
+        //         type: "GET",
+        //         data: { serialNumber: serialNumber },
+        //         success: function (data) {
+        //             CarInformation = data;
+        //             console.log(data)
+        //             $("#Contract_CurrentMeter").val(CarInformation.carInformation.crCasCarInformationCurrentMeter);
+        //             handleCurrentMeterInput();
+        //         },
+        //         error: function (xhr, textStatus, errorThrown) {
+        //             console.error("Error loading data:", textStatus, errorThrown);
+        //         }
+        //     });
+        // }
         function GetCarInfo(serialNumber) {
-            console.log(serialNumber);
-            $.ajax({
-                url: "/BS/Contract/GetCarInformation",
-                type: "GET",
-                data: { serialNumber: serialNumber },
-                success: function (data) {
-                    CarInformation = data;
-                    console.log(data)
-                    $("#Contract_CurrentMeter").val(CarInformation.carInformation.crCasCarInformationCurrentMeter);
-                    handleCurrentMeterInput();
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    console.error("Error loading data:", textStatus, errorThrown);
-                }
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: "/BS/Contract/GetCarInformation",
+                    type: "GET",
+                    data: { serialNumber: serialNumber },
+                    cache: false,
+                    success: function (data) {
+                        resolve(data);
+                        CarInformation = data;
+                        console.log(data)
+                        $("#Contract_CurrentMeter").val(CarInformation.carInformation.crCasCarInformationCurrentMeter);
+                        handleCurrentMeterInput();
+
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        reject(errorThrown);
+                    }
+                });
             });
         }
 
-        $(".CarSelected").click(function () {
-            // Remove "selected" class from all rows
-            $(".CarSelected").removeClass("selected");
-            // Add "selected" class to the clicked row
-            $(this).addClass("selected");
-            SerialNumberOfCar = $(this).find('td').data("serial-number");
-            PriceNumberOfCar = $(this).find('td').data("price-number");
-            GetCarInfo(SerialNumberOfCar);
-        })
+        // $(".CarSelected").click(function () {
+        //     // Remove "selected" class from all rows
+        //     $(".CarSelected").removeClass("selected");
+        //     // Add "selected" class to the clicked row
+        //     $(this).addClass("selected");
+        //     SerialNumberOfCar = $(this).find('td').data("serial-number");
+        //     PriceNumberOfCar = $(this).find('td').data("price-number");
+        //     GetCarInfo(SerialNumberOfCar);
+        // })
         function GetAdvantages(priceNumber) {
             console.log(priceNumber);
             $.ajax({
@@ -3298,7 +3351,7 @@ else
                 data: { priceNumber: priceNumber },
                 success: function (data) {
                     AdvantagesValue = data;
-                    console.log(AdvantagesValue)
+                    console.log("AdvantagesValue1", AdvantagesValue)
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.error("Error loading data:", textStatus, errorThrown);
@@ -3588,7 +3641,7 @@ else
                 document.getElementById('RentValue').textContent = rentValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                 var TotalChoices = $("#TotalChoices").text();
-                if (parseFloat(TotalChoices) != null && parseFloat(TotalChoices) != 0 && parseFloat(TotalChoices) != "") {
+                if (TotalChoices != null && TotalChoices != 0 && TotalChoices != "" && TotalChoices != undefined) {
                     choicesValue = parseFloat(TotalChoices) * parseInt(daysNo);
                     document.getElementById('ChoicesValue').textContent = choicesValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 }
@@ -3596,10 +3649,12 @@ else
                     document.getElementById('ChoicesValue').textContent = "0.00";
                     choicesValue = 0;
                 }
+                console.log("choicesValue", choicesValue);
                 $("#Contract_OptionTotal").val(choicesValue);
 
                 var TotalAdditionals = $("#TotalAdditionals").text();
-                if (parseFloat(TotalAdditionals) != null && parseFloat(TotalAdditionals) != "") {
+                console.log("TotalAdditionals", TotalAdditionals);
+                if (TotalAdditionals != null && TotalAdditionals != 0 && TotalAdditionals != "" && TotalAdditionals != undefined) {
                     additionalValue = parseFloat(TotalAdditionals);
                     document.getElementById('AdditionalValue').textContent = additionalValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -3609,8 +3664,11 @@ else
                     additionalValue = 0;
                 }
                 $("#Contract_AdditionalTotal").val(additionalValue);
-
+                console.log("additionalValue", additionalValue);
                 var AdvatagesTotalValue = parseFloat(AdvantagesValue);
+                console.log("AdvantagesValue", AdvantagesValue);
+                console.log("AdvatagesTotalValue", AdvatagesTotalValue);
+
                 if (AdvatagesTotalValue != null && AdvatagesTotalValue != "") {
                     advantagesValueTotal = AdvatagesTotalValue * parseInt(daysNo);
                     document.getElementById('AdvatagesValue').textContent = advantagesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -3619,7 +3677,8 @@ else
                     document.getElementById('AdvatagesValue').textContent = "0.00";
                     advantagesValueTotal = 0;
                 }
-                $("#Contract_AdvantagesTotalValue").val(contractValue);
+                $("#Contract_AdvantagesTotalValue").val(advantagesValueTotal);
+                console.log("advantagesValueTotal", advantagesValueTotal);
 
 
                 var additionalDriver = document.getElementById("addational-driver");
@@ -3638,9 +3697,15 @@ else
 
                 var privateDriverRadio1 = document.getElementById("PrivateDriver");
                 var privateDriverID = $("#driver-dropdown").val();
-                if (privateDriverRadio1.checked && privateDriverID == null) {
+                console.log("privateDriverRadio1", privateDriverRadio1)
+                console.log("privateDriverRadio1.Checked", privateDriverRadio1.checked)
+                console.log("privateDriverID", privateDriverID)
+
+                if (privateDriverRadio1.checked && privateDriverID != null) {
                     var privateDriver = CarInformation.carPrice.crCasPriceCarBasicPrivateDriverValue;
-                    if (parseInt(privateDriver) != null) {
+                    console.log("privateDriver", privateDriver)
+                    console.log("parseInt(privateDriver)", parseInt(privateDriver))
+                    if (privateDriver != null) {
                         privateDriverValue = parseFloat(privateDriver) * parseInt(daysNo);
                         document.getElementById('PrivateDriverValue').textContent = privateDriverValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     }
@@ -3648,6 +3713,10 @@ else
                         document.getElementById('PrivateDriverValue').textContent = "0.00";
                         privateDriverValue = 0;
                     }
+                }
+                else {
+                    privateDriverValue = 0;
+                    document.getElementById('PrivateDriverValue').textContent = "0.00";
                 }
                 //Get FeeTmm Out Or in value
                 getFeeTmm();
@@ -3685,7 +3754,7 @@ else
             document.getElementById('Taxvalue').textContent = "0.00";
             document.getElementById('TotalActualContract').textContent = "0.00";
             document.getElementById("TotalAmount").textContent = "0.00";
-            document.getElementById("dayNo").textContent = "";
+            document.getElementById("dayNo").value = "";
             document.getElementById("Discount_Input").value = 0;
             document.getElementById("Delegate-out").checked = false;
             $('#AmountPayed').prop('readonly', true);

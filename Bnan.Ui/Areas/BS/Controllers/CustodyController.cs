@@ -74,21 +74,15 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 bSLayoutVM.UserBalanceTotal = UserBranchValidity.CrMasUserBranchValidityBranchCashBalance;
                 bSLayoutVM.UserBalanceAvaliable = UserBranchValidity.CrMasUserBranchValidityBranchCashAvailable;
                 bSLayoutVM.UserBalanceResereved = UserBranchValidity.CrMasUserBranchValidityBranchCashReserved;
-                bSLayoutVM.CustodyReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptBank == "00" &&
-                                                                                       x.CrCasAccountReceiptLessorCode == lessorCode &&
-                                                                                       x.CrCasAccountReceiptBranchCode == branchCode &&
-                                                                                       x.CrCasAccountReceiptIsPassing == "1" &&
-                                                                                       x.CrCasAccountReceiptUser == userLogin.CrMasUserInformationCode,
-                                                                                       new[] {
-                                                                                           "CrCasAccountReceiptPaymentMethodNavigation",
-                                                                                           "CrCasAccountReceiptReferenceTypeNavigation" }).ToList();
+                
             }
             else
             {
                 bSLayoutVM.UserBalanceTotal = UserBranchValidity.CrMasUserBranchValidityBranchSalesPointBalance;
                 bSLayoutVM.UserBalanceAvaliable = UserBranchValidity.CrMasUserBranchValidityBranchSalesPointAvailable;
                 bSLayoutVM.UserBalanceResereved = UserBranchValidity.CrMasUserBranchValidityBranchSalesPointReserved;
-                bSLayoutVM.CustodyReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptBank != "00" &&
+            }
+            bSLayoutVM.CustodyReceipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptSalesPoint == salesPointCode &&
                                                                                        x.CrCasAccountReceiptLessorCode == lessorCode &&
                                                                                        x.CrCasAccountReceiptBranchCode == branchCode &&
                                                                                        x.CrCasAccountReceiptIsPassing == "1" &&
@@ -96,7 +90,6 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                        new[] {
                                                                                            "CrCasAccountReceiptPaymentMethodNavigation",
                                                                                            "CrCasAccountReceiptReferenceTypeNavigation" }).ToList();
-            }
             return PartialView("_CustodyData", bSLayoutVM);
         }
         [HttpPost]
@@ -124,7 +117,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         var R = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptNo == Receipt);
                         if (R != null)
                         {
-                            checkUpdateReceipt = await _custodyService.UpdateAccountReceipt(R.CrCasAccountReceiptNo, adminstritive.CrCasSysAdministrativeProceduresNo, Reasons);
+                            checkUpdateReceipt = await _custodyService.UpdateAccountReceipt(R.CrCasAccountReceiptNo, adminstritive.CrCasSysAdministrativeProceduresNo);
                         }
                         else
                         {
