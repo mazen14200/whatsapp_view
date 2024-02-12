@@ -104,6 +104,11 @@ namespace Bnan.Inferastructure
             CreateMap<CrCasRenterContractBasic, ContractForExtensionVM>();
             CreateMap<ContractForExtensionVM, CrCasRenterContractBasic>();
 
+            CreateMap<CrMasSupCarBrand,CarBrandsVM>();
+            CreateMap<CarBrandsVM, CrMasSupCarBrand>();
+
+            CreateMap<CrMasSupRenterNationality, RenterNationalityVM>();
+            CreateMap<RenterNationalityVM, CrMasSupRenterNationality>();
         }
 
     }

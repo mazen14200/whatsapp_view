@@ -93,7 +93,8 @@
   "Manager": "المدير",
   "MobilePhone": "الجوال",
   "TelePhone": "الهاتف",
-  "Status": "الحاله",
+  "Status": "الحاله  ",
+  "Count": "العدد  ",
   "search": "بحث",
   "photo": "صورة",
   "Documentphoto": "صورة المستند",
@@ -327,8 +328,44 @@
   "Car": "السيارة",
 
 
+  //Car Brands------
+  "Brands Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل ماركة سيارة ",
+  "Brands Data": "عرض الماركات",
+  "CarBrandNameEn": "اسم الماركة بالانجليزي",
+  "CarBrandName": "اسم الماركة",
+  "CarBrandNameAr": "اسم الماركة بالعربي",
+  "CarBrandCode": "الرمز",
+  "Add Brands Hint": ".تمكنك هذه الصفحة من إضافة ماركة سيارة جديدة ",
+  "Add Brands Data": "اضافة ماركة سيارة",
+  "Edit Brands Hint": ".تمكنك هذه الصفحة من تعديل ماركة سيارة  ",
+  "Edit Brands Data": "تعديل ماركة سيارة",
+  "CarBrandImg": " صورة ماركةالسيارة",
 
+  "HintSureToRetriveHCarBrand": "سيترتب على استرجاع إيقاف بيانات ماركة السيارة وجودها على النظام.",
+  "HintSureToRetriveDCarBrand": "سيترتب على استرجاع حذف بيانات ماركة السيارة وجودها على النظام.",
 
+  "HintSureTodeleteCarBrand": "سيترتب على حذف بيانات ماركة السيارة عدم وجودها على النظام",
+  "HintSureToHoldCarBrand": "سيترتب على إيقاف بيانات ماركة السيارة إيقافها على النظام",
+
+  "HintSureTo_Cannot_deleteCarBrand": " للأسف لا تستطيع حذف ماركة السيارة هذه لأنه يوجد منها عدد =",
+  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
+
+  //Renter Nationality------
+  "RenterNationality Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل جنسية مستأجر ",
+  "RenterNationality Data": "عرض جنسيات المستأجرين",
+  "RenterNationalityNameEn": "اسم الجنسية بالانجليزي",
+  "RenterNationalityNameAr": "اسم الجنسية بالعربي",
+  "RenterNationalityCode": "رمز الجنسية",
+  "Add RenterNationality Hint": ".تمكنك هذه الصفحة من إضافة جنسية مستأجر  ",
+  "Add RenterNationality Data": "اضافة جنسية مستأجر",
+  "Edit RenterNationality Hint": ".تمكنك هذه الصفحة من تعديل جنسية مستأجر  ",
+  "Edit RenterNationality Data": "تعديل جنسية مستأجر",
+
+  "HintSureToRetriveHRenterNationality": "سيترتب على استرجاع إيقاف بيانات  جنسية المستأجر وجودها على النظام.",
+  "HintSureToRetriveDRenterNationality": "سيترتب على استرجاع حذف بيانات جنسية المستأجر وجودها على النظام.",
+
+  "HintSureTodeleteRenterNationality": "سيترتب على حذف بيانات جنسية المستأجر عدم وجودها على النظام",
+  "HintSureToHoldRenterNationality": "سيترتب على إيقاف بيانات جنسية المستأجر إيقافها على النظام",
 
 
 
@@ -336,6 +373,7 @@
   "requiredFiled": "هذا الحقل مطلوب.",
   "requiredNoLengthFiled": "هذا الحقل يلازم {0} ارقام",
   "requiredNoLengthFiled15": "هذا الحقل يلازم 15 ارقام",
+  "requiredNoLengthFiled30": "هذا الحقل يلازم اقل من 30 خانة",
   "requiredNoLengthFiled10": "هذا الحقل يلازم 10 ارقام ويبدأ برقم 7",
   "NotStartWith7": "هذا الحقل يلازم 10 ارقام و لا يمكن ان يبدأ برقم 7",
   "requiredNoStartWithFiled7": "هذا الحقل مطلوب و يبدء برقم7",
@@ -455,6 +493,8 @@
   "toastMessageExistRenters": "عفواً ..... لا يوجد مستأجرين بالشركة",
   "toastMessageExistReceipts": "عفواً ..... لا يوجد قيود بالفرع ",
 
+  "Existing": "هذا الحقل مسجل من قبل",
+  "Exist": "ExistAr",
 
   // LessorImages
   "LessorsImages Hint": "تمكنك هذه الصفحة من عرض بيانات الشركات وتعديل الصور المساندة للشركات ",

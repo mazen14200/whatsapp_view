@@ -91,6 +91,7 @@
   "MobilePhone": "Mobile Phone",
   "TelePhone": "TelePhone",
   "Status": "Status",
+  "Count": "Count",
   "search": "search",
   "photo": "Pohto",
   "Documentphoto": "Document photo",
@@ -320,6 +321,47 @@
   "Edit Distribtion Data": "Edit Distribtion Car",
   "Car": "Car",
 
+  //Car Brands------
+  "Brands Hint": "The page allows you to display, add, and modify Car Brands data.",
+  "Brands Data": "Car Brands",
+  "CarBrandNameEn": "Brand Name in English",
+  "CarBrandNameAr": "Brand Name in Arabic",
+  "CarBrandName": "Brand Name",
+  "CarBrandCode": "Code",
+  "Add Brands Hint": "This page allows you to add Car Brands data.",
+  "Add Brands Data": "Add Car Brands",
+  "Edit Brands Hint": "The page allows you to modify Car Brands data.",
+  "Edit Brands Data": "modify Car Brands",
+  "CarBrandImg": "Car Brand Img",
+
+  "HintSureToRetriveHCarBrand": "The retrieval of Car Brand data will result to be restored in the system.",
+  "HintSureToRetriveDCarBrand": "The retrieval of  Car Brand data will result to be restored in the system.",
+
+  "HintSureTodeleteCarBrand": "Deleting  Car Brand data will result not being able to accessed in the system.",
+  "HintSureToHoldCarBrand": " Car Brand data will be holded, which results in the system being holded as well.",
+
+  "HintSureTo_Cannot_deleteCarBrand": "Sorry You Can't Delete this Car Brand because there are Count of this = ",
+  "SureTo_Cannot_delete": "Sorry You Can't Delete this",
+
+  //Renter Nationality------
+  "RenterNationality Hint": "The page allows you to display, add, and modify Renter Nationality data.",
+  "RenterNationality Data": "Renter Nationality",
+  "RenterNationalityNameEn": "Nationality Name in English",
+  "RenterNationalityNameAr": "Nationality Name in Arabic",
+  "RenterNationalityName": "Nationality Name",
+  "RenterNationalityCode": "Nationality Code",
+  "Add RenterNationality Hint": "This page allows you to add Renter Nationality data.",
+  "Add RenterNationality Data": "Add Renter Nationality",
+  "Edit RenterNationality Hint": "The page allows you to modify Renter Nationality data.",
+  "Edit RenterNationality Data": "modify Renter Nationality",
+
+  "HintSureToRetriveHRenterNationality": "The retrieval of Renter Nationality data will result to be restored in the system.",
+  "HintSureToRetriveDRenterNationality": "The retrieval of Renter Nationality data will result to be restored in the system.",
+
+  "HintSureTodeleteRenterNationality": "Deleting  Renter Nationality data will result not being able to accessed in the system.",
+  "HintSureToHoldRenterNationality": " Renter Nationality data will be holded, which results in the system being holded as well.",
+
+
 
   // buttons
   "Hold": "Hold",
@@ -362,6 +404,7 @@
   "requiredFiled": "This Field Is Required",
   "requiredNoLengthFiled": "Please enter exactly {0} numbers.",
   "requiredNoLengthFiled15": "Please enter exactly 15 numbers.",
+  "requiredNoLengthFiled30": "Please enter No More Than 30 Digits.",
   "requiredNoStartWithFiled": "Input Must Start With  Number {0}.",
   "requiredNoStartWithFiled7": "Field Is Required And Must Start With Number 7",
   "requiredNoStartWithFiled15": "Field Is Required And Must Start With Number 15",
@@ -450,6 +493,9 @@
   "PleaseChooseAtLeastOneValue": "Sorry.....you must choose at least one value ",
   "toastMessageExistRenters": "Sorry.....there is no renters in company",
   "toastMessageExistReceipts": "Sorry.....there is no receipts in branch",
+
+  "Existing": "This field is Existed.",
+  "Exist": "ExistEn",
   // LessorImages
   "LessorsImages Hint": "The page allows you to display lessors data , and modify lessors images",
   "Edit Lessor Images Data": "Edit",

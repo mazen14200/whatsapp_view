@@ -8,5 +8,6 @@ namespace Bnan.Core.Interfaces
 {
     public interface IRenterNationality
     {
+
     }
 }

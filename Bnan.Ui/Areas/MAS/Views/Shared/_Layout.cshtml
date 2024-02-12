@@ -37,6 +37,7 @@
     <link href="~/css/vendor/responsive.bootstrap5.css" rel="stylesheet" type="text/css">
     <link href="~/css/vendor/buttons.bootstrap5.css" rel="stylesheet" type="text/css">
     <link href="~/css/vendor/select.bootstrap5.css" rel="stylesheet" type="text/css">
+
     <title>@ViewData["Title"]</title>
     <link rel="shortcut icon" href="~/Bnan.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
@@ -46,7 +47,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-
     @*select2*@
     <link rel="stylesheet" href="~/css/select2.min.css" />
     @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
@@ -67,10 +67,10 @@
     <link rel="shortcut icon" type="image/ico" href="~/Bnan.png">
 
 
-
-
-
-
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 </head>
 <body class="show" id="CAS" data-layout-config="{&quot;leftSideBarTheme&quot;:&quot;dark&quot;,&quot;layoutBoxed&quot;:false, &quot;leftSidebarCondensed&quot;:false, &quot;leftSidebarScrollable&quot;:false,&quot;darkMode&quot;:false, &quot;showRightSidebarOnStart&quot;: true}" data-leftbar-theme="dark" style="visibility: visible;">
 
@@ -404,8 +404,9 @@
                                                                 {
                                                                     @*Nationalities*@
                                                                     <li>
-                                                                        <a>@localizer["Nationalities"]</a>
+                                                                        <a asp-area="MAS" asp-controller="RenterNationality" asp-action="Index">@localizer["Nationalities"]</a>
                                                                     </li>
+
                                                                 }
 
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1106004")?.CrMasUserSubValidationAuthorization == true)
@@ -494,7 +495,7 @@
                                                                 {
                                                                     @*Models*@
                                                                     <li>
-                                                                        <a>@localizer["Brands"]</a>
+                                                                        <a asp-area="MAS" asp-controller="CarBrand" asp-action="Index">@localizer["Brands"]</a>
                                                                     </li>
                                                                 }
 
@@ -1129,7 +1130,6 @@
     @await Component.InvokeAsync("NToastNotify")
     <script src="~/js/site.js"></script>
 
-
     @*set datatable*@
     <script>
         function set_basic_datatable() {
@@ -1239,6 +1239,7 @@
                     } else {
                         toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                         toastr.error('@localizer["toastMessage"]');
+                        
                     }
                 },
             })

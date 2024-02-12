@@ -1,0 +1,182 @@
+﻿@using Bnan.Core.Extensions
+@model Tuple<IEnumerable<CrMasSupCarBrand>, List<List<string>>>
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
+}
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["CarBrandCode"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["CarBrandName"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Count"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model.Item1)
+                {
+                    @if (item.CrMasSupCarBrandStatus == @Status.Deleted || item.CrMasSupCarBrandStatus == @Status.Hold)
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "CarBrand", new { id = item.CrMasSupCarBrandCode })'" style="cursor:pointer;color:red">
+                            <td>@no</td>
+                            <td>@item.CrMasSupCarBrandCode</td>
+                            <td>@item.CrMasSupCarBrandEnName</td>
+                            <td>
+                                @if (Model.Item2 != null)
+                                {
+                                    @foreach (var row in Model.Item2)
+                                    {
+                                        if(row[0] == @item.CrMasSupCarBrandCode)
+                                        {
+                                            @row[1]
+                                        }
+
+                                    }
+                                }
+                            </td>
+                            <td>
+                                &emsp;
+                                @if (@item.CrMasSupCarBrandStatus == Status.Deleted)
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else if (@item.CrMasSupCarBrandStatus == Status.Hold)
+                                {
+                                    @localizer["Hold"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "CarBrand", new { id = item.CrMasSupCarBrandCode })'">
+                            <td>@no</td>
+                            <td>@item.CrMasSupCarBrandCode</td>
+                            <td>@item.CrMasSupCarBrandEnName</td>
+                            <td>
+                                @if (Model.Item2 != null)
+                                {
+                                    @foreach (var row in Model.Item2)
+                                    {
+                                        if (row[0] == @item.CrMasSupCarBrandCode)
+                                        {
+                                            @row[1]
+                                        }
+
+                                    }
+                                }
+                            </td>
+                            <td>
+                                &emsp;
+                                @if (@item.CrMasSupCarBrandStatus == Status.Active)
+                                {
+                                    @localizer["Active"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending" >@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending" >@localizer["CarBrandCode"]</th>
+                    <th aria-label="Position: activate to sort column ascending" >@localizer["CarBrandName"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Count"]</th>
+                    <th aria-label="Position: activate to sort column ascending" >@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model.Item1)
+                {
+                    @if (item.CrMasSupCarBrandStatus == @Status.Deleted || item.CrMasSupCarBrandStatus == @Status.Hold)
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "CarBrand", new { id = item.CrMasSupCarBrandCode })'" style="cursor:pointer;color:red">
+                            <td>&emsp; @no</td>
+                            <td>&emsp; @item.CrMasSupCarBrandCode</td>
+                            <td>&emsp; @item.CrMasSupCarBrandArName</td>
+                            <td>
+                                &emsp;&emsp;
+                                @if (Model.Item2 != null)
+                                {
+                                    @foreach (var row in Model.Item2)
+                                    {
+                                        if (row[0] == @item.CrMasSupCarBrandCode)
+                                        {
+                                            @row[1]
+                                        }
+
+                                    }
+                                }
+                            </td>
+                            <td>
+                                &emsp;&emsp;
+                                @if (@item.CrMasSupCarBrandStatus == Status.Deleted)
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else if (@item.CrMasSupCarBrandStatus == Status.Hold)
+                                {
+                                    @localizer["Hold"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "CarBrand", new { id = item.CrMasSupCarBrandCode })'">
+                            <td>&emsp; @no</td>
+                            <td>&emsp; @item.CrMasSupCarBrandCode</td>
+                            <td>&emsp; @item.CrMasSupCarBrandArName</td>
+                            <td>
+                                &emsp;&emsp;
+                                @if (Model.Item2 != null)
+                                {
+                                    @foreach (var row in Model.Item2)
+                                    {
+                                        if (row[0] == @item.CrMasSupCarBrandCode)
+                                        {
+                                            @row[1]
+                                        }
+
+                                    }
+                                }
+                            </td>
+                            <td>
+                                &emsp;&emsp;
+                                @if (@item.CrMasSupCarBrandStatus == Status.Active)
+                                {
+                                    @localizer["Active"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}

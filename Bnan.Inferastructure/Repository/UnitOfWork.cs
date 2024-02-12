@@ -103,6 +103,7 @@ namespace Bnan.Inferastructure.Repository
         public IGenric<CrCasAccountReceipt> CrCasAccountReceipt { get; private set; }
         public IGenric<CrCasRenterContractAlert> CrCasRenterContractAlert { get; private set; }
         public IGenric<CrMasSysEvaluation> CrMasSysEvaluation { get; private set; }
+        public IGenric<CrMasSupCarBrand> CrMasSupCarBrand { get; private set; }
 
 
         public UnitOfWork(BnanKSAContext context)
@@ -187,6 +188,7 @@ namespace Bnan.Inferastructure.Repository
             CrCasAccountReceipt = new BaseRepository<CrCasAccountReceipt>(_context);
             CrCasRenterContractAlert = new BaseRepository<CrCasRenterContractAlert>(_context);
             CrMasSysEvaluation = new BaseRepository<CrMasSysEvaluation>(_context);
+            CrMasSupCarBrand = new BaseRepository<CrMasSupCarBrand>(_context);
         }
         public int Complete()
         {

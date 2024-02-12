@@ -63,8 +63,10 @@ namespace Bnan.Inferastructure.Repository
                 userLogin.CrMasUserLoginSubTask = subTaskCode;
                 userLogin.CrMasUserLoginArOperation = operationAr;
                 userLogin.CrMasUserLoginEnOperation = operationEn;
-                userLogin.CrMasUserLoginConcatenateOperationArDescription = $"{user.CrMasUserInformationArName.Trim()} - {systemAr} - {mainTaskAr} - {subTaskAr} - {operationAr}";
-                userLogin.CrMasUserLoginConcatenateOperationEnDescription = $"{user.CrMasUserInformationEnName.Trim()} - {systemEn} - {mainTaskEn} - {mainTaskEn} - {operationEn}";
+                //userLogin.CrMasUserLoginConcatenateOperationArDescription = $"{user.CrMasUserInformationArName.Trim()} - {systemAr} - {mainTaskAr} - {subTaskAr} - {operationAr}";
+                //userLogin.CrMasUserLoginConcatenateOperationEnDescription = $"{user.CrMasUserInformationEnName.Trim()} - {systemEn} - {mainTaskEn} - {mainTaskEn} - {operationEn}";
+                userLogin.CrMasUserLoginConcatenateOperationArDescription = $"{systemAr} - {mainTaskAr} - {subTaskAr} - {operationAr}";
+                userLogin.CrMasUserLoginConcatenateOperationEnDescription = $"{systemEn} - {mainTaskEn} - {mainTaskEn} - {operationEn}";
                 await  _unitOfWork.CrMasUserLogins.AddAsync(userLogin);
                 await _unitOfWork.CompleteAsync();
                 

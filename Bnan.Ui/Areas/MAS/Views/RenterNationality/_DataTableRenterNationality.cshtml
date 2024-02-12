@@ -1,0 +1,122 @@
+﻿@using Bnan.Core.Extensions
+@model IEnumerable<CrMasSupRenterNationality>
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
+}
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterNationalityCode"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterNationalityNameEn"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrMasSupRenterNationalitiesStatus == @Status.Deleted || item.CrMasSupRenterNationalitiesStatus == @Status.Hold)
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "RenterNationality", new { id = item.CrMasSupRenterNationalitiesCode })'" style="cursor:pointer;color:red">
+                            <td>@no</td>
+                            <td>@item.CrMasSupRenterNationalitiesCode</td>
+                            <td>@item.CrMasSupRenterNationalitiesEnName</td>
+                            <td>
+                                @if (@item.CrMasSupRenterNationalitiesStatus == Status.Deleted)
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else if (@item.CrMasSupRenterNationalitiesStatus == Status.Hold)
+                                {
+                                    @localizer["Hold"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "RenterNationality", new { id = item.CrMasSupRenterNationalitiesCode })'">
+                            <td>@no</td>
+                            <td>@item.CrMasSupRenterNationalitiesCode</td>
+                            <td>@item.CrMasSupRenterNationalitiesEnName</td>
+                            <td>
+                                @if (@item.CrMasSupRenterNationalitiesStatus == Status.Active)
+                                {
+                                    @localizer["Active"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="col-sm-12">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
+            <thead>
+                <tr role="row">
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterNationalityCode"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterNationalityNameEn"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    @if (item.CrMasSupRenterNationalitiesStatus == @Status.Deleted || item.CrMasSupRenterNationalitiesStatus == @Status.Hold)
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "RenterNationality", new { id = item.CrMasSupRenterNationalitiesCode })'" style="cursor:pointer;color:red">
+                            <td>@no</td>
+                            <td>@item.CrMasSupRenterNationalitiesCode</td>
+                            <td>@item.CrMasSupRenterNationalitiesArName</td>
+                            <td>
+                                @if (@item.CrMasSupRenterNationalitiesStatus == Status.Deleted)
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else if (@item.CrMasSupRenterNationalitiesStatus == Status.Hold)
+                                {
+                                    @localizer["Hold"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "RenterNationality", new { id = item.CrMasSupRenterNationalitiesCode })'">
+                            <td>@no</td>
+                            <td>@item.CrMasSupRenterNationalitiesCode</td>
+                            <td>@item.CrMasSupRenterNationalitiesArName</td>
+                            <td>
+                                @if (@item.CrMasSupRenterNationalitiesStatus == Status.Active)
+                                {
+                                    @localizer["Active"]
+                                }
+                            </td>
+                        </tr>
+                    }
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
