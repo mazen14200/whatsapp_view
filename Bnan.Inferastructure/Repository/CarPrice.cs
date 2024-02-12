@@ -3,6 +3,7 @@ using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
@@ -25,7 +26,7 @@ namespace Bnan.Inferastructure.Repository
             {
                 CrCasPriceCarAdvantagesNo = serialNumber,
                 CrCasPriceCarAdvantagesCode = id,
-                CrCasPriceCarAdvantagesValue = decimal.Parse(value)
+                CrCasPriceCarAdvantagesValue = decimal.Parse(value, CultureInfo.InvariantCulture)
             };
             await _unitOfWork.CrCasPriceCarAdvantage.AddAsync(crCasPriceCarAdvantage);
             return true;
@@ -42,7 +43,7 @@ namespace Bnan.Inferastructure.Repository
             {
                 CrCasPriceCarOptionsNo = serialNumber,
                 CrCasPriceCarOptionsCode = id,
-                CrCasPriceCarOptionsValue = decimal.Parse(value)
+                CrCasPriceCarOptionsValue = decimal.Parse(value, CultureInfo.InvariantCulture)
             };
             await _unitOfWork.CrCasPriceCarOption.AddAsync(crCasPriceCarOption);
             return true;
@@ -55,7 +56,7 @@ namespace Bnan.Inferastructure.Repository
             {
                 CrCasPriceCarAdditionalNo = serialNumber,
                 CrCasPriceCarAdditionalCode = id,
-                CrCasPriceCarAdditionalValue = decimal.Parse(value)
+                CrCasPriceCarAdditionalValue = decimal.Parse(value, CultureInfo.InvariantCulture)
             };
             await _unitOfWork.CrCasPriceCarAdditional.AddAsync(crCasPriceCarAdditional);
             return true;

@@ -3,6 +3,7 @@ using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Security.Cryptography.Xml;
@@ -83,7 +84,7 @@ namespace Bnan.Inferastructure.Repository
 
             renterContractBasic.CrCasRenterContractBasicPreviousBalance = Renter.CrCasRenterLessorBalance;
             renterContractBasic.CrCasRenterContractBasicAmountRequired = renterContractBasic.CrCasRenterContractBasicExpectedTotal + renterContractBasic.CrCasRenterContractBasicPreviousBalance;
-            renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = decimal.Parse(AmountPayed);
+            renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = decimal.Parse(AmountPayed, CultureInfo.InvariantCulture);
             renterContractBasic.CrCasRenterContractBasicUserInsert = UserInsert;
             renterContractBasic.CrCasRenterContractBasicReasons = Reasons;
             renterContractBasic.CrCasRenterContractBasicStatus = Status.Active;

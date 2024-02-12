@@ -1,6 +1,7 @@
 ﻿using Bnan.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Bnan.Inferastructure.Repository
             var membership = await _unitOfWork.CrCasLessorMembership.FindAsync(x => x.CrCasLessorMembershipConditionsLessor == LessorCode && x.CrCasLessorMembershipConditions == code);
             if (membership != null) { 
                 membership.CrCasLessorMembershipConditionsActivate = isActivate;
-                membership.CrCasLessorMembershipConditionsAmount = decimal.Parse(amount);
+                membership.CrCasLessorMembershipConditionsAmount = decimal.Parse(amount, CultureInfo.InvariantCulture);
                 membership.CrCasLessorMembershipConditionsLink1= link1;
                 membership.CrCasLessorMembershipConditionsKm=int.Parse(km);
                 membership.CrCasLessorMembershipConditionsLink2= link2;

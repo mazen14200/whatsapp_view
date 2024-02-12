@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
@@ -126,8 +127,8 @@ namespace Bnan.Inferastructure.Repository
                 CrCasSysAdministrativeProceduresDate = DateTime.Now.Date,
                 CrCasSysAdministrativeProceduresTime = DateTime.Now.TimeOfDay,
                 CrCasSysAdministrativeProceduresTargeted = Targeted,
-                CrCasSysAdministrativeProceduresDebit = decimal.Parse(Debit),
-                CrCasSysAdministrativeProceduresCreditor =decimal.Parse(Creditor),
+                CrCasSysAdministrativeProceduresDebit = decimal.Parse(Debit, CultureInfo.InvariantCulture),
+                CrCasSysAdministrativeProceduresCreditor =decimal.Parse(Creditor, CultureInfo.InvariantCulture),
                 CrCasSysAdministrativeProceduresUserInsert = userCode,
                 CrCasSysAdministrativeProceduresArDescription = procedure.CrMasSysProceduresArName,
                 CrCasSysAdministrativeProceduresEnDescription = procedure.CrMasSysProceduresEnName,

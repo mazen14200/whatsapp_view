@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using NToastNotify;
+using System.Globalization;
 
 namespace Bnan.Ui.Areas.BS.Controllers
 {
@@ -146,7 +147,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
                 //Advantages
                 var CheckAdvantages = true;
-                if (decimal.Parse(ContractInfo.AdvantagesTotalValue) > 0)
+                if (decimal.Parse(ContractInfo.AdvantagesTotalValue, CultureInfo.InvariantCulture) > 0)
                 {
                     var AdavntagesCar = _unitOfWork.CrCasPriceCarAdvantage.FindAll(x => x.CrCasPriceCarAdvantagesNo == ContractInfo.PriceNo);
                     foreach (var item in AdavntagesCar) if (CheckAdvantages) CheckAdvantages = await _ContractServices.AddRenterContractAdvantages(item, BasicContract.CrCasRenterContractBasicNo);
