@@ -165,8 +165,8 @@
                                             @item.CrCasAccountReceiptPaymentMethodNavigation.CrMasSupAccountPaymentMethodEnName
                                         }
                                     </td>
-                                    <td>@item.CrCasAccountReceiptPayment?.ToString("N2")</td>
-                                    <td>@item.CrCasAccountReceiptReceipt?.ToString("N2")</td>
+                                    <td>@item.CrCasAccountReceiptPayment?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                                    <td>@item.CrCasAccountReceiptReceipt?.ToString("N2",CultureInfo.InvariantCulture)</td>
                                 </tr>
                                 no++;
                             }

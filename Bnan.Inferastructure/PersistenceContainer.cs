@@ -48,10 +48,19 @@ namespace Bnan.Inferastructure
                     new CultureInfo("en-US"),
                     new CultureInfo("ar-EG")
                 };
-
+                foreach (var culture in supportedCultures)
+                {
+                    // Customize the number format for each supported culture
+                    culture.NumberFormat.CurrencyDecimalDigits = 2;
+                    culture.NumberFormat.CurrencyDecimalSeparator = ".";
+                    culture.NumberFormat.CurrencyGroupSeparator = ",";
+                }
                 options.DefaultRequestCulture = new RequestCulture(culture: supportedCultures[0], uiCulture: supportedCultures[0]);
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
+                CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+                CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+
             });
 
 

@@ -65,7 +65,7 @@
                         }
                     </td>
                 }
-                <td>@item.CrCasRenterLessorEvaluationValue?.ToString("N2")</td>
+                <td>@item.CrCasRenterLessorEvaluationValue?.ToString("N2",CultureInfo.InvariantCulture)</td>
                 @{
                     var Evaluation = Model.Evaluations.Find(x => x.CrMasSysEvaluationsCode == item.CrCasRenterLessorDealingMechanism);
                 }
@@ -78,8 +78,8 @@
                     <td class="text-left">@Evaluation.CrMasSysEvaluationsEnDescription</td>
                 }
                 <td>@item.CrCasRenterLessorContractCount</td>
-                <td>@item.CrCasRenterLessorContractTradedAmount?.ToString("N2")</td>
-                <td>@item.CrCasRenterLessorBalance?.ToString("N2")</td>
+                <td>@item.CrCasRenterLessorContractTradedAmount?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                <td>@item.CrCasRenterLessorBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
                 <td>@item.CrCasRenterLessorDateLastContractual?.ToString("yyyy/MM/dd")</td>
                 @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                 {

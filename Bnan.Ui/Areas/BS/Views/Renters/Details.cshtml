@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.EntityFrameworkCore;
 @using Newtonsoft.Json;
+@using System.Globalization;
 @model BSLayoutVM
 @inject IViewLocalizer localizer
 @{
@@ -174,7 +175,7 @@
                                                     <P>@localizer["Amountstraded"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P>@Model.Renter?.CrCasRenterLessorContractTradedAmount?.ToString("N2")</P>
+                                                    <P>@Model.Renter?.CrCasRenterLessorContractTradedAmount?.ToString("N2",CultureInfo.InvariantCulture)</P>
                                                 </div>
                                             </div>
                                         </div>
@@ -327,7 +328,7 @@
                                                                 }
 
 
-                                                                <td>@item.CrCasRenterContractBasicExpectedTotal?.ToString("N2")</td>
+                                                                <td>@item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)</td>
                                                                 
                                                                     @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                                                     {

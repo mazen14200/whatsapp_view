@@ -64,8 +64,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 newAdmins.CrCasSysAdministrativeProceduresDocEndDate = item.CrCasSysAdministrativeProceduresDocEndDate?.ToString("yyyy/MM/dd");
                 var AccountReceipt = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptPassingReference == item.CrCasSysAdministrativeProceduresNo, new[] { "CrCasAccountReceiptSalesPointNavigation" });
                 newAdmins.SalesPointNavigation = _unitOfWork.CrCasAccountSalesPoint.Find(x => x.CrCasAccountSalesPointCode == item.CrCasSysAdministrativeProceduresDocNo);
-                newAdmins.CrCasSysAdministrativeProceduresCreditor = item.CrCasSysAdministrativeProceduresCreditor?.ToString("N2");
-                newAdmins.CrCasSysAdministrativeProceduresDebit = item.CrCasSysAdministrativeProceduresDebit?.ToString("N2");
+                newAdmins.CrCasSysAdministrativeProceduresCreditor = item.CrCasSysAdministrativeProceduresCreditor?.ToString("N2", CultureInfo.InvariantCulture);
+                newAdmins.CrCasSysAdministrativeProceduresDebit = item.CrCasSysAdministrativeProceduresDebit?.ToString("N2", CultureInfo.InvariantCulture);
                 newAdmins.UserInsertNavigation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted);
                 newAdmins.UserReceviedNavigation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresUserInsert);
                 newAdmins.CrCasSysAdministrativeProceduresStatus = item.CrCasSysAdministrativeProceduresStatus;
@@ -103,8 +103,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     var AccountReceipt = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptPassingReference == item.CrCasSysAdministrativeProceduresNo, new[] { "CrCasAccountReceiptSalesPointNavigation" });
 
                     newAdmins.SalesPointNavigation = _unitOfWork.CrCasAccountSalesPoint.Find(x => x.CrCasAccountSalesPointCode == item.CrCasSysAdministrativeProceduresDocNo);
-                    newAdmins.CrCasSysAdministrativeProceduresCreditor = item.CrCasSysAdministrativeProceduresCreditor?.ToString("N2");
-                    newAdmins.CrCasSysAdministrativeProceduresDebit = item.CrCasSysAdministrativeProceduresDebit?.ToString("N2");
+                    newAdmins.CrCasSysAdministrativeProceduresCreditor = item.CrCasSysAdministrativeProceduresCreditor?.ToString("N2", CultureInfo.InvariantCulture);
+                    newAdmins.CrCasSysAdministrativeProceduresDebit = item.CrCasSysAdministrativeProceduresDebit?.ToString("N2", CultureInfo.InvariantCulture);
                     newAdmins.UserInsertNavigation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted);
                     newAdmins.UserReceviedNavigation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresUserInsert);
                     newAdmins.CrCasSysAdministrativeProceduresStatus = item.CrCasSysAdministrativeProceduresStatus;
@@ -145,9 +145,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 var AccountReceipt = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptPassingReference == adminstritive.CrCasSysAdministrativeProceduresNo, new[] { "CrCasAccountReceiptSalesPointNavigation" });
 
                 newAdmins.SalesPointNavigation = _unitOfWork.CrCasAccountSalesPoint.Find(x => x.CrCasAccountSalesPointCode == adminstritive.CrCasSysAdministrativeProceduresDocNo);
-                newAdmins.CrCasSysAdministrativeProceduresCreditor = adminstritive.CrCasSysAdministrativeProceduresCreditor?.ToString("N2");
-                newAdmins.CrCasSysAdministrativeProceduresDebit = adminstritive.CrCasSysAdministrativeProceduresDebit?.ToString("N2");
-                newAdmins.TotalAmount = (adminstritive.CrCasSysAdministrativeProceduresCreditor - adminstritive.CrCasSysAdministrativeProceduresDebit)?.ToString("N2");
+                newAdmins.CrCasSysAdministrativeProceduresCreditor = adminstritive.CrCasSysAdministrativeProceduresCreditor?.ToString("N2", CultureInfo.InvariantCulture);
+                newAdmins.CrCasSysAdministrativeProceduresDebit = adminstritive.CrCasSysAdministrativeProceduresDebit?.ToString("N2", CultureInfo.InvariantCulture);
+                newAdmins.TotalAmount = (adminstritive.CrCasSysAdministrativeProceduresCreditor - adminstritive.CrCasSysAdministrativeProceduresDebit)?.ToString("N2", CultureInfo.InvariantCulture);
                 newAdmins.UserInsertNavigation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == adminstritive.CrCasSysAdministrativeProceduresTargeted);
                 newAdmins.UserReceviedNavigation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == adminstritive.CrCasSysAdministrativeProceduresUserInsert);
                 newAdmins.CrCasSysAdministrativeProceduresStatus = adminstritive.CrCasSysAdministrativeProceduresStatus;

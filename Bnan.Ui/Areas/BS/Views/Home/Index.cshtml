@@ -8,6 +8,7 @@
 @using Microsoft.AspNetCore.Mvc.Localization;
 @using Microsoft.EntityFrameworkCore;
 @using Microsoft.Extensions.Options;
+@using System.Globalization;
 @model BSLayoutVM
 @inject IViewLocalizer localizer
 @inject UserManager<CrMasUserInformation> userManager
@@ -93,13 +94,13 @@
                             <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 branch-chart-data">
                                 <div class="data chart-p">
                                     <p class="mb-2">
-                                        @localizer["BranchCustody"] : <span id="brunch-custody">@((Model.CrCasBranchInformation?.CrCasBranchInformationTotalBalance ?? 0).ToString("N2"))</span>
+                                        @localizer["BranchCustody"] : <span id="brunch-custody">@((Model.CrCasBranchInformation?.CrCasBranchInformationTotalBalance ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
                                     </p>
                                     <p class="mb-2">
-                                        @localizer["AvailableBalance"] : <span id="Available-balance-brunch">@((Model.CrCasBranchInformation?.CrCasBranchInformationAvailableBalance ?? 0).ToString("N2"))</span>
+                                        @localizer["AvailableBalance"] : <span id="Available-balance-brunch">@((Model.CrCasBranchInformation?.CrCasBranchInformationAvailableBalance ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
                                     </p>
                                     <p class="mb-2">
-                                        @localizer["ReservedBalance"] : <span id="used-balance-brunch">@((Model.CrCasBranchInformation?.CrCasBranchInformationReservedBalance ?? 0).ToString("N2"))</span>
+                                        @localizer["ReservedBalance"] : <span id="used-balance-brunch">@((Model.CrCasBranchInformation?.CrCasBranchInformationReservedBalance ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
                                     </p>
                                     <!--  -->
                                 </div>
@@ -131,13 +132,13 @@
 
                                     }
                                     <p class="mb-2">
-                                        @localizer["EmployeeCustody"] : <span id="employee-custody">@((totalBalanceInBranch ?? 0).ToString("N2"))</span>
+                                        @localizer["EmployeeCustody"] : <span id="employee-custody">@((totalBalanceInBranch ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
                                     </p>
                                     <p class="mb-2">
-                                        @localizer["AvailableBalance"] : <span id="Available-balance-employee">@((totalAvaliableBalanceInBranch ?? 0).ToString("N2"))</span>
+                                        @localizer["AvailableBalance"] : <span id="Available-balance-employee">@((totalAvaliableBalanceInBranch ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
                                     </p>
                                     <p class="mb-2">
-                                        @localizer["ReservedBalance"] : <span id="used-balance-employee">@((totalResevedBalanceInBranch ?? 0).ToString("N2"))</span>
+                                        @localizer["ReservedBalance"] : <span id="used-balance-employee">@((totalResevedBalanceInBranch ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
                                     </p>
                                     <!--  -->
                                 </div>
