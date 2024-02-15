@@ -1805,7 +1805,7 @@ else
         async function sendMessageToWhatsApp(randomNumber,numberPhone) {
             const toNumber = numberPhone; // The recipient's phone number
             const fromNumber = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
-            const messageText = "السلام عليكم هذا هو رمز التأكيد " + randomNumber; // The message text with the random code
+            const messageText = '@localizer["VerificationCode"]' + randomNumber; // The message text with the random code
             const url = `https://business.enjazatik.com/api/v1/send-message?number=${encodeURIComponent(toNumber)}&message=${encodeURIComponent(messageText)}&token=${encodeURIComponent(fromNumber)}`;
             try {
                 const response = await fetch(url, { method: 'GET' });
@@ -3946,7 +3946,7 @@ else
             const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key
             const mobileNo = '@user.CrMasUserInformationMobileNo'; // Assuming this variable contains the mobile number
             const phoneNumber = callingKey + mobileNo;
-            const messageText = "تفاصيل انشاء العقد"; // Replace with your message
+            const messageText = " "; // Replace with your message
             try {
                 // Read the image file as a Blob
                 const responseImage = await fetch(imagePath);

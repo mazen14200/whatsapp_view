@@ -38,11 +38,11 @@
                                 <span>AdditionalDriver=No</span>
                             }
                             
-                            <span>Additionals=@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdditionals.Count()</span>
+                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdditionals.Count()</span>
                             
-                            <span>Options=@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarOptions.Count()</span>
+                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarOptions.Count()</span>
                             
-                            <span>Advantages=@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdvantages.Count()</span>
+                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdvantages.Count()</span>
                         </p>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
@@ -84,18 +84,18 @@ else
                         <p>
                             @if (item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarBasicIsAdditionalDriver == true)
                             {
-                                <span>AdditionalDriver=Yes</span>
+                                <span>Yes</span>
                             }
                             else
                             {
-                                <span>AdditionalDriver=No</span>
+                                <span>No</span>
                             }
                             
-                            <span>Additionals=@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdditionals.Count()</span>
+                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdditionals.Count()</span>
                             
-                            <span>Options=@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarOptions.Count()</span>
+                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarOptions.Count()</span>
                             
-                            <span>Advantages=@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdvantages.Count()</span>
+                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdvantages.Count()</span>
                         </p>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
