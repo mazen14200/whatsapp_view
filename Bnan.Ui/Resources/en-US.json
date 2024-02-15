@@ -75,16 +75,16 @@
   "Logout": "Logout",
   "My Account": "My Account",
   //login
-  "CompanyDeleted": "Sorry …… You Don't Have Permission Call The Operating Company ",
+  "CompanyDeleted": "Sorry …… You Don't Have Permission Call The Operating Company",
   "AccountHold": "User Holded",
-  "AccountDelete": " Sorry …… You Don't Have Permission Call Administration",
-  "PasswordInvalid": "Sorry …… Password is Incorrect ",
+  "AccountDelete": "Sorry …… You Don't Have Permission Call Administration",
+  "PasswordInvalid": "Sorry …… Password is Incorrect",
   "UserNameInvalid": "Sorry …… Employee No. is Incorrect",
   "PleaseEnterUserName": "Please Enter User Name",
   "PleaseEnterPassword": "Please Enter Password",
   "Password": "Password",
   "UserIsOpen": "Sorry...the employee's number is being used on another device",
-  "EmployeeHoldedInBS": " Sorry …… Some Power Have Been Reduced. Please Call Administration",
+  "EmployeeHoldedInBS": "Sorry …… Some Power Have Been Reduced. Please Call Administration",
   "CompanyIsHoldInSystems": "Sorry.. Some Services Have Been Suspended. Please Contact The Operating Company",
   //CAS  Datatable
   "Branch": "Branch",
@@ -183,6 +183,7 @@
   "Categories": "Categories",
   "CategoriesDistribution": "Categories Distribution",
   "Features": "Additional Features",
+  "Advantages": "Additional Features",
   "Colors": "Colors",
   //MailsServices
   "MailsServices": "MailsServices",
@@ -232,7 +233,7 @@
   "User Is Exists": "Employee Is Exists",
   "TasksArName": "Job Ar Title",
   "TasksEnName": "Job En Title",
-  "Edit User Hint": "The page allows you to Edit Employee data ",
+  "Edit User Hint": "The page allows you to Edit Employee data",
   "Edit User Data": "Update Employee Data",
   "Picture": "Picture",
   "Signture": "Signture",
@@ -264,7 +265,7 @@
   "LessorInstagram": "Instagram",
   "LessorWhats": "Whats App",
   "LessorContractEmail": "Contract Email",
-  "Edit Lessor Hint": "The page allows you to Edit Lessor data ",
+  "Edit Lessor Hint": "The page allows you to Edit Lessor data",
   "Edit Lessor Data": "Update",
   "Classification": "Classification",
   "reasons": "Reasons",
@@ -318,7 +319,7 @@
   "AddCarDistribution": "Add Distribution",
   "BrandCategory": "Brand/Model",
   "DistribtionPhoto": "Car Photo",
-  "Add Distribtion Hint": "The page allows you to Add Distribtion Car data ",
+  "Add Distribtion Hint": "The page allows you to Add Distribtion Car data",
   "Add Distribtion Data": "Add Distribtion Car",
   "Edit Distribtion Hint": "The page allows you to Edit Distribtion Car data",
   "Edit Distribtion Data": "Edit Distribtion Car",
@@ -341,10 +342,144 @@
   "HintSureToRetriveDCarBrand": "The retrieval of  Car Brand data will result to be restored in the system.",
 
   "HintSureTodeleteCarBrand": "Deleting  Car Brand data will result not being able to accessed in the system.",
-  "HintSureToHoldCarBrand": " Car Brand data will be holded, which results in the system being holded as well.",
+  "HintSureToHoldCarBrand": "Car Brand data will be holded, which results in the system being holded as well.",
 
-  "HintSureTo_Cannot_deleteCarBrand": "Sorry You Can't Delete this Car Brand because there are Count of this = ",
+  "HintSureTo_Cannot_deleteCarBrand": "Sorry You Can't Delete this Car Brand because there are Count of this =",
   "SureTo_Cannot_delete": "Sorry You Can't Delete this",
+
+
+  //Car Fuels------
+  "Fuels Hint": "The page allows you to display, add, and modify Car Fuels data.",
+  "Fuels Data": "Car Fuels",
+  "CarFuelNameEn": "Fuel Name in English",
+  "CarFuelNameAr": "Fuel Name in Arabic",
+  "CarFuelName": "Fuel Name",
+  "CarFuelCode": "Code",
+  "Add Fuels Hint": "This page allows you to add Car Fuels data.",
+  "Add Fuels Data": "Add Car Fuels",
+  "Edit Fuels Hint": "The page allows you to modify Car Fuels data.",
+  "Edit Fuels Data": "modify Car Fuels",
+  "CarFuelImg": "Car Fuel Img",
+
+  "HintSureToRetriveHCarFuel": "The retrieval of Car Fuel data will result to be restored in the system.",
+  "HintSureToRetriveDCarFuel": "The retrieval of  Car Fuel data will result to be restored in the system.",
+
+  "HintSureTodeleteCarFuel": "Deleting  Car Fuel data will result not being able to accessed in the system.",
+  "HintSureToHoldCarFuel": "Car Fuel data will be holded, which results in the system being holded as well.",
+
+  "HintSureTo_Cannot_deleteCarFuel": "Sorry You Can't Delete this Car Fuel because there are Count of this =",
+  "SureTo_Cannot_delete": "Sorry You Can't Delete this",
+
+
+  //Car Cvts------
+  "Cvts Hint": "The page allows you to display, add, and modify vehicles type data.",
+  "Cvts Data": "vehicles type",
+  "CarCvtNameEn": "vehicle type in English",
+  "CarCvtNameAr": "vehicle type in Arabic",
+  "CarCvtName": "vehicle type",
+  "CarCvtCode": "Code",
+  "Add Cvts Hint": "This page allows you to add vehicle type data.",
+  "Add Cvts Data": "Add vehicle type",
+  "Edit Cvts Hint": "This page allows you to modify vehicles type data.",
+  "Edit Cvts Data": "modify vehicle type",
+  "CarCvtImg": "vehicle type Img",
+
+  "HintSureToRetriveHCarCvt": "The retrieval of vehicle type data will result to be restored in the system.",
+  "HintSureToRetriveDCarCvt": "The retrieval of vehicle type data will result to be restored in the system.",
+
+  "HintSureTodeleteCarCvt": "Deleting vehicle type data will result not being able to accessed in the system.",
+  "HintSureToHoldCarCvt": "vehicle type data will be holded, which results in the system being holded as well.",
+
+  "HintSureTo_Cannot_deleteCarCvt": "Sorry You Can't Delete this vehicle type because there are Count of this =",
+  "SureTo_Cannot_delete": "Sorry You Can't Delete this",
+
+
+  //Car Categorys------
+  "Categorys Hint": "The page allows you to display, add, and modify Car Categorys data.",
+  "Categorys Data": "Car Categorys",
+  "CarCategoryNameEn": "Category Name in English",
+  "CarCategoryNameAr": "Category Name in Arabic",
+  "CarCategoryName": "Category Name",
+  "CarCategoryCode": "Code",
+  "Add Categorys Hint": "This page allows you to add Car Categorys data.",
+  "Add Categorys Data": "Add Car Categorys",
+  "Edit Categorys Hint": "The page allows you to modify Car Categorys data.",
+  "Edit Categorys Data": "modify Car Categorys",
+  "CarCategoryImg": "Car Category Img",
+
+  "HintSureToRetriveHCarCategory": "The retrieval of Car Category data will result to be restored in the system.",
+  "HintSureToRetriveDCarCategory": "The retrieval of  Car Category data will result to be restored in the system.",
+
+  "HintSureTodeleteCarCategory": "Deleting  Car Category data will result not being able to accessed in the system.",
+  "HintSureToHoldCarCategory": "Car Category data will be holded, which results in the system being holded as well.",
+
+  "HintSureTo_Cannot_deleteCarCategory": "Sorry You Can't Delete this Car Category because there are Count of this =",
+  "SureTo_Cannot_delete": "Sorry You Can't Delete this",
+
+  //Car Advantages------
+  "Advantages": "Additional Features",
+  "Advantages Hint": "The page allows you to display, add, and modify Car Features data.",
+  "Advantages Data": "Car Features",
+  "CarAdvantageNameEn": "Feature Name in English",
+  "CarAdvantageNameAr": "Feature Name in Arabic",
+  "CarAdvantageName": "Feature Name",
+  "CarAdvantageCode": "Code",
+  "Add Advantages Hint": "This page allows you to add new Car Feature data.",
+  "Add Advantages Data": "Add Car Feature",
+  "Edit Advantages Hint": "The page allows you to modify Car Features data.",
+  "Edit Advantages Data": "modify Car Features",
+  "CarAdvantageImg": "Car Feature Img",
+
+  "HintSureToRetriveHCarAdvantage": "The retrieval of Car Feature data will result to be restored in the system.",
+  "HintSureToRetriveDCarAdvantage": "The retrieval of  Car Feature data will result to be restored in the system.",
+
+  "HintSureTodeleteCarAdvantage": "Deleting Car Feature data will result not being able to accessed in the system.",
+  "HintSureToHoldCarAdvantage": "Car Feature data will be holded, which results in the system being holded as well.",
+
+  "HintSureTo_Cannot_deleteCarAdvantage": "Sorry You Can't Delete this Car Feature because there are Count of this =",
+  "SureTo_Cannot_delete": "Sorry You Can't Delete this",
+
+
+  //Car Registrations------
+  "Registrations Hint": "The page allows you to display, add, and modify Car Registration Types data.",
+  "Registrations Data": "Car Registration Types",
+  "CarRegistrationNameEn": "Registration Type in English",
+  "CarRegistrationNameAr": "Registration Type in Arabic",
+  "CarRegistrationName": "Registration Type",
+  "CarRegistrationCode": "Code",
+  "Add Registrations Hint": "This page allows you to add Car Registration Type data.",
+  "Add Registrations Data": "Add Car Registration Type",
+  "Edit Registrations Hint": "The page allows you to modify Car Registration Type data.",
+  "Edit Registrations Data": "modify Car Registration Types",
+  "CarRegistrationImg": "Car Registration Img",
+
+
+  "HintSureToRetriveHCarRegistration": "The retrieval of Car Registration Type data will result to be restored in the system.",
+  "HintSureToRetriveDCarRegistration": "The retrieval of  Car Registration Type data will result to be restored in the system.",
+
+  "HintSureTodeleteCarRegistration": "Deleting  Car Registration Type data will result not being able to accessed in the system.",
+  "HintSureToHoldCarRegistration": "Car Registration Type data will be holded, which results in the system being holded as well.",
+
+  "HintSureTo_Cannot_deleteCarRegistration": "Sorry You Can't Delete this Car Registration Type because there are Count of this =",
+  "SureTo_Cannot_delete": "Sorry You Can't Delete this",
+
+
+  //User Login ------
+  "UserLogin Hint": "The page display User Login Report.",
+  "UserLogin Data": "User Login Report",
+  "UserLoginNameEn": "UserName in English",
+  "UserLoginNameAr": "UserName in Arabic",
+  "UserLoginName": "UserName",
+  "UserLoginCode": "Code",
+  "Add UserLogin Hint": "This page allows you to add User Login data.",
+  "Add UserLogin Data": "Add User Login Type",
+  "Edit UserLogin Hint": "The page allows you to modify User Login data.",
+  "Edit UserLogin Data": "modify User Login",
+  "Add minDate Data": "choose minimum Date",
+  "Add MaxDate Data": "choose Maximum Date",
+  "UserLoginConcate": "Complete process Name",
+  "UserLoginDateTime": "User Date&Time Login",
+
 
   //Renter Nationality------
   "RenterNationality Hint": "The page allows you to display, add, and modify Renter Nationality data.",
@@ -362,7 +497,7 @@
   "HintSureToRetriveDRenterNationality": "The retrieval of Renter Nationality data will result to be restored in the system.",
 
   "HintSureTodeleteRenterNationality": "Deleting  Renter Nationality data will result not being able to accessed in the system.",
-  "HintSureToHoldRenterNationality": " Renter Nationality data will be holded, which results in the system being holded as well.",
+  "HintSureToHoldRenterNationality": "Renter Nationality data will be holded, which results in the system being holded as well.",
 
 
 
@@ -412,10 +547,12 @@
   "requiredNoLengthFiled": "Please enter exactly {0} numbers.",
   "requiredNoLengthFiled15": "Please enter exactly 15 numbers.",
   "requiredNoLengthFiled30": "Please enter No More Than 30 Digits.",
+  "requiredNoLengthFiled40": "Please enter No More Than 40 Digits.",
+  "requiredNoLengthFiled50": "Please enter No More Than 50 Digits.",
   "requiredNoStartWithFiled": "Input Must Start With  Number {0}.",
   "requiredNoStartWithFiled7": "Field Is Required And Must Start With Number 7",
   "requiredNoStartWithFiled15": "Field Is Required And Must Start With Number 15",
-  "requiredNoLengthFiled10": " Field Requires 10 Numbers And Start Number 7",
+  "requiredNoLengthFiled10": "Field Requires 10 Numbers And Start Number 7",
   "NotStartWith7": "This field Requires 10 Numbers and cannot start with the number 7",
   "requiredNoStartWithFiled1": "Field Is Required And Must Start With Number 1",
   "requiredNoStartWithFiled5": "Field Is Required And Must Start With Number 5",
@@ -441,7 +578,7 @@
   "SystemValiditions Data": "Edit ValiditionsSystem Data",
   "SystemValiditions Hint": "This Page Enables You To View And Update The Data Of Employees Granted Authority To The Administrative System",
   "Edit ValiditionsSystem Data": "Updating The Employee’s Administrative Powers Data",
-  "Edit ValiditionsSystem Hint": " This Page Enables You To View And Update The Employee’s Administrative Powers Data",
+  "Edit ValiditionsSystem Hint": "This Page Enables You To View And Update The Employee’s Administrative Powers Data",
   // Edit system Validitions
   "MainValiditions": "Main Validitions",
   "SubValiditions": "Sub Validitions",
@@ -497,7 +634,7 @@
   "toastMessageEmployeeHaveBalance": "A employee with a balance cannot be deleted",
   "toastMessageExistFeedBox": "There is no box feeding",
   "toastMessageExistCustody": "Sorry.....there is no balance available for delivery of the deposit",
-  "PleaseChooseAtLeastOneValue": "Sorry.....you must choose at least one value ",
+  "PleaseChooseAtLeastOneValue": "Sorry.....you must choose at least one value",
   "toastMessageExistRenters": "Sorry.....there is no renters in company",
   "toastMessageExistReceipts": "Sorry.....there is no receipts in branch",
 
@@ -525,12 +662,12 @@
   "EndContractWhatUp": "End Contract WhatsUp",
   "CloseContractEmail": "Close Contract Email",
   "CloseContractWhatUp": "Close Contract WhatUp",
-  "ContArConditions1": " Contract Ar Conditions1",
-  "ContArConditions2": " Contract Ar Conditions2",
-  "ContArConditions3": " Contract Ar Conditions3",
-  "ContEnConditions1": " Contract En Conditions1",
-  "ContEnConditions2": " Contract En Conditions2",
-  "ContEnConditions3": " Contract En Conditions3",
+  "ContArConditions1": "Contract Ar Conditions1",
+  "ContArConditions2": "Contract Ar Conditions2",
+  "ContArConditions3": "Contract Ar Conditions3",
+  "ContEnConditions1": "Contract En Conditions1",
+  "ContEnConditions2": "Contract En Conditions2",
+  "ContEnConditions3": "Contract En Conditions3",
 
   //Contract Company
   "ContractCompany Data": "Company Contracts",
@@ -625,7 +762,7 @@
   "Edit Refrence Data": "Edit",
 
   //
-  "Receipt Confirmation Hint": "This Page Enables You To Search And View Covenant Data ",
+  "Receipt Confirmation Hint": "This Page Enables You To Search And View Covenant Data",
 
   "HintSureToRetriveHRefrence": "The retrieval of Account Reference data will result to be restored in the system.",
   "HintSureToRetriveDRefrence": "The retrieval of Account Reference data will result to be restored in the system.",
@@ -750,7 +887,7 @@
   "CompanyHoldedDanger": "The company's services have been suspended. Please contact the developing company",
   "ContractNewDanger": "The contract has not been registered yet. Please register the contract to activate all powers",
   "ContractExpireDanger": "The contract has expired, please check with the developing company",
-  "ContractAboutExpireDanger": " Attention .....The Contract is About To Expire. Please call The Operating Company",
+  "ContractAboutExpireDanger": "Attention .....The Contract is About To Expire. Please call The Operating Company",
 
 
   //PostRegion Services  
@@ -787,7 +924,7 @@
   //AccountBank Services  
   "AccountBank Data": "Account Bank Data",
   "AccountBank Hint": "The page allows you to display, add, and modify Account Bank data.",
-  "AccountBankNameEn": " Account En Name",
+  "AccountBankNameEn": "Account En Name",
   "AccountBankNameAr": "Account Ar Name",
   "AccountBankName": "Account Name",
 
@@ -819,8 +956,8 @@
   "Employement": "Job title",
   "CreditLimit": "Credit Limit Of Covenate",
   "BranchesAuth": "Authority of branches",
-  "Owners": "Authority Of Owners ",
-  "AdminAuth": "Authority Of Admin ",
+  "Owners": "Authority Of Owners",
+  "AdminAuth": "Authority Of Admin",
   "ResetPassword": "Reset Password",
 
 
@@ -937,7 +1074,7 @@
   "SalesPointNameAr": "SalePoint Ar. Name",
   "IsSalesPointNo": "SalesPoint Number is exists",
   "TotalBalance": "Current Balance",
-  "HintSureToHoldSalesPoint": "Hold SalesPoints Data Will Result in Payment While Maintaining All Previous Administrative  And Financial Procedures ",
+  "HintSureToHoldSalesPoint": "Hold SalesPoints Data Will Result in Payment While Maintaining All Previous Administrative  And Financial Procedures",
   "HintSureToDeleteSalesPoint": "Deleting SalesPoints Data Will Result in Payment While All Administrative  And Financial Procedures  Will Be And Maintained",
   "SureToRetriveHoldSalesPoint": "Confirm Activation",
   "HintSureToRetriveHSalesPoint": "Activating The Point Of Sale Will Entail Activating The Payment Process And Financial Procedures",
@@ -960,7 +1097,7 @@
   "Edit Owners Data": "Edit Owner Data",
   "Edit Owners Hint": "The page allows you to display and Edit Owner Data.",
   "Mecanism Data": "Alerts",
-  "Mecanism Hint": "The page allows you to Edit Alert. ",
+  "Mecanism Hint": "The page allows you to Edit Alert.",
   "Additional": "Additional",
   "UserNumber": "User Id",
   "IsExist": "Name Is Exists",
@@ -1016,7 +1153,7 @@
   "CurrentBranch": "Current Branch",
   "NewBranch": "New Branch",
   "TransferOwnerCars Hint": "This page allows you to search and view car data and change the owner .",
-  "TransferOwnerCarsEdit Hint": " The Page Allows You To Change The Owner .",
+  "TransferOwnerCarsEdit Hint": "The Page Allows You To Change The Owner .",
   "TransferOwnerCarsEdit Data": "Change The Car Owner",
   "NewOwner": "New Owner",
   "CurrentOwner": "Current Owner",
@@ -1025,11 +1162,11 @@
   "EndMaintaince": "Consumption even",
   "ConsumptionKM": "Consumption KM",
   "KMEndsAt": "KM Ends At (KM)",
-  "CurrentMeterMessage": "The value cannot be less than ",
+  "CurrentMeterMessage": "The value cannot be less than",
   "MaintainancesType": "Maintainance",
   "notRegisteration": "Not Registeration",
   "CasForRepair Hint": "This page allows you to search, view and repair vehicle data",
-  "CarsForSale Hint": "The page allows you to search the data of the cars to be display for sale ",
+  "CarsForSale Hint": "The page allows you to search the data of the cars to be display for sale",
   "RepairCar Edit Data": "Car Repair",
   "RepairCar Edit Hint": "This Page Enables You to Update Car Repair Data",
   "CarForSale Edit Data": "Updating sales procedures data",
@@ -1072,7 +1209,7 @@
   "ExtraHourValue": "Extra Hour Value",
   "AdditionalDriverValue": "Additional Driver Value",
   "InFeesTamm": "In Fees Tamm",
-  "InFees": "In Fees ",
+  "InFees": "In Fees",
   "OutFees": "Out Fees",
   "OutFeesTamm": "Out Fees Tamm",
   "CompensationAccident": "Compensation Accident",
@@ -1115,14 +1252,14 @@
   "UnAvaliableCarsIsEmptyTab": "There are no cars unavailable",
   "Balance": "Balance",
   "FeedBox Data": "Feed Box",
-  "FeedBox Hint": "The page allow you to Feed Employee's box ",
+  "FeedBox Hint": "The page allow you to Feed Employee's box",
   "FeedValue": "Feed Value",
   "CancelContract": "Cancel Contract",
   "ContractExtension": "Contract Extension",
   "ContractSettlement": "Contract Settlement",
   "CreateContract": "Create Contract",
   "TheCovenant": "Extradition custody",
-  "Feedbox": " Feed the box",
+  "Feedbox": "Feed the box",
   "FinancialReport": "Financial Report",
   "Tenants": "Tenants",
   "Statistics": "Statistics",
@@ -1247,7 +1384,7 @@
   //
   "TradedAmount": "Traded Amount",
   "Canceled": "Canceled",
-  "Extension": "Extended ",
+  "Extension": "Extended",
   "Closed": "Closed",
   "Sector": "Sector",
   "StartDateLic": "Start Date",

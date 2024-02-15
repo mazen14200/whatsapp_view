@@ -1,21 +1,22 @@
-﻿@using Bnan.Core.Extensions
-@model Tuple<IEnumerable<CrMasSupCarBrand>, List<List<string>>>
+﻿
+
+@using Bnan.Core.Extensions
+@model Tuple<IEnumerable<CrMasSupCarAdvantage>, List<List<string>>>
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
 }
 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
 {
     <div class="col-sm-12">
-        @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
             <thead>
-                <tr role="row">
+                <tr >
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
-                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["CarBrandCode"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["CarBrandName"]</th>
+                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["CarAdvantageCode"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["CarAdvantageName"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Count"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
@@ -27,18 +28,18 @@
                 }
                 @foreach (var item in Model.Item1)
                 {
-                    @if (item.CrMasSupCarBrandStatus == @Status.Deleted || item.CrMasSupCarBrandStatus == @Status.Hold)
+                    @if (item.CrMasSupCarAdvantagesStatus == @Status.Deleted || item.CrMasSupCarAdvantagesStatus == @Status.Hold)
                     {
-                        <tr onclick="location.href='@Url.Action("Edit", "CarBrand", new { id = item.CrMasSupCarBrandCode })'" style="cursor:pointer;color:red">
+                        <tr onclick="location.href='@Url.Action("Edit", "CarAdvantage", new { id = item.CrMasSupCarAdvantagesCode })'" style="cursor:pointer;color:red">
                             <td id="_Nc">@no</td>
-                            <td id="_Nc">@item.CrMasSupCarBrandCode</td>
-                            <td>@item.CrMasSupCarBrandEnName</td>
+                            <td id="_Nc">@item.CrMasSupCarAdvantagesCode</td>
+                            <td>@item.CrMasSupCarAdvantagesEnName</td>
                             <td id="_Nc">
                                 @if (Model.Item2 != null)
                                 {
                                     @foreach (var row in Model.Item2)
                                     {
-                                        if (row[0] == @item.CrMasSupCarBrandCode)
+                                        if(row[0] == @item.CrMasSupCarAdvantagesCode)
                                         {
                                             @row[1]
                                         }
@@ -47,12 +48,12 @@
                                 }
                             </td>
                             <td>
-
-                                @if (@item.CrMasSupCarBrandStatus == Status.Deleted)
+                                &emsp;
+                                @if (@item.CrMasSupCarAdvantagesStatus == Status.Deleted)
                                 {
                                     @localizer["Deleted"]
                                 }
-                                else if (@item.CrMasSupCarBrandStatus == Status.Hold)
+                                else if (@item.CrMasSupCarAdvantagesStatus == Status.Hold)
                                 {
                                     @localizer["Hold"]
                                 }
@@ -61,16 +62,16 @@
                     }
                     else
                     {
-                        <tr onclick="location.href='@Url.Action("Edit", "CarBrand", new { id = item.CrMasSupCarBrandCode })'">
+                        <tr onclick="location.href='@Url.Action("Edit", "CarAdvantage", new { id = item.CrMasSupCarAdvantagesCode })'">
                             <td id="_Nc">@no</td>
-                            <td id="_Nc">@item.CrMasSupCarBrandCode</td>
-                            <td>@item.CrMasSupCarBrandEnName</td>
+                            <td id="_Nc">@item.CrMasSupCarAdvantagesCode</td>
+                            <td>@item.CrMasSupCarAdvantagesEnName</td>
                             <td id="_Nc">
                                 @if (Model.Item2 != null)
                                 {
                                     @foreach (var row in Model.Item2)
                                     {
-                                        if (row[0] == @item.CrMasSupCarBrandCode)
+                                        if (row[0] == @item.CrMasSupCarAdvantagesCode)
                                         {
                                             @row[1]
                                         }
@@ -79,8 +80,8 @@
                                 }
                             </td>
                             <td>
-
-                                @if (@item.CrMasSupCarBrandStatus == Status.Active)
+                                &emsp;
+                                @if (@item.CrMasSupCarAdvantagesStatus == Status.Active)
                                 {
                                     @localizer["Active"]
                                 }
@@ -98,12 +99,12 @@ else
     <div class="col-sm-12">
         <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;">
             <thead>
-                <tr role="row">
+                <tr >
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
-                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["CarBrandCode"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["CarBrandName"]</th>
+                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["CarAdvantageCode"]</th>
+                    <th aria-label="Position: activate to sort column ascending" >@localizer["CarAdvantageName"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th aria-label="Position: activate to sort column ascending" >@localizer["Status"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -113,19 +114,19 @@ else
                 }
                 @foreach (var item in Model.Item1)
                 {
-                    @if (item.CrMasSupCarBrandStatus == @Status.Deleted || item.CrMasSupCarBrandStatus == @Status.Hold)
+                    @if (item.CrMasSupCarAdvantagesStatus == @Status.Deleted || item.CrMasSupCarAdvantagesStatus == @Status.Hold)
                     {
-                        <tr onclick="location.href='@Url.Action("Edit", "CarBrand", new { id = item.CrMasSupCarBrandCode })'" style="cursor:pointer;color:red">
+                        <tr onclick="location.href='@Url.Action("Edit", "CarAdvantage", new { id = item.CrMasSupCarAdvantagesCode })'" style="cursor:pointer;color:red">
                             <td id="_Nc">&emsp; @no</td>
-                            <td id="_Nc">&emsp; @item.CrMasSupCarBrandCode</td>
-                            <td>&emsp; @item.CrMasSupCarBrandArName</td>
+                            <td id="_Nc">&emsp; @item.CrMasSupCarAdvantagesCode</td>
+                            <td>&emsp; @item.CrMasSupCarAdvantagesArName</td>
                             <td id="_Nc">
-                                &emsp;
+                                &emsp;&emsp;
                                 @if (Model.Item2 != null)
                                 {
                                     @foreach (var row in Model.Item2)
                                     {
-                                        if (row[0] == @item.CrMasSupCarBrandCode)
+                                        if (row[0] == @item.CrMasSupCarAdvantagesCode)
                                         {
                                             @row[1]
                                         }
@@ -134,12 +135,12 @@ else
                                 }
                             </td>
                             <td>
-                                &emsp;
-                                @if (@item.CrMasSupCarBrandStatus == Status.Deleted)
+                                &emsp;&emsp;
+                                @if (@item.CrMasSupCarAdvantagesStatus == Status.Deleted)
                                 {
                                     @localizer["Deleted"]
                                 }
-                                else if (@item.CrMasSupCarBrandStatus == Status.Hold)
+                                else if (@item.CrMasSupCarAdvantagesStatus == Status.Hold)
                                 {
                                     @localizer["Hold"]
                                 }
@@ -148,17 +149,17 @@ else
                     }
                     else
                     {
-                        <tr onclick="location.href='@Url.Action("Edit", "CarBrand", new { id = item.CrMasSupCarBrandCode })'">
+                        <tr onclick="location.href='@Url.Action("Edit", "CarAdvantage", new { id = item.CrMasSupCarAdvantagesCode })'">
                             <td id="_Nc">&emsp; @no</td>
-                            <td id="_Nc">&emsp; @item.CrMasSupCarBrandCode</td>
-                            <td>&emsp; @item.CrMasSupCarBrandArName</td>
+                            <td id="_Nc">&emsp; @item.CrMasSupCarAdvantagesCode</td>
+                            <td>&emsp; @item.CrMasSupCarAdvantagesArName</td>
                             <td id="_Nc">
-                                &emsp;
+                                &emsp;&emsp;
                                 @if (Model.Item2 != null)
                                 {
                                     @foreach (var row in Model.Item2)
                                     {
-                                        if (row[0] == @item.CrMasSupCarBrandCode)
+                                        if (row[0] == @item.CrMasSupCarAdvantagesCode)
                                         {
                                             @row[1]
                                         }
@@ -167,8 +168,8 @@ else
                                 }
                             </td>
                             <td>
-                                &emsp;
-                                @if (@item.CrMasSupCarBrandStatus == Status.Active)
+                                &emsp;&emsp;
+                                @if (@item.CrMasSupCarAdvantagesStatus == Status.Active)
                                 {
                                     @localizer["Active"]
                                 }

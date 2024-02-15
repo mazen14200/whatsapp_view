@@ -1,14 +1,16 @@
-﻿@using Bnan.Core.Extensions
-@* @model IEnumerable<CrMasSupCarBrand>
+﻿
+
+@using Bnan.Core.Extensions
+@* @model IEnumerable<CrMasUserLogin>
 *@
-@model Tuple<IEnumerable<CrMasSupCarBrand>, List<List<string>>>
+@model Tuple<IEnumerable<CrMasUserLogin>, List<List<string>>>
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
        ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
-    ViewData["Page-title"] = @localizer["Brands Data"];
-    ViewData["Page-Hint"] = @localizer["Brands Hint"];
+    ViewData["Page-title"] = @localizer["UserLogin Data"];
+    ViewData["Page-Hint"] = @localizer["UserLogin Hint"];
 }
 <style>
     body {
@@ -34,13 +36,13 @@
         cursor: pointer;
     }
 
-    /*     td,th {
-            text-align: center;
-        } */
-
-    #_Nc {
+/*     td,th {
         text-align: center;
-    }
+    } */
+
+/*     #_Nc {
+        text-align: center;
+    } */
 </style>
 
 <div class="sub-container">
@@ -52,53 +54,47 @@
                     <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="MAS" asp-controller="Home" asp-action="Index">
                         <i class="mdi mdi-window-close"></i>
                     </a>
-                    <a class="btn btn-secondary InsertBtn" onclick="CheckValidation('1107004', '@Status.Insert', '@Url.Action("AddCarBrand", "CarBrand")')">
-                        @localizer["Add Brands Data"]
-                    </a> 
+            @*      <a class="btn btn-secondary InsertBtn" onclick="CheckValidation('1104001', '@Status.Insert', '@Url.Action("AddCarRegistration", "CarRegistration")')">
+                        @localizer["Add Registrations Data"]
+                    </a>  *@
                 </div>
+            
+            @*DateTime Inputs*@
+            <label>@localizer["Add minDate Data"]</label>
+                <input name="_mini" id="_mini" type="date" name="_max" id="_max" placeholder="YYYY-MM-DD" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
+            <label>@localizer["Add MaxDate Data"]</label>
+                <input type="date" name="_max" id="_max" placeholder="YYYY-MM-DD" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
             </div>
-
             @*search And Fitler Radio Button*@
             <div class="col-sm-12 col-md-3 p-0">
                 <input class="form-control" type="search" id="top-search" style="width: 96%;" placeholder="@localizer["search"]...">
             </div>
-            <div class="col-sm-12 col-md-12 mt-3" id="status-filter">
+@*             <div class="col-sm-12 col-md-12 mt-3" id="status-filter">
                 <div class="form-check form-check-inline">
                     <input type="radio" id="customRadioAll" name="customRadio" value="All" class="form-check-input">
                     <label class="form-check-label" for="customRadioAll">@localizer["All"]</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadioActive" name="customRadio" value="A" class="form-check-input">
-                    <label class="form-check-label" for="customRadioActive">@localizer["Active"]</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadioStoped" name="customRadio" value="H" class="form-check-input">
-                    <label class="form-check-label" for="customRadioStoped">@localizer["Stoped"]</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadioRemoved" name="customRadio" value="D" class="form-check-input">
-                    <label class="form-check-label" for="customRadioRemoved">@localizer["Deleted"]</label>
-                </div>
+                
 
-            </div>
+            </div> *@
         </div>
         <div class=dataTable>
-            <partial name="_DataTableCarBrand" />
+            <partial name="_DataTableReport1" />
         </div>
     </div>
 </div>
 
 @section scripts {
-    @*Get CarBrand Using filter*@
+    @*Get CarRegistration Using filter*@
     <script>
-        //get CarBrand By Status function
-        function GetCarBrandFitler(status) {
+        //get CarRegistration By Status function
+        function GetReport1Fitler(_max, _mini) {
             $.ajax({
                 type: "GET",
                 data: {
-                    status: status
+                    _max: _max, _mini: _mini
                 },
-                url: "@Url.Action("GetCarBrandByStatus", "CarBrand", new { Area = "MAS" })",
+                url: "@Url.Action("GetUserLoginByDate", "Report1", new { Area = "MAS" })",
                 success: function (response) {
                     $(".dataTable").html(response);
                     set_basic_datatable();
@@ -106,9 +102,10 @@
             })
         }
 
-        //on Click Filter Radio Button GetCarBrandByStatus
-        $("input[name='customRadio']").on("click", function () {
-            GetCarBrandFitler($(this).val())
+        //on Click Filter Radio Button GetCarRegistrationByStatus
+        $("input[name='_max']").on("Change", function () {
+            const min = document.getElementById('_mini').value;
+            GetReport1Fitler($(this).val(), min)
         })
     </script>
 }

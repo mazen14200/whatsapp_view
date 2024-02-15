@@ -263,9 +263,10 @@
                                                             {
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1104001")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
+                                                                    
                                                                     @*Report1*@
                                                                     <li>
-                                                                        <a> @localizer["Report1"]</a>
+                                                                        <a asp-area="MAS" asp-controller="Report1" asp-action="Index">@localizer["Report1"]</a>
                                                                     </li>
                                                                 }
 
@@ -471,15 +472,15 @@
                                                                 {
                                                                     @*Registration Type*@
                                                                     <li>
-                                                                        <a> @localizer["RegistrationType"]</a>
-                                                                    </li>
+                                                                        <a asp-area="MAS" asp-controller="CarRegistration" asp-action="Index">@localizer["RegistrationType"]</a>
+                                                                    </li>                                                                    
                                                                 }
 
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1107002")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     @*Fuel Type*@
                                                                     <li>
-                                                                        <a>@localizer["FuelType"]</a>
+                                                                        <a asp-area="MAS" asp-controller="CarFuel" asp-action="Index">@localizer["FuelType"]</a>
                                                                     </li>
                                                                 }
 
@@ -487,13 +488,13 @@
                                                                 {
                                                                     @*CVTType*@
                                                                     <li>
-                                                                        <a>@localizer["CVTType"]</a>
+                                                                        <a asp-area="MAS" asp-controller="CarCvt" asp-action="Index">@localizer["CVTType"]</a>
                                                                     </li>
                                                                 }
 
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1107004")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
-                                                                    @*Models*@
+                                                                    @*Brands*@
                                                                     <li>
                                                                         <a asp-area="MAS" asp-controller="CarBrand" asp-action="Index">@localizer["Brands"]</a>
                                                                     </li>
@@ -520,15 +521,15 @@
                                                                 {
                                                                     @*Categories*@
                                                                     <li>
-                                                                        <a>@localizer["Categories"]</a>
+                                                                        <a asp-area="MAS" asp-controller="CarCategory" asp-action="Index">@localizer["Categories"]</a>
                                                                     </li>
                                                                 }
 
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1107008")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
-                                                                    @*Features*@
+                                                                    @*Advantages*@
                                                                     <li>
-                                                                        <a>@localizer["Features"]</a>
+                                                                        <a asp-area="MAS" asp-controller="CarAdvantage" asp-action="Index">@localizer["Advantages"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1107009")?.CrMasUserSubValidationAuthorization == true)
