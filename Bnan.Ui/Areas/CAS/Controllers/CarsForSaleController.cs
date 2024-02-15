@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using NToastNotify;
+using System.Globalization;
 
 namespace Bnan.Ui.Areas.CAS.Controllers
 {
@@ -87,7 +88,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                                                                                                                                "CrCasCarInformationCategoryNavigation", "CrCasCarInformation2"});
             ViewBag.OfferDate = car.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd");
             ViewBag.SoldDate = car.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd");
-            ViewBag.offerValue = car.CrCasCarInformationOfferValueSale?.ToString("N2");
+            ViewBag.offerValue = car.CrCasCarInformationOfferValueSale?.ToString("N2", CultureInfo.InvariantCulture);
             if (car.CrCasCarInformationForSaleStatus == Status.RendAndForSale) ViewBag.ForRent = _localizer["Yes"];
             else ViewBag.ForRent = _localizer["Noo"];
 

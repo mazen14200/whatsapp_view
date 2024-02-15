@@ -4,6 +4,7 @@ using Bnan.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,8 +40,8 @@ namespace Bnan.Inferastructure.Repository
                 if (branch.CrCasBranchInformationAvailableBalance == null) branch.CrCasBranchInformationAvailableBalance = 0;
                 if (branch.CrCasBranchInformationReservedBalance == null) branch.CrCasBranchInformationReservedBalance = 0;
 
-                branch.CrCasBranchInformationAvailableBalance -= decimal.Parse(Creditor);
-                branch.CrCasBranchInformationReservedBalance += decimal.Parse(Creditor);
+                branch.CrCasBranchInformationAvailableBalance -= decimal.Parse(Creditor, CultureInfo.InvariantCulture);
+                branch.CrCasBranchInformationReservedBalance += decimal.Parse(Creditor, CultureInfo.InvariantCulture);
                 if (_unitOfWork.CrCasBranchInformation.Update(branch) != null) return true;
             }
             return false;
@@ -51,8 +52,8 @@ namespace Bnan.Inferastructure.Repository
             var user = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationLessor == lessorCode && x.CrMasUserInformationCode == UserCode);
             if (user != null)
             {
-                user.CrMasUserInformationAvailableBalance -= decimal.Parse(Creditor);
-                user.CrMasUserInformationReservedBalance += decimal.Parse(Creditor);
+                user.CrMasUserInformationAvailableBalance -= decimal.Parse(Creditor, CultureInfo.InvariantCulture);
+                user.CrMasUserInformationReservedBalance += decimal.Parse(Creditor, CultureInfo.InvariantCulture);
                 if (_unitOfWork.CrMasUserInformation.Update(user) != null) return true;
             }
             return false;
@@ -64,8 +65,8 @@ namespace Bnan.Inferastructure.Repository
                                                                                x.CrCasAccountSalesPointBrn == BranchCode);
             if (SalesPoint != null)
             {
-                SalesPoint.CrCasAccountSalesPointTotalAvailable -= decimal.Parse(Creditor);
-                SalesPoint.CrCasAccountSalesPointTotalReserved += decimal.Parse(Creditor);
+                SalesPoint.CrCasAccountSalesPointTotalAvailable -= decimal.Parse(Creditor, CultureInfo.InvariantCulture);
+                SalesPoint.CrCasAccountSalesPointTotalReserved += decimal.Parse(Creditor, CultureInfo.InvariantCulture);
                 if (_unitOfWork.CrCasAccountSalesPoint.Update(SalesPoint) != null) return true;
             }
             return false;
@@ -79,13 +80,13 @@ namespace Bnan.Inferastructure.Repository
             {
                 if (BankNo == "00")
                 {
-                    UserBranchValididy.CrMasUserBranchValidityBranchCashAvailable -= decimal.Parse(Creditor);
-                    UserBranchValididy.CrMasUserBranchValidityBranchCashReserved += decimal.Parse(Creditor);
+                    UserBranchValididy.CrMasUserBranchValidityBranchCashAvailable -= decimal.Parse(Creditor, CultureInfo.InvariantCulture);
+                    UserBranchValididy.CrMasUserBranchValidityBranchCashReserved += decimal.Parse(Creditor, CultureInfo.InvariantCulture);
                 }
                 else
                 {
-                    UserBranchValididy.CrMasUserBranchValidityBranchSalesPointAvailable -= decimal.Parse(Creditor);
-                    UserBranchValididy.CrMasUserBranchValidityBranchSalesPointReserved += decimal.Parse(Creditor);
+                    UserBranchValididy.CrMasUserBranchValidityBranchSalesPointAvailable -= decimal.Parse(Creditor, CultureInfo.InvariantCulture);
+                    UserBranchValididy.CrMasUserBranchValidityBranchSalesPointReserved += decimal.Parse(Creditor, CultureInfo.InvariantCulture);
                 }
                 if (_unitOfWork.CrMasUserBranchValidity.Update(UserBranchValididy) != null) return true;
 
@@ -111,7 +112,7 @@ namespace Bnan.Inferastructure.Repository
             else receipt.CrCasAccountReceiptPaymentMethod = "40";
             receipt.CrCasAccountReceiptReferenceType = "15";
             receipt.CrCasAccountReceiptReferenceNo = adminstritive.CrCasSysAdministrativeProceduresNo;
-            receipt.CrCasAccountReceiptReceipt = decimal.Parse(TotalAmount);
+            receipt.CrCasAccountReceiptReceipt = decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
             receipt.CrCasAccountReceiptPayment = 0;
             receipt.CrCasAccountReceiptBank = SalesPoint.CrCasAccountSalesPointBank;
             receipt.CrCasAccountReceiptAccount = SalesPoint.CrCasAccountSalesPointAccountBank;
@@ -152,13 +153,13 @@ namespace Bnan.Inferastructure.Repository
                 if (branch.CrCasBranchInformationReservedBalance == null) branch.CrCasBranchInformationReservedBalance = 0;
                 if (status == Status.Accept)
                 {
-                    branch.CrCasBranchInformationReservedBalance -= decimal.Parse(TotalAmount);
-                    branch.CrCasBranchInformationTotalBalance -= decimal.Parse(TotalAmount);
+                    branch.CrCasBranchInformationReservedBalance -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
+                    branch.CrCasBranchInformationTotalBalance -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
                 }
                 else
                 {
-                    branch.CrCasBranchInformationReservedBalance -= decimal.Parse(TotalAmount);
-                    branch.CrCasBranchInformationAvailableBalance += decimal.Parse(TotalAmount);
+                    branch.CrCasBranchInformationReservedBalance -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
+                    branch.CrCasBranchInformationAvailableBalance += decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
                 }
 
                 if (_unitOfWork.CrCasBranchInformation.Update(branch) != null) return true;
@@ -175,13 +176,13 @@ namespace Bnan.Inferastructure.Repository
             {
                 if (status == Status.Accept)
                 {
-                    SalesPoint.CrCasAccountSalesPointTotalBalance -= decimal.Parse(TotalAmount);
-                    SalesPoint.CrCasAccountSalesPointTotalReserved -= decimal.Parse(TotalAmount);
+                    SalesPoint.CrCasAccountSalesPointTotalBalance -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
+                    SalesPoint.CrCasAccountSalesPointTotalReserved -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
                 }
                 else
                 {
-                    SalesPoint.CrCasAccountSalesPointTotalAvailable += decimal.Parse(TotalAmount);
-                    SalesPoint.CrCasAccountSalesPointTotalReserved -= decimal.Parse(TotalAmount);
+                    SalesPoint.CrCasAccountSalesPointTotalAvailable += decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
+                    SalesPoint.CrCasAccountSalesPointTotalReserved -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
                 }
 
                 if (_unitOfWork.CrCasAccountSalesPoint.Update(SalesPoint) != null) return true;
@@ -196,13 +197,13 @@ namespace Bnan.Inferastructure.Repository
             {
                 if (status == Status.Accept)
                 {
-                    user.CrMasUserInformationTotalBalance -= decimal.Parse(TotalAmount);
-                    user.CrMasUserInformationReservedBalance -= decimal.Parse(TotalAmount);
+                    user.CrMasUserInformationTotalBalance -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
+                    user.CrMasUserInformationReservedBalance -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
                 }
                 else
                 {
-                    user.CrMasUserInformationAvailableBalance += decimal.Parse(TotalAmount);
-                    user.CrMasUserInformationReservedBalance -= decimal.Parse(TotalAmount);
+                    user.CrMasUserInformationAvailableBalance += decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
+                    user.CrMasUserInformationReservedBalance -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
                 }
 
                 if (_unitOfWork.CrMasUserInformation.Update(user) != null) return true;
@@ -225,13 +226,13 @@ namespace Bnan.Inferastructure.Repository
                 {
                     if (status == Status.Accept)
                     {
-                        UserBranchValididy.CrMasUserBranchValidityBranchCashBalance -= decimal.Parse(TotalAmount);
-                        UserBranchValididy.CrMasUserBranchValidityBranchCashReserved -= decimal.Parse(TotalAmount);
+                        UserBranchValididy.CrMasUserBranchValidityBranchCashBalance -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
+                        UserBranchValididy.CrMasUserBranchValidityBranchCashReserved -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
                     }
                     else
                     {
-                        UserBranchValididy.CrMasUserBranchValidityBranchCashAvailable += decimal.Parse(TotalAmount);
-                        UserBranchValididy.CrMasUserBranchValidityBranchCashReserved -= decimal.Parse(TotalAmount);
+                        UserBranchValididy.CrMasUserBranchValidityBranchCashAvailable += decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
+                        UserBranchValididy.CrMasUserBranchValidityBranchCashReserved -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
                     }
 
                 }
@@ -239,13 +240,13 @@ namespace Bnan.Inferastructure.Repository
                 {
                     if (status == Status.Accept)
                     {
-                        UserBranchValididy.CrMasUserBranchValidityBranchSalesPointBalance -= decimal.Parse(TotalAmount);
-                        UserBranchValididy.CrMasUserBranchValidityBranchSalesPointReserved -= decimal.Parse(TotalAmount);
+                        UserBranchValididy.CrMasUserBranchValidityBranchSalesPointBalance -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
+                        UserBranchValididy.CrMasUserBranchValidityBranchSalesPointReserved -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
                     }
                     else
                     {
-                        UserBranchValididy.CrMasUserBranchValidityBranchSalesPointAvailable += decimal.Parse(TotalAmount);
-                        UserBranchValididy.CrMasUserBranchValidityBranchSalesPointReserved -= decimal.Parse(TotalAmount);
+                        UserBranchValididy.CrMasUserBranchValidityBranchSalesPointAvailable += decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
+                        UserBranchValididy.CrMasUserBranchValidityBranchSalesPointReserved -= decimal.Parse(TotalAmount, CultureInfo.InvariantCulture);
                     }
 
                 }

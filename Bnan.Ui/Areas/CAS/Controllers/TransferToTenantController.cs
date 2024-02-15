@@ -112,7 +112,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var Renter = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == renterLessorVM.CrCasRenterLessorId && x.CrCasRenterLessorCode == lessorCode, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic4s",
                                                                                                                            "CrCasRenterLessorNavigation" });
             var AddAdminstritive = await _tranferToRenter.SaveAdminstritiveTransferRenter(renterLessorVM.AdminstritiveNo, userLogin.CrMasUserInformationCode,"306","30", lessorCode, Renter.CrCasRenterLessorId,
-                                                                                            decimal.Parse(renterLessorVM.Amount), 0,renterLessorVM.Reasons);
+                                                                                            decimal.Parse(renterLessorVM.Amount, CultureInfo.InvariantCulture), 0,renterLessorVM.Reasons);
 
             var CheckAddReceipt = true;
             CheckAddReceipt = await _tranferToRenter.AddAccountReceiptTransferToRenter(AddAdminstritive.CrCasSysAdministrativeProceduresNo, Renter.CrCasRenterLessorId, userLogin.CrMasUserInformationCode,"301", "17", lessorCode,

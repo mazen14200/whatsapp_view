@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using NToastNotify;
+using System.Globalization;
+
 namespace Bnan.Ui.Areas.CAS.Controllers
 {
     [Area("CAS")]
@@ -100,7 +102,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var result = await _adminstritiveProcedures.SaveAdminstritive(userLogin.CrMasUserInformationCode, "1", "303", "30", userLogin.CrMasUserInformationLessor, "100",
-            Model.CrMasUserInformationCode, decimal.Parse(FeedValue), null, null, null, null, null, null, null, "تغذية صندوق", "Feed Box", "I", Reasons);
+            Model.CrMasUserInformationCode, decimal.Parse(FeedValue, CultureInfo.InvariantCulture), null, null, null, null, null, null, null, "تغذية صندوق", "Feed Box", "I", Reasons);
             if (result) _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
             else _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
             return RedirectToAction("FeedBox");

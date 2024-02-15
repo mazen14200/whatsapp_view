@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.EntityFrameworkCore;
 @using Newtonsoft.Json;
+@using System.Globalization;
 @model BSLayoutVM
 @inject UserManager<CrMasUserInformation> userManager
 @inject SignInManager<CrMasUserInformation> signinManager
@@ -191,7 +192,7 @@
                                                     <P> @localizer["Netcontract"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P>@Model.ExtensionContract.CrCasRenterContractBasicExpectedTotal?.ToString("N2")</P>
+                                                    <P>@Model.ExtensionContract.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)</P>
                                                 </div>
                                             </div>
                                             <div class="col-md-auto col-lg-4 d-flex "
@@ -200,7 +201,7 @@
                                                     <P>@localizer["AmountPaid"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P>@Model.ExtensionContract.CrCasRenterContractBasicAmountPaidAdvance?.ToString("N2")</P>
+                                                    <P>@Model.ExtensionContract.CrCasRenterContractBasicAmountPaidAdvance?.ToString("N2",CultureInfo.InvariantCulture)</P>
                                                 </div>
                                             </div>
                                         </div>
@@ -285,7 +286,7 @@
                                                     <P>@localizer["PreviousBalance"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P>@Model.ExtensionContract.CasRenterPreviousBalance?.ToString("N2")</P>
+                                                    <P>@Model.ExtensionContract.CasRenterPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)</P>
                                                 </div>
                                             </div>
                                             <div class="col-md-auto col-lg-4 d-flex "

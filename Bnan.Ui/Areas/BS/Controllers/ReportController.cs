@@ -103,7 +103,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             receiptDetails.ReceiptNo = ReceiptNo;
             receiptDetails.Date = receipt.CrCasAccountReceiptDate?.ToString("yyyy/MM/dd");
-            receiptDetails.Creditor = receipt.CrCasAccountReceiptPayment?.ToString("N2");
+            receiptDetails.Creditor = receipt.CrCasAccountReceiptPayment?.ToString("N2",CultureInfo.InvariantCulture);
             receiptDetails.ReferenceNo = receipt.CrCasAccountReceiptReferenceNo;
             receiptDetails.ReferenceTypeAr = receipt.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceArName;
             receiptDetails.ReferenceTypeEn = receipt.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceEnName;

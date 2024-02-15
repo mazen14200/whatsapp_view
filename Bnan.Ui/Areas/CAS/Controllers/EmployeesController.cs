@@ -277,12 +277,13 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
             var lastUser = _userManager.Users.ToList().LastOrDefault(x => x.CrMasUserInformationLessor == currentUser.CrMasUserInformationLessor);
             var crMasUserInformation = _mapper.Map<RegisterViewModel>(user);
+            ViewBag.CreditLimit = crMasUserInformation.CrMasUserInformationCreditLimit?.ToString("N2", CultureInfo.InvariantCulture);
             crMasUserInformation.CrMasUserBranchValidities = _unitOfWork.CrMasUserBranchValidity.FindAll(x => x.CrMasUserBranchValidityId == user.CrMasUserInformationCode).ToList();
             crMasUserInformation.CrCasBranchInformations = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == currentUser.CrMasUserInformationLessor&&x.CrCasBranchInformationStatus!=Status.Deleted).ToList();
             return View(crMasUserInformation);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(RegisterViewModel model, bool CrMasUserInformationAuthorizationAdmin, bool CrMasUserInformationAuthorizationOwner, bool CrMasUserInformationAuthorizationBranch, List<string> CheckboxBranchesWithData)
+        public async Task<IActionResult> Edit(RegisterViewModel model,string CreditLimit, bool CrMasUserInformationAuthorizationAdmin, bool CrMasUserInformationAuthorizationOwner, bool CrMasUserInformationAuthorizationBranch, List<string> CheckboxBranchesWithData)
         {
             if (ModelState.IsValid)
             {
@@ -292,7 +293,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
                     user.CrMasUserInformationTasksArName = model.CrMasUserInformationTasksArName;
                     user.CrMasUserInformationTasksEnName = model.CrMasUserInformationTasksEnName;
-                    user.CrMasUserInformationCreditLimit = model.CrMasUserInformationCreditLimit;
+                    user.CrMasUserInformationCreditLimit = decimal.Parse(CreditLimit, CultureInfo.InvariantCulture);
                     user.CrMasUserInformationReasons = model.CrMasUserInformationReasons;
                     user.CrMasUserInformationAuthorizationAdmin = CrMasUserInformationAuthorizationAdmin;
                     user.CrMasUserInformationAuthorizationOwner = CrMasUserInformationAuthorizationOwner;

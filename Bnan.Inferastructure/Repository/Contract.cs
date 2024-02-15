@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.RenderTree;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -297,7 +298,7 @@ namespace Bnan.Inferastructure.Repository
             else authorization.CrCasRenterContractAuthorizationType = false;
             authorization.CrCasRenterContractAuthorizationStartDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
             authorization.CrCasRenterContractAuthorizationDaysNo = 365;
-            authorization.CrCasRenterContractAuthorizationValue = decimal.Parse(AuthrizationValue);
+            authorization.CrCasRenterContractAuthorizationValue = decimal.Parse(AuthrizationValue, CultureInfo.InvariantCulture);
             //authorization.CrCasRenterContractAuthorizationValue = AuthrizationValue;
             authorization.CrCasRenterContractAuthorizationEndDate = authorization.CrCasRenterContractAuthorizationStartDate?.AddDays(Convert.ToDouble(authorization.CrCasRenterContractAuthorizationDaysNo));
             authorization.CrCasRenterContractAuthorizationStatus = Status.Active;
@@ -392,20 +393,20 @@ namespace Bnan.Inferastructure.Repository
             if (Authrization == "true") renterContractBasic.CrCasRenterContractBasicAuthorizationValue = carPrice.CrCasCarPriceBasicOutFeesTamm;
             else renterContractBasic.CrCasRenterContractBasicAuthorizationValue = carPrice.CrCasCarPriceBasicInFeesTamm;
             renterContractBasic.CrCasRenterContractBasicTaxRate = carPrice.CrCasPriceCarBasicRentalTaxRate;
-            renterContractBasic.CrCasRenterContractBasicUserDiscountRate = decimal.Parse(UserDiscount);
+            renterContractBasic.CrCasRenterContractBasicUserDiscountRate = decimal.Parse(UserDiscount, CultureInfo.InvariantCulture);
             //Info From Payment Tab From Create Contract 
             renterContractBasic.CrCasRenterContractBasicCurrentReadingMeter = int.Parse(CurrentMeter);
             renterContractBasic.CrCasRenterContractBasicExpectedRentValue = carPrice.CrCasPriceCarBasicDailyRent * int.Parse(DaysNo);
-            renterContractBasic.CrCasRenterContractBasicExpectedOptionsValue = decimal.Parse(OptionsTotal);
-            renterContractBasic.CrCasRenterContractBasicAdditionalValue = decimal.Parse(AdditionalTotal);
-            renterContractBasic.CrCasRenterContractBasicExpectedValueBeforDiscount = decimal.Parse(ContractValueBeforeDiscount);
-            renterContractBasic.CrCasRenterContractBasicExpectedDiscountValue = decimal.Parse(DiscountValue);
-            renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount = decimal.Parse(ContractValueAfterDiscount);
-            renterContractBasic.CrCasRenterContractBasicExpectedTaxValue = decimal.Parse(TaxValue);
-            renterContractBasic.CrCasRenterContractBasicExpectedTotal = decimal.Parse(ContractValueAfterDiscount) + decimal.Parse(TaxValue);
+            renterContractBasic.CrCasRenterContractBasicExpectedOptionsValue = decimal.Parse(OptionsTotal, CultureInfo.InvariantCulture);
+            renterContractBasic.CrCasRenterContractBasicAdditionalValue = decimal.Parse(AdditionalTotal, CultureInfo.InvariantCulture);
+            renterContractBasic.CrCasRenterContractBasicExpectedValueBeforDiscount = decimal.Parse(ContractValueBeforeDiscount, CultureInfo.InvariantCulture);
+            renterContractBasic.CrCasRenterContractBasicExpectedDiscountValue = decimal.Parse(DiscountValue, CultureInfo.InvariantCulture);
+            renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount = decimal.Parse(ContractValueAfterDiscount, CultureInfo.InvariantCulture);
+            renterContractBasic.CrCasRenterContractBasicExpectedTaxValue = decimal.Parse(TaxValue, CultureInfo.InvariantCulture);
+            renterContractBasic.CrCasRenterContractBasicExpectedTotal = decimal.Parse(ContractValueAfterDiscount, CultureInfo.InvariantCulture) + decimal.Parse(TaxValue, CultureInfo.InvariantCulture);
             renterContractBasic.CrCasRenterContractBasicPreviousBalance = renterlessorInfo.CrCasRenterLessorBalance;
             renterContractBasic.CrCasRenterContractBasicAmountRequired = renterContractBasic.CrCasRenterContractBasicExpectedTotal + renterlessorInfo.CrCasRenterLessorBalance;
-            if (!string.IsNullOrEmpty(AmountPayed)) renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = decimal.Parse(AmountPayed);
+            if (!string.IsNullOrEmpty(AmountPayed)) renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = decimal.Parse(AmountPayed, CultureInfo.InvariantCulture);
             else renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = 0;
 
 

@@ -155,10 +155,9 @@
                             <label class="form-label" for="CrMasUserInformationCreditLimit">@localizer["CreditLimit"]</label>
                         </div>
                         <div class="col-md-8" style="margin-right: -90px;margin-left: -90px;">
-                            <input type="text" class="form-control" style="width:155px" asp-for="CrMasUserInformationCreditLimit" maxlength="9" id="CrMasUserInformationCreditLimit" autocomplete="off" data-val-required="@localizer["requiredFiled"]" oninput="validateInput9Digit(this)">
+                            <input type="text" class="form-control" style="width:155px" name="CreditLimit" maxlength="9" id="CrMasUserInformationCreditLimit" value="@ViewBag.CreditLimit" autocomplete="off" data-val-required="@localizer["requiredFiled"]" oninput="validateInput9Digit(this)">
                             <div style="margin-top:2px">
                                 <div style="height: 1.0em">
-                                    <span asp-validation-for="@Model.CrMasUserInformationCreditLimit" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>

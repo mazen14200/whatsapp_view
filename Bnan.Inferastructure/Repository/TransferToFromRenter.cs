@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
@@ -36,8 +37,8 @@ namespace Bnan.Inferastructure.Repository
             receipt.CrCasAccountReceiptDate = DateTime.Now;
             receipt.CrCasAccountReceiptReferenceType = ReferenceType;
             receipt.CrCasAccountReceiptReferenceNo = AdmintritiveNo;
-            receipt.CrCasAccountReceiptReceipt = decimal.Parse(TotalAmountReceipt);
-            receipt.CrCasAccountReceiptPayment = decimal.Parse(TotalAmountPayment);
+            receipt.CrCasAccountReceiptReceipt = decimal.Parse(TotalAmountReceipt, CultureInfo.InvariantCulture);
+            receipt.CrCasAccountReceiptPayment = decimal.Parse(TotalAmountPayment, CultureInfo.InvariantCulture);
             receipt.CrCasAccountReceiptBank = BankNo;
             receipt.CrCasAccountReceiptAccount = AccountNo;
             receipt.CrCasAccountReceiptUser = userCode;
@@ -68,7 +69,7 @@ namespace Bnan.Inferastructure.Repository
             var Renter = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId);
             if (Renter != null)
             {
-                Renter.CrCasRenterLessorBalance+=decimal.Parse(Amount);
+                Renter.CrCasRenterLessorBalance+=decimal.Parse(Amount, CultureInfo.InvariantCulture);
                 if (_unitOfWork.CrCasRenterLessor.Update(Renter) != null) return true;
             }
             return false;

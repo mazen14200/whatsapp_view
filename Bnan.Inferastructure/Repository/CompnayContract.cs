@@ -3,6 +3,7 @@ using Bnan.Core.Models;
 using Bnan.Inferastructure.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -95,12 +96,12 @@ namespace Bnan.Inferastructure.Repository
             companyContract.CrMasContractCompanyDate = DateTime.Parse(Date).Date;
             companyContract.CrMasContractCompanyStartDate = DateTime.Parse(StartDate).Date;
             companyContract.CrMasContractCompanyEndDate = DateTime.Parse(EndDate).Date;
-            companyContract.CrMasContractCompanyAnnualFees = decimal.Parse(ContractCompanyAnnualFees);
-            companyContract.CrMasContractCompanyDiscountRate = decimal.Parse(ContractCompanyDiscountRate);
+            companyContract.CrMasContractCompanyAnnualFees = decimal.Parse(ContractCompanyAnnualFees, CultureInfo.InvariantCulture);
+            companyContract.CrMasContractCompanyDiscountRate = decimal.Parse(ContractCompanyDiscountRate, CultureInfo.InvariantCulture);
             companyContract.CrMasContractCompanyAboutToExpire = DateTime.Parse(EndDate).AddDays(-aboutExp).Date;
             companyContract.CrMasContractCompanyStatus = "A";
             companyContract.CrMasContractCompanyActivation = Activiation;
-            companyContract.CrMasContractCompanyTaxRate = decimal.Parse(ContractCompanyTaxRate);
+            companyContract.CrMasContractCompanyTaxRate = decimal.Parse(ContractCompanyTaxRate, CultureInfo.InvariantCulture);
             companyContract.CrMasContractCompanyNumber = companyContract.CrMasContractCompanyNo;
             _unitOfWork.CrMasContractCompany.Update(companyContract);
             return true;
@@ -143,9 +144,9 @@ namespace Bnan.Inferastructure.Repository
                 contractCount = lastContract != null ? lastContract.CrMasContractCompanyDetailedSer + serial : 1;
             }
             crMasContractCompanyDetailed.CrMasContractCompanyDetailedSer = contractCount;
-            crMasContractCompanyDetailed.CrMasContractCompanyDetailedFromPrice = decimal.Parse(From);
-            crMasContractCompanyDetailed.CrMasContractCompanyDetailedToPrice = decimal.Parse(To);
-            crMasContractCompanyDetailed.CrMasContractCompanyDetailedValue = decimal.Parse(Value);
+            crMasContractCompanyDetailed.CrMasContractCompanyDetailedFromPrice = decimal.Parse(From, CultureInfo.InvariantCulture);
+            crMasContractCompanyDetailed.CrMasContractCompanyDetailedToPrice = decimal.Parse(To, CultureInfo.InvariantCulture);
+            crMasContractCompanyDetailed.CrMasContractCompanyDetailedValue = decimal.Parse(Value, CultureInfo.InvariantCulture);
             await _unitOfWork.CrMasContractCompanyDetailed.AddAsync(crMasContractCompanyDetailed);
 
             return true;

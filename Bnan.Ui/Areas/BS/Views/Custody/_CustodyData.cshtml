@@ -1,5 +1,6 @@
 ﻿@using Bnan.Core.Extensions;
 @using Bnan.Ui.ViewModels.BS;
+@using System.Globalization;
 @model BSLayoutVM
 @inject IViewLocalizer localizer
 @{
@@ -18,7 +19,7 @@
             <P>@localizer["TotalBalanceOfSalesPoint"]</P>
         </div>
         <div class="col-auto personal-data">
-            <P>@Model.SalesPointBalanceTotal?.ToString("N2")</P>
+            <P>@Model.SalesPointBalanceTotal?.ToString("N2",CultureInfo.InvariantCulture)</P>
         </div>
     </div>
     <div class="col-md-6 col-lg-4 col-xl-3  d-flex data-col">
@@ -26,7 +27,7 @@
             <P>@localizer["AvailableBalance"]</P>
         </div>
         <div class="col-auto personal-data">
-            <P>@Model.SalesPointBalanceAvaliable?.ToString("N2")</P>
+            <P>@Model.SalesPointBalanceAvaliable?.ToString("N2",CultureInfo.InvariantCulture)</P>
         </div>
     </div>
     <div class="col-md-4 d-flex data-col">
@@ -34,7 +35,7 @@
             <P>@localizer["ReservedBalance"]</P>
         </div>
         <div class="col-auto personal-data">
-            <P>@Model.SalesPointBalanceResereved?.ToString("N2")</P>
+            <P>@Model.SalesPointBalanceResereved?.ToString("N2",CultureInfo.InvariantCulture)</P>
         </div>
     </div>
 </div>
@@ -44,7 +45,7 @@
             <P>@localizer["EmployeeTotalBalance"]</P>
         </div>
         <div class="col-auto personal-data">
-            <P>@Model.UserBalanceTotal?.ToString("N2")</P>
+            <P>@Model.UserBalanceTotal?.ToString("N2",CultureInfo.InvariantCulture)</P>
         </div>
     </div>
     <div class="col-md-6 col-lg-4 col-xl-3  d-flex data-col">
@@ -52,7 +53,7 @@
             <P>@localizer["AvailableBalance"]</P>
         </div>
         <div class="col-auto personal-data">
-            <P>@Model.UserBalanceAvaliable?.ToString("N2")</P>
+            <P>@Model.UserBalanceAvaliable?.ToString("N2",CultureInfo.InvariantCulture)</P>
         </div>
     </div>
     <div class="col-md-4 d-flex data-col">
@@ -60,7 +61,7 @@
             <P>@localizer["ReservedBalance"]</P>
         </div>
         <div class="col-auto personal-data">
-            <P>@Model.UserBalanceResereved?.ToString("N2")</P>
+            <P>@Model.UserBalanceResereved?.ToString("N2",CultureInfo.InvariantCulture)</P>
         </div>
     </div>
 </div>
@@ -129,8 +130,8 @@
                     @foreach (var item in Model.CustodyReceipts)
                     {
                         <tr>
-                            <td id="Receipt_@item.CrCasAccountReceiptNo">@item.CrCasAccountReceiptReceipt?.ToString("N2")</td>
-                            <td id="Payment_@item.CrCasAccountReceiptNo">@item.CrCasAccountReceiptPayment?.ToString("N2")</td>
+                            <td id="Receipt_@item.CrCasAccountReceiptNo">@item.CrCasAccountReceiptReceipt?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="Payment_@item.CrCasAccountReceiptNo">@item.CrCasAccountReceiptPayment?.ToString("N2",CultureInfo.InvariantCulture)</td>
                             @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                             {
                                 <td class="text-right">@item.CrCasAccountReceiptPaymentMethodNavigation?.CrMasSupAccountPaymentMethodArName</td>
