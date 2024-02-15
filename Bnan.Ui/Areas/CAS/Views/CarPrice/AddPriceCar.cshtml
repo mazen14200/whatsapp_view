@@ -258,6 +258,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-1 formlabel">
+                                    <label class="form-label" asp-for="CrCasPriceCarBasicPrivateDriverValue">@localizer["PrivateDriverValue"]</label>
+                                </div>
+                                <div class="col-md-1 col-11">
+                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicPrivateDriverValue" maxlength="6" oninput="validateInput3Digit(this)">
+                                    <div style="margin-top:2px">
+                                        <div style="height: 1.35em">
+                                            <span asp-validation-for="@Model.CrCasPriceCarBasicPrivateDriverValue" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             @*ِAdditional Driver and InFees and OutFess Value*@
                             <div class="row mt-2">

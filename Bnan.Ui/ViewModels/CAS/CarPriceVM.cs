@@ -45,6 +45,8 @@ namespace Bnan.Ui.ViewModels.CAS
         [Required(ErrorMessage = "requiredFiled")]
         public decimal? CrCasPriceCarBasicAdditionalDriverValue { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
+        public decimal? CrCasPriceCarBasicPrivateDriverValue { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
         public decimal? CrCasCarPriceBasicInFeesTamm { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public decimal? CrCasCarPriceBasicOutFeesTamm { get; set; }

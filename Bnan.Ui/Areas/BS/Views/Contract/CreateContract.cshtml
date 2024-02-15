@@ -366,14 +366,6 @@ else
                                                     <span class="requird-field" id="requird_field_DriverID" asp-validation-for="@Model.Contract.DriverId"></span>
                                                 </div>
                                             </div>
-                                            <!--ForTest-->
-                                            <div class="col-sm-3 col-md-3 col-lg-3">
-                                                <input type="text" class="form-control" id="PriceNo" readonly>
-                                            </div>
-                                            <div class="col-sm-1 col-md-1 col-lg-1">
-                                                <input type="text" class="form-control" id="TaxRate" readonly>
-                                            </div>
-                                            <!--ForTest-->
                                             <div class="col-auto seacrh-icon-col">
                                                 <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="seacrh-icon Image"
                                                      id="hover-image-driver">
@@ -486,20 +478,6 @@ else
                                             <div class="col-auto" style="margin-bottom: 32px;">
                                                 <button type="button" class="check-btn" data-bs-toggle="modal" id="DriverCheckBtn" onclick="TimerFunctionDriver(true)">@localizer["Verification"] </button>
                                             </div>
-                                            <!--ForTest-->
-                                            <div class="col-auto">
-                                                <label for="national-number-driver" class="col-form-label">الخيارات</label>
-                                            </div>
-                                            <div class="col-sm-1 col-md-1 col-lg-1">
-                                                <input type="text" class="form-control" id="ChoicesTest" readonly>
-                                            </div>
-                                            <div class="col-auto">
-                                                <label for="national-number-driver" class="col-form-label">الاضافات</label>
-                                            </div>
-                                            <div class="col-sm-1 col-md-1 col-lg-1">
-                                                <input type="text" class="form-control" id="AdditionalTest" readonly>
-                                            </div>
-                                            <!--ForTest-->
                                         </div>
                                         <div class="row row-step3 align-items-center">
                                             <div class="col-md-6">
@@ -674,14 +652,6 @@ else
                                                     <span class="requird-field" id="requird_field_AdditionalDriverId" asp-validation-for="@Model.Contract.AdditionalDriverId"></span>
                                                 </div>
                                             </div>
-                                            <!--ForTest-->
-                                            <div class="col-sm-3 col-md-3 col-lg-3">
-                                                <input type="text" class="form-control" id="PriceNo2" readonly>
-                                            </div>
-                                            <div class="col-sm-1 col-md-1 col-lg-1">
-                                                <input type="text" class="form-control" id="TaxRate2" readonly>
-                                            </div>
-                                            <!--ForTest-->
                                             <div class="col-auto seacrh-icon-col">
                                                 <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="seacrh-icon Image"
                                                      id="hover-image-Add-driver">
@@ -800,20 +770,6 @@ else
                                             <div class="col-auto" style="margin-bottom: 32px;">
                                                 <button type="button" class="check-btn" data-bs-toggle="modal" id="AddDriverCheckBtn" onclick="TimerFunctionAddDriver(true)">@localizer["Verification"]</button>
                                             </div>
-                                            <!--ForTest-->
-                                            <div class="col-auto">
-                                                <label for="national-number-driver" class="col-form-label">الخيارات</label>
-                                            </div>
-                                            <div class="col-sm-1 col-md-1 col-lg-1">
-                                                <input type="text" class="form-control" id="ChoicesTest2" readonly>
-                                            </div>
-                                            <div class="col-auto">
-                                                <label for="national-number-driver" class="col-form-label">الاضافات</label>
-                                            </div>
-                                            <div class="col-sm-1 col-md-1 col-lg-1">
-                                                <input type="text" class="form-control" id="AdditionalTest2" readonly>
-                                            </div>
-                                            <!--ForTest-->
                                         </div>
                                         <div class="row row-step4">
                                             <div class="col-auto">
@@ -2681,13 +2637,7 @@ else
                                 var birthdate = RenterInformation.birthDate ? RenterInformation.birthDate.split('T')[0] : null;
                                 var licenseExpiryDate = RenterInformation.licenseExpiryDate ? RenterInformation.licenseExpiryDate.split('T')[0] : null;
                                 var licenseIssuedDate = RenterInformation.licenseIssuedDate ? RenterInformation.licenseIssuedDate.split('T')[0] : null;
-                                //For Test
-                                $("#PriceNo").val(CarInformation.carPrice.crCasPriceCarBasicNo);
-                                $("#TaxRate").val(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
-                                // $("#RentValue").val(CarInformation.carPrice.crCasPriceCarBasicDailyRent);
-                                $("#AdditionalTest").val(CarAdditionals.count);
-                                $("#ChoicesTest").val(CarChoices.count);
-                                //For Test
+                                
 
                                 if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
                                     if (DriverInformation.postEnNameConcenate != "" && DriverInformation.postEnNameConcenate != null && DriverInformation.postEnNameConcenate != undefined) {
@@ -2769,13 +2719,7 @@ else
                             }
                             else {
                                 //Clear Data Of Driver And Add Driver To Return Check
-                                //ForTest
-                                $("#PriceNo").val(CarInformation.carPrice.crCasPriceCarBasicNo);
-                                $("#TaxRate").val(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
-                                // $("#RentValue").val(CarInformation.carPrice.crCasPriceCarBasicDailyRent);
-                                $("#AdditionalTest").val(CarAdditionals.count);
-                                $("#ChoicesTest").val(CarChoices.count);
-                                //ForTest
+                                
                                 IsThereAdditionalDriver();
                                 clearDataDriver();
                                 clearDataAddDriver();
@@ -2800,12 +2744,7 @@ else
                     console.log("Tab Driver", currentField);
                     var driverName = $("#DriverName").text();
                     if (driverName != null && driverName != "") {
-                        //ForTest
-                        $("#PriceNo2").val(CarInformation.carPrice.crCasPriceCarBasicNo);
-                        $("#TaxRate2").val(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
-                        $("#AdditionalTest2").val(CarAdditionals.count);
-                        $("#ChoicesTest2").val(CarChoices.count);
-                        //ForTest
+                        
                         var currentDate = new Date();
                         var additionalDriver = document.getElementById("addational-driver");
                         var ExpiryIdDateDriver = new Date(DriverInformation.expiryIdDate);

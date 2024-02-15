@@ -99,8 +99,8 @@ namespace Bnan.Inferastructure.Repository
                 model.CrCasPriceCarBasicMonthlyDay = 28;
                 model.CrCasPriceCarBasicYearlyDay = 360;
                 model.CrCasPriceCarBasicRequireFinancialCredit = false;
+                if (model.CrCasPriceCarBasicIsAdditionalDriver == false) model.CrCasPriceCarBasicAdditionalDriverValue = 0;
                 model.CrCasPriceCarBasicStatus = Status.Active;
-
                 await _unitOfWork.CrCasPriceCarBasic.AddAsync(model);
                 return model.CrCasPriceCarBasicNo;
             }
