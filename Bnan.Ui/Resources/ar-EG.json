@@ -29,7 +29,7 @@
 
   //Renter
   "Renter": "المستأجرين",
-  "Renter Data": " بينات المستأجرين",
+  "Renter Data": "بينات المستأجرين",
   "Renter Contract": "عقود المستأجرين",
   "Renter Balances": "ارصده المستأجرين",
   "Contract": "العقد",
@@ -37,7 +37,7 @@
   "Accounts": "الحسابات",
   "Cash Feeding": "تغذيه الصندوق",
   "Receipt Confirmation": "استسلام عهدة",
-  "Receipt Confirmationn": "عرض بيانات العهد ",
+  "Receipt Confirmationn": "عرض بيانات العهد",
   "Transfer To Renter": "تحويل الى مستاجر",
   "Transfer From Renter": "تحويل من مستاجر",
   "Tax Dues": "مستحقات القيمة المضافة",
@@ -55,7 +55,7 @@
   "Renter Statistics": "إحصائيات المستاجرين",
   // Users
   "Users": "الموظفين",
-  "UsersInfo": " بيانات الموظفين",
+  "UsersInfo": "بيانات الموظفين",
   "Users' Responsibilities System": "صلاحيات النظام",
   "Contract Authorization": "صلاحيات العقد",
   //Services
@@ -70,11 +70,11 @@
   "Drivers": "السائقين",
   //Login
   "CompanyDeleted": "عفواً ........ ليس لديك صلاحية الرجاء مراجعة الشركة المشغلة",
-  "NoHaveBranches": "لا يمكن الدخول لان ليس لك صلاحية , راجع الادارة ",
-  "HaveOneBranchDeleted": "لا يمكن الدخول الفرع محذوف , راجع الادارة ",
+  "NoHaveBranches": "لا يمكن الدخول لان ليس لك صلاحية , راجع الادارة",
+  "HaveOneBranchDeleted": "لا يمكن الدخول الفرع محذوف , راجع الادارة",
   "AuthEmplpoyee": "عفوا لا يمكنك الدخول ليس لديك اي صلاحية",
-  "AccountHold": " الموظف موقوف",
-  "AccountDelete": "عفواً ........ ليس لديك صلاحية الرجاء مراجعة الإدارة ",
+  "AccountHold": "الموظف موقوف",
+  "AccountDelete": "عفواً ........ ليس لديك صلاحية الرجاء مراجعة الإدارة",
   "PasswordInvalid": "عفوا .... كلمة السر غير صحيحة",
   "UserNameInvalid": "عفوا .... رقم الموظف غير صحيح",
   "PleaseEnterUserName": "الرجاء ادخال الاسم",
@@ -96,8 +96,8 @@
   "Manager": "المدير",
   "MobilePhone": "الجوال",
   "TelePhone": "الهاتف",
-  "Status": "الحاله  ",
-  "Count": "العدد  ",
+  "Status": "الحاله",
+  "Count": "العدد ",
   "search": "بحث",
   "photo": "صورة",
   "Documentphoto": "صورة المستند",
@@ -137,7 +137,7 @@
 
   //CAS Branch Doucment
   "Document Data": "مستندات الفروع",
-  "Document Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات مستندات الفروع ",
+  "Document Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات مستندات الفروع",
   "Document Type": "نوع المستند",
   "TheNumber": "الرقم",
   "Date": "تاريخه",
@@ -190,6 +190,8 @@
   "Categories": "الفئات",
   "CategoriesDistribution": "توزيع الفئات",
   "Features": "المميزات الاضافية",
+  "Advantages": "المميزات الاضافية",
+
   "Colors": "الالوان",
   //MailsServices
   "MailsServices": "خدمات البريد",
@@ -200,7 +202,7 @@
   "PaymentMethods": "طريق الدفع",
   "Reference": "المرجع",
   //RentalContracts
-  "RentalContracts": "خدمات العقود ",
+  "RentalContracts": "خدمات العقود",
   "Additionals": "الاضافات",
   "Choices": "الخيارات",
   "VirtualInspection": "الفحص الظاهري",
@@ -238,8 +240,8 @@
   "User Is Exists": "رقم المستخدم موجود بالفعل",
   "TasksArName": "الوظيفة عربي",
   "TasksEnName": "الوظيفة انجليزي",
-  "Edit User Hint": "تمكنك هذه الصفحة من الاطلاع و تحديث بيانات الموظف ",
-  "Edit User Data": "تحديث بيانات موظف ",
+  "Edit User Hint": "تمكنك هذه الصفحة من الاطلاع و تحديث بيانات الموظف",
+  "Edit User Data": "تحديث بيانات موظف",
   "Picture": "الصورة",
   "Signture": "التوقيع",
   "ResetPassword": "استرجاع كلمة السر",
@@ -265,17 +267,17 @@
   "DirNameEn": "إسم المدير انجليزى",
   "LessorPhone": "الجوال",
   "LessorPhone2": "الجوال 2",
-  "LessorEmail": " البريد الإلكترونى",
+  "LessorEmail": "البريد الإلكترونى",
   "LessorTwitter": "تويتر",
   "LessorFacebook": "الفيس بوك",
   "LessorInstagram": "إنستجرام",
   "LessorWhats": "رقم رسائل الواتس اب",
   "LessorContractEmail": "بريد التواصل",
   "Edit Lessor Hint": "تمكنك هذه الصفحة من تعديل بينات الشركه",
-  "Edit Lessor Data": "تعديل ",
+  "Edit Lessor Data": "تعديل",
   "Classification": "التصنيف",
   "reasons": "الملاحظات",
-  "lessorCityPost": " المنطقه / المدينه",
+  "lessorCityPost": "المنطقه / المدينه",
   "region": "المنطقه",
   "DistrictNameAr": "إسم الحي عربي",
   "DistrictNameEn": "إسم الحي إنجليزي",
@@ -333,17 +335,17 @@
 
 
   //Car Brands------
-  "Brands Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل ماركة سيارة ",
+  "Brands Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل ماركة سيارة",
   "Brands Data": "عرض الماركات",
   "CarBrandNameEn": "اسم الماركة بالانجليزي",
   "CarBrandName": "اسم الماركة",
   "CarBrandNameAr": "اسم الماركة بالعربي",
   "CarBrandCode": "الرمز",
-  "Add Brands Hint": ".تمكنك هذه الصفحة من إضافة ماركة سيارة جديدة ",
+  "Add Brands Hint": ".تمكنك هذه الصفحة من إضافة ماركة سيارة جديدة",
   "Add Brands Data": "اضافة ماركة سيارة",
-  "Edit Brands Hint": ".تمكنك هذه الصفحة من تعديل ماركة سيارة  ",
+  "Edit Brands Hint": ".تمكنك هذه الصفحة من تعديل ماركة سيارة ",
   "Edit Brands Data": "تعديل ماركة سيارة",
-  "CarBrandImg": " صورة ماركةالسيارة",
+  "CarBrandImg": "صورة ماركة السيارة",
 
   "HintSureToRetriveHCarBrand": "سيترتب على استرجاع إيقاف بيانات ماركة السيارة وجودها على النظام.",
   "HintSureToRetriveDCarBrand": "سيترتب على استرجاع حذف بيانات ماركة السيارة وجودها على النظام.",
@@ -351,18 +353,156 @@
   "HintSureTodeleteCarBrand": "سيترتب على حذف بيانات ماركة السيارة عدم وجودها على النظام",
   "HintSureToHoldCarBrand": "سيترتب على إيقاف بيانات ماركة السيارة إيقافها على النظام",
 
-  "HintSureTo_Cannot_deleteCarBrand": " للأسف لا تستطيع حذف ماركة السيارة هذه لأنه يوجد منها عدد =",
+  "HintSureTo_Cannot_deleteCarBrand": "للأسف لا تستطيع حذف ماركة السيارة هذه لأنه يوجد منها عدد =",
   "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
+
+  //Car Fuels------
+  "Fuels Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل وقود سيارة",
+  "Fuels Data": "عرض انوع الوقود",
+  "CarFuelNameEn": "نوع الوقود بالانجليزي",
+  "CarFuelName": "نوع الوقود",
+  "CarFuelNameAr": "نوع الوقود بالعربي",
+  "CarFuelCode": "الرمز",
+  "Add Fuels Hint": ".تمكنك هذه الصفحة من إضافة وقود سيارة جديد",
+  "Add Fuels Data": "اضافة وقود سيارة",
+  "Edit Fuels Hint": ".تمكنك هذه الصفحة من تعديل وقود سيارة ",
+  "Edit Fuels Data": "تعديل وقود سيارة",
+  "CarFuelImg": "صورة وقود السيارة",
+
+  "HintSureToRetriveHCarFuel": "سيترتب على استرجاع إيقاف بيانات وقود السيارة وجودها على النظام.",
+  "HintSureToRetriveDCarFuel": "سيترتب على استرجاع حذف بيانات وقود السيارة وجودها على النظام.",
+
+  "HintSureTodeleteCarFuel": "سيترتب على حذف بيانات وقود السيارة عدم وجودها على النظام",
+  "HintSureToHoldCarFuel": "سيترتب على إيقاف بيانات وقود السيارة إيقافها على النظام",
+
+  "HintSureTo_Cannot_deleteCarFuel": "للأسف لا تستطيع حذف نوع وقود السيارة هذه لأنه يوجد منها عدد =",
+  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
+
+
+
+  //Car Cvts------
+  "Cvts Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل نوع الناقل",
+  "Cvts Data": "عرض نوع الناقل",
+  "CarCvtNameEn": "نوع الناقل بالانجليزي",
+  "CarCvtName": "نوع الناقل",
+  "CarCvtNameAr": "نوع الناقل بالعربي",
+  "CarCvtCode": "الرمز",
+  "Add Cvts Hint": ".تمكنك هذه الصفحة من إضافة نوع ناقل جديد",
+  "Add Cvts Data": "اضافة نوع الناقل",
+  "Edit Cvts Hint": ".تمكنك هذه الصفحة من تعديل نوع الناقل ",
+  "Edit Cvts Data": "تعديل نوع الناقل",
+  "CarCvtImg": "صورة نوع الناقل",
+
+  "HintSureToRetriveHCarCvt": "سيترتب على استرجاع إيقاف بيانات نوع الناقل وجودها على النظام.",
+  "HintSureToRetriveDCarCvt": "سيترتب على استرجاع حذف بيانات نوع الناقل وجودها على النظام.",
+
+  "HintSureTodeleteCarCvt": "سيترتب على حذف بيانات نوع الناقل عدم وجودها على النظام",
+  "HintSureToHoldCarCvt": "سيترتب على إيقاف بيانات نوع الناقل إيقافها على النظام",
+
+  "HintSureTo_Cannot_deleteCarCvt": "للأسف لا تستطيع حذف نوع الناقل هذه لأنه يوجد منها عدد =",
+  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
+
+
+
+  //Car Categorys------
+  "Categorys Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل فئات سيارة",
+  "Categorys Data": "عرض فئة السيارة",
+  "CarCategoryNameEn": "فئة السيارة بالانجليزي",
+  "CarCategoryName": "فئة السيارة",
+  "CarCategoryNameAr": "فئة السيارة بالعربي",
+  "CarCategoryCode": "الرمز",
+  "Add Categorys Hint": ".تمكنك هذه الصفحة من إضافة فئات سيارة جديدة",
+  "Add Categorys Data": "اضافة فئات سيارة",
+  "Edit Categorys Hint": ".تمكنك هذه الصفحة من تعديل فئات سيارة ",
+  "Edit Categorys Data": "تعديل فئات سيارة",
+  "CarCategoryImg": "صورة فئة السيارة",
+
+  "HintSureToRetriveHCarCategory": "سيترتب على استرجاع إيقاف بيانات فئة السيارة وجودها على النظام.",
+  "HintSureToRetriveDCarCategory": "سيترتب على استرجاع حذف بيانات فئة السيارة وجودها على النظام.",
+
+  "HintSureTodeleteCarCategory": "سيترتب على حذف بيانات فئة السيارة عدم وجودها على النظام",
+  "HintSureToHoldCarCategory": "سيترتب على إيقاف بيانات فئة السيارة إيقافها على النظام",
+
+  "HintSureTo_Cannot_deleteCarCategory": "للأسف لا تستطيع حذف فئة السيارة هذه لأنه يوجد منها عدد =",
+  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
+
+
+
+  //Car Advantages------
+  "Advantages Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل ميزة سيارة",
+  "Advantages Data": "عرض الميزات الإضافية",
+  "CarAdvantageNameEn": "اسم الميزة بالانجليزي",
+  "CarAdvantageName": "اسم الميزة",
+  "CarAdvantageNameAr": "اسم الميزة بالعربي",
+  "CarAdvantageCode": "الرمز",
+  "Add Advantages Hint": ".تمكنك هذه الصفحة من إضافة ميزة سيارة جديدة",
+  "Add Advantages Data": "اضافة ميزة سيارة",
+  "Edit Advantages Hint": ".تمكنك هذه الصفحة من تعديل ميزة سيارة ",
+  "Edit Advantages Data": "تعديل ميزة سيارة",
+  "CarAdvantageImg": "صورة ميزة السيارة",
+
+  "HintSureToRetriveHCarAdvantage": "سيترتب على استرجاع إيقاف بيانات ميزة السيارة وجودها على النظام.",
+  "HintSureToRetriveDCarAdvantage": "سيترتب على استرجاع حذف بيانات ميزة السيارة وجودها على النظام.",
+
+  "HintSureTodeleteCarAdvantage": "سيترتب على حذف بيانات ميزة السيارة عدم وجودها على النظام",
+  "HintSureToHoldCarAdvantage": "سيترتب على إيقاف بيانات ميزة السيارة إيقافها على النظام",
+
+  "HintSureTo_Cannot_deleteCarAdvantage": "للأسف لا تستطيع حذف ميزة السيارة هذه لأنه يوجد منها عدد =",
+  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
+
+
+
+  //Car Registrations------
+  "Registrations Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل نوع تسجيل سيارة",
+  "Registrations Data": "عرض انواع تسجيل السيارت",
+  "CarRegistrationNameEn": "نوع التسجيل بالانجليزي",
+  "CarRegistrationName": "نوع تسجيل السيارة",
+  "CarRegistrationNameAr": "نوع التسجيل بالعربي",
+  "CarRegistrationCode": "الرمز",
+  "Add Registrations Hint": ".تمكنك هذه الصفحة من إضافة نوع تسجيل سيارة جديدة",
+  "Add Registrations Data": "اضافة نوع تسجيل سيارة",
+  "Edit Registrations Hint": ".تمكنك هذه الصفحة من تعديل نوع تسجيل سيارة ",
+  "Edit Registrations Data": "تعديل نوع تسجيل سيارة",
+  "CarRegistrationImg": "صورة نوع تسجيل السيارة",
+
+  "HintSureToRetriveHCarRegistration": "سيترتب على استرجاع إيقاف بيانات نوع تسجيل السيارة وجودها على النظام.",
+  "HintSureToRetriveDCarRegistration": "سيترتب على استرجاع حذف بيانات نوع تسجيل السيارة وجودها على النظام.",
+
+  "HintSureTodeleteCarRegistration": "سيترتب على حذف بيانات نوع تسجيل السيارة عدم وجودها على النظام",
+  "HintSureToHoldCarRegistration": "سيترتب على إيقاف بيانات نوع تسجيل السيارة إيقافها على النظام",
+
+  "HintSureTo_Cannot_deleteCarRegistration": "للأسف لا تستطيع حذف نوع تسجيل السيارة هذه لأنه يوجد منها عدد =",
+  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
+
+
+  //User Login ------
+  "UserLogin Hint": ".تمكنك هذه الصفحة من عرض تقرير عن دخول المستخدم",
+  "UserLogin Data": "عرض انواع تقرير عن دخول المستخدم",
+  "UserLoginNameEn": "اسم المستخدم بالانجليزي",
+  "UserLoginName": "اسم المستخدم",
+  "UserLoginNameAr": "اسم المستخدم بالعربي",
+  "UserLoginCode": "الرمز",
+  "Add UserLogin Hint": ".تمكنك هذه الصفحة من إضافة دخول المستخدم",
+  "Add UserLogin Data": "اضافة دخول المستخدم",
+  "Edit UserLogin Hint": ".تمكنك هذه الصفحة من تعديل دخول المستخدم ",
+  "Edit UserLogin Data": "تعديل دخول المستخدم",
+  "Add minDate Data": "اختر اقصى تاريخ",
+  "Add MaxDate Data": "اختر اقل تاريخ",
+  "UserLoginConcate": "اسم العملية بالكامل",
+  "UserLoginDateTime": "تاريخ ووقت الدخول",
+
+
+
   //Renter Nationality------
-  "RenterNationality Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل جنسية مستأجر ",
+  "RenterNationality Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل جنسية مستأجر",
   "RenterNationality Data": "عرض جنسيات المستأجرين",
   "RenterNationalityNameEn": "اسم الجنسية بالانجليزي",
   "RenterNationalityNameAr": "اسم الجنسية بالعربي",
   "RenterNationalityCode": "رمز الجنسية",
-  "Add RenterNationality Hint": ".تمكنك هذه الصفحة من إضافة جنسية مستأجر  ",
+  "Add RenterNationality Hint": ".تمكنك هذه الصفحة من إضافة جنسية مستأجر ",
   "Add RenterNationality Data": "اضافة جنسية مستأجر",
-  "Edit RenterNationality Hint": ".تمكنك هذه الصفحة من تعديل جنسية مستأجر  ",
+  "Edit RenterNationality Hint": ".تمكنك هذه الصفحة من تعديل جنسية مستأجر ",
   "Edit RenterNationality Data": "تعديل جنسية مستأجر",
 
   "HintSureToRetriveHRenterNationality": "سيترتب على استرجاع إيقاف بيانات  جنسية المستأجر وجودها على النظام.",
@@ -378,6 +518,8 @@
   "requiredNoLengthFiled": "هذا الحقل يلازم {0} ارقام",
   "requiredNoLengthFiled15": "هذا الحقل يلازم 15 ارقام",
   "requiredNoLengthFiled30": "هذا الحقل يلازم اقل من 30 خانة",
+  "requiredNoLengthFiled40": "هذا الحقل يلازم اقل من 40 خانة",
+  "requiredNoLengthFiled50": "هذا الحقل يلازم اقل من 50 خانة",
   "requiredNoLengthFiled10": "هذا الحقل يلازم 10 ارقام ويبدأ برقم 7",
   "NotStartWith7": "هذا الحقل يلازم 10 ارقام و لا يمكن ان يبدأ برقم 7",
   "requiredNoStartWithFiled7": "هذا الحقل مطلوب و يبدء برقم7",
@@ -412,7 +554,7 @@
   "CancelOffer": "تأكيد الالغاء",
   "ConfirmOffers": "تأكيد تنفيذ البيع",
   "HintCancelOffer": "سيترتب على الغاء العرض  للبيع امكانية ايجار السيارة",
-  "HindConfirmOffer": "سيترتب على تنفيذ عملية البيع اسقاطها من ممتلكات الشركة مع الاحتفاظ بجميع الإجراءات المالية و الإدارية السابقة ",
+  "HindConfirmOffer": "سيترتب على تنفيذ عملية البيع اسقاطها من ممتلكات الشركة مع الاحتفاظ بجميع الإجراءات المالية و الإدارية السابقة",
   // modal for Branch
   "SureToRetriveHoldBranch": "تأكيد تفعيل الفرع ......",
   "HintSureToRetriveHBranch": "سيترتب على استرجاع تفعيل بيانات الفرع تفعيل السيارات و نقاط البيع و المستندات  المرتبطة بالفرع",
@@ -438,7 +580,7 @@
   "logout": "تسجيل الخروج",
   //system Validitions
 
-  "SystemValiditions Data": " صلاحيات النظام للموظفين",
+  "SystemValiditions Data": "صلاحيات النظام للموظفين",
   "SystemValiditions Hint": "تمكنك هذه الصفحة من عرض و تحديث بيانات الموظفين الممنوحين صلاحيه للنظام الإداري",
   "Edit ValiditionsSystem Data": "تحديث بيانات الصلاحيات الإدارة للموظف",
   "Edit ValiditionsSystem Hint": "تمكنك هذه الصفحة من الاطلاع و تحديث بيانات الصلاحيات الإدارية للموظف",
@@ -454,7 +596,7 @@
   "NewPassword": "كلمة السر الجديدة",
   "ConfirmNewPassword": "تأكيد كلمة السر الجديدة",
   "MyAccount Data": "حسابي",
-  "MyAccount Hint": "تمكنك هذه الصفحة من تعديل بياناتك الشخصية ",
+  "MyAccount Hint": "تمكنك هذه الصفحة من تعديل بياناتك الشخصية",
   "minLengthField": "لا يجب ان يقل هذا الحقل عن 3 احرف",
   "minLengthPhone": "لا يجب ان يقل رقم الجوال عن 11 رقم",
   "AutoLogout": "وقت الخروج الالي",
@@ -468,7 +610,7 @@
   "toastMessage": "ليس لديك صلاحيه",
   "toastMessageCreateContract": "عفواً ....... لا يوجد صلاحية انشاء عقد",
   "toastMessageLessorHold": "عفواً ....... الشركة موقوفه لا يمكن انشاء عقد",
-  "toastMessageCompanyContractExpired": "عفواً .... لا يمكن انشاء عقد راجع عقود الشركة ",
+  "toastMessageCompanyContractExpired": "عفواً .... لا يمكن انشاء عقد راجع عقود الشركة",
   "toastMessageCompanyDocumentRegister": "السجل التجاري منتهي لا يمكن الاستمرار",
   "toastMessageCompanyDocumentChamber": "اشتراك الغرفة التجارية منتهي لا يمكن الاستمرار",
   "toastMessageCompanyDocumentTransferPermission": "تصريح هيئة النقل منتهي لا يمكن الاستمرار",
@@ -477,7 +619,7 @@
   "ExpiryIdDateIsExpired": "تاريخ صلاحية الهوية منتهيه يرجي التجديد",
   "toastMessageUserHold": "عفواً ....... تم تقليص بعض الخدمات لا يمكن انشاء عقد",
   "toastMessageBranchHold": "عفواً ....... الفرع موقوف لا يمكن انشاء عقد",
-  "toastRequiredField": "من فضلك تأكد من ملئ جميع الحقول ",
+  "toastRequiredField": "من فضلك تأكد من ملئ جميع الحقول",
   "SomethingWrongPleaseCallAdmin": "هناك خطأ ما حدث يرجى التواصل مع الادارة",
   "ToastSave": "تم الحفظ بنجاح",
   "ToastEdit": "تم التعديل بنجاح",
@@ -495,16 +637,16 @@
   "toastMessageSalesPointHaveBalance": "لا يمكن حذف نقطة بيع بها رصيد",
   "toastMessageEmployeeHaveBalance": "لا يمكن حذف موظف لديه رصيد",
   "toastMessageExistFeedBox": "عفواً ..... لا يوجد تغذية صندوق",
-  "toastMessageExistCustody": "عفواً ..... لا يوجد رصيد متاح لتسليم العهدة ",
-  "PleaseChooseAtLeastOneValue": "عفواً ..... يجب اختيار قيمة واحدة على الاقل ",
+  "toastMessageExistCustody": "عفواً ..... لا يوجد رصيد متاح لتسليم العهدة",
+  "PleaseChooseAtLeastOneValue": "عفواً ..... يجب اختيار قيمة واحدة على الاقل",
   "toastMessageExistRenters": "عفواً ..... لا يوجد مستأجرين بالشركة",
-  "toastMessageExistReceipts": "عفواً ..... لا يوجد قيود بالفرع ",
+  "toastMessageExistReceipts": "عفواً ..... لا يوجد قيود بالفرع",
 
   "Existing": "هذا الحقل مسجل من قبل",
   "Exist": "ExistAr",
 
   // LessorImages
-  "LessorsImages Hint": "تمكنك هذه الصفحة من عرض بيانات الشركات وتعديل الصور المساندة للشركات ",
+  "LessorsImages Hint": "تمكنك هذه الصفحة من عرض بيانات الشركات وتعديل الصور المساندة للشركات",
   "Edit Lessor Images Data": "تعديل",
   "Edit Lessor Images Hint": "تمكنك هذه الصفحة من اضافة او تعديل الصور المساندة للشركة",
   "DirName": "اسم المدير",
@@ -519,21 +661,21 @@
   "CreateContractWhatUp": "انشاء العقد بالواتس اب",
   "TomorrowContractEmail": "العقد ينتهي غداً بالبريد",
   "TomorrowContractWhatUp": "العقد ينتهي غداً بالواتس اب",
-  "HourContractEmail": " العقد ينتهي بعد ساعات بالبريد",
+  "HourContractEmail": "العقد ينتهي بعد ساعات بالبريد",
   "HourContractWhatUp": "العقد ينتهي بعد ساعات بالواتس اب",
   "EndContractEmail": "العقد أنتهى بالبريد",
   "EndContractWhatUp": "العقد أنتهى بالواتس",
   "CloseContractEmail": "اغلاق العقد أنتهى بالبريد",
   "CloseContractWhatUp": "اغلاق العقد أنتهى بالواتس",
-  "ContArConditions1": " شروط العقد عربي 1",
-  "ContArConditions2": " شروط العقد عربي 2",
-  "ContArConditions3": " شروط العقد عربي 3",
-  "ContEnConditions1": " شروط العقد انجليزي 1",
-  "ContEnConditions2": " شروط العقد انجليزي 2",
-  "ContEnConditions3": " شروط العقد انجليزي 3",
+  "ContArConditions1": "شروط العقد عربي 1",
+  "ContArConditions2": "شروط العقد عربي 2",
+  "ContArConditions3": "شروط العقد عربي 3",
+  "ContEnConditions1": "شروط العقد انجليزي 1",
+  "ContEnConditions2": "شروط العقد انجليزي 2",
+  "ContEnConditions3": "شروط العقد انجليزي 3",
   //Contract Company
-  "ContractCompany Data": "عقود الشركات ",
-  "ContractCompany Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات عقود الشركات ",
+  "ContractCompany Data": "عقود الشركات",
+  "ContractCompany Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات عقود الشركات",
   "CActive": "قائم",
   "OnExpired": "علي وشك الانتهاء",
   "OnExpiredd": "علي وشك",
@@ -577,7 +719,7 @@
   //Edit Bank
 
   "Edit Bank Hint": "تمكنك هذه الصفحة من تعديل بيانات البنك",
-  "Edit Bank Data": "تعديل ",
+  "Edit Bank Data": "تعديل",
 
 
   "HintSureToRetriveHBank": "سيترتب على استرجاع إيقاف بيانات البنك وجوده على النظام.",
@@ -632,7 +774,7 @@
   "HintSureToHoldRefrence": "سيترتب على إيقاف بيانات المرجع إيقافها على النظام",
 
   //
-  "Receipt Confirmation Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات العهد و الإنجليزي  ",
+  "Receipt Confirmation Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات العهد و الإنجليزي ",
   //ContractAdditional Services
   "ContractAdditional Data": "بيانات الاضافات بالعقود",
   "ContractAdditional Hint": "تمكنك الصفحة من عرض و إضافة و تعديل بيانات الاضافات بالعقود.",
@@ -811,12 +953,12 @@
 
   //Cas EMployee
   "EmployementEn": "المسمى الوظيفي انجليزي",
-  "EmployementAr": " المسمى الوظيفي عربي",
-  "Employement": " المسمى الوظيفي",
+  "EmployementAr": "المسمى الوظيفي عربي",
+  "Employement": "المسمى الوظيفي",
   "CreditLimit": "الحد الائتماني للعهدة",
   "BranchesAuth": "صلاحية الفروع",
-  "Owners": "صلاحية الملاك ",
-  "AdminAuth": "صلاحية الادارة ",
+  "Owners": "صلاحية الملاك",
+  "AdminAuth": "صلاحية الادارة",
   "ValiditySystem": "صلاحيات الأنظمة",
   "Language": "اللغة الافتراضية",
 
@@ -878,7 +1020,7 @@
   "ContractCompany": "مستندات الشركة",
   "ContractCompany2": "عقود الشركة",
   "CompanyContracts": "العقود",
-  "ContractValidityRegister": " السجل التجاري",
+  "ContractValidityRegister": "السجل التجاري",
   "ContractValidityChamber": "اشتراك الغرفة التجارية",
   "ValidityTransferPermission": "تصريح هيئة النقل",
   "ContractValidityLicenceMunicipale": "رخصة البلدية",
@@ -913,8 +1055,8 @@
   //SalesPoint
   "SalesPoint Hint": ".تمكنك الصفحة من البحث و اضافة و تعديل بيانات نقاط البيع",
   "Add SalesPoint Hint": ".تمكنك الصفحة من اضافة نقطة بيع جديدة",
-  "Edit SalesPoint Data": ".تحديث بيانات نقطة البيع ",
-  "Edit SalesPoint Hint": ".تمكنك الصفحة من تحديث بيانات نقطة البيع ",
+  "Edit SalesPoint Data": ".تحديث بيانات نقطة البيع",
+  "Edit SalesPoint Hint": ".تمكنك الصفحة من تحديث بيانات نقطة البيع",
   "SalesPoint Data": "بيانات نقاط البيع",
   "Add SalesPoint Data": "اضافة نقطة بيع",
   "Add SalesPoint": "اضافة نقطة بيع",
@@ -924,7 +1066,7 @@
   "SalesPointNameEn": "اسم نقطة البيع انجليزي",
   "SalesPointNameAr": "اسم نقطة البيع عربي",
   "IsSalesPointNo": "رقم نقطة البيع موجود من قبل",
-  "TotalBalance": " الرصيد الحالي",
+  "TotalBalance": "الرصيد الحالي",
   "HintSureToHoldSalesPoint": "سيترتب على ايقاف بيانات نقطة البيع عدم إجراء عمليات الدفع مع الاحتفاظ بجميع الإجراءات الإدارية و المالية السابقة",
   "HintSureToDeleteSalesPoint": "سيترتب على حذف بيانات نقطة البيع عدم إجراء عمليات الدفع مع الاحتفاظ بجميع الإجراءات الإدارية و المالية السابقة",
   "SureToRetriveHoldSalesPoint": "تأكيد التفعيل ...",
@@ -933,7 +1075,7 @@
   "HintSureToRetriveDSalesPoint": "سيترتب على ارجاع بيانات نقطة البيع ارجاع عملية الدفع والاجراءات الادراية والمالية",
   "IsExistModel": "هذا النوع موجود من قبل",
   "Owners Data": "بيانات الملاك",
-  "Owners Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات الملاك ",
+  "Owners Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات الملاك",
   "Add Owner": "اضافة مالك",
   "Id": "الهوية",
   "Commercial_No": "السجل التجاري",
@@ -947,7 +1089,7 @@
   "Edit Owners Data": "تحديث بيانات المالك",
   "Edit Owners Hint": "تمكنك هذه الصفحة من الاطلاع على بيانات المالك و تحديثها",
   "Mecanism Data": "عرض التنبيهات",
-  "Mecanism Hint": "تمكنك هذه الصفحة من تعديل التنبيهات ",
+  "Mecanism Hint": "تمكنك هذه الصفحة من تعديل التنبيهات",
   "Additional": "سعر السيارات والعروض",
   "UserNumber": "رقم المستخدم",
   "IsExist": "الاسم موجود من قبل",
@@ -963,7 +1105,7 @@
   // Cars 
   "Cars Data": "بيانات السيارات",
   "Car Data": "بيانات السيارة",
-  "Cars Hint": ".تمكنك هذه الصفحة من الاطلاع على بيانات السيارات المعروضة و الغير معروضة للبيع و المباعة ",
+  "Cars Hint": ".تمكنك هذه الصفحة من الاطلاع على بيانات السيارات المعروضة و الغير معروضة للبيع و المباعة",
   "SerialNumber": "الرقم التسلسلي",
   "ContractCount": "الايام",
   "DaysCount": "العقود",
@@ -1015,11 +1157,11 @@
   "EndMaintaince": "الاستهلاك حتي",
   "ConsumptionKM": "الاستهلاك(كم)",
   "KMEndsAt": "الاستهلاك حتي(كم)",
-  "CurrentMeterMessage": "لا يمكن ان تكون اقل من ",
+  "CurrentMeterMessage": "لا يمكن ان تكون اقل من",
   "MaintainancesType": "أمر االصيانة",
   "notRegisteration": "لم يسجل بعد",
   "CasForRepair Hint": "تمكنك هذه الصفحة من البحث والاطلاع على بيانات السيارات واصلاحها",
-  "CarsForSale Hint": "تمكنك هذه الصفحة من البحث وعرض بيانات السيارات المراد عرضها للبيع ",
+  "CarsForSale Hint": "تمكنك هذه الصفحة من البحث وعرض بيانات السيارات المراد عرضها للبيع",
   "RepairCar Edit Data": "إصلاح السيارة",
   "RepairCar Edit Hint": "تمكنك هذه الصفحة من تحديث بيانات اصلاح السيارة",
   "CarForSale Edit Data": "تحديث بيانات إجراءات البيع",
@@ -1060,10 +1202,10 @@
   "AdditionalKmValue": "قيمة الكيلو الاضافي",
   "ExtraHourValue": "قيمة الساعة الاضافية",
   "AdditionalDriverValue": "قيمة السائق الاضافي",
-  "InFeesTamm": "رسوم التفويض الداخلي ",
-  "InFees": "داخلي ",
+  "InFeesTamm": "رسوم التفويض الداخلي",
+  "InFees": "داخلي",
   "OutFees": "خارجي",
-  "OutFeesTamm": "رسوم التفويض الخارجي ",
+  "OutFeesTamm": "رسوم التفويض الخارجي",
   "CompensationAccident": "قيمة تحمل الحادث",
   "CompensationDrowning": "قيمة تحمل الغرق",
   "CompensationFire": "قيمة تحمل الحريق",
@@ -1110,7 +1252,7 @@
   "ContractSettlement": "تسوية العقد",
   "CreateContract": "انشاء العقد",
   "TheCovenant": "تسليم العهدة",
-  "Feedbox": " تغذية الصندوق",
+  "Feedbox": "تغذية الصندوق",
   "FinancialReport": "التقرير المالي",
   "Tenants": "المستأجرين",
   "Statistics": "الاحصائيات",
@@ -1172,7 +1314,7 @@
   "ContractCountt": "عدد العقود",
   "RentalDays": "ايام التأجير",
   "KilometersCut": "الكيلوات المقطوعه",
-  "AmountsTraded": " المبالغ المتداولة",
+  "AmountsTraded": "المبالغ المتداولة",
   "DealingMechanism": "آلية التعامل",
   "MemberShip": "العضوية",
   "Birthdate": "تاريخ الميلاد",
@@ -1182,7 +1324,7 @@
   "ChooseYourDriver": "اختر سائقك",
   "Name": "الاسم",
   "Address": "العنوان",
-  "RenterIdWrong": "عفواً .. رقم الهوية غير صحيح ",
+  "RenterIdWrong": "عفواً .. رقم الهوية غير صحيح",
   "PleaseShowMobile": "من فضلك ادخل رمز التحقق المرسل على جوال",
   "SendAnotherCode": "ارسال رمز آخر",
   "Submit": "تأكيد",
@@ -1286,8 +1428,8 @@
   "TransferFromTenant Data": "تحويل من مستأجر",
   "TransferToTenant Hint": "تمكنك هذه الصفحة البحث وعرض بيانات المستأجرين المتاحين للتحويل البنكي",
   "TransferFromTenant Hint": "تمكنك هذه الصفحة البحث وعرض بيانات المستأجرين المتاحين للتحويل البنكي",
-  "TransferToTenant Edit Hint": " تمكنك هذه الصفحة من اجراء عملية التحويل الي المستأجر",
-  "TransferFromTenant Edit Hint": " تمكنك هذه الصفحة من اجراء عملية التحويل من المستأجر",
+  "TransferToTenant Edit Hint": "تمكنك هذه الصفحة من اجراء عملية التحويل الي المستأجر",
+  "TransferFromTenant Edit Hint": "تمكنك هذه الصفحة من اجراء عملية التحويل من المستأجر",
   "AccountNo": "رقم الحساب",
   "FromAccount": "من حساب",
   "ToAccount": "الى حساب",

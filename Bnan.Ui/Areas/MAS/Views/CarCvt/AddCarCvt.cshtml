@@ -1,11 +1,12 @@
-﻿@using Bnan.Ui.ViewModels.MAS
-@model Bnan.Ui.ViewModels.MAS.CarBrandsVM
+﻿
+@using Bnan.Ui.ViewModels.MAS
+@model Bnan.Ui.ViewModels.MAS.CarCvtVM
 
 @inject IViewLocalizer localizer
 
 @{
-    ViewData["Page-title"] = localizer["Add Brands Data"];
-    ViewData["Page-Hint"] = localizer["Add Brands Hint"];
+    ViewData["Page-title"] = localizer["Add Cvts Data"];
+    ViewData["Page-Hint"] = localizer["Add Cvts Hint"];
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
 }
 <style>
@@ -150,29 +151,29 @@
 
 
 <div class="sub-container-form">
-    <form class="needs-validation" novalidate asp-area="MAS" asp-controller="CarBrand" asp-action="AddCarBrand" enctype="multipart/form-data">
+    <form class="needs-validation" novalidate asp-area="MAS" asp-controller="CarCvt" asp-action="AddCarCvt" enctype="multipart/form-data">
         @* <div class="form-contain"> *@ @* For-scrolling *@
-            @*CarBrand code*@
+            @*CarCvt code*@
             <div class="row mt-2">
                 <div class="col-md-2">
-                    <label class="form-label" for="CarBrandCode">@localizer["CarBrandCode"]</label>
+                    <label class="form-label" for="CarCvtCode">@localizer["CarCvtCode"]</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" asp-for="CrMasSupCarBrandCode" id="CarBrandcode" maxlength="100" width="80%" value="@ViewBag.CarBrandCode" readonly />
+                    <input type="text" class="form-control" asp-for="CrMasSupCarCvtCode" id="CarCvtcode" maxlength="100" width="80%" value="@ViewBag.CarCvtCode" readonly />
                 </div>
             </div>
 
-            @*CarBrand name arabic*@
+            @*CarCvt name arabic*@
             <div class="row mt-2">
                 <div class="col-md-2">
-                    <label class="form-label" for="CarBrandNameAr">@localizer["CarBrandNameAr"]</label>
+                    <label class="form-label" for="CarCvtNameAr">@localizer["CarCvtNameAr"]</label>
                 </div>
                 <div class="col-md-4">
-                <input type="text" class="form-control" asp-for="CrMasSupCarBrandArName" id="CarBrandNameAr" maxlength="30" width="80%" onchange="Check_onChange_input('ExistAr',document.getElementById('CarBrandNameAr').value)" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" autoComplete="off" />
-                @* <input type="text" class="form-control" asp-for="CrMasSupCarBrandArName" id="CarBrandNameAr" maxlength="50" width="80%" oninput="this.value=this.value.replace(/[^a-zA-Z ]/g, '')" required /> *@
+                <input type="text" class="form-control" asp-for="CrMasSupCarCvtArName" id="CarCvtNameAr" maxlength="30" width="80%" onchange="Check_onChange_input('ExistAr',document.getElementById('CarCvtNameAr').value)" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" autoComplete="off" />
+                @* <input type="text" class="form-control" asp-for="CrMasSupCarCvtArName" id="CarCvtNameAr" maxlength="50" width="80%" oninput="this.value=this.value.replace(/[^a-zA-Z ]/g, '')" required /> *@
                     <div style="margin-top:2px">
                         <div style="height: 1.0em">
-                            <span asp-validation-for="@Model.CrMasSupCarBrandArName" class="text-danger"></span>
+                            <span asp-validation-for="@Model.CrMasSupCarCvtArName" class="text-danger"></span>
                             @Html.ValidationMessage("ExistAr", null, new { @class = "text-danger" })
                         </div>
                     </div>
@@ -180,42 +181,42 @@
             </div>
 
 
-            @*CarBrand name English*@
+            @*CarCvt name English*@
             <div class="row mt-2">
                 <div class="col-md-2">
-                    <label class="form-label" for="CarBrandNameEn">@localizer["CarBrandNameEn"]</label>
+                    <label class="form-label" for="CarCvtNameEn">@localizer["CarCvtNameEn"]</label>
                 </div>
                 <div class="col-md-4">
-                <input type="text" class="form-control" asp-for="CrMasSupCarBrandEnName" maxlength="30" id="CarBrandNameEn" width="80%" onchange="Check_onChange_input('ExistEn',document.getElementById('CarBrandNameEn').value)" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')" autoComplete="off">
+                <input type="text" class="form-control" asp-for="CrMasSupCarCvtEnName" maxlength="30" id="CarCvtNameEn" width="80%" onchange="Check_onChange_input('ExistEn',document.getElementById('CarCvtNameEn').value)" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')" autoComplete="off">
                     <div style="margin-top:2px">
                         <div style="height: 1.0em">
-                            <span asp-validation-for="@Model.CrMasSupCarBrandEnName" class="text-danger"></span>
+                            <span asp-validation-for="@Model.CrMasSupCarCvtEnName" class="text-danger"></span>
                              @Html.ValidationMessage("ExistEn", null, new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
             </div>
 
-            @*CarBrand reasons*@
+            @*CarCvt reasons*@
             <div class="row mt-2">
                 <div class="col-md-2">
-                    <label class="form-label" for="CarBrandReasons">@localizer["reasons"]</label>
+                    <label class="form-label" for="CarCvtReasons">@localizer["reasons"]</label>
                 </div>
                 <div class="col-md-7">
-                    <input type="text" class="form-control" asp-for="CrMasSupCarBrandReasons" maxlength="100" id="CarBrandReasons" width="80%" autoComplete="off" />
+                    <input type="text" class="form-control" asp-for="CrMasSupCarCvtReasons" maxlength="100" id="CarCvtReasons" width="80%" autoComplete="off" />
                     <div style="margin-top:2px">
                         <div style="height: 1.0em">
-                            <span asp-validation-for="@Model.CrMasSupCarBrandReasons" class="text-danger"></span>
+                            <span asp-validation-for="@Model.CrMasSupCarCvtReasons" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            @*CarBrand Image*@
+            @*CarCvt Image*@
              <div class="row mt-1">
                 <div class="col-md-4">
                     <div class="file-upload">
-                        <button class="file-upload-btn1" type="button" onclick="$('.file-upload-input-picture1').trigger('click')">@localizer["CarBrandImg"]</button>
+                        <button class="file-upload-btn1" type="button" onclick="$('.file-upload-input-picture1').trigger('click')">@localizer["CarCvtImg"]</button>
                         <div class="image-upload-wrap">
                             <input class="file-upload-input-picture1" type="file" onchange="readURL(this, 'picture');" accept="image/*" id="AcceptImg" name="AcceptImg" />
                             <div class="drag-text">
@@ -238,7 +239,7 @@
 
         <div class="mt-3">
             <button class="btn btn-primary" type="submit">@localizer["Save"]</button>
-            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="MAS" asp-controller="CarBrand" asp-action="Index">
+            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="MAS" asp-controller="CarCvt" asp-action="Index">
                 @localizer["Back"]
             </a>
         </div>
@@ -298,7 +299,7 @@
         $('.image-upload-wrap').bind('dragleave', function () {
             $(this).removeClass('image-dropping');
         });
-        $('#CarBrandNameEn').change(function () {
+        $('#CarCvtNameEn').change(function () {
             $(this).removeClass('image-dropping');
         });
 
@@ -306,11 +307,11 @@
         function Check_onChange_input(Exist_lang,dataField) {
             $.ajax({
                 type: "POST",
-                url: "/MAS/CarBrand/CheckChangedField",
+                url: "/MAS/CarCvt/CheckChangedField",
                 data: { Exist_lang: Exist_lang, dataField: dataField },
                 success: function (result) {
                     // $('.modal').modal('hide');
-                    // window.location.href = "/MAS/CarBrand/Index";
+                    // window.location.href = "/MAS/CarCvt/Index";
                     console.log(result);
 
                 },

@@ -136,6 +136,14 @@ namespace Bnan.Inferastructure
             builder.Services.AddScoped<IContractExtension, ContractExtension>();
             builder.Services.AddScoped<IFeedBoxBS, FeedBoxBS>();
 
+            builder.Services.AddScoped<IMasCarFuel, MasCarFuel>();
+            builder.Services.AddScoped<IMasCarCvt, MasCarCvt>();
+            builder.Services.AddScoped<IMasCarCategory, MasCarCategory>();
+            builder.Services.AddScoped<IMasCarAdvantage, MasCarAdvantage>();
+            builder.Services.AddScoped<IMasCarRegistration, MasCarRegistration>();
+            builder.Services.AddScoped<ICarBrand, CarBrand>();
+
+
             return builder;
         }
 

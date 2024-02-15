@@ -19,7 +19,7 @@ builder.Services.AddRazorPages().AddNToastNotifyToastr(new ToastrOptions());
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.AddPersistenceServices();
 builder.Services.AddSignalR();
-builder.Services.AddScoped<ICarBrand,CarBrand>();
+
 
 
 

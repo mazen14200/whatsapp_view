@@ -1,14 +1,16 @@
-﻿@using Bnan.Core.Extensions
-@* @model IEnumerable<CrMasSupCarBrand>
+﻿
+
+@using Bnan.Core.Extensions
+@* @model IEnumerable<CrMasSupCarAdvantage>
 *@
-@model Tuple<IEnumerable<CrMasSupCarBrand>, List<List<string>>>
+@model Tuple<IEnumerable<CrMasSupCarAdvantage>, List<List<string>>>
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
        ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
-    ViewData["Page-title"] = @localizer["Brands Data"];
-    ViewData["Page-Hint"] = @localizer["Brands Hint"];
+    ViewData["Page-title"] = @localizer["Advantages Data"];
+    ViewData["Page-Hint"] = @localizer["Advantages Hint"];
 }
 <style>
     body {
@@ -52,8 +54,8 @@
                     <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="MAS" asp-controller="Home" asp-action="Index">
                         <i class="mdi mdi-window-close"></i>
                     </a>
-                    <a class="btn btn-secondary InsertBtn" onclick="CheckValidation('1107004', '@Status.Insert', '@Url.Action("AddCarBrand", "CarBrand")')">
-                        @localizer["Add Brands Data"]
+                    <a class="btn btn-secondary InsertBtn" onclick="CheckValidation('1107008', '@Status.Insert', '@Url.Action("AddCarAdvantage", "CarAdvantage")')">
+                        @localizer["Add Advantages Data"]
                     </a> 
                 </div>
             </div>
@@ -83,22 +85,22 @@
             </div>
         </div>
         <div class=dataTable>
-            <partial name="_DataTableCarBrand" />
+            <partial name="_DataTableCarAdvantage" />
         </div>
     </div>
 </div>
 
 @section scripts {
-    @*Get CarBrand Using filter*@
+    @*Get CarAdvantage Using filter*@
     <script>
-        //get CarBrand By Status function
-        function GetCarBrandFitler(status) {
+        //get CarAdvantage By Status function
+        function GetCarAdvantageFitler(status) {
             $.ajax({
                 type: "GET",
                 data: {
                     status: status
                 },
-                url: "@Url.Action("GetCarBrandByStatus", "CarBrand", new { Area = "MAS" })",
+                url: "@Url.Action("GetCarAdvantageByStatus", "CarAdvantage", new { Area = "MAS" })",
                 success: function (response) {
                     $(".dataTable").html(response);
                     set_basic_datatable();
@@ -106,9 +108,9 @@
             })
         }
 
-        //on Click Filter Radio Button GetCarBrandByStatus
+        //on Click Filter Radio Button GetCarAdvantageByStatus
         $("input[name='customRadio']").on("click", function () {
-            GetCarBrandFitler($(this).val())
+            GetCarAdvantageFitler($(this).val())
         })
     </script>
 }

@@ -109,6 +109,23 @@ namespace Bnan.Inferastructure
 
             CreateMap<CrMasSupRenterNationality, RenterNationalityVM>();
             CreateMap<RenterNationalityVM, CrMasSupRenterNationality>();
+
+            CreateMap<CrMasSupCarFuel, CarFuelVM > ();
+            CreateMap<CarFuelVM, CrMasSupCarFuel>();
+
+            CreateMap<CrMasSupCarCvt, CarCvtVM>();
+            CreateMap<CarCvtVM, CrMasSupCarCvt>();
+
+            CreateMap<CarCategoryVM, CrMasSupCarCategory>().ReverseMap();
+
+            CreateMap<CarAdvantageVM, CrMasSupCarAdvantage>().ReverseMap();
+           
+            CreateMap<CarRegistrationVM, CrMasSupCarRegistration>().ReverseMap();
+
+            CreateMap<UserLoginVM, CrMasUserLogin>().ReverseMap();
+
+
+
         }
 
     }

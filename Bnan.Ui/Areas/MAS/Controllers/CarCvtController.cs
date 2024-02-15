@@ -17,32 +17,34 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Numerics;
 
-namespace Bnan.Ui.Areas.MAS.Controllers
+
+namespace Bnan.Ui.Areas.MAS
 {
+
     [Area("MAS")]
     [Authorize(Roles = "MAS")]
-    public class CarBrandController : BaseController
+    public class CarCvtController : BaseController
     {
         private readonly IUserLoginsService _userLoginsService;
         private readonly UserManager<CrMasUserInformation> userManager;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly IUserService _userService;
-        private readonly ICarBrand _carBrand;
+        private readonly IMasCarCvt _carCvt;
         private readonly IToastNotification _toastNotification;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IStringLocalizer<CarBrandController> _localizer;
+        private readonly IStringLocalizer<CarCvtController> _localizer;
 
 
-        public CarBrandController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork,
-            IMapper mapper, IUserService userService,  ICarBrand carBrand,
-            IUserLoginsService userLoginsService, IToastNotification toastNotification, IWebHostEnvironment webHostEnvironment, IStringLocalizer<CarBrandController> localizer) : base(userManager, unitOfWork, mapper)
+        public CarCvtController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork,
+            IMapper mapper, IUserService userService, IMasCarCvt carCvt,
+            IUserLoginsService userLoginsService, IToastNotification toastNotification, IWebHostEnvironment webHostEnvironment, IStringLocalizer<CarCvtController> localizer) : base(userManager, unitOfWork, mapper)
         {
             this.userManager = userManager;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             _userService = userService;
-            _carBrand = carBrand;
+            _carCvt = carCvt;
             _userLoginsService = userLoginsService;
             _toastNotification = toastNotification;
             _webHostEnvironment = webHostEnvironment;
@@ -54,64 +56,64 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var titles = await setTitle("107", "1107004", "1");
+            var titles = await setTitle("107", "1107003", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var contracts = await _unitOfWork.CrMasSupCarBrand.GetAllAsync();
-            var contract = contracts.Where(x => x.CrMasSupCarBrandStatus == "A").ToList();
-            var CarsInfo_count_all = _carBrand.GetAllCarBrandsCount();
-            Tuple<IEnumerable<CrMasSupCarBrand>, List<List<string>>> tb = new Tuple<IEnumerable<CrMasSupCarBrand>, List<List<string>>>(contract, CarsInfo_count_all);
+            var contracts = await _unitOfWork.CrMasSupCarCvt.GetAllAsync();
+            var contract = contracts.Where(x => x.CrMasSupCarCvtStatus == "A").ToList();
+            var CarsInfo_count_all = _carCvt.GetAllCarCvtsCount();
+            Tuple<IEnumerable<CrMasSupCarCvt>, List<List<string>>> tb = new Tuple<IEnumerable<CrMasSupCarCvt>, List<List<string>>>(contract, CarsInfo_count_all);
             return View(tb);
         }
 
         [HttpGet]
-        public PartialViewResult GetCarBrandByStatus(string status)
+        public PartialViewResult GetCarCvtByStatus(string status)
         {
             if (!string.IsNullOrEmpty(status))
             {
                 if (status == Status.All)
                 {
-                    //var CarBrandbyStatusAll = _unitOfWork.CrMasSupCarBrand.GetAll();
-                    //return PartialView("_DataTableCarBrand", CarBrandbyStatusAll);
+                    //var CarCvtbyStatusAll = _unitOfWork.CrMasSupCarCvt.GetAll();
+                    //return PartialView("_DataTableCarCvt", CarCvtbyStatusAll);
 
-                    var CarBrandbyStatusAll = _unitOfWork.CrMasSupCarBrand.FindAll(l => l.CrMasSupCarBrandStatus == Status.Hold || l.CrMasSupCarBrandStatus == Status.Active);
-                    var CarsInfo_count_all1 = _carBrand.GetAllCarBrandsCount();
-                    Tuple<IEnumerable<CrMasSupCarBrand>, List<List<string>>> tb1 = new Tuple<IEnumerable<CrMasSupCarBrand>, List<List<string>>>(CarBrandbyStatusAll, CarsInfo_count_all1);
-                    return PartialView("_DataTableCarBrand", tb1);
+                    var CarCvtbyStatusAll = _unitOfWork.CrMasSupCarCvt.FindAll(l => l.CrMasSupCarCvtStatus == Status.Hold || l.CrMasSupCarCvtStatus == Status.Active);
+                    var CarsInfo_count_all1 = _carCvt.GetAllCarCvtsCount();
+                    Tuple<IEnumerable<CrMasSupCarCvt>, List<List<string>>> tb1 = new Tuple<IEnumerable<CrMasSupCarCvt>, List<List<string>>>(CarCvtbyStatusAll, CarsInfo_count_all1);
+                    return PartialView("_DataTableCarCvt", tb1);
                 }
-                var CarBrandbyStatus = _unitOfWork.CrMasSupCarBrand.FindAll(l => l.CrMasSupCarBrandStatus == status).ToList();
-                var CarsInfo_count_all = _carBrand.GetAllCarBrandsCount();
-                Tuple<IEnumerable<CrMasSupCarBrand>, List<List<string>>> tb = new Tuple<IEnumerable<CrMasSupCarBrand>, List<List<string>>>(CarBrandbyStatus, CarsInfo_count_all);
-                return PartialView("_DataTableCarBrand", tb);
+                var CarCvtbyStatus = _unitOfWork.CrMasSupCarCvt.FindAll(l => l.CrMasSupCarCvtStatus == status).ToList();
+                var CarsInfo_count_all = _carCvt.GetAllCarCvtsCount();
+                Tuple<IEnumerable<CrMasSupCarCvt>, List<List<string>>> tb = new Tuple<IEnumerable<CrMasSupCarCvt>, List<List<string>>>(CarCvtbyStatus, CarsInfo_count_all);
+                return PartialView("_DataTableCarCvt", tb);
             }
             return PartialView();
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> AddCarBrand()
+        public async Task<IActionResult> AddCarCvt()
         {
 
             // Set Title !!!!!!!!!!!!!!!!!!!!!!!!!!
-            var titles = await setTitle("107", "1107004", "1");
+            var titles = await setTitle("107", "1107003", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var CarBrandCode = "";
-            var CarBrands = await _unitOfWork.CrMasSupCarBrand.GetAllAsync();
-            if (CarBrands.Count() != 0)
+            var CarCvtCode = "";
+            var CarCvts = await _unitOfWork.CrMasSupCarCvt.GetAllAsync();
+            if (CarCvts.Count() != 0)
             {
-                CarBrandCode = (BigInteger.Parse(CarBrands.LastOrDefault().CrMasSupCarBrandCode) + 1).ToString();
+                CarCvtCode = (BigInteger.Parse(CarCvts.LastOrDefault().CrMasSupCarCvtCode) + 1).ToString();
             }
             else
             {
-                CarBrandCode = "3001";
+                CarCvtCode = "10";
             }
-            ViewBag.CarBrandCode = CarBrandCode;
+            ViewBag.CarCvtCode = CarCvtCode;
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCarBrand(CarBrandsVM CarBrands, IFormFile? AcceptImg)
+        public async Task<IActionResult> AddCarCvt(CarCvtVM CarCvts, IFormFile? AcceptImg)
         {
             string currentCulture = CultureInfo.CurrentCulture.Name;
             string foldername = $"{"images\\Common"}";
@@ -120,53 +122,54 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
             if (ModelState.IsValid)
             {
-                if (CarBrands != null)
+                if (CarCvts != null)
                 {
-                    var CarBrandsVMT = _mapper.Map<CrMasSupCarBrand>(CarBrands);
-                    var All_CarBrands = await _unitOfWork.CrMasSupCarBrand.GetAllAsync();
-                    var existingCarBrand_En = All_CarBrands.FirstOrDefault(x =>
-                        x.CrMasSupCarBrandEnName == CarBrandsVMT.CrMasSupCarBrandEnName);
-                    var existingCarBrand_Ar = All_CarBrands.FirstOrDefault(x => 
-                        x.CrMasSupCarBrandArName == CarBrandsVMT.CrMasSupCarBrandArName);
+                    var CarCvtVMT = _mapper.Map<CrMasSupCarCvt>(CarCvts);
+                    var All_CarCvts = await _unitOfWork.CrMasSupCarCvt.GetAllAsync();
+                    var existingCarCvt_En = All_CarCvts.FirstOrDefault(x =>
+                        x.CrMasSupCarCvtEnName == CarCvtVMT.CrMasSupCarCvtEnName);
+                    var existingCarCvt_Ar = All_CarCvts.FirstOrDefault(x =>
+                        x.CrMasSupCarCvtArName == CarCvtVMT.CrMasSupCarCvtArName);
 
                     // Generate code for the second time
-                    var CarBrandCode = (BigInteger.Parse(All_CarBrands.LastOrDefault().CrMasSupCarBrandCode) + 1).ToString();
-                    CarBrands.CrMasSupCarBrandCode = CarBrandCode;
-                    ViewBag.CarBrandCode = CarBrandCode;
-                    if (CarBrandsVMT.CrMasSupCarBrandArName != null && CarBrandsVMT.CrMasSupCarBrandEnName != null) 
+                    var CarCvtCode = (BigInteger.Parse(All_CarCvts.LastOrDefault().CrMasSupCarCvtCode) + 1).ToString();
+                    CarCvts.CrMasSupCarCvtCode = CarCvtCode;
+                    ViewBag.CarCvtCode = CarCvtCode;
+                    if (CarCvtVMT.CrMasSupCarCvtArName != null && CarCvtVMT.CrMasSupCarCvtEnName != null)
                     {
-                        if (existingCarBrand_Ar != null && existingCarBrand_En != null)
+                        if (existingCarCvt_Ar != null && existingCarCvt_En != null)
                         {
                             ModelState.AddModelError("ExistAr", _localizer["Existing"]);
                             ModelState.AddModelError("ExistEn", _localizer["Existing"]);
-                            return View(CarBrands);
+                            return View(CarCvts);
                         }
-                        else if (existingCarBrand_En != null)
-                        {                  
+                        else if (existingCarCvt_En != null)
+                        {
                             ModelState.AddModelError("ExistEn", _localizer["Existing"]);
-                            return View(CarBrands);
+                            return View(CarCvts);
                         }
-                        else if (existingCarBrand_Ar != null)
+                        else if (existingCarCvt_Ar != null)
                         {
                             ModelState.AddModelError("ExistAr", _localizer["Existing"]);
-                            return View(CarBrands);
+                            return View(CarCvts);
                         }
                     }
 
                     if (AcceptImg != null)
                     {
-                        string fileNameImg = CarBrands.CrMasSupCarBrandEnName + "_CarBrand_" + CarBrands.CrMasSupCarBrandCode.ToString().Substring(CarBrands.CrMasSupCarBrandCode.ToString().Length - 3);
+                        //string fileNameImg = CarCvts.CrMasSupCarCvtEnName + "_CarCvt_" + CarCvts.CrMasSupCarCvtCode.ToString();
+                        string fileNameImg ="CarCvt_" + CarCvts.CrMasSupCarCvtCode.ToString();
                         filePathImageAccept = await AcceptImg.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
                     }
 
 
-                    CarBrandsVMT.CrMasSupCarBrandImage = filePathImageAccept;
-                    CarBrandsVMT.CrMasSupCarBrandStatus = "A";
-                    await _unitOfWork.CrMasSupCarBrand.AddAsync(CarBrandsVMT);
+                    CarCvtVMT.CrMasSupCarCvtImage = filePathImageAccept;
+                    CarCvtVMT.CrMasSupCarCvtStatus = "A";
+                    await _unitOfWork.CrMasSupCarCvt.AddAsync(CarCvtVMT);
 
                     _unitOfWork.Complete();
 
-                    var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107004", "1");
+                    var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107003", "1");
 
                     await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "اضافة", "Add", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
@@ -174,10 +177,10 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
                     _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
 
-            }
+                }
                 return RedirectToAction("Index");
             }
-            return View("AddCarBrand", CarBrands);
+            return View("AddCarCvt", CarCvts);
         }
 
 
@@ -186,26 +189,26 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             //To Set Title !!!!!!!!!!!!!
-            var titles = await setTitle("107", "1107004", "1");
+            var titles = await setTitle("107", "1107003", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
 
-            var contract = await _unitOfWork.CrMasSupCarBrand.GetByIdAsync(id);
+            var contract = await _unitOfWork.CrMasSupCarCvt.GetByIdAsync(id);
             if (contract == null)
             {
                 ModelState.AddModelError("Exist", "SomeThing Wrong is happened");
                 return View("Index");
             }
-            int countCarBrands = 0;
-            countCarBrands = _carBrand.GetOneBrandCount(id);
-            ViewBag.CarBrands_Count = countCarBrands;
-            var model = _mapper.Map<CarBrandsVM>(contract);
+            int countCarCvts = 0;
+            countCarCvts = _carCvt.GetOneCarCvtCount(id);
+            ViewBag.CarCvts_Count = countCarCvts;
+            var model = _mapper.Map<CarCvtVM>(contract);
 
             return View(model);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Edit(CarBrandsVM model, IFormFile? AcceptImg)
+        public async Task<IActionResult> Edit(CarCvtVM model, IFormFile? AcceptImg)
         {
             string foldername = $"{"images\\Common"}";
             string filePathImageAccept = "";
@@ -218,19 +221,20 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
                     if (AcceptImg != null)
                     {
-                        string fileNameImg = model.CrMasSupCarBrandEnName + "_CarBrand_" + model.CrMasSupCarBrandCode.ToString().Substring(model.CrMasSupCarBrandCode.ToString().Length - 3);
+                        //string fileNameImg = model.CrMasSupCarCvtEnName + "_CarCvt_" + model.CrMasSupCarCvtCode.ToString();
+                        string fileNameImg = "CarCvt_" + model.CrMasSupCarCvtCode.ToString();
                         filePathImageAccept = await AcceptImg.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
-                        model.CrMasSupCarBrandImage = filePathImageAccept;
+                        model.CrMasSupCarCvtImage = filePathImageAccept;
                     }
 
 
-                    var contract = _mapper.Map<CrMasSupCarBrand>(model);
+                    var contract = _mapper.Map<CrMasSupCarCvt>(model);
 
-                    _unitOfWork.CrMasSupCarBrand.Update(contract);
+                    _unitOfWork.CrMasSupCarCvt.Update(contract);
                     _unitOfWork.Complete();
 
                     // SaveTracing
-                    var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107004", "1");
+                    var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107003", "1");
 
                     await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
@@ -242,7 +246,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
             }
 
-            return RedirectToAction("Index", "CarBrand");
+            return RedirectToAction("Index", "CarCvt");
         }
 
 
@@ -251,24 +255,24 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         {
             string sAr = "";
             string sEn = "";
-            var Contract = await _unitOfWork.CrMasSupCarBrand.GetByIdAsync(code);
+            var Contract = await _unitOfWork.CrMasSupCarCvt.GetByIdAsync(code);
             if (Contract != null)
             {
                 if (status == Status.Hold)
                 {
                     sAr = "ايقاف";
                     sEn = "Hold";
-                    Contract.CrMasSupCarBrandStatus = Status.Hold;
+                    Contract.CrMasSupCarCvtStatus = Status.Hold;
                 }
                 else if (status == Status.Deleted)
                 {
-                    int CountCarBrands = 0;
-                    CountCarBrands = _carBrand.GetOneBrandCount(code);
-                    if (CountCarBrands == 0)
+                    int CountCarCvts = 0;
+                    CountCarCvts = _carCvt.GetOneCarCvtCount(code);
+                    if (CountCarCvts == 0)
                     {
                         sAr = "حذف";
                         sEn = "Remove";
-                        Contract.CrMasSupCarBrandStatus = Status.Deleted;
+                        Contract.CrMasSupCarCvtStatus = Status.Deleted;
                     }
                     else
                     {
@@ -280,19 +284,19 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 {
                     sAr = "استرجاع";
                     sEn = "Retrive";
-                    Contract.CrMasSupCarBrandStatus = Status.Active;
+                    Contract.CrMasSupCarCvtStatus = Status.Active;
                 }
 
                 await _unitOfWork.CompleteAsync();
 
                 // SaveTracing
 
-                var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107004", "1");
+                var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107003", "1");
                 await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, sAr, sEn, mainTask.CrMasSysMainTasksCode,
                 subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
-                return RedirectToAction("Index", "CarBrand");
+                return RedirectToAction("Index", "CarCvt");
             }
 
 
@@ -301,17 +305,17 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CheckChangedField(string Exist_lang,string dataField)
+        public async Task<IActionResult> CheckChangedField(string Exist_lang, string dataField)
         {
-            var All_CarBrands = await _unitOfWork.CrMasSupCarBrand.GetAllAsync();
-            
-            if (dataField != null && All_CarBrands != null)
+            var All_CarCvts = await _unitOfWork.CrMasSupCarCvt.GetAllAsync();
+
+            if (dataField != null && All_CarCvts != null)
             {
                 if (Exist_lang == "ExistAr")
                 {
-                    var existingCarBrand_Ar = All_CarBrands.FirstOrDefault(x =>
-                        x.CrMasSupCarBrandArName == dataField);
-                    if (existingCarBrand_Ar != null)
+                    var existingCarCvt_Ar = All_CarCvts.FirstOrDefault(x =>
+                        x.CrMasSupCarCvtArName == dataField);
+                    if (existingCarCvt_Ar != null)
                     {
                         ModelState.AddModelError(Exist_lang, _localizer["Existing"]);
                         return View();
@@ -319,9 +323,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 }
                 else if (Exist_lang == "ExistEn")
                 {
-                    var existingCarBrand_En = All_CarBrands.FirstOrDefault(x =>
-                        x.CrMasSupCarBrandEnName == dataField);
-                    if (existingCarBrand_En != null)
+                    var existingCarCvt_En = All_CarCvts.FirstOrDefault(x =>
+                        x.CrMasSupCarCvtEnName == dataField);
+                    if (existingCarCvt_En != null)
                     {
                         ModelState.AddModelError(Exist_lang, _localizer["Existing"]);
                         return View();
@@ -331,7 +335,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             }
             return View();
         }
-                
+
 
 
         //public  IActionResult CannotDelete() 
@@ -342,4 +346,4 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         //    return View();
         //}
     }
-    }
+ }
