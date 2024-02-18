@@ -48,7 +48,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                  x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationOwnerStatus == Status.Active &&
                                                                                 (x.CrCasCarInformationForSaleStatus == Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale),
                                                                                 new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics",
-                                                                                        "CrCasCarInformationCategoryNavigation", "CrCasCarDocumentsMaintenances" }).ToList();
+                                                                                        "CrCasCarInformationCategoryNavigation", "CrCasCarDocumentsMaintenances","CrCasCarInformationCvtNavigation",
+                                                                                        "CrCasCarInformationFuelNavigation" }).ToList();
 
             var categoryCars = carsAvailable.Select(item => item.CrCasCarInformationCategoryNavigation).Distinct().OrderBy(item => item.CrMasSupCarCategoryCode).ToList();
             var CheckupCars = _unitOfWork.CrMasSupContractCarCheckup.FindAll(x => x.CrMasSupContractCarCheckupStatus == Status.Active).ToList();
@@ -462,7 +463,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                  x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationOwnerStatus == Status.Active &&
                                                                                 (x.CrCasCarInformationForSaleStatus == Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale),
                                                                                 new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics",
-                                                                                        "CrCasCarInformationCategoryNavigation", "CrCasCarDocumentsMaintenances" }).ToList();
+                                                                                        "CrCasCarInformationCategoryNavigation", "CrCasCarDocumentsMaintenances","CrCasCarInformationCvtNavigation",
+                                                                                        "CrCasCarInformationFuelNavigation" }).ToList();
             if (selectedCategory == "3400000000")
             {
                 BSLayoutVM bSLayoutVM = new BSLayoutVM()
