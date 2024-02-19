@@ -63,7 +63,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 string fileNameImg = "Image";
                 filePathImage = await Profile_Photo.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
             }
-            else if (Profile_Photo == null&&string.IsNullOrEmpty(user.CrMasUserInformationPicture))
+            else if (Profile_Photo == null && string.IsNullOrEmpty(user.CrMasUserInformationPicture))
             {
                 filePathImage = "~/images/common/user.jpg";
             }
@@ -77,13 +77,13 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 string fileNameSignture = "Signture";
                 filePathSignture = await signature_img.SaveImageAsync(_webHostEnvironment, foldername, fileNameSignture, ".png");
             }
-            else if(signature_img == null && string.IsNullOrEmpty(user.CrMasUserInformationSignature))
+            else if (signature_img == null && string.IsNullOrEmpty(user.CrMasUserInformationSignature))
             {
                 filePathSignture = "~/images/common/DefualtUserSignature.png";
             }
             else
             {
-                filePathSignture=user.CrMasUserInformationSignature;
+                filePathSignture = user.CrMasUserInformationSignature;
             }
 
 
@@ -118,40 +118,31 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(string Current, string New, string Confirm)
+        public async Task<IActionResult> ChangePassword(string Current, string New)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var user = await _userService.GetUserByUserNameAsync(userLogin.CrMasUserInformationCode);
-            //// Check current password 
-            //if (user.CrMasUserInformationPassWord.Trim() != model.CurrentPassword.Trim())
-            //{
-            //    if (currentCulture == "en-US") ModelState.AddModelError("NotExist", "Current password is incorrect. Please try again.");
-            //    else ModelState.AddModelError("NotExist", "كلمة السر الحالية غير صحيحة, يرجي اعادة المحاولة");
-            //    return View(model);
-            //}
-            //if (model.NewPassword != model.ConfirmPassword)
-            //{
-            //    if (currentCulture == "en-US") ModelState.AddModelError("Exist", "New password does not match. Enter new password again here.");
-            //    else ModelState.AddModelError("Exist", "كلمة السر وتأكيد كلمة السر غير مطابقان, يرجي اعادة المحاولة");
-
-            //    return View(model);
-            //}
-            //var result = await _userManager.ChangePasswordAsync(user, user.CrMasUserInformationPassWord.Trim(), model.NewPassword);
-            //if (result.Succeeded)
-            //{
-            //    user.CrMasUserInformationPassWord = model.NewPassword;
-            //    user.CrMasUserInformationChangePassWordLastDate = DateTime.Now.Date;
-            //    _unitOfWork.Complete();
-            //    _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
-            //}
-
-            //else
-            //{
-            //    ModelState.AddModelError("Exist", "Something wrong happed , please try again");
-            //    return View(model);
-            //}
-
-            return RedirectToAction("Index", "Home");
+            // Check current password 
+            if (user.CrMasUserInformationPassWord.Trim() != Current.Trim()) return Json("wrong");
+            var result = await _userManager.ChangePasswordAsync(user, user.CrMasUserInformationPassWord.Trim(), New.Trim());
+            if (result.Succeeded)
+            {
+                user.CrMasUserInformationPassWord = New.Trim();
+                user.CrMasUserInformationChangePassWordLastDate = DateTime.Now.Date;
+                _unitOfWork.Complete();
+                return Json("true");
+            }
+            else return Json("false");
+        }
+        public IActionResult SuccesssMessageForChangePassword()
+        {
+            _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("Index", "Home", new { area = "BS" });
+        }
+        public IActionResult ErrorMessageForChangePassword()
+        {
+            _toastNotification.AddErrorToastMessage(_localizer["SomethingWrongPleaseCallAdmin"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+            return RedirectToAction("Index", "Home", new { area = "BS" });
         }
 
     }

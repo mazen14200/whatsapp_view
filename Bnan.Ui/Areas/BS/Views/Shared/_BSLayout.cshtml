@@ -415,7 +415,7 @@
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered  ">
             <div class="modal-content">
-                <form class="needs-validation" novalidate>
+                <form class="needs-validation" novalidate id="formPass" >
                     <div class="modal-header account-modal-header">
                         <p class="card-title">تغيير كلمة السر</p>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -431,10 +431,11 @@
                                             <label for="current_pass">كلمة السر الحالية</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="password" id="current_pass" class="account-select"
+                                            <input type="password" id="currentPass" class="account-select"
                                                    name=" current passowrd" autocomplete="off">
                                             <div class="row requird-field">
-                                                <p style="display:none;"> هذا الحقل مطلوب</p>
+                                                <p id="currentPassRequired"></p>
+                                                <p id="currentMessage" class="text-danger"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -445,10 +446,10 @@
                                             <label for="New_pass">كلمة السر الجديدة </label>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="password" id="New_pass" class=" account-select"
+                                            <input type="password" id="newPass" class=" account-select"
                                                    name="new passowrd" autocomplete="off">
                                             <div class="row requird-field">
-                                                <p style="display:none;">هذا الحقل مطلوب</p>
+                                                <p id="newPassRequired"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -459,10 +460,11 @@
                                             <label for="New_pass_reenter">تأكيد كلمة السر الجديدة </label>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="password" id="New_pass_reenter" class=" account-select"
+                                            <input type="password" id="confirmPass" class=" account-select"
                                                    name="new passowrd reenter" autocomplete="off">
                                             <div class="row requird-field">
-                                                <p style="display:none;">هذا الحقل مطلوب</p>
+                                                <p <p id="confirmPassRequired"></p>
+                                                <p id="confirmPassMessage" class="text-danger"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -471,48 +473,13 @@
                         </div>
                     </div>
                     <div class="modal-footer save-button-row" id="passowrd-save">
-                        <a id="submit" class="btn btn-custom">حفظ</a>
+                        <a id="submitPassword" class="btn btn-custom">حفظ</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- end of change passowrd Modal-->
-    <!-- Upload Profile Picture Modal -->
-    <!-- Upload signature Modal -->
-    <div class="modal fade" id="signature_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered ">
-            <div class="modal-content signature-modal-content">
-                <form id="signature-form">
-                    <div class="modal-header account-modal-header signature-modal-header">
-                        <div class="anchors w-100">  <a href="#" id="Img_signture">تحميل</a>  <a href="#" class="activee" id="written_signture">كتابة</a></div>
-
-                        <div>
-                            <p class="card-title"> التوقيع </p>
-                        </div>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true"><img src="~/BranchSys/img/cancel.png"></span>
-                        </button>
-
-                    </div>
-                    <div class="modal-body">
-                        <div class="row upload-modal">
-                            <div class="col-md-9 col-lg-11 col-md-offset-4 col-sm-6 profile-badge" style="height: 200px;">
-                                <div class="h-100 w-100 d-flex align-items-center justify-content-center" id="signature_content ">
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer save-button-row" id="passowrd-save">
-                        <button type="submit" class="btn btn-custom" id="save">حفظ</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- end of Upload signature Modal-->
     <!-- charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
     <!--link to make javascript function operate-->
@@ -634,9 +601,79 @@
         //     });
         // });
     </script>
-
+   
     
     <script>
+        const currentPassInput = document.getElementById('currentPass');
+        const newPassInput = document.getElementById('newPass');
+        const confirmPassInput = document.getElementById('confirmPass');
+
+        // Add event listeners to clear error messages when input is detected
+        currentPassInput.addEventListener('input', () => {
+            currentPassMessage.textContent = ''; // Clear the error message
+            $('#currentPassRequired').hide();
+        });
+        confirmPassInput.addEventListener('input', () => {
+            confirmPassMessage.textContent = ''; // Clear the error message
+            $('#newPassRequired').hide();
+        });
+        newPassInput.addEventListener('input', () => {
+            confirmPassMessage.textContent = ''; // Clear the error message
+            $('#confirmPassRequired').hide();
+        });
+        $(document).ready(function () {
+            $('#submitPassword').click(function () {
+                // Get the values from the input fields
+                var currentPassword = $("#currentPass").val().trim();
+                var newPassword = $("#newPass").val().trim();
+                var confirmPassword = $("#confirmPass").val().trim();
+
+                // Clear any previous error messages
+                $('#currentMessage, #confirmPassMessage').text('');
+
+                // Check if any input field is empty
+                if (currentPassword === '') {
+                    $('#currentPassRequired').text('@localizer["requiredFiled"]');
+                    return;
+                }
+                if (newPassword === '') {
+                    $('#newPassRequired').text('@localizer["requiredFiled"]');
+                    return;
+                }
+                if (confirmPassword === '') {
+                    $('#confirmPassRequired').text('@localizer["requiredFiled"]');
+                    return;
+                }
+
+                // Check if the new password and confirm password match
+                if (newPassword !== confirmPassword) {
+                    $('#confirmPassMessage').text('@localizer["WrongConfirmPassword"]');
+                    return;
+                }
+
+                // Perform AJAX request if all validations pass
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        Current: currentPassword,
+                        New: newPassword,
+                    },
+                    url: "@Url.Action("ChangePassword", "Employees", new { Area = "BS" })",
+                    success: function (response) {
+                        var result = response;
+                        if (result === "wrong") {
+                            $('#currentMessage').text('@localizer["WrongCurrentPassword"]');
+                        } else if (result === "false") {
+                            $('#PasswordModal').modal('hide');
+                            window.location.href = "/BS/Employees/ErrorMessageForChangePassword";
+                        } else {
+                            $('#PasswordModal').modal('hide');
+                            window.location.href = "/BS/Employees/SuccesssMessageForChangePassword";
+                        }
+                    },
+                });
+            });
+        });
     </script>
 </body>
 </html>
