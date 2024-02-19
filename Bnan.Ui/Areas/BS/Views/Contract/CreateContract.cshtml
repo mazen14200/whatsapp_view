@@ -3953,29 +3953,122 @@ else
                 const blob = await responseImage.blob();
                 // Prepare form data
                 const formData = new FormData();
-                formData.append("file", blob, "CreateContract.jfif"); // Append the image blob with a filename
                 formData.append("number", phoneNumber); // Append the recipient's phone number
                 formData.append("message", messageText); // Append the message
-                const requestOptions = {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
+
+                // Create a canvas element
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                // Create an image element
+                const img = new Image();
+
+                // When the image is loaded, draw it on the canvas
+                img.onload = function () {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+
+                    // Define text properties
+                    const fontSize = 25;
+                    ctx.font = `bold ${fontSize}px serif`;
+                    const lineHeight = fontSize + 12; // Adjust line height as needed
+                    ctx.fillStyle = 'black';
+                    const CarEn = CarInformation.carInformation.crCasCarInformationConcatenateEnName;
+                    const CarAr = CarInformation.carInformation.crCasCarInformationConcatenateArName;
+                    const wordsToKeep = 4; // Number of words you want to keep
+                    const wordsArray1 = CarEn.split(' - '); // Split the string into an array of words
+                    const wordsArray2 = CarAr.split(' - '); // Split the string into an array of words
+                    const trimmedCarEn = wordsArray1.slice(0, wordsToKeep).join(' - '); // Join the first `wordsToKeep` words
+                    const trimmedCarAr = wordsArray2.slice(0, wordsToKeep).join(' - '); // Join the first `wordsToKeep` words
+                    console.log("trimmedCarEn",trimmedCarEn); // Output: "Nissan - Altima - Intermediate Sedan - 2019"
+                    console.log("trimmedCarAr", trimmedCarAr); // Output: "Nissan - Altima - Intermediate Sedan - 2019"
+                    // Define text content and positions
+                    const textContentEn = [
+                        { text: RenterInformation.personalEnName, x: 70, y: 215 },
+                        { text: trimmedCarEn, x: 70, y: 265 },
+                        { text: $("#StartDate").text(), x: 200, y: 327 },
+                        { text: $("#EndDate").text(), x: 200, y: 370 },
+                        { text: $("#ContractNo").val(), x: 77, y: 555 }
+                    ];
+                    // Draw text with highlighted gray background
+                    textContentEn.forEach(({ text, x, y }) => {
+                        const textWidth = ctx.measureText(text).width;
+                        const padding = 5; // Padding around the text
+
+                        // Draw gray background rectangle
+                        ctx.fillStyle = 'rgba(128, 128, 128, 0.5)';
+                        ctx.fillRect(x - padding, y - fontSize - padding, textWidth + 2 * padding, lineHeight);
+
+                        // Draw text on top of the background
+                        ctx.fillStyle = 'black';
+                        ctx.fillText(text, x, y);
+                    });
+
+
+                    // Assuming the StartDate and EndDate elements contain the dates in ISO format (e.g., "2024-02-20")
+                    const startDate = new Date($("#StartDate").text());
+                    const endDate = new Date($("#EndDate").text());
+                    const options = { day: 'numeric',month: 'long',year: 'numeric'};
+                    // Format the start and end dates in Hijri calendar with Arabic locale
+                    const startHijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', options).format(startDate);
+                    const endHijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', options).format(endDate);
+                    console.log("Start Hijri Date in Arabic:", startHijriDate);
+                    console.log("End Hijri Date in Arabic:", endHijriDate);
+                    const textContentAr = [
+                        { text: RenterInformation.personalArName, x: 1000, y: 215 },
+                        { text: trimmedCarAr, x: 1000, y: 265 },
+                        { text: startHijriDate, x: 835, y: 327 },
+                        { text: endHijriDate, x: 835, y: 370 },
+                        { text: '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArShortName)' + ' - ' + '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArName)', x: 980, y: 425 },
+                    ];
+                    // Draw text with highlighted gray background
+                    textContentAr.forEach(({ text, x, y }) => {
+                        const textWidth = ctx.measureText(text).width;
+                        const padding = 5; // Padding around the text
+
+                        // Draw gray background rectangle
+                        ctx.textAlign = 'right'; // Align text to the right
+                        ctx.fillStyle = 'rgba(128, 128, 128, 0.5)';
+                        ctx.fillRect(x - textWidth - padding, y - fontSize - padding, textWidth + 2 * padding, lineHeight);
+
+                        // Draw text on top of the background
+                        ctx.fillStyle = 'black';
+                        ctx.fillText(text, x, y);
+                    });
+
+
+                    // Convert the canvas to a blob
+                    canvas.toBlob(async function (blob) {
+                        formData.append("file", blob, "CreateContractWithText.jfif"); // Append the modified image blob with a filename
+
+                        const requestOptions = {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        };
+
+                        // Send the request to the API endpoint
+                        const response = await fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions);
+                        if (response.ok) {
+                            const result = await response.json();
+                            console.log("SendImageResult", result);
+                        } else {
+                            const errorMessage = await response.text(); // Get the error message as plain text
+                            console.log("SendImageError", errorMessage);
+                        }
+                    }, 'image/jpeg');
                 };
-                // Send the request to the API endpoint
-                const response = await fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions);
-                if (response.ok) {
-                    const result = await response.json();
-                    console.log("SendImageResult", result);
-                } else {
-                    const errorMessage = await response.text(); // Get the error message as plain text
-                    console.log("SendImageError", errorMessage);
-                }
+
+                // Set the source of the image element
+                img.src = URL.createObjectURL(blob);
             } catch (error) {
                 console.log('SendImageError', error);
             }
         };
+        
         // submit Form
         document.addEventListener('DOMContentLoaded', function () {
             // Get the form element

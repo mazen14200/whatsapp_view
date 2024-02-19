@@ -246,7 +246,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     {
                         if (await _unitOfWork.CompleteAsync() > 0)
                         {
-                            _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                            _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                             return RedirectToAction("Index", "Home");
                         }
                     }
