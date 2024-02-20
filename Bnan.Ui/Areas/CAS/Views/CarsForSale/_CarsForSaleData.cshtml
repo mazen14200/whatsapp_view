@@ -22,8 +22,8 @@
                     <th aria-label="Position: activate to sort column ascending">@localizer["Branch"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["CurrentMeter"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["ContractCount"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["OfferDate"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["SoldDate"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
             </thead>
@@ -39,11 +39,11 @@
                         <tr onclick="location.href='@Url.Action("OfferCarForSale", "CarsForSale", new { id = item.CrCasCarInformationSerailNo })'" style="color:red; cursor:pointer">
                             <td>@no</td>
                             <td>@item.CrCasCarInformationSerailNo</td>
-                            <td>@item.CrCasCarInformation1.CrCasBranchInformationEnShortName</td>
+                            <td>@item.CrCasCarInformation1?.CrCasBranchInformationEnShortName</td>
                             <td>@item.CrCasCarInformationConcatenateEnName</td>
-                            <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
-                            <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
-                            <td>@item.CrCasCarInformationLastContractDate</td>
+                            <td>@item.CrCasCarInformationCurrentMeter</td>
+                            <td>@item.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd")</td>
                             <td>
                                 @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.ForSale)
                                 {
@@ -63,11 +63,11 @@
                         <tr onclick="location.href='@Url.Action("OfferCarForSale", "CarsForSale", new { id = item.CrCasCarInformationSerailNo })'">
                             <td>@no</td>
                             <td>@item.CrCasCarInformationSerailNo</td>
-                            <td>@item.CrCasCarInformation1.CrCasBranchInformationEnShortName</td>
+                            <td>@item.CrCasCarInformation1?.CrCasBranchInformationEnShortName</td>
                             <td>@item.CrCasCarInformationConcatenateEnName</td>
-                            <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
-                            <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
-                            <td>@item.CrCasCarInformationLastContractDate</td>
+                            <td>@item.CrCasCarInformationCurrentMeter</td>
+                            <td>@item.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd")</td>
                             <td>
                                 @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.Active)
                                 {
@@ -97,8 +97,8 @@ else
                     <th aria-label="Position: activate to sort column ascending">@localizer["Branch"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["CurrentMeter"]</th>
-                    <th aria-label="position: activate to sort column ascending">@localizer["ContractCount"]</th>
-                    <th aria-label="position: activate to sort column ascending">@localizer["LastDateContract"]</th>
+                    <th aria-label="position: activate to sort column ascending">@localizer["OfferDate"]</th>
+                    <th aria-label="position: activate to sort column ascending">@localizer["SoldDate"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
             </thead>
@@ -114,11 +114,11 @@ else
                         <tr onclick="location.href='@Url.Action("OfferCarForSale", "CarsForSale", new { id = item.CrCasCarInformationSerailNo })'" style="color:red; cursor:pointer">
                             <td>@no</td>
                             <td>@item.CrCasCarInformationSerailNo</td>
-                            <td>@item.CrCasCarInformation1.CrCasBranchInformationArShortName</td>
+                            <td>@item.CrCasCarInformation1?.CrCasBranchInformationArShortName</td>
                             <td>@item.CrCasCarInformationConcatenateArName</td>
-                            <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
-                            <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
-                            <td>@item.CrCasCarInformationLastContractDate</td>
+                            <td>@item.CrCasCarInformationCurrentMeter</td>
+                            <td>@item.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd")</td>
                             <td>
                                 @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.ForSale)
                                 {
@@ -138,11 +138,11 @@ else
                         <tr onclick="location.href='@Url.Action("OfferCarForSale", "CarsForSale", new { id = item.CrCasCarInformationSerailNo })'" style="cursor:pointer;">
                             <td>@no</td>
                             <td>@item.CrCasCarInformationSerailNo</td>
-                            <td>@item.CrCasCarInformation1.CrCasBranchInformationArShortName</td>
+                            <td>@item.CrCasCarInformation1?.CrCasBranchInformationArShortName</td>
                             <td>@item.CrCasCarInformationConcatenateArName</td>
-                            <td>@item.CrCasCarInformationCurrentMeter?.ToString("N0")</td>
-                            <td>@item.CrCasCarInformationConractCount?.ToString("N0")</td>
-                            <td>@item.CrCasCarInformationLastContractDate</td>
+                            <td>@item.CrCasCarInformationCurrentMeter</td>
+                            <td>@item.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd")</td>
                             <td>
                                 @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.Active)
                                 {

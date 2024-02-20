@@ -74,7 +74,7 @@
     <form id="form" class="needs-validation" novalidate asp-area="CAS" asp-controller="CarsInformation" asp-action="AddCar" enctype="multipart/form-data">
         <div class="form-contain">
             <div class="row">
-                <div class="row">
+                <div class="row" style="height:6vh">
                     <div class="col-md-1">
                         <label class="form-label" for="CrCasCarInformationSerailNo">@localizer["SerialNumber"]</label>
                     </div>
@@ -87,8 +87,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-1">
                         <label class="form-label" for="CrCasCarInformationDistribution">@localizer["Car"]</label>
                     </div>
@@ -101,6 +99,45 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <h4 style="font-size: 20px;">
+                            <label class="mb-1">
+                                @localizer["Advantages"]
+                            </label>
+                            <a class="plus-icon" onclick="showAdvantages()">
+                                <i class="dripicons-plus"></i>
+                            </a>
+                        </h4>
+                        <div id="Advantages" style="display: none;">
+                            @foreach (var item in ViewBag.Advantages)
+                            {
+                                <ul class="list mt-2" style="font-size: 17px;">
+                                    <li>
+                                        <h4 class="mb-1">
+                                            <input type="checkbox" id="CheckBoxAdvantages@(item.CrMasSupCarAdvantagesCode)" data-id="@item.CrMasSupCarAdvantagesCode" style="height: 15px;width: 30px;" name="CheckBoxAdvantages[IndexOf(item)]" class="checkbox-Advantages" value="false" />
+                                            @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                            {
+                                                <label for="Advantages">
+                                                    @item.CrMasSupCarAdvantagesArName
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <label for="Advantages">
+                                                    @item.CrMasSupCarAdvantagesEnName
+                                                </label>
+                                            }
+
+                                        </h4>
+                                    </li>
+                                </ul>
+                            }
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <!--Registration Type -->
                     <div class="col-md-1">
                         <label class="form-label" for="CrCasCarInformationStructureNo">@localizer["StructureNo"]</label>
                     </div>
@@ -113,10 +150,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <!--Registration Type -->
-
                     <div class="col-md-1">
                         <label class="form-label" for="CrCasCarInformationRegistration">@localizer["RegistrationType"]</label>
                     </div>
@@ -145,7 +178,8 @@
                             </div>
                         </div>
                     </div>
-
+                </div>
+                <div class="row">
                     <!--Fuel Type -->
                     <div class="col-md-1">
                         <label class="form-label" for="CrCasCarInformationFuel">@localizer["FuelType"]</label>
@@ -180,7 +214,7 @@
                     <div class="col-md-1">
                         <label class="form-label" for="CrCasCarInformationCvt">@localizer["CVTtype"]</label>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <select class="form-select" asp-for="CrCasCarInformationCvt" style="width: 100%;" dir="rtl" required>
                             <option value="" selected></option> <!-- Add an empty option as the first option -->
                             @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
@@ -213,7 +247,7 @@
                     <div class="col-md-2">
                         <div class="row">
                             <div class="col-md-4" style="width: 100px;">
-                                <select class="form-select" name="firstChar" required data-val="true" data-val-required="@localizer["requiredFiled"]">
+                                <select class="form-select selectChar" name="firstChar" required data-val="true" data-val-required="@localizer["requiredFiled"]">
                                     <option value=""></option>
                                     @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                     {
@@ -259,7 +293,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4 colorMarginCar">
-                                <select class="form-select" name="secondChar" required data-val="true" data-val-required="@localizer["requiredFiled"]">
+                                <select class="form-select selectChar" name="secondChar" required data-val="true" data-val-required="@localizer["requiredFiled"]">
                                     <option value=""></option>
                                     @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                     {
@@ -305,7 +339,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4 colorMarginCar2">
-                                <select class="form-select" name="thirdChar" required data-val="true" data-val-required="@localizer["requiredFiled"]">
+                                <select class="form-select selectChar" name="thirdChar" required data-val="true" data-val-required="@localizer["requiredFiled"]">
                                     <option value=""></option>
                                     @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                     {
@@ -349,6 +383,11 @@
                                     }
 
                                 </select>
+                            </div>
+                        </div>
+                        <div style="margin-top:2px">
+                            <div style="height: 1.35em">
+                                <span class="text-danger" id="requriedMessageChar"></span>
                             </div>
                         </div>
                     </div>
@@ -430,7 +469,7 @@
                         <label class="form-label" for="CrCasCarInformationSeatColor">@localizer["MattressColor"]</label>
                     </div>
                     <div class="col-md-1">
-                        <select class="form-select" asp-for="CrCasCarInformationSeatColor" style="width: 100%;" dir="rtl" >
+                        <select class="form-select" asp-for="CrCasCarInformationSeatColor" style="width: 100%;" dir="rtl">
                             <option selected></option>
                             @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                             {
@@ -458,7 +497,7 @@
                         <label class="form-label" for="CrCasCarInformationFloorColor">@localizer["FloorColor"]</label>
                     </div>
                     <div class="col-md-1 colFloorColor">
-                        <select class="form-select" asp-for="CrCasCarInformationFloorColor" style="width: 95%;" dir="rtl" >
+                        <select class="form-select" asp-for="CrCasCarInformationFloorColor" style="width: 95%;" dir="rtl">
                             <option selected></option>
                             @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                             {
@@ -519,43 +558,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-3">
-                        <h4 style="font-size: 20px;">
-                            <label class="mb-1">
-                                @localizer["Advantages"]
-                            </label>
-                            <a class="plus-icon" onclick="showAdvantages()">
-                                <i class="dripicons-plus"></i>
-                            </a>
-                        </h4>
-                        <div id="Advantages" style="display: none;">
-                            @foreach (var item in ViewBag.Advantages)
-                            {
-                                <ul class="list mt-2" style="font-size: 17px;">
-                                    <li>
-                                        <h4 class="mb-1">
-                                            <input type="checkbox" id="CheckBoxAdvantages@(item.CrMasSupCarAdvantagesCode)" data-id="@item.CrMasSupCarAdvantagesCode" style="height: 15px;width: 30px;" name="CheckBoxAdvantages[IndexOf(item)]" class="checkbox-Advantages" value="false" />
-                                            @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
-                                            {
-                                                <label for="Advantages">
-                                                    @item.CrMasSupCarAdvantagesArName
-                                                </label>
-                                            }
-                                            else
-                                            {
-                                                <label for="Advantages">
-                                                    @item.CrMasSupCarAdvantagesEnName
-                                                </label>
-                                            }
-
-                                        </h4>
-                                    </li>
-                                </ul>
-                            }
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="mt-3">
@@ -610,11 +612,11 @@
         function showAdvantages() {
             var list = document.getElementById("Advantages");
             var plusIcon = document.getElementById("plus-icon");
-                if (list.style.display === "block") {
-                    list.style.display = "none";
-                } else {
-                    list.style.display = "block";
-                }
+            if (list.style.display === "block") {
+                list.style.display = "none";
+            } else {
+                list.style.display = "block";
+            }
         }
     </script>
     <script>
@@ -627,12 +629,33 @@
         });
     </script>
     <script>
+        // Define the validation function
+        function validateSelects() {
+            var selects = document.querySelectorAll('.selectChar');
+            var isValid = true;
+            console.log("isValid", isValid);
+
+            selects.forEach(function (select) {
+                if (!select.value || select.value.trim() === "") {
+                    isValid = false;
+                    // Display error message
+                    document.getElementById('requriedMessageChar').textContent = '@localizer["requiredFiled"]';
+                    console.log("isValid", isValid);
+                }
+            });
+            // Clear the error message if all fields are filled out
+            if (isValid) {
+                document.getElementById('requriedMessageChar').textContent = "";
+            }
+            return isValid;
+        }
         document.addEventListener('DOMContentLoaded', function () {
             // Get the form element
             var form = document.getElementById('form');
             $("#submitButton").click(function (e) {
                 e.preventDefault();
-                if ($("#form").valid()) {
+                validateSelects();
+                if ($("#form").valid() && validateSelects()) {
                     // Get the selected checkboxes and their IDs
                     var checkboxes = document.querySelectorAll('.checkbox-Advantages');
                     var data = [];
@@ -642,9 +665,7 @@
                         var checked = checkbox.checked;
                         data.push({ Id: id, Value: checked });
                     });
-                    console.log(form);
-                    console.log(data);
-                    console.log(checkboxes);
+
                     // Create a hidden input field with the data
                     var hiddenInput = document.createElement('input');
                     hiddenInput.setAttribute('type', 'hidden');
@@ -653,15 +674,14 @@
 
                     //// Append the hidden input field to the form BEFORE checking validity
                     form.appendChild(hiddenInput);
-                    console.log(hiddenInput);
                     form.submit();
                 }
-               
+
 
                 //var allInputsValid = true;
                 //var inputs = form.querySelectorAll('input[type="text"]');
                 //var filteredInputs = [];
-               
+
                 //inputs.forEach(function (input) {
                 //    var inputId = input.getAttribute('id');
                 //    if (inputId !== 'CrMasUserInformationEmail' && inputId !== 'CrMasUserInformationMobileNo' && inputId !== "CrMasUserInformationReasons") {

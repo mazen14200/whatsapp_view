@@ -31,14 +31,23 @@ namespace Bnan.Inferastructure.Repository
             if (string.IsNullOrEmpty(model.CrCasCarInformationSecondaryColor)) model.CrCasCarInformationSecondaryColor = null;
             if (string.IsNullOrEmpty(model.CrCasCarInformationSeatColor)) model.CrCasCarInformationSeatColor = null;
             if (string.IsNullOrEmpty(model.CrCasCarInformationFloorColor)) model.CrCasCarInformationFloorColor = null;
-
-
-
+            var carPirce = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicDistributionCode == distribution.CrMasSupCarDistributionCode);
+            if (carPirce != null)
+            {
+                model.CrCasCarInformationPriceNo = carPirce.CrCasPriceCarBasicNo;
+                model.CrCasCarInformationPriceStatus = true;
+            }
+            else
+            {
+                model.CrCasCarInformationPriceNo = null;
+                model.CrCasCarInformationPriceStatus = false;
+            }
+            
             CrCasCarInformation casCarInformation = new CrCasCarInformation()
             {
                 CrCasCarInformationSerailNo = model.CrCasCarInformationSerailNo,
-                CrCasCarInformationConcatenateArName = $"{distribution.CrMasSupCarDistributionConcatenateArName} - {color.CrMasSupCarColorArName}",
-                CrCasCarInformationConcatenateEnName = $"{distribution.CrMasSupCarDistributionConcatenateEnName} - {color.CrMasSupCarColorEnName}",
+                CrCasCarInformationConcatenateArName = $"{distribution.CrMasSupCarDistributionConcatenateArName} - {model.CrCasCarInformationPlateArNo} - {color.CrMasSupCarColorArName}",
+                CrCasCarInformationConcatenateEnName = $"{distribution.CrMasSupCarDistributionConcatenateEnName} - {model.CrCasCarInformationPlateEnNo} - {color.CrMasSupCarColorEnName}",
                 CrCasCarDocumentsMaintenances = model.CrCasCarDocumentsMaintenances,
                 CrCasCarAdvantages = model.CrCasCarAdvantages,
                 CrCasCarInformationCategory = distribution.CrMasSupCarDistributionCategory,
@@ -66,9 +75,10 @@ namespace Bnan.Inferastructure.Repository
                 CrCasCarInformationPlateEnNo = model.CrCasCarInformationPlateEnNo,
                 CrCasCarInformationRegistration = model.CrCasCarInformationRegistration,
                 CrCasCarInformationReasons = model.CrCasCarInformationReasons,
+                CrCasCarInformationPriceNo = model.CrCasCarInformationPriceNo,
                 CrCasCarInformationDocumentationStatus = false,
                 CrCasCarInformationMaintenanceStatus = true,
-                CrCasCarInformationPriceStatus = false,
+                CrCasCarInformationPriceStatus = model.CrCasCarInformationPriceStatus,
                 CrCasCarInformationBranchStatus = "A",
                 CrCasCarInformationStatus = "A",
                 CrCasCarInformationOwnerStatus = "A",

@@ -3976,17 +3976,17 @@ else
                     ctx.fillStyle = 'black';
                     const CarEn = CarInformation.carInformation.crCasCarInformationConcatenateEnName;
                     const CarAr = CarInformation.carInformation.crCasCarInformationConcatenateArName;
-                    const wordsToKeep = 4; // Number of words you want to keep
-                    const wordsArray1 = CarEn.split(' - '); // Split the string into an array of words
-                    const wordsArray2 = CarAr.split(' - '); // Split the string into an array of words
-                    const trimmedCarEn = wordsArray1.slice(0, wordsToKeep).join(' - '); // Join the first `wordsToKeep` words
-                    const trimmedCarAr = wordsArray2.slice(0, wordsToKeep).join(' - '); // Join the first `wordsToKeep` words
-                    console.log("trimmedCarEn",trimmedCarEn); // Output: "Nissan - Altima - Intermediate Sedan - 2019"
-                    console.log("trimmedCarAr", trimmedCarAr); // Output: "Nissan - Altima - Intermediate Sedan - 2019"
+                    // const wordsToKeep = 4; // Number of words you want to keep
+                    // const wordsArray1 = CarEn.split(' - '); // Split the string into an array of words
+                    // const wordsArray2 = CarAr.split(' - '); // Split the string into an array of words
+                    // const trimmedCarEn = wordsArray1.slice(0, wordsToKeep).join(' - '); // Join the first `wordsToKeep` words
+                    // const trimmedCarAr = wordsArray2.slice(0, wordsToKeep).join(' - '); // Join the first `wordsToKeep` words
+                    // console.log("trimmedCarEn",trimmedCarEn); // Output: "Nissan - Altima - Intermediate Sedan - 2019"
+                    // console.log("trimmedCarAr", trimmedCarAr); // Output: "Nissan - Altima - Intermediate Sedan - 2019"
                     // Define text content and positions
                     const textContentEn = [
                         { text: RenterInformation.personalEnName, x: 70, y: 215 },
-                        { text: trimmedCarEn, x: 70, y: 265 },
+                        { text: CarEn, x: 70, y: 265 },
                         { text: $("#StartDate").text(), x: 200, y: 327 },
                         { text: $("#EndDate").text(), x: 200, y: 370 },
                         { text: $("#ContractNo").val(), x: 77, y: 555 }
@@ -4009,7 +4009,7 @@ else
                     // Assuming the StartDate and EndDate elements contain the dates in ISO format (e.g., "2024-02-20")
                     const startDate = new Date($("#StartDate").text());
                     const endDate = new Date($("#EndDate").text());
-                    const options = { day: 'numeric',month: 'long',year: 'numeric'};
+                    const options = { month: 'long', year: 'numeric',day: 'numeric' };
                     // Format the start and end dates in Hijri calendar with Arabic locale
                     const startHijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', options).format(startDate);
                     const endHijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', options).format(endDate);
@@ -4017,7 +4017,7 @@ else
                     console.log("End Hijri Date in Arabic:", endHijriDate);
                     const textContentAr = [
                         { text: RenterInformation.personalArName, x: 1000, y: 215 },
-                        { text: trimmedCarAr, x: 1000, y: 265 },
+                        { text: CarAr, x: 1000, y: 265 },
                         { text: startHijriDate, x: 835, y: 327 },
                         { text: endHijriDate, x: 835, y: 370 },
                         { text: '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArShortName)' + ' - ' + '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArName)', x: 980, y: 425 },
