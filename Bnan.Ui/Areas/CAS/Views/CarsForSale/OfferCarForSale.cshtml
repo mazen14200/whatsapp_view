@@ -108,6 +108,30 @@
                         }
                     </div>
                 </div>
+                @*Status*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Status"]</label>
+                    </div>
+                    <div class="col-md-2 col-8">
+                        @if (Model.CrCasCarInformationStatus == Status.Rented)
+                        {
+                            <input type="text" class="form-control" value="@localizer["Rented"]" readonly>
+                        }
+                        else if (Model.CrCasCarInformationStatus == Status.Active && Model.CrCasCarInformationMaintenanceStatus == true)
+                        {
+                            <input type="text" class="form-control" value="@localizer["Avaliable"]" readonly>
+                        }
+                        else if (Model.CrCasCarInformationStatus == Status.Active && Model.CrCasCarInformationMaintenanceStatus == false)
+                        {
+                            <input type="text" class="form-control" value="@localizer["Repair"]" readonly>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" value="@localizer["Sold"]" readonly>
+                        }
+                    </div>
+                </div>
                 @*Date of Repair*@
                 <div class="row mt-2">
                     <div class="col-md-1 formlabel">
@@ -161,7 +185,7 @@
                     <div class="col-md-1 formlabel">
                         <label class="form-label">@localizer["Car"]</label>
                     </div>
-                    <div class="col-md-3 col-11">
+                    <div class="col-md-4 col-11">
                         @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                         {
                             <input type="text" class="form-control" asp-for="CrCasCarInformationConcatenateArName" readonly>
@@ -169,6 +193,30 @@
                         else
                         {
                             <input type="text" class="form-control" asp-for="CrCasCarInformationConcatenateEnName" readonly>
+                        }
+                    </div>
+                </div>
+                @*Status*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Status"]</label>
+                    </div>
+                    <div class="col-md-2 col-8">
+                        @if (Model.CrCasCarInformationStatus == Status.Rented)
+                        {
+                            <input type="text" class="form-control" value="@localizer["Rented"]" readonly>
+                        }
+                        else if (Model.CrCasCarInformationStatus == Status.Active && Model.CrCasCarInformationMaintenanceStatus == true)
+                        {
+                            <input type="text" class="form-control" value="@localizer["Avaliable"]" readonly>
+                        }
+                        else if (Model.CrCasCarInformationStatus == Status.Active && Model.CrCasCarInformationMaintenanceStatus == false)
+                        {
+                            <input type="text" class="form-control" value="@localizer["Repair"]" readonly>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" value="@localizer["Sold"]" readonly>
                         }
                     </div>
                 </div>
@@ -227,7 +275,7 @@
                     <div class="col-md-1 formlabel">
                         <label class="form-label">@localizer["Car"]</label>
                     </div>
-                    <div class="col-md-3 col-11">
+                    <div class="col-md-4 col-11">
                         @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                         {
                             <input type="text" class="form-control" asp-for="CrCasCarInformationConcatenateArName" readonly>
@@ -235,6 +283,30 @@
                         else
                         {
                             <input type="text" class="form-control" asp-for="CrCasCarInformationConcatenateEnName" readonly>
+                        }
+                    </div>
+                </div>
+                @*Status*@
+                <div class="row mt-2">
+                    <div class="col-md-1 formlabel">
+                        <label class="form-label">@localizer["Status"]</label>
+                    </div>
+                    <div class="col-md-2 col-8">
+                        @if (Model.CrCasCarInformationStatus == Status.Rented)
+                        {
+                            <input type="text" class="form-control" value="@localizer["Rented"]" readonly>
+                        }
+                        else if (Model.CrCasCarInformationStatus == Status.Active && Model.CrCasCarInformationMaintenanceStatus == true)
+                        {
+                            <input type="text" class="form-control" value="@localizer["Avaliable"]" readonly>
+                        }
+                        else if (Model.CrCasCarInformationStatus == Status.Active && Model.CrCasCarInformationMaintenanceStatus == false)
+                        {
+                            <input type="text" class="form-control" value="@localizer["Repair"]" readonly>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" value="@localizer["Sold"]" readonly>
                         }
                     </div>
                 </div>
@@ -299,7 +371,7 @@
             }
             else if (Model.CrCasCarInformationStatus == Status.Sold)
             {
-                
+
             }
             else
             {
@@ -310,7 +382,7 @@
             </a>
         </div>
     </form>
-
+</div>
 
     <!-- Reactive Hold User MOdel-->
     <div class="modal fade" id="centermodalActive" tabindex="-1" role="dialog" aria-hidden="true">

@@ -25,12 +25,30 @@
                         <p>@item.CrCasCarInformationConcatenateEnName</p>
                         <!--For Test-->
                         <p>@item.CrCasCarInformationSerailNo</p>
-                        <p>@item.CrCasCarInformationPriceNo</p>
+                        <p>
+                            @item.CrCasCarInformationPriceNo
+                        </p>
+                        <p>
+                            @if (item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarBasicIsAdditionalDriver == true)
+                            {
+                                <span>AdditionalDriver=Yes</span>
+                            }
+                            else
+                            {
+                                <span>AdditionalDriver=No</span>
+                            }
+                            
+                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdditionals.Count()</span>
+                            
+                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarOptions.Count()</span>
+                            
+                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdvantages.Count()</span>
+                        </p>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
                         <p>
-                            <img src="~/BranchSys/CreateContract/img/Rectangle 93.png">
-                            <img src="~/BranchSys/CreateContract/img/Rectangle 143.png ">
+                            <img src="@Url.Content(item.CrCasCarInformationCvtNavigation?.CrMasSupCarCvtImage?.ToString())" style="width: 25px; height: 20px">
+                            <img src="@Url.Content(item.CrCasCarInformationFuelNavigation?.CrMasSupCarFuelImage?.ToString())" style="width: 40px; height: 20px">
                             <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionSmallBags</span>
                             <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionBagBags</span>
                             <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionPassengers</span>
@@ -55,21 +73,39 @@ else
                 <div class="row"
                      style="flex-direction: row-reverse;">
                     <div class="col-sm-12  col-md-12 col-lg-2 p-1">
-                        <img src="@Url.Content(item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionImage?.ToString())" style="height: 130px;width: 150px;">
+                        <img src="@Url.Content(item.CrCasCarInformationDistributionNavigation?.CrMasSupCarDistributionImage?.ToString())" style="height: 130px;width: 150px;">
                     </div>
                     <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
                         <p>@item.CrCasCarInformationConcatenateArName</p>
                         <p>@item.CrCasCarInformationSerailNo</p>
-                        <p>@item.CrCasCarInformationPriceNo</p>
+                        <p>
+                            @item.CrCasCarInformationPriceNo
+                        </p>
+                        <p>
+                            @if (item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarBasicIsAdditionalDriver == true)
+                            {
+                                <span>Yes</span>
+                            }
+                            else
+                            {
+                                <span>No</span>
+                            }
+                            
+                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdditionals.Count()</span>
+                            
+                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarOptions.Count()</span>
+                            
+                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdvantages.Count()</span>
+                        </p>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-4 pt-3 icon-details-car-fieldset">
                         <p>
-                            <img src="~/BranchSys/CreateContract/img/Rectangle 93.png">
-                            <img src="~/BranchSys/CreateContract/img/Rectangle 143.png ">
-                            <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionSmallBags</span>
-                            <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionBagBags</span>
-                            <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionPassengers</span>
-                            <img src="~/BranchSys/CreateContract/img/Rectangle 98 (1).png"><span>@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionDoor</span>
+                            <img src="@Url.Content(item.CrCasCarInformationCvtNavigation?.CrMasSupCarCvtImage?.ToString())" style="width: 25px; height: 20px">
+                            <img src="@Url.Content(item.CrCasCarInformationFuelNavigation?.CrMasSupCarFuelImage?.ToString())" style="width: 40px; height: 20px">
+                            <img src="~/BranchSys/CreateContract/img/Rectangle 96.png"><span>@item.CrCasCarInformationDistributionNavigation?.CrMasSupCarDistributionSmallBags</span>
+                            <img src="~/BranchSys/CreateContract/img/Rectangle 95.png"><span>@item.CrCasCarInformationDistributionNavigation?.CrMasSupCarDistributionBagBags</span>
+                            <img src="~/BranchSys/CreateContract/img/Rectangle 97.png"><span>@item.CrCasCarInformationDistributionNavigation?.CrMasSupCarDistributionPassengers</span>
+                            <img src="~/BranchSys/CreateContract/img/Rectangle 98 (1).png"><span>@item.CrCasCarInformationDistributionNavigation?.CrMasSupCarDistributionDoor</span>
                         </p>
                         <p>
                             <span>@localizer["CurrentMeter"]:</span>

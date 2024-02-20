@@ -96,7 +96,7 @@
                                                     <p id="money-amount">@localizer["FeedBoxAmount"]</p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>@Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresDebit</p>
+                                                    <p>@Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresDebit?.ToString("N2",CultureInfo.InvariantCulture)</p>
                                                 </div>
 
                                             </div>

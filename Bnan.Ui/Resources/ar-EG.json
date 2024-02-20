@@ -120,6 +120,7 @@
   "All": "الكل",
   "Active": "نشط",
   "Deleted": "محذوف",
+  "Deletedd": "محذوفه",
   "Stoped": "موقوف",
   "Renew": "لم يسجل",
   "AboutToExpire": "على وشك الإنتهاء",
@@ -593,6 +594,8 @@
   "ChangePassword Data": "تغيير كلمة السر",
   "ChangePassword Hint": "تمكنك هذه الصفحة من تغيير كلمة السر الخاصة بك",
   "CurrentPassword": "كلمة السر الحالية",
+  "WrongCurrentPassword": "كلمة السر الحالية غير صحيحة",
+  "WrongConfirmPassword": "كلمة السر وتأكيد كلمة السر غير مطابقان, يرجي اعادة المحاولة",
   "NewPassword": "كلمة السر الجديدة",
   "ConfirmNewPassword": "تأكيد كلمة السر الجديدة",
   "MyAccount Data": "حسابي",
@@ -1105,7 +1108,7 @@
   // Cars 
   "Cars Data": "بيانات السيارات",
   "Car Data": "بيانات السيارة",
-  "Cars Hint": ".تمكنك هذه الصفحة من الاطلاع على بيانات السيارات المعروضة و الغير معروضة للبيع و المباعة",
+  "Cars Hint": "تمكنك هذه الصفحة من البحث وعرض بيانات السيارات",
   "SerialNumber": "الرقم التسلسلي",
   "ContractCount": "الايام",
   "DaysCount": "العقود",
@@ -1161,7 +1164,7 @@
   "MaintainancesType": "أمر االصيانة",
   "notRegisteration": "لم يسجل بعد",
   "CasForRepair Hint": "تمكنك هذه الصفحة من البحث والاطلاع على بيانات السيارات واصلاحها",
-  "CarsForSale Hint": "تمكنك هذه الصفحة من البحث وعرض بيانات السيارات المراد عرضها للبيع",
+  "CarsForSale Hint": "تمكنك هذه الصفحة من البحث وعرض بيانات السيارات المراد عرضها للبيع والمباعة",
   "RepairCar Edit Data": "إصلاح السيارة",
   "RepairCar Edit Hint": "تمكنك هذه الصفحة من تحديث بيانات اصلاح السيارة",
   "CarForSale Edit Data": "تحديث بيانات إجراءات البيع",
@@ -1448,5 +1451,7 @@
   "ExtensionDays": "عدد أيام التمديد",
   "TotalContractDays": "إجمالي أيام العقد",
   "DiscountValue": "قيمة الخصم",
-  "PleaseChooseCar": "من فضلك اختر سيارة"
+  "PleaseChooseCar": "من فضلك اختر سيارة",
+  //
+  "VerificationCode": "رمز التحقق"
 }
