@@ -3941,7 +3941,8 @@ else
     <script>
         // Function to send a static image file to WhatsApp
         const sendStaticImageToWhatsApp = async () => {
-            const imagePath = "/images/Common/CreateContract.jfif"; // Replace with the correct path to your image file
+            const imageLessor = "@user.CrMasUserInformationLessorNavigation.CrMasLessorImage.CrMasLessorImageCreateContractWhatUp";
+            console.log("imageLessor", imageLessor);
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
             const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key
             const mobileNo = '@user.CrMasUserInformationMobileNo'; // Assuming this variable contains the mobile number
@@ -3949,7 +3950,7 @@ else
             const messageText = " "; // Replace with your message
             try {
                 // Read the image file as a Blob
-                const responseImage = await fetch(imagePath);
+                const responseImage = await fetch(imageLessor);
                 const blob = await responseImage.blob();
                 // Prepare form data
                 const formData = new FormData();
@@ -4037,10 +4038,9 @@ else
                         ctx.fillText(text, x, y);
                     });
 
-
                     // Convert the canvas to a blob
                     canvas.toBlob(async function (blob) {
-                        formData.append("file", blob, "CreateContractWithText.jfif"); // Append the modified image blob with a filename
+                        formData.append("file", blob, "CreateContractWhatUp.png"); // Append the modified image blob with a filename
 
                         const requestOptions = {
                             method: 'POST',
@@ -4084,7 +4084,7 @@ else
                     // Submit the form
                     CheckIfCanPayLessThanTotalAmount();
                     if (somethingIsNotOkay) {
-                        form.submit();
+                        // form.submit();
                         sendStaticImageToWhatsApp();
                     }
                     else {

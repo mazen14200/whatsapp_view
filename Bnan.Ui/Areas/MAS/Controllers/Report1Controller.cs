@@ -60,54 +60,21 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             var titles = await setTitle("104", "1104001", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var UserLoginbyDateAll1 = await _unitOfWork.CrMasUserLogins.GetAllAsync();
-            //var contract = contracts.Where(x => x.CrMasUserLoginEntryDate >= "A").ToList();
-            //var CarsInfo_count_all = _userLoginsService.GetAllUserLoginsCount();
-            List<List<string>> LoginInfo_count_all1 = new List<List<string>>() { new List<string>() { "rgf1", "e2" } };
-            ViewBag.EndDate = "11/02/2024";
-            foreach (var item in UserLoginbyDateAll1)
-            {
-                string id = item.CrMasUserLoginNo.ToString();
-                string Concate_Datetime = item.CrMasUserLoginEntryDate?.Date.ToString("dd/MM/yyyy");
-                Concate_Datetime = Concate_Datetime +" - "+ item.CrMasUserLoginEntryTime?.ToString().Substring(0,5);
-                LoginInfo_count_all1.Add(new List<string> { id, Concate_Datetime });
-
-
-            }
-            Tuple<IEnumerable<CrMasUserLogin>, List<List<string>>> tb = new Tuple<IEnumerable<CrMasUserLogin>, List<List<string>>>(UserLoginbyDateAll1, LoginInfo_count_all1);
-            return View(tb);
+            var UserLoginbyDateAll1 =  _unitOfWork.CrMasUserLogins.GetAll(new[] { "CrMasUserLoginUserNavigation" }).ToList();
+            return View(UserLoginbyDateAll1);
         }
 
         [HttpGet]
         public PartialViewResult GetUserLoginByDate(string _max, string _mini)
         {
-            _max = "12-02-2024";
-            _mini = "01-02-2024";
+
             if (!string.IsNullOrEmpty(_max) && !string.IsNullOrEmpty(_mini))
             {
                 
-                //var UserLoginbyStatusAll = _unitOfWork.CrMasUserLogins.GetAll();
-                //return PartialView("_DataTableUserLogin", UserLoginbyStatusAll);
-                var UserLoginAll = _unitOfWork.CrMasUserLogins.GetAll();
-                var UserLoginbyDateAll2 = UserLoginAll.Where(l => l.CrMasUserLoginEntryDate >= DateTime.Parse(_mini).Date).ToList();
-                var UserLoginbyDateAll = UserLoginbyDateAll2.Where(l => l.CrMasUserLoginEntryDate < DateTime.Parse(_max).Date).ToList();
-                //var LoginInfo_count_all1 = _userLoginsService.GetAllUserLoginsCount();
-                //List<List<string>> LoginInfo_count_all1 = new List<List<string>>() { new List<string>() { "rgf1", "e2" }, new List<string>() { "rgf1", "e2" }, };
-                List<List<string>> LoginInfo_count_all = new List<List<string>>() { new List<string>() { "rgf1", "e2" } };
-                //LoginInfo_count_all1.Add(["rgf1", "e2"]);
-                //LoginInfo_count_all1.Add(["3r", "2e"]);
-                foreach (var item in UserLoginbyDateAll)
-                {
-                    string id = item.CrMasUserLoginNo.ToString();
-                    string Concate_Datetime = item.CrMasUserLoginEntryDate?.Date.ToString("dd/MM/yyyy");
-                    Concate_Datetime = Concate_Datetime + " - " + item.CrMasUserLoginEntryTime?.ToString().Substring(0, 5);
-                    LoginInfo_count_all.Add(new List<string> { id, Concate_Datetime });
-
-                        
-                }
-                Tuple<IEnumerable<CrMasUserLogin>, List<List<string>>> tb1 = new Tuple<IEnumerable<CrMasUserLogin>, List<List<string>>>(UserLoginbyDateAll, LoginInfo_count_all);
-
-                return PartialView("_DataTableUserLogin", tb1);
+                
+                var UserLoginAll = _unitOfWork.CrMasUserLogins.FindAll(l => l.CrMasUserLoginEntryDate >= DateTime.Parse(_mini).Date && l.CrMasUserLoginEntryDate < DateTime.Parse(_max).Date,
+                                                                             new[] { "CrMasUserLoginUserNavigation" }).ToList();
+                return PartialView("_DataTableReport1", UserLoginAll);
                 
             }
             return PartialView();

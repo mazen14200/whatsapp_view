@@ -1,7 +1,7 @@
 ﻿
 
 @using Bnan.Core.Extensions
-@model Tuple<IEnumerable<CrMasUserLogin>, List<List<string>>>
+@model List<CrMasUserLogin>
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
@@ -28,15 +28,15 @@
                 @{
                     int no = 1;
                 }
-                @foreach (var item in Model.Item1)
+                @foreach (var item in Model)
                 
                     {
                         @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
                     <tr style="cursor:pointer;color:black">
-                            <td id="_Nc">@item.CrMasUserLoginNo</td>
-                        <td id="_Nc"> @Model.Item2[no][1]</td>
+                        <td id="_Nc">@item.CrMasUserLoginNo</td>
+                        <td id="_Nc">@item.CrMasUserLoginEntryDate?.ToString("yyyy/MM/dd") - @item.CrMasUserLoginEntryTime</td>
                         <td>@item.CrMasUserLoginConcatenateOperationEnDescription</td>
-                        <td>@item.CrMasUserLoginConcatenateOperationEnDescription</td>
+                        <td>@item.CrMasUserLoginUserNavigation.CrMasUserInformationEnName</td>
    
                     </tr>
 
@@ -67,7 +67,7 @@ else
                 @{
                     int no = 1;
                 }
-                @foreach (var item in Model.Item1)
+                @foreach (var item in Model)
 
                 {
                     @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
@@ -75,9 +75,9 @@ else
                         <td id="_Nc">@item.CrMasUserLoginNo</td>
                         @* <td id="_Nc"> @item.CrMasUserLoginEntryDate @item.CrMasUserLoginEntryTime</td> *@
                         @* <td id="_Nc"> @Model.Item2[Model.Item2.IndexOf(Model.Item2.Last())][1]</td> *@
-                        <td id="_Nc"> @Model.Item2[no][1]</td>
+                        <td id="_Nc"> @item.CrMasUserLoginEntryDate?.ToString("yyyy/MM/dd") - @item.CrMasUserLoginEntryTime</td>
                         <td>@item.CrMasUserLoginConcatenateOperationArDescription</td>
-                        <td>@item.CrMasUserLoginConcatenateOperationArDescription</td>
+                        <td>@item.CrMasUserLoginUserNavigation.CrMasUserInformationArName</td>
 
                     </tr>
 
