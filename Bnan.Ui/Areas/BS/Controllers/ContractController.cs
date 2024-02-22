@@ -277,6 +277,22 @@ namespace Bnan.Ui.Areas.BS.Controllers
             {
                 var LessorRenterInfo = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorId == lessorCode);
                 var RenterPost = _unitOfWork.CrMasRenterPost.Find(x => x.CrMasRenterPostCode == RenterId);
+                if (LessorRenterInfo==null)
+                {
+                    var casRenterLessor = await _ContractServices.AddRenterFromElmToCasRenterLessor(lessorCode, BnanRenterInfo, RenterPost);
+                    if (casRenterLessor!=null) 
+                    {
+                        try
+                        {
+                            await _unitOfWork.CompleteAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            return Json(null);
+                            throw;
+                        }
+                    }
+                }
                 //this model for View Only 
                 RenterInformationsVM renterInformationsVM = new RenterInformationsVM
                 {
@@ -320,7 +336,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     var masRenterInformation = await _ContractServices.AddRenterFromElmToMasRenter(RenterId, elmRenterEmployeer, elmRenterInfo, elmRenterLicince);
                     var masRenterPost = await _ContractServices.AddRenterFromElmToMasRenterPost(RenterId, elmRenterPost);
                     var casRenterLessor = await _ContractServices.AddRenterFromElmToCasRenterLessor(lessorCode, masRenterInformation, masRenterPost);
-                    if (masRenterInformation != null && casRenterLessor != null)
+                    if (masRenterInformation != null && casRenterLessor != null&& masRenterPost!=null)
                     {
                         //try for test
                         try

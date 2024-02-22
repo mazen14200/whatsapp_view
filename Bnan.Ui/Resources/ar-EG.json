@@ -620,6 +620,7 @@
   "toastMessageCompanyDocumentLicenceMunicipale": "رخصة البلدية منتهي لا يمكن الاستمرار",
   "toastMessageCompanyDocumentLicenceAddress": "العنوان الوطني منتهي لا يمكن الاستمرار",
   "ExpiryIdDateIsExpired": "تاريخ صلاحية الهوية منتهيه يرجي التجديد",
+  "PleaseEnterMobile": "من فضلك ادخل رقم جوالك اولا",
   "toastMessageUserHold": "عفواً ....... تم تقليص بعض الخدمات لا يمكن انشاء عقد",
   "toastMessageBranchHold": "عفواً ....... الفرع موقوف لا يمكن انشاء عقد",
   "toastRequiredField": "من فضلك تأكد من ملئ جميع الحقول",
@@ -1453,5 +1454,6 @@
   "DiscountValue": "قيمة الخصم",
   "PleaseChooseCar": "من فضلك اختر سيارة",
   //
-  "VerificationCode": "رمز التحقق"
+  "VerificationCode": "رمز التحقق",
+  
 }
