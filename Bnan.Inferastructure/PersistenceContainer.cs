@@ -129,7 +129,7 @@ namespace Bnan.Inferastructure
             builder.Services.AddScoped<IRenterDriver, RenterDriver>();
             builder.Services.AddScoped<IDrivingLicense, DrivingLicense>();
 
-            builder.Services.AddScoped<IRenterIDType, IDType>();
+            builder.Services.AddScoped<IRenterIdType, RenterIdType>();
 
             builder.Services.AddScoped<IRenterGender, RenterGender>();
             builder.Services.AddScoped<IRenterNationality, RenterNationality>();

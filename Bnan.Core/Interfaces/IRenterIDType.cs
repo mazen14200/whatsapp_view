@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace Bnan.Core.Interfaces
 {
-    public interface IRenterIDType
+    public interface IRenterIdType
     {
+        List<List<string>> GetAllRenterIdTypesCount();
+
+        int GetOneRenterIdTypeCount(string id);
 
     }
 }

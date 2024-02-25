@@ -478,7 +478,7 @@
 
 
   //User Login ------
-  "UserLogin Hint": ".تمكنك هذه الصفحة من عرض تقرير عن دخول المستخدم",
+  "UserLogin Hint": ".تمكنك هذه الصفحة من عرض دخول المستخدمين",
   "UserLogin Data": "عرض انواع تقرير عن دخول المستخدم",
   "UserLoginNameEn": "اسم المستخدم بالانجليزي",
   "UserLoginName": "اسم المستخدم",
@@ -490,9 +490,30 @@
   "Edit UserLogin Data": "تعديل دخول المستخدم",
   "Add minDate Data": "اختر اقصى تاريخ",
   "Add MaxDate Data": "اختر اقل تاريخ",
-  "UserLoginConcate": "اسم العملية بالكامل",
-  "UserLoginDateTime": "تاريخ ووقت الدخول",
+  "UserLoginConcate": "العملية",
+  "UserLoginDateTime": "التاريخ والوقت",
 
+  //Car RenterIdTypes------
+  "RenterIdTypes Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل نوع الهوية",
+  "RenterIdTypes Data": "عرض انواع الهوية",
+  "RenterIdTypeNameEn": "نوع الهوية بالانجليزي",
+  "RenterIdTypeName": "نوع الهوية",
+  "RenterIdTypeNameAr": "نوع الهوية بالعربي",
+  "RenterIdTypeCode": "الرمز",
+  "Add RenterIdTypes Hint": ".تمكنك هذه الصفحة من إضافة نوع هوية جديدة",
+  "Add RenterIdTypes Data": "اضافة نوع هوية",
+  "Edit RenterIdTypes Hint": ".تمكنك هذه الصفحة من تعديل نوع هوية ",
+  "Edit RenterIdTypes Data": "تعديل نوع هوية",
+  "RenterIdTypeImg": "صورة نوع الهوية",
+
+  "HintSureToRetriveHRenterIdType": "سيترتب على استرجاع إيقاف بيانات نوع الهوية وجودها على النظام.",
+  "HintSureToRetriveDRenterIdType": "سيترتب على استرجاع حذف بيانات نوع الهوية وجودها على النظام.",
+
+  "HintSureTodeleteRenterIdType": "سيترتب على حذف بيانات نوع الهوية عدم وجودها على النظام",
+  "HintSureToHoldRenterIdType": "سيترتب على إيقاف بيانات نوع الهوية إيقافها على النظام",
+
+  "HintSureTo_Cannot_deleteRenterIdType": "للأسف لا تستطيع حذف نوع الهوية هذه لأنه يوجد منها عدد =",
+  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
   //Renter Nationality------
