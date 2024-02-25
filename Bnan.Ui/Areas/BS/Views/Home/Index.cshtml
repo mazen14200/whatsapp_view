@@ -827,6 +827,7 @@
         document.getElementById("CreateContract").addEventListener('click', function () {
             var createAuth = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityCreate";
             var userStatus = "@userInfo?.CrMasUserInformationStatus";
+            var userMobile = "@userInfo?.CrMasUserInformationMobileNo";
             var lessorStatus = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorInformationStatus";
             var BranchStatus = "@Model?.CrCasBranchInformation?.CrCasBranchInformationStatus";
             var CarsAvaliableNo = "@ViewBag.AvaliableCars";
@@ -902,6 +903,11 @@
                     }
                 });
 
+            }
+            else if (userMobile == null || userMobile == "") {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["PleaseEnterMobile"]');
+                return
             }
             else {
                 window.location.href = "/BS/Contract/CreateContract";

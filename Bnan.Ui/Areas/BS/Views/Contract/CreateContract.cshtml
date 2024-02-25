@@ -53,7 +53,7 @@ else
     </style>
 }
 
-<div class="container-fluid mt-5" id="grad1">
+<div class="container-fluid mt-0" id="grad1">
     <section class="section-mainCard" style="font-weight: 600;">
         <div class="row justify-content-center w-100 h-100">
             <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
@@ -3942,7 +3942,8 @@ else
         // Function to send a static image file to WhatsApp
         const sendStaticImageToWhatsApp = async () => {
             const imageLessor = "@user.CrMasUserInformationLessorNavigation.CrMasLessorImage.CrMasLessorImageCreateContractWhatUp";
-            console.log("imageLessor", imageLessor);
+            const imagePath = imageLessor.replace('~', '');
+            console.log("imagePath", imagePath);
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
             const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key
             const mobileNo = '@user.CrMasUserInformationMobileNo'; // Assuming this variable contains the mobile number
@@ -3950,7 +3951,7 @@ else
             const messageText = " "; // Replace with your message
             try {
                 // Read the image file as a Blob
-                const responseImage = await fetch(imageLessor);
+                const responseImage = await fetch(imagePath);
                 const blob = await responseImage.blob();
                 // Prepare form data
                 const formData = new FormData();
@@ -4059,7 +4060,7 @@ else
                             const errorMessage = await response.text(); // Get the error message as plain text
                             console.log("SendImageError", errorMessage);
                         }
-                    }, 'image/jpeg');
+                    }, 'image/png');
                 };
 
                 // Set the source of the image element
@@ -4084,7 +4085,7 @@ else
                     // Submit the form
                     CheckIfCanPayLessThanTotalAmount();
                     if (somethingIsNotOkay) {
-                        // form.submit();
+                        form.submit();
                         sendStaticImageToWhatsApp();
                     }
                     else {
