@@ -152,6 +152,8 @@ namespace Bnan.Inferastructure
             builder.Services.AddScoped<IMasCarRegistration, MasCarRegistration>();
             builder.Services.AddScoped<ICarBrand, CarBrand>();
 
+            builder.Services.AddScoped<IRenterInformation, RenterInformation>();
+
 
             return builder;
         }

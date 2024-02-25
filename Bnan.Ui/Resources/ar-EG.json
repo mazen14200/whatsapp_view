@@ -493,7 +493,37 @@
   "UserLoginConcate": "العملية",
   "UserLoginDateTime": "التاريخ والوقت",
 
-  //Car RenterIdTypes------
+  //RenterInformations------
+  "RenterInformations Hint": ".تمكنك هذه الصفحة من عرض والبحث عن بيانات المستأجرين والدخول الى البيانات التفصيلية للمستأجر",
+  "RenterInformations Data": "عرض بيانات مستأجر",
+  "RenterInformationNameEn": "اسم المستأجر بالانجليزي",
+  "RenterInformationName": "اسم المستأجر",
+  "RenterInformationNameAr": "اسم المستأجر بالعربي",
+  "RenterInformationCode": "الرمز",
+  "RenterInformationId": "الهوية",
+  "RenterInformationNationality": "الجنسية",
+  "RenterInformationAddress": "العنوان",
+  "RenterInformationProfession": "المؤهل",
+  "RenterInformationSector": "جهة العمل",
+
+  "Add RenterInformations Hint": ".تمكنك هذه الصفحة من إضافة بيانات مستأجر جديدة",
+  "Add RenterInformations Data": "اضافة بيانات مستأجر",
+  "Edit RenterInformations Hint": ".تمكنك هذه الصفحة من تعديل بيانات المستأجرين ",
+  "Edit RenterInformations Data": "تعديل بيانات المستأجرين",
+  "RenterInformationImg": "صورة بيانات المستأجر",
+
+  "HintSureToRetriveHRenterInformation": "سيترتب على استرجاع إيقاف بيانات المستأجر وجودها على النظام.",
+  "HintSureToRetriveDRenterInformation": "سيترتب على استرجاع حذف بيانات المستأجر وجودها على النظام.",
+
+  "HintSureTodeleteRenterInformation": "سيترتب على حذف بيانات المستأجر عدم وجودها على النظام",
+  "HintSureToHoldRenterInformation": "سيترتب على إيقاف بيانات المستأجر إيقافها على النظام",
+
+  "HintSureTo_Cannot_deleteRenterInformation": "للأسف لا تستطيع حذف بيانات المستأجر هذه لأنه يوجد منها عدد =",
+  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
+
+
+
+  //RenterIdTypes------
   "RenterIdTypes Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل نوع الهوية",
   "RenterIdTypes Data": "عرض انواع الهوية",
   "RenterIdTypeNameEn": "نوع الهوية بالانجليزي",
@@ -1475,6 +1505,6 @@
   "DiscountValue": "قيمة الخصم",
   "PleaseChooseCar": "من فضلك اختر سيارة",
   //
-  "VerificationCode": "رمز التحقق",
-  
+  "VerificationCode": "رمز التحقق"
+
 }
