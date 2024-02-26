@@ -53,7 +53,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             var categoryCars = carsAvailable.Select(item => item.CrCasCarInformationCategoryNavigation).Distinct().OrderBy(item => item.CrMasSupCarCategoryCode).ToList();
             var CheckupCars = _unitOfWork.CrMasSupContractCarCheckup.FindAll(x => x.CrMasSupContractCarCheckupStatus == Status.Active).ToList();
-            ViewBag.StartDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm");
+            ViewBag.StartDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture);
 
             //Check Account Bank And Sales Point and payment method
             var AccountBanks = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankLessor == lessorCode && x.CrCasAccountBankStatus == Status.Active, new[] { "CrCasAccountSalesPoints" }).ToList();
@@ -275,7 +275,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             if (BnanRenterInfo != null)
             {
-                var LessorRenterInfo = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorId == lessorCode);
+                var LessorRenterInfo = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == lessorCode);
                 var RenterPost = _unitOfWork.CrMasRenterPost.Find(x => x.CrMasRenterPostCode == RenterId);
                 if (LessorRenterInfo==null)
                 {

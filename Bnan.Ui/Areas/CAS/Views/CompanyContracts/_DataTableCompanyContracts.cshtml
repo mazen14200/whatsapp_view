@@ -38,9 +38,9 @@
                             <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@no</td>
                             <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@item.CrMasContractCompanyNumber</td>
                             <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@item.CrMasContractCompanyProceduresNavigation.CrMasSysProceduresEnName</td>
-                            <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@item.CrMasContractCompanyDate?.ToString("yyyy/MM/dd")</td>
-                            <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@item.CrMasContractCompanyStartDate?.ToString("yyyy/MM/dd")</td>
-                            <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@item.CrMasContractCompanyEndDate?.ToString("yyyy/MM/dd")</td>
+                            <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@item.CrMasContractCompanyDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                            <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@item.CrMasContractCompanyStartDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                            <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">@item.CrMasContractCompanyEndDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
                             <td onclick="location.href='@Url.Action("Edit", "CompanyContracts", new { id = item.CrMasContractCompanyNo })'">
                                 @if (@item.CrMasContractCompanyStatus == @Status.Renewed)
                                 {

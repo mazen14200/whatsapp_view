@@ -200,7 +200,7 @@
                                                     <P>@localizer["StartDateLic"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P>@Model.Renter?.CrCasRenterLessorNavigation.CrMasRenterInformationDrivingLicenseDate?.ToString("yyyy/MM/dd")</P>
+                                                    <P>@Model.Renter?.CrCasRenterLessorNavigation.CrMasRenterInformationDrivingLicenseDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</P>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 d-flex data-col ">
@@ -208,7 +208,7 @@
                                                     <P>@localizer["EndDateLic"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P>@Model.Renter?.CrCasRenterLessorNavigation.CrMasRenterInformationExpiryDrivingLicenseDate?.ToString("yyyy/MM/dd")</P>
+                                                    <P>@Model.Renter?.CrCasRenterLessorNavigation.CrMasRenterInformationExpiryDrivingLicenseDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</P>
                                                 </div>
                                             </div>
                                         </div>
@@ -342,8 +342,8 @@
                                                                         @item.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateEnName
                                                                     </td>
                                                                     }
-                                                                <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
-                                                                <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
+                                                                <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                                                                <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
                                                                 <td>@item.CrCasRenterContractBasicNo</td>
                                                                 <td scope="row">@no</td>
                                                             </tr>

@@ -149,7 +149,7 @@
                                 <td class="text-left">@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceEnName</td>
                             }
                             <td>@item.CrCasAccountReceiptReferenceNo</td>
-                            <td>@item.CrCasAccountReceiptDate?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasAccountReceiptDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
                             <td>
                                 <label class="form-check-label" for="contract-number-@item.CrCasAccountReceiptNo">@item.CrCasAccountReceiptNo</label>
                                 <input class="form-check-input custody-input" type="checkbox" value="@item.CrCasAccountReceiptNo" id="contract-number-@item.CrCasAccountReceiptNo" name="checked-contract" onclick="handleCheckboxChange(this)">

@@ -58,6 +58,10 @@ namespace Bnan.Inferastructure.Repository
             renterContractBasic.CrCasRenterContractBasicAdditionalValue = Contract.CrCasRenterContractBasicAdditionalValue;
             renterContractBasic.CrCasRenterContractPriceReference = Contract.CrCasRenterContractPriceReference;
             renterContractBasic.CrCasRenterContractBasicCarSerailNo = Contract.CrCasRenterContractBasicCarSerailNo;
+            renterContractBasic.CrCasRenterContractBasicUserFreeHours = Contract.CrCasRenterContractBasicUserFreeHours;
+            renterContractBasic.CrCasRenterContractBasicTotalFreeHours = Contract.CrCasRenterContractBasicTotalFreeHours;
+            renterContractBasic.CrCasRenterContractBasicDailyFreeKmUser = Contract.CrCasRenterContractBasicDailyFreeKmUser;
+            renterContractBasic.CrCasRenterContractBasicTotalDailyFreeKm = Contract.CrCasRenterContractBasicTotalDailyFreeKm;
             ////////////////
             ///       
             renterContractBasic.CrCasRenterContractBasicCopy += 1;
