@@ -4037,7 +4037,6 @@ else
                         }
                     }, 'image/png');
                 };
-
                 // Set the source of the image element
                 img.src = URL.createObjectURL(blob);
             } catch (error) {
@@ -4060,7 +4059,7 @@ else
                     // Submit the form
                     CheckIfCanPayLessThanTotalAmount();
                     if (somethingIsNotOkay) {
-                        // form.submit();
+                        form.submit();
                         sendStaticImageToWhatsApp();
                     }
                     else {

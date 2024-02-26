@@ -49,13 +49,12 @@ namespace Bnan.Core.Models
         public DateTime? CrMasUserInformationExitLastDate { get; set; }
         public TimeSpan? CrMasUserInformationExitLastTime { get; set; }
         public int? CrMasUserInformationExitTimer { get; set; }
+        public DateTime? CrMasUserInformationLastActionDate { get; set; }
         public string? CrMasUserInformationPicture { get; set; }
         public string? CrMasUserInformationSignature { get; set; }
         public bool? CrMasUserInformationOperationStatus { get; set; }
         public string? CrMasUserInformationStatus { get; set; }
         public string? CrMasUserInformationReasons { get; set; }
-       
-
         public virtual CrMasLessorInformation? CrMasUserInformationLessorNavigation { get; set; }
         public virtual CrMasUserContractValidity CrMasUserContractValidity { get; set; } = null!;
         public virtual ICollection<CrCasAccountReceipt> CrCasAccountReceipts { get; set; }

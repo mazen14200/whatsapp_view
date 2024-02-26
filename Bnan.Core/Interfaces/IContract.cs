@@ -35,6 +35,7 @@ namespace Bnan.Core.Interfaces
         Task<bool> UpdateBranchValidity(string BranchCode, string LessorCode,string UserId,string PaymentMethod, decimal AmountPaid);
         Task<bool> UpdateUserBalance(string BranchCode, string LessorCode,string UserId,string PaymentMethod, decimal AmountPaid);
         Task<bool> AddRenterAlert(string ContractNo, string LessorCode,string BranchCode, int RentalDays, DateTime ContractEndDate, string SerialNo, string PriceNo);
+        Task<bool> AddRenterStatistics(CrCasRenterContractBasic Contract);
 
 
     }

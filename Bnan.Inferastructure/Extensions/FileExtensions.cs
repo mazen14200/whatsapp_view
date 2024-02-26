@@ -10,33 +10,39 @@ namespace Bnan.Inferastructure.Extensions
 {
     public static class FileExtensions
     {
-        
-        public static async Task<string> SaveImageAsync(this IFormFile file,IWebHostEnvironment webHostEnvironment, string folderName, string fileName,string extension)
-        {
 
+        public static async Task<string> SaveImageAsync(this IFormFile file, IWebHostEnvironment webHostEnvironment, string folderName, string fileName, string extension)
+        {
             string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, folderName);
-            string filePath = Path.Combine(uploadsFolder, fileName+extension);
+            string filePath = Path.Combine(uploadsFolder, fileName + extension);
 
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
             }
 
+            // Check if the file exists and delete it
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(fileStream);
             }
+
             string virtualPath = filePath.Replace(webHostEnvironment.WebRootPath, "~").Replace("\\", "/");
             return virtualPath;
         }
 
-        public static async Task<bool?> RemoveImage(this IWebHostEnvironment webHostEnvironment, string folderName, string fileName,string extension)
+        public static async Task<bool?> RemoveImage(this IWebHostEnvironment webHostEnvironment, string folderName, string fileName, string extension)
         {
-            string imagePath = Path.Combine(webHostEnvironment.WebRootPath, folderName, fileName+extension);
+            string imagePath = Path.Combine(webHostEnvironment.WebRootPath, folderName, fileName + extension);
 
             if (File.Exists(imagePath))
             {
-                File.Delete(imagePath); 
+                File.Delete(imagePath);
                 return true;
             }
             return false;
@@ -68,10 +74,10 @@ namespace Bnan.Inferastructure.Extensions
                     Directory.CreateDirectory(path);
                 }
             }
-            
+
             return true;
         }
-        public static async Task<bool?> CreateFolderBranch(IWebHostEnvironment webHostEnvironment, string lessorCode,string branchCode)
+        public static async Task<bool?> CreateFolderBranch(IWebHostEnvironment webHostEnvironment, string lessorCode, string branchCode)
         {
             var directoryPaths = new List<string>
                     {
