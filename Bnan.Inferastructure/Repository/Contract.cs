@@ -201,6 +201,8 @@ namespace Bnan.Inferastructure.Repository
                 CrCasRenterLessorEvaluationTotal = 0,
                 CrCasRenterLessorEvaluationValue = 0,
                 CrCasRenterLessorBalance = 0,
+                CrCasRenterLessorAvailableBalance = 0,
+                CrCasRenterLessorReservedBalance = 0,
                 CrCasRenterLessorStatisticsNationalities = crMasRenterInformation?.CrMasRenterInformationNationality,
                 CrCasRenterLessorStatisticsGender = crMasRenterInformation?.CrMasRenterInformationGender,
                 CrCasRenterLessorStatisticsJobs = crMasRenterInformation?.CrMasRenterInformationProfession,
@@ -475,7 +477,7 @@ namespace Bnan.Inferastructure.Repository
             return null;
         }
 
-        public async Task<bool> UpdateRenterLessor(string RenterId, string LessorCode, DateTime LastContract, decimal TotalPayed, string RenterReasons)
+        public async Task<bool> UpdateRenterLessor(string RenterId, string LessorCode, DateTime LastContract, decimal TotalPayed, decimal RequiredValue, string RenterReasons)
         {
             var RenterLessor = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == LessorCode);
             if (RenterLessor != null)
@@ -483,7 +485,11 @@ namespace Bnan.Inferastructure.Repository
                 RenterLessor.CrCasRenterLessorDateLastContractual = LastContract;
                 if (RenterLessor.CrCasRenterLessorContractCount != null) RenterLessor.CrCasRenterLessorContractCount += 1;
                 else RenterLessor.CrCasRenterLessorContractCount = 1;
-                RenterLessor.CrCasRenterLessorBalance = -(TotalPayed);
+
+                RenterLessor.CrCasRenterLessorBalance += TotalPayed;
+                RenterLessor.CrCasRenterLessorReservedBalance += RequiredValue;
+                RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance - RenterLessor.CrCasRenterLessorReservedBalance;
+
                 RenterLessor.CrCasRenterLessorStatus = Status.Rented;
                 RenterLessor.CrCasRenterLessorReasons = RenterReasons;
                 RenterLessor.CrCasRenterLessorContractExtension = 0;
@@ -561,7 +567,7 @@ namespace Bnan.Inferastructure.Repository
         {
             CrCasAccountReceipt crCasAccountReceipt = new CrCasAccountReceipt();
             var User = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == UserId && x.CrMasUserInformationLessor == LessorCode);
-            var Renter = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId&&x.CrCasRenterLessorCode == LessorCode);
+            var Renter = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == LessorCode);
             var SalesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x => x.CrCasAccountSalesPointCode == SalesPointNo && x.CrCasAccountSalesPointLessor == LessorCode && x.CrCasAccountSalesPointBrn == BranchCode,
                                                                                 new[] { "CrCasAccountSalesPointBankNavigation", "CrCasAccountSalesPointAccountBankNavigation" });
             var AccountBank = await _unitOfWork.CrCasAccountBank.FindAsync(x => x.CrCasAccountBankCode == Account && x.CrCasAccountBankLessor == LessorCode, new[] { "CrCasAccountBankNoNavigation" });
@@ -1002,7 +1008,7 @@ namespace Bnan.Inferastructure.Repository
         public async Task<bool> AddRenterStatistics(CrCasRenterContractBasic Contract)
         {
             CrCasRenterContractStatistic Statistic = new CrCasRenterContractStatistic();
-            if (Contract!=null)
+            if (Contract != null)
             {
                 Statistic.CrCasRenterContractStatisticsNo = Contract.CrCasRenterContractBasicNo;
                 Statistic.CrCasRenterContractStatisticsLessor = Contract.CrCasRenterContractBasicLessor;
@@ -1014,7 +1020,7 @@ namespace Bnan.Inferastructure.Repository
                 Statistic.CrCasRenterContractStatisticsUserOpen = Contract.CrCasRenterContractBasicUserInsert;
                 // Post Renter And Branch
                 var branch = await _unitOfWork.CrCasBranchPost.FindAsync(x => x.CrCasBranchPostLessor == Contract.CrCasRenterContractBasicLessor && x.CrCasBranchPostBranch == Contract.CrCasRenterContractBasicBranch);
-                if (branch!=null)
+                if (branch != null)
                 {
                     Statistic.CrCasRenterContractStatisticsBranchRegions = branch.CrCasBranchPostRegions;
                     Statistic.CrCasRenterContractStatisticsBranchCity = branch.CrCasBranchPostCity;
@@ -1031,7 +1037,7 @@ namespace Bnan.Inferastructure.Repository
                 }
                 //Car 
                 var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == Contract.CrCasRenterContractBasicCarSerailNo && x.CrCasCarInformationLessor == Contract.CrCasRenterContractBasicLessor);
-                if (car!=null)
+                if (car != null)
                 {
                     Statistic.CrCasRenterContractStatisticsBrand = car.CrCasCarInformationBrand;
                     Statistic.CrCasRenterContractStatisticsModel = car.CrCasCarInformationModel;
@@ -1047,7 +1053,7 @@ namespace Bnan.Inferastructure.Repository
                 Statistic.CrCasRenterContractStatisticsDayCount = GetCountDaysCategory((int)Contract.CrCasRenterContractBasicExpectedRentalDays);
                 // Renter Mas
                 var masRenter = await _unitOfWork.CrMasRenterInformation.FindAsync(x => x.CrMasRenterInformationId == Contract.CrCasRenterContractBasicRenterId);
-                if (masRenter!=null)
+                if (masRenter != null)
                 {
                     Statistic.CrCasRenterContractStatisticsAgeNo = GetAgeCategory((DateTime)masRenter.CrMasRenterInformationBirthDate);
                 }
@@ -1165,7 +1171,7 @@ namespace Bnan.Inferastructure.Repository
             {
                 return "7"; // من 26 إلى 30
             }
-            else if (daysNo>30)
+            else if (daysNo > 30)
             {
                 return "8"; // أكثر من 30
             }
@@ -1223,35 +1229,35 @@ namespace Bnan.Inferastructure.Repository
         {
             if (value < 300)
             {
-                return "1"; 
+                return "1";
             }
             else if (value > 300 && value <= 500)
             {
-                return "2"; 
+                return "2";
             }
             else if (value > 500 && value <= 1000)
             {
-                return "3"; 
+                return "3";
             }
             else if (value > 1000 && value <= 1500)
             {
-                return "4"; 
+                return "4";
             }
             else if (value > 1500 && value <= 2000)
             {
-                return "5"; 
+                return "5";
             }
             else if (value > 2000 && value <= 2500)
             {
-                return "6"; 
+                return "6";
             }
             else if (value > 2500 && value <= 3000)
             {
-                return "7"; 
+                return "7";
             }
             else if (value > 3000 && value <= 3500)
             {
-                return "8"; 
+                return "8";
             }
             else
             {
@@ -1259,6 +1265,6 @@ namespace Bnan.Inferastructure.Repository
             }
         }
 
-        
+
     }
 }

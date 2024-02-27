@@ -1,4 +1,4 @@
-﻿@using Bnan.Core.Extensions;
+﻿    @using Bnan.Core.Extensions;
 @using Bnan.Ui.ViewModels.CAS
 @model Bnan.Ui.ViewModels.CAS.RenterLessorVM
 @inject IViewLocalizer localizer
@@ -196,7 +196,7 @@
 
         <div class="mt-4" id="buttonContainer">
             <button class="btn btn-primary ms-1" type="submit">@localizer["Save"]</button>
-            <a type="button" class="btn btn-danger ms-2" asp-area="CAS" asp-controller="TransferToTenant" asp-action="Index">
+            <a type="button" class="btn btn-danger ms-2" asp-area="CAS" asp-controller="TransferFromTenant" asp-action="Index">
                 @localizer["Back"]
             </a>
         </div>

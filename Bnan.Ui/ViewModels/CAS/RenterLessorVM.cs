@@ -19,6 +19,8 @@ namespace Bnan.Ui.ViewModels.CAS
         public int? CrCasRenterLessorContractKm { get; set; }
         public decimal? CrCasRenterLessorContractTradedAmount { get; set; }
         public decimal? CrCasRenterLessorBalance { get; set; }
+        public decimal? CrCasRenterLessorAvailableBalance { get; set; }
+        public decimal? CrCasRenterLessorReservedBalance { get; set; }
         public int? CrCasRenterLessorEvaluationNumber { get; set; }
         public int? CrCasRenterLessorEvaluationTotal { get; set; }
         public decimal? CrCasRenterLessorEvaluationValue { get; set; }
@@ -40,7 +42,6 @@ namespace Bnan.Ui.ViewModels.CAS
         public string? FromAccountBankSelected { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public string? Amount { get; set; }
-        [Required(ErrorMessage = "requiredFiled")]
         public string? RenterInformationIban { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public string? FromBank { get; set; }

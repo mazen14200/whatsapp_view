@@ -575,7 +575,7 @@
             console.log("RenterBalance", RenterBalance);
             console.log("RenterBalance", parseFloat(RenterBalance));
             document.getElementById('TotalContract').textContent = totalContract.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            TotalAmount = parseFloat(RenterBalance) + parseFloat(totalContract);
+            TotalAmount = parseFloat(totalContract)-parseFloat(RenterBalance);
             document.getElementById("TotalAmount").textContent = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             $("#ExtensionContract_TotalAmount").val(TotalAmount);
             $("#ExtensionContract_TotalContract").val(totalContract);

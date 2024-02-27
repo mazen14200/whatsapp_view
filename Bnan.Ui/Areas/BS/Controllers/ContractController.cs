@@ -186,7 +186,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 //Update RenterLessor Of Car Renter
                 var CheckRenterLessor = true;
                 CheckRenterLessor = await _ContractServices.UpdateRenterLessor(Renter.CrMasRenterInformationId, lessorCode, (DateTime)BasicContract.CrCasRenterContractBasicIssuedDate,
-                                                                              (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance, ContractInfo.RenterReasons);
+                                                                              (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance, (decimal)BasicContract.CrCasRenterContractBasicExpectedTotal, ContractInfo.RenterReasons);
                 
                 //Update Mas Renter Info Of Car Renter
                 var CheckMasRenter = true;
@@ -318,7 +318,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     BirthDate = BnanRenterInfo?.CrMasRenterInformationBirthDate,
                     ExpiryIdDate = BnanRenterInfo?.CrMasRenterInformationExpiryIdDate,
                     KeyCountry = BnanRenterInfo?.CrMasRenterInformationCountreyKey,
-                    Balance = LessorRenterInfo?.CrCasRenterLessorBalance
+                    Balance = LessorRenterInfo?.CrCasRenterLessorAvailableBalance
                 };
                 return Json(renterInformationsVM);
             }

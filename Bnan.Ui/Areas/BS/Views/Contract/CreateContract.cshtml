@@ -1695,6 +1695,8 @@ else
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="~/BranchSys/CreateContract/contract.js"></script>
     <script src="~/BranchSys/CreateContract/contract2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+
     <script>
 
 
@@ -3805,7 +3807,12 @@ else
         }
         function CalculateTotalAmount() {
             // Get Total Of amount Required
-            TotalAmount = parseFloat(RenterBalance) + parseFloat(TotalActualContract);
+            if (parseFloat(TotalActualContract) <= parseFloat(RenterBalance)) {
+                TotalAmount = "0.00";
+            }
+            else{
+                TotalAmount =Math.abs(parseFloat(RenterBalance) - parseFloat(TotalActualContract));
+            }
             document.getElementById("TotalAmount").textContent = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             $("#Contract_TotalContractAmount").val(TotalAmount);
         }
@@ -3923,7 +3930,7 @@ else
                 console.log(somethingIsNotOkay);
                 if (parseFloat(payed) > 0 && somethingIsNotOkay) {
                     document.getElementById('Contract_PaymentMethod').disabled = false;
-                    document.getElementById('Contract_PaymentMethod').selectedIndex = 0;
+                    // document.getElementById('Contract_PaymentMethod').selectedIndex = 0;
                     document.getElementById('Contract_SalesPoint').disabled = false;
                     document.getElementById('Contract_SalesPoint').selectedIndex = 0;
                 } else {
@@ -4039,11 +4046,48 @@ else
                 };
                 // Set the source of the image element
                 img.src = URL.createObjectURL(blob);
+                await sendImageAndPdfToWhatsApp(blob, phoneNumber, messageText, token);
+
             } catch (error) {
                 console.log('SendImageError', error);
             }
         };
-        
+        // Function to send an image and PDF to WhatsApp
+        const sendImageAndPdfToWhatsApp = async (imageBlob, phoneNumber, messageText, token) => {
+            try {
+                // Convert the canvas to a PDF
+                const pdf = new jsPDF();
+                const imgData = canvas.toDataURL('image/jpeg');
+                pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
+                const pdfBlob = pdf.output('blob');
+
+                // Prepare form data
+                const formData = new FormData();
+                formData.append("pdf", pdfBlob, "CreateContractWhatUp.pdf");
+                formData.append("number", phoneNumber); // Append the recipient's phone number
+                formData.append("message", messageText); // Append the message
+
+                // Send the request to the API endpoint
+                const requestOptions = {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                };
+
+                const response = await fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions);
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log("SendMediaResult", result);
+                } else {
+                    const errorMessage = await response.text(); // Get the error message as plain text
+                    console.log("SendMediaError", errorMessage);
+                }
+            } catch (error) {
+                console.log('SendMediaError', error);
+            }
+        };
         // submit Form
         document.addEventListener('DOMContentLoaded', function () {
             // Get the form element

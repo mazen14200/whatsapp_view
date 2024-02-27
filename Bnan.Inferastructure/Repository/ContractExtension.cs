@@ -113,14 +113,16 @@ namespace Bnan.Inferastructure.Repository
             }
             return false;
         }
-        public async Task<bool> UpdateRenterLessor(string RenterId, string LessorCode, decimal TotalPayed)
+        public async Task<bool> UpdateRenterLessor(string RenterId, string LessorCode, decimal TotalPayed, decimal RequiredValue)
         {
             var RenterLessor = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == LessorCode);
             if (RenterLessor != null)
             {
                 if (RenterLessor.CrCasRenterLessorContractCount != null) RenterLessor.CrCasRenterLessorContractCount += 1;
                 else RenterLessor.CrCasRenterLessorContractCount = 1;
-                RenterLessor.CrCasRenterLessorBalance -= (TotalPayed);
+                RenterLessor.CrCasRenterLessorBalance += TotalPayed;
+                RenterLessor.CrCasRenterLessorReservedBalance += RequiredValue;
+                RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance - RenterLessor.CrCasRenterLessorReservedBalance;
                 RenterLessor.CrCasRenterLessorContractExtension += 1;
                 if (_unitOfWork.CrCasRenterLessor.Update(RenterLessor) != null) return true;
             }

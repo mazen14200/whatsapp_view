@@ -52,7 +52,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
             var RenterAvaiable = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == lessorCode &&
-                                                                          x.CrCasRenterLessorBalance < 0 &&
+                                                                          x.CrCasRenterLessorAvailableBalance > 0 &&
                                                                           x.CrCasRenterLessorStatus == Status.Active, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic4s",
                                                                                                                            "CrCasRenterLessorNavigation" }).ToList();
             var RenterAvaiableVM = _mapper.Map<List<RenterLessorVM>>(RenterAvaiable);
@@ -123,7 +123,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
 
             var CheckUpdateRenterLessor = true;
-            CheckUpdateRenterLessor = await _tranferToRenter.UpdateCasRenterLessor(Renter.CrCasRenterLessorId, lessorCode, renterLessorVM.Amount);
+            CheckUpdateRenterLessor = await _tranferToRenter.UpdateCasRenterLessorTransferTo(Renter.CrCasRenterLessorId, lessorCode, renterLessorVM.Amount);
 
 
             if (AddAdminstritive!=null&& CheckAddReceipt&& CheckUpdateMasRenter&& CheckUpdateRenterLessor)

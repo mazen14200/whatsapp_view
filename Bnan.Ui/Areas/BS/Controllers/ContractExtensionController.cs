@@ -108,7 +108,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             contractMap.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
             contractMap.AuthType = authContract.CrCasRenterContractAuthorizationType;
-            contractMap.CasRenterPreviousBalance = contract.CrCasRenterContractBasic4?.CrCasRenterLessorBalance;
+            contractMap.CasRenterPreviousBalance = contract.CrCasRenterContractBasic4?.CrCasRenterLessorAvailableBalance;
             bsLayoutVM.ExtensionContract = contractMap;
             bsLayoutVM.SalesPoint = SalesPoint;
             bsLayoutVM.PaymentMethods = PaymentMethod;
@@ -158,7 +158,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
                 //Update RenterLessor Of Car Renter
                 var CheckRenterLessor = true;
-                CheckRenterLessor = await _contractExtension.UpdateRenterLessor(NewContract.CrCasRenterContractBasicRenterId, lessorCode ,(decimal)NewContract.CrCasRenterContractBasicAmountPaidAdvance);
+                CheckRenterLessor = await _contractExtension.UpdateRenterLessor(NewContract.CrCasRenterContractBasicRenterId, lessorCode ,(decimal)NewContract.CrCasRenterContractBasicAmountPaidAdvance,(decimal)NewContract.CrCasRenterContractBasicAmountRequired);
                 //Update Branch Balance , But first Check if passing equal 4 or not 
                 
                 var CheckBranch = true;

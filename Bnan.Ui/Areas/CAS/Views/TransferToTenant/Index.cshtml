@@ -59,13 +59,12 @@
                             <th aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                             <th aria-label="Position: activate to sort column ascending">@localizer["Id"]</th>
                             <th aria-label="Position: activate to sort column ascending">@localizer["Name"]</th>
-                            <th aria-label="Office: activate to sort column ascending">@localizer["FirstVisit"]</th>
                             <th aria-label="Start date: activate to sort column ascending">@localizer["LastContract"]</th>
                             <th aria-label="Start date: activate to sort column ascending">@localizer["Balance"]</th>
+                            <th aria-label="Start date: activate to sort column ascending">@localizer["AvailableBalance"]</th>
+                            <th aria-label="Start date: activate to sort column ascending">@localizer["ReservedBalance"]</th>
                             <th aria-label="Start date: activate to sort column ascending">@localizer["AmountsTraded"]</th>
-                            <th aria-label="Start date: activate to sort column ascending">@localizer["ContractCountt"]</th>
                             <th aria-label="Start date: activate to sort column ascending">@localizer["DealingMechanism"]</th>
-                            <th aria-label="Start date: activate to sort column ascending">@localizer["Evaluation"]</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,7 +73,8 @@
                         }
                         @foreach (var item in Model)
                         {
-                            <tr onclick="location.href='@Url.Action("TransferTo", "TransferToTenant", new { id = item.CrCasRenterLessorId })'">
+                            <tr onclick="location.href='@Url.Action("TransferFrom", "TransferFromTenant", new { id = item.CrCasRenterLessorId })'">
+
                                 <td>@no</td>
                                 <td>@item.CrCasRenterLessorId</td>
                                 <td>
@@ -87,11 +87,11 @@
                                         @item.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
                                     }
                                 </td>
-                                <td>@item.CrCasRenterLessorDateFirstInteraction?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
                                 <td>@item.CrCasRenterLessorDateLastContractual?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
                                 <td>@item.CrCasRenterLessorBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                                <td>@item.CrCasRenterLessorAvailableBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                                <td>@item.CrCasRenterLessorReservedBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
                                 <td>@item.CrCasRenterLessorContractTradedAmount</td>
-                                <td>@item.CrCasRenterLessorContractCount</td>
                                 <td>
                                     @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                     {
@@ -102,7 +102,6 @@
                                         @item.CrMasSysEvaluation.CrMasSysEvaluationsEnDescription
                                     }
                                 </td>
-                                <td>@item.CrCasRenterLessorEvaluationValue</td>
                             </tr>
                             no++;
                         }
