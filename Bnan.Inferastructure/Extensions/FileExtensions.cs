@@ -35,7 +35,30 @@ namespace Bnan.Inferastructure.Extensions
             string virtualPath = filePath.Replace(webHostEnvironment.WebRootPath, "~").Replace("\\", "/");
             return virtualPath;
         }
+        public static async Task<string> SaveImageAsync(this IFormFile file, IWebHostEnvironment webHostEnvironment, string folderName, string fileName, string extension,string oldPath)
+        {
+            string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, folderName);
+            string filePath = Path.Combine(uploadsFolder, fileName + extension);
+            string oldPathPysical= MapPath(webHostEnvironment, oldPath);
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
 
+            // Check if the file exists and delete it
+            if (File.Exists(oldPathPysical))
+            {
+                File.Delete(oldPathPysical);
+            }
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+
+            string virtualPath = filePath.Replace(webHostEnvironment.WebRootPath, "~").Replace("\\", "/");
+            return virtualPath;
+        }
         public static async Task<bool?> RemoveImage(this IWebHostEnvironment webHostEnvironment, string folderName, string fileName, string extension)
         {
             string imagePath = Path.Combine(webHostEnvironment.WebRootPath, folderName, fileName + extension);
@@ -48,7 +71,16 @@ namespace Bnan.Inferastructure.Extensions
             return false;
         }
 
+        public static string MapPath(this IWebHostEnvironment webHostEnvironment, string virtualPath)
+        {
+            // Remove the leading "~/" if present
+            virtualPath = virtualPath.TrimStart('~', '/');
 
+            // Combine the web root path with the virtual path
+            string fullPath = Path.Combine(webHostEnvironment.WebRootPath, virtualPath.Replace('/', Path.DirectorySeparatorChar));
+
+            return fullPath;
+        }
         public static async Task<bool?> CreateFolderLessor(IWebHostEnvironment webHostEnvironment, string lessorCode)
         {
             var directoryPaths = new List<string>
