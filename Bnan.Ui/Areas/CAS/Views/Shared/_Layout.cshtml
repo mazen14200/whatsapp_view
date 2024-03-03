@@ -906,11 +906,77 @@
     </script>
     @*Expireation pop up modal*@
     <script>
+        // $(document).ready(function () {
+        //     // Set an initial timeout of 60 seconds (in milliseconds)
+        //     var exitUser = "@user.CrMasUserInformationExitTimer";
+        //     let timeout = parseInt(exitUser) * 60 * 1000;
+        //     let timer;
+        //     // Function to start the countdown
+        //     function startCountdown() {
+        //         timer = setInterval(updateCountdown, 1000);
+        //     }
+        //     function clearCountdown() {
+        //         clearInterval(timer);
+        //     }
+        //     // Function to update the countdown display
+        //     function updateCountdown() {
+        //         let countdownElem = $('#countdown');
+        //         let timeLeft = parseInt(countdownElem.text());
+
+        //         if (timeLeft > 1) {
+        //             countdownElem.text(timeLeft - 1);
+        //         } else {
+        //             clearInterval(timer);
+        //             logout();
+        //         }
+        //     }
+        //     // Function to logout the user
+        //     function logout() {
+        //         $.ajax({
+        //             type: "GET",
+        //             url: "@Url.Action("Logout", "Account", new { Area = "Identity" })",
+        //             success: function (response) {
+        //                 window.location.href = "@Url.Action("Index", "Account", new { Area = "Identity" })";
+        //             },
+        //         })
+        //     }
+
+        //     // Add event listener to detect no activity
+        //     let idleTimeout = null;
+
+        //     $(document).on('click keydown mousemove', function () {
+        //         clearTimeout(idleTimeout);
+        //         idleTimeout = setTimeout(function () {
+        //             if ($('#popup').is(':visible')) {
+        //                 return; // Popup already displayed, so ignore this event
+        //             }
+
+        //             $('#popup').modal("show");
+        //             startCountdown();
+        //         }, timeout);
+        //     });
+
+        //     // Add event listener to continue button
+        //     $('#continueBtn').click(function () {
+        //         $('#countdown').text("60");
+        //         clearCountdown();
+        //         clearTimeout(idleTimeout);
+        //         $('#popup').modal("hide");
+        //     });
+
+        //     // Add event listener to logout button
+        //     $('#logoutBtn').click(function () {
+        //         clearTimeout(idleTimeout);
+        //         logout();
+        //     });
+        // });
+
         $(document).ready(function () {
             // Set an initial timeout of 60 seconds (in milliseconds)
             var exitUser = "@user.CrMasUserInformationExitTimer";
             let timeout = parseInt(exitUser) * 60 * 1000;
             let timer;
+
             // Function to start the countdown
             function startCountdown() {
                 timer = setInterval(updateCountdown, 1000);
@@ -918,6 +984,7 @@
             function clearCountdown() {
                 clearInterval(timer);
             }
+
             // Function to update the countdown display
             function updateCountdown() {
                 let countdownElem = $('#countdown');
@@ -930,6 +997,7 @@
                     logout();
                 }
             }
+
             // Function to logout the user
             function logout() {
                 $.ajax({
@@ -944,13 +1012,30 @@
             // Add event listener to detect no activity
             let idleTimeout = null;
 
-            $(document).on('click keydown mousemove', function () {
+            $(document).on('click', function () {
+                $('#countdown').text("60");
+                clearCountdown();
                 clearTimeout(idleTimeout);
+                $('#popup').modal("hide");
+                updateLastAction();
                 idleTimeout = setTimeout(function () {
                     if ($('#popup').is(':visible')) {
                         return; // Popup already displayed, so ignore this event
                     }
 
+                    $('#popup').modal("show");
+                    startCountdown();
+                }, timeout);
+            });
+            $(document).on('mousemove', function () {
+                // $('#countdown').text("60");
+                // clearCountdown();
+                clearTimeout(idleTimeout);
+                // $('#popup').modal("hide");
+                idleTimeout = setTimeout(function () {
+                    if ($('#popup').is(':visible')) {
+                        return; // Popup already displayed, so ignore this event
+                    }
                     $('#popup').modal("show");
                     startCountdown();
                 }, timeout);
@@ -969,6 +1054,21 @@
                 clearTimeout(idleTimeout);
                 logout();
             });
+            // Function to update last action date in the database
+            function updateLastAction() {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("UpdateLastActionDate", "Account", new { Area = "Identity" })",
+                    success: function (response) {
+                        // Handle success
+                        console.log(response)
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error
+                    }
+                });
+            }
+
         });
     </script>
 
