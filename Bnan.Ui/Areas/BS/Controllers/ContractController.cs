@@ -273,7 +273,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             if (BnanRenterInfo != null)
             {
-                var LessorRenterInfo = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == lessorCode);
+                var LessorRenterInfo = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == lessorCode,
+                                                                         new[] { "CrCasRenterContractBasicCrCasRenterContractBasic4s", "CrCasRenterLessorMembershipNavigation" });
+                var dealingMechanizm = _unitOfWork.CrMasSysEvaluation.Find(x => x.CrMasSysEvaluationsCode == LessorRenterInfo.CrCasRenterLessorDealingMechanism);
                 var RenterPost = _unitOfWork.CrMasRenterPost.Find(x => x.CrMasRenterPostCode == RenterId);
                 if (LessorRenterInfo==null)
                 {
@@ -318,7 +320,18 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     BirthDate = BnanRenterInfo?.CrMasRenterInformationBirthDate,
                     ExpiryIdDate = BnanRenterInfo?.CrMasRenterInformationExpiryIdDate,
                     KeyCountry = BnanRenterInfo?.CrMasRenterInformationCountreyKey,
-                    Balance = LessorRenterInfo?.CrCasRenterLessorAvailableBalance
+                    Balance = LessorRenterInfo?.CrCasRenterLessorAvailableBalance,
+                    LastContract=LessorRenterInfo?.CrCasRenterLessorDateLastContractual,
+                    LastVisit= LessorRenterInfo?.CrCasRenterLessorDateLastContractual,
+                    ContractCount = LessorRenterInfo?.CrCasRenterLessorContractCount,
+                    RentalDays = LessorRenterInfo?.CrCasRenterLessorContractDays,
+                    AmountsTraded = LessorRenterInfo?.CrCasRenterLessorContractTradedAmount,
+                    KMCut = LessorRenterInfo?.CrCasRenterLessorContractKm,
+                    ArDealingMechanism = dealingMechanizm?.CrMasSysEvaluationsArDescription,
+                    EnDealingMechanism = dealingMechanizm?.CrMasSysEvaluationsEnDescription,
+                    ArMembership = LessorRenterInfo?.CrCasRenterLessorMembershipNavigation?.CrMasSupRenterMembershipArName,
+                    EnMembership = LessorRenterInfo?.CrCasRenterLessorMembershipNavigation?.CrMasSupRenterMembershipEnName,
+                    CountContracts= LessorRenterInfo?.CrCasRenterContractBasicCrCasRenterContractBasic4s.Count(),
                 };
                 return Json(renterInformationsVM);
             }

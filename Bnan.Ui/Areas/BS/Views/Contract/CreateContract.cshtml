@@ -102,16 +102,16 @@ else
                                                     <span class="requird-field" id="requird-field_RenterID" asp-validation-for="@Model.Contract.RenterId"></span>
                                                 </div>
                                             </div>
-                                            <div class="col-auto seacrh-icon-col">
+                                            <div class="col-auto seacrh_icon_Renter" id="seacrh_icon_Renter">
                                                 <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="seacrh-icon Image"
                                                      id="hover-image">
-                                                <div class="dropdown-content" id="dropdown-content">
+                                                <div class="dropdown-content" id="dropdown_content_Renter">
                                                     <div class="row dropdown-content-row pt-2">
                                                         <div class="col-7 ">
                                                             <p>@localizer["LastVisit"]</p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>3/10/2020</p>
+                                                            <p id="lastVisit"></p>
                                                         </div>
 
                                                     </div>
@@ -120,7 +120,7 @@ else
                                                             <p>@localizer["LastContract"]</p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>30/6/2023</p>
+                                                            <p id="LastContract"></p>
                                                         </div>
 
                                                     </div>
@@ -129,7 +129,7 @@ else
                                                             <p>@localizer["ContractCountt"]</p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>5</p>
+                                                            <p id="ContractCountt">0</p>
                                                         </div>
 
                                                     </div>
@@ -138,7 +138,7 @@ else
                                                             <p> @localizer["RentalDays"] </p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>100</p>
+                                                            <p id="RentalDays">0</p>
                                                         </div>
 
                                                     </div>
@@ -147,7 +147,7 @@ else
                                                             <p> @localizer["KilometersCut"] </p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>7.200</p>
+                                                            <p id="KMCut">0.00</p>
                                                         </div>
 
                                                     </div>
@@ -156,7 +156,7 @@ else
                                                             <p>@localizer["AmountsTraded"]</p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>92.500</p>
+                                                            <p id="AmountsTraded">0.00</p>
                                                         </div>
 
                                                     </div>
@@ -165,7 +165,7 @@ else
                                                             <p> @localizer["Balance"] </p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>-1.250</p>
+                                                            <p id="BalanceRenter">0.00</p>
                                                         </div>
 
                                                     </div>
@@ -174,7 +174,7 @@ else
                                                             <p> @localizer["Evaluation"] </p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>4.12</p>
+                                                            <p id="Evaluation">0.00</p>
                                                         </div>
 
                                                     </div>
@@ -183,16 +183,15 @@ else
                                                             <p> @localizer["DealingMechanism"]</p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>جيد</p>
+                                                            <p id="DealingMechanism"></p>
                                                         </div>
-
                                                     </div>
                                                     <div class="row dropdown-content-row">
                                                         <div class="col-7 ">
                                                             <p>@localizer["Membership"]</p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>ماسية</p>
+                                                            <p id="Membership"></p>
                                                         </div>
 
                                                     </div>
@@ -366,98 +365,98 @@ else
                                                     <span class="requird-field" id="requird_field_DriverID" asp-validation-for="@Model.Contract.DriverId"></span>
                                                 </div>
                                             </div>
-                                            <div class="col-auto seacrh-icon-col">
+                                            <div class="col-auto" id="seacrh_icon_Driver">
                                                 <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="seacrh-icon Image"
                                                      id="hover-image-driver">
                                                 <div class="dropdown-content"
-                                                     id="dropdown-content-driver">
+                                                     id="dropdown_content_Driver">
                                                     <div class="row dropdown-content-row pt-2">
                                                         <div class="col-7 ">
-                                                            <p>اخر زيارة </p>
+                                                            <p>@localizer["LastVisit"]</p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>3/10/2020</p>
+                                                            <p id="LastVisitDriver"></p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
                                                         <div class="col-7 ">
-                                                            <p>اخر عقد </p>
+                                                            <p>@localizer["LastContract"] </p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>30/6/2023</p>
+                                                            <p id="LastContractDriver"></p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
                                                         <div class="col-7 ">
-                                                            <p> عدد العقود </p>
+                                                            <p> @localizer["ContractsCount"] </p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>5</p>
+                                                            <p id="ContractCounttDriver">0</p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
                                                         <div class="col-7 ">
-                                                            <p> عدد ايام التأجير </p>
+                                                            <p>@localizer["RentalDays"] </p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>100</p>
+                                                            <p id="RentalDaysDriver">0</p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
                                                         <div class="col-7 ">
-                                                            <p> الكبلات المقطوعة </p>
+                                                            <p> @localizer["Kilotraveled"] </p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>7.200</p>
+                                                            <p id="KMCutDriver">0.00</p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
                                                         <div class="col-7 ">
-                                                            <p> المبالغ المتداولة</p>
+                                                            <p> @localizer["Amountstraded"]</p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>92.500</p>
+                                                            <p id="AmountsTradedDriver">0.00</p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
                                                         <div class="col-7 ">
-                                                            <p> الرصيد </p>
+                                                            <p> @localizer["Balance"] </p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>-1.250</p>
+                                                            <p id="BalanceDriver">0.00</p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
                                                         <div class="col-7 ">
-                                                            <p> التقييم </p>
+                                                            <p> @localizer["Evaluation"] </p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>4.12</p>
+                                                            <p id="EvaluationDriver">0.00</p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
                                                         <div class="col-7 ">
-                                                            <p> آالية التعامل</p>
+                                                            <p> @localizer["DealingMechanism"]</p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>جيد</p>
+                                                            <p id="DealingMechanismDriver">جيد</p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
                                                         <div class="col-7 ">
-                                                            <p> العوضية</p>
+                                                            <p> @localizer["MemberShip"]</p>
                                                         </div>
                                                         <div class="col personal-data-dropdown">
-                                                            <p>ماسية</p>
+                                                            <p id="MembershipDriver"></p>
                                                         </div>
 
                                                     </div>
@@ -652,98 +651,98 @@ else
                                                     <span class="requird-field" id="requird_field_AdditionalDriverId" asp-validation-for="@Model.Contract.AdditionalDriverId"></span>
                                                 </div>
                                             </div>
-                                            <div class="col-auto seacrh-icon-col">
+                                            <div class="col-auto seacrh-icon-col" id="seacrh_icon_AddDriver">
                                                 <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="seacrh-icon Image"
                                                      id="hover-image-Add-driver">
                                                 <div class="dropdown-content"
-                                                     id="dropdown-content-Add-driver">
+                                                     id="dropdown_content_AddDriver">
                                                     <div class="row dropdown-content-row pt-2">
-                                                        <div class="col-7 pe-4">
-                                                            <p>اخر زيارة </p>
+                                                        <div class="col-7 ">
+                                                            <p>@localizer["LastVisit"]</p>
                                                         </div>
-                                                        <div class="col personal-data">
-                                                            <p>3/10/2020</p>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="row dropdown-content-row">
-                                                        <div class="col-7 pe-4">
-                                                            <p>اخر عقد </p>
-                                                        </div>
-                                                        <div class="col personal-data">
-                                                            <p>30/6/2023</p>
+                                                        <div class="col personal-data-dropdown">
+                                                            <p id="LastVisitAddDriver"></p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
-                                                        <div class="col-7 pe-4">
-                                                            <p> عدد العقود </p>
+                                                        <div class="col-7 ">
+                                                            <p>@localizer["LastContract"] </p>
                                                         </div>
-                                                        <div class="col personal-data">
-                                                            <p>5</p>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="row dropdown-content-row">
-                                                        <div class="col-7 pe-4">
-                                                            <p> عدد ايام التأجير </p>
-                                                        </div>
-                                                        <div class="col personal-data">
-                                                            <p>100</p>
+                                                        <div class="col personal-data-dropdown">
+                                                            <p id="LastContractAddDriver"></p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
-                                                        <div class="col-7 pe-4">
-                                                            <p> الكبلات المقطوعة </p>
+                                                        <div class="col-7 ">
+                                                            <p> @localizer["ContractsCount"] </p>
                                                         </div>
-                                                        <div class="col personal-data">
-                                                            <p>7.200</p>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="row dropdown-content-row">
-                                                        <div class="col-7 pe-4">
-                                                            <p> المبالغ المتداولة</p>
-                                                        </div>
-                                                        <div class="col personal-data">
-                                                            <p>92.500</p>
+                                                        <div class="col personal-data-dropdown">
+                                                            <p id="ContractCounttAddDriver">0</p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
-                                                        <div class="col-7 pe-4">
-                                                            <p> الرصيد </p>
+                                                        <div class="col-7 ">
+                                                            <p>@localizer["RentalDays"] </p>
                                                         </div>
-                                                        <div class="col personal-data">
-                                                            <p>-1.250</p>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="row dropdown-content-row">
-                                                        <div class="col-7 pe-4">
-                                                            <p> التقييم </p>
-                                                        </div>
-                                                        <div class="col personal-data">
-                                                            <p>4.12</p>
+                                                        <div class="col personal-data-dropdown">
+                                                            <p id="RentalDaysDriver">0</p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
-                                                        <div class="col-7 pe-4">
-                                                            <p> آالية التعامل</p>
+                                                        <div class="col-7 ">
+                                                            <p> @localizer["Kilotraveled"] </p>
                                                         </div>
-                                                        <div class="col personal-data">
-                                                            <p>جيد</p>
+                                                        <div class="col personal-data-dropdown">
+                                                            <p id="KMCutAddDriver">0.00</p>
                                                         </div>
 
                                                     </div>
                                                     <div class="row dropdown-content-row">
-                                                        <div class="col-7 pe-4">
-                                                            <p> العوضية</p>
+                                                        <div class="col-7 ">
+                                                            <p> @localizer["Amountstraded"]</p>
                                                         </div>
-                                                        <div class="col personal-data">
-                                                            <p>ماسية</p>
+                                                        <div class="col personal-data-dropdown">
+                                                            <p id="AmountsTradedAddDriver">0.00</p>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row dropdown-content-row">
+                                                        <div class="col-7 ">
+                                                            <p> @localizer["Balance"] </p>
+                                                        </div>
+                                                        <div class="col personal-data-dropdown">
+                                                            <p id="BalanceAddDriver">0.00</p>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row dropdown-content-row">
+                                                        <div class="col-7 ">
+                                                            <p> @localizer["Evaluation"] </p>
+                                                        </div>
+                                                        <div class="col personal-data-dropdown">
+                                                            <p id="EvaluationAddDriver">0.00</p>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row dropdown-content-row">
+                                                        <div class="col-7 ">
+                                                            <p> @localizer["DealingMechanism"]</p>
+                                                        </div>
+                                                        <div class="col personal-data-dropdown">
+                                                            <p id="DealingMechanismAddDriver">جيد</p>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row dropdown-content-row">
+                                                        <div class="col-7 ">
+                                                            <p> @localizer["MemberShip"]</p>
+                                                        </div>
+                                                        <div class="col personal-data-dropdown">
+                                                            <p id="MembershipAddDriver"></p>
                                                         </div>
 
                                                     </div>
@@ -1702,7 +1701,9 @@ else
 
         // //////////////////////choose-adriver-display////////////////
         document.addEventListener("DOMContentLoaded", function () {
-            $(".seacrh-icon-col").hide();
+            $(".seacrh_icon_Renter").hide();
+            $("#seacrh_icon_Driver").hide();
+            $("#seacrh_icon_AddDriver").hide();
             $("#PrivateDriverDiv").hide();
             $("#RenterIsdriverDiv").hide();
             // Check if have driver or not
@@ -1804,7 +1805,7 @@ else
             return randomNumber.toString().padStart(6, '0');
         }
         // Function to send a message to WhatsApp
-        async function sendMessageToWhatsApp(randomNumber,numberPhone) {
+        async function sendMessageToWhatsApp(randomNumber, numberPhone) {
             const toNumber = numberPhone; // The recipient's phone number
             const fromNumber = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
             const messageText = '@localizer["VerificationCode"]' + randomNumber; // The message text with the random code
@@ -1812,12 +1813,12 @@ else
             try {
                 const response = await fetch(url, { method: 'GET' });
                 const result = await response.json();
-                console.log("result Whatsup",result); // Log the result of the API call
+                console.log("result Whatsup", result); // Log the result of the API call
             } catch (error) {
                 console.error('Error sending message:', error);
             }
         }
-        
+
         //For Renter Modal
         document.addEventListener('DOMContentLoaded', function () {
             var RenterCheckBtn = document.getElementById('RenterCheckBtn');
@@ -1847,7 +1848,7 @@ else
                         // Phone number For test
                         randomNumberRenter = generateRandomNumber();
                         console.log("randomNumber", randomNumberRenter);
-                        var phoneNumber = '@user.CrMasUserInformationCallingKey'+'@user.CrMasUserInformationMobileNo';
+                        var phoneNumber = '@user.CrMasUserInformationCallingKey' + '@user.CrMasUserInformationMobileNo';
                         console.log("phoneNumber", phoneNumber);
                         await sendMessageToWhatsApp(randomNumberRenter, phoneNumber);
                     } else {
@@ -1876,6 +1877,15 @@ else
                 var currentDate = new Date();
                 var ExpiryIdDate = new Date(RenterInformation.expiryIdDate);
                 var driverCount = "@Model.Drivers.Count()";
+
+                // Assuming RenterInformation is an object with properties lastVisit and lastContract
+                var lastVisitDate = new Date(RenterInformation.lastVisit);
+                var lastContractDate = new Date(RenterInformation.lastContract);
+
+                // Format the dates as "yyyy/MM/dd"
+                var formattedLastVisit = lastVisitDate.getFullYear() + '/' + (lastVisitDate.getMonth() + 1).toString().padStart(2, '0') + '/' + lastVisitDate.getDate().toString().padStart(2, '0');
+                var formattedLastContract = lastContractDate.getFullYear() + '/' + (lastContractDate.getMonth() + 1).toString().padStart(2, '0') + '/' + lastContractDate.getDate().toString().padStart(2, '0');
+
                 setTimeout(function () {
                     var birthdate = RenterInformation.birthDate.split('T')[0];
                     if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
@@ -1901,7 +1911,26 @@ else
                             $("#PrivateDriverDiv").show();
                         }
                         $("#RenterName").text(RenterInformation.personalEnName);
+
+
+
+                        if (RenterInformation.countContracts > 0) {
+                            $(".seacrh_icon_Renter").show();
+
+                            $("#DealingMechanism").text(RenterInformation.enDealingMechanism);
+                            $("#Membership").text(RenterInformation.enMembership);
+                            $("#lastVisit").text(formattedLastVisit);
+                            $("#LastContract").text(formattedLastContract);
+                            $("#ContractCountt").text(RenterInformation.countContracts);
+                            $("#RentalDays").text(RenterInformation.rentalDays);
+                            $("#KMCut").text(RenterInformation.kMCut);
+                            $("#AmountsTraded").text(RenterInformation.amountsTraded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#BalanceRenter").text(RenterInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#Evaluation").text(RenterInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        }
+
                         $("#birth-date-step1").val(birthdate);
+
                     }
                     else {
 
@@ -1927,6 +1956,22 @@ else
                             $("#PrivateDriverDiv").show();
                         }
                         $("#RenterName").text(RenterInformation.personalArName);
+
+                        if (RenterInformation.countContracts > 0) {
+                            $(".seacrh_icon_Renter").show();
+
+                            $("#DealingMechanism").text(RenterInformation.arDealingMechanism);
+                            $("#Membership").text(RenterInformation.arMembership);
+                            $("#lastVisit").text(formattedLastVisit);
+                            $("#LastContract").text(formattedLastContract);
+                            $("#ContractCountt").text(RenterInformation.countContracts);
+                            $("#RentalDays").text(RenterInformation.rentalDays);
+                            $("#KMCut").text(RenterInformation.kMCut);
+                            $("#AmountsTraded").text(RenterInformation.amountsTraded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#BalanceRenter").text(RenterInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#Evaluation").text(RenterInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        }
+
                         $("#birth-date-step1").val(birthdate);
                     }
                 }, 1000);
@@ -1937,7 +1982,7 @@ else
                 event.preventDefault();
                 var inputFieldValue = document.getElementById('otc1');
                 var numericValue = parseInt(inputFieldValue.value);
-               
+
                 if (isNaN(numericValue)) {
                     // Input value is not a number or is empty
                     console.log('Input value:', numericValue);
@@ -1998,7 +2043,7 @@ else
             }
         }
 
-        
+
 
         // For Driver///////////////////////
         async function GetDriverInformation(DriverId) {
@@ -2103,7 +2148,17 @@ else
             $('#thirdPopupModal').modal('show');
             setTimeout(function () {
                 $('#thirdPopupModal').modal('hide');
+
                 console.log(DriverInformation);
+
+                 // Assuming RenterInformation is an object with properties lastVisit and lastContract
+                var lastVisitDate = new Date(DriverInformation.lastVisit);
+                var lastContractDate = new Date(DriverInformation.lastContract);
+
+                // Format the dates as "yyyy/MM/dd"
+                var formattedLastVisit = lastVisitDate.getFullYear() + '/' + (lastVisitDate.getMonth() + 1).toString().padStart(2, '0') + '/' + lastVisitDate.getDate().toString().padStart(2, '0');
+                var formattedLastContract = lastContractDate.getFullYear() + '/' + (lastContractDate.getMonth() + 1).toString().padStart(2, '0') + '/' + lastContractDate.getDate().toString().padStart(2, '0');
+
                 setTimeout(function () {
                     var birthdate = DriverInformation.birthDate ? DriverInformation.birthDate.split('T')[0] : null;
                     var licenseExpiryDate = DriverInformation.licenseExpiryDate ? DriverInformation.licenseExpiryDate.split('T')[0] : null;
@@ -2142,7 +2197,20 @@ else
                             $("#DriverLicenseExpiration").text('');
 
                         }
-
+                        //SearchIcon Details Driver Info
+                        if (DriverInformation.countContracts > 0) {
+                            $("#seacrh_icon_Driver").show();
+                            $("#DealingMechanismDriver").text(DriverInformation.enDealingMechanism);
+                            $("#MembershipDriver").text(DriverInformation.enMembership);
+                            $("#lastVisitDriver").text(formattedLastVisit);
+                            $("#LastContractDriver").text(formattedLastContract);
+                            $("#ContractCounttDriver").text(DriverInformation.countContracts);
+                            $("#RentalDaysDriver").text(DriverInformation.rentalDays);
+                            $("#KMCutDriver").text(DriverInformation.kMCut);
+                            $("#AmountsTradedDriver").text(DriverInformation.amountsTraded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#BalanceDriver").text(DriverInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#EvaluationDriver").text(DriverInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        }
                         $("#DriverEmployer").text(DriverInformation.employerEnName);
                         $("#birth-date-driver").val(birthdate);
                     }
@@ -2175,6 +2243,21 @@ else
                             $("#DriverLicenseType").text('@localizer["notfound"]').css("color", "red");
                             $("#DriverLicenseIssued").text('');
                             $("#DriverLicenseExpiration").text('');
+                        }
+                        //SearchIcon Details Driver Info
+                        if (DriverInformation.countContracts > 0) {
+                            $("#seacrh_icon_Driver").show();
+
+                            $("#DealingMechanismDriver").text(DriverInformation.arDealingMechanism);
+                            $("#MembershipDriver").text(DriverInformation.arMembership);
+                            $("#lastVisitDriver").text(formattedLastVisit);
+                            $("#LastContractDriver").text(formattedLastContract);
+                            $("#ContractCounttDriver").text(DriverInformation.countContracts);
+                            $("#RentalDaysDriver").text(DriverInformation.rentalDays);
+                            $("#KMCutDriver").text(DriverInformation.kMCut);
+                            $("#AmountsTradedDriver").text(DriverInformation.amountsTraded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#BalanceDriver").text(DriverInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#EvaluationDriver").text(DriverInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                         }
                         $("#DriverEmployer").text(DriverInformation.employerArName);
                         $("#birth-date-driver").val(birthdate);
@@ -2351,6 +2434,16 @@ else
                     var licenseExpiryDate = AddDriverInformation.licenseExpiryDate ? AddDriverInformation.licenseExpiryDate.split('T')[0] : null;
                     var licenseIssuedDate = AddDriverInformation.licenseIssuedDate ? AddDriverInformation.licenseIssuedDate.split('T')[0] : null;
                     console.log(AddDriverInformation.personalArName);
+                    console.log(AddDriverInformation);
+
+                    // Assuming RenterInformation is an object with properties lastVisit and lastContract
+                    var lastVisitDate = new Date(AddDriverInformation.lastVisit);
+                    var lastContractDate = new Date(AddDriverInformation.lastContract);
+
+                    // Format the dates as "yyyy/MM/dd"
+                    var formattedLastVisit = lastVisitDate.getFullYear() + '/' + (lastVisitDate.getMonth() + 1).toString().padStart(2, '0') + '/' + lastVisitDate.getDate().toString().padStart(2, '0');
+                    var formattedLastContract = lastContractDate.getFullYear() + '/' + (lastContractDate.getMonth() + 1).toString().padStart(2, '0') + '/' + lastContractDate.getDate().toString().padStart(2, '0');
+
                     if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
                         if (AddDriverInformation.postEnNameConcenate != "" && AddDriverInformation.postEnNameConcenate != null && AddDriverInformation.postEnNameConcenate != undefined) {
                             $("#AddDriverAddress").text(AddDriverInformation.postEnNameConcenate);
@@ -2384,7 +2477,20 @@ else
                             $("#AddDriverLicenseIssued").text('');
                             $("#AddDriverLicenseExpiration").text('');
                         }
-
+                        //SearchIcon Details Add Driver Info
+                        if (AddDriverInformation.countContracts > 0) {
+                            $("#seacrh_icon_AddDriver").show();
+                            $("#DealingMechanismAddDriver").text(AddDriverInformation.enDealingMechanism);
+                            $("#MembershipAddDriver").text(AddDriverInformation.enMembership);
+                            $("#lastVisitAddDriver").text(formattedLastVisit);
+                            $("#LastContractAddDriver").text(formattedLastContract);
+                            $("#ContractCounttAddDriver").text(AddDriverInformation.countContracts);
+                            $("#RentalDaysAddDriver").text(AddDriverInformation.rentalDays);
+                            $("#KMCutAddDriver").text(AddDriverInformation.kMCut);
+                            $("#AmountsTradedAddDriver").text(AddDriverInformation.amountsTraded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#BalanceAddDriver").text(AddDriverInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#EvaluationAddDriver").text(AddDriverInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        }
                         $("#AddDriverEmployer").text(AddDriverInformation.employerEnName);
                         $("#birth-date-additionalDriver").val(birthdate);
                     }
@@ -2417,6 +2523,19 @@ else
                             $("#AddDriverLicenseType").text('@localizer["notfound"]').css("color", "red");
                             $("#AddDriverLicenseIssued").text('');
                             $("#AddDriverLicenseExpiration").text('');
+                        }
+                         if (AddDriverInformation.countContracts > 0) {
+                            $("#seacrh_icon_AddDriver").show();
+                            $("#DealingMechanismAddDriver").text(AddDriverInformation.arDealingMechanism);
+                            $("#MembershipAddDriver").text(AddDriverInformation.arMembership);
+                            $("#lastVisitAddDriver").text(formattedLastVisit);
+                            $("#LastContractAddDriver").text(formattedLastContract);
+                            $("#ContractCounttAddDriver").text(AddDriverInformation.countContracts);
+                            $("#RentalDaysAddDriver").text(AddDriverInformation.rentalDays);
+                            $("#KMCutAddDriver").text(AddDriverInformation.kMCut);
+                            $("#AmountsTradedAddDriver").text(AddDriverInformation.amountsTraded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#BalanceAddDriver").text(AddDriverInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#EvaluationAddDriver").text(AddDriverInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                         }
                         $("#AddDriverEmployer").text(AddDriverInformation.employerArName);
                         $("#birth-date-additionalDriver").val(birthdate);
@@ -2639,7 +2758,7 @@ else
                                 var birthdate = RenterInformation.birthDate ? RenterInformation.birthDate.split('T')[0] : null;
                                 var licenseExpiryDate = RenterInformation.licenseExpiryDate ? RenterInformation.licenseExpiryDate.split('T')[0] : null;
                                 var licenseIssuedDate = RenterInformation.licenseIssuedDate ? RenterInformation.licenseIssuedDate.split('T')[0] : null;
-                                
+
 
                                 if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
                                     if (DriverInformation.postEnNameConcenate != "" && DriverInformation.postEnNameConcenate != null && DriverInformation.postEnNameConcenate != undefined) {
@@ -2721,7 +2840,7 @@ else
                             }
                             else {
                                 //Clear Data Of Driver And Add Driver To Return Check
-                                
+
                                 IsThereAdditionalDriver();
                                 clearDataDriver();
                                 clearDataAddDriver();
@@ -2746,7 +2865,7 @@ else
                     console.log("Tab Driver", currentField);
                     var driverName = $("#DriverName").text();
                     if (driverName != null && driverName != "") {
-                        
+
                         var currentDate = new Date();
                         var additionalDriver = document.getElementById("addational-driver");
                         var ExpiryIdDateDriver = new Date(DriverInformation.expiryIdDate);
@@ -3275,7 +3394,7 @@ else
 
 
 
-      
+
         function GetCarInfo(serialNumber) {
             return new Promise((resolve, reject) => {
                 $.ajax({
@@ -3298,7 +3417,7 @@ else
             });
         }
 
-       
+
         function GetAdvantages(priceNumber) {
             console.log(priceNumber);
             $.ajax({
@@ -3810,8 +3929,8 @@ else
             if (parseFloat(TotalActualContract) <= parseFloat(RenterBalance)) {
                 TotalAmount = "0.00";
             }
-            else{
-                TotalAmount =Math.abs(parseFloat(RenterBalance) - parseFloat(TotalActualContract));
+            else {
+                TotalAmount = Math.abs(parseFloat(RenterBalance) - parseFloat(TotalActualContract));
             }
             document.getElementById("TotalAmount").textContent = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             $("#Contract_TotalContractAmount").val(TotalAmount);
@@ -4012,7 +4131,7 @@ else
                         { text: CarAr, x: 1000, y: 155 },
                         { text: startHijriDate, x: 835, y: 350 },
                         { text: endHijriDate, x: 835, y: 390 },
-                        { text: '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArShortName)' + ' - ' + '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArName)', x: 980, y: 460 },
+                        { text: '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArShortName)' + ' - ' + '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchPost.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateArName)', x: 980, y: 460 },
                     ];
 
                     // Draw text without background
@@ -4046,7 +4165,7 @@ else
                 };
                 // Set the source of the image element
                 img.src = URL.createObjectURL(blob);
-                await sendImageAndPdfToWhatsApp(blob, phoneNumber, messageText, token);
+                // await sendImageAndPdfToWhatsApp(blob, phoneNumber, messageText, token);
 
             } catch (error) {
                 console.log('SendImageError', error);
@@ -4151,5 +4270,43 @@ else
             })
         });
 
+    </script>
+    <script>
+        $(document).ready(function () {
+            /////////////////////////////////////////////////////////////////////////search-icon-renter///////////////////////////////////////////////////////////////////
+            const imagePayRenter = document.getElementById("seacrh_icon_Renter");
+            const dropdownPayRenter = document.getElementById("dropdown_content_Renter");
+            imagePayRenter.addEventListener('click', function () {
+                console.log(5555555)
+                if (dropdownPayRenter.style.display === 'block') {
+                    dropdownPayRenter.style.display = 'none';
+                } else {
+                    dropdownPayRenter.style.display = 'block';
+                }
+            });
+
+             /////////////////////////////////////////////////////////////////////////search-icon-driver///////////////////////////////////////////////////////////////////
+            const imagePayDriver = document.getElementById("seacrh_icon_Driver");
+            const dropdownPayDriver = document.getElementById("dropdown_content_Driver");
+            imagePayDriver.addEventListener('click', function () {
+                if (dropdownPayDriver.style.display === 'block') {
+                    dropdownPayDriver.style.display = 'none';
+                } else {
+                    dropdownPayDriver.style.display = 'block';
+                }
+            });
+            /////////////////////////////////////////////////////////////////////////search-icon-AddDriver///////////////////////////////////////////////////////////////////
+            const imagePayAddDriver = document.getElementById("seacrh_icon_AddDriver");
+            const dropdownPayAddDriver = document.getElementById("dropdown_content_AddDriver");
+            imagePayAddDriver.addEventListener('click', function () {
+                if (dropdownPayAddDriver.style.display === 'block') {
+                    dropdownPayAddDriver.style.display = 'none';
+                } else {
+                    dropdownPayAddDriver.style.display = 'block';
+                }
+            });
+
+
+        });
     </script>
 }

@@ -646,7 +646,7 @@
             // Add event listener to detect no activity
             let idleTimeout = null;
 
-            $(document).on('click keydown', function () {
+            $(document).on('click', function () {
                 $('#countdown').text("60");
                 clearCountdown();
                 clearTimeout(idleTimeout);
@@ -657,6 +657,19 @@
                         return; // Popup already displayed, so ignore this event
                     }
 
+                    $('#popup').modal("show");
+                    startCountdown();
+                }, timeout);
+            });
+            $(document).on('mousemove', function () {
+                $('#countdown').text("60");
+                clearCountdown();
+                clearTimeout(idleTimeout);
+                $('#popup').modal("hide");
+                idleTimeout = setTimeout(function () {
+                    if ($('#popup').is(':visible')) {
+                        return; // Popup already displayed, so ignore this event
+                    }
                     $('#popup').modal("show");
                     startCountdown();
                 }, timeout);
