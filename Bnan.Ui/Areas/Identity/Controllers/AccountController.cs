@@ -273,7 +273,7 @@ namespace Bnan.Ui.Areas.Identity.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             user.CrMasUserInformationLastActionDate= DateTime.Now;
-            await _userService.SaveChanges(user);
+            await _unitOfWork.CompleteAsync();
             return Json(user.CrMasUserInformationLastActionDate);
         }
 

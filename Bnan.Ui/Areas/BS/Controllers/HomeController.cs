@@ -199,7 +199,6 @@ namespace Bnan.Ui.Areas.BS.Controllers
             bSLayoutVM.PaymentMethodsBranch = paymentMethodBranch.OrderBy(x=>x.Code).ToList();
             bSLayoutVM.PaymentMethodsUser = paymentMethodUser.OrderBy(x=>x.Code).ToList();
 
-
             return View(bSLayoutVM);
         }
         public async Task<IActionResult> ChangeBranch(string selectedBranch)
