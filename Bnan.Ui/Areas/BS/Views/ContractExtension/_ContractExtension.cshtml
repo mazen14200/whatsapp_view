@@ -63,7 +63,13 @@
                 }
                 <td>@DaysNo</td>
                 <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
-                <td>@item.CrCasRenterContractBasicNo <span class="text-danger">(@item.CrCasRenterContractBasicCopy)</span></td>
+                <td>
+                    @item.CrCasRenterContractBasicNo
+                    @if (item.CrCasRenterContractBasicCopy > 0)
+                    {
+                        <span class="text-danger">(@item.CrCasRenterContractBasicCopy)</span>
+                    }
+                </td>
                 <td scope="row">@no</td>
 
             </tr>

@@ -12,10 +12,12 @@
  body{
     direction: rtl;
 }
-
- .pieChart-data,
-  .employee-chart-data,
-  .branch-chart-data{
+.navbar-nav {
+    padding-right: 0;
+}
+.pieChart-data,
+.employee-chart-data,
+.branch-chart-data {
     padding: 0;
 }
   .pieChart-data{

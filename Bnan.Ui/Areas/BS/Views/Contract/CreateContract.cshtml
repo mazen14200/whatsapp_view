@@ -53,8 +53,7 @@ else
     </style>
 }
 
-<div class="container-fluid mt-0" id="grad1">
-    <section class="section-mainCard" style="font-weight: 600;">
+    <section class="section-mainCard">
         <div class="row justify-content-center w-100 h-100">
             <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
                 <div class="card main-card ">
@@ -96,8 +95,8 @@ else
                                                     @localizer["RenterId"]
                                                 </label>
                                             </div>
-                                            <div class="col-sm-3 col-md-3 col-lg-3">
-                                                <input type="text" class="form-control" style="margin-left: -4px;" asp-for="Contract.RenterId" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="10" autofocus>
+                                            <div class="col-sm-3 col-md-3 col-lg-2">
+                                                <input type="text" class="form-control inputs" style="margin-left: -4px;" asp-for="Contract.RenterId" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="10" autofocus>
                                                 <div class="row requird-field-row">
                                                     <span class="requird-field" id="requird-field_RenterID" asp-validation-for="@Model.Contract.RenterId"></span>
                                                 </div>
@@ -200,15 +199,13 @@ else
                                         </div>
                                         <div class="row row-step1 align-items-center">
                                             <div class="col-auto" style="padding-bottom: 30px;">
-                                                <label for="birth-date-step1"
-                                                       class=" col-form-label">
+                                                <label for="birth-date-step1" class=" col-form-label">
                                                     @localizer["Birthdate"]
                                                 </label>
 
                                             </div>
-                                            <div class="col-sm-3 col-md-3 col-lg-3">
-                                                <input type="date" class="form-control"
-                                                       id="birth-date-step1" name="birth-date-step1" readonly>
+                                            <div class="col-sm-3 col-md-3 col-lg-2">
+                                                <input type="date" class="form-control inputs" id="birth-date-step1" name="birth-date-step1" readonly>
                                                 <div class="row requird-field-row">
                                                     <p class="requird-field" id="requird_field_Birthdate"></p>
                                                 </div>
@@ -239,7 +236,7 @@ else
                                                 <div class="offset">
                                                     @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
                                                     {
-                                                        <select class="form-select" id="driver-dropdown" asp-for="Contract.PrivateDriverId">
+                                                        <select class="form-select form-select-driver" id="driver-dropdown" asp-for="Contract.PrivateDriverId">
                                                             <option selected disabled>@localizer["ChooseYourDriver"]</option>
                                                             @foreach (var driver in Model.Drivers)
                                                             {
@@ -249,7 +246,7 @@ else
                                                     }
                                                     else
                                                     {
-                                                        <select class="form-select text-right" id="driver-dropdown" asp-for="Contract.PrivateDriverId">
+                                                        <select class="form-select text-right form-select-driver" id="driver-dropdown" asp-for="Contract.PrivateDriverId">
                                                             <option selected disabled>@localizer["ChooseYourDriver"]</option>
                                                             @foreach (var driver in Model.Drivers)
                                                             {
@@ -296,7 +293,7 @@ else
                                                 <label for="FormControlTextarea1">@localizer["reasons"]</label>
                                             </div>
                                             <div class="col-sm-7 col-md-7 col-lg-7">
-                                                <input class="form-control text-right" asp-for="Contract.RenterReasons" rows="1" maxlength="100" type="text">
+                                                <input class="form-control text-right textarea-inputs" asp-for="Contract.RenterReasons" rows="1" maxlength="100" type="text">
                                             </div>
 
                                         </div>
@@ -359,8 +356,8 @@ else
                                             <div class="col-auto">
                                                 <label for="national-number-driver" class="col-form-label">@localizer["RenterId"]</label>
                                             </div>
-                                            <div class="col-sm-3 col-md-3 col-lg-3">
-                                                <input type="tel" class="form-control" asp-for="Contract.DriverId" style="margin-left: -4px;" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="10" required>
+                                            <div class="col-sm-3 col-md-3 col-lg-2">
+                                                <input type="tel" class="form-control inputs" asp-for="Contract.DriverId" style="margin-left: -4px;" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="10" required>
                                                 <div class="row requird-field-row">
                                                     <span class="requird-field" id="requird_field_DriverID" asp-validation-for="@Model.Contract.DriverId"></span>
                                                 </div>
@@ -467,8 +464,8 @@ else
                                             <div class="col-auto" style="padding-bottom: 30px;">
                                                 <label for="birth-date-driver" class="col-form-label">@localizer["Birthdate"]</label>
                                             </div>
-                                            <div class="col-sm-3 col-md-3 col-lg-3">
-                                                <input type="date" class="form-control" id="birth-date-driver" name="birth-date-driver" readonly>
+                                            <div class="col-sm-3 col-md-3 col-lg-2">
+                                                <input type="date" class="form-control inputs" id="birth-date-driver" name="birth-date-driver" readonly>
                                                 <div class="row requird-field-row">
                                                     <p class="requird-field" id="requird_field_Birthdate_driver"></p>
                                                 </div>
@@ -618,7 +615,7 @@ else
                                                 <label for="FormControlTextarea2">@localizer["reasons"]</label>
                                             </div>
                                             <div class="col-sm-7 col-md-7 col-lg-7">
-                                                <input class="form-control text-right" asp-for="Contract.DriverReasons" maxlength="100">
+                                                <input class="form-control text-right textarea-inputs" asp-for="Contract.DriverReasons" maxlength="100">
                                             </div>
                                         </div>
                                     </div>
@@ -645,8 +642,8 @@ else
                                                     @localizer["RenterId"]
                                                 </label>
                                             </div>
-                                            <div class="col-sm-3 col-md-3 col-lg-3">
-                                                <input type="tel" class="form-control" style="margin-left: -4px;" required asp-for="Contract.AdditionalDriverId" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="10">
+                                            <div class="col-sm-3 col-md-3 col-lg-2">
+                                                <input type="tel" class="form-control inputs" style="margin-left: -4px;" required asp-for="Contract.AdditionalDriverId" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="10">
                                                 <div class="row requird-field-row">
                                                     <span class="requird-field" id="requird_field_AdditionalDriverId" asp-validation-for="@Model.Contract.AdditionalDriverId"></span>
                                                 </div>
@@ -757,10 +754,8 @@ else
                                                 </label>
 
                                             </div>
-                                            <div class="col-sm-3 col-md-3 col-lg-3">
-                                                <input type="date" class="form-control"
-                                                       id="birth-date-additionalDriver"
-                                                       name="birth-date-additionalDriver" readonly>
+                                            <div class="col-sm-3 col-md-3 col-lg-2">
+                                                <input type="date" class="form-control inputs" id="birth-date-additionalDriver" name="birth-date-additionalDriver" readonly>
                                                 <div class="row requird-field-row">
                                                     <p class="requird_field_BirthDate_AddDriver"></p>
                                                 </div>
@@ -892,8 +887,8 @@ else
                                             <div class="col-auto">
                                                 <label for="FormControlTextarea3">@localizer["reasons"]</label>
                                             </div>
-                                            <div class="col-sm-5 col-md-5 col-lg-5">
-                                                <input class="form-control text-right" asp-for="Contract.AddDriverReasons" maxlength="100">
+                                            <div class="col-sm-7 col-md-7 col-lg-7">
+                                                <input class="form-control text-right textarea-inputs" asp-for="Contract.AddDriverReasons" maxlength="100">
                                             </div>
                                         </div>
                                     </div>
@@ -984,7 +979,7 @@ else
                                 <fieldset>
                                     <div class="form-card">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-lg-6">
                                                 <div class="row CurrentReadingg_row"
                                                      style="flex-direction: row-reverse;align-items: baseline;">
                                                     <div class="col-auto">
@@ -1022,7 +1017,7 @@ else
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-lg-6">
                                                 <div class="table-scroll">
                                                     <table class="table table-bordered  table-hover">
                                                         <thead>
@@ -1067,8 +1062,6 @@ else
                                     </div>
 
                                 </fieldset>
-
-
                                 <fieldset>
                                     <div class="form-card form-card7">
                                         <div class="row flex-row-reverse">
@@ -1114,8 +1107,8 @@ else
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row flex-row-reverse align-items-baseline">
-                                            <div class="col-md-6 col-lg-4 d-flex payment-col align-items-baseline">
+                                        <div class="row flex-row-reverse">
+                                            <div class="col-md-6 col-lg-4 d-flex payment-col">
                                                 <div class="col-auto">
                                                     <p id="renting-price"> @localizer["ContractValue"]</p>
                                                     <input hidden asp-for="Contract.ContractValueBeforeDiscount" />
@@ -1371,7 +1364,7 @@ else
                                                 <p id="notes">@localizer["reasons"]</p>
                                             </div>
                                             <div class="col-sm-7 col-md-7 col-lg-7">
-                                                <textarea class="form-control text-right" id="FormControl-last-Textarea" asp-for="Contract.PaymentReasons" rows="1" maxlength="100"></textarea>
+                                                <textarea class="form-control text-right textarea-inputs" id="FormControl-last-Textarea" asp-for="Contract.PaymentReasons" rows="1" maxlength="100"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1417,23 +1410,23 @@ else
                                         @localizer["PleaseShowMobile"]<p id="MobileNumber"></p>
                                     </legend>
                                     <div>
-                                        <input type="number" pattern="[0-9]*" value=""
+                                        <input class="OTP" type="number" pattern="[0-9]*" value=""
                                                inputtype="numeric" autocomplete="one-time-code" id="otc1"
                                                name="otc1" required>
                                         <!-- Autocomplete not to put on other input -->
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP"  type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc2"
                                                name="otc2" required>
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc3"
                                                name="otc3" required>
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc4"
                                                name="otc4" required>
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc5"
                                                name="otc5" required>
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc6"
                                                name="otc6" required>
                                     </div>
@@ -1470,23 +1463,23 @@ else
                                         @localizer["PleaseShowMobile"]<p id="MobileNumberDriver"></p>
                                     </legend>
                                     <div>
-                                        <input type="number" pattern="[0-9]*" value=""
+                                        <input class="OTP" type="number" pattern="[0-9]*" value=""
                                                inputtype="numeric" autocomplete="one-time-code" id="otc11"
                                                name="otc11" required>
                                         <!-- Autocomplete not to put on other input -->
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc22"
                                                name="otc22" required>
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc33"
                                                name="otc33" required>
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc44"
                                                name="otc44" required>
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc55"
                                                name="otc55" required>
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc66"
                                                name="otc66" required>
                                     </div>
@@ -1525,23 +1518,23 @@ else
                                         @localizer["PleaseShowMobile"]<p id="MobileNumberAddDriver"></p>
                                     </legend>
                                     <div>
-                                        <input type="number" pattern="[0-9]*" value=""
+                                        <input class="OTP" type="number" pattern="[0-9]*" value=""
                                                inputtype="numeric" autocomplete="one-time-code" id="otc111"
                                                name="otc111" required>
                                         <!-- Autocomplete not to put on other input -->
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc222"
                                                name="otc222" required>
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc333"
                                                name="otc333" required>
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc444"
                                                name="otc444" required>
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc555"
                                                name="otc555" required>
-                                        <input type="number" pattern="[0-9]*" min="0" max="9"
+                                        <input class="OTP" type="number" pattern="[0-9]*" min="0" max="9"
                                                maxlength="1" value="" inputtype="numeric" id="otc666"
                                                name="otc666" required>
                                     </div>
@@ -1670,7 +1663,6 @@ else
             </div>
         </div>
     </section>
-</div>
 <footer class="fixed-bottom-xl">
     <div class="before-footer-widget">
         <svg width: 100%; height:auto viewbox="0 0 2444 132">

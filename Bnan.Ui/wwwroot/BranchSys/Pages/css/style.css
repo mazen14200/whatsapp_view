@@ -12,12 +12,77 @@ body {
     font-family: cairo;
     font-weight: 400;
     height: 100vh;
-    font-size: 0.8125rem;
+    font-size: .875rem;
     letter-spacing: 0.28px;
 }
 
 nav {
     background-color: rgba(255, 206, 148, 1);
+    padding: .5rem 1rem !important;
+}
+
+.notes_box {
+    direction: rtl;
+}
+
+.inputs, .form-control1, .form-control2, .form-select-last, .form-select-selling, .textarea-inputs {
+    border-radius: 8px;
+    border: 2px solid #faa64d;
+    resize: none;
+    font-size: .875rem;
+}
+
+.textarea-inputs {
+    border-top: none;
+/*    min-height: calc(3em + 0.75rem + calc(var(--bs-border-width)* 2)) !important;
+*/}
+
+.inputs {
+    height: 32px;
+    border-top: none;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+}
+
+.form-control1 {
+    height: 32px;
+    width: 90px;
+    text-align: center;
+}
+
+.form-control2 {
+    text-align: center;
+    height: 32px;
+    width: 92px;
+}
+
+.form-select-last {
+    border-top: none;
+    width: 150px;
+    padding-bottom: 0;
+}
+
+.form-select-selling {
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    color: black;
+    background-color: white;
+    background-image: var(--bs-form-select-bg-img), var(--bs-form-select-bg-icon, none);
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    border-top: 0px;
+    height: 28px;
+}
+
+.form-control:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #ff9626;
+    box-shadow: 0px 9px 20px 0rem #ff962610;
+    border-top: none;
 }
 
 /*======================================================================
@@ -74,7 +139,7 @@ nav {
     color: #39629C;
     width: 100%;
     direction: rtl;
-    height: 30px;
+    height: 32px;
     padding: 0;
     font-size: .75rem;
 }
@@ -302,7 +367,6 @@ nav {
 /*===========================================================================================================================================*/
 
 
-
 /*form styles*/
 #SettlementForm {
     text-align: end;
@@ -420,20 +484,13 @@ textarea {
 }
 
 
-.form-control {
-    border-radius: 8px;
-    border: 1px solid #faa64d;
+
+
+.form-control:focus {
+    border: 1px solid #FF9626;
     border-top: none;
-    height: 29px;
-    resize: none;
+    box-shadow: 3px 5px 5px rgba(255, 150, 38, .2);
 }
-
-
-    .form-control:focus {
-        border: 1px solid #FF9626;
-        border-top: none;
-        box-shadow: 3px 5px 5px rgba(255, 150, 38, .2);
-    }
 
 .form-check-inline {
     display: inline-flex;
@@ -593,7 +650,34 @@ footer {
     width: 100%;
     height: 200px;
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+.alert {
+    color: #fff;
+    background-color: #FF992E;
+    flex-direction: row-reverse;
+    font-size: .7rem;
+    font-weight: 600;
+    margin-bottom: 0;
+    border: 1px solid #4e73df;
+    padding: 0.5rem 0.6rem;
+}
 
+.dropdown-item-custom {
+    display: flex;
+    flex-direction: row-reverse;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e3e6f0;
+    font-size: .7rem;
+    flex-direction: row-reverse;
+}
+
+.ended-Docs-Num {
+    color: red;
+}
+
+.Not-ended-Docs-Num {
+    color: #FF992E;
+}
 /* /////////////////////////////////////////////////tenant-details-css//////////////////////////////////////////////////// */
 .personal-data {
     color: #39629C;
@@ -648,23 +732,7 @@ footer {
 }
 
 /* ////////////////////////////////custody///////////////////////////////////////////////// */
-.form-select {
-    text-align: center;
-    display: block;
-    width: 100%;
-    font-size: .9rem;
-    font-weight: 400;
-    color: black;
-    background-color: white;
-    background-image: var(--bs-form-select-bg-img), var(--bs-form-select-bg-icon, none);
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 16px 12px;
-    border: var(--bs-border-width) solid #FF9800;
-    border-top: 0px;
-    border-radius: 8px;
-    height: 28px;
-}
+
 
 .custody-input {
     --bs-form-check-bg: var(--bs-body-bg);
@@ -722,7 +790,7 @@ footer {
     font-size: 10px;
     color: red;
     width: fit-content;
-    /* display: none; */
+    display: none;
 }
 
 .requird-field-row-last {
@@ -730,31 +798,6 @@ footer {
     height: 20px;
 }
 
-.form-control1 {
-    border-radius: 8px;
-    border: 1px solid #faa64d;
-    height: 32px;
-    width: 90px;
-    resize: none;
-    text-align: center;
-}
-
-.form-control2 {
-    text-align: center;
-    border-radius: 8px;
-    border: 1px solid #faa64d;
-    height: 32px;
-    width: 92px;
-    resize: none;
-}
-
-.form-select-last {
-    border-radius: 8px;
-    border: 1px solid #faa64d;
-    border-top: none;
-    width: 150px;
-    padding-bottom: 0;
-}
 
 .button-row {
     justify-content: space-between;
@@ -793,7 +836,7 @@ footer {
     margin: 0;
 }
 
-.modal-content {
+.report-modal-content {
     border: 3px solid #FF9626
 }
 
@@ -941,6 +984,9 @@ footer {
     }
 
 /* /////////////////////////////////////SettlementCard1//////////////////////////////////// */
+.SettlementCard1 {
+    gap: 10px
+}
 
 .data-row-Settl {
     flex-direction: row-reverse;
@@ -1108,19 +1154,14 @@ flex-direction: row-reverse;
 }
 
 
-.upload-icon {
-    width: 50px;
-    height: 50px;
-    transition: opacity 0.3s ease;
-}
+
 
 .preview-image {
     max-width: 100%;
     max-height: 100%;
 }
 
-.upload-container.previewing .upload-icon,
-.upload-container.previewing p {
+.upload-container.previewing .upload-icon {
     opacity: 1;
 }
 
@@ -1139,9 +1180,7 @@ flex-direction: row-reverse;
 #SettlementTable .form-check-label {
     color: #000;
 }
-.notes_box {
-    direction: rtl;
-}
+
 /***************************************************SettlementCard5**************************************************/
 .payment-input {
     border: 1px solid #faa64d;
@@ -1268,7 +1307,7 @@ flex-direction: row-reverse;
     }
 
     .extension2-card {
-        gap: 30px;
+        gap: 2.6rem;
     }
 }
 
@@ -1454,4 +1493,68 @@ flex-direction: row-reverse;
         padding: 11px;
     }
 }
+
+@media (min-height: 900px) {
+    .account-modal-rows {
+        padding: 16px;
+    }
+}
+
+@media (min-height: 1000px) {
+    .account-modal-rows {
+        padding: 18px;
+    }
+}
 /*===========================================================================================================================================*/
+/*======================================================================
+//           ========================== feed style ==============================================================================================
+//          =====================================================================*/
+
+.data-row {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+}
+/*======================================================================
+//           ========================== feed media ==============================================================================================
+//          =====================================================================*/
+@media (max-height:700px) {
+    .feed-card {
+        gap: 1rem
+    }
+}
+
+@media (min-height:700px) {
+    .feed-card {
+        gap: 1rem
+    }
+}
+
+@media (min-height:750px) {
+    .feed-card {
+        gap: 1.5rem
+    }
+}
+
+@media (min-height:800px) {
+    .feed-card {
+        gap: 1rem
+    }
+}
+
+@media (min-height:850px) {
+    .feed-card {
+        gap: 2.5rem
+    }
+}
+
+@media (min-height:900px) {
+    .feed-card {
+        gap: 3rem
+    }
+}
+
+@media (max-width:1000px) {
+    .feed-card {
+        gap: 3.5em
+    }
+}

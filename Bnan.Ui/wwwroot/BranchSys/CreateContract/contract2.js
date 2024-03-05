@@ -1,50 +1,55 @@
 jQuery(document).ready(function () {
-
     ImgUpload();
-
 });
+
 function HideFirstImg() {
     var firstImg = document.getElementById('upload-img1');
-    firstImg.style.display = "none";
+    firstImg.style.display = 'none';
 }
+
 function ImgUpload() {
-    var imgWrap = "";
+    var imgWrap = '';
     var imgArray = [];
 
     $('.upload__inputfile').each(function () {
         $(this).on('change', function (e) {
             imgWrap = $(this).closest('.upload__box').find('.upload_img-wrap_inner');
-            var maxLength = 12
+            var maxLength = 12;
 
             var files = e.target.files;
             var filesArr = Array.prototype.slice.call(files);
             var uploadBtnBox = document.getElementById('upload__btn-box');
             if (imgArray.length + filesArr.length > maxLength) {
-                uploadBtnBox.style.display = "none";
+                uploadBtnBox.style.display = 'none';
                 return;
             }
 
-            var iterator = 0;
             filesArr.forEach(function (f, index) {
                 if (!f.type.match('image.*')) {
                     return;
                 }
 
-                imgArray.push(f);
-
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    var html = "<div class='upload__img-box'><div style='background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'><img src='/BranchSys/CreateContract/delete.png'></div></div></div>";
+                    var html =
+                        "<div class='upload__img-box'><div style='background-image: url(" +
+                        e.target.result +
+                        ")' data-number='" +
+                        $('.upload__img-close').length +
+                        "' data-file='" +
+                        f.name +
+                        "' class='img-bg'><div class='upload__img-close'><img src='/BranchSys/CreateContract/delete.png'></div></div></div>";
                     imgWrap.append(html);
-                    iterator++;
-                }
+                    imgArray.push(f); // Move the push operation here
+                };
                 reader.readAsDataURL(f);
             });
         });
     });
 
-    $('body').on('click', ".upload__img-close", function (e) {
-        var file = $(this).parent().data("file");
+    $('body').on('click', '.upload__img-close', function (e) {
+        e.stopPropagation(); // Prevent event bubbling to the .img-bg element
+        var file = $(this).parent().data('file');
         for (var i = 0; i < imgArray.length; i++) {
             if (imgArray[i].name === file) {
                 imgArray.splice(i, 1);
@@ -52,6 +57,21 @@ function ImgUpload() {
             }
         }
         $(this).parent().parent().remove();
+    });
+
+    $('body').on('click', '.img-bg', function (e) {
+        var imageUrl = $(this).css('background-image');
+        imageUrl = imageUrl.replace(/^url\(['"](.+)['"]\)/, '$1');
+        var newTab = window.open();
+        newTab.document.body.innerHTML = '<img src="' + imageUrl + '">';
+
+        $(newTab.document.body).css({
+            'background-color': 'black',
+            'display': 'flex',
+            'align-items': 'center',
+            'justify-content': 'center',
+
+        });
     });
 }
 

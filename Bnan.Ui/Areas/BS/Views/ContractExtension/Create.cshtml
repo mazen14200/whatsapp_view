@@ -377,8 +377,8 @@
                                             <div class="col-auto">
                                                 <label id="notes" for="FormControl-last-Textarea">@localizer["reasons"]</label>
                                             </div>
-                                            <div class="col-sm-10 col-md-5 col-lg-5">
-                                                <input class="form-control" maxlength="100" id="reasons" name="reasons">
+                                            <div class="col-sm-10 col-md-7 col-lg-7">
+                                                <input class="form-control textarea-inputs" maxlength="100" id="reasons" name="reasons">
                                             </div>
 
                                         </div>
@@ -530,7 +530,7 @@
             discountValue = 0;
             taxValue = 0;
             TotalAmount = 0;
-            $("#ExtensionContract_AmountPayed").css({ "border": "1px solid #faa64d" }); //This For last Check When i submit Form
+            $("#ExtensionContract_AmountPayed").css({ "border": "2px solid #faa64d" }); //This For last Check When i submit Form
             somethingIsNotOkay = true;
         }
 
@@ -635,7 +635,7 @@
                 somethingIsNotOkay = false;
             }
             else {
-                $("#ExtensionContract_AmountPayed").css({ "border": "1px solid #faa64d" }); //This For last Check When i submit Form
+                $("#ExtensionContract_AmountPayed").css({ "border": "2px solid #faa64d" }); //This For last Check When i submit Form
                 somethingIsNotOkay = true;
             }
         }
