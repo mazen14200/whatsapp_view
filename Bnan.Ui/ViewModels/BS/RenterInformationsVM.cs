@@ -18,6 +18,8 @@
         public DateTime? BirthDate { get; set; }
         public DateTime? ExpiryIdDate { get; set; }
         public decimal? Balance { get; set; }
+        public decimal? AvailableBalance { get; set; }
+        public decimal? ReservedBalance { get; set; }
 
         //Licence
         public string? LicenseCode { get; set; }

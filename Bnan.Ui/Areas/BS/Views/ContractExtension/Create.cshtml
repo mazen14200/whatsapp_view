@@ -70,6 +70,7 @@
                                 <input hidden asp-for="ExtensionContract.DiscountValue" />
                                 <input hidden asp-for="ExtensionContract.RentValue" />
                                 <input hidden asp-for="ExtensionContract.DaysNo" />
+                                <input hidden id="ExtensionValue" name="ExtensionValue" />
 
                                 <fieldset>
                                     <div class="form-card extension2-card">
@@ -114,11 +115,11 @@
                                                                 <p>
                                                                     @if (Model.ExtensionContract.AuthType == true)
                                                                     {
-                                                                        @localizer["InFees"]
+                                                                        @localizer["OutFees"]
                                                                     }
                                                                     else
                                                                     {
-                                                                        @localizer["OutFees"]
+                                                                        @localizer["InFees"]
                                                                     }
                                                                 </p>
                                                             </div>
@@ -569,13 +570,20 @@
         function CalculateTotalAmount() {
             // Get Total Of amount Required
             var RenterBalance = '@Model.ExtensionContract.CasRenterPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)'
+            var PreviousTotalContract = '@Model.ExtensionContract.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)'
             RenterBalance = RenterBalance.replace(/,/g, '');
+            PreviousTotalContract = PreviousTotalContract.replace(/,/g, '');
             totalContract = parseFloat(discountValue) + parseFloat(taxValue) + parseFloat(rentValue);
             console.log("totalContract", totalContract);
             console.log("RenterBalance", RenterBalance);
-            console.log("RenterBalance", parseFloat(RenterBalance));
+            console.log("rentValue", rentValue);
+            console.log("PreviousTotalContract", PreviousTotalContract);
             document.getElementById('TotalContract').textContent = totalContract.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            TotalAmount = parseFloat(totalContract)-parseFloat(RenterBalance);
+            TotalAmount = ( parseFloat(totalContract) - parseFloat(PreviousTotalContract) ) - parseFloat(RenterBalance);
+            $("#ExtensionValue").val(parseFloat(totalContract) - parseFloat(PreviousTotalContract));
+            if (TotalAmount < 0) {
+                TotalAmount = 0;
+            }
             document.getElementById("TotalAmount").textContent = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             $("#ExtensionContract_TotalAmount").val(TotalAmount);
             $("#ExtensionContract_TotalContract").val(totalContract);

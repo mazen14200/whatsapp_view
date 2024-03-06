@@ -10,6 +10,7 @@ function HideFirstImg() {
 function ImgUpload() {
     var imgWrap = '';
     var imgArray = [];
+    var uploadedImages = [];
 
     $('.upload__inputfile').each(function () {
         $(this).on('change', function (e) {
@@ -48,13 +49,13 @@ function ImgUpload() {
     });
 
     $('body').on('click', '.upload__img-close', function (e) {
-        e.stopPropagation(); // Prevent event bubbling to the .img-bg element
+        e.stopPropagation();
         var file = $(this).parent().data('file');
-        for (var i = 0; i < imgArray.length; i++) {
-            if (imgArray[i].name === file) {
-                imgArray.splice(i, 1);
-                break;
-            }
+
+        for (var i = 0; i < uploadedImages.length; i++) {
+            if (uploadedImages[i].name == file)
+                uploadedImages.splice(i, 1);
+            break;
         }
         $(this).parent().parent().remove();
     });
@@ -73,8 +74,24 @@ function ImgUpload() {
 
         });
     });
-}
 
+    $('#msform').on('change', function (e) {
+        e.preventDefault();
+
+        var files = $('#checking-img')[0].files;
+
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                uploadedImages.push(file);
+            };
+            console.log(uploadedImages)
+            reader.readAsDataURL(file);
+        }
+
+    });
+}
 /////////////////////////////////////////////////////////////////////////search-icon-payment///////////////////////////////////////////////////////////////////
 const imagePay = document.getElementById('payment-extra-details');
 const dropdownPay = document.getElementById('dropdown-content-payment');

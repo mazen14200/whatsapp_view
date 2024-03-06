@@ -648,6 +648,12 @@ footer {
 .tabel-data-checkbox-td {
     width: 32%
 }
+.tabel-data-checkbox-td-Add {
+    width: 60%
+}
+.Delivery-to-another-branch {
+    margin-right: 10px
+}
 
 .table-bordered tr {
     border: 1px solid #ff9626a3;

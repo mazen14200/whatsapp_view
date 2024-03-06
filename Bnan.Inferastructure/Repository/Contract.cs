@@ -407,7 +407,7 @@ namespace Bnan.Inferastructure.Repository
             renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount = decimal.Parse(ContractValueAfterDiscount, CultureInfo.InvariantCulture);
             renterContractBasic.CrCasRenterContractBasicExpectedTaxValue = decimal.Parse(TaxValue, CultureInfo.InvariantCulture);
             renterContractBasic.CrCasRenterContractBasicExpectedTotal = decimal.Parse(ContractValueAfterDiscount, CultureInfo.InvariantCulture) + decimal.Parse(TaxValue, CultureInfo.InvariantCulture);
-            renterContractBasic.CrCasRenterContractBasicPreviousBalance = renterlessorInfo.CrCasRenterLessorBalance;
+            renterContractBasic.CrCasRenterContractBasicPreviousBalance = renterlessorInfo.CrCasRenterLessorAvailableBalance;
             renterContractBasic.CrCasRenterContractBasicAmountRequired = renterContractBasic.CrCasRenterContractBasicExpectedTotal + renterlessorInfo.CrCasRenterLessorBalance;
             if (!string.IsNullOrEmpty(AmountPayed)) renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = decimal.Parse(AmountPayed, CultureInfo.InvariantCulture);
             else renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = 0;
