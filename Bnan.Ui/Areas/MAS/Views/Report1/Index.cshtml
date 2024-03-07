@@ -14,7 +14,7 @@
 }
 <style>
     body {
-        overflow: hidden
+        overflow: scroll;
     }
 
     @@media (max-width: 600px) {
@@ -123,27 +123,30 @@
                 </div>
             
             @*DateTime Inputs*@
-                <div class="grid-container">
-                    <div class="grid-child">
-                        <div class="col-md-3">
-                            <label class="form-label">@localizer["StartDate"]</label>
+                <div  class="row" style="display:flex;gap: 90px;">
+                    
+                    <div class="col-md-2 row">
+                        <!-- Autoclose -->
+                        <div class="col-md-2">
+                            <label class="form-label">@localizer["StartDate_from"]</label>
                         </div>
                         <div class="col-md-6 dateRelative">
-                        <input type="date" class="form-control dateInput" max="2024-02-15" id="startDateInput" />
+                            <input type="date" class="form-control dateInput" max="2024-02-15" value="@ViewBag.StartDate" id="startDateInput" />
                         </div>
                     </div>
 
-
-
-                    <div class="grid-child">
+                    <div class="col-md-2 row">
+                        <!-- Autoclose -->
                         <div class="col-md-2">
-                            <label class="form-label">@localizer["EndDate"]</label>
+                            <label class="form-label">@localizer["EndDate_to"]</label>
                         </div>
                         <div class="col-md-6 dateRelative">
-                            <input type="date" class="form-control dateInput" max="2024-02-15" id="endDateInput" style="background-color:white" />
+                            <input type="date" class="form-control dateInput" max="2024-02-15" value="@ViewBag.EndDate" id="endDateInput" style="background-color:white" />
                         </div>
                     </div>
                 </div>
+
+                
 
             </div>
                 
@@ -160,7 +163,7 @@
 
             </div> *@
         </div>
-        <div class="dataTable" id="dataTableR1">
+        <div class="dataTable " id="dataTableR1">
             <partial name="_DataTableReport1" />
         </div>
     </div>

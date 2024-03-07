@@ -478,23 +478,46 @@
   "Edit UserLogin Data": "modify User Login",
   "Add minDate Data": "choose minimum Date",
   "Add MaxDate Data": "choose Maximum Date",
-  "UserLoginConcate": "Complete process Name",
-  "UserLoginDateTime": "User Date&Time Login",
+  "UserLoginConcate": "process Name",
+  "UserLoginDateTime": "Date & Time",
 
 
   //RenterInformation------
-  "RenterInformations Hint": "The page allows you to display, add, and modify  Renter Informations data.",
+  "RenterInformations Hint": "This page allows you to display Renter information  and display more detailed data.",
   "RenterInformations Data": "Renter Informations",
   "RenterInformationNameEn": "Renter Name in English",
   "RenterInformationNameAr": "Renter Name in Arabic",
-  "RenterInformationName": "Renter Name",
+  "RenterInformationName": "Name",
   "RenterInformationCode": "Code",
   "RenterInformationId": "ID",
   "RenterInformationNationality": "Nationality",
   "RenterInformationAddress": "Address",
   "RenterInformationProfession": "Profession",
-  "RenterInformationSector": "Sector",
-
+  "RenterInformationWorkPlace": "Work Place",
+  "RenterLessorMechanism": "Evaluation",
+  "DateLastContract": "Last contractual",
+  "Rented": "Rented",
+  "Edit RenterLessorInformation Data": "Detailed Renter Information",
+  "Edit RenterLessorInformation Hint": "this page allows you to add Deal Mechanism of Renter and Display Details of Renter Information",
+  "Code": "Code",
+  "RenterInformationNameArShort": "Short Name in Arabic",
+  "RenterInformationNameEnShort": "Short Name in English",
+  "BirthDate": "Birth Date",
+  "RenterIDType": "ID Type",
+  "Date_start": "Start Date",
+  "Date_end": "End Date",
+  "Gender": "Gender",
+  "Nationality": "Nationality",
+  "sector": "sector",
+  "Profession": "Profession",
+  "WorkPlace": "Work Place",
+  "Bank_name": "Bank",
+  "Account_bank_numper": "Account Number",
+  "Membership": "Membership",
+  "DrivingType": "Driving License",
+  "Mechanism_Renter": "Evaluation",
+  "Rate": "Rate",
+  "choose_Mechanism_Renter": "choose Dealing Mechanism",
   "Add RenterInformations Hint": "This page allows you to add Renter Information data.",
   "Add RenterInformations Data": "Add  Renter Informations",
   "Edit RenterInformations Hint": "The page allows you to modify  Renter Informations data.",
@@ -511,8 +534,26 @@
   "HintSureTodeleteRenterInformation": "Deleting  Renter Information data will result not being able to accessed in the system.",
   "HintSureToHoldRenterInformation": "Renter Information data will be holded, which results in the system being holded as well.",
 
-
-
+  //Renter Contract
+  "RenterContract Hint": "This page allows you to display Contracts of Renter ",
+  "RenterContract Data": "Renter Contracts",
+  "Edit RenterContract Data": "Details of Renter Contracts",
+  "Edit RenterContract Hint": "this page allows you to Display Details of Renter Contracts",
+  "Add RenterContract Hint": "This page allows you to add Renter Contract data.",
+  "Add RenterContract Data": "Add  Renter Contract",
+  "DateLast_Contract": "Last contractual",
+  "DateFrist_Contract": "First contractual",
+  "Contract_Count": "Contracts_Count",
+  "Days_Count": "Days_Count",
+  "KM_Count": "KiloMeters_Count",
+  "RenterContractId": "Contract Number",
+  "Start_Contract": "Start",
+  "End_Contract": "End",
+  "Car_Name": "Car Name",
+  "Contract_Value": "Contract Value",
+  "Contract": "The Contract",
+  "Extension": "Extension",
+  "Standing": "Standing",
   //RenterIdType------
   "RenterIdTypes Hint": "The page allows you to display, add, and modify  Id Types data.",
   "RenterIdTypes Data": "Id Types",
@@ -555,6 +596,10 @@
   "HintSureToHoldRenterNationality": "Renter Nationality data will be holded, which results in the system being holded as well.",
 
 
+  "StartDate_from": "From",
+  "EndDate_to": "To",
+  "From": "From",
+  "To": "To",
 
   // buttons
   "Hold": "Hold",
@@ -751,7 +796,12 @@
   "ServiceValue": "Value",
   "ServiceRate": "Rate",
 
-
+  "insert": "insert",
+  "update": "update",
+  "hold": "hold",
+  "unhold": "unhold",
+  "delete": "delete",
+  "undelete": "undelete",
 
   //Banks Services
   "Banks Data": "Banks Data",

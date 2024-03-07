@@ -50,6 +50,14 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
+            //save Tracing
+            var (mainTask, subTask, system, currentUser) = await SetTrace("109", "1109003", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
             var titles = await setTitle("109", "1109003", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
@@ -166,8 +174,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     _unitOfWork.Complete();
 
                     var (mainTask, subTask, system, currentUser) = await SetTrace("109", "1109003", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "اضافة مرجع", "Add Reference", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = AccountRefrenceVMT.CrMasSupAccountReceiptReferenceArName;
+                    var RecordEn = AccountRefrenceVMT.CrMasSupAccountReceiptReferenceEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "اضافة", "Add", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -216,8 +225,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("109", "1109003", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل بيانات", "Edit information", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = refrence.CrMasSupAccountReceiptReferenceArName;
+                    var RecordEn = refrence.CrMasSupAccountReceiptReferenceEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode,RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -243,28 +253,29 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 {
                     if (status == Status.Hold)
                     {
-                        sAr = "ايقاف مرجع";
-                        sEn = "Hold Reference";
+                        sAr = "ايقاف";
+                        sEn = "Hold";
                         refrence.CrMasSupAccountPaymentMethodStatus = Status.Hold;
                     }
                     else if (status == Status.Deleted)
                     {
-                        sAr = "حذف مرجع";
-                        sEn = "Remove Reference";
+                        sAr = "حذف";
+                        sEn = "Remove";
                         refrence.CrMasSupAccountPaymentMethodStatus = Status.Deleted;
                     }
                     else if (status == "Reactivate")
                     {
-                        sAr = "استرجاع مرجع";
-                        sEn = "Retrive Reference";
+                        sAr = "استرجاع";
+                        sEn = "Retrive";
                         refrence.CrMasSupAccountPaymentMethodStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("109", "1109003", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, sAr, sEn, mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = refrence.CrMasSupAccountReceiptReferenceArName;
+                    var RecordEn = refrence.CrMasSupAccountReceiptReferenceEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, sAr, sEn, mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 

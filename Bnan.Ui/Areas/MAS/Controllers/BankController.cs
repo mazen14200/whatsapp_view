@@ -48,6 +48,14 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            //save Tracing
+            var (mainTask, subTask, system, currentUser) = await SetTrace("109", "1109001", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
             var titles = await setTitle("109", "1109001", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
@@ -168,8 +176,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     _unitOfWork.Complete();
 
                     var (mainTask, subTask, system, currentUser) = await SetTrace("109", "1109001", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "اضافة بنك", "Add Bank", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = BankVMTBank.CrMasSupAccountBankArName;
+                    var RecordEn = BankVMTBank.CrMasSupAccountBankEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "اضافة بنك", "Add Bank", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -225,8 +234,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("109", "1109001", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل بيانات", "Edit information", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = model.CrMasSupAccountBankArName;
+                    var RecordEn = model.CrMasSupAccountBankEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                     _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
@@ -252,26 +262,28 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     if (status == Status.Hold)
                     {
                         sAr = "ايقاف";
-                        sEn = "Bank";
+                        sEn = "Hold";
                         bank.CrMasSupAccountBankStatus = Status.Hold;
                     }
                     else if (status == Status.Deleted)
                     {
                         sAr = "حذف";
-                        sEn = "Bank";
+                        sEn = "Remove";
                         bank.CrMasSupAccountBankStatus = Status.Deleted;
                     }
                     else if (status == "Reactivate")
                     {
                         sAr = "استرجاع";
-                        sEn = "Bank";
+                        sEn = "Retrive";
                         bank.CrMasSupAccountBankStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("109", "1109001", "1");
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, sAr, sEn, mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = bank.CrMasSupAccountBankArName;
+                    var RecordEn = bank.CrMasSupAccountBankEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, sAr, sEn, mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 return RedirectToAction("Index", "Bank");

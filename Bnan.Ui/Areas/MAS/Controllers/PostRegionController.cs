@@ -49,6 +49,12 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var (mainTask, subTask, system, currentUser) = await SetTrace("108", "1108001", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
             var titles = await setTitle("108", "1108001", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
@@ -164,8 +170,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     _unitOfWork.Complete();
 
                     var (mainTask, subTask, system, currentUser) = await SetTrace("108", "1108001", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "اضافة منطقة", "Add Region", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = PostRegionVMTPostRegion.CrMasSupPostRegionsArName;
+                    var RecordEn = PostRegionVMTPostRegion.CrMasSupPostRegionsEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "اضافة", "Add", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                     _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
@@ -220,9 +227,10 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     _unitOfWork.Complete();
 
                     // SaveTracing
-                    var (mainTask, subTask, system, currentUser) = await SetTrace("108", "1108001", "1");   
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل بيانات", "Edit information", mainTask.CrMasSysMainTasksCode,
+                    var (mainTask, subTask, system, currentUser) = await SetTrace("108", "1108001", "1");
+                    var RecordAr = PostRegion.CrMasSupPostRegionsArName;
+                    var RecordEn = PostRegion.CrMasSupPostRegionsEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -249,26 +257,28 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     if (status == Status.Hold)
                     {
                         sAr = "ايقاف";
-                        sEn = "PostRegion";
+                        sEn = "Hold";
                         PostRegion.CrMasSupPostRegionsStatus = Status.Hold;
                     }
                     else if (status == Status.Deleted)
                     {
                         sAr = "حذف";
-                        sEn = "PostRegion";
+                        sEn = "Remove";
                         PostRegion.CrMasSupPostRegionsStatus = Status.Deleted;
                     }
                     else if (status == "Reactivate")
                     {
                         sAr = "استرجاع";
-                        sEn = "PostRegion";
+                        sEn = "Retrive";
                         PostRegion.CrMasSupPostRegionsStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("108", "1108001", "1");
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, sAr, sEn, mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = PostRegion.CrMasSupPostRegionsArName;
+                    var RecordEn = PostRegion.CrMasSupPostRegionsEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, sAr, sEn, mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 return RedirectToAction("Index", "PostRegion");

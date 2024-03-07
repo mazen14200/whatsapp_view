@@ -479,7 +479,7 @@
 
   //User Login ------
   "UserLogin Hint": ".تمكنك هذه الصفحة من عرض دخول المستخدمين",
-  "UserLogin Data": "عرض انواع تقرير عن دخول المستخدم",
+  "UserLogin Data": "دخول المستخدمين",
   "UserLoginNameEn": "اسم المستخدم بالانجليزي",
   "UserLoginName": "اسم المستخدم",
   "UserLoginNameAr": "اسم المستخدم بالعربي",
@@ -494,23 +494,47 @@
   "UserLoginDateTime": "التاريخ والوقت",
 
   //RenterInformations------
-  "RenterInformations Hint": ".تمكنك هذه الصفحة من عرض والبحث عن بيانات المستأجرين والدخول الى البيانات التفصيلية للمستأجر",
-  "RenterInformations Data": "عرض بيانات مستأجر",
+  "RenterInformations Hint": "تمكنك هذه الصفحة من عرض والبحث عن بيانات المستأجرين والدخول الى البيانات التفصيلية للمستأجر",
+  "RenterInformations Data": "بيانات المستأجرين",
   "RenterInformationNameEn": "اسم المستأجر بالانجليزي",
-  "RenterInformationName": "اسم المستأجر",
+  "RenterInformationName": "الأســم",
   "RenterInformationNameAr": "اسم المستأجر بالعربي",
   "RenterInformationCode": "الرمز",
-  "RenterInformationId": "الهوية",
+  "RenterInformationId": "الهـويـة",
   "RenterInformationNationality": "الجنسية",
   "RenterInformationAddress": "العنوان",
   "RenterInformationProfession": "المؤهل",
-  "RenterInformationSector": "جهة العمل",
-
+  "RenterInformationWorkPlace": "جهة العمل",
+  "RenterLessorMechanism": "آلية التعامل",
+  "DateLastContract": "أخر عقد",
+  "Rented": "مستأجر",
+  "Rate": "التقييم",
+  "Edit RenterLessorInformation Data": "بيانات المستأجر التفصيلية",
+  "Edit RenterLessorInformation Hint": "تمكنك هذه الصفحة من عرض البيانات التفصيلية للمستأجر وتحديثها",
+  "Code": "الرمز",
+  "RenterInformationNameArShort": "الاسم المختصر بالعربي",
+  "RenterInformationNameEnShort": "الاسم المختصر بالانجليزي",
+  "BirthDate": "تاريخ الميلاد",
+  "RenterIDType": "نوع الهـويـة",
+  "Date_start": "تاريـخــها",
+  "Date_end": "نهايـتــها",
+  "Gender": "الجنــس",
+  "Nationality": "الجنسية",
+  "sector": "القطــاع",
+  "Profession": "المهنة",
+  "WorkPlace": "جهة العمل",
+  "Bank_name": "البنـــك",
+  "Account_bank_numper": "رقم الحساب",
+  "Membership": "العضوية",
+  "DrivingType": "رخصة القيادة",
+  "Mechanism_Renter": "آلية التعامل",
+  "choose_Mechanism_Renter": "أختر آلية التعامل",
   "Add RenterInformations Hint": ".تمكنك هذه الصفحة من إضافة بيانات مستأجر جديدة",
   "Add RenterInformations Data": "اضافة بيانات مستأجر",
   "Edit RenterInformations Hint": ".تمكنك هذه الصفحة من تعديل بيانات المستأجرين ",
   "Edit RenterInformations Data": "تعديل بيانات المستأجرين",
   "RenterInformationImg": "صورة بيانات المستأجر",
+
 
   "HintSureToRetriveHRenterInformation": "سيترتب على استرجاع إيقاف بيانات المستأجر وجودها على النظام.",
   "HintSureToRetriveDRenterInformation": "سيترتب على استرجاع حذف بيانات المستأجر وجودها على النظام.",
@@ -521,7 +545,26 @@
   "HintSureTo_Cannot_deleteRenterInformation": "للأسف لا تستطيع حذف بيانات المستأجر هذه لأنه يوجد منها عدد =",
   "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
-
+  //Renter Contract
+  "RenterContract Hint": "تمكنك هذه الصفحة من عرض والبحث عن تفاصيل عقود المستأجرين",
+  "RenterContract Data": "عقود المستأجرين",
+  "Edit RenterContract Data": "البيانات التفصيلية لعقود المستأجر",
+  "Edit RenterContract Hint": "تمكنك هذه الصفحة من عرض البيانات التفصيلية لعقود المستأجر",
+  "Add RenterContract Hint": "تمكنك هذه الصفحة من إضافة عقد مستأجر جديد",
+  "Add RenterContract Data": "إضافة عقد مستأجر جديد",
+  "DateLast_Contract": "أخر عقد",
+  "DateFrist_Contract": "أول عقد",
+  "Contract_Count": "عدد العقود",
+  "Days_Count": "عدد الأيام",
+  "KM_Count": "عدد الكيلوات",
+  "RenterContractId": "رقم العقد",
+  "Start_Contract": "بدايته",
+  "End_Contract": "نهايته",
+  "Car_Name": "اسم السيارة",
+  "Contract_Value": "قيمة العقد",
+  "Contract": "العقد",
+  "Extension": "ممدد",
+  "Standing": "قائم",
 
   //RenterIdTypes------
   "RenterIdTypes Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل نوع الهوية",
@@ -564,6 +607,11 @@
   "HintSureToHoldRenterNationality": "سيترتب على إيقاف بيانات جنسية المستأجر إيقافها على النظام",
 
 
+
+  "StartDate_from": "من",
+  "EndDate_to": "إلى",
+  "From": "من",
+  "To": "إلى",
 
   //validation on input
   "requiredFiled": "هذا الحقل مطلوب.",
@@ -910,7 +958,12 @@
   "HintSureTodeleteCarCheckup": "سيترتب على حذف بيانات الفحص الظاهري عدم وجودها على النظام",
   "HintSureToHoldCarCheckup": "سيترتب على إيقاف بيانات الفحص الظاهري إيقافها على النظام",
 
-
+  "insert": "ادراج",
+  "update": "تحديث",
+  "hold": "ايقاف",
+  "unhold": "تنشيط",
+  "delete": "حذف",
+  "undelete": "استرجاع",
 
   //PostCity Services
   "PostCity Data": "بيانات المدينة",

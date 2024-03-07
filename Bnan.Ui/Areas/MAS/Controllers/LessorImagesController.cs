@@ -3,6 +3,7 @@ using Bnan.Core.Extensions;
 using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using Bnan.Inferastructure.Extensions;
+using Bnan.Inferastructure.Repository;
 using Bnan.Ui.Areas.Base.Controllers;
 using Bnan.Ui.Areas.CAS.Controllers;
 using Bnan.Ui.ViewModels.MAS;
@@ -23,16 +24,29 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IStringLocalizer<LessorImagesController> _localizer;
         private readonly IToastNotification _toastNotification;
-        public LessorImagesController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment webHostEnvironment, IStringLocalizer<LessorImagesController> localizer, IToastNotification toastNotification) : base(userManager, unitOfWork, mapper)
+        private readonly IUserLoginsService _userLoginsService;
+
+        public LessorImagesController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment webHostEnvironment, IStringLocalizer<LessorImagesController> localizer, IToastNotification toastNotification , IUserLoginsService userLoginsService) : base(userManager, unitOfWork, mapper)
         {
             _webHostEnvironment = webHostEnvironment;
             _localizer = localizer;
             _toastNotification = toastNotification;
+            _userLoginsService = userLoginsService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+
+            //save Tracing
+            var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101002", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
+
             //sidebar Active
             ViewBag.id = "#sidebarCompany";
             ViewBag.no = "1";
@@ -108,8 +122,22 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                         if (Name == "ContEnConditions1") lessorImages.CrMasLessorImageContEnConditions1 = saveImage;
                         if (Name == "ContEnConditions2") lessorImages.CrMasLessorImageContEnConditions2 = saveImage;
                         if (Name == "ContEnConditions3") lessorImages.CrMasLessorImageContEnConditions3 = saveImage;
+
                     }
                     _unitOfWork.CrMasLessorImage.Update(lessorImages);
+
+
+                    // SaveTracing
+                    var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101002", "1");
+                    var RecordAr = "";
+                    var RecordEn = "";
+                    RecordAr = _unitOfWork.CrMasLessorInformation.Find(x => x.CrMasLessorInformationCode == lessorImages.CrMasLessorImageCode).CrMasLessorInformationArShortName + " - " + _localizer[item.Name];
+                    RecordEn = _unitOfWork.CrMasLessorInformation.Find(x => x.CrMasLessorInformationCode == lessorImages.CrMasLessorImageCode).CrMasLessorInformationEnShortName + " - " + _localizer[item.Name];
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "إضافة صورة", "Add Image", mainTask.CrMasSysMainTasksCode,
+                    subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+                    subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
                 }
 
                 if (Request.Form.ContainsKey("imagesForRemove"))
@@ -147,6 +175,15 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                             if (id == "ContEnConditions3") lessorImages.CrMasLessorImageContEnConditions3 = null;
 
                             _unitOfWork.CrMasLessorImage.Update(lessorImages);
+                            // SaveTracing
+                            var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101002", "1");
+                            var RecordAr = "";
+                            var RecordEn = "";
+                            RecordAr = _unitOfWork.CrMasLessorInformation.Find(x => x.CrMasLessorInformationCode == lessorImages.CrMasLessorImageCode).CrMasLessorInformationArShortName + " - " + _localizer[image.id];
+                            RecordEn = _unitOfWork.CrMasLessorInformation.Find(x => x.CrMasLessorInformationCode == lessorImages.CrMasLessorImageCode).CrMasLessorInformationEnShortName + " - " + _localizer[image.id];
+                            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "حذف صورة", "Delete Image", mainTask.CrMasSysMainTasksCode,
+                            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+                            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                         }
                     }
 

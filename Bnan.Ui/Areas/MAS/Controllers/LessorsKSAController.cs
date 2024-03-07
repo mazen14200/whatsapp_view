@@ -88,6 +88,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+
+            var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101001", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
             //sidebar Active
             ViewBag.id = "#sidebarCompany";
             ViewBag.no = "0";
@@ -247,8 +255,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101001", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "اضافة شركه", "Add lessor", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = LessorVMTlessor.CrMasLessorInformationArShortName;
+                    var RecordEn = LessorVMTlessor.CrMasLessorInformationEnShortName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "اضافة", "Add", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -428,7 +437,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
                         // SaveTracing
                         var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101001", "1");
-                        await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل بيانات", "Edit information", mainTask.CrMasSysMainTasksCode,
+                        var RecordAr = lessor.CrMasLessorInformationArShortName;
+                        var RecordEn = lessor.CrMasLessorInformationEnShortName;
+                        await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                         subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                         subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                         _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
@@ -522,20 +533,20 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
                     if (status == Status.Hold)
                     {
-                        sAr = "ايقاف شركه";
-                        sEn = "Hold Lessor";
+                        sAr = "ايقاف";
+                        sEn = "Hold";
                         lessor.CrMasLessorInformationStatus = Status.Hold;
                     }
                     else if (status == Status.Deleted)
                     {
-                        sAr = "حذف شركه";
-                        sEn = "Remove Lessor";
+                        sAr = "حذف";
+                        sEn = "Remove";
                         lessor.CrMasLessorInformationStatus = Status.Deleted;
                     }
                     else if (status == "Reactivate")
                     {
-                        sAr = "استرجاع شركه";
-                        sEn = "Retrive Lessor";
+                        sAr = "استرجاع";
+                        sEn = "Retrive";
                         lessor.CrMasLessorInformationStatus = Status.Active;
 
                     }
@@ -543,7 +554,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     await _unitOfWork.CompleteAsync();
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101001", "1");
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, sAr, sEn, mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = lessor.CrMasLessorInformationArShortName;
+                    var RecordEn = lessor.CrMasLessorInformationEnShortName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, sAr, sEn, mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 

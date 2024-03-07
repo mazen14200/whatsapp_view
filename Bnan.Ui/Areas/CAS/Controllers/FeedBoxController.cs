@@ -36,6 +36,13 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
         public async Task<IActionResult> FeedBox()
         {
+            //save Tracing
+            var (mainTask, subTask, system, currentUser) = await SetTrace("204", "2204001", "2");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
 
             //sidebar Active
             ViewBag.id = "#sidebarAcount";

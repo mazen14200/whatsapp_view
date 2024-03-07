@@ -51,6 +51,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<ActionResult> DocumentsCar()
         {
+            //save Tracing
+            var (mainTask, subTask, system, currentUser) = await SetTrace("202", "2202002", "2");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
             //sidebar Active
             ViewBag.id = "#sidebarcars";
             ViewBag.no = "1";

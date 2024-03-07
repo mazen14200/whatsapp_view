@@ -234,14 +234,15 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2203001")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg=""> @localizer["Renter Data"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="RenterLessorInformation" asp-action="Index">@localizer["Renter Data"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2203002")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Renter Contract"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="RenterContract" asp-action="Index">@localizer["Renter Contract"]</a>
                                                                     </li>
+                                                                    
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2203003")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
