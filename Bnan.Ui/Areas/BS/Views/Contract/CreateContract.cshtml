@@ -1702,7 +1702,7 @@ else
     <script src="~/BranchSys/CreateContract/contract.js"></script>
     <script src="~/BranchSys/CreateContract/contract2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
     <script>
 
 
@@ -4086,6 +4086,8 @@ else
             const mobileNo = '@user.CrMasUserInformationMobileNo'; // Assuming this variable contains the mobile number
             const phoneNumber = callingKey + mobileNo;
             const messageText = " "; // Replace with your message
+            const contractNo = "@ViewBag.ContractNo";
+
             try {
                 // Read the image file as a Blob
                 const responseImage = await fetch(imagePath);
@@ -4150,7 +4152,6 @@ else
                         ctx.textAlign = 'right'; // Align text to the right
                         ctx.fillText(text, x, y);
                     });
-
                     // Convert the canvas to a blob
                     canvas.toBlob(async function (blob) {
                         formData.append("file", blob, "CreateContractWhatUp.png"); // Append the modified image blob with a filename
@@ -4172,52 +4173,16 @@ else
                             const errorMessage = await response.text(); // Get the error message as plain text
                             console.log("SendImageError", errorMessage);
                         }
+                        // createPdfAndSendToWhatsApp(contractNo, phoneNumber, token, blob);
                     }, 'image/png');
                 };
                 // Set the source of the image element
                 img.src = URL.createObjectURL(blob);
-                // await sendImageAndPdfToWhatsApp(blob, phoneNumber, messageText, token);
-
             } catch (error) {
                 console.log('SendImageError', error);
             }
         };
         // Function to send an image and PDF to WhatsApp
-        const sendImageAndPdfToWhatsApp = async (imageBlob, phoneNumber, messageText, token) => {
-            try {
-                // Convert the canvas to a PDF
-                const pdf = new jsPDF();
-                const imgData = canvas.toDataURL('image/jpeg');
-                pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
-                const pdfBlob = pdf.output('blob');
-
-                // Prepare form data
-                const formData = new FormData();
-                formData.append("pdf", pdfBlob, "CreateContractWhatUp.pdf");
-                formData.append("number", phoneNumber); // Append the recipient's phone number
-                formData.append("message", messageText); // Append the message
-
-                // Send the request to the API endpoint
-                const requestOptions = {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                };
-
-                const response = await fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions);
-                if (response.ok) {
-                    const result = await response.json();
-                    console.log("SendMediaResult", result);
-                } else {
-                    const errorMessage = await response.text(); // Get the error message as plain text
-                    console.log("SendMediaError", errorMessage);
-                }
-            } catch (error) {
-                console.log('SendMediaError', error);
-            }
-        };
         // submit Form
         document.addEventListener('DOMContentLoaded', function () {
             // Get the form element
@@ -4243,6 +4208,67 @@ else
             });
         });
 
+    </script>
+    <script type="text/javascript">
+        function createPdfAndSendToWhatsApp(contractNo, phoneNumber, token, imageBlob) {
+            const doc = new jsPDF();
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            try {
+                // Convert the image blob to a base64 DataURL
+                const reader = new FileReader();
+                reader.onload = function () {
+                    const imageDataUrl = reader.result;
+                    // Add the image to the PDF
+                    const imgWidth = 150; // Width of the image in the PDF
+                    const imgHeight = 100; // Height of the image in the PDF
+                    const imgXPos = (pageWidth - imgWidth) / 2; // X position of the image
+                    const imgYPos = (pageHeight - imgHeight) / 2; // Y position of the image
+                    doc.addImage(imageDataUrl, 'PNG', imgXPos, imgYPos, imgWidth, imgHeight);
+
+                    console.log("Image added to PDF successfully");
+
+                    // Convert the PDF to a blob
+                    const pdfBlob = doc.output('blob');
+                    const blobUrl = URL.createObjectURL(pdfBlob);
+                    window.open(blobUrl, '_blank');
+                    // Prepare form data with PDF
+                    const formData = new FormData();
+                    formData.append("number", phoneNumber); // Append the recipient's phone number
+                    formData.append("message", ""); // Append the message
+                    formData.append("file", pdfBlob, `${contractNo}.pdf`); // Append the PDF blob with a filename
+
+                    const requestOptions = {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    };
+
+                    // Send the request to the API endpoint
+                    fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                return response.text().then(error => Promise.reject(error));
+                            }
+                        })
+                        .then(result => {
+                            console.log("SendPDFResult", result);
+                        })
+                        .catch(error => {
+                            console.log("SendPDFError", error);
+                        });
+                };
+
+                reader.readAsDataURL(imageBlob); // Start reading the image blob
+            } catch (error) {
+                console.error('Error adding image to PDF:', error);
+            }
+            doc.save(`${contractNo}.pdf`); // Save the PDF with the contract number as filename
+        }
     </script>
     <script>
         $(document).ready(function () {
