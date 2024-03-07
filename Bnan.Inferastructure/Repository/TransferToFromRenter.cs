@@ -64,19 +64,28 @@ namespace Bnan.Inferastructure.Repository
             }
             return false;
         }
-        public async Task<bool> UpdateCasRenterLessor(string RenterId, string lessorCode, string Amount)
+        public async Task<bool> UpdateCasRenterLessorTransferFrom(string RenterId, string lessorCode, string Amount)
         {
             var Renter = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId);
             if (Renter != null)
             {
                 Renter.CrCasRenterLessorBalance+=decimal.Parse(Amount, CultureInfo.InvariantCulture);
+                Renter.CrCasRenterLessorAvailableBalance+=decimal.Parse(Amount, CultureInfo.InvariantCulture);
                 if (_unitOfWork.CrCasRenterLessor.Update(Renter) != null) return true;
             }
             return false;
         }
-
-
-
+        public async Task<bool> UpdateCasRenterLessorTransferTo(string RenterId, string lessorCode, string Amount)
+        {
+            var Renter = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId);
+            if (Renter != null)
+            {
+                Renter.CrCasRenterLessorBalance -= decimal.Parse(Amount, CultureInfo.InvariantCulture);
+                Renter.CrCasRenterLessorAvailableBalance -= decimal.Parse(Amount, CultureInfo.InvariantCulture);
+                if (_unitOfWork.CrCasRenterLessor.Update(Renter) != null) return true;
+            }
+            return false;
+        }
         public string GetAccountReceiptNo(string BranchCode, string UserCode,string ProcedureCode)
         {
             var userLogin = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == UserCode);

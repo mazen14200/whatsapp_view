@@ -52,9 +52,9 @@
                                     @localizer["Rate"]
                                 }
                             </td>
-                            <td>@item.CrMasContractCompanyDate?.ToString("yyyy/MM/dd")</td>
-                            <td>@item.CrMasContractCompanyStartDate?.ToString("yyyy/MM/dd")</td>
-                            <td>@item.CrMasContractCompanyEndDate?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrMasContractCompanyDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                            <td>@item.CrMasContractCompanyStartDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                            <td>@item.CrMasContractCompanyEndDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
                             <td>
                                 @if (@item.CrMasContractCompanyStatus == @Status.Renewed)
                                 {

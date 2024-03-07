@@ -116,14 +116,14 @@ namespace Bnan.Ui.Areas.Identity.Controllers
                     }
                     return View(model);
                 }
-                //else if (await _authService.CheckPassword(model.UserName, model.Password) == true)
-                //{
-                //    if (user.CrMasUserInformationOperationStatus == true)
-                //    {
-                //        ModelState.AddModelError("Hint", _localizer["UserIsOpen"]);
-                //        return View(model);
-                //    }
-                //}
+                else if (await _authService.CheckPassword(model.UserName, model.Password) == true)
+                {
+                    if (user.CrMasUserInformationOperationStatus == true)
+                    {
+                        ModelState.AddModelError("Hint", _localizer["UserIsOpen"]);
+                        return View(model);
+                    }
+                }
                 //Check The Status Of User 
                 if (user.CrMasUserInformationStatus == Status.Deleted)
                 {
@@ -267,6 +267,14 @@ namespace Bnan.Ui.Areas.Identity.Controllers
         public IActionResult Register()
         {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateLastActionDate(bool keyPress)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            user.CrMasUserInformationLastActionDate= DateTime.Now;
+            await _unitOfWork.CompleteAsync();
+            return Json(user.CrMasUserInformationLastActionDate);
         }
 
         [HttpPost]

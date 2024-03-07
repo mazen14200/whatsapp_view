@@ -1,5 +1,9 @@
 body {
-    font-family: 'Cairo', 'sans-serif';
+    font-family: cairo !important;
+    font-weight: 400 !important;
+    height: 100vh !important;
+    font-size: .875rem !important;
+    letter-spacing: 0.28px !important;
 }
 
 nav {

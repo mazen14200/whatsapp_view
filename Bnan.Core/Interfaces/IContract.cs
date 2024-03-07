@@ -24,7 +24,7 @@ namespace Bnan.Core.Interfaces
         Task<bool> AddRenterContractAuthrization(string ContractNo,string LessorCode,string AuthrizationType,string AuthrizationValue);
         Task<bool> UpdateCarInformation(string SerialNo, string LessorCode, string BranchCode, DateTime LastContract, int DaysNo, int CurrentMeter,string ExpireMaintainceCount);
         Task<string> UpdateCarDocMaintainance(string SerialNo, string LessorCode, string BranchCode, int CurrentMeter);
-        Task<bool> UpdateRenterLessor(string RenterId, string LessorCode,DateTime LastContract,decimal TotalPayed,string RenterReasons);
+        Task<bool> UpdateRenterLessor(string RenterId, string LessorCode,DateTime LastContract,decimal TotalPayed, decimal RequiredValue, string RenterReasons);
         Task<bool> UpdateMasRenter(string RenterId);
         Task<bool> UpdateDriverStatus(string DriverId, string LessorCode,string Reasons);
         Task<bool> UpdatePrivateDriverStatus(string PrivateDriverId, string LessorCode);
@@ -35,6 +35,7 @@ namespace Bnan.Core.Interfaces
         Task<bool> UpdateBranchValidity(string BranchCode, string LessorCode,string UserId,string PaymentMethod, decimal AmountPaid);
         Task<bool> UpdateUserBalance(string BranchCode, string LessorCode,string UserId,string PaymentMethod, decimal AmountPaid);
         Task<bool> AddRenterAlert(string ContractNo, string LessorCode,string BranchCode, int RentalDays, DateTime ContractEndDate, string SerialNo, string PriceNo);
+        Task<bool> AddRenterStatistics(CrCasRenterContractBasic Contract);
 
 
     }

@@ -26,6 +26,14 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
+//app.Use(async (context, next) =>
+//{
+//    context.Response.Headers.Append("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+//    context.Response.Headers.Append("Pragma", "no-cache"); // HTTP 1.0.
+//    context.Response.Headers.Append("Expires", "0"); // Proxies.
+//    await next();
+//});
+
 app.UseNToastNotify();
 if (!app.Environment.IsDevelopment())
 {

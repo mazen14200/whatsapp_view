@@ -94,6 +94,7 @@ namespace Bnan.Core.Interfaces
         public IGenric<CrCasRenterContractAlert> CrCasRenterContractAlert { get; }
         public IGenric<CrMasSysEvaluation> CrMasSysEvaluation { get; }
         public IGenric<CrMasSupCarBrand> CrMasSupCarBrand { get; }
+        public IGenric<CrCasRenterContractStatistic> CrCasRenterContractStatistic { get; }
         int Complete();
         Task<int> CompleteAsync();
     }

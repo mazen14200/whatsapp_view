@@ -42,8 +42,8 @@
                             <td>@item.CrCasCarInformation1?.CrCasBranchInformationEnShortName</td>
                             <td>@item.CrCasCarInformationConcatenateEnName</td>
                             <td>@item.CrCasCarInformationCurrentMeter</td>
-                            <td>@item.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd")</td>
-                            <td>@item.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                            <td>@item.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
                             <td>
                                 @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.ForSale)
                                 {
@@ -66,8 +66,8 @@
                             <td>@item.CrCasCarInformation1?.CrCasBranchInformationEnShortName</td>
                             <td>@item.CrCasCarInformationConcatenateEnName</td>
                             <td>@item.CrCasCarInformationCurrentMeter</td>
-                            <td>@item.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd")</td>
-                            <td>@item.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                            <td>@item.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
                             <td>
                                 @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.Active)
                                 {
@@ -117,8 +117,8 @@ else
                             <td>@item.CrCasCarInformation1?.CrCasBranchInformationArShortName</td>
                             <td>@item.CrCasCarInformationConcatenateArName</td>
                             <td>@item.CrCasCarInformationCurrentMeter</td>
-                            <td>@item.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd")</td>
-                            <td>@item.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                            <td>@item.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
                             <td>
                                 @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.ForSale)
                                 {
@@ -141,8 +141,8 @@ else
                             <td>@item.CrCasCarInformation1?.CrCasBranchInformationArShortName</td>
                             <td>@item.CrCasCarInformationConcatenateArName</td>
                             <td>@item.CrCasCarInformationCurrentMeter</td>
-                            <td>@item.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd")</td>
-                            <td>@item.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasCarInformationOfferedSaleDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                            <td>@item.CrCasCarInformationSoldDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
                             <td>
                                 @if (item.CrCasCarInformationStatus == Status.Active && item.CrCasCarInformationForSaleStatus == Status.Active)
                                 {

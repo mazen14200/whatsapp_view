@@ -56,12 +56,19 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var user = await _userService.GetUserByUserNameAsync(userLogin.CrMasUserInformationCode);
             var UserModel = model.UserInformation;
             string foldername = $"{"images\\Company"}\\{user.CrMasUserInformationLessor}\\{"Users"}\\{user.CrMasUserInformationCode}";
+
             string filePathImage;
             string filePathSignture;
+
+            var oldPathImage = user.CrMasUserInformationPicture;
+            var oldPathSignture = user.CrMasUserInformationSignature;
+            if (oldPathImage == "~/images/common/user.jpg") oldPathImage = "";
+            if (oldPathSignture == "~/images/common/DefualtUserSignature.png") oldPathSignture = "";
+
             if (Profile_Photo != null)
             {
-                string fileNameImg = "Image";
-                filePathImage = await Profile_Photo.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
+                string fileNameImg = "Image_" + DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوقت
+                filePathImage = await Profile_Photo.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png", oldPathImage);
             }
             else if (Profile_Photo == null && string.IsNullOrEmpty(user.CrMasUserInformationPicture))
             {
@@ -74,8 +81,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             if (signature_img != null)
             {
-                string fileNameSignture = "Signture";
-                filePathSignture = await signature_img.SaveImageAsync(_webHostEnvironment, foldername, fileNameSignture, ".png");
+                string fileNameSignture = "Signture_" + DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوقت
+                filePathSignture = await signature_img.SaveImageAsync(_webHostEnvironment, foldername, fileNameSignture, ".png", oldPathSignture);
             }
             else if (signature_img == null && string.IsNullOrEmpty(user.CrMasUserInformationSignature))
             {

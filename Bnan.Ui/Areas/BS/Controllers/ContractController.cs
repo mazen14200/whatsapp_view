@@ -53,7 +53,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             var categoryCars = carsAvailable.Select(item => item.CrCasCarInformationCategoryNavigation).Distinct().OrderBy(item => item.CrMasSupCarCategoryCode).ToList();
             var CheckupCars = _unitOfWork.CrMasSupContractCarCheckup.FindAll(x => x.CrMasSupContractCarCheckupStatus == Status.Active).ToList();
-            ViewBag.StartDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm");
+            ViewBag.StartDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture);
 
             //Check Account Bank And Sales Point and payment method
             var AccountBanks = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankLessor == lessorCode && x.CrCasAccountBankStatus == Status.Active, new[] { "CrCasAccountSalesPoints" }).ToList();
@@ -186,7 +186,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 //Update RenterLessor Of Car Renter
                 var CheckRenterLessor = true;
                 CheckRenterLessor = await _ContractServices.UpdateRenterLessor(Renter.CrMasRenterInformationId, lessorCode, (DateTime)BasicContract.CrCasRenterContractBasicIssuedDate,
-                                                                              (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance, ContractInfo.RenterReasons);
+                                                                              (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance, (decimal)BasicContract.CrCasRenterContractBasicExpectedTotal, ContractInfo.RenterReasons);
                 
                 //Update Mas Renter Info Of Car Renter
                 var CheckMasRenter = true;
@@ -230,17 +230,15 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                         BasicContract.CrCasRenterContractBasicCarSerailNo, BasicContract.CrCasRenterContractPriceReference);
 
 
-
-
-
-
-
+                // Add Renter Alert
+                var CheckRenterStatisctics = true;
+                CheckRenterStatisctics = await _ContractServices.AddRenterStatistics(BasicContract);
 
                 if (BasicContract != null && CheckChoices && CheckAddditional && CheckAdvantages &&
                     CheckCheckUpCar && CheckAuthrization && CheckCarInfo && CheckDocAndMaintainance!=null &&
                     CheckRenterLessor&& CheckAccountReceipt&& CheckBranch&& CheckSalesPoint&&
                     CheckUserInformation&& CheckBranchValidity&& CheckMasRenter&& CheckAddDriver&& 
-                    CheckDriver&& CheckPrivateDriver&& CheckRenterAlert)
+                    CheckDriver&& CheckPrivateDriver&& CheckRenterAlert&& CheckRenterStatisctics)
                 {
                     try
                     {
@@ -275,7 +273,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             if (BnanRenterInfo != null)
             {
-                var LessorRenterInfo = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorId == lessorCode);
+                var LessorRenterInfo = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == lessorCode,
+                                                                         new[] { "CrCasRenterContractBasicCrCasRenterContractBasic4s", "CrCasRenterLessorMembershipNavigation" });
+                var dealingMechanizm = _unitOfWork.CrMasSysEvaluation.Find(x => x.CrMasSysEvaluationsCode == LessorRenterInfo.CrCasRenterLessorDealingMechanism);
                 var RenterPost = _unitOfWork.CrMasRenterPost.Find(x => x.CrMasRenterPostCode == RenterId);
                 if (LessorRenterInfo==null)
                 {
@@ -320,7 +320,20 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     BirthDate = BnanRenterInfo?.CrMasRenterInformationBirthDate,
                     ExpiryIdDate = BnanRenterInfo?.CrMasRenterInformationExpiryIdDate,
                     KeyCountry = BnanRenterInfo?.CrMasRenterInformationCountreyKey,
-                    Balance = LessorRenterInfo?.CrCasRenterLessorBalance
+                    Balance = LessorRenterInfo?.CrCasRenterLessorAvailableBalance,
+                    AvailableBalance= LessorRenterInfo?.CrCasRenterLessorAvailableBalance,
+                    ReservedBalance= LessorRenterInfo?.CrCasRenterLessorReservedBalance,
+                    LastContract =LessorRenterInfo?.CrCasRenterLessorDateLastContractual,
+                    LastVisit= LessorRenterInfo?.CrCasRenterLessorDateLastContractual,
+                    ContractCount = LessorRenterInfo?.CrCasRenterLessorContractCount,
+                    RentalDays = LessorRenterInfo?.CrCasRenterLessorContractDays,
+                    AmountsTraded = LessorRenterInfo?.CrCasRenterLessorContractTradedAmount,
+                    KMCut = LessorRenterInfo?.CrCasRenterLessorContractKm,
+                    ArDealingMechanism = dealingMechanizm?.CrMasSysEvaluationsArDescription,
+                    EnDealingMechanism = dealingMechanizm?.CrMasSysEvaluationsEnDescription,
+                    ArMembership = LessorRenterInfo?.CrCasRenterLessorMembershipNavigation?.CrMasSupRenterMembershipArName,
+                    EnMembership = LessorRenterInfo?.CrCasRenterLessorMembershipNavigation?.CrMasSupRenterMembershipEnName,
+                    CountContracts= LessorRenterInfo?.CrCasRenterContractBasicCrCasRenterContractBasic4s.Count(),
                 };
                 return Json(renterInformationsVM);
             }

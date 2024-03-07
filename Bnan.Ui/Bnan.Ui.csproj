@@ -6,12 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FollowUpContract\**" />
     <Compile Remove="wwwroot\BranchSys\ٌRenters\**" />
     <Compile Remove="wwwroot\pages\**" />
+    <Content Remove="FollowUpContract\**" />
     <Content Remove="wwwroot\BranchSys\ٌRenters\**" />
     <Content Remove="wwwroot\pages\**" />
+    <EmbeddedResource Remove="FollowUpContract\**" />
     <EmbeddedResource Remove="wwwroot\BranchSys\ٌRenters\**" />
     <EmbeddedResource Remove="wwwroot\pages\**" />
+    <None Remove="FollowUpContract\**" />
     <None Remove="wwwroot\BranchSys\ٌRenters\**" />
     <None Remove="wwwroot\pages\**" />
   </ItemGroup>

@@ -62,8 +62,14 @@
                     var DaysNo = (item.CrCasRenterContractBasicExpectedEndDate - DateTime.Now)?.Days;
                 }
                 <td>@DaysNo</td>
-                <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("yyyy/MM/dd")</td>
-                <td>@item.CrCasRenterContractBasicNo</td>
+                <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                <td>
+                    @item.CrCasRenterContractBasicNo
+                    @if (item.CrCasRenterContractBasicCopy > 0)
+                    {
+                        <span class="text-danger">(@item.CrCasRenterContractBasicCopy)</span>
+                    }
+                </td>
                 <td scope="row">@no</td>
 
             </tr>

@@ -18,6 +18,8 @@
         public DateTime? BirthDate { get; set; }
         public DateTime? ExpiryIdDate { get; set; }
         public decimal? Balance { get; set; }
+        public decimal? AvailableBalance { get; set; }
+        public decimal? ReservedBalance { get; set; }
 
         //Licence
         public string? LicenseCode { get; set; }
@@ -32,6 +34,20 @@
         //Post
         public string? PostArNameConcenate { get; set; }
         public string? PostEnNameConcenate { get; set; }
+        //Cas Renter
+        public DateTime? LastVisit { get; set; }
+        public DateTime? LastContract { get; set; }
+        public int? ContractCount { get; set; }
+        public int? RentalDays { get; set; }
+        public int? KMCut { get; set; }
+        public decimal? AmountsTraded { get; set; }
+        public decimal? Evaluation { get; set; }
+        public string? ArDealingMechanism { get; set; }
+        public string? EnDealingMechanism { get; set; }
+        public string? ArMembership { get; set; }
+        public string? EnMembership { get; set; }
+        public int? CountContracts { get; set; }
+
 
     }
 }

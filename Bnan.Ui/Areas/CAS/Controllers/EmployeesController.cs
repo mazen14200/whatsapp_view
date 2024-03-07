@@ -626,10 +626,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             string foldername = $"{"images\\Company"}\\{user.CrMasUserInformationLessor}\\{"Users"}\\{model.CrMasUserInformationCode}";
             string filePathImage;
             string filePathSignture;
+            string oldPathImage = user.CrMasUserInformationPicture;
+            string oldPathSignture = user.CrMasUserInformationPicture;
+            if (oldPathImage == "~/images/common/user.jpg") oldPathImage = "";
+            if (oldPathSignture == "~/images/common/DefualtUserSignature.png") oldPathSignture = "";
             if (UserImgFile != null)
             {
-                string fileNameImg = "Image";
-                filePathImage = await UserImgFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
+                string fileNameImg = "Image_" + DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوقت
+                filePathImage = await UserImgFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png", oldPathImage);
             }
             else
             {
@@ -637,8 +641,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             }
             if (UserSignatureFile != null)
             {
-                string fileNameSignture = "Signture";
-                filePathSignture = await UserSignatureFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameSignture, ".png");
+                string fileNameSignture = "Signture_" + DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوقت
+                filePathSignture = await UserSignatureFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameSignture, ".png", oldPathSignture);
             }
             else
             {

@@ -127,11 +127,11 @@ else
                                             <div class="col d-flex align-items-center Search-col flex-row-reverse flex-wrap gap-4">
                                                 <div class="col-md-4 d-flex flex-row-reverse gap-3">
                                                     <label for="start-date">@localizer["From"]</label>
-                                                    <input type="date" class="form-control" style="font-size: 0.8125rem;" id="start-date" name="start-date" value="@ViewBag.FromDate" required>
+                                                    <input type="date" class="form-control inputs" style="font-size: 0.8125rem;" id="start-date" name="start-date" value="@ViewBag.FromDate" required>
                                                 </div>
                                                 <div class="col-md-4 d-flex flex-row-reverse gap-3">
                                                     <label for="end-date">@localizer["To"]</label>
-                                                    <input type="date" class="form-control" style="font-size: 0.8125rem;" id="end-date" name="end-date" max="@DateTime.Now.ToString("yyyy-MM-dd")" value="@ViewBag.ToDate" required>
+                                                    <input type="date" class="form-control inputs" style="font-size: 0.8125rem;" id="end-date" name="end-date" max="@DateTime.Now.ToString("yyyy-MM-dd")" value="@ViewBag.ToDate" required>
                                                 </div>
 
                                                 <a id="filterDateBtn" class="btn btn-custom me-2">@localizer["Show"]</a>

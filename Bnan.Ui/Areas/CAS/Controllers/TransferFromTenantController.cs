@@ -117,7 +117,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             var Renter = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == renterLessorVM.CrCasRenterLessorId && x.CrCasRenterLessorCode == lessorCode, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic4s",
                                                                                                                            "CrCasRenterLessorNavigation" });
-            var AddAdminstritive = await _tranferToRenter.SaveAdminstritiveTransferRenter(renterLessorVM.AdminstritiveNo, userLogin.CrMasUserInformationCode, "305", "30", lessorCode, Renter.CrCasRenterLessorId,
+            var AddAdminstritive = await _tranferToRenter.SaveAdminstritiveTransferRenter(renterLessorVM.AdminstritiveNo, userLogin.CrMasUserInformationCode, "306", "30", lessorCode, Renter.CrCasRenterLessorId,
                                                                                    0, decimal.Parse(renterLessorVM.Amount, CultureInfo.InvariantCulture), renterLessorVM.Reasons);
 
             var CheckAddReceipt = true;
@@ -129,9 +129,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
 
             var CheckUpdateRenterLessor = true;
-            var AmountMinus = (-decimal.Parse(renterLessorVM.Amount, CultureInfo.InvariantCulture)).ToString();
 
-            CheckUpdateRenterLessor = await _tranferToRenter.UpdateCasRenterLessor(Renter.CrCasRenterLessorId, lessorCode, AmountMinus);
+            CheckUpdateRenterLessor = await _tranferToRenter.UpdateCasRenterLessorTransferFrom(Renter.CrCasRenterLessorId, lessorCode, renterLessorVM.Amount);
 
 
             if (AddAdminstritive != null && CheckAddReceipt && CheckUpdateMasRenter && CheckUpdateRenterLessor)

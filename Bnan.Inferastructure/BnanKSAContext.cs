@@ -102,6 +102,7 @@ namespace Bnan.Core.Models
         public virtual DbSet<CrMasUserMessage> CrMasUserMessages { get; set; } = null!;
         public virtual DbSet<CrMasUserProceduresValidation> CrMasUserProceduresValidations { get; set; } = null!;
         public virtual DbSet<CrMasUserSubValidation> CrMasUserSubValidations { get; set; } = null!;
+       
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -124,7 +125,6 @@ namespace Bnan.Core.Models
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
             modelBuilder.Entity<CrMasUserInformation>().Ignore(x => x.Email).Ignore(x => x.EmailConfirmed)
                 .Ignore(x => x.NormalizedEmail).Ignore(x => x.PhoneNumber).Ignore(x => x.PhoneNumberConfirmed);
-
             modelBuilder.Entity<CrCasAccountBank>(entity =>
             {
                 entity.HasKey(e => e.CrCasAccountBankCode);
@@ -669,8 +669,8 @@ namespace Bnan.Core.Models
 
                 entity.ToTable("CR_Cas_Branch_Information");
 
-                //entity.HasIndex(e => new { e.CrCasBranchInformationCode, e.CrCasBranchInformationLessor }, "AK_CR_Cas_Branch_Information_CR_Cas_Branch_Information_Code_CR_Cas_Branch_Information_Lessor")
-                //    .IsUnique();
+                entity.HasIndex(e => new { e.CrCasBranchInformationCode, e.CrCasBranchInformationLessor }, "AK_CR_Cas_Branch_Information_CR_Cas_Branch_Information_Code_CR_Cas_Branch_Information_Lessor")
+                    .IsUnique();
 
                 entity.HasIndex(e => new { e.CrCasBranchInformationCode, e.CrCasBranchInformationLessor }, "uq_CR_Cas_Branch_Information")
                     .IsUnique();
@@ -2912,6 +2912,10 @@ namespace Bnan.Core.Models
                     .HasColumnName("CR_Cas_Renter_Lessor_Code")
                     .IsFixedLength();
 
+                entity.Property(e => e.CrCasRenterLessorAvailableBalance)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Lessor_Available_Balance");
+
                 entity.Property(e => e.CrCasRenterLessorBalance)
                     .HasColumnType("decimal(13, 2)")
                     .HasColumnName("CR_Cas_Renter_Lessor_Balance");
@@ -2967,6 +2971,10 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrCasRenterLessorReasons)
                     .HasMaxLength(100)
                     .HasColumnName("CR_Cas_Renter_Lessor_Reasons");
+
+                entity.Property(e => e.CrCasRenterLessorReservedBalance)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Lessor_Reserved_Balance");
 
                 entity.Property(e => e.CrCasRenterLessorSector)
                     .HasMaxLength(1)
@@ -6160,8 +6168,6 @@ namespace Bnan.Core.Models
 
                 entity.HasIndex(e => e.CrMasUserInformationLessor, "IX_CR_Mas_User_Information_CR_Mas_User_Information_Lessor");
 
-               
-
                 entity.Property(e => e.CrMasUserInformationCode)
                     .HasMaxLength(10)
                     .IsUnicode(false)
@@ -6231,6 +6237,10 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrMasUserInformationExitLastTime).HasColumnName("CR_Mas_User_Information_Exit_Last_Time");
 
                 entity.Property(e => e.CrMasUserInformationExitTimer).HasColumnName("CR_Mas_User_Information_Exit_Timer");
+
+                entity.Property(e => e.CrMasUserInformationLastActionDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CR_Mas_User_Information_Last_Action_Date");
 
                 entity.Property(e => e.CrMasUserInformationLessor)
                     .HasMaxLength(4)

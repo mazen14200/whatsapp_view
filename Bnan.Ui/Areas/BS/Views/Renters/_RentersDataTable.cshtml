@@ -20,8 +20,11 @@
             <th scope="col" class="@(requestCulture?.RequestCulture.UICulture.Name == "ar-EG" ? "text-right" : "text-left")">
                 @localizer["DealingMechanism"]
             </th>
-            <th scope="col">@localizer["DaysCount"]</th>
+            @*             <th scope="col">@localizer["DaysCount"]</th>
             <th scope="col">@localizer["TradedAmount"]</th>
+            *@
+            <th scope="col">@localizer["ReservedBalance"]</th>
+            <th scope="col">@localizer["AvailableBalance"]</th>
             <th scope="col">@localizer["Balance"]</th>
             <th scope="col">@localizer["LastVisit"]</th>
             <th scope="col" class="@(requestCulture?.RequestCulture.UICulture.Name == "ar-EG" ? "text-right" : "text-left")">
@@ -77,10 +80,12 @@
                 {
                     <td class="text-left">@Evaluation.CrMasSysEvaluationsEnDescription</td>
                 }
-                <td>@item.CrCasRenterLessorContractCount</td>
-                <td>@item.CrCasRenterLessorContractTradedAmount?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                @* <td>@item.CrCasRenterLessorContractCount</td>
+            <td>@item.CrCasRenterLessorContractTradedAmount?.ToString("N2",CultureInfo.InvariantCulture)</td> *@
+                <td>@item.CrCasRenterLessorReservedBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                <td>@item.CrCasRenterLessorAvailableBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
                 <td>@item.CrCasRenterLessorBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
-                <td>@item.CrCasRenterLessorDateLastContractual?.ToString("yyyy/MM/dd")</td>
+                <td>@item.CrCasRenterLessorDateLastContractual?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
                 @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                 {
                     <td class="text-right">@item.CrCasRenterLessorNavigation?.CrMasRenterInformationArName</td>

@@ -70,6 +70,7 @@
                                 <input hidden asp-for="ExtensionContract.DiscountValue" />
                                 <input hidden asp-for="ExtensionContract.RentValue" />
                                 <input hidden asp-for="ExtensionContract.DaysNo" />
+                                <input hidden id="ExtensionValue" name="ExtensionValue" />
 
                                 <fieldset>
                                     <div class="form-card extension2-card">
@@ -94,7 +95,7 @@
                                                                 <p>@localizer["ExpectedEndDate"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>@Model.ExtensionContract.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd")</p>
+                                                                <p>@Model.ExtensionContract.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</p>
                                                             </div>
                                                         </div>
                                                         <div class="row dropdown-content-row">
@@ -114,11 +115,11 @@
                                                                 <p>
                                                                     @if (Model.ExtensionContract.AuthType == true)
                                                                     {
-                                                                        @localizer["InFees"]
+                                                                        @localizer["OutFees"]
                                                                     }
                                                                     else
                                                                     {
-                                                                        @localizer["OutFees"]
+                                                                        @localizer["InFees"]
                                                                     }
                                                                 </p>
                                                             </div>
@@ -181,7 +182,7 @@
                                                     <P>@localizer["EndAuth"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <P>@Model.ExtensionContract.AuthEndDate?.ToString("yyyy/MM/dd")</P>
+                                                    <P>@Model.ExtensionContract.AuthEndDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</P>
                                                 </div>
                                             </div>
                                         </div>
@@ -377,8 +378,8 @@
                                             <div class="col-auto">
                                                 <label id="notes" for="FormControl-last-Textarea">@localizer["reasons"]</label>
                                             </div>
-                                            <div class="col-sm-10 col-md-5 col-lg-5">
-                                                <input class="form-control" maxlength="100" id="reasons" name="reasons">
+                                            <div class="col-sm-10 col-md-7 col-lg-7">
+                                                <input class="form-control textarea-inputs" maxlength="100" id="reasons" name="reasons">
                                             </div>
 
                                         </div>
@@ -461,7 +462,7 @@
             if (parseInt(daysNo) > 0) {
                 $("#ExtensionContract_DaysNo").val(ExpectedDaysNo);
                 var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-                var formattedstartDate = "@Model.ExtensionContract.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd HH:mm:ss")";
+                var formattedstartDate = "@Model.ExtensionContract.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd HH:mm:ss",CultureInfo.InvariantCulture)";
                 var StartDate = new Date(formattedstartDate);
                 StartDate.setDate(StartDate.getDate() + parseInt(ExpectedDaysNo));
                 var formattedEndDate = StartDate.toLocaleDateString('ja-JP', options);
@@ -530,7 +531,7 @@
             discountValue = 0;
             taxValue = 0;
             TotalAmount = 0;
-            $("#ExtensionContract_AmountPayed").css({ "border": "1px solid #faa64d" }); //This For last Check When i submit Form
+            $("#ExtensionContract_AmountPayed").css({ "border": "2px solid #faa64d" }); //This For last Check When i submit Form
             somethingIsNotOkay = true;
         }
 
@@ -568,11 +569,21 @@
         }
         function CalculateTotalAmount() {
             // Get Total Of amount Required
-            var RenterBalance = '@Model.ExtensionContract.CasRenterPreviousBalance'
+            var RenterBalance = '@Model.ExtensionContract.CasRenterPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)'
+            var PreviousTotalContract = '@Model.ExtensionContract.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)'
+            RenterBalance = RenterBalance.replace(/,/g, '');
+            PreviousTotalContract = PreviousTotalContract.replace(/,/g, '');
             totalContract = parseFloat(discountValue) + parseFloat(taxValue) + parseFloat(rentValue);
             console.log("totalContract", totalContract);
+            console.log("RenterBalance", RenterBalance);
+            console.log("rentValue", rentValue);
+            console.log("PreviousTotalContract", PreviousTotalContract);
             document.getElementById('TotalContract').textContent = totalContract.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            TotalAmount = parseFloat(RenterBalance) + parseFloat(totalContract);
+            TotalAmount = ( parseFloat(totalContract) - parseFloat(PreviousTotalContract) ) - parseFloat(RenterBalance);
+            $("#ExtensionValue").val(parseFloat(totalContract) - parseFloat(PreviousTotalContract));
+            if (TotalAmount < 0) {
+                TotalAmount = 0;
+            }
             document.getElementById("TotalAmount").textContent = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             $("#ExtensionContract_TotalAmount").val(TotalAmount);
             $("#ExtensionContract_TotalContract").val(totalContract);
@@ -587,7 +598,7 @@
                 console.log(somethingIsNotOkay);
                 if (parseFloat(payed) > 0 && somethingIsNotOkay) {
                     document.getElementById('ExtensionContract_PaymentMethod').disabled = false;
-                    document.getElementById('ExtensionContract_PaymentMethod').selectedIndex = 0;
+                    // document.getElementById('ExtensionContract_PaymentMethod').selectedIndex = 0;
                     document.getElementById('ExtensionContract_SalesPoint').disabled = false;
                     document.getElementById('ExtensionContract_SalesPoint').selectedIndex = 0;
                 } else {
@@ -632,7 +643,7 @@
                 somethingIsNotOkay = false;
             }
             else {
-                $("#ExtensionContract_AmountPayed").css({ "border": "1px solid #faa64d" }); //This For last Check When i submit Form
+                $("#ExtensionContract_AmountPayed").css({ "border": "2px solid #faa64d" }); //This For last Check When i submit Form
                 somethingIsNotOkay = true;
             }
         }
@@ -695,7 +706,6 @@
                     CheckIfCanPayLessThanTotalAmount();
                     if (somethingIsNotOkay) {
                         form.submit();
-                        console.log(55555555)
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();

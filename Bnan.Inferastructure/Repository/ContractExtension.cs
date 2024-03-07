@@ -1,8 +1,10 @@
 ﻿using Bnan.Core.Extensions;
 using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Net.WebSockets;
@@ -22,7 +24,7 @@ namespace Bnan.Inferastructure.Repository
         }
         public async Task<CrCasRenterContractBasic> AddRenterExtensionContract(string ContractNo, string DaysNo, string UserInsert, string AmountPayed, string Reasons)
         {
-            var Contract = await _unitOfWork.CrCasRenterContractBasic.FindAsync(x => x.CrCasRenterContractBasicNo == ContractNo);
+            var Contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == ContractNo).LastOrDefault();
             var Renter = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == Contract.CrCasRenterContractBasicRenterId);
             CrCasRenterContractBasic renterContractBasic = new CrCasRenterContractBasic();
 
@@ -58,33 +60,45 @@ namespace Bnan.Inferastructure.Repository
             renterContractBasic.CrCasRenterContractBasicAdditionalValue = Contract.CrCasRenterContractBasicAdditionalValue;
             renterContractBasic.CrCasRenterContractPriceReference = Contract.CrCasRenterContractPriceReference;
             renterContractBasic.CrCasRenterContractBasicCarSerailNo = Contract.CrCasRenterContractBasicCarSerailNo;
+            renterContractBasic.CrCasRenterContractBasicUserFreeHours = Contract.CrCasRenterContractBasicUserFreeHours;
+            renterContractBasic.CrCasRenterContractBasicTotalFreeHours = Contract.CrCasRenterContractBasicTotalFreeHours;
+            renterContractBasic.CrCasRenterContractBasicDailyFreeKmUser = Contract.CrCasRenterContractBasicDailyFreeKmUser;
+            renterContractBasic.CrCasRenterContractBasicTotalDailyFreeKm = Contract.CrCasRenterContractBasicTotalDailyFreeKm;
             ////////////////
             ///       
-            renterContractBasic.CrCasRenterContractBasicCopy += 1;
+            renterContractBasic.CrCasRenterContractBasicCopy = Contract.CrCasRenterContractBasicCopy+ 1;
             renterContractBasic.CrCasRenterContractBasicExpectedRentalDays = int.Parse(DaysNo);
             renterContractBasic.CrCasRenterContractBasicExpectedEndDate = renterContractBasic.CrCasRenterContractBasicExpectedStartDate?.AddDays(int.Parse(DaysNo));
             renterContractBasic.CrCasRenterContractBasicExpectedRentValue = int.Parse(DaysNo) * Contract.CrCasRenterContractBasicDailyRent;
             renterContractBasic.CrCasRenterContractBasicExpectedOptionsValue = int.Parse(DaysNo) * (Contract.CrCasRenterContractBasicExpectedOptionsValue / Contract.CrCasRenterContractBasicExpectedRentalDays);
-            renterContractBasic.CrCasRenterContractBasicExpectedPrivateDriverValue = int.Parse(DaysNo) * Contract.CrCasRenterContractBasicPrivateDriverValue;
+
+            if (renterContractBasic.CrCasRenterContractBasicPrivateDriverId != null) renterContractBasic.CrCasRenterContractBasicExpectedPrivateDriverValue = int.Parse(DaysNo) * Contract.CrCasRenterContractBasicPrivateDriverValue;
+            else renterContractBasic.CrCasRenterContractBasicExpectedPrivateDriverValue = 0;
+
+            var additionalDriverValueAddToContract = Contract.CrCasRenterContractBasicAdditionalDriverValue;
+            if (string.IsNullOrEmpty(renterContractBasic.CrCasRenterContractBasicAdditionalDriverId)) additionalDriverValueAddToContract = 0;
 
             renterContractBasic.CrCasRenterContractBasicExpectedValueBeforDiscount = renterContractBasic.CrCasRenterContractBasicExpectedRentValue +
                                                                                      renterContractBasic.CrCasRenterContractBasicExpectedOptionsValue +
                                                                                      renterContractBasic.CrCasRenterContractBasicExpectedPrivateDriverValue +
                                                                                      renterContractBasic.CrCasRenterContractBasicAdditionalValue +
-                                                                                     renterContractBasic.CrCasRenterContractBasicAuthorizationValue;
+                                                                                     renterContractBasic.CrCasRenterContractBasicAuthorizationValue +
+                                                                                     additionalDriverValueAddToContract;
 
             renterContractBasic.CrCasRenterContractBasicExpectedDiscountValue = renterContractBasic.CrCasRenterContractBasicExpectedValueBeforDiscount * Contract.CrCasRenterContractBasicUserDiscountRate;
 
             renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount = renterContractBasic.CrCasRenterContractBasicExpectedValueBeforDiscount +
                                                                                      renterContractBasic.CrCasRenterContractBasicExpectedDiscountValue;
-            renterContractBasic.CrCasRenterContractBasicExpectedTaxValue = renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount * (Contract.CrCasRenterContractBasicTaxRate/100);
+            renterContractBasic.CrCasRenterContractBasicExpectedTaxValue = renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount * (Contract.CrCasRenterContractBasicTaxRate / 100);
 
             renterContractBasic.CrCasRenterContractBasicExpectedTotal = renterContractBasic.CrCasRenterContractBasicExpectedValueAfterDiscount +
                                                                         renterContractBasic.CrCasRenterContractBasicExpectedTaxValue;
 
-            renterContractBasic.CrCasRenterContractBasicPreviousBalance = Renter.CrCasRenterLessorBalance;
-            renterContractBasic.CrCasRenterContractBasicAmountRequired = renterContractBasic.CrCasRenterContractBasicExpectedTotal + renterContractBasic.CrCasRenterContractBasicPreviousBalance;
-            renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = decimal.Parse(AmountPayed, CultureInfo.InvariantCulture);
+            renterContractBasic.CrCasRenterContractBasicPreviousBalance = Renter.CrCasRenterLessorAvailableBalance;
+            var totalRequired = renterContractBasic.CrCasRenterContractBasicExpectedTotal - Contract.CrCasRenterContractBasicExpectedTotal - renterContractBasic.CrCasRenterContractBasicPreviousBalance;
+            if (totalRequired < 0) totalRequired = 0;
+            renterContractBasic.CrCasRenterContractBasicAmountRequired = totalRequired;
+            renterContractBasic.CrCasRenterContractBasicAmountPaidAdvance = decimal.Parse(AmountPayed, CultureInfo.InvariantCulture)+ Contract.CrCasRenterContractBasicAmountPaidAdvance;
             renterContractBasic.CrCasRenterContractBasicUserInsert = UserInsert;
             renterContractBasic.CrCasRenterContractBasicReasons = Reasons;
             renterContractBasic.CrCasRenterContractBasicStatus = Status.Active;
@@ -94,7 +108,7 @@ namespace Bnan.Inferastructure.Repository
         public async Task<bool> UpdateAlertContract(string ContractNo)
         {
             var ContractAlert = await _unitOfWork.CrCasRenterContractAlert.FindAsync(x => x.CrCasRenterContractAlertNo == ContractNo);
-            var Contract = await _unitOfWork.CrCasRenterContractBasic.FindAsync(x => x.CrCasRenterContractBasicNo == ContractNo && x.CrCasRenterContractBasicStatus==Status.Active);
+            var Contract = await _unitOfWork.CrCasRenterContractBasic.FindAsync(x => x.CrCasRenterContractBasicNo == ContractNo && x.CrCasRenterContractBasicStatus == Status.Active);
             if (ContractAlert != null)
             {
                 ContractAlert.CrCasRenterContractAlertDays = Contract.CrCasRenterContractBasicExpectedRentalDays;
@@ -109,14 +123,16 @@ namespace Bnan.Inferastructure.Repository
             }
             return false;
         }
-        public async Task<bool> UpdateRenterLessor(string RenterId, string LessorCode, decimal TotalPayed)
+        public async Task<bool> UpdateRenterLessor(string RenterId, string LessorCode, decimal TotalPayed, decimal RequiredValue)
         {
             var RenterLessor = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == LessorCode);
             if (RenterLessor != null)
             {
                 if (RenterLessor.CrCasRenterLessorContractCount != null) RenterLessor.CrCasRenterLessorContractCount += 1;
                 else RenterLessor.CrCasRenterLessorContractCount = 1;
-                RenterLessor.CrCasRenterLessorBalance -= (TotalPayed);
+                RenterLessor.CrCasRenterLessorBalance += TotalPayed;
+                RenterLessor.CrCasRenterLessorReservedBalance += RequiredValue;
+                RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance - RenterLessor.CrCasRenterLessorReservedBalance;
                 RenterLessor.CrCasRenterLessorContractExtension += 1;
                 if (_unitOfWork.CrCasRenterLessor.Update(RenterLessor) != null) return true;
             }
@@ -124,7 +140,7 @@ namespace Bnan.Inferastructure.Repository
         }
         public async Task<bool> UpdateStatusOldContract(string ContractNo)
         {
-            var Contract = await _unitOfWork.CrCasRenterContractBasic.FindAsync(x => x.CrCasRenterContractBasicNo == ContractNo&&x.CrCasRenterContractBasicStatus==Status.Active);
+            var Contract = await _unitOfWork.CrCasRenterContractBasic.FindAsync(x => x.CrCasRenterContractBasicNo == ContractNo && x.CrCasRenterContractBasicStatus == Status.Active);
             if (Contract != null)
             {
                 Contract.CrCasRenterContractBasicStatus = Status.Extension;

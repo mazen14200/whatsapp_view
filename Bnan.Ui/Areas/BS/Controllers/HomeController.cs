@@ -199,15 +199,15 @@ namespace Bnan.Ui.Areas.BS.Controllers
             bSLayoutVM.PaymentMethodsBranch = paymentMethodBranch.OrderBy(x=>x.Code).ToList();
             bSLayoutVM.PaymentMethodsUser = paymentMethodUser.OrderBy(x=>x.Code).ToList();
 
-
             return View(bSLayoutVM);
         }
         public async Task<IActionResult> ChangeBranch(string selectedBranch)
         {
             var userLogin = await _userManager.GetUserAsync(User);
-            var lessorCode = userLogin.CrMasUserInformationLessor;
+            var userInfo = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == userLogin.CrMasUserInformationCode);
+            var lessorCode = userInfo.CrMasUserInformationLessor;
             var checkBranchCode = await _unitOfWork.CrCasBranchInformation.FindAsync(x => x.CrCasBranchInformationLessor == lessorCode && x.CrCasBranchInformationCode == selectedBranch);
-            if (checkBranchCode != null) userLogin.CrMasUserInformationDefaultBranch = selectedBranch;
+            if (checkBranchCode != null) userInfo.CrMasUserInformationDefaultBranch = selectedBranch;
             else userLogin.CrMasUserInformationDefaultBranch = "100";
             await _unitOfWork.CompleteAsync();
             return Json(true);

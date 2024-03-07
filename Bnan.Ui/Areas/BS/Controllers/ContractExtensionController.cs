@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using NToastNotify;
 using System.Diagnostics.Contracts;
+using System.Globalization;
 
 namespace Bnan.Ui.Areas.BS.Controllers
 {
@@ -45,11 +46,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var contractMap = _mapper.Map<List<ContractForExtensionVM>>(contracts);
             foreach (var contract in contractMap)
             {
-                var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode&&
-                x.CrCasRenterContractAuthorizationContractNo==contract.CrCasRenterContractBasicNo);
-                if (authContract != null) contract.AuthEndDate=authContract.CrCasRenterContractAuthorizationEndDate;
+                var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode &&
+                x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);
+                if (authContract != null) contract.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
             }
-            bsLayoutVM.ExtensionContracts = contractMap.Where(x=>x.AuthEndDate>DateTime.Now).ToList();
+            bsLayoutVM.ExtensionContracts = contractMap.Where(x => x.AuthEndDate > DateTime.Now).ToList();
             return View(bsLayoutVM);
         }
 
@@ -72,8 +73,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             if (!string.IsNullOrEmpty(search))
             {
-                
-                bsLayoutVM.ExtensionContracts = contractMap.Where(x => x.AuthEndDate > DateTime.Now&&
+
+                bsLayoutVM.ExtensionContracts = contractMap.Where(x => x.AuthEndDate > DateTime.Now &&
                                                                                                (x.CrCasRenterContractBasicNo.Contains(search) ||
                                                                                                 x.CrCasRenterContractBasic4.CrCasRenterLessorNavigation.CrMasRenterInformationArName.Contains(search) ||
                                                                                                 x.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName.Contains(search) ||
@@ -81,7 +82,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                                 x.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName.ToLower().Contains(search))).ToList();
                 return PartialView("_ContractExtension", bsLayoutVM);
             }
-            bsLayoutVM.ExtensionContracts= contractMap.Where(x => x.AuthEndDate > DateTime.Now ).ToList();
+            bsLayoutVM.ExtensionContracts = contractMap.Where(x => x.AuthEndDate > DateTime.Now).ToList();
             return PartialView("_ContractExtension", bsLayoutVM);
         }
         [HttpGet]
@@ -93,13 +94,13 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var bsLayoutVM = await GetBranchesAndLayout();
-            var contract = await _unitOfWork.CrCasRenterContractBasic.FindAsync(x => x.CrCasRenterContractBasicNo == id,
-                                                                                     new[] { "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", 
-                                                                                             "CrCasRenterContractBasicCarSerailNoNavigation"});
+            var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == id,
+                                                                                     new[] { "CrCasRenterContractBasic4.CrCasRenterLessorNavigation",
+                                                                                             "CrCasRenterContractBasicCarSerailNoNavigation"}).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();
             var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode &&
                 x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);
             var contractMap = _mapper.Map<ContractForExtensionVM>(contract);
-            var PaymentMethod = _unitOfWork.CrMasSupAccountPaymentMethod.FindAll(x => x.CrMasSupAccountPaymentMethodStatus == Status.Active&&x.CrMasSupAccountPaymentMethodClassification!="4").ToList();
+            var PaymentMethod = _unitOfWork.CrMasSupAccountPaymentMethod.FindAll(x => x.CrMasSupAccountPaymentMethodStatus == Status.Active && x.CrMasSupAccountPaymentMethodClassification != "4").ToList();
             var SalesPoint = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == lessorCode &&
                                                                              x.CrCasAccountSalesPointBrn == bsLayoutVM.SelectedBranch &&
                                                                              x.CrCasAccountSalesPointBankStatus == Status.Active &&
@@ -108,96 +109,92 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             contractMap.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
             contractMap.AuthType = authContract.CrCasRenterContractAuthorizationType;
-            contractMap.CasRenterPreviousBalance = contract.CrCasRenterContractBasic4?.CrCasRenterLessorBalance;
+            contractMap.CasRenterPreviousBalance = contract.CrCasRenterContractBasic4?.CrCasRenterLessorAvailableBalance;
             bsLayoutVM.ExtensionContract = contractMap;
             bsLayoutVM.SalesPoint = SalesPoint;
             bsLayoutVM.PaymentMethods = PaymentMethod;
             return View(bsLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(BSLayoutVM bSLayoutVM,string reasons)
+        public async Task<IActionResult> Create(BSLayoutVM bSLayoutVM, string ExtensionValue, string reasons)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var ContractInfo = bSLayoutVM.ExtensionContract;
             var Contract = await _unitOfWork.CrCasRenterContractBasic.FindAsync(x => x.CrCasRenterContractBasicNo == ContractInfo.CrCasRenterContractBasicNo && x.CrCasRenterContractBasicStatus == Status.Active);
-            if (Contract!=null)
+            if (Contract != null)
             {
                 var Renter = _unitOfWork.CrMasRenterInformation.Find(x => x.CrMasRenterInformationId == Contract.CrCasRenterContractBasicRenterId);
                 var RenterLessor = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == Contract.CrCasRenterContractBasicRenterId);
                 var Car = _unitOfWork.CrCasCarInformation.Find(x => x.CrCasCarInformationSerailNo == Contract.CrCasRenterContractBasicCarSerailNo);
                 var CarPrice = _unitOfWork.CrCasPriceCarBasic.Find(x => x.CrCasPriceCarBasicNo == Contract.CrCasRenterContractPriceReference);
                 var Branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == bSLayoutVM.SelectedBranch && x.CrCasBranchInformationLessor == lessorCode);
-
+                if (string.IsNullOrEmpty(ContractInfo.AmountPayed)) ContractInfo.AmountPayed = "0";
                 var NewContract = await _contractExtension.AddRenterExtensionContract(Contract.CrCasRenterContractBasicNo, ContractInfo.DaysNo, userLogin.CrMasUserInformationCode, ContractInfo.AmountPayed, reasons);
-
-                var CheckUpdateContractStatus = true;
-                CheckUpdateContractStatus = await _contractExtension.UpdateStatusOldContract(Contract.CrCasRenterContractBasicNo);
-
-                //Account Receipt
-                var CheckAccountReceipt = true;
-                var passing = "";
-                if (NewContract.CrCasRenterContractBasicAmountPaidAdvance > 0)
+                if (NewContract != null)
                 {
+                    var CheckUpdateContractStatus = true;
+                    CheckUpdateContractStatus = await _contractExtension.UpdateStatusOldContract(Contract.CrCasRenterContractBasicNo);
 
-                    if (ContractInfo.PaymentMethod == "30")
+                    //Account Receipt
+                    var CheckAccountReceipt = true;
+                    var CheckRenterLessor = true;
+                    var CheckBranch = true;
+                    var CheckSalesPoint = true;
+                    var CheckBranchValidity = true;
+                    var CheckUserInformation = true;
+
+                    var passing = "";
+                    if (decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture) !=null&& decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture) > 0)
                     {
-                        passing = "4";
-                        ContractInfo.AccountNo = ContractInfo.SalesPoint;
-                    }
-                    else
-                    {
-                        passing = "1";
-                    }
 
-                    CheckAccountReceipt = await _contractExtension.AddAccountReceipt(NewContract.CrCasRenterContractBasicNo, lessorCode, NewContract.CrCasRenterContractBasicBranch,
-                                                                                  ContractInfo.PaymentMethod, ContractInfo.AccountNo, NewContract.CrCasRenterContractBasicCarSerailNo,
-                                                                                  ContractInfo.SalesPoint, (decimal)NewContract.CrCasRenterContractBasicAmountPaidAdvance,
-                                                                                  NewContract.CrCasRenterContractBasicRenterId, userLogin.CrMasUserInformationCode, passing, reasons);
-                }
-
-                //Update RenterLessor Of Car Renter
-                var CheckRenterLessor = true;
-                CheckRenterLessor = await _contractExtension.UpdateRenterLessor(NewContract.CrCasRenterContractBasicRenterId, lessorCode ,(decimal)NewContract.CrCasRenterContractBasicAmountPaidAdvance);
-                //Update Branch Balance , But first Check if passing equal 4 or not 
-                
-                var CheckBranch = true;
-                if (passing != "4") CheckBranch = await _contractExtension.UpdateBranchBalance(Branch.CrCasBranchInformationCode, lessorCode, (decimal)NewContract.CrCasRenterContractBasicAmountPaidAdvance);
-
-                //Update SalesPoint Balance , But first Check if passing equal 4 or not 
-                var CheckSalesPoint = true;
-                if (!string.IsNullOrEmpty(ContractInfo.SalesPoint) && passing != "4") CheckSalesPoint = await _contractExtension.UpdateSalesPointBalance(Branch.CrCasBranchInformationCode, lessorCode, ContractInfo.SalesPoint, (decimal)NewContract.CrCasRenterContractBasicAmountPaidAdvance);
-
-                // UpdateBranchValidity
-                var CheckBranchValidity = true;
-                if (passing != "4") CheckBranchValidity = await _contractExtension.UpdateBranchValidity(Branch.CrCasBranchInformationCode, lessorCode, userLogin.CrMasUserInformationCode, ContractInfo.PaymentMethod, (decimal)NewContract.CrCasRenterContractBasicAmountPaidAdvance);
-
-
-                // UpdateUserBalance
-                var CheckUserInformation = true;
-                if (passing != "4") CheckUserInformation = await _contractExtension.UpdateUserBalance(Branch.CrCasBranchInformationCode, lessorCode, userLogin.CrMasUserInformationCode, ContractInfo.PaymentMethod, (decimal)NewContract.CrCasRenterContractBasicAmountPaidAdvance);
-
-                // Add Renter Alert
-                var CheckRenterAlert = true;
-
-                CheckRenterAlert = await _contractExtension.UpdateAlertContract(NewContract.CrCasRenterContractBasicNo);
-
-                if (NewContract != null && CheckUpdateContractStatus && CheckRenterLessor && CheckAccountReceipt && CheckBranch && CheckSalesPoint &&
-                    CheckUserInformation && CheckBranchValidity && CheckRenterAlert)
-                {
-                    try
-                    {
-                        if (await _unitOfWork.CompleteAsync() > 0)
+                        if (ContractInfo.PaymentMethod == "30")
                         {
-                            _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
-                            return RedirectToAction("Index");
+                            passing = "4";
+                            ContractInfo.AccountNo = ContractInfo.SalesPoint;
                         }
+                        else
+                        {
+                            passing = "1";
+                        }
+
+                        CheckAccountReceipt = await _contractExtension.AddAccountReceipt(NewContract.CrCasRenterContractBasicNo, lessorCode, NewContract.CrCasRenterContractBasicBranch,
+                                                                                      ContractInfo.PaymentMethod, ContractInfo.AccountNo, NewContract.CrCasRenterContractBasicCarSerailNo,
+                                                                                      ContractInfo.SalesPoint, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture),
+                                                                                      NewContract.CrCasRenterContractBasicRenterId, userLogin.CrMasUserInformationCode, passing, reasons);
+                        //Update Branch Balance , But first Check if passing equal 4 or not 
+                        if (passing != "4") CheckBranch = await _contractExtension.UpdateBranchBalance(Branch.CrCasBranchInformationCode, lessorCode, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture));
+                        //Update SalesPoint Balance , But first Check if passing equal 4 or not 
+                        if (!string.IsNullOrEmpty(ContractInfo.SalesPoint) && passing != "4") CheckSalesPoint = await _contractExtension.UpdateSalesPointBalance(Branch.CrCasBranchInformationCode, lessorCode, ContractInfo.SalesPoint, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture));
+                        // UpdateBranchValidity
+                        if (passing != "4") CheckBranchValidity = await _contractExtension.UpdateBranchValidity(Branch.CrCasBranchInformationCode, lessorCode, userLogin.CrMasUserInformationCode, ContractInfo.PaymentMethod, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture));
+                        // UpdateUserBalance
+                        if (passing != "4") CheckUserInformation = await _contractExtension.UpdateUserBalance(Branch.CrCasBranchInformationCode, lessorCode, userLogin.CrMasUserInformationCode, ContractInfo.PaymentMethod, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture));
                     }
-                    catch (Exception ex)
+                    //Update RenterLessor Of Car Renter
+                    CheckRenterLessor = await _contractExtension.UpdateRenterLessor(NewContract.CrCasRenterContractBasicRenterId, lessorCode, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture), decimal.Parse(ExtensionValue, CultureInfo.InvariantCulture));
+
+                    // Add Renter Alert
+                    var CheckRenterAlert = true;
+                    CheckRenterAlert = await _contractExtension.UpdateAlertContract(NewContract.CrCasRenterContractBasicNo);
+
+                    if (NewContract != null && CheckUpdateContractStatus && CheckRenterLessor && CheckAccountReceipt && CheckBranch && CheckSalesPoint &&
+                        CheckUserInformation && CheckBranchValidity && CheckRenterAlert)
                     {
-                        _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
-                        return RedirectToAction("Index");
-                        throw;
+                        try
+                        {
+                            if (await _unitOfWork.CompleteAsync() > 0)
+                            {
+                                _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                                return RedirectToAction("Index");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                            return RedirectToAction("Index");
+                            throw;
+                        }
                     }
                 }
             }

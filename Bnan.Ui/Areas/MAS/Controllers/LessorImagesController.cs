@@ -46,8 +46,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
 
-            // Set cache-control headers to prevent caching
-            Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+
             //sidebar Active
             ViewBag.id = "#sidebarCompany";
             ViewBag.no = "1";
@@ -67,8 +66,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            // Set cache-control headers to prevent caching
-            Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+           
             //sidebar Active
             ViewBag.id = "#sidebarCompany";
             ViewBag.no = "1";
