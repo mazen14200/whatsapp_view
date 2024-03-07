@@ -15,6 +15,8 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Microsoft.Extensions.Localization;
 
 namespace Bnan.Ui.Areas.MAS.Controllers
 {
@@ -29,6 +31,8 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         private readonly IUserMainValidtion _userMainValidtion;
         private readonly IUserSubValidition _userSubValidition;
         private readonly IUserProcedureValidition _userProcedureValidition;
+        private readonly IStringLocalizer<UsersController> _localizer;
+
 
         public UsersController(IUserService userService,
                                IAuthService authService,
@@ -37,6 +41,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                                IUnitOfWork unitOfWork, IUserLoginsService userLoginsService,
                                IMapper mapper, IUserMainValidtion userMainValidtion,
                                IUserSubValidition userSubValidition,
+                               IStringLocalizer<UsersController> localizer,
                                IUserProcedureValidition userProcedureValidition) : base(userManager, unitOfWork, mapper)
         {
             _userService = userService;
@@ -46,11 +51,19 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             _userMainValidtion = userMainValidtion;
             _userSubValidition = userSubValidition;
             _userProcedureValidition = userProcedureValidition;
+            _localizer = localizer;
         }
 
         [HttpGet]
         public async Task<IActionResult> Users()
         {
+            //save Tracing
+            var (mainTask, subTask, system, currentUser) = await SetTrace("105", "1105001", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
             //sidebar Active
             ViewBag.id = "#sidebarUsers";
             ViewBag.no = "0";
@@ -186,7 +199,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
             // SaveTracing
             var (mainTask, subTask, system, currentUser) = await SetTrace("105", "1105001", "1");
-            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "اضافة", "Add", mainTask.CrMasSysMainTasksCode,
+            var RecordAr =$"{model.CrMasUserInformationArName} - {model.CrMasUserInformationTasksArName}" ;
+            var RecordEn =$"{model.CrMasUserInformationEnName} - {model.CrMasUserInformationTasksEnName}" ;
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "إضافة", "Add", mainTask.CrMasSysMainTasksCode,
             subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
             subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -226,9 +241,12 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     user.CrMasUserInformationTasksArName = model.CrMasUserInformationTasksArName;
                     user.CrMasUserInformationTasksEnName = model.CrMasUserInformationTasksEnName;
                     await _userService.UpdateAsync(user);
-                    //SaveTracing
+                    
+                    // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("105", "1105001", "1");
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل بيانات", "Edit information", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = $"{_unitOfWork.CrMasUserInformation.Find(x=>x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationArName} - {_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationTasksArName}";
+                    var RecordEn = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationEnName} - {_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationTasksEnName}";
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 }
@@ -248,27 +266,30 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 {
                     if (status == Status.Hold)
                     {
-                        sAr = "ايقاف موظف";
-                        sEn = "Hold Employee";
+                        sAr = "ايقاف";
+                        sEn = "Hold";
                         user.CrMasUserInformationStatus = Status.Hold;
                     }
                     else if (status == Status.Deleted)
                     {
-                        sAr = "حذف موظف";
-                        sEn = "Remove Employee";
+                        sAr = "حذف";
+                        sEn = "Remove";
                         user.CrMasUserInformationStatus = Status.Deleted;
                     }
                     else if (status == Status.Active)
                     {
-                        sAr = "استرجاع موظف";
-                        sEn = "Retrive Employee";
+                        sAr = "استرجاع";
+                        sEn = "Retrive";
                         user.CrMasUserInformationStatus = Status.Active;
                     }
 
                     await _unitOfWork.CompleteAsync();
+
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("105", "1105001", "1");
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, sAr, sEn, mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == user.CrMasUserInformationCode).CrMasUserInformationArName} - {_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == user.CrMasUserInformationCode).CrMasUserInformationTasksArName}";
+                    var RecordEn = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == user.CrMasUserInformationCode).CrMasUserInformationEnName} - {_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == user.CrMasUserInformationCode).CrMasUserInformationTasksEnName}";
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, sAr, sEn, mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -284,6 +305,14 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public async Task<IActionResult> SystemValiditions()
         {
+            //save Tracing
+            var (mainTask, subTask, system, currentUser) = await SetTrace("105", "1105002", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
             //sidebar Active
             ViewBag.id = "#sidebarUsers";
             ViewBag.no = "1";
@@ -345,7 +374,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        public IActionResult EditSystemValiditions([FromBody] CheckBoxModels model)
+        public async Task<IActionResult> EditSystemValiditions([FromBody] CheckBoxModels model)
         {
 
             foreach (var checkboxMain in model.CheckboxesMainTask)
@@ -359,10 +388,36 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 var subTask = _unitOfWork.CrMasUserSubValidations.Find(x => x.CrMasUserSubValidationUser == model.UserId && x.CrMasUserSubValidationMain == checkboxSub.mainTaskId && x.CrMasUserSubValidationSubTasks== checkboxSub.subTaskId);
                 if (mainTask.CrMasUserMainValidationAuthorization == true)
                 {
-                    if (subTask != null) subTask.CrMasUserSubValidationAuthorization = checkboxSub.value;
+                    if (subTask != null)
+                    {
+                        if (subTask.CrMasUserSubValidationAuthorization == false && checkboxSub.value == true)
+                        {
+                            // SaveTracing
+                            var (mainTask1, subTask1, system, currentUser) = await SetTrace("105", "1105002", "1");
+                            var RecordAr = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.UserId).CrMasUserInformationArName} - {_unitOfWork.CrMasSysSubTask.Find(x => x.CrMasSysSubTasksCode == subTask.CrMasUserSubValidationSubTasks).CrMasSysSubTasksArName.ToString()}";
+                            var RecordEn = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.UserId).CrMasUserInformationEnName} - {_unitOfWork.CrMasSysSubTask.Find(x => x.CrMasSysSubTasksCode == subTask.CrMasUserSubValidationSubTasks).CrMasSysSubTasksEnName.ToString()}";
+                            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "إضافة دور", "Add role", mainTask1.CrMasSysMainTasksCode,
+                            subTask1.CrMasSysSubTasksCode, mainTask1.CrMasSysMainTasksArName, subTask1.CrMasSysSubTasksArName, mainTask1.CrMasSysMainTasksEnName,
+                            subTask1.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+                        }
+
+                        subTask.CrMasUserSubValidationAuthorization = checkboxSub.value;
+
+                    }
                 }
                 else
                 {
+                    if (subTask.CrMasUserSubValidationAuthorization == true )
+                    {
+                        // SaveTracing
+                        var (mainTask1, subTask1, system, currentUser) = await SetTrace("105", "1105002", "1");
+                        var RecordAr = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.UserId).CrMasUserInformationArName} - {_unitOfWork.CrMasSysSubTask.Find(x => x.CrMasSysSubTasksCode == subTask.CrMasUserSubValidationSubTasks).CrMasSysSubTasksArName.ToString()}";
+                        var RecordEn = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.UserId).CrMasUserInformationEnName} - {_unitOfWork.CrMasSysSubTask.Find(x => x.CrMasSysSubTasksCode == subTask.CrMasUserSubValidationSubTasks).CrMasSysSubTasksEnName.ToString()}";
+                        await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "حذف دور", "Remove role", mainTask1.CrMasSysMainTasksCode,
+                        subTask1.CrMasSysSubTasksCode, mainTask1.CrMasSysMainTasksArName, subTask1.CrMasSysSubTasksArName, mainTask1.CrMasSysMainTasksEnName,
+                        subTask1.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+                    }
+
                     subTask.CrMasUserSubValidationAuthorization = false;
                 }
 
@@ -382,6 +437,8 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                         if (checkboxProcedure.procedureName.ToLower() == "unhold") procedureTask.CrMasUserProceduresValidationUnHoldAuthorization = checkboxProcedure.value;
                         if (checkboxProcedure.procedureName.ToLower() == "delete") procedureTask.CrMasUserProceduresValidationDeleteAuthorization = checkboxProcedure.value;
                         if (checkboxProcedure.procedureName.ToLower() == "undelete") procedureTask.CrMasUserProceduresValidationUnDeleteAuthorization = checkboxProcedure.value;
+
+
                     }
                 }
                 else
@@ -402,6 +459,13 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public async Task<IActionResult> MyAccount()
         {
+            //save Tracing
+            var (mainTask, subTask, system, currentUser) = await SetTrace("105", "1105003", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
             // Set Title
             var titles = await setTitle("105", "1105001", "1");
             await ViewData.SetPageTitleAsync(titles[0],"", titles[2], "تعديل", "Edit", titles[3]);
@@ -448,6 +512,15 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             user.CrMasUserInformationSignature = filePathSignture;
             user.CrMasUserInformationPicture = filePathImage;
             await _userManager.UpdateAsync(user);
+
+            // SaveTracing
+            var (mainTask, subTask, system, currentUser) = await SetTrace("105", "1105003", "1");
+            var RecordAr = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationArName} - {_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationTasksArName}";
+            var RecordEn = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationEnName} - {_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationTasksEnName}";
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -489,6 +562,14 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     user.CrMasUserInformationPassWord = model.NewPassword;
                     user.CrMasUserInformationChangePassWordLastDate = DateTime.Now.Date;
                     _unitOfWork.Complete();
+
+                    // SaveTracing
+                    var (mainTask, subTask, system, currentUser) = await SetTrace("105", "1105003", "1");
+                    var RecordAr = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == user.CrMasUserInformationCode).CrMasUserInformationArName} - {_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == user.CrMasUserInformationCode).CrMasUserInformationTasksArName}";
+                    var RecordEn = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == user.CrMasUserInformationCode).CrMasUserInformationEnName} - {_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == user.CrMasUserInformationCode).CrMasUserInformationTasksEnName}";
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تغيير الباسورد", "password Changed", mainTask.CrMasSysMainTasksCode,
+                    subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+                    subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 }
             }
             else

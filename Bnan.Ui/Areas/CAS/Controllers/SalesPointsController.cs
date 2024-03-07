@@ -41,6 +41,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
         public async Task<IActionResult> SalesPoints()
         {
+            //save Tracing
+            var (mainTask, subTask, system, currentUser1) = await SetTrace("207", "2207004", "2");
+
+            await _userLoginsService.SaveTracing(currentUser1.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
             //sidebar Active
             ViewBag.id = "#sidebarServices";
             ViewBag.no = "3";
@@ -197,7 +205,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     _unitOfWork.Complete();
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("207", "2207004", "2");
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل بيانات", "Edit information", mainTask.CrMasSysMainTasksCode,
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                     // Save Adminstrive Procedures

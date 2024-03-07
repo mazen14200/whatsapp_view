@@ -155,6 +155,12 @@ namespace Bnan.Inferastructure
             builder.Services.AddScoped<IRenterInformation, RenterInformation>();
 
 
+            //CAS
+            builder.Services.AddScoped<IRenterLessorInformation, CasRenterLessorInformation>();
+
+            builder.Services.AddScoped<IRenterContract, CasRenterContract>();
+
+
             return builder;
         }
 

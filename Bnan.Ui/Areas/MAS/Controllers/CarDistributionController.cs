@@ -42,6 +42,13 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
         public async Task<IActionResult> CarDistribution()
         {
+            //save Tracing
+            var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107007", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
             //sidebar active
             ViewBag.id = "#sidebarcarsservices";
             ViewBag.no = "5";
@@ -163,7 +170,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
             // SaveTracing
             var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107007", "1");
-            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "إضافه", "Add", mainTask.CrMasSysMainTasksCode,
+            var RecordAr = crMasSupCarDistributionVM.CrMasSupCarDistributionConcatenateArName;
+            var RecordEn = crMasSupCarDistributionVM.CrMasSupCarDistributionConcatenateEnName;
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "إضافه", "Add", mainTask.CrMasSysMainTasksCode,
             subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
             subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
             return View(crMasSupCarDistributionVM);
@@ -205,7 +214,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 // SaveTracing
                 var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107007", "1");
-                await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
+                var RecordAr = CrMasSupCarDistribution.CrMasSupCarDistributionConcatenateArName;
+                var RecordEn = CrMasSupCarDistribution.CrMasSupCarDistributionConcatenateEnName;
+                await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                 subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 return RedirectToAction("CarDistribution");
@@ -263,7 +274,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     await _unitOfWork.CompleteAsync();
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107007", "1");
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, sAr, sEn, mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = CarDistribution.CrMasSupCarDistributionConcatenateArName;
+                    var RecordEn = CarDistribution.CrMasSupCarDistributionConcatenateEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, sAr, sEn, mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 

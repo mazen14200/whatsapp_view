@@ -10,12 +10,43 @@
 }
 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
 {
-    @* <div class="col-sm-12"> *@
-    @* <div style="overflow-y: scroll;overflow-x: scroll; "> *@
-    @* <div style="width:150;height: 300px "> *@
+    @*Mazen- For Scrolling*@
+    @*
+<style >
+        .container-scrol {
+            overflow: scroll;
+            height: 180px;
+            width: 900px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+            table th,
+            table td {
+                max-width: 600px;
+                padding: 8px 16px;
+                border: 1px solid #ddd;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            table thead {
+                position: sticky;
+                inset-block-start: 0;
+                background-color: #ddd;
+            }
+</style>
+    <div class="container-scrol">
+        <table class="table table-hover" >*@
+
+     <div class="col-sm-12"> 
         @* For-scrolling *@
-    <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;margin: 0 auto;width:100%; ">
-            <thead>
+
+            <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+                <thead>
                 <tr>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["UserLoginDateTime"]</th>
@@ -37,7 +68,7 @@
                         <td id="_Nc">@no</td>
                         <td id="_Nc"> @Model.Item2[no][1]</td>
                         <td>@item.CrMasUserLoginConcatenateOperationEnDescription</td>
-                        <td>@item.CrMasUserLoginConcatenateOperationEnDescription</td>
+                        <td>@item.CrMasUserLoginUserNavigation.CrMasUserInformationEnName</td>
    
                     </tr>
 
@@ -47,14 +78,14 @@
         </table>
             @* </div> *@
         @* </div> *@
-    @* </div> *@
+     </div> 
 }
 else
 {
-        @* <div style="overflow-x: scroll; "> *@
 
-    //dt-responsive nowrap w-100 dataTable no-footer
-    <table id="basic-datatable" class="table table-bordered table-hover dtr-inline dt-responsive dataTable" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px;margin: 0 auto;">
+    <div class="col-sm-12">
+        @* For-scrolling *@
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
             <thead>
                 <tr>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
@@ -72,14 +103,14 @@ else
 
                 {
                     @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
-                            <tr style="cursor:pointer;color:black">
+                       <tr style="cursor:pointer;color:black">
                         @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
                         <td id="_Nc">@no</td>
                         @* <td id="_Nc"> @item.CrMasUserLoginEntryDate @item.CrMasUserLoginEntryTime</td> *@
                         @* <td id="_Nc"> @Model.Item2[Model.Item2.IndexOf(Model.Item2.Last())][1]</td> *@
                         <td id="_Nc"> @Model.Item2[no][1]</td>
                         <td>@item.CrMasUserLoginConcatenateOperationArDescription</td>
-                        <td>@item.CrMasUserLoginConcatenateOperationArDescription</td>
+                    <td>@item.CrMasUserLoginUserNavigation.CrMasUserInformationArName</td>
 
                     </tr>
 
@@ -89,7 +120,7 @@ else
         </table>
 
 
-    @* </div> *@
+    </div>
       
 }
 @section script{

@@ -11,5 +11,8 @@ namespace Bnan.Core.Interfaces
     {
         Task SaveTracing(string userCode, string operationAr, string operationEn, string mainTaskCode, string subTaskCode,
             string mainTaskAr, string subTaskAr, string mainTaskEn, string subTaskEn, string systemCode, string systemAr, string systemEn);
+
+        Task SaveTracing(string userCode, string RecordAr, string RecordEn, string operationAr, string operationEn, string mainTaskCode, string subTaskCode,
+            string mainTaskAr, string subTaskAr, string mainTaskEn, string subTaskEn, string systemCode, string systemAr, string systemEn);
     }
 }

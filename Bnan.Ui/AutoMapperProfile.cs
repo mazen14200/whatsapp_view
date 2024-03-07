@@ -128,7 +128,9 @@ namespace Bnan.Inferastructure
 
             CreateMap<RenterInformationsVM, CrMasRenterInformation>().ReverseMap();
 
+            CreateMap<RenterLessorInformationVM, CrCasRenterLessor>().ReverseMap();
 
+            CreateMap<CasRenterContractVM, CrCasRenterLessor>().ReverseMap();
 
         }
 

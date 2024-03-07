@@ -39,6 +39,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
         public async Task<IActionResult> CarPrice()
         {
+            //save Tracing
+            var (mainTask, subTask, system, currentUser) = await SetTrace("202", "2202007", "2");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
             //sidebar Active
             ViewBag.id = "#sidebarcars";
             ViewBag.no = "6";

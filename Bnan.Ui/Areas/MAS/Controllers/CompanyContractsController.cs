@@ -36,7 +36,15 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         }
 
         public async Task<IActionResult> CompanyContracts()
-        {       //sidebar Active
+        {
+            var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101003", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
+            //sidebar Active
             ViewBag.id = "#sidebarCompany";
             ViewBag.no = "2";
 
@@ -149,10 +157,14 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 throw;
             }
 
-           
+
             // SaveTracing
             var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101003", "1");
-            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
+            var companyCode = _unitOfWork.CrMasContractCompany.Find(x=>x.CrMasContractCompanyNo== CompanyContractCode).CrMasContractCompanyLessor;
+            var companyName = _unitOfWork.CrMasLessorInformation.Find(x=>x.CrMasLessorInformationCode == companyCode);
+            var RecordAr = $"{companyName.CrMasLessorInformationArShortName} - ( {CompanyContractCode} )" ;
+            var RecordEn = $"{companyName.CrMasLessorInformationEnShortName} - ( {CompanyContractCode} )";
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
             subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
             subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -175,7 +187,11 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 await _unitOfWork.CompleteAsync(); // Save the changes
                 // SaveTracing
                 var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101003", "1");
-                await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "حذف", "Delete", mainTask.CrMasSysMainTasksCode,
+                var companyCode = _unitOfWork.CrMasContractCompany.Find(x=>x.CrMasContractCompanyNo== companyContract.CrMasContractCompanyNo).CrMasContractCompanyLessor;
+                var companyName = _unitOfWork.CrMasLessorInformation.Find(x=>x.CrMasLessorInformationCode == companyCode);
+                var RecordAr = $"{companyName.CrMasLessorInformationArShortName} - ( {companyContract.CrMasContractCompanyNo} )" ;
+                var RecordEn = $"{companyName.CrMasLessorInformationEnShortName} - ( {companyContract.CrMasContractCompanyNo} )";
+                await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "حذف", "Delete", mainTask.CrMasSysMainTasksCode,
                 subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 return Json(new { success = true });

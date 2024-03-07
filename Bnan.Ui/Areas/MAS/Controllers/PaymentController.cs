@@ -46,6 +46,13 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var (mainTask, subTask, system, currentUser) = await SetTrace("109", "1109002", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
             var titles = await setTitle("109", "1109002", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var methods = await _unitOfWork.CrMasSupAccountPaymentMethod.GetAllAsync();
@@ -128,8 +135,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("109", "1109002", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل بيانات", "Edit information", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = payment.CrMasSupAccountPaymentMethodArName;
+                    var RecordEn = payment.CrMasSupAccountPaymentMethodEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -177,7 +185,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     // SaveTracing
 
                     var (mainTask, subTask, system, currentUser) = await SetTrace("109", "1109002", "1");
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, sAr, sEn, mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = Payment.CrMasSupAccountPaymentMethodArName;
+                    var RecordEn = Payment.CrMasSupAccountPaymentMethodEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, sAr, sEn, mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -295,8 +305,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     _unitOfWork.Complete();
 
                     var (mainTask, subTask, system, currentUser) = await SetTrace("109", "1109002", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "اضافة طريقة دفع", "Add Payment Method", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = PaymentMethodVMT.CrMasSupAccountPaymentMethodArName;
+                    var RecordEn = PaymentMethodVMT.CrMasSupAccountPaymentMethodEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "اضافة", "Add", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 

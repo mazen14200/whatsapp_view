@@ -55,6 +55,12 @@ namespace Bnan.Ui.Areas.MAS
 
         public async Task<IActionResult> Index()
         {
+            var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107003", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
 
             var titles = await setTitle("107", "1107003", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
@@ -170,8 +176,9 @@ namespace Bnan.Ui.Areas.MAS
                     _unitOfWork.Complete();
 
                     var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107003", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "اضافة", "Add", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = CarCvtVMT.CrMasSupCarCvtArName;
+                    var RecordEn = CarCvtVMT.CrMasSupCarCvtEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "اضافة", "Add", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -235,8 +242,9 @@ namespace Bnan.Ui.Areas.MAS
 
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107003", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = contract.CrMasSupCarCvtArName;
+                    var RecordEn = contract.CrMasSupCarCvtEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -290,9 +298,10 @@ namespace Bnan.Ui.Areas.MAS
                 await _unitOfWork.CompleteAsync();
 
                 // SaveTracing
-
+                var RecordAr = Contract.CrMasSupCarCvtArName;
+                var RecordEn = Contract.CrMasSupCarCvtEnName;
                 var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107003", "1");
-                await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, sAr, sEn, mainTask.CrMasSysMainTasksCode,
+                await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, sAr, sEn, mainTask.CrMasSysMainTasksCode,
                 subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 

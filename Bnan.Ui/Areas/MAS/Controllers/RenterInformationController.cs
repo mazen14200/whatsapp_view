@@ -53,14 +53,52 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var (mainTask, subTask, system, currentUser) = await SetTrace("103", "1103001", "1");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
             var titles = await setTitle("103", "1103001", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var RenterInformationAll = _unitOfWork.CrMasRenterInformation.GetAll(new[] { "CrMasRenterInformationNationalityNavigation", "CrMasRenterInformationProfessionNavigation", "CrMasRenterInformationSectorNavigation" });
+            var RenterInformationAll = _unitOfWork.CrMasRenterInformation.GetAll(new[] { "CrMasRenterInformationNationalityNavigation", "CrMasRenterInformationEmployerNavigation", "CrMasRenterInformationProfessionNavigation", "CrMasRenterPost" });
             //var RenterInformationAll = await _unitOfWork.CrMasRenterInformation.GetAllAsync();
-            var RenterInformationAllA = RenterInformationAll.Where(x => x.CrMasRenterInformationStatus == "A").ToList();
+            //var RenterInformationAllA = RenterInformationAll.Where(x => x.CrMasRenterInformationStatus == "A").ToList();
+            var RenterInformationAllA = RenterInformationAll.ToList();
+            List<List<string>> ConcateAdress_short = new List<List<string>>();
+            foreach (var item in RenterInformationAllA)
+            {
+                var ar = item.CrMasRenterPost.CrMasRenterPostArShortConcatenate.ToString(); 
+                string[] values = ar.Split('-');
+                for (int i = 0; i < values.Length; i++)
+                {
+                    values[i] = values[i].Trim();
+                }
+                var en = item.CrMasRenterPost.CrMasRenterPostEnShortConcatenate.ToString();
+                string[] values2 = en.Split('-');
+                for (int i = 0; i < values2.Length; i++)
+                {
+                    values2[i] = values2[i].Trim();
+                }
+                if (values.Length > 1 && values2.Length > 1)
+                {
+                    if (values2[0].Length < 4 && values2.Length > 2)
+                    {
+                        ConcateAdress_short.Add(new List<string> { item.CrMasRenterInformationId, values[0] + " - " + values[1], values2[0] + "-" + values2[1] + " - " + values2[2] });
+                    }
+                    else
+                    {
+                        ConcateAdress_short.Add(new List<string> { item.CrMasRenterInformationId, values[0] + " - " + values[1], values2[0] + " - " + values2[1] });
+
+                    }
+                }
+
+
+            }
+            ViewBag.ConcateAdress = ConcateAdress_short;
             //var CarsInfo_count_all = _RenterInformation.GetAllRenterInformationsCount();
+
             return View(RenterInformationAllA);
         }
 
@@ -156,8 +194,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     _unitOfWork.Complete();
 
                     var (mainTask, subTask, system, currentUser) = await SetTrace("103", "1103001", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "اضافة", "Add", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = RenterInformationVMT.CrMasRenterInformationArName;
+                    var RecordEn = RenterInformationVMT.CrMasRenterInformationEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "اضافة", "Add", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -211,8 +250,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("103", "1103001", "1");
-
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
+                    var RecordAr = contract.CrMasRenterInformationArName;
+                    var RecordEn = contract.CrMasRenterInformationEnName;
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
@@ -268,7 +308,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 // SaveTracing
 
                 var (mainTask, subTask, system, currentUser) = await SetTrace("103", "1103001", "1");
-                await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, sAr, sEn, mainTask.CrMasSysMainTasksCode,
+                var RecordAr = Contract.CrMasRenterInformationArName;
+                var RecordEn = Contract.CrMasRenterInformationEnName;
+                await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, sAr, sEn, mainTask.CrMasSysMainTasksCode,
                 subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
