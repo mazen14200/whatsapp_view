@@ -12,10 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using NToastNotify;
-using System.Globalization;
-using Bnan.Ui.ViewModels.BS;
-using System.Diagnostics.Contracts;
-using System.Numerics;
+
 namespace Bnan.Ui.Areas.CAS.Controllers
 {
 
@@ -53,6 +50,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "1";
             var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203002", "2");
 
             await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
@@ -62,7 +62,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("203", "2203002", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var RenterContractAll = _unitOfWork.CrCasRenterLessor.GetAll(new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation", "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation", "CrCasRenterLessorSectorNavigation", "CrCasRenterLessorCodeNavigation", "CrCasRenterLessorStatisticsGenderNavigation", "CrCasRenterLessorMembershipNavigation" });
+            var RenterContractAll = _unitOfWork.CrCasRenterLessor.GetAll(new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation", "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation", "CrCasRenterLessorSectorNavigation", "CrCasRenterLessorCodeNavigation", "CrCasRenterLessorStatisticsGenderNavigation", "CrCasRenterLessorMembershipNavigation" }).Where(x=>x.CrCasRenterLessorContractCount > 0);
             //var RenterContractAll = await _unitOfWork.CrCasRenterLessor.GetAllAsync();
             //var RenterContractAllA = RenterContractAll.Where(x => x.CrCasRenterLessorStatus == "A").ToList();
             //var RenterContractAllA = RenterContractAll.ToList();
@@ -80,6 +80,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> RenterContract_Table()
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "1";
             var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203002", "2");
 
             await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
@@ -102,12 +105,39 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var RenterContract_Basic_All = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic4", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).ToList();
 
             ViewData["Data_Table"] = RenterContract_Basic_All;
+            //ViewBag.v1 = "mm";
+            //var c1 = 1.5;
+            //var c1_1 = 1.3;
+            //var c2 = 1.5;
+            //var c2_1 = 1.3;
+            //double num = 45645.7;
+            
+            //if (num > 1000)
+            //{
+            //    c1 = num / 1000;
+            //    c1_1 = num % 1000;
+            //    if (c1 > 1000)
+            //    {
+            //        c2 = c1 / 1000;
+            //        c2_1 = c1 % 1000;
+            //    }
+            //    else
+            //    {
+            //        string f = $"{c1},{c1_1}";
+            //        ViewBag.v1 = f;
+            //    }
+            //}
+            
+
             return View();
         }
 
         [HttpGet]
         public PartialViewResult GetRenterContractByStatus(string status)
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "1";
             if (!string.IsNullOrEmpty(status))
             {
                 var RenterContractAllA = _unitOfWork.CrMasRenterPost.FindAll(x => x.CrMasRenterPostArShortConcatenate != null).ToList();
@@ -155,10 +185,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
 
 
-                    var RenterContractbyStatusAll = _unitOfWork.CrCasRenterLessor.FindAll(l => l.CrCasRenterLessorStatus == Status.Hold || l.CrCasRenterLessorStatus == Status.Active || l.CrCasRenterLessorStatus == Status.Rented, new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation", "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation", "CrCasRenterLessorSectorNavigation", "CrCasRenterLessorCodeNavigation", "CrCasRenterLessorStatisticsGenderNavigation", "CrCasRenterLessorMembershipNavigation" }).ToList();
+                    var RenterContractbyStatusAll = _unitOfWork.CrCasRenterLessor.FindAll(l => l.CrCasRenterLessorStatus == Status.Hold || l.CrCasRenterLessorStatus == Status.Active || l.CrCasRenterLessorStatus == Status.Rented, new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation", "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation", "CrCasRenterLessorSectorNavigation", "CrCasRenterLessorCodeNavigation", "CrCasRenterLessorStatisticsGenderNavigation", "CrCasRenterLessorMembershipNavigation" }).Where(x => x.CrCasRenterLessorContractCount > 0).ToList();
                     return PartialView("_DataTableRenterContract", RenterContractbyStatusAll);
                 }
-                var RenterContractbyStatus = _unitOfWork.CrCasRenterLessor.FindAll(l => l.CrCasRenterLessorStatus == status, new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation", "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation", "CrCasRenterLessorSectorNavigation", "CrCasRenterLessorCodeNavigation", "CrCasRenterLessorStatisticsGenderNavigation", "CrCasRenterLessorMembershipNavigation" }).ToList();
+                var RenterContractbyStatus = _unitOfWork.CrCasRenterLessor.FindAll(l => l.CrCasRenterLessorStatus == status, new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation", "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation", "CrCasRenterLessorSectorNavigation", "CrCasRenterLessorCodeNavigation", "CrCasRenterLessorStatisticsGenderNavigation", "CrCasRenterLessorMembershipNavigation" }).Where(x => x.CrCasRenterLessorContractCount > 0).ToList();
                 return PartialView("_DataTableRenterContract", RenterContractbyStatus);
             }
             return PartialView();
@@ -253,8 +283,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             //sidebar Active
-            ViewBag.id = "#sidebarCompany";
-            ViewBag.no = "0";
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "1";
 
             //To Set Title !!!!!!!!!!!!!
             var titles = await setTitle("203", "2203002", "2");
@@ -305,8 +335,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         public async Task<IActionResult> Edit(CasRenterContractVM model)
         {
             //sidebar Active
-            ViewBag.id = "#sidebarCompany";
-            ViewBag.no = "0";
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "1";
 
             var user = await _userService.GetUserByUserNameAsync(HttpContext.User.Identity.Name);
 
@@ -347,6 +377,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpPost]
         public async Task<IActionResult> EditStatus(string code, string status)
         {
+
             string sAr = "";
             string sEn = "";
             var Contract = await _unitOfWork.CrCasRenterLessor.GetByIdAsync(code);
@@ -403,6 +434,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckChangedField(string Exist_lang, string dataField)
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "1";
             var All_RenterContracts = await _unitOfWork.CrCasRenterLessor.GetAllAsync();
 
             if (dataField != null && All_RenterContracts != null)

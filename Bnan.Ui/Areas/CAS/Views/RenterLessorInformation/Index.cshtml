@@ -86,13 +86,6 @@
                     <input type="radio" id="customRadioRented" name="customRadio" value="R" class="form-check-input">
                     <label class="form-check-label" for="customRadioRented">@localizer["Rented"]</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label" ></label>
-
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label"></label>
-                </div>
             </div>
         </div>
         <div class="dataTable " >
@@ -121,6 +114,8 @@
 
         //on Click Filter Radio Button GetRenterLessorInformationByStatus
         $("input[name='customRadio']").on("click", function () {
+            // Clear the value from the search input
+            $("#top-search").val("");
             GetRenterLessorInformationFitler($(this).val())
         })
     </script>

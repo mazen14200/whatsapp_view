@@ -344,7 +344,7 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205003")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Contracts Report"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="Index" asp-controller="ReportContract"> @localizer["Contracts Report"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205004")?.CrMasUserSubValidationAuthorization == true)

@@ -56,6 +56,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
         public async Task<IActionResult> Index()
         {
+
+            //sidebar Active
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "0";
+
             var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203001", "2");
 
             await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
@@ -116,6 +121,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public PartialViewResult GetRenterLessorInformationByStatus(string status)
         {
+
+            //sidebar Active
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "0";
             if (!string.IsNullOrEmpty(status))
             {
                 var RenterLessorInformationAllA = _unitOfWork.CrMasRenterPost.FindAll(x => x.CrMasRenterPostArShortConcatenate != null).ToList();
@@ -260,8 +269,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
+
             //sidebar Active
-            ViewBag.id = "#sidebarCompany";
+            ViewBag.id = "#sidebarRenter";
             ViewBag.no = "0";
 
             //To Set Title !!!!!!!!!!!!!
@@ -301,8 +311,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(RenterLessorInformationVM model)
         {
+
             //sidebar Active
-            ViewBag.id = "#sidebarCompany";
+            ViewBag.id = "#sidebarRenter";
             ViewBag.no = "0";
 
             var user = await _userService.GetUserByUserNameAsync(HttpContext.User.Identity.Name);

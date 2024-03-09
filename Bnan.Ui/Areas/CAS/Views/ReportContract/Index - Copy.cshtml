@@ -9,12 +9,12 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
        ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
-    ViewData["Page-title"] = @localizer["UserLogin Data"];
-    ViewData["Page-Hint"] = @localizer["UserLogin Hint"];
+    ViewData["Page-title"] = @localizer["RenterContractReport Data"];
+    ViewData["Page-Hint"] = @localizer["RenterContractReport Hint"];
 }
 <style>
     body {
-        overflow: hidden;
+        overflow: scroll;
     }
 
     @@media (max-width: 600px) {
@@ -114,7 +114,7 @@
             @*filter*@
             <div class="col-sm-12 col-md-9" style="-webkit-flex-item-align:center;">
                 <div class="col-sm-12 col-md-4 p-0">
-                    <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="MAS" asp-controller="Home" asp-action="Index">
+                    <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="CAS" asp-controller="Home" asp-action="Index">
                         <i class="mdi mdi-window-close"></i>
                     </a>
             @*      <a class="btn btn-secondary InsertBtn" onclick="CheckValidation('1104001', '@Status.Insert', '@Url.Action("AddCarRegistration", "CarRegistration")')">
@@ -149,23 +149,43 @@
                 
 
             </div>
+
+
                 
             @*search And Fitler Radio Button*@
             <div class="col-sm-12 col-md-3 p-0">
                 <input class="form-control" type="search" id="top-search" style="width: 96%;" placeholder="@localizer["search"]...">
             </div>
-@*             <div class="col-sm-12 col-md-12 mt-3" id="status-filter">
+            <div class="col-sm-12 col-md-12 mt-3" id="status-filter">
                 <div class="form-check form-check-inline">
                     <input type="radio" id="customRadioAll" name="customRadio" value="All" class="form-check-input">
                     <label class="form-check-label" for="customRadioAll">@localizer["All"]</label>
                 </div>
-                
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadioToday_Expired" name="customRadio" value="today" class="form-check-input">
+                    <label class="form-check-label" for="customRadioToday_Expired">@localizer["Today_Expired"]</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadioTommorow_Expired" name="customRadio" value="tomorrow" class="form-check-input">
+                    <label class="form-check-label" for="customRadioTommorow_Expired">@localizer["Tommorow_Expired"]</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadioafter_long_Expired" name="customRadio" value="after_longTime" class="form-check-input">
+                    <label class="form-check-label" for="customRadioafter_long_Expired">@localizer["after_long_Expired"]</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadioStoped" name="customRadio" value="E" class="form-check-input">
+                    <label class="form-check-label" for="customRadioStoped">@localizer["Expired"]</label>
+                </div>
 
-            </div> *@
-        </div>
-        <div class="dataTable " id="dataTableR1">
-            <partial name="_DataTableReport1" />
-        </div>
+            </div>
+        @if (ViewData["Data_Table"] !=null)
+        {
+            <div class="dataTable " id="dataTableR1">
+                <partial name="_DataTableReportContract" />
+            </div>
+        }
+
     </div>
 </div>
 <input type="text" hidden id="aaa" />
@@ -195,15 +215,22 @@
         });
     </script>
     <script>
-        function GetUpdatedValues() {
+            function GetUpdatedValues(status) {
             //var code = document.getElementById("CrMasContractCompanyNo").value;
             var _max = document.getElementById("endDateInput").value;
             var _mini = document.getElementById("startDateInput").value;
+            if(status == "All"){
+                    const yesBtn = document.getElementById('customRadioAll');
+
+                    // ✅ Set the radio button to checked
+                    yesBtn.checked = true;
+            }
+            //var status = $("input[name='customRadio']").val();
             $.ajax({
                 type: "GET",
-                data: { _max: _max, _mini: _mini },
-                // url: "@Url.Action("GetUserLoginByDate", "Report1", new { Area = "MAS" })",
-                url: '/MAS/Report1/GetUserLoginByDate',
+                    data: { _max: _max, _mini: _mini, status: status },
+                    // url: "@Url.Action("GetAllContractsByDate_status", "ReportContract", new { Area = "CAS" })",
+                    url: '/CAS/ReportContract/GetAllContractsByDate_status',
 
                 success: function (result) {
                     console.log(result);
@@ -225,23 +252,46 @@
             var endDate = document.getElementById('endDateInput');
 
             startDate.addEventListener('change', function () {
-                // Clear the value from the search input
-                $("#top-search").val("");
                 console.log('Start date changed');
-                GetUpdatedValues();
+                GetUpdatedValues("All");
                 // Handle logic for start date change here
             });
 
             endDate.addEventListener('change', function () {
-                // Clear the value from the search input
-                $("#top-search").val("");
                 console.log('End date changed');
-                GetUpdatedValues();
+                GetUpdatedValues("All");
                 // Handle logic for end date change here
             });
         });
     </script>
-}
+        @*Get Renter contract Using filter*@
+        <script>
+            //get Renter contract By Status function
+            function GetRenterContractFitler(status) {
+                $.ajax({
+                    type: "GET",
+                    data: {
+                        status: status
+                    },
+                    url: "@Url.Action("GetRenterContractsByStatus", "ReportContract", new { Area = "CAS" })",
+                    success: function (response) {
+                        $("#dataTableR1").html(response);
+                        set_basic_datatable();
+                    },
+                })
+            }
+
+            //on Click Filter Radio Button GetLessorsByStatus
+            $("input[name='customRadio']").on("click", function () {
+                // Clear the value from the search input
+                $("#top-search").val("");
+                //GetRenterContractFitler($(this).val())
+                GetUpdatedValues($(this).val());
+            })
+        </script>
+    }
+    
+
 
 @* 
 @section scripts {
