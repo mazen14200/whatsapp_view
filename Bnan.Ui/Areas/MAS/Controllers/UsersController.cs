@@ -116,7 +116,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             //To Set Title;
             var titles = await setTitle("105", "1105001", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "اضافة", "Create", titles[3]);
-            var callingKeys=_unitOfWork.CrMasSysCallingKeys.FindAll(x=>x.CrMasSysCallingKeysStatus==Status.Active);
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active);
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
             ViewData["CallingKeys"] = callingKeyList; // Pass the callingKeys to the view
 
@@ -127,33 +127,44 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUser(RegisterViewModel model, IFormFile UserSignatureFile, IFormFile UserImgFile)
         {
+            var user = await _userService.GetUserByUserNameAsync(model.CrMasUserInformationCode);
+
             string foldername = $"{"images\\Bnan\\Users"}\\{model.CrMasUserInformationCode}";
             string filePathImage;
             string filePathSignture;
 
             if (UserImgFile != null)
             {
-                string fileNameImg = "Image";
+                string fileNameImg = "Image_" + DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوقت
                 //string fileNameImgExtenstion = Path.GetExtension(UserImgFile.FileName);
                 filePathImage = await UserImgFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
             }
-            else
+            else if (UserImgFile == null && string.IsNullOrEmpty(user.CrMasUserInformationPicture))
             {
                 filePathImage = "~/images/common/user.jpg";
             }
+            else
+            {
+                filePathImage = user.CrMasUserInformationPicture;
+
+            }
             if (UserSignatureFile != null)
             {
-                string fileNameSignture = "Signture";
+                string fileNameSignture = "Signture_" + DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوقت
                 //string fileNameSigntureExtenstion = Path.GetExtension(UserSignatureFile.FileName);
                 filePathSignture = await UserSignatureFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameSignture, ".png");
             }
-            else
+            else if (UserSignatureFile == null && string.IsNullOrEmpty(user.CrMasUserInformationSignature))
             {
                 filePathSignture = "~/images/common/DefualtUserSignature.png";
             }
+            else
+            {
+                filePathSignture = user.CrMasUserInformationSignature;
+            }
 
 
-            var user = await _userService.GetUserByUserNameAsync(model.CrMasUserInformationCode);
+
             if (user != null)
             {
                 ModelState.AddModelError("Exist", "User Code Is Exists");
@@ -162,7 +173,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
             model.CrMasUserInformationSignature = filePathSignture;
             model.CrMasUserInformationPicture = filePathImage;
-           
+
             var crMasUserInformation = _mapper.Map<CrMasUserInformation>(model);
             var createUser = await _authService.RegisterAsync(crMasUserInformation);
 
@@ -199,8 +210,8 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
             // SaveTracing
             var (mainTask, subTask, system, currentUser) = await SetTrace("105", "1105001", "1");
-            var RecordAr =$"{model.CrMasUserInformationArName} - {model.CrMasUserInformationTasksArName}" ;
-            var RecordEn =$"{model.CrMasUserInformationEnName} - {model.CrMasUserInformationTasksEnName}" ;
+            var RecordAr = $"{model.CrMasUserInformationArName} - {model.CrMasUserInformationTasksArName}";
+            var RecordEn = $"{model.CrMasUserInformationEnName} - {model.CrMasUserInformationTasksEnName}";
             await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "إضافة", "Add", mainTask.CrMasSysMainTasksCode,
             subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
             subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
@@ -217,7 +228,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
             //To Set Title 
             var titles = await setTitle("105", "1105001", "1");
-            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل","Edit", titles[3]);
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
             var user = await _userService.GetUserByUserNameAsync(id);
             if (user == null)
             {
@@ -241,10 +252,10 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                     user.CrMasUserInformationTasksArName = model.CrMasUserInformationTasksArName;
                     user.CrMasUserInformationTasksEnName = model.CrMasUserInformationTasksEnName;
                     await _userService.UpdateAsync(user);
-                    
+
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("105", "1105001", "1");
-                    var RecordAr = $"{_unitOfWork.CrMasUserInformation.Find(x=>x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationArName} - {_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationTasksArName}";
+                    var RecordAr = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationArName} - {_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationTasksArName}";
                     var RecordEn = $"{_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationEnName} - {_unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == model.CrMasUserInformationCode).CrMasUserInformationTasksEnName}";
                     await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
@@ -358,15 +369,15 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
             RegisterViewModel viewModel = new RegisterViewModel
             {
-                CrMasSysMainTasks = (List<CrMasSysMainTask>)_unitOfWork.CrMasSysMainTasks.FindAll(x=>x.CrMasSysMainTasksStatus==Status.Active),
+                CrMasSysMainTasks = (List<CrMasSysMainTask>)_unitOfWork.CrMasSysMainTasks.FindAll(x => x.CrMasSysMainTasksStatus == Status.Active),
                 CrMasUserMainValidations = (List<CrMasUserMainValidation>)mainValidition,
 
-                CrMasUserInformationCode= user.CrMasUserInformationCode,
-                CrMasUserInformationArName= user.CrMasUserInformationArName,
+                CrMasUserInformationCode = user.CrMasUserInformationCode,
+                CrMasUserInformationArName = user.CrMasUserInformationArName,
                 CrMasUserInformationEnName = user.CrMasUserInformationEnName,
 
-                CrMasSysSubTasks =(List<CrMasSysSubTask>)_unitOfWork.CrMasSysSubTasks.FindAll(x=>x.CrMasSysSubTasksStatus== Status.Active),
-                CrMasUserSubValidations= (List<CrMasUserSubValidation>)subValition,
+                CrMasSysSubTasks = (List<CrMasSysSubTask>)_unitOfWork.CrMasSysSubTasks.FindAll(x => x.CrMasSysSubTasksStatus == Status.Active),
+                CrMasUserSubValidations = (List<CrMasUserSubValidation>)subValition,
                 CrMasSysProceduresTasks = (List<CrMasSysProceduresTask>)procedureTasks,
                 ProceduresValidations = (List<CrMasUserProceduresValidation>)procedureValidition,
 
@@ -379,13 +390,13 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
             foreach (var checkboxMain in model.CheckboxesMainTask)
             {
-                var mainTask = _unitOfWork.CrMasUserMainValidations.Find(x => x.CrMasUserMainValidationUser == model.UserId && x.CrMasUserMainValidationMainTasks== checkboxMain.id);
+                var mainTask = _unitOfWork.CrMasUserMainValidations.Find(x => x.CrMasUserMainValidationUser == model.UserId && x.CrMasUserMainValidationMainTasks == checkboxMain.id);
                 if (mainTask != null) mainTask.CrMasUserMainValidationAuthorization = checkboxMain.value;
             }
             foreach (var checkboxSub in model.CheckboxesSubTask)
             {
                 var mainTask = _unitOfWork.CrMasUserMainValidations.Find(x => x.CrMasUserMainValidationUser == model.UserId && x.CrMasUserMainValidationMainTasks == checkboxSub.mainTaskId);
-                var subTask = _unitOfWork.CrMasUserSubValidations.Find(x => x.CrMasUserSubValidationUser == model.UserId && x.CrMasUserSubValidationMain == checkboxSub.mainTaskId && x.CrMasUserSubValidationSubTasks== checkboxSub.subTaskId);
+                var subTask = _unitOfWork.CrMasUserSubValidations.Find(x => x.CrMasUserSubValidationUser == model.UserId && x.CrMasUserSubValidationMain == checkboxSub.mainTaskId && x.CrMasUserSubValidationSubTasks == checkboxSub.subTaskId);
                 if (mainTask.CrMasUserMainValidationAuthorization == true)
                 {
                     if (subTask != null)
@@ -407,7 +418,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 }
                 else
                 {
-                    if (subTask.CrMasUserSubValidationAuthorization == true )
+                    if (subTask.CrMasUserSubValidationAuthorization == true)
                     {
                         // SaveTracing
                         var (mainTask1, subTask1, system, currentUser) = await SetTrace("105", "1105002", "1");
@@ -428,7 +439,8 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 var subTask = _unitOfWork.CrMasUserSubValidations.Find(x => x.CrMasUserSubValidationUser == model.UserId && x.CrMasUserSubValidationMain == checkboxProcedure.mainTaskId && x.CrMasUserSubValidationSubTasks == checkboxProcedure.subTaskId);
                 var procedureTask = _unitOfWork.CrMasUserProceduresValidations.Find(x => x.CrMasUserProceduresValidationCode == model.UserId && x.CrMasUserProceduresValidationMainTask == checkboxProcedure.mainTaskId && x.CrMasUserProceduresValidationSubTasks == checkboxProcedure.subTaskId);
 
-                if (mainTask.CrMasUserMainValidationAuthorization == true && subTask.CrMasUserSubValidationAuthorization==true) {
+                if (mainTask.CrMasUserMainValidationAuthorization == true && subTask.CrMasUserSubValidationAuthorization == true)
+                {
                     if (procedureTask != null && checkboxProcedure != null)
                     {
                         if (checkboxProcedure.procedureName.ToLower() == "insert") procedureTask.CrMasUserProceduresValidationInsertAuthorization = checkboxProcedure.value;
@@ -444,7 +456,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 else
                 {
                     procedureTask.CrMasUserProceduresValidationInsertAuthorization = false;
-                    procedureTask.CrMasUserProceduresValidationUpDateAuthorization=false;
+                    procedureTask.CrMasUserProceduresValidationUpDateAuthorization = false;
                     procedureTask.CrMasUserProceduresValidationHoldAuthorization = false;
                     procedureTask.CrMasUserProceduresValidationUnHoldAuthorization = false;
                     procedureTask.CrMasUserProceduresValidationDeleteAuthorization = false;
@@ -468,7 +480,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
             // Set Title
             var titles = await setTitle("105", "1105001", "1");
-            await ViewData.SetPageTitleAsync(titles[0],"", titles[2], "تعديل", "Edit", titles[3]);
+            await ViewData.SetPageTitleAsync(titles[0], "", titles[2], "تعديل", "Edit", titles[3]);
             var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
             var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active);
             var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
@@ -479,7 +491,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> MyAccount(RegisterViewModel model, IFormFile UserSignatureFile, IFormFile UserImgFile,string countryCode)
+        public async Task<IActionResult> MyAccount(RegisterViewModel model, IFormFile UserSignatureFile, IFormFile UserImgFile, string countryCode)
         {
             var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
             if (user == null) return RedirectToAction("Login", "Account");
@@ -489,26 +501,36 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             string filePathSignture;
             if (UserImgFile != null)
             {
-                string fileNameImg = "Image";
-                filePathImage = await UserImgFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
+                string fileNameImg = "Image_" + DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوقت
+                filePathImage = await UserImgFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png", user.CrMasUserInformationPicture);
+            }
+            else if (UserImgFile == null && string.IsNullOrEmpty(user.CrMasUserInformationPicture))
+            {
+                filePathImage = "~/images/common/user.jpg";
             }
             else
             {
-                 filePathImage = "~/images/common/user.jpg";
+                filePathImage = user.CrMasUserInformationPicture;
+
             }
+            
             if (UserSignatureFile != null)
             {
-                string fileNameSignture = "Signture";
-                filePathSignture = await UserSignatureFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameSignture, ".png");
+                string fileNameSignture = "Signture_" + DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوقتs
+                filePathSignture = await UserSignatureFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameSignture, ".png",user.CrMasUserInformationSignature);
             }
-            else
+            else if (UserSignatureFile == null && string.IsNullOrEmpty(user.CrMasUserInformationSignature))
             {
                 filePathSignture = "~/images/common/DefualtUserSignature.png";
             }
-            user.CrMasUserInformationCallingKey=model.CrMasUserInformationCallingKey;
-            user.CrMasUserInformationMobileNo=model.CrMasUserInformationMobileNo;
-            user.CrMasUserInformationEmail=model.CrMasUserInformationEmail;
-            user.CrMasUserInformationExitTimer=model.CrMasUserInformationExitTimer;
+            else
+            {
+                filePathSignture = user.CrMasUserInformationSignature;
+            }
+            user.CrMasUserInformationCallingKey = model.CrMasUserInformationCallingKey;
+            user.CrMasUserInformationMobileNo = model.CrMasUserInformationMobileNo;
+            user.CrMasUserInformationEmail = model.CrMasUserInformationEmail;
+            user.CrMasUserInformationExitTimer = model.CrMasUserInformationExitTimer;
             user.CrMasUserInformationSignature = filePathSignture;
             user.CrMasUserInformationPicture = filePathImage;
             await _userManager.UpdateAsync(user);
@@ -537,7 +559,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         {
             string currentCulture = CultureInfo.CurrentCulture.Name;
 
-            if (model!=null)
+            if (model != null)
             {
                 var user = await _userService.GetUserByUserNameAsync(User.Identity.Name);
                 if (user == null) return RedirectToAction("Login", "Account");
@@ -580,7 +602,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
 
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
     }

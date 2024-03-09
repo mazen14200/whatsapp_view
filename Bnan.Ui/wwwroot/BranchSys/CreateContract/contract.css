@@ -460,6 +460,10 @@ input[type="number"]:nth-child(n+4) {
     transform: translateX(-50%);
     z-index: 9999;
     background-color: white;
+    font-size: 0.75rem;
+}
+#dropdown_content_Renter {
+    width: 290px;
 }
 
 .dropdown-content-row {
@@ -480,7 +484,10 @@ input[type="number"]:nth-child(n+4) {
     height: 37px;
 }
 
-
+.requird-field-row-data {
+    justify-content: flex-end;
+    height: 0;
+}
 
 
 

@@ -66,7 +66,23 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="shortcut icon" type="image/ico" href="~/Bnan.png">
 
-
+    @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+    {
+        <style>
+            .lessor-title {
+                margin-right: 55px;
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+            .lessor-title {
+                margin-left: 70px;
+            }
+        </style>
+    }
+    
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
@@ -263,7 +279,7 @@
                                                             {
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1104001")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
-                                                                    
+
                                                                     @*Report1*@
                                                                     <li>
                                                                         <a asp-area="MAS" asp-controller="Report1" asp-action="Index">@localizer["Report1"]</a>
@@ -473,7 +489,7 @@
                                                                     @*Registration Type*@
                                                                     <li>
                                                                         <a asp-area="MAS" asp-controller="CarRegistration" asp-action="Index">@localizer["RegistrationType"]</a>
-                                                                    </li>                                                                    
+                                                                    </li>
                                                                 }
 
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "1107002")?.CrMasUserSubValidationAuthorization == true)
@@ -1078,7 +1094,7 @@
                     <button class="button-menu-mobile button-menu-mobile-logo open-left">
                         <img src="~/images/Bnan/Support Image/C.png" alt="" style="height: 90px;width: 100px;">
                     </button>
-                    <button class="button-menu-mobile open-left lessor-title" style="font-size:19px;font-weight:800;margin-right: 55px; white-space: nowrap;">
+                    <button class="button-menu-mobile open-left lessor-title" style="font-size:19px;font-weight:800; white-space: nowrap;">
                         @if (signinManager.IsSignedIn(User))
                         {
                             @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
@@ -1127,7 +1143,7 @@
     <script src="~/js/toastr.js"></script>
     <script src="~/js/select2.min.js"></script>
     <script src="~/js/site.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
     @await Component.InvokeAsync("NToastNotify")
     <script src="~/js/site.js"></script>
 
@@ -1340,7 +1356,7 @@
                     } else {
                         toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                         toastr.error('@localizer["toastMessage"]');
-                        
+
                     }
                 },
             })
@@ -1437,17 +1453,17 @@
             // }
         }
 
-                                // auto complete off in all input
-                                //document.addEventListener("DOMContentLoaded", function () {
-                                //    // Get all input fields in the document
-                                //    var inputFields = document.querySelectorAll("input");
+        // auto complete off in all input
+        //document.addEventListener("DOMContentLoaded", function () {
+        //    // Get all input fields in the document
+        //    var inputFields = document.querySelectorAll("input");
 
-                                //    // Loop through each input field
-                                //    inputFields.forEach(function (input) {
-                                //        // Set the autocomplete attribute to "off"
-                                //        input.setAttribute("autocomplete", "off");
-                                //    });
-                                //});
+        //    // Loop through each input field
+        //    inputFields.forEach(function (input) {
+        //        // Set the autocomplete attribute to "off"
+        //        input.setAttribute("autocomplete", "off");
+        //    });
+        //});
     </script>
 </body>
 </html>

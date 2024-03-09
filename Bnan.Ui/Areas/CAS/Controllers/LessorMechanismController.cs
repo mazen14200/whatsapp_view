@@ -105,10 +105,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             {
                 var id = item.id;
                 var checkBox = item.valueCheckBox;
+                var days = item.Days;
                 var mechanism = lessorMechanisms.FirstOrDefault(x => x.CrCasLessorMechanismProcedures == id);
                 if (mechanism != null)
                 {
                     mechanism.CrCasLessorMechanismActivate = checkBox;
+                    mechanism.CrCasLessorMechanismDaysAlertAboutExpire = int.Parse(days);
                     _unitOfWork.CrCasLessorMechanism.Update(mechanism);
                 }
             }

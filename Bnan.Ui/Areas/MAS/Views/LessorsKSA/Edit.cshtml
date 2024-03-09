@@ -469,7 +469,7 @@
                     <label class="form-label" asp-for="BranchPostVM.CrCasBranchPostArDistrict">@localizer["DistrictNameAr"]</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostArDistrict" id="LessorNameAr" maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" readonly />
+                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostArDistrict" id="LessorNameAr" maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')"  />
                     <div style="margin-top:2px">
                         <div style="height: 1.35em">
                             <span asp-validation-for="BranchPostVM.CrCasBranchPostArDistrict" class="text-danger"></span>
@@ -481,7 +481,7 @@
                     <label class="form-label" asp-for="BranchPostVM.CrCasBranchPostEnDistrict">@localizer["DistrictNameEn"]</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostEnDistrict" id="LessorNameArShort" width="80%" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')" readonly>
+                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostEnDistrict" id="LessorNameArShort" width="80%" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')" >
                     <div style="margin-top:2px">
                         <div style="height: 1.35em">
                             <span asp-validation-for="BranchPostVM.CrCasBranchPostEnDistrict" class="text-danger"></span>
@@ -496,7 +496,7 @@
                     <label class="form-label" asp-for="BranchPostVM.CrCasBranchPostArStreet">@localizer["StreetNameAr"]</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostArStreet" id="StreetNameAr" maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" readonly />
+                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostArStreet" id="StreetNameAr" maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')"  />
                     <div style="margin-top:2px">
                         <div style="height: 1.35em">
                             <span asp-validation-for="BranchPostVM.CrCasBranchPostArStreet" class="text-danger"></span>
@@ -508,7 +508,7 @@
                     <label class="form-label" asp-for="BranchPostVM.CrCasBranchPostEnStreet">@localizer["StreetNameEn"]</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostEnStreet" id="StreetNameEn" width="80%" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')" readonly>
+                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostEnStreet" id="StreetNameEn" width="80%" oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')" >
                     <div style="margin-top:2px">
                         <div style="height: 1.35em">
                             <span asp-validation-for="BranchPostVM.CrCasBranchPostEnStreet" class="text-danger"></span>
@@ -523,7 +523,7 @@
                     <label class="form-label" asp-for="BranchPostVM.CrCasBranchPostBuilding">@localizer["BulidingNumber"]</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostBuilding" id="BulidingNumber" maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^0-9]/g,'')" readonly />
+                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostBuilding" id="BulidingNumber" maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^0-9]/g,'')"  />
                     <div style="margin-top:2px">
                         <div style="height: 1.35em">
                             <span asp-validation-for="BranchPostVM.CrCasBranchPostBuilding" class="text-danger"></span>
@@ -535,7 +535,7 @@
                     <label class="form-label" asp-for="BranchPostVM.CrCasBranchPostUnitNo">@localizer["UnitNumber"]</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostUnitNo" id="UnitNumber" width="80%" oninput="this.value=this.value.replace(/[^0-9]/g,'')" readonly>
+                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostUnitNo" id="UnitNumber" width="80%" oninput="this.value=this.value.replace(/[^0-9]/g,'')" >
                     <div style="margin-top:2px">
                         <div style="height: 1.35em">
                             <span asp-validation-for="BranchPostVM.CrCasBranchPostUnitNo" class="text-danger"></span>
@@ -550,7 +550,7 @@
                     <label class="form-label" asp-for="BranchPostVM.CrCasBranchPostZipCode">@localizer["symbolMailAr"]</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostZipCode" id="symbolMail" maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^0-9]/g,'')" readonly />
+                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostZipCode" id="symbolMail" maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^0-9]/g,'')"  />
                     <div style="margin-top:2px">
                         <div style="height: 1.35em">
                             <span asp-validation-for="BranchPostVM.CrCasBranchPostZipCode" class="text-danger"></span>
@@ -562,7 +562,7 @@
                     <label class="form-label" asp-for="BranchPostVM.CrCasBranchPostAdditionalNumbers">@localizer["AdditionalNumber"]</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostAdditionalNumbers" id="AdditionalNumber" width="80%" oninput="this.value=this.value.replace(/[^0-9]/g,'')" readonly>
+                    <input type="text" class="form-control" asp-for="BranchPostVM.CrCasBranchPostAdditionalNumbers" id="AdditionalNumber" width="80%" oninput="this.value=this.value.replace(/[^0-9]/g,'')" >
                     <div style="margin-top:2px">
                         <div style="height: 1.35em">
                             <span asp-validation-for="BranchPostVM.CrCasBranchPostAdditionalNumbers" class="text-danger"></span>

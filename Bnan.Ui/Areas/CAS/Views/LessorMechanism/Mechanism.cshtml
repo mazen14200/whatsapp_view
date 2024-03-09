@@ -235,6 +235,7 @@
                                             <h4 class="mb-1">
                                                 <input type="checkbox" class="AdditionalCheckBox" data-id="@item.CrCasLessorMechanismProcedures" style="height: 15px;width: 30px;" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
                                                 <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresArName</label>
+                                                <input type="text" class="form-control AdditionalCheckInput" data-id="@item.CrCasLessorMechanismProcedures" style="width: 65px; display: inline;" asp-for="@item.CrCasLessorMechanismDaysAlertAboutExpire" maxlength="3" />
                                             </h4>
                                         </li>
                                     </ul>
@@ -246,6 +247,7 @@
                                             <h4 class="mb-1">
                                                 <input type="checkbox" class="AdditionalCheckBox" data-id="@item.CrCasLessorMechanismProcedures" style="height: 15px;width: 30px;" @((bool)item.CrCasLessorMechanismActivate ? "checked='checked'" : "") value="@item.CrCasLessorMechanismActivate" />
                                                 <label for="@item.CrCasLessorMechanismActivate">@item.CrCasLessorMechanismProceduresNavigation.CrMasSysProceduresEnName</label>
+                                                <input type="text" class="form-control AdditionalCheckInput" data-id="@item.CrCasLessorMechanismProcedures" style="width: 65px; display: inline;" asp-for="@item.CrCasLessorMechanismDaysAlertAboutExpire" maxlength="3" />
                                             </h4>
                                         </li>
                                     </ul>
@@ -431,14 +433,19 @@
 
             // Additional
             var checkBoxesAdditional = document.getElementsByClassName("AdditionalCheckBox");
+            var inputsContractAdditional = document.getElementsByClassName("AdditionalCheckInput");
             var Additional = [];
             for (var i = 0; i < checkBoxesAdditional.length; i++) {
                 var checkbox = checkBoxesAdditional[i];
                 var valueCheckBox = checkbox.checked;
                 var idCheckBox = checkbox.getAttribute("data-id");
-                Additional.push({ id: idCheckBox, valueCheckBox: valueCheckBox });
+                var inputDays = inputsContractAdditional[i];
+                var valueInput = inputDays.value;
+                var idInput = inputDays.getAttribute("data-id");
+                Additional.push({ id: idCheckBox, valueCheckBox: valueCheckBox, Days: valueInput });
 
             }
+            
             console.log(Additional)
 
             $.ajax({

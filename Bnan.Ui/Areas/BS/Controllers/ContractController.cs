@@ -70,6 +70,17 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var autoinc = GetContractLastRecord("1", lessorCode, bSLayoutVM.SelectedBranch).CrCasRenterContractBasicNo;
             var BasicContractNo = y + "-" + sector + "401" + "-" + lessorCode + bSLayoutVM.SelectedBranch + "-" + autoinc;
             ViewBag.ContractNo = BasicContractNo;
+            // get data and send it to View And Create image  
+            DateTime now = DateTime.Now;
+            var y1 = now.ToString("yy");
+            //var sector = Renter.CrCasRenterLessorSector;
+            var autoinc1 = GetContractAccountReceipt(lessorCode, bSLayoutVM.SelectedBranch).CrCasAccountReceiptNo;
+            var AccountReceiptNo = y + "-" + "1" + "301" + "-" + lessorCode + bSLayoutVM.SelectedBranch + "-" + autoinc;
+            ViewBag.AccountReceiptNo = AccountReceiptNo;
+
+
+
+
 
             bSLayoutVM.Drivers = drivers;
             bSLayoutVM.CarCategories = categoryCars;
@@ -324,7 +335,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     AvailableBalance= LessorRenterInfo?.CrCasRenterLessorAvailableBalance,
                     ReservedBalance= LessorRenterInfo?.CrCasRenterLessorReservedBalance,
                     LastContract =LessorRenterInfo?.CrCasRenterLessorDateLastContractual,
-                    LastVisit= LessorRenterInfo?.CrCasRenterLessorDateLastContractual,
+                    LastVisit= LessorRenterInfo?.CrCasRenterLessorDateFirstInteraction,
                     ContractCount = LessorRenterInfo?.CrCasRenterLessorContractCount,
                     RentalDays = LessorRenterInfo?.CrCasRenterLessorContractDays,
                     AmountsTraded = LessorRenterInfo?.CrCasRenterLessorContractTradedAmount,
@@ -722,6 +733,28 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 return Json(new { SalesPoints = SalesPointVMList, AccountBank = AccountBankVMList, Type = Type });
             }
             return Json(null);
+        }
+
+        private CrCasAccountReceipt GetContractAccountReceipt(string LessorCode, string BranchCode)
+        {
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var Lrecord = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == LessorCode &&
+                                                                       x.CrCasAccountReceiptYear == y && x.CrCasAccountReceiptBranchCode == BranchCode)
+                                                             .Max(x => x.CrCasAccountReceiptNo.Substring(x.CrCasAccountReceiptNo.Length - 6, 6));
+
+            CrCasAccountReceipt c = new CrCasAccountReceipt();
+            if (Lrecord != null)
+            {
+                Int64 val = Int64.Parse(Lrecord) + 1;
+                c.CrCasAccountReceiptNo = val.ToString("000000");
+            }
+            else
+            {
+                c.CrCasAccountReceiptNo = "000001";
+            }
+
+            return c;
         }
 
     }
