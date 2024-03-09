@@ -107,7 +107,7 @@ else
                                             <div class="dropdown-content" id="dropdown_content_Renter">
                                                 <div class="row dropdown-content-row pt-2">
                                                     <div class="col-7 ">
-                                                        <p>@localizer["LastVisit"]</p>
+                                                        <p>@localizer["FirstVisit"]</p>
                                                     </div>
                                                     <div class="col personal-data-dropdown">
                                                         <p id="lastVisit"></p>
@@ -384,7 +384,7 @@ else
                                                  id="dropdown_content_Driver">
                                                 <div class="row dropdown-content-row pt-2">
                                                     <div class="col-7 ">
-                                                        <p>@localizer["LastVisit"]</p>
+                                                        <p>@localizer["FirstVisit"]</p>
                                                     </div>
                                                     <div class="col personal-data-dropdown">
                                                         <p id="LastVisitDriver"></p>
@@ -557,6 +557,7 @@ else
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <p id="DriverLicenseType"></p>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -568,6 +569,7 @@ else
                                                 </div>
                                                 <div class="col-auto personal-data">
                                                     <p id="DriverLicenseIssued"></p>
+                                                    
                                                 </div>
 
                                             </div>
@@ -579,8 +581,8 @@ else
                                                     <p id="driver-licence-end"> @localizer["Expirationdate"] </p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p id="DriverLicenseExpiration"></p>
-                                                    <div class="row requird-field-row">
+                                                    <p id="DriverLicenseExpiration" class="m-0"></p>
+                                                    <div class="row requird-field-row-data">
                                                         <span class="requird-field" id="DriverLicenseExpirationMessage"></span>
                                                     </div>
                                                 </div>
@@ -670,7 +672,7 @@ else
                                                  id="dropdown_content_AddDriver">
                                                 <div class="row dropdown-content-row pt-2">
                                                     <div class="col-7 ">
-                                                        <p>@localizer["LastVisit"]</p>
+                                                        <p>@localizer["FirstVisit"]</p>
                                                     </div>
                                                     <div class="col personal-data-dropdown">
                                                         <p id="LastVisitAddDriver"></p>
@@ -858,8 +860,8 @@ else
                                                     </p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p id="AddDriverLicenseExpiration"></p>
-                                                    <div class="row requird-field-row">
+                                                    <p id="AddDriverLicenseExpiration" class="m-0"></p>
+                                                    <div class="row requird-field-row-data">
                                                         <span class="requird-field" id="AddDriverLicenseExpirationMessage"></span>
                                                     </div>
                                                 </div>
@@ -1134,15 +1136,10 @@ else
                                             <div class="col-auto">
                                                 <img src="~/BranchSys/CreateContract/img/seacrh-icon.png" alt="icon button to display more data" id="payment-extra-details">
                                                 <div class="dropdown-content payment-dropdown-content" id="dropdown-content-payment">
-                                                    <div class="title-container">
-                                                        <img src="~/BranchSys/CreateContract/img/cancel.png" alt="cancle_icon" class="cancle-icon-dropdowen" id="close">
-                                                        <p style="display: inline;">تفاصيل قيمة العقد</p>
-
-                                                    </div>
                                                     <div class="data-container">
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>: @localizer["RentalValue"]</p>
+                                                                <p>@localizer["RentalValue"]</p>
                                                             </div>
                                                             <div class="col personal-data-dropdown">
                                                                 <p id="RentValue">0</p>
@@ -1151,7 +1148,7 @@ else
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>: @localizer["AdvantagesValue"] </p>
+                                                                <p>@localizer["AdvantagesValue"] </p>
                                                             </div>
                                                             <div class="col personal-data-dropdown">
                                                                 <p id="AdvatagesValue">0</p>
@@ -1161,7 +1158,7 @@ else
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>: @localizer["ChoicesValue"] </p>
+                                                                <p>@localizer["ChoicesValue"] </p>
                                                             </div>
                                                             <div class="col personal-data-dropdown">
                                                                 <p id="ChoicesValue">0</p>
@@ -1170,7 +1167,7 @@ else
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>:@localizer["AdditionalValue"] </p>
+                                                                <p>@localizer["AdditionalValue"] </p>
                                                             </div>
                                                             <div class="col personal-data-dropdown">
                                                                 <p id="AdditionalValue">0</p>
@@ -1179,7 +1176,7 @@ else
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>: @localizer["AddDriverValue"] </p>
+                                                                <p>@localizer["AddDriverValue"] </p>
                                                             </div>
                                                             <div class="col personal-data-dropdown">
                                                                 <p id="AddDriverValue">0</p>
@@ -1188,7 +1185,7 @@ else
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>: @localizer["PrivateDriverValue"]</p>
+                                                                <p>@localizer["PrivateDriverValue"]</p>
                                                             </div>
                                                             <div class="col personal-data-dropdown">
                                                                 <p id="PrivateDriverValue">0</p>
@@ -1196,13 +1193,12 @@ else
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>: @localizer["DelegationValue"]</p>
+                                                                <p>@localizer["DelegationValue"]</p>
                                                             </div>
                                                             <div class="col personal-data-dropdown">
                                                                 <p id="InFeesTammValue">0</p>
                                                                 <input hidden asp-for="Contract.FeesTmmValue" />
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1789,6 +1785,7 @@ else
                     document.getElementById("dropdown-container").style.display = "none";
                     $("#PrivateDriverDiv").hide();
                     $("#RenterIsdriverDiv").hide();
+                    $("#seacrh_icon_Renter").hide();
                     var CheckIfRenterIdExist = false;
                     var CheckIfDriverIdExist = false;
                     var CheckIfAddDriverIdExist = false;
@@ -1936,9 +1933,9 @@ else
                             $("#ReservedBalance").text(RenterInformation.reservedBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                             $("#AvailableBalance").text(RenterInformation.availableBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                             $("#Evaluation").text(RenterInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            $("#birth-date-step1").val(birthdate);
                         }
 
-                        $("#birth-date-step1").val(birthdate);
 
                     }
                     else {
@@ -1965,7 +1962,7 @@ else
                             $("#PrivateDriverDiv").show();
                         }
                         $("#RenterName").text(RenterInformation.personalArName);
-
+                        $("#birth-date-step1").val(birthdate);
                         if (RenterInformation.countContracts > 0) {
                             $(".seacrh_icon_Renter").show();
 
@@ -1983,7 +1980,6 @@ else
                             $("#Evaluation").text(RenterInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                         }
 
-                        $("#birth-date-step1").val(birthdate);
                     }
                 }, 1000);
             }, 1000); // Adjust the duration as needed (in milliseconds)
@@ -2099,6 +2095,7 @@ else
                     $("#DriverLicenseExpiration").text("");
                     $("#DriverLicenseExpirationMessage").text("").css("color", "");
                     $("#DriverEmployer").text("");
+                    $("#seacrh_icon_Driver").hide();
                     CheckIfDriverIdExist = false;
                     DriverInformation = null;
                     AddDriverInformation = null;
@@ -2197,6 +2194,8 @@ else
                         $("#DriverNationality").text(DriverInformation.personalEnNationality);
                         $("#DriverGender").text(DriverInformation.personalEnGender);
                         $("#DriverProffessions").text(DriverInformation.personalEnProfessions);
+                        $("#DriverEmployer").text(DriverInformation.employerEnName);
+                        $("#birth-date-driver").val(birthdate);
                         if (DriverInformation.licenseEnName != "" && DriverInformation.licenseEnName != null && DriverInformation.licenseEnName != undefined && DriverInformation.licenseCode != "2") {
                             $("#DriverLicenseType").text(DriverInformation.licenseEnName);
                             $("#DriverLicenseIssued").text(licenseIssuedDate);
@@ -2222,8 +2221,6 @@ else
                             $("#BalanceDriver").text(DriverInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                             $("#EvaluationDriver").text(DriverInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                         }
-                        $("#DriverEmployer").text(DriverInformation.employerEnName);
-                        $("#birth-date-driver").val(birthdate);
                     }
                     else {
                         if (DriverInformation.postArNameConcenate != "" && DriverInformation.postArNameConcenate != null && DriverInformation.postArNameConcenate != undefined) {
@@ -2245,6 +2242,8 @@ else
                         $("#DriverProffessions").text(DriverInformation.personalArProfessions);
                         $("#DriverGender").text(DriverInformation.personalArGender);
                         $("#DriverNationality").text(DriverInformation.personalArNationality);
+                        $("#DriverEmployer").text(DriverInformation.employerArName);
+                        $("#birth-date-driver").val(birthdate);
                         if (DriverInformation.licenseArName != "" && DriverInformation.licenseArName != null && DriverInformation.licenseArName != undefined && DriverInformation.licenseCode != "2") {
                             $("#DriverLicenseType").text(DriverInformation.licenseArName);
                             $("#DriverLicenseIssued").text(licenseIssuedDate);
@@ -2270,8 +2269,7 @@ else
                             $("#BalanceDriver").text(DriverInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                             $("#EvaluationDriver").text(DriverInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                         }
-                        $("#DriverEmployer").text(DriverInformation.employerArName);
-                        $("#birth-date-driver").val(birthdate);
+                        
                     }
                 }, 1000);
             }, 1000); // Adjust the duration as needed (in milliseconds)
@@ -2382,7 +2380,7 @@ else
                     $("#AddDriverAddress").text('').css("color", "");
                     $("#AddDriverLicenseType").text('').css("color", "");
                     $("#requird_field_BirthDate_AddDriver").text('@localizer["IdIsExpire"]').css("color", "red");
-
+                    $("#seacrh_icon_AddDriver").hide();
                     $("#AddDriverEmployer").text("");
                     CheckIfAddDriverIdExist = false;
                     AddDriverInformation = null;
@@ -2478,6 +2476,8 @@ else
                         $("#AddDriverNationality").text(AddDriverInformation.personalEnNationality);
                         $("#AddDriverGender").text(AddDriverInformation.personalEnGender);
                         $("#AddDriverProffessions").text(AddDriverInformation.personalEnProfessions);
+                        $("#AddDriverEmployer").text(AddDriverInformation.employerEnName);
+                        $("#birth-date-additionalDriver").val(birthdate);
                         if (AddDriverInformation.licenseEnName != "" && AddDriverInformation.licenseEnName != null && AddDriverInformation.licenseEnName != undefined && AddDriverInformation.licenseCode != "2") {
                             $("#AddDriverLicenseIssued").text(licenseIssuedDate);
                             $("#AddDriverLicenseExpiration").text(licenseExpiryDate);
@@ -2502,8 +2502,7 @@ else
                             $("#BalanceAddDriver").text(AddDriverInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                             $("#EvaluationAddDriver").text(AddDriverInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                         }
-                        $("#AddDriverEmployer").text(AddDriverInformation.employerEnName);
-                        $("#birth-date-additionalDriver").val(birthdate);
+                        
                     }
                     else {
                         if (AddDriverInformation.postArNameConcenate != "" && AddDriverInformation.postArNameConcenate != null && AddDriverInformation.postArNameConcenate != undefined) {
@@ -2525,6 +2524,8 @@ else
                         $("#AddDriverProffessions").text(AddDriverInformation.personalArProfessions);
                         $("#AddDriverGender").text(AddDriverInformation.personalArGender);
                         $("#AddDriverNationality").text(AddDriverInformation.personalArNationality);
+                        $("#AddDriverEmployer").text(AddDriverInformation.employerArName);
+                        $("#birth-date-additionalDriver").val(birthdate);
                         if (AddDriverInformation.licenseArName != "" && AddDriverInformation.licenseArName != null && AddDriverInformation.licenseArName != undefined && AddDriverInformation.licenseCode != "2") {
                             $("#AddDriverLicenseType").text(AddDriverInformation.licenseArName);
                             $("#AddDriverLicenseIssued").text(licenseIssuedDate);
@@ -2548,8 +2549,6 @@ else
                             $("#BalanceAddDriver").text(AddDriverInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                             $("#EvaluationAddDriver").text(AddDriverInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                         }
-                        $("#AddDriverEmployer").text(AddDriverInformation.employerArName);
-                        $("#birth-date-additionalDriver").val(birthdate);
                     }
                 }, 1000);
             }, 1000); // Adjust the duration as needed (in milliseconds)
@@ -4051,7 +4050,6 @@ else
 
     </script>
 
-
     <script>
         $(document).ready(function () {
             $("#AmountPayed").focusout(function () {
@@ -4080,7 +4078,6 @@ else
         const sendStaticImageToWhatsApp = async () => {
             const imageLessor = "@user.CrMasUserInformationLessorNavigation.CrMasLessorImage.CrMasLessorImageCreateContractWhatUp";
             const imagePath = imageLessor.replace('~', '');
-            console.log("imagePath", imagePath);
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
             const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key
             const mobileNo = '@user.CrMasUserInformationMobileNo'; // Assuming this variable contains the mobile number
@@ -4155,7 +4152,6 @@ else
                     // Convert the canvas to a blob
                     canvas.toBlob(async function (blob) {
                         formData.append("file", blob, "CreateContractWhatUp.png"); // Append the modified image blob with a filename
-
                         const requestOptions = {
                             method: 'POST',
                             body: formData,
@@ -4163,7 +4159,6 @@ else
                                 'Authorization': `Bearer ${token}`
                             }
                         };
-
                         // Send the request to the API endpoint
                         const response = await fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions);
                         if (response.ok) {
@@ -4182,7 +4177,103 @@ else
                 console.log('SendImageError', error);
             }
         };
+
         // Function to send an image and PDF to WhatsApp
+        const sendReceiptToWhatsApp = async () => {
+            const imageLessor = "~/images/common/Ar_Catch_Receipt.png";
+            const imagePath = imageLessor.replace('~', '');
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
+            const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
+            const mobileNo = '@user.CrMasUserInformationMobileNo';     // Assuming this variable contains the mobile number.
+            const phoneNumber = callingKey + mobileNo;
+            //Data Receipt
+            // Gregorian (Miladi) Date
+            const miladiDate = new Date();
+            const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).replace(/\//g, '-');
+
+            // Hijri Date
+            const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+            const hijriDateString = new Intl.DateTimeFormat('ar-u-ca-islamic', hijriOptions).format(miladiDate);
+            // First In Page
+            const contractNo = "@ViewBag.ContractNo";
+            const AccountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const referenceType = "انشاء عقد";
+            const RenterName = RenterInformation.personalArName;
+            const CarName = CarInformation.crCasCarInformationConcatenateArName;
+            // last in page
+            const balance = RenterInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            var DiscountInput = document.getElementById("Discount_Input").value;
+            var AmountPayedInput = document.getElementById("AmountPayed").value;
+            const discountRate = parseFloat(DiscountInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const TaxPercent = parseFloat(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const AmountRequired = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            var selectElement = document.getElementById("Contract_PaymentMethod");
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            // Get the text of the selected option
+            const selectedText = selectedOption.textContent || selectedOption.innerText;
+            //get Data Director lessor and branch and get renter and user
+            var userName = "@user.CrMasUserInformationArName";
+            var directorOfLessor = "@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorArName";
+            var directorOfBranch = "@Model.CrCasBranchInformation.CrCasBranchInformationDirectorArName";
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+            // Get Image And Text On
+            // Read the image file as a Blob
+            const responseImage = await fetch(imagePath);
+            const blob = await responseImage.blob();
+            // Prepare form data
+            const formData = new FormData();
+            formData.append("number", phoneNumber); // Append the recipient's phone number
+            formData.append("message", " "); // Append the message
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                ctx.drawImage(img, 0, 0);
+
+                ctx.font = "bold 16px serif";
+                ctx.textAlign = "right";
+                ctx.fillStyle = "black";
+                //
+                ctx.fillText(" 1 ", canvas.width - 55, 140);
+                ctx.fillText(" 2", canvas.width - 100, 168);
+                ctx.fillText("3 ", canvas.width - 100, 192);
+                //
+                ctx.fillText("4 ", canvas.width - 115, 305);
+                ctx.fillText("5", canvas.width - 150, 348);
+                ctx.fillText("6", canvas.width - 150, 383);
+                ctx.fillText("7", canvas.width - 68, 425);
+                //
+                canvas.toBlob(async function (blob) {
+                    formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
+                    const requestOptions = {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    };
+                    // Send the request to the API endpoint
+                    const response = await fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions);
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log("SendImageResult", result);
+                    } else {
+                        const errorMessage = await response.text(); // Get the error message as plain text
+                        console.log("SendImageError", errorMessage);
+                    }
+                }, 'image/png');
+            };
+            img.src = URL.createObjectURL(blob);
+        };
         // submit Form
         document.addEventListener('DOMContentLoaded', function () {
             // Get the form element
@@ -4200,6 +4291,7 @@ else
                     if (somethingIsNotOkay) {
                         form.submit();
                         sendStaticImageToWhatsApp();
+                        // sendReceiptToWhatsApp();
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();
@@ -4345,5 +4437,13 @@ else
 
 
         });
+
+
+        // To decode some string
+        function decodeHTMLEntities(text) {
+            var textArea = document.createElement("textarea");
+            textArea.innerHTML = text;
+            return textArea.value;
+        }
     </script>
 }

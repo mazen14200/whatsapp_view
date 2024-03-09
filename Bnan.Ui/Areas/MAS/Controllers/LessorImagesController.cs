@@ -95,33 +95,34 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 foreach (var item in formData.Files)
                 {
                     var Name = item.Name;
+                    var NewName = Name+"_"+ DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوقت
                     var file = item;
                     if (file != null && Name != null)
                     {
-                        var saveImage = await file.SaveImageAsync(_webHostEnvironment, foldername, Name, ".png");
-                        if (Name == "CompanyLogo") lessorImages.CrMasLessorImageLogo = saveImage;
-                        if (Name == "LogoPrint") lessorImages.CrMasLessorImageLogoPrint = saveImage;
-                        if (Name == "Stamp") lessorImages.CrMasLessorImageStamp = saveImage;
-                        if (Name == "StampOutsideCity") lessorImages.CrMasLessorImageStampOutsideCity = saveImage;
-                        if (Name == "StampOutsideCountry") lessorImages.CrMasLessorImageStampOutsideCountry = saveImage;
-                        if (Name == "StampFullAmountPaid") lessorImages.CrMasLessorImageStampFullAmountPaid = saveImage;
-                        if (Name == "SignatureDirector") lessorImages.CrMasLessorImageSignatureDirector = saveImage;
-                        if (Name == "CreateContractEmail") lessorImages.CrMasLessorImageCreateContractEmail = saveImage;
-                        if (Name == "CreateContractWhatUp") lessorImages.CrMasLessorImageCreateContractWhatUp = saveImage;
-                        if (Name == "TomorrowContractEmail") lessorImages.CrMasLessorImageTomorrowContractEmail = saveImage;
-                        if (Name == "TomorrowContractWhatUp") lessorImages.CrMasLessorImageTomorrowContractWhatUp = saveImage;
-                        if (Name == "HourContractEmail") lessorImages.CrMasLessorImageHourContractEmail = saveImage;
-                        if (Name == "HourContractWhatUp") lessorImages.CrMasLessorImageHourContractWhatUp = saveImage;
-                        if (Name == "EndContractEmail") lessorImages.CrMasLessorImageEndContractEmail = saveImage;
-                        if (Name == "EndContractWhatUp") lessorImages.CrMasLessorImageEndContractWhatUp = saveImage;
-                        if (Name == "CloseContractEmail") lessorImages.CrMasLessorImageCloseContractEmail = saveImage;
-                        if (Name == "CloseContractWhatUp") lessorImages.CrMasLessorImageCloseContractWhatUp = saveImage;
-                        if (Name == "ContArConditions1") lessorImages.CrMasLessorImageContArConditions1 = saveImage;
-                        if (Name == "ContArConditions2") lessorImages.CrMasLessorImageContArConditions2 = saveImage;
-                        if (Name == "ContArConditions3") lessorImages.CrMasLessorImageContArConditions3 = saveImage;
-                        if (Name == "ContEnConditions1") lessorImages.CrMasLessorImageContEnConditions1 = saveImage;
-                        if (Name == "ContEnConditions2") lessorImages.CrMasLessorImageContEnConditions2 = saveImage;
-                        if (Name == "ContEnConditions3") lessorImages.CrMasLessorImageContEnConditions3 = saveImage;
+                        
+                        if (Name == "CompanyLogo")lessorImages.CrMasLessorImageLogo = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageLogo);
+                        if (Name == "LogoPrint") lessorImages.CrMasLessorImageLogoPrint = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageLogoPrint);
+                        if (Name == "Stamp") lessorImages.CrMasLessorImageStamp = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageStamp);
+                        if (Name == "StampOutsideCity") lessorImages.CrMasLessorImageStampOutsideCity = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageStampOutsideCity);
+                        if (Name == "StampOutsideCountry") lessorImages.CrMasLessorImageStampOutsideCountry = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageStampOutsideCountry);
+                        if (Name == "StampFullAmountPaid") lessorImages.CrMasLessorImageStampFullAmountPaid = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageStampFullAmountPaid);
+                        if (Name == "SignatureDirector") lessorImages.CrMasLessorImageSignatureDirector = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageSignatureDirector);
+                        if (Name == "CreateContractEmail") lessorImages.CrMasLessorImageCreateContractEmail = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageCreateContractEmail);
+                        if (Name == "CreateContractWhatUp") lessorImages.CrMasLessorImageCreateContractWhatUp = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageCreateContractWhatUp);
+                        if (Name == "TomorrowContractEmail") lessorImages.CrMasLessorImageTomorrowContractEmail = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageTomorrowContractEmail);
+                        if (Name == "TomorrowContractWhatUp") lessorImages.CrMasLessorImageTomorrowContractWhatUp = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageTomorrowContractWhatUp);
+                        if (Name == "HourContractEmail") lessorImages.CrMasLessorImageHourContractEmail = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageHourContractEmail);
+                        if (Name == "HourContractWhatUp") lessorImages.CrMasLessorImageHourContractWhatUp = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageHourContractWhatUp);
+                        if (Name == "EndContractEmail") lessorImages.CrMasLessorImageEndContractEmail = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEndContractEmail);
+                        if (Name == "EndContractWhatUp") lessorImages.CrMasLessorImageEndContractWhatUp = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEndContractWhatUp);
+                        if (Name == "CloseContractEmail") lessorImages.CrMasLessorImageCloseContractEmail = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageCloseContractEmail);
+                        if (Name == "CloseContractWhatUp") lessorImages.CrMasLessorImageCloseContractWhatUp = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageCloseContractWhatUp);
+                        if (Name == "ContArConditions1") lessorImages.CrMasLessorImageContArConditions1 = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageContArConditions1);
+                        if (Name == "ContArConditions2") lessorImages.CrMasLessorImageContArConditions2 = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageContArConditions2);
+                        if (Name == "ContArConditions3") lessorImages.CrMasLessorImageContArConditions3 = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageContArConditions3);
+                        if (Name == "ContEnConditions1") lessorImages.CrMasLessorImageContEnConditions1 = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageContEnConditions1);
+                        if (Name == "ContEnConditions2") lessorImages.CrMasLessorImageContEnConditions2 = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageContEnConditions2);
+                        if (Name == "ContEnConditions3") lessorImages.CrMasLessorImageContEnConditions3 = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageContEnConditions3);
 
                     }
                     _unitOfWork.CrMasLessorImage.Update(lessorImages);
