@@ -9,7 +9,6 @@ namespace Bnan.Core.Models
         {
             CrCasBeneficiaries = new HashSet<CrCasBeneficiary>();
             CrCasOwners = new HashSet<CrCasOwner>();
-            CrCasRenterContractBasics = new HashSet<CrCasRenterContractBasic>();
             CrCasRenterLessors = new HashSet<CrCasRenterLessor>();
             CrCasSysAdministrativeProcedures = new HashSet<CrCasSysAdministrativeProcedure>();
             CrMasContractCompanies = new HashSet<CrMasContractCompany>();
@@ -25,7 +24,6 @@ namespace Bnan.Core.Models
 
         public virtual ICollection<CrCasBeneficiary> CrCasBeneficiaries { get; set; }
         public virtual ICollection<CrCasOwner> CrCasOwners { get; set; }
-        public virtual ICollection<CrCasRenterContractBasic> CrCasRenterContractBasics { get; set; }
         public virtual ICollection<CrCasRenterLessor> CrCasRenterLessors { get; set; }
         public virtual ICollection<CrCasSysAdministrativeProcedure> CrCasSysAdministrativeProcedures { get; set; }
         public virtual ICollection<CrMasContractCompany> CrMasContractCompanies { get; set; }

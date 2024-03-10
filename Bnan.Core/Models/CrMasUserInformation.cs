@@ -44,6 +44,9 @@ namespace Bnan.Core.Models
         public string? CrMasUserInformationMobileNo { get; set; }
         public string? CrMasUserInformationEmail { get; set; }
         public DateTime? CrMasUserInformationChangePassWordLastDate { get; set; }
+        public bool? CrMasUserInformationAlertCreditLimit { get; set; }
+        public int? CrMasUserInformationAlertDaysPassWord { get; set; }
+        public int? CrMasUserInformationCreditDaysLimit { get; set; }
         public DateTime? CrMasUserInformationEntryLastDate { get; set; }
         public TimeSpan? CrMasUserInformationEntryLastTime { get; set; }
         public DateTime? CrMasUserInformationExitLastDate { get; set; }

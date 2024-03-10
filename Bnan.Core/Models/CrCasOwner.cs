@@ -8,6 +8,7 @@ namespace Bnan.Core.Models
         public CrCasOwner()
         {
             CrCasCarInformations = new HashSet<CrCasCarInformation>();
+            CrCasRenterContractBasics = new HashSet<CrCasRenterContractBasic>();
         }
 
         public string CrCasOwnersCode { get; set; } = null!;
@@ -26,5 +27,6 @@ namespace Bnan.Core.Models
         public virtual CrMasLessorInformation CrCasOwnersLessorCodeNavigation { get; set; } = null!;
         public virtual CrMasSupRenterSector? CrCasOwnersSectorNavigation { get; set; }
         public virtual ICollection<CrCasCarInformation> CrCasCarInformations { get; set; }
+        public virtual ICollection<CrCasRenterContractBasic> CrCasRenterContractBasics { get; set; }
     }
 }

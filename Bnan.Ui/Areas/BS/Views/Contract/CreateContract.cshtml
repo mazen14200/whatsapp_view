@@ -4076,7 +4076,7 @@ else
     <script>
         // Function to send a static image file to WhatsApp
         const sendStaticImageToWhatsApp = async () => {
-            const imageLessor = "@user.CrMasUserInformationLessorNavigation.CrMasLessorImage.CrMasLessorImageCreateContractWhatUp";
+            const imageLessor = "@user.CrMasUserInformationLessorNavigation.CrMasLessorImage.CrMasLessorImageContractCard";
             const imagePath = imageLessor.replace('~', '');
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
             const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key
@@ -4199,8 +4199,8 @@ else
             const contractNo = "@ViewBag.ContractNo";
             const AccountReceiptNo = "@ViewBag.AccountReceiptNo";
             const referenceType = "انشاء عقد";
-            const RenterName = RenterInformation.personalArName;
-            const CarName = CarInformation.crCasCarInformationConcatenateArName;
+            const RenterName =decodeHTMLEntities(RenterInformation.personalArName);
+            const CarName = CarInformation.carInformation.crCasCarInformationConcatenateArName;
             // last in page
             const balance = RenterInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             var DiscountInput = document.getElementById("Discount_Input").value;
@@ -4214,9 +4214,9 @@ else
             // Get the text of the selected option
             const selectedText = selectedOption.textContent || selectedOption.innerText;
             //get Data Director lessor and branch and get renter and user
-            var userName = "@user.CrMasUserInformationArName";
-            var directorOfLessor = "@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorArName";
-            var directorOfBranch = "@Model.CrCasBranchInformation.CrCasBranchInformationDirectorArName";
+            var userName =decodeHTMLEntities("@user.CrMasUserInformationArName");
+            var directorOfLessor =decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorArName");
+            var directorOfBranch = decodeHTMLEntities("@Model.CrCasBranchInformation.CrCasBranchInformationDirectorArName");
             //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -4239,19 +4239,37 @@ else
 
                 ctx.drawImage(img, 0, 0);
 
-                ctx.font = "bold 16px serif";
+                ctx.font = "bold 37px serif";
                 ctx.textAlign = "right";
                 ctx.fillStyle = "black";
-                //
-                ctx.fillText(" 1 ", canvas.width - 55, 140);
-                ctx.fillText(" 2", canvas.width - 100, 168);
-                ctx.fillText("3 ", canvas.width - 100, 192);
-                //
-                ctx.fillText("4 ", canvas.width - 115, 305);
-                ctx.fillText("5", canvas.width - 150, 348);
-                ctx.fillText("6", canvas.width - 150, 383);
-                ctx.fillText("7", canvas.width - 68, 425);
-                //
+                //Date and contract no
+                ctx.fillText(contractNo, canvas.width - 110, 300);
+                ctx.fillText(miladiDateString, canvas.width - 228, 365);
+                ctx.fillText(hijriDateString, canvas.width - 228, 420);
+                // Receipt and type and renter and car name
+                ctx.fillText(referenceType, canvas.width - 250, 670);
+                ctx.fillText(AccountReceiptNo, canvas.width - 320, 760);
+                ctx.fillText(RenterName, canvas.width - 122, 840);
+                ctx.fillText(CarName, canvas.width - 122, 932);
+
+
+                // The payed Information
+                ctx.fillText(balance, canvas.width - 330, 2285);
+                ctx.fillText(DiscountInput, canvas.width - 360, 2380);
+                ctx.fillText(TaxPercent, canvas.width - 367, 2480);
+                ctx.fillText(AmountRequired, canvas.width - 360, 2580);
+                ctx.fillText(AmountPayed, canvas.width - 360, 2675);
+                ctx.fillText(selectedText, canvas.width - 360, 2770);
+
+
+                // director and renter and user 
+                ctx.fillText(directorOfLessor, canvas.width - 790, 3020);
+                ctx.fillText(userName, canvas.width - 1780, 3020);
+                ctx.fillText(directorOfBranch, canvas.width - 750, 3130);
+                ctx.fillText(RenterName, canvas.width - 1780, 3130);
+
+                
+
                 canvas.toBlob(async function (blob) {
                     formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
                     const requestOptions = {
@@ -4290,8 +4308,8 @@ else
                     CheckIfCanPayLessThanTotalAmount();
                     if (somethingIsNotOkay) {
                         form.submit();
-                        sendStaticImageToWhatsApp();
-                        // sendReceiptToWhatsApp();
+                        // sendStaticImageToWhatsApp();
+                        sendReceiptToWhatsApp();
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();

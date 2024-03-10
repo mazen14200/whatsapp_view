@@ -344,7 +344,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     EnDealingMechanism = dealingMechanizm?.CrMasSysEvaluationsEnDescription,
                     ArMembership = LessorRenterInfo?.CrCasRenterLessorMembershipNavigation?.CrMasSupRenterMembershipArName,
                     EnMembership = LessorRenterInfo?.CrCasRenterLessorMembershipNavigation?.CrMasSupRenterMembershipEnName,
-                    CountContracts= LessorRenterInfo?.CrCasRenterContractBasicCrCasRenterContractBasic4s.Count(),
+                    CountContracts= LessorRenterInfo?.CrCasRenterContractBasicCrCasRenterContractBasic5s.Count(),
                 };
                 return Json(renterInformationsVM);
             }
