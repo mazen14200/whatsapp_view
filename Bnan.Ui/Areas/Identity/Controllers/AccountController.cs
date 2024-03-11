@@ -272,7 +272,7 @@ namespace Bnan.Ui.Areas.Identity.Controllers
         public async Task<IActionResult> UpdateLastActionDate(bool keyPress)
         {
             var user = await _userManager.GetUserAsync(User);
-            user.CrMasUserInformationLastActionDate= DateTime.Now;
+             user.CrMasUserInformationLastActionDate= DateTime.Now;
             await _unitOfWork.CompleteAsync();
             return Json(user.CrMasUserInformationLastActionDate);
         }

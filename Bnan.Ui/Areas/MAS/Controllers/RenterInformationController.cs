@@ -51,8 +51,13 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
         [HttpGet]
 
+        
         public async Task<IActionResult> Index()
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "0";
+
             var (mainTask, subTask, system, currentUser) = await SetTrace("103", "1103001", "1");
 
             await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
@@ -67,15 +72,19 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             //var RenterInformationAllA = RenterInformationAll.Where(x => x.CrMasRenterInformationStatus == "A").ToList();
             var RenterInformationAllA = RenterInformationAll.ToList();
             List<List<string>> ConcateAdress_short = new List<List<string>>();
+            
             foreach (var item in RenterInformationAllA)
             {
-                var ar = item.CrMasRenterPost.CrMasRenterPostArShortConcatenate.ToString(); 
+                var ar = item.CrMasRenterPost?.CrMasRenterPostArShortConcatenate?.ToString();
+                var en = item.CrMasRenterPost?.CrMasRenterPostEnShortConcatenate?.ToString();
+
+                if (ar != null && en != null)
+                { 
                 string[] values = ar.Split('-');
                 for (int i = 0; i < values.Length; i++)
                 {
                     values[i] = values[i].Trim();
                 }
-                var en = item.CrMasRenterPost.CrMasRenterPostEnShortConcatenate.ToString();
                 string[] values2 = en.Split('-');
                 for (int i = 0; i < values2.Length; i++)
                 {
@@ -96,6 +105,8 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
 
             }
+        }
+            
             ViewBag.ConcateAdress = ConcateAdress_short;
             //var CarsInfo_count_all = _RenterInformation.GetAllRenterInformationsCount();
 
@@ -105,6 +116,11 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public PartialViewResult GetRenterInformationByStatus(string status)
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "0";
+
+
             if (!string.IsNullOrEmpty(status))
             {
                 if (status == Status.All)
@@ -129,6 +145,9 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRenterInformation()
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "0";
 
             // Set Title !!!!!!!!!!!!!!!!!!!!!!!!!!
             var titles = await setTitle("103", "1103001", "1");
@@ -213,6 +232,10 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
+            //sidebar Active
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "0";
+
             //To Set Title !!!!!!!!!!!!!
             var titles = await setTitle("103", "1103001", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);

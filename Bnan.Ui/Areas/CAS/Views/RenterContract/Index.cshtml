@@ -114,6 +114,8 @@
 
         //on Click Filter Radio Button GetRenterLessorInformationByStatus
         $("input[name='customRadio']").on("click", function () {
+            // Clear the value from the search input
+            $("#top-search").val("");
             GetRenterContractFitler($(this).val())
         })
     </script>

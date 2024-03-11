@@ -50,8 +50,8 @@
                         <tr style="cursor:pointer;color:red">
                             <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
-                            <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd")</td>
-                            <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
 
                             <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal</td>
@@ -94,12 +94,62 @@
                         <tr  >
                             <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
-                            <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd")</td>
-                            <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
 
-                            <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal</td>
-                            
+                            <td id="_Nc">
+                                @{
+                                    var n = @item.CrCasRenterContractBasicExpectedTotal?.ToString();
+                                    if (n != null && n?.Length > 0)
+                                    {
+                                        var s = n.Length;
+                                        if (Convert.ToInt32(item.CrCasRenterContractBasicExpectedTotal) < 0)
+                                        {
+                                            n = n.Replace('٫', '.');
+                                            @n
+                                        }
+                                        else if (n.Length < 7)
+                                        {
+                                            n = n.Replace('٫', '.');
+                                            var all = $"{n}";
+                                            @all
+                                        }
+                                        else if (n.Length == 7)
+                                        {
+                                            n = n.Replace('٫', '.');
+                                            var f1 = n.Substring(0, 1);
+                                            var f2 = n.Remove(0, 1);
+                                            var all = $"{f1},{f2}";
+                                            @all
+                                        }
+                                        else if (n.Length > 7 && n.Length < 10)
+                                        {
+                                            n = n.Replace('٫', '.');
+                                            var f1 = n.Substring(0, s - 6);
+                                            var f2 = n.Remove(0, s - 6);
+                                            var all = $"{f1},{f2}";
+                                            @all
+                                        }
+                                        else if (n.Length > 9)
+                                        {
+                                            n = n.Replace('٫', '.');
+                                            var f0 = n.Substring(0, s - 9);
+                                            var f1 = n.Substring(0, s - 6);
+                                            var f2 = n.Remove(0, s - 6);
+                                            var all = $"{f0},{f1},{f2}";
+                                            @all
+                                        }
+                                        else
+                                        {
+                                            n = n.Replace('٫', '.');
+                                            @n
+                                        }
+                                    }
+                                }
+
+
+                            </td>
                             <td>
 
                                 @if (@item.CrCasRenterContractBasicStatus == Status.Active)
@@ -175,7 +225,7 @@ else
                             <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
 
-                            <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal</td>
+                            <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal?.ToString().Length</td>
                             
                             <td>
 
@@ -206,6 +256,8 @@ else
                             </td>
 
                             <td id="_Nc">@localizer["Contract"]</td>
+                            @*<td id="_Nc">@ViewBag.v1</td>*@
+                            
 
                         </tr>
                     }
@@ -219,8 +271,59 @@ else
                             <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
 
-                            <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal</td>
-                            
+                            <td id="_Nc">
+                                @{
+                                    var n = @item.CrCasRenterContractBasicExpectedTotal?.ToString();
+                                    if(n != null && n?.Length > 0)
+                                    {
+                                        var s = n.Length;
+                                        if (Convert.ToInt32(item.CrCasRenterContractBasicExpectedTotal) < 0)
+                                        {
+                                            n = n.Replace('٫', '.');
+                                            @n
+                                        }
+                                        else if (n.Length < 7)
+                                        {
+                                            n = n.Replace('٫', '.');
+                                            var all = $"{n}";
+                                            @all
+                                        }
+                                        else if (n.Length == 7)
+                                        {
+                                            n = n.Replace('٫', '.');
+                                            var f1 = n.Substring(0, 1);
+                                            var f2 = n.Remove(0, 1);
+                                            var all = $"{f1},{f2}";
+                                            @all
+                                        }
+                                        else if (n.Length > 7 && n.Length < 10)
+                                        {
+                                            n = n.Replace('٫', '.');
+                                            var f1 = n.Substring(0, s-6);
+                                            var f2 = n.Remove(0, s-6);
+                                            var all = $"{f1},{f2}";
+                                            @all
+                                        }
+                                        else if (n.Length > 9)
+                                        {
+                                            n = n.Replace('٫', '.');
+                                            var f0 = n.Substring(0, s - 9);
+                                            var f1 = n.Substring(0, s - 6);
+                                            var f2 = n.Remove(0, s - 6);
+                                            var all = $"{f0},{f1},{f2}";
+                                            @all
+                                        }
+                                        else
+                                        {
+                                            n = n.Replace('٫', '.');
+                                            @n
+                                        }
+                                    }
+                                }
+                                
+                                
+                            </td>
+
                             <td>
 
                                 @if (@item.CrCasRenterContractBasicStatus == Status.Active)
@@ -250,7 +353,7 @@ else
                             </td>
 
                             <td id="_Nc">@localizer["Contract"]</td>
-
+                            @*<td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal</td>*@
                         </tr>
                     }
                     no++;

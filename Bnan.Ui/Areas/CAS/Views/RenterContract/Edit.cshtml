@@ -161,10 +161,13 @@
         /* x-lable (+) x-input == 390 px */
         /*width: 28.75%;*/
         width: 115.5px;
+        height: 35px;
     }
 
     .col-md-input-10 {
         width: 275px;
+        margin-top: -5px;
+        height: 35px;
     }
 
 </style>
@@ -177,14 +180,22 @@
             top: 39%;
             left: 50%;
         }
+        #t_mar{
+            margin: 35px;
+            margin-right: 55px;
+            margin-top: 5px;
+        }
 
         .col-md-label5 {
             /*width: 28.75%;*/
             width: 105.5px;
+            height: 35px;
         }
 
         .col-md-input5 {
             width: 285px;
+            margin-top: -8px;
+            height: 35px;
         }
     </style>
 }
@@ -197,13 +208,21 @@ else
             right: 50%;
         }
 
+        #t_mar {
+            margin: 35px;
+            margin-left: 55px;
+            margin-top: 5px;
+        }
         .col-md-label5 {
             /*width: 28.75%;*/
             width: 85.5px;
+            height: 35px;
         }
 
         .col-md-input5 {
             width: 305px;
+            margin-top:-8px;
+            height:35px;
         }
     </style>
 }
@@ -211,8 +230,9 @@ else
 
 <div class="sub-container-form" id="CAS">
     <form class="needs-validation" novalidate asp-area="CAS" asp-controller="RenterLessorInformation" asp-action="Edit" method="post" enctype="multipart/form-data">
-        <div class="form-contain" style="position:relative">
-            @*branch Code*@
+        @*<div class="form-contain" style="position:relative">*@ @*For Scrolling in Form*@
+          <div class="" style="position:relative">
+                @*branch Code*@
             <div class="row mt-2" hidden>
                 <div class="col-md-label5 formlabel">
                     <label class="form-label" for="branchCode">@localizer["Code"]</label>
@@ -251,60 +271,23 @@ else
                     <div class="col-md-label5 formlabel">
                         <label class="form-label" for="CrCasRenterLessorId">@localizer["RenterInformationId"]</label>
                     </div>
-                    <div class="col-md-input5 p-0 col-11">
+                    <div class="col-md-input5 p-0 col-11" style="margin-top:-5px">
                         <input type="text" class="form-control" asp-for="CrCasRenterLessorId" readonly maxlength="15" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationGovernmentNo" class="text-danger" data-error="@localizer["requiredNoStartWithFiled7"]" id="gov-error"></span>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="col-md-label5 formlabel">
                         <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationArName">@localizer["RenterInformationName"]</label>
                     </div>
-                    <div class="col-md-6 p-0 col-11">
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
                         <input type="text" class="form-control" asp-for="CrCasRenterLessorNavigation.CrMasRenterInformationArName" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationArName" class="text-danger"></span>
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                    </div>
                 </div> @*End row*@
 
 
-                @* Nationality -- Profession -- Mempership *@
+                @* Mempership -- Mechanism *@
                 <div class="row mt-2">
 
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="CrCasRenterLessorStatisticsNationalitiesNavigation.CrMasSupRenterNationalitiesArName">@localizer["Nationality"]</label>
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                        <input type="text" class="form-control" asp-for="CrCasRenterLessorStatisticsNationalitiesNavigation.CrMasSupRenterNationalitiesArName" readonly style="width:96%" maxlength="15" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="CrCasRenterLessorStatisticsJobsNavigation.CrMasSupRenterProfessionsArName">@localizer["Profession"]</label>
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                        <input type="text" class="form-control" asp-for="CrCasRenterLessorStatisticsJobsNavigation.CrMasSupRenterProfessionsArName" readonly maxlength="10" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationGovernmentNo" class="text-danger" data-error="@localizer["requiredNoStartWithFiled7"]" id="gov-error"></span>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="col-md-label5 formlabel">
                         <label class="form-label" for="CrCasRenterLessorMembershipNavigation.CrMasSupRenterMembershipArName">@localizer["Membership"]</label>
@@ -319,42 +302,23 @@ else
                         </div>
                     </div>
 
+                    <div class="col-md-label5 formlabel">
+                        <label class="form-label" for="Mechanism_Droplist">@localizer["Mechanism_Rent"]</label>
+                    </div>
+                    <div class="col-md-label5 col-11 p-0 CallingKeys" style="margin-top:-5px;height:35px">
+                            @foreach (var x in ViewData["Mechanism"] as List<CrMasSysEvaluation>)
+                            {
+                                if (x.CrMasSysEvaluationsCode == Model.CrCasRenterLessorDealingMechanism)
+                                {
+                                <input type="text" class="form-control" value="@x.CrMasSysEvaluationsArDescription" readonly maxlength="15" id="Evaluation" name="Evaluation" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                                }
+
+                            }
+                    </div>
+
                     <div class="col-md-1">
                     </div>
                     <div class="col-md-input5 p-0 col-11">
-                    </div>
-
-                </div> @*End row*@
-
-
-                @* Sector -- WorkPlace *@
-                <div class="row mt-2">
-
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="CrCasRenterLessorSectorNavigation.CrMasSupRenterSectorArName">@localizer["sector"]</label>
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                        <input type="text" class="form-control" asp-for="CrCasRenterLessorSectorNavigation.CrMasSupRenterSectorArName" readonly style="width:96%" maxlength="15" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="workPlaceAr">@localizer["WorkPlace"]</label>
-                    </div>
-                    <div class="col-md-8 p-0 col-11">
-                        <input type="text" class="form-control" value="@ViewBag.workPlaceAr" readonly style="width:96%" id="workPlaceAr" maxlength="100" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-1">
                     </div>
 
                 </div> @*End row*@
@@ -368,100 +332,18 @@ else
                     </div>
                     <div class="col-md-input-10 p-0 col-11">
                         <input type="text" class="form-control" asp-for="CrCasRenterLessorContractDays" readonly style="width:96%" maxlength="15" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="col-md-label-10 formlabel">
-                        <label class="form-label" for="workPlaceAr">@localizer["Amountstraded"]</label>
+                    <div class="col-md-label-10 formlabel" style="width:152px">
+                        <label class="form-label" for="KM_Count">@localizer["KM_Count_walked"]</label>
                     </div>
                     <div class="col-md-input-10 p-0 col-11">
-                        @*<P>@Model.CrCasRenterLessorContractTradedAmount?.ToString("N2",CultureInfo.InvariantCulture)</P>*@
-                        <input type="text" class="form-control" asp-for="CrCasRenterLessorContractTradedAmount" readonly style="width:96%" id="workPlaceAr" maxlength="100" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
+                        <input type="text" class="form-control" asp-for="CrCasRenterLessorContractKm" readonly style="width:96%" id="KM_Count" maxlength="100" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                     </div>
 
-                    <div class="col-md-1">
-                    </div>
 
                 </div> @*End row*@
 
-                @*DrivingType -- Date_start -- Date_end *@
-                <div class="row mt-2">
-                    <div class="col-md-label-10 formlabel">
-                        <label class="form-label" for="DrivingTypeAr">@localizer["DrivingType"]</label>
-                    </div>
-                    <div class="col-md-input-10 p-0 col-11">
-                        <input type="text" class="form-control" value="@ViewBag.DrivingTypeAr" id="DrivingTypeAr" readonly maxlength="10" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationGovernmentNo" class="text-danger" data-error="@localizer["requiredNoStartWithFiled7"]" id="gov-error"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationDrivingLicenseDate">@localizer["Date_start"]</label>
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                        <input type="text" class="form-control" value="@Model.CrCasRenterLessorNavigation.CrMasRenterInformationDrivingLicenseDate?.ToString("dd/MM/yyyy")" readonly style="width:96%" maxlength="15" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationExpiryDrivingLicenseDate">@localizer["Date_end"]</label>
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                        <input type="text" class="form-control" value="@Model.CrCasRenterLessorNavigation.CrMasRenterInformationExpiryDrivingLicenseDate?.ToString("dd/MM/yyyy")" readonly style="width:96%" maxlength="15" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                    </div>
-                </div> @*End row*@
-
-                @* Address Ar *@
-                <div class="row mt-2">
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="DrivingTypeAr">@localizer["Address"]</label>
-                    </div>
-                    <div class="col-md-8 p-0 col-11">
-                        <input type="text" class="form-control" value="@ViewBag.AddressAr" id="AddressAr" readonly maxlength="50" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-
-                       @* @{
-                            foreach (var x in ViewData["Adress"] as List<CrMasRenterPost>)
-                            {
-                                if(x.CrMasRenterPostCode == Model.CrCasRenterLessorId)
-                                {
-                                    <input type="text" class="form-control" value="@x.CrMasRenterPostArShortConcatenate" id="DrivingTypeAr" readonly maxlength="10" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-
-                                }
-                            }
-                        }*@
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationGovernmentNo" class="text-danger" data-error="@localizer["requiredNoStartWithFiled7"]" id="gov-error"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div> @*End row*@
     }
     @*// English english *@
     else if (requestCulture.RequestCulture.UICulture.Name == "en-US")
@@ -472,60 +354,23 @@ else
                     <div class="col-md-label5 formlabel">
                         <label class="form-label" for="CrCasRenterLessorId">@localizer["RenterInformationId"]</label>
                     </div>
-                    <div class="col-md-input5 p-0 col-11">
+                    <div class="col-md-input5 p-0 col-11" style="margin-top:-5px">
                         <input type="text" class="form-control" asp-for="CrCasRenterLessorId" readonly maxlength="15" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationGovernmentNo" class="text-danger" data-error="@localizer["requiredNoStartWithFiled7"]" id="gov-error"></span>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="col-md-label5 formlabel">
                         <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["RenterInformationName"]</label>
                     </div>
-                    <div class="col-md-6 p-0 col-11">
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
                         <input type="text" class="form-control" asp-for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationEnName" class="text-danger"></span>
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                    </div>
                 </div> @*End row*@
 
 
-                @* Nationality -- Profession -- Mempership *@
+                @* Mempership -- Mechanism *@
                 <div class="row mt-2">
 
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="CrCasRenterLessorStatisticsNationalitiesNavigation.CrMasSupRenterNationalitiesEnName">@localizer["Nationality"]</label>
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                        <input type="text" class="form-control" asp-for="CrCasRenterLessorStatisticsNationalitiesNavigation.CrMasSupRenterNationalitiesEnName" readonly style="width:96%" maxlength="15" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="CrCasRenterLessorStatisticsJobsNavigation.CrMasSupRenterProfessionsEnName">@localizer["Profession"]</label>
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                        <input type="text" class="form-control" asp-for="CrCasRenterLessorStatisticsJobsNavigation.CrMasSupRenterProfessionsEnName" readonly maxlength="10" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationGovernmentNo" class="text-danger" data-error="@localizer["requiredNoStartWithFiled7"]" id="gov-error"></span>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="col-md-label5 formlabel">
                         <label class="form-label" for="CrCasRenterLessorMembershipNavigation.CrMasSupRenterMembershipEnName">@localizer["Membership"]</label>
@@ -540,43 +385,21 @@ else
                         </div>
                     </div>
 
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                    </div>
-
-                </div> @*End row*@
-
-
-                @* Sector -- WorkPlace *@
-                <div class="row mt-2">
-
                     <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="CrCasRenterLessorSectorNavigation.CrMasSupRenterSectorEnName">@localizer["sector"]</label>
+                        <label class="form-label" for="Mechanism_Droplist">@localizer["Mechanism_Rent"]</label>
                     </div>
-                    <div class="col-md-input5 p-0 col-11">
-                        <input type="text" class="form-control" asp-for="CrCasRenterLessorSectorNavigation.CrMasSupRenterSectorEnName" readonly style="width:96%" maxlength="15" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
+                    <div class="col-md-label5 col-11 p-0 CallingKeys" style="margin-top:-5px;height:35px">
+                        @foreach (var x in ViewData["Mechanism"] as List<CrMasSysEvaluation>)
+                        {
+                            if (x.CrMasSysEvaluationsCode == Model.CrCasRenterLessorDealingMechanism)
+                            {
+                                <input type="text" class="form-control" value="@x.CrMasSysEvaluationsEnDescription" readonly maxlength="15" id="Evaluation" name="Evaluation" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                            }
+
+                        }
                     </div>
 
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="workPlaceEn">@localizer["WorkPlace"]</label>
-                    </div>
-                    <div class="col-md-8 p-0 col-11">
-                        <input type="text" class="form-control" value="@ViewBag.workPlaceEn" readonly style="width:96%" id="workPlaceEn" maxlength="100" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-1">
-                    </div>
 
                 </div> @*End row*@
 
@@ -589,106 +412,23 @@ else
                     </div>
                     <div class="col-md-input-10 p-0 col-11">
                         <input type="text" class="form-control" asp-for="CrCasRenterLessorContractDays" readonly style="width:96%" maxlength="15" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="col-md-label-10 formlabel">
-                        <label class="form-label" for="workPlaceEn">@localizer["Amountstraded"]</label>
+                    <div class="col-md-label-10 formlabel" style="width:152px">
+                        <label class="form-label" for="KM_Count">@localizer["KM_Count_walked"]</label>
                     </div>
                     <div class="col-md-input-10 p-0 col-11">
-                        @*<P>@Model.CrCasRenterLessorContractTradedAmount?.ToString("N2",CultureInfo.InvariantCulture)</P>*@
-                        <input type="text" class="form-control" asp-for="CrCasRenterLessorContractTradedAmount" readonly style="width:96%" id="workPlaceEn" maxlength="100" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
+                        <input type="text" class="form-control" asp-for="CrCasRenterLessorContractKm" readonly style="width:96%" id="KM_Count" maxlength="100" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                     </div>
 
-                    <div class="col-md-1">
-                    </div>
 
-                </div> @*End row*@
-
-                @*DrivingType -- Date_start -- Date_end *@
-                <div class="row mt-2">
-                    <div class="col-md-label-10 formlabel">
-                        <label class="form-label" for="DrivingTypeEn">@localizer["DrivingType"]</label>
-                    </div>
-                    <div class="col-md-input-10 p-0 col-11">
-                        <input type="text" class="form-control" value="@ViewBag.DrivingTypeEn" id="DrivingTypeEn" readonly maxlength="10" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationGovernmentNo" class="text-danger" data-error="@localizer["requiredNoStartWithFiled7"]" id="gov-error"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationDrivingLicenseDate">@localizer["Date_start"]</label>
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                        <input type="text" class="form-control" value="@Model.CrCasRenterLessorNavigation.CrMasRenterInformationDrivingLicenseDate?.ToString("yyyy/MM/dd")" readonly style="width:96%" maxlength="15" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationExpiryDrivingLicenseDate">@localizer["Date_end"]</label>
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                        <input type="text" class="form-control" value="@Model.CrCasRenterLessorNavigation.CrMasRenterInformationExpiryDrivingLicenseDate?.ToString("yyyy/MM/dd")" readonly style="width:96%" maxlength="15" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationTaxNo" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-input5 p-0 col-11">
-                    </div>
-                </div> @*End row*@
-
-                @* Address En *@
-                <div class="row mt-2">
-                    <div class="col-md-label5 formlabel">
-                        <label class="form-label" for="DrivingTypeEn">@localizer["Address"]</label>
-                    </div>
-                    <div class="col-md-8 p-0 col-11">
-                        <input type="text" class="form-control" value="@ViewBag.AddressEn" id="AddressEn" readonly maxlength="50" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-
-                        @* @{
-                    foreach (var x in ViewData["Adress"] as List<CrMasRenterPost>)
-                    {
-                    if(x.CrMasRenterPostCode == Model.CrCasRenterLessorId)
-                    {
-                    <input type="text" class="form-control" value="@x.CrMasRenterPostEnShortConcatenate" id="DrivingTypeEn" readonly maxlength="10" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-
-                    }
-                    }
-                    }*@
-                        <div style="margin-top:2px">
-                            <div style="height: 1.35em">
-                                <span yyy="nnnCrCasRenterLessorInformationInformationGovernmentNo" class="text-danger" data-error="@localizer["requiredNoStartWithFiled7"]" id="gov-error"></span>
-                            </div>
-                        </div>
-                    </div>
                 </div> @*End row*@
 
     }
 
             @if (ViewData["Data_Table"] != null)
             {
-                <div  style="margin:45px;">
+                <div  id="t_mar">
                 <div class="dataTable ">
                     <partial name="_DataTable_Internal_RenterContract" />
                 </div>
@@ -699,7 +439,7 @@ else
             </div>
             @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
         </div>
-        <div class="mt-3" id="buttonContainer">
+        <div class="mt-3" id="buttonContainer" style="margin-bottom:20px;">
             @*<button type="submit" id="saveEdit" class="btn btn-primary ms-1">@localizer["Save"]</button>*@
 
                 <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="RenterContract" asp-action="Index">
@@ -952,6 +692,7 @@ else
 
 
     <script>
+        
         var cultureInfo_ = '@System.Globalization.CultureInfo.CurrentCulture.Name'; // OK Done OK OK
 
         $('#DeleteButton').click(function () {

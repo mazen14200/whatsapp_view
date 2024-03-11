@@ -56,6 +56,11 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
         public async Task<IActionResult> Index()
         {
+
+            //sidebar Active
+            ViewBag.id = "#sidebarReport";
+            ViewBag.no = "0";
+
             //ViewBag.StartDate = "2024-02-15";
             //ViewBag.EndDate = "2024-02-15";
             ViewBag.StartDate = "";
@@ -109,6 +114,10 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         [HttpGet]
         public PartialViewResult GetUserLoginByDate(string _max, string _mini)
         {
+
+            //sidebar Active
+            ViewBag.id = "#sidebarReport";
+            ViewBag.no = "0";
             if (!string.IsNullOrEmpty(_max) && !string.IsNullOrEmpty(_mini))
             {
                 
@@ -144,9 +153,10 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         {
             string currentCulture = CultureInfo.CurrentCulture.Name;
 
+
             //sidebar Active
-            ViewBag.id = "#sidebarCompany";
-            ViewBag.no = "2";
+            ViewBag.id = "#sidebarReport";
+            ViewBag.no = "0";
             //To Set Title
             var titles = await setTitle("101", "1101003", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
