@@ -69,9 +69,9 @@
         }
 
     /* .file-upload-btn:active {
-                            border: 0;
-                            transition: all .2s ease;
-                        }*/
+                                    border: 0;
+                                    transition: all .2s ease;
+                                }*/
 
     .file-upload-content {
         display: none;
@@ -312,8 +312,6 @@
                     </div>
                 }
 
-
-
                 @if (!string.IsNullOrEmpty(Model.CrMasLessorImageStampOutsideCountry))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
@@ -438,7 +436,6 @@
                     </div>
                 }
 
-
                 @if (!string.IsNullOrEmpty(Model.CrMasLessorImageContractCard))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
@@ -479,11 +476,12 @@
                         </div>
                     </div>
                 }
+
                 @if (!string.IsNullOrEmpty(Model.CrMasLessorImageContractExtensionCard))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.CreateContractWhatUp').trigger('click')">@localizer["ExtensionContractCard"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ExtensionContractCard').trigger('click')">@localizer["ExtensionContractCard"]</button>
                             <div class="image-upload-wrap" style="display:none">
                                 <input class="file-upload-input ExtensionContractCard" type="file" onchange="readURL(this, 'ExtensionContractCard');" accept="image/*" id="ExtensionContractCard" name="ExtensionContractCard" />
                                 <div class="drag-text">
@@ -563,6 +561,7 @@
 
 
                 }
+
                 @if (!string.IsNullOrEmpty(Model.CrMasLessorImageContract4Hour))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
@@ -686,7 +685,6 @@
                     </div>
                 }
 
-
                 @if (!string.IsNullOrEmpty(Model.CrMasLessorImageContractCancelled))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
@@ -728,8 +726,6 @@
                     </div>
                 }
 
-
-
                 @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArCatchReceipt))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
@@ -770,6 +766,7 @@
                         </div>
                     </div>
                 }
+
                 @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArBillExchange))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
@@ -810,6 +807,7 @@
                         </div>
                     </div>
                 }
+
                 @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArBoxFeeding))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
@@ -1084,7 +1082,7 @@
                         <div class="file-upload">
                             <button class="file-upload-btn" type="button" onclick="$('.EnBoxFeeding').trigger('click')">@localizer["EnBoxFeeding"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input EnBoxFeeding" type="file" data-re="r" onchange="readURL(this, 'EnBoxFeeding');" accept="image/*" id="EnBoxFeeding" name="EnBoxFeeding" />
+                                <input class="file-upload-input EnBoxFeeding" type="file" onchange="readURL(this, 'EnBoxFeeding');" accept="image/*" id="EnBoxFeeding" name="EnBoxFeeding" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
@@ -1098,6 +1096,7 @@
                         </div>
                     </div>
                 }
+
                 @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnDeliveryCustody))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
@@ -1124,7 +1123,7 @@
                         <div class="file-upload">
                             <button class="file-upload-btn" type="button" onclick="$('.EnDeliveryCustody').trigger('click')">@localizer["EnDeliveryCustody"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input EnDeliveryCustody" type="file" data-re="r" onchange="readURL(this, 'EnDeliveryCustody');" accept="image/*" id="EnDeliveryCustody" name="EnDeliveryCustody" />
+                                <input class="file-upload-input EnDeliveryCustody" type="file" onchange="readURL(this, 'EnDeliveryCustody');" accept="image/*" id="EnDeliveryCustody" name="EnDeliveryCustody" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
@@ -1138,6 +1137,7 @@
                         </div>
                     </div>
                 }
+
                 @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnTransferFtenant))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
@@ -1164,7 +1164,7 @@
                         <div class="file-upload">
                             <button class="file-upload-btn" type="button" onclick="$('.EnTransferFtenant').trigger('click')">@localizer["EnTransferFtenant"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input EnTransferFtenant" type="file" data-re="r" onchange="readURL(this, 'EnTransferFtenant');" accept="image/*" id="EnTransferFtenant" name="EnTransferFtenant" />
+                                <input class="file-upload-input EnTransferFtenant" type="file" onchange="readURL(this, 'EnTransferFtenant');" accept="image/*" id="EnTransferFtenant" name="EnTransferFtenant" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
@@ -1178,6 +1178,7 @@
                         </div>
                     </div>
                 }
+
                 @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnTransferTtenant))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
@@ -1204,7 +1205,7 @@
                         <div class="file-upload">
                             <button class="file-upload-btn" type="button" onclick="$('.EnTransferTtenant').trigger('click')">@localizer["EnTransferTtenant"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input EnTransferTtenant" type="file" data-re="r" onchange="readURL(this, 'EnTransferTtenant');" accept="image/*" id="EnTransferTtenant" name="EnTransferTtenant" />
+                                <input class="file-upload-input EnTransferTtenant" type="file" onchange="readURL(this, 'EnTransferTtenant');" accept="image/*" id="EnTransferTtenant" name="EnTransferTtenant" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
@@ -1218,6 +1219,735 @@
                         </div>
                     </div>
                 }
+
+@*
+
+
+               
+
+
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArContractPage1))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage1').trigger('click')">@localizer["ArContractPage1"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input ArContractPage1" type="file" onchange="readURL(this, 'ArContractPage1');" accept="image/*" id="ArContractPage1" name="ArContractPage1" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage1" style="display:block">
+                                <img class="file-upload-image ArContractPage1" src="@Url.Content(Model.CrMasLessorImageArContractPage1?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage1').trigger('click')">@localizer["ArContractPage1"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input ArContractPage1" type="file"  onchange="readURL(this, 'ArContractPage1');" accept="image/*" id="ArContractPage1" name="ArContractPage1" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage1" style="display:none">
+                                <img class="file-upload-image ArContractPage1" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArContractPage2))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage2').trigger('click')">@localizer["ArContractPage2"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input ArContractPage2" type="file" onchange="readURL(this, 'ArContractPage2');" accept="image/*" id="ArContractPage2" name="ArContractPage2" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage2" style="display:block">
+                                <img class="file-upload-image ArContractPage2" src="@Url.Content(Model.CrMasLessorImageArContractPage2?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage2').trigger('click')">@localizer["ArContractPage2"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input ArContractPage2" type="file"  onchange="readURL(this, 'ArContractPage2');" accept="image/*" id="ArContractPage2" name="ArContractPage2" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage2" style="display:none">
+                                <img class="file-upload-image ArContractPage2" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArContractPage3))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage3').trigger('click')">@localizer["ArContractPage3"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input ArContractPage3" type="file" onchange="readURL(this, 'ArContractPage3');" accept="image/*" id="ArContractPage3" name="ArContractPage3" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage3" style="display:block">
+                                <img class="file-upload-image ArContractPage3" src="@Url.Content(Model.CrMasLessorImageArContractPage3?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage3').trigger('click')">@localizer["ArContractPage3"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input ArContractPage3" type="file"  onchange="readURL(this, 'ArContractPage3');" accept="image/*" id="ArContractPage3" name="ArContractPage3" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage3" style="display:none">
+                                <img class="file-upload-image ArContractPage3" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArContractPage4))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage4').trigger('click')">@localizer["ArContractPage4"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input ArContractPage4" type="file" onchange="readURL(this, 'ArContractPage4');" accept="image/*" id="ArContractPage4" name="ArContractPage4" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage4" style="display:block">
+                                <img class="file-upload-image ArContractPage4" src="@Url.Content(Model.CrMasLessorImageArContractPage4?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage4').trigger('click')">@localizer["ArContractPage4"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input ArContractPage4" type="file"  onchange="readURL(this, 'ArContractPage4');" accept="image/*" id="ArContractPage4" name="ArContractPage4" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage4" style="display:none">
+                                <img class="file-upload-image ArContractPage4" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArContractPage5))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage5').trigger('click')">@localizer["ArContractPage5"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input ArContractPage5" type="file" onchange="readURL(this, 'ArContractPage5');" accept="image/*" id="ArContractPage5" name="ArContractPage5" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage5" style="display:block">
+                                <img class="file-upload-image ArContractPage5" src="@Url.Content(Model.CrMasLessorImageArContractPage5?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage5').trigger('click')">@localizer["ArContractPage5"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input ArContractPage5" type="file"  onchange="readURL(this, 'ArContractPage5');" accept="image/*" id="ArContractPage5" name="ArContractPage5" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage5" style="display:none">
+                                <img class="file-upload-image ArContractPage5" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArContractPage6))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage6').trigger('click')">@localizer["ArContractPage6"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input ArContractPage6" type="file" onchange="readURL(this, 'ArContractPage6');" accept="image/*" id="ArContractPage6" name="ArContractPage6" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage6" style="display:block">
+                                <img class="file-upload-image ArContractPage6" src="@Url.Content(Model.CrMasLessorImageArContractPage6?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage6').trigger('click')">@localizer["ArContractPage6"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input ArContractPage6" type="file"  onchange="readURL(this, 'ArContractPage6');" accept="image/*" id="ArContractPage6" name="ArContractPage6" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage6" style="display:none">
+                                <img class="file-upload-image ArContractPage6" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArContractPage7))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage7').trigger('click')">@localizer["ArContractPage7"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input ArContractPage7" type="file" onchange="readURL(this, 'ArContractPage7');" accept="image/*" id="ArContractPage7" name="ArContractPage7" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage7" style="display:block">
+                                <img class="file-upload-image ArContractPage7" src="@Url.Content(Model.CrMasLessorImageArContractPage7?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage7').trigger('click')">@localizer["ArContractPage7"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input ArContractPage7" type="file"  onchange="readURL(this, 'ArContractPage7');" accept="image/*" id="ArContractPage7" name="ArContractPage7" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage7" style="display:none">
+                                <img class="file-upload-image ArContractPage7" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArContractPage8))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage8').trigger('click')">@localizer["ArContractPage8"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input ArContractPage8" type="file" onchange="readURL(this, 'ArContractPage8');" accept="image/*" id="ArContractPage8" name="ArContractPage8" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage8" style="display:block">
+                                <img class="file-upload-image ArContractPage8" src="@Url.Content(Model.CrMasLessorImageArContractPage8?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage8').trigger('click')">@localizer["ArContractPage8"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input ArContractPage8" type="file"  onchange="readURL(this, 'ArContractPage8');" accept="image/*" id="ArContractPage8" name="ArContractPage8" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage8" style="display:none">
+                                <img class="file-upload-image ArContractPage8" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArContractPage9))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage9').trigger('click')">@localizer["ArContractPage9"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input ArContractPage9" type="file" onchange="readURL(this, 'ArContractPage9');" accept="image/*" id="ArContractPage9" name="ArContractPage9" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage9" style="display:block">
+                                <img class="file-upload-image ArContractPage9" src="@Url.Content(Model.CrMasLessorImageArContractPage9?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.ArContractPage9').trigger('click')">@localizer["ArContractPage9"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input ArContractPage9" type="file"  onchange="readURL(this, 'ArContractPage9');" accept="image/*" id="ArContractPage9" name="ArContractPage9" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content ArContractPage9" style="display:none">
+                                <img class="file-upload-image ArContractPage9" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnContractPage1))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage1').trigger('click')">@localizer["EnContractPage1"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input EnContractPage1" type="file" onchange="readURL(this, 'EnContractPage1');" accept="image/*" id="EnContractPage1" name="EnContractPage1" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage1" style="display:block">
+                                <img class="file-upload-image EnContractPage1" src="@Url.Content(Model.CrMasLessorImageEnContractPage1?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage1').trigger('click')">@localizer["EnContractPage1"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input EnContractPage1" type="file"  onchange="readURL(this, 'EnContractPage1');" accept="image/*" id="EnContractPage1" name="EnContractPage1" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage1" style="display:none">
+                                <img class="file-upload-image EnContractPage1" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnContractPage2))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage2').trigger('click')">@localizer["EnContractPage2"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input EnContractPage2" type="file" onchange="readURL(this, 'EnContractPage2');" accept="image/*" id="EnContractPage2" name="EnContractPage2" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage2" style="display:block">
+                                <img class="file-upload-image EnContractPage2" src="@Url.Content(Model.CrMasLessorImageEnContractPage2?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage2').trigger('click')">@localizer["EnContractPage2"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input EnContractPage2" type="file"  onchange="readURL(this, 'EnContractPage2');" accept="image/*" id="EnContractPage2" name="EnContractPage2" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage2" style="display:none">
+                                <img class="file-upload-image EnContractPage2" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnContractPage3))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage3').trigger('click')">@localizer["EnContractPage3"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input EnContractPage3" type="file" onchange="readURL(this, 'EnContractPage3');" accept="image/*" id="EnContractPage3" name="EnContractPage3" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage3" style="display:block">
+                                <img class="file-upload-image EnContractPage3" src="@Url.Content(Model.CrMasLessorImageEnContractPage3?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage3').trigger('click')">@localizer["EnContractPage3"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input EnContractPage3" type="file"  onchange="readURL(this, 'EnContractPage3');" accept="image/*" id="EnContractPage3" name="EnContractPage3" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage3" style="display:none">
+                                <img class="file-upload-image EnContractPage3" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnContractPage4))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage4').trigger('click')">@localizer["EnContractPage4"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input EnContractPage4" type="file" onchange="readURL(this, 'EnContractPage4');" accept="image/*" id="EnContractPage4" name="EnContractPage4" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage4" style="display:block">
+                                <img class="file-upload-image EnContractPage4" src="@Url.Content(Model.CrMasLessorImageEnContractPage4?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage4').trigger('click')">@localizer["EnContractPage4"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input EnContractPage4" type="file"  onchange="readURL(this, 'EnContractPage4');" accept="image/*" id="EnContractPage4" name="EnContractPage4" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage4" style="display:none">
+                                <img class="file-upload-image EnContractPage4" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnContractPage5))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage5').trigger('click')">@localizer["EnContractPage5"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input EnContractPage5" type="file" onchange="readURL(this, 'EnContractPage5');" accept="image/*" id="EnContractPage5" name="EnContractPage5" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage5" style="display:block">
+                                <img class="file-upload-image EnContractPage5" src="@Url.Content(Model.CrMasLessorImageEnContractPage5?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage5').trigger('click')">@localizer["EnContractPage5"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input EnContractPage5" type="file"  onchange="readURL(this, 'EnContractPage5');" accept="image/*" id="EnContractPage5" name="EnContractPage5" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage5" style="display:none">
+                                <img class="file-upload-image EnContractPage5" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnContractPage6))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage6').trigger('click')">@localizer["EnContractPage6"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input EnContractPage6" type="file" onchange="readURL(this, 'EnContractPage6');" accept="image/*" id="EnContractPage6" name="EnContractPage6" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage6" style="display:block">
+                                <img class="file-upload-image EnContractPage6" src="@Url.Content(Model.CrMasLessorImageEnContractPage6?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage6').trigger('click')">@localizer["EnContractPage6"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input EnContractPage6" type="file"  onchange="readURL(this, 'EnContractPage6');" accept="image/*" id="EnContractPage6" name="EnContractPage6" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage6" style="display:none">
+                                <img class="file-upload-image EnContractPage6" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnContractPage7))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage7').trigger('click')">@localizer["EnContractPage7"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input EnContractPage7" type="file" onchange="readURL(this, 'EnContractPage7');" accept="image/*" id="EnContractPage7" name="EnContractPage7" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage7" style="display:block">
+                                <img class="file-upload-image EnContractPage7" src="@Url.Content(Model.CrMasLessorImageEnContractPage7?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage7').trigger('click')">@localizer["EnContractPage7"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input EnContractPage7" type="file"  onchange="readURL(this, 'EnContractPage7');" accept="image/*" id="EnContractPage7" name="EnContractPage7" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage7" style="display:none">
+                                <img class="file-upload-image EnContractPage7" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnContractPage8))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage8').trigger('click')">@localizer["EnContractPage8"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input EnContractPage8" type="file" onchange="readURL(this, 'EnContractPage8');" accept="image/*" id="EnContractPage8" name="EnContractPage8" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage8" style="display:block">
+                                <img class="file-upload-image EnContractPage8" src="@Url.Content(Model.CrMasLessorImageEnContractPage8?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage8').trigger('click')">@localizer["EnContractPage8"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input EnContractPage8" type="file"  onchange="readURL(this, 'EnContractPage8');" accept="image/*" id="EnContractPage8" name="EnContractPage8" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage8" style="display:none">
+                                <img class="file-upload-image EnContractPage8" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnContractPage9))
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage9').trigger('click')">@localizer["EnContractPage9"]</button>
+                            <div class="image-upload-wrap" style="display:none">
+                                <input class="file-upload-input EnContractPage9" type="file" onchange="readURL(this, 'EnContractPage9');" accept="image/*" id="EnContractPage9" name="EnContractPage9" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage9" style="display:block">
+                                <img class="file-upload-image EnContractPage9" src="@Url.Content(Model.CrMasLessorImageEnContractPage9?.ToString())" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mt-1">
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.EnContractPage9').trigger('click')">@localizer["EnContractPage9"]</button>
+                            <div class="image-upload-wrap" style="display:block">
+                                <input class="file-upload-input EnContractPage9" type="file"  onchange="readURL(this, 'EnContractPage9');" accept="image/*" id="EnContractPage9" name="EnContractPage9" />
+                                <div class="drag-text">
+                                    <h3>@localizer["DragAndDrop"]</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content EnContractPage9" style="display:none">
+                                <img class="file-upload-image EnContractPage9" src="#" alt="uploaded image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                *@
 
 
             </div>
@@ -1286,12 +2016,18 @@
             var imagesForRemove = [];
 
             var fileInputs = document.querySelectorAll('input[type="file"]');
+            console.log("fileInputs", fileInputs)
+
             for (var i = 0; i < fileInputs.length; i++) {
                 var fileInput = fileInputs[i];
                 var id = fileInput.getAttribute('id');
                 var file = fileInput.files[0];
+
+                console.log("id", id)
+                console.log("file", file)
+
                 var deleteImageSrc = fileInput.getAttribute('data-r');
-                console.log(deleteImageSrc)
+                console.log("deleteImageSrc",deleteImageSrc)
                 if (deleteImageSrc != "" && deleteImageSrc != null) {
                     imagesForRemove.push({
                         id: id,
@@ -1304,7 +2040,7 @@
             if (imagesForRemove.length > 0) {
                 formData.append('imagesForRemove', JSON.stringify(imagesForRemove));
             }
-            console.log(formData)
+            console.log("FormData", formData)
             console.log(imagesForRemove)
             $.ajax({
                 url: '/MAS/LessorImages/EditImages',
@@ -1336,5 +2072,5 @@
 
 
     </script>
-   
+
 }
