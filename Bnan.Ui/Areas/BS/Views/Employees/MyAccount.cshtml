@@ -166,21 +166,22 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12">
+                                                <div class="col-md-12" >
                                                     <div class="row account-modal-rows pt-lg-3">
                                                         <div class="col-lg-2 account-titles">
                                                             <label for="phone">@localizer["RenterDriverMobile"]</label>
                                                         </div>
-                                                        <div class="col-lg-2 personal-data">
+                                                        <div class="col-auto personal-data">
 
-                                                            <select id="country-code" asp-for="@Model.UserInformation.CrMasUserInformationCallingKey">
+                                                            @* <select id="country-code" asp-for="@Model.UserInformation.CrMasUserInformationCallingKey">
                                                                 @foreach (var item in Model.CallingKeys)
                                                                 {
                                                                     <option value="@item.CrMasSysCallingKeysNo" selected="@(item.CrMasSysCallingKeysNo.Trim() == Model.UserInformation.CrMasUserInformationCallingKey ? "selected" : null)">+@item.CrMasSysCallingKeysNo</option>
 
                                                                 }
                                                             </select>
-                                                            <input type="tel" id="phone" asp-for="@Model.UserInformation.CrMasUserInformationMobileNo" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="20" class="account-select" autocomplete="off">
+                                                            <input type="tel" id="phone" asp-for="@Model.UserInformation.CrMasUserInformationMobileNo" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="20" class="account-select" autocomplete="off"> *@
+                                                            <p>@Model.UserInformation.CrMasUserInformationCallingKey@Model.UserInformation.CrMasUserInformationMobileNo</p>
                                                         </div>
                                                     </div>
                                                 </div>

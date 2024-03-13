@@ -228,7 +228,7 @@
             </div>
 
 
-            <div class="row mt-1" hidden>
+           @*  <div class="row mt-1">
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-2">
@@ -239,6 +239,32 @@
                         </div>
                     </div>
                 </div>
+            </div> *@
+            <div class="row mt-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="UserPhone">@localizer["User Phone"]</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="row" style="margin-right: -12px;width:75%;">
+                        <div class="col-md-4" style="margin-right: 12px;">
+                            <input type="text" class="form-control" id="UserPhone" maxlength="20" asp-for="CrMasUserInformationMobileNo" data-val-required="@localizer["requiredFiled"]" data-val-minlength="@localizer["minLengthPhone"]" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                        </div>
+                        <div class="col-md-2" style="margin-right: -23px;">
+                            <select class="form-select" asp-for="CrMasUserInformationCallingKey" name="CrMasUserInformationCallingKey" style="width: 90px;">
+                                @foreach (var callingKey in (List<SelectListItem>)ViewData["CallingKeys"])
+                                {
+                                    <option value="@callingKey.Text" selected="@(callingKey.Text.Trim() == Model.CrMasUserInformationCallingKey ? "selected" : null)">@callingKey.Text</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-top:2px">
+                        <div style="height: 1.0em">
+                            <span asp-validation-for="@Model.CrMasUserInformationMobileNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
 

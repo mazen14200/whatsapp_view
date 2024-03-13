@@ -285,7 +285,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             if (BnanRenterInfo != null)
             {
                 var LessorRenterInfo = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == lessorCode,
-                                                                         new[] { "CrCasRenterContractBasicCrCasRenterContractBasic4s", "CrCasRenterLessorMembershipNavigation" });
+                                                                         new[] { "CrCasRenterContractBasicCrCasRenterContractBasic5s", "CrCasRenterLessorMembershipNavigation" });
                 var dealingMechanizm = _unitOfWork.CrMasSysEvaluation.Find(x => x.CrMasSysEvaluationsCode == LessorRenterInfo.CrCasRenterLessorDealingMechanism);
                 var RenterPost = _unitOfWork.CrMasRenterPost.Find(x => x.CrMasRenterPostCode == RenterId);
                 if (LessorRenterInfo==null)
@@ -331,7 +331,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     BirthDate = BnanRenterInfo?.CrMasRenterInformationBirthDate,
                     ExpiryIdDate = BnanRenterInfo?.CrMasRenterInformationExpiryIdDate,
                     KeyCountry = BnanRenterInfo?.CrMasRenterInformationCountreyKey,
-                    Balance = LessorRenterInfo?.CrCasRenterLessorAvailableBalance,
+                    Balance = LessorRenterInfo?.CrCasRenterLessorBalance,
                     AvailableBalance= LessorRenterInfo?.CrCasRenterLessorAvailableBalance,
                     ReservedBalance= LessorRenterInfo?.CrCasRenterLessorReservedBalance,
                     LastContract =LessorRenterInfo?.CrCasRenterLessorDateLastContractual,

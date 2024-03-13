@@ -97,11 +97,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
             if (user != null)
             {
                 user.CrMasUserInformationDefaultLanguage = UserModel.CrMasUserInformationDefaultLanguage;
-                user.CrMasUserInformationMobileNo = UserModel.CrMasUserInformationMobileNo;
+                //user.CrMasUserInformationMobileNo = UserModel.CrMasUserInformationMobileNo;
                 user.CrMasUserInformationEmail = UserModel.CrMasUserInformationEmail;
                 user.CrMasUserInformationRemindMe = UserModel.CrMasUserInformationRemindMe;
                 user.CrMasUserInformationExitTimer = UserModel.CrMasUserInformationExitTimer;
-                user.CrMasUserInformationCallingKey = UserModel.CrMasUserInformationCallingKey;
+                //user.CrMasUserInformationCallingKey = UserModel.CrMasUserInformationCallingKey;
                 user.CrMasUserInformationPicture = filePathImage;
                 user.CrMasUserInformationSignature = filePathSignture;
                 try
