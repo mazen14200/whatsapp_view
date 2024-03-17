@@ -67,9 +67,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             {
                 AdmintritiveCustodyVM newAdmins = new AdmintritiveCustodyVM();
                 newAdmins.CrCasSysAdministrativeProceduresNo = item.CrCasSysAdministrativeProceduresNo;
-                newAdmins.CrCasSysAdministrativeProceduresDate = item.CrCasSysAdministrativeProceduresDate?.ToString("yyyy/MM/dd");
-                newAdmins.CrCasSysAdministrativeProceduresDocStartDate = item.CrCasSysAdministrativeProceduresDocStartDate?.ToString("yyyy/MM/dd");
-                newAdmins.CrCasSysAdministrativeProceduresDocEndDate = item.CrCasSysAdministrativeProceduresDocEndDate?.ToString("yyyy/MM/dd");
+                newAdmins.CrCasSysAdministrativeProceduresDate = item.CrCasSysAdministrativeProceduresDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
+                newAdmins.CrCasSysAdministrativeProceduresDocStartDate = item.CrCasSysAdministrativeProceduresDocStartDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
+                newAdmins.CrCasSysAdministrativeProceduresDocEndDate = item.CrCasSysAdministrativeProceduresDocEndDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
                 var AccountReceipt = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptPassingReference == item.CrCasSysAdministrativeProceduresNo, new[] { "CrCasAccountReceiptSalesPointNavigation" });
                 newAdmins.SalesPointNavigation = _unitOfWork.CrCasAccountSalesPoint.Find(x => x.CrCasAccountSalesPointCode == item.CrCasSysAdministrativeProceduresDocNo);
                 newAdmins.CrCasSysAdministrativeProceduresCreditor = item.CrCasSysAdministrativeProceduresCreditor?.ToString("N2", CultureInfo.InvariantCulture);
@@ -77,7 +77,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 newAdmins.UserInsertNavigation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted);
                 newAdmins.UserReceviedNavigation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresUserInsert);
                 newAdmins.CrCasSysAdministrativeProceduresStatus = item.CrCasSysAdministrativeProceduresStatus;
-                newAdmins.DatePassing = AccountReceipt?.CrCasAccountReceiptPassingDate?.ToString("yyyy/MM/dd");
+                newAdmins.DatePassing = AccountReceipt?.CrCasAccountReceiptPassingDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
                 newAdmins.CrCasSysAdministrativeProceduresReasons = item.CrCasSysAdministrativeProceduresReasons;
                 admintritives.Add(newAdmins);
             }
@@ -105,9 +105,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
                     AdmintritiveCustodyVM newAdmins = new AdmintritiveCustodyVM();
                     newAdmins.CrCasSysAdministrativeProceduresNo = item.CrCasSysAdministrativeProceduresNo;
-                    newAdmins.CrCasSysAdministrativeProceduresDate = item.CrCasSysAdministrativeProceduresDate?.ToString("yyyy/MM/dd");
-                    newAdmins.CrCasSysAdministrativeProceduresDocStartDate = item.CrCasSysAdministrativeProceduresDocStartDate?.ToString("yyyy/MM/dd");
-                    newAdmins.CrCasSysAdministrativeProceduresDocEndDate = item.CrCasSysAdministrativeProceduresDocEndDate?.ToString("yyyy/MM/dd");
+                    newAdmins.CrCasSysAdministrativeProceduresDate = item.CrCasSysAdministrativeProceduresDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
+                    newAdmins.CrCasSysAdministrativeProceduresDocStartDate = item.CrCasSysAdministrativeProceduresDocStartDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
+                    newAdmins.CrCasSysAdministrativeProceduresDocEndDate = item.CrCasSysAdministrativeProceduresDocEndDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
                     var AccountReceipt = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptPassingReference == item.CrCasSysAdministrativeProceduresNo, new[] { "CrCasAccountReceiptSalesPointNavigation" });
 
                     newAdmins.SalesPointNavigation = _unitOfWork.CrCasAccountSalesPoint.Find(x => x.CrCasAccountSalesPointCode == item.CrCasSysAdministrativeProceduresDocNo);
@@ -116,7 +116,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     newAdmins.UserInsertNavigation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresTargeted);
                     newAdmins.UserReceviedNavigation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == item.CrCasSysAdministrativeProceduresUserInsert);
                     newAdmins.CrCasSysAdministrativeProceduresStatus = item.CrCasSysAdministrativeProceduresStatus;
-                    newAdmins.DatePassing = AccountReceipt?.CrCasAccountReceiptPassingDate?.ToString("yyyy/MM/dd");
+                    newAdmins.DatePassing = AccountReceipt?.CrCasAccountReceiptPassingDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
                     newAdmins.CrCasSysAdministrativeProceduresReasons = item.CrCasSysAdministrativeProceduresReasons;
                     admintritives.Add(newAdmins);
                 }
@@ -147,9 +147,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                                                                           new[] { "CrCasAccountReceiptPaymentMethodNavigation", "CrCasAccountReceiptReferenceTypeNavigation" }).ToList();
 
                 newAdmins.CrCasSysAdministrativeProceduresNo = adminstritive.CrCasSysAdministrativeProceduresNo;
-                newAdmins.CrCasSysAdministrativeProceduresDate = adminstritive.CrCasSysAdministrativeProceduresDate?.ToString("yyyy/MM/dd");
-                newAdmins.CrCasSysAdministrativeProceduresDocStartDate = adminstritive.CrCasSysAdministrativeProceduresDocStartDate?.ToString("yyyy/MM/dd");
-                newAdmins.CrCasSysAdministrativeProceduresDocEndDate = adminstritive.CrCasSysAdministrativeProceduresDocEndDate?.ToString("yyyy/MM/dd");
+                newAdmins.CrCasSysAdministrativeProceduresDate = adminstritive.CrCasSysAdministrativeProceduresDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
+                newAdmins.CrCasSysAdministrativeProceduresDocStartDate = adminstritive.CrCasSysAdministrativeProceduresDocStartDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
+                newAdmins.CrCasSysAdministrativeProceduresDocEndDate = adminstritive.CrCasSysAdministrativeProceduresDocEndDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
                 var AccountReceipt = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptPassingReference == adminstritive.CrCasSysAdministrativeProceduresNo, new[] { "CrCasAccountReceiptSalesPointNavigation" });
 
                 newAdmins.SalesPointNavigation = _unitOfWork.CrCasAccountSalesPoint.Find(x => x.CrCasAccountSalesPointCode == adminstritive.CrCasSysAdministrativeProceduresDocNo);

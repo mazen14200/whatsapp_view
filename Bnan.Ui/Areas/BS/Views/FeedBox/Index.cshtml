@@ -91,7 +91,7 @@
 
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <p>@Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresDate?.ToString("dd/MM/yyyy")</p>
+                                                    <p>@Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</p>
                                                 </div>
                                             </div>
                                             <div class="row data-row">
@@ -108,7 +108,7 @@
                                                     <p id="notes">@localizer["reasons"]</p>
                                                 </div>
                                                 <div class="col-sm-7 col-md-7 col-lg-7">
-                                                    <input class="form-control textarea-inputs"
+                                                    <input class="form-control textarea-inputs @(requestCulture?.RequestCulture.UICulture.Name == "en-US" ? "text-left" : "text-right")"
                                                            id="reasons" maxlength="100" name="reasons" asp-for="CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresReasons">
                                                 </div>
 

@@ -36,7 +36,7 @@
   //Accounts
   "Accounts": "الحسابات",
   "Cash Feeding": "تغذيه الصندوق",
-  "Receipt Confirmation": "استسلام عهدة",
+  "Receipt Confirmation": "استلام عهدة",
   "Receipt Confirmationn": "عرض بيانات العهد",
   "Transfer To Renter": "تحويل الى مستاجر",
   "Transfer From Renter": "تحويل من مستاجر",
@@ -112,7 +112,7 @@
   "Documentphoto": "صورة المستند",
   "pdf": "العقد",
   "notfound": "غير متوفر",
-
+  "ReceiptPdf": "ملف السند",
   //CAS Add Branch
   "Add Branch Hint": "تمكنك هذه الصفحة من إضافة فرع جديد",
   "Add Branch Data": "إضافة فرع",
@@ -1336,8 +1336,9 @@
   "CarForSale": "السيارة معروضة للبيع فقط",
   "CarRented": "السيارة مؤجرة",
   "CarPrice": "اسعار السيارات",
-  "CarMaintainceReview": "راجع صيانة السيارة",
-  "CarDocumentReview": "راجع مستندات السيارة",
+  "CarMaintainceReview": "الرجاء التحقق من صيانة السيارة",
+  "CarDocumentReview": "الرجاء التحقق من مستندات السيارة",
+  "CarDocumentMaintainanceReview": "الرجاء التحقق من وثائق وجدولة صيانة السيارة",
   // Car Prices
   "CarPrice Data": "اسعار السيارات",
   "CarPrice Hint": "تمكنك هذه الصفحة من البحث و إضافة وحذف الأسعار",

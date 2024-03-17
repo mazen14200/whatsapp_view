@@ -125,13 +125,13 @@ else
                                         </div>
                                         <div class="row pb-2 seacrh-row flex-row-reverse" style="justify-content: space-between;">
                                             <div class="col d-flex align-items-center Search-col flex-row-reverse flex-wrap gap-4">
-                                                <div class="col-md-4 d-flex flex-row-reverse gap-3">
+                                                <div class="col-md-2 d-flex flex-row-reverse gap-3">
                                                     <label for="start-date">@localizer["From"]</label>
                                                     <input type="date" class="form-control inputs" style="font-size: 0.8125rem;" id="start-date" name="start-date" value="@ViewBag.FromDate" required>
                                                 </div>
-                                                <div class="col-md-4 d-flex flex-row-reverse gap-3">
+                                                <div class="col-md-2 d-flex flex-row-reverse gap-3">
                                                     <label for="end-date">@localizer["To"]</label>
-                                                    <input type="date" class="form-control inputs" style="font-size: 0.8125rem;" id="end-date" name="end-date" max="@DateTime.Now.ToString("yyyy-MM-dd")" value="@ViewBag.ToDate" required>
+                                                    <input type="date" class="form-control inputs" style="font-size: 0.8125rem;" id="end-date" name="end-date" max="@DateTime.Now.ToString("yyyy-MM-dd",CultureInfo.InvariantCulture)" value="@ViewBag.ToDate" required>
                                                 </div>
 
                                                 <a id="filterDateBtn" class="btn btn-custom me-2">@localizer["Show"]</a>
@@ -204,8 +204,9 @@ else
                         </div>
 
                     </div>
-                    <div class="row">
-                        <div class="col-12 d-flex flex-row-reverse">
+                   
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
                             <div class="col-auto p-0">
                                 <P>@localizer["Creditor"]</P>
                             </div>
@@ -213,6 +214,15 @@ else
                                 <P id="Creditor"></P>
                             </div>
                         </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["Debit"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="Debit"></P>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="row flex-row-reverse">
                         <div class="col-md-7 d-flex flex-row-reverse">
@@ -358,8 +368,8 @@ else
                     // Update elements in your view
                     console.log("totalCreditor", totalCreditor)
                     console.log("totalDebit", totalDebit)
-                    $("#DebitTotal").text(parseFloat(totalDebit).toFixed(2));
-                    $("#CreditorTotal").text(parseFloat(totalCreditor).toFixed(2));
+                    $("#DebitTotal").text(parseFloat(totalDebit).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                    $("#CreditorTotal").text(parseFloat(totalCreditor).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                 },
             });
         }
@@ -388,6 +398,7 @@ else
                             $("#ReceiptNo").text(response.receiptNo);
                             $("#Date").text(response.date);
                             $("#Creditor").text(response.creditor);
+                            $("#Debit").text(response.debit);
                             $("#ReferenceNo").text(response.referenceNo);
                             $("#AccountBankCode").text(response.accountBankCode);
                             $("#Reasons").text(response.reasons);

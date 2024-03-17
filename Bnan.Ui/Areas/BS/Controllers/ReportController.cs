@@ -47,8 +47,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var lastAccountReceipt = accountReceipts.OrderByDescending(x => x.CrCasAccountReceiptDate).FirstOrDefault();
             var ToDate = lastAccountReceipt?.CrCasAccountReceiptDate;
             var FromDate = ToDate?.AddDays(-30);
-            ViewBag.ToDate = ToDate?.ToString("yyyy-MM-dd");
-            ViewBag.FromDate = FromDate?.ToString("yyyy-MM-dd");
+            ViewBag.ToDate = ToDate?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            ViewBag.FromDate = FromDate?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             var filterByDateAccountReceipt = accountReceipts.Where(x => x.CrCasAccountReceiptDate >= FromDate && x.CrCasAccountReceiptDate <= ToDate).ToList();
 
@@ -102,8 +102,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
             ReceiptDetailsVM receiptDetails = new ReceiptDetailsVM();
 
             receiptDetails.ReceiptNo = ReceiptNo;
-            receiptDetails.Date = receipt.CrCasAccountReceiptDate?.ToString("yyyy/MM/dd");
+            receiptDetails.Date = receipt.CrCasAccountReceiptDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
             receiptDetails.Creditor = receipt.CrCasAccountReceiptPayment?.ToString("N2",CultureInfo.InvariantCulture);
+            receiptDetails.Debit = receipt.CrCasAccountReceiptReceipt?.ToString("N2",CultureInfo.InvariantCulture);
             receiptDetails.ReferenceNo = receipt.CrCasAccountReceiptReferenceNo;
             receiptDetails.ReferenceTypeAr = receipt.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceArName;
             receiptDetails.ReferenceTypeEn = receipt.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceEnName;
@@ -127,7 +128,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             receiptDetails.StatusReceipt = receipt.CrCasAccountReceiptIsPassing;
             receiptDetails.UserReceivedAr = userRecevied?.CrMasUserInformationArName;
             receiptDetails.UserReceivedEn = userRecevied?.CrMasUserInformationEnName;
-            receiptDetails.ReceivedDate = receipt.CrCasAccountReceiptPassingDate?.ToString("yyyy/MM/dd");
+            receiptDetails.ReceivedDate = receipt.CrCasAccountReceiptPassingDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
             receiptDetails.Reasons = receipt.CrCasAccountReceiptReasons;
 
 

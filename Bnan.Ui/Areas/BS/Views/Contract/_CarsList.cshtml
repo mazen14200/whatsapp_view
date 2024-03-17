@@ -23,28 +23,7 @@
                     </div>
                     <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
                         <p>@item.CrCasCarInformationSerailNo</p>
-                        <p>@item.CrCasCarInformationConcatenateEnName</p>
-                        <!--For Test-->
-                        @*  <p>
-                @item.CrCasCarInformationPriceNo
-                </p>
-                <p>
-                @if (item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarBasicIsAdditionalDriver == true)
-                {
-                <span>AdditionalDriver=Yes</span>
-                }
-                else
-                {
-                <span>AdditionalDriver=No</span>
-                }
-
-                <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdditionals.Count()</span>
-
-                <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarOptions.Count()</span>
-
-                <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdvantages.Count()</span>
-                </p>
-                *@
+                        <p>@item.CrCasCarInformationConcatenateEnName</p>                       
                         <p>
                             <img src="@Url.Content(item.CrCasCarInformationCvtNavigation?.CrMasSupCarCvtImage?.ToString())" style="width: 50px; height: 20px ;padding-left: 10px;padding-right: 10px;">
                             <img src="@Url.Content(item.CrCasCarInformationFuelNavigation?.CrMasSupCarFuelImage?.ToString())" style="width: 50px; height: 20px ;padding-left: 10px;padding-right: 10px;">
@@ -59,7 +38,19 @@
                             <span>@localizer["CurrentMeter"]:</span>
                             <span>@item.CrCasCarInformationCurrentMeter</span>
                         </p>
-                        @if (item.CrCasCarDocumentsMaintenances.Where(x => (x.CrCasCarDocumentsMaintenanceProceduresClassification == "12" && x.CrCasCarDocumentsMaintenanceStatus != Status.Active) || (x.CrCasCarDocumentsMaintenanceProceduresClassification == "13" && x.CrCasCarDocumentsMaintenanceStatus != Status.Active)).Count() > 0)
+                        @if (item.CrCasCarInformationDocumentationStatus == false && item.CrCasCarInformationMaintenanceStatus == false)
+                        {
+                            <p>
+                                <span style="color:red">@localizer["CarDocumentMaintainanceReview"]</span>
+                            </p>
+                        }
+                        else if (item.CrCasCarInformationDocumentationStatus == true && item.CrCasCarInformationMaintenanceStatus == false)
+                        {
+                            <p>
+                                <span style="color:red">@localizer["CarMaintainceReview"]</span>
+                            </p>
+                        }
+                        else if (item.CrCasCarInformationDocumentationStatus == false && item.CrCasCarInformationMaintenanceStatus == true)
                         {
                             <p>
                                 <span style="color:red">@localizer["CarDocumentReview"]</span>
@@ -85,25 +76,6 @@ else
                     <div class="col-sm-12  col-md-12 pt-3 col-lg-6 details-car-fieldset">
                         <p>@item.CrCasCarInformationSerailNo</p>
                         <p>@item.CrCasCarInformationConcatenateArName</p>
-                        @* <p>
-                            @item.CrCasCarInformationPriceNo
-                        </p>
-                        <p>
-                            @if (item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarBasicIsAdditionalDriver == true)
-                            {
-                                <span>Yes</span>
-                            }
-                            else
-                            {
-                                <span>No</span>
-                            }
-
-                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdditionals.Count()</span>
-
-                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarOptions.Count()</span>
-
-                            <span>@item.CrCasCarInformationDistributionNavigation?.CrCasPriceCarBasics.FirstOrDefault()?.CrCasPriceCarAdvantages.Count()</span>
-                        </p> *@
                         <p>
                             <img src="@Url.Content(item.CrCasCarInformationCvtNavigation?.CrMasSupCarCvtImage?.ToString())" style="width: 50px; height: 20px ;padding-left: 10px;padding-right: 10px;">
                             <img src="@Url.Content(item.CrCasCarInformationFuelNavigation?.CrMasSupCarFuelImage?.ToString())" style="width: 50px; height: 20px ;padding-left: 10px;padding-right: 10px;">
@@ -118,7 +90,19 @@ else
                             <span>@localizer["CurrentMeter"]:</span>
                             <span>@item.CrCasCarInformationCurrentMeter</span>
                         </p>
-                        @if (item.CrCasCarDocumentsMaintenances.Where(x => (x.CrCasCarDocumentsMaintenanceProceduresClassification == "12" && x.CrCasCarDocumentsMaintenanceStatus != Status.Active) || (x.CrCasCarDocumentsMaintenanceProceduresClassification == "13" && x.CrCasCarDocumentsMaintenanceStatus != Status.Active)).Count() >0)
+                        @if (item.CrCasCarInformationDocumentationStatus == false && item.CrCasCarInformationMaintenanceStatus == false)
+                        {
+                            <p>
+                                <span style="color:red">@localizer["CarDocumentMaintainanceReview"]</span>
+                            </p>
+                        }
+                        else if (item.CrCasCarInformationDocumentationStatus == true && item.CrCasCarInformationMaintenanceStatus == false)
+                        {
+                            <p>
+                                <span style="color:red">@localizer["CarMaintainceReview"]</span>
+                            </p>
+                        }
+                        else if (item.CrCasCarInformationDocumentationStatus == false && item.CrCasCarInformationMaintenanceStatus == true)
                         {
                             <p>
                                 <span style="color:red">@localizer["CarDocumentReview"]</span>

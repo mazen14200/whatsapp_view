@@ -220,7 +220,8 @@ else
 
                                         </div>
                                         <div class="col-sm-3 col-md-3 col-lg-2">
-                                            <input type="date" class="form-control inputs" id="birth-date-step1" name="birth-date-step1" readonly>
+                                            @*     <input type="date" class="form-control inputs" id="birth-date-step1" name="birth-date-step1" readonly hidden>*@
+                                            <input type="text" class="form-control inputs" id="birth-date-step1" name="birth-date-step1" readonly>
                                             <div class="row requird-field-row">
                                                 <p class="requird-field" id="requird_field_Birthdate"></p>
                                             </div>
@@ -480,7 +481,8 @@ else
                                             <label for="birth-date-driver" class="col-form-label">@localizer["Birthdate"]</label>
                                         </div>
                                         <div class="col-sm-3 col-md-3 col-lg-2">
-                                            <input type="date" class="form-control inputs" id="birth-date-driver" name="birth-date-driver" readonly>
+                                            @*  <input type="date" class="form-control inputs" id="birth-date-driver" name="birth-date-driver" readonly>*@
+                                            <input type="text" class="form-control inputs" id="birth-date-driver" name="birth-date-driver" readonly>
                                             <div class="row requird-field-row">
                                                 <p class="requird-field" id="requird_field_Birthdate_driver"></p>
                                             </div>
@@ -772,7 +774,8 @@ else
 
                                         </div>
                                         <div class="col-sm-3 col-md-3 col-lg-2">
-                                            <input type="date" class="form-control inputs" id="birth-date-additionalDriver" name="birth-date-additionalDriver" readonly>
+                                            @* <input type="date" class="form-control inputs" id="birth-date-additionalDriver" name="birth-date-additionalDriver" readonly>*@
+                                            <input type="text" class="form-control inputs" id="birth-date-additionalDriver" name="birth-date-additionalDriver" readonly>
                                             <div class="row requird-field-row">
                                                 <p class="requird_field_BirthDate_AddDriver"></p>
                                             </div>
@@ -1891,7 +1894,8 @@ else
                 var formattedLastContract = lastContractDate.getFullYear() + '/' + (lastContractDate.getMonth() + 1).toString().padStart(2, '0') + '/' + lastContractDate.getDate().toString().padStart(2, '0');
 
                 setTimeout(function () {
-                    var birthdate = RenterInformation.birthDate.split('T')[0];
+                    var birthdateformat = new Date(RenterInformation.birthDate);
+                    var birthdate = birthdateformat.getFullYear() + '/' + (birthdateformat.getMonth() + 1).toString().padStart(2, '0') + '/' + birthdateformat.getDate().toString().padStart(2, '0');
                     if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
                         if (RenterInformation.postEnNameConcenate != "" && RenterInformation.postEnNameConcenate != null && RenterInformation.postEnNameConcenate != undefined) {
                             $("#RenterAddress").text(RenterInformation.postEnNameConcenate);
@@ -1915,6 +1919,7 @@ else
                             $("#PrivateDriverDiv").show();
                         }
                         $("#RenterName").text(RenterInformation.personalEnName);
+                        $("#birth-date-step1").val(birthdate);
 
 
 
@@ -1933,7 +1938,6 @@ else
                             $("#ReservedBalance").text(RenterInformation.reservedBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                             $("#AvailableBalance").text(RenterInformation.availableBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                             $("#Evaluation").text(RenterInformation.evaluation.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-                            $("#birth-date-step1").val(birthdate);
                         }
 
 
@@ -2168,7 +2172,8 @@ else
                 var formattedLastContract = lastContractDate.getFullYear() + '/' + (lastContractDate.getMonth() + 1).toString().padStart(2, '0') + '/' + lastContractDate.getDate().toString().padStart(2, '0');
 
                 setTimeout(function () {
-                    var birthdate = DriverInformation.birthDate ? DriverInformation.birthDate.split('T')[0] : null;
+                    var birthdateformat = new Date(DriverInformation.birthDate);
+                    var birthdate = birthdateformat.getFullYear() + '/' + (birthdateformat.getMonth() + 1).toString().padStart(2, '0') + '/' + birthdateformat.getDate().toString().padStart(2, '0');
                     var licenseExpiryDate = DriverInformation.licenseExpiryDate ? DriverInformation.licenseExpiryDate.split('T')[0] : null;
                     var licenseIssuedDate = DriverInformation.licenseIssuedDate ? DriverInformation.licenseIssuedDate.split('T')[0] : null;
                     if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
@@ -2439,7 +2444,9 @@ else
             setTimeout(function () {
                 $('#thirdPopupModal').modal('hide');
                 setTimeout(function () {
-                    var birthdate = AddDriverInformation.birthDate ? AddDriverInformation.birthDate.split('T')[0] : null;
+                    // var birthdate = AddDriverInformation.birthDate ? AddDriverInformation.birthDate.split('T')[0] : null;
+                    var birthdateformat = new Date(AddDriverInformation.birthDate);
+                    var birthdate = birthdateformat.getFullYear() + '/' + (birthdateformat.getMonth() + 1).toString().padStart(2, '0') + '/' + birthdateformat.getDate().toString().padStart(2, '0');
                     var licenseExpiryDate = AddDriverInformation.licenseExpiryDate ? AddDriverInformation.licenseExpiryDate.split('T')[0] : null;
                     var licenseIssuedDate = AddDriverInformation.licenseIssuedDate ? AddDriverInformation.licenseIssuedDate.split('T')[0] : null;
                     console.log(AddDriverInformation.personalArName);
@@ -3191,7 +3198,7 @@ else
                     // Final check
                     if (imgs && currentMeter && allChecked) {
                         //Get RenterBalance
-                        RenterBalance = RenterInformation.balance;
+                        RenterBalance = RenterInformation.availableBalance;
                         if (RenterBalance != null && RenterBalance != "" && RenterBalance != 0 && RenterBalance != undefined) {
                             document.getElementById("Balance").textContent = RenterBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                         }
@@ -4132,7 +4139,7 @@ else
                     // Format the start and end dates in Hijri calendar with Arabic locale
                     const startDate = new Date($("#StartDate").text());
                     const endDate = new Date($("#EndDate").text());
-                    const options = { month: 'long', year: 'numeric', day: 'numeric' };
+                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
                     const startHijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', options).format(startDate);
                     const endHijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', options).format(endDate);
 
@@ -4202,7 +4209,7 @@ else
             const RenterName = decodeHTMLEntities(RenterInformation.personalArName);
             const CarName = CarInformation.carInformation.crCasCarInformationConcatenateArName;
             // last in page
-            const balance = RenterInformation.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const balance = RenterInformation.availableBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             var DiscountInput = document.getElementById("Discount_Input").value;
             var AmountPayedInput = document.getElementById("AmountPayed").value;
             const discountRate = parseFloat(DiscountInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -4401,14 +4408,12 @@ else
                     //     const errorMessage = await response.text(); // Get the error message as plain text
                     //     console.log("SendImageError", errorMessage);
                     // }
-                    var message = ` عزيزي المستأجر / ${RenterName} , لقد تم اصدار الفاتورة برقم ${AccountReceiptNo} ,في تاريخ ${miladiDateString} , يمكنك مراجعة الفاتورة عن طريق تحميل الملف المرفق `
+                    var message = ` عزيزي / ${RenterName} , في تاريخ ${miladiDateString} , يمكنك مراجعة الفاتورة عن طريق تحميل الملف المرفق `
                     createPdfAndSendToWhatsApp(contractNo, phoneNumber, token, blob, message);
                 }, 'image/png');
             };
             img.src = URL.createObjectURL(blob);
         };
-
-
         function calculateAndDraw(ctx, canvas, itemName, itemValue, days, discountInput, taxPercent, yHeight) {
             var itemTotal = parseFloat(itemValue) * parseInt(days);
             var discountValue = itemTotal * (parseFloat(discountInput) / 100);
@@ -4444,9 +4449,11 @@ else
                     // Submit the form
                     CheckIfCanPayLessThanTotalAmount();
                     if (somethingIsNotOkay) {
-                        // form.submit();
-                        // sendStaticImageToWhatsApp();
                         sendReceiptToWhatsApp();
+                        sendStaticImageToWhatsApp();
+                        // setTimeout(function () {
+                        //     form.submit();
+                        // }, 10000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();

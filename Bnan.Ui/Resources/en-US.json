@@ -98,6 +98,7 @@
   "photo": "Pohto",
   "Documentphoto": "Document photo",
   "pdf": "Contract",
+  "ReceiptPdf": "Receipt Pdf",
   "notfound": "not found",
 
 
@@ -1334,8 +1335,10 @@
   "CarForSale": "Car offer to sale only",
   "CarPrice": "Car Price",
 
-  "CarMaintainceReview": "Preview maintainances of car",
-  "CarDocumentReview": "Preview Documents of car",
+  "CarMaintainceReview": "Please Check Vehicle Maintenance",
+  "CarDocumentReview": "Please Check The Vehicle Documents",
+  "CarDocumentMaintainanceReview": "Please Check Documentation And Schedule Vehicle Maintenance",
+
   // Car Prices
   "CarPrice Data": "Prices of cars",
   "CarPrice Hint": "The page allow you to search diplay prices of cars",

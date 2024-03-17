@@ -14,6 +14,7 @@
 <table class="table table-bordered table-hover" id="reportTable">
     <thead>
         <tr>
+            <th scope="col">@localizer["ReceiptPdf"]</th>
             <th scope="col" class="@(requestCulture?.RequestCulture.UICulture.Name == "ar-EG" ? "text-right" : "text-left")">
                 @localizer["Status"]
             </th>
@@ -40,6 +41,8 @@
             @foreach (var item in Model.AccountReceipts)
             {
                 <tr class="modal-trigger" data-id="@item.CrCasAccountReceiptNo">
+
+                    <td><i class="fas fa-file-pdf"></i></td>
                     @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                     {
                         <td class="text-right">
