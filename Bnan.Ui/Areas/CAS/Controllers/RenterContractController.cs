@@ -145,7 +145,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewBag.RenterContracts_Count = countRenterContracts;
             var model = _mapper.Map<CasRenterContractVM>(contract);
 
-            var RenterContract_Basic_All = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic4", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x=>x.CrCasRenterContractBasicRenterId==model?.CrCasRenterLessorId && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension).ToList();
+            var RenterContract_Basic_All = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic4", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x=>x.CrCasRenterContractBasicRenterId==model?.CrCasRenterLessorId && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension).ToList();
 
             ViewData["Data_Table"] = RenterContract_Basic_All;
 
