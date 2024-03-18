@@ -14,7 +14,8 @@ namespace Bnan.Core.Models
         public DateTime? CrCasRenterContractAlertHourDate { get; set; }
         public DateTime? CrCasRenterContractAlertEndDate { get; set; }
         public string? CrCasRenterContractAlertStatus { get; set; }
-        public string? CrCasRenterContractAlertStatusMsg { get; set; }
+        public string? CrCasRenterContractAlertArStatusMsg { get; set; }
+        public string? CrCasRenterContractAlertEnStatusMsg { get; set; }
         public string? CrCasRenterContractAlertContractActiviteStatus { get; set; }
         public string? CrCasRenterContractAlertContractStatus { get; set; }
 

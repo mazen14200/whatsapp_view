@@ -25,6 +25,7 @@ namespace Bnan.Core.Models
         public decimal? CrCasAccountReceiptRenterPreviousBalance { get; set; }
         public string? CrCasAccountReceiptUser { get; set; }
         public decimal? CrCasAccountReceiptUserPreviousBalance { get; set; }
+        public decimal? CrCasAccountReceiptBranchUserPreviousBalance { get; set; }
         public string? CrCasAccountReceiptIsPassing { get; set; }
         public DateTime? CrCasAccountReceiptPassingDate { get; set; }
         public string? CrCasAccountReceiptPassingUser { get; set; }

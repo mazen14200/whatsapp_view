@@ -5,6 +5,7 @@
         public string? ReceiptNo { get; set; }
         public string? Date { get; set; }
         public string? Creditor { get; set; }
+        public string? Debit { get; set; }
         public string? ReferenceNo { get; set; }
         public string? ReferenceTypeAr { get; set; }
         public string? ReferenceTypeEn { get; set; }

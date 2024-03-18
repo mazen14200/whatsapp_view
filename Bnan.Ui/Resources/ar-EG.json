@@ -36,7 +36,7 @@
   //Accounts
   "Accounts": "الحسابات",
   "Cash Feeding": "تغذيه الصندوق",
-  "Receipt Confirmation": "استسلام عهدة",
+  "Receipt Confirmation": "استلام عهدة",
   "Receipt Confirmationn": "عرض بيانات العهد",
   "Transfer To Renter": "تحويل الى مستاجر",
   "Transfer From Renter": "تحويل من مستاجر",
@@ -46,13 +46,22 @@
   "Reports": "التقارير",
   "Administrative Procedures": "الاجراءات الاداريه",
   "Finacial Procedures": "الاجراءات الماليه",
-  "Contracts Report": "العقود",
-  "Financial Transaction Of Renter": "الحركه الماليه للمستاجرين",
-  "Financial Transaction Of Sales Point": "الحركه الماليه لنقاط البيع",
-  "Financial Transaction Of Employees": "الحركه الماليه للموظفين",
-  "Contract Statistics": "إحصائيات العقود",
-  "Car Stats": "إحصائيات السيارات",
-  "Renter Statistics": "إحصائيات المستاجرين",
+  "ActiveContracts": "عفود قائمة",
+  //"ClosedContracts": "عقود مغلقة",
+  //"CanceledContracts": "عقود ملغاه",
+  "DriverContracts": "عقود السائقين",
+  "EmployeesContracts": "عقود الموظفين",
+  "CarsContracts": "عقود السيارات",
+  "TAMMSystemMenu": "قائمة نظام تم",
+  "FinancialTransactionOfRenter": "الحركة المالية للمستأجرين",
+  "FinancialTransactionOfSalesPoint": "الحركة المالية لنقاط البيع",
+  "FinancialTransactionOfEmployees": "الحركة المالية للموظفين",
+  "CarStatistics": "إحصائيات السيارات",
+  "TenantStatistics": "إحصائيات المستأجرين",
+  "ContractStatistics": "إحصائيات العقود",
+  "CarContractStatistics": "إحصائيات عقود السيارات",
+  "TenantContractsStatistics": "إحصائيات عقود المستأجرين",
+  "EmployeeContractsStatistics": "إحصائيات عقود الموظفين",
   // Users
   "Users": "الموظفين",
   "UsersInfo": "بيانات الموظفين",
@@ -103,7 +112,7 @@
   "Documentphoto": "صورة المستند",
   "pdf": "العقد",
   "notfound": "غير متوفر",
-
+  "ReceiptPdf": "ملف السند",
   //CAS Add Branch
   "Add Branch Hint": "تمكنك هذه الصفحة من إضافة فرع جديد",
   "Add Branch Data": "إضافة فرع",
@@ -378,7 +387,6 @@
   "HintSureToHoldCarFuel": "سيترتب على إيقاف بيانات وقود السيارة إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteCarFuel": "للأسف لا تستطيع حذف نوع وقود السيارة هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
 
@@ -402,7 +410,6 @@
   "HintSureToHoldCarCvt": "سيترتب على إيقاف بيانات نوع الناقل إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteCarCvt": "للأسف لا تستطيع حذف نوع الناقل هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
 
@@ -426,7 +433,6 @@
   "HintSureToHoldCarCategory": "سيترتب على إيقاف بيانات فئة السيارة إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteCarCategory": "للأسف لا تستطيع حذف فئة السيارة هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
 
@@ -450,7 +456,6 @@
   "HintSureToHoldCarAdvantage": "سيترتب على إيقاف بيانات ميزة السيارة إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteCarAdvantage": "للأسف لا تستطيع حذف ميزة السيارة هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
 
@@ -474,7 +479,6 @@
   "HintSureToHoldCarRegistration": "سيترتب على إيقاف بيانات نوع تسجيل السيارة إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteCarRegistration": "للأسف لا تستطيع حذف نوع تسجيل السيارة هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
   //User Login ------
@@ -518,13 +522,14 @@
   "RenterIDType": "نوع الهوية",
   "Date_start": "تاريخها",
   "Date_end": "نهايتها",
-  "Gender": "الجنس",
-  "Nationality": "الجنسية",
+  //"Gender": "الجنس",
+  //"Nationality": "الجنسية",
   "sector": "القطاع",
-  "Profession": "المهنة",
+  //"Profession": "المهنة",
   "WorkPlace": "جهة العمل",
   "Bank_name": "البنـك",
   "Account_bank_numper": "رقم الحساب",
+  "Membership": "العضوية",
   "DrivingType": "رخصة القيادة",
   "Mechanism_Renter": "آلية التعامل",
   "Mechanism_Rent": "آلية التعامل",
@@ -544,7 +549,6 @@
   "HintSureToHoldRenterInformation": "سيترتب على إيقاف بيانات المستأجر إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteRenterInformation": "للأسف لا تستطيع حذف بيانات المستأجر هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
   //Renter Contract
   "RenterContract Hint": "تمكنك هذه الصفحة من عرض والبحث عن تفاصيل عقود المستأجرين",
@@ -609,7 +613,6 @@
   "HintSureToHoldRenterIdType": "سيترتب على إيقاف بيانات نوع الهوية إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteRenterIdType": "للأسف لا تستطيع حذف نوع الهوية هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
   //Renter Nationality------
@@ -783,22 +786,48 @@
   "StampOutsideCountry": "ختم خارج الدولة",
   "StampFullAmountPaid": "ختم تم تسديد كامل المبلغ",
   "SignatureDirector": "توقيع مدير الشركة",
-  "CreateContractEmail": "انشاء العقد بالبريد",
-  "CreateContractWhatUp": "انشاء العقد بالواتس اب",
-  "TomorrowContractEmail": "العقد ينتهي غداً بالبريد",
-  "TomorrowContractWhatUp": "العقد ينتهي غداً بالواتس اب",
-  "HourContractEmail": "العقد ينتهي بعد ساعات بالبريد",
-  "HourContractWhatUp": "العقد ينتهي بعد ساعات بالواتس اب",
-  "EndContractEmail": "العقد أنتهى بالبريد",
-  "EndContractWhatUp": "العقد أنتهى بالواتس",
-  "CloseContractEmail": "اغلاق العقد أنتهى بالبريد",
-  "CloseContractWhatUp": "اغلاق العقد أنتهى بالواتس",
-  "ContArConditions1": "شروط العقد عربي 1",
-  "ContArConditions2": "شروط العقد عربي 2",
-  "ContArConditions3": "شروط العقد عربي 3",
-  "ContEnConditions1": "شروط العقد انجليزي 1",
-  "ContEnConditions2": "شروط العقد انجليزي 2",
-  "ContEnConditions3": "شروط العقد انجليزي 3",
+  "ContractCard": "بطاقة العقد",
+  "ExtensionContractCard": "بطاقة تمديد العقد",
+  "Contract24HourCard": "العقد ينتهي غداً",
+  "Contract4Hour": "العقد ينتهي بعد ساعات",
+  "ContractClosed": "اغلاق العقداً",
+  "ContractFinished": "انتهاء العقد",
+  "ContractCancelled": "الغاء العقد",
+
+  "ArCatchReceipt": "سند القبض عربي",
+  "ArBillExchange": "سند الصرف عربي",
+  "ArBoxFeeding": "تغذية صندوق عربي",
+  "ArDeliveryCustody": "تسليم عهدة عربي",
+  "ArTransferFtenant": "تحويل من مستاجر عربي",
+  "ArTransferTtenant": "تحويل الى مستاجر عربي",
+  "EnCatchReceipt": "سند القبض انجليزي",
+  "EnBillExchange": "سند الصرف انجليزي",
+  "EnBoxFeeding": "تغذية صندوق انجليزي",
+  "EnDeliveryCustody": "تسليم عهدة انجليزي",
+  "EnTransferFtenant": "تحويل من مستاجر انجليزي",
+  "EnTransferTtenant": "تحويل الى مستاجر انجليزي",
+
+  "ArContractPage1": "العقد عربي صفحة 1",
+  "ArContractPage2": "العقد عربي صفحة 2",
+  "ArContractPage3": "العقد عربي صفحة 3",
+  "ArContractPage4": "العقد عربي صفحة 4",
+  "ArContractPage5": "العقد عربي صفحة 5",
+  "ArContractPage6": "العقد عربي صفحة 6",
+  "ArContractPage7": "العقد عربي صفحة 7",
+  "ArContractPage8": "العقد عربي صفحة 8",
+  "ArContractPage9": "العقد عربي صفحة 9",
+
+  "EnContractPage1": "العقد انجليزي صفحة 1",
+  "EnContractPage2": "العقد انجليزي صفحة 2",
+  "EnContractPage3": "العقد انجليزي صفحة 3",
+  "EnContractPage4": "العقد انجليزي صفحة 4",
+  "EnContractPage5": "العقد انجليزي صفحة 5",
+  "EnContractPage6": "العقد انجليزي صفحة 6",
+  "EnContractPage7": "العقد انجليزي صفحة 7",
+  "EnContractPage8": "العقد انجليزي صفحة 8",
+  "EnContractPage9": "العقد انجليزي صفحة 9",
+
+
   //Contract Company
   "ContractCompany Data": "عقود الشركات",
   "ContractCompany Hint": "تمكنك هذه الصفحة من البحث و عرض بيانات عقود الشركات",
@@ -819,8 +848,6 @@
   "ContractCompanyAnnualFees": "رسوم الاشتراك",
   "DiscountRate": "نسبة الخصم",
   "TaxRate": "نسبة الضريبة",
-  "From": "من",
-  "To": "الي",
   "ServiceValue": "قيمة الخدمة",
   "ServiceRate": "نسبة الخدمة",
 
@@ -1315,8 +1342,9 @@
   "CarForSale": "السيارة معروضة للبيع فقط",
   "CarRented": "السيارة مؤجرة",
   "CarPrice": "اسعار السيارات",
-  "CarMaintainceReview": "راجع صيانة السيارة",
-  "CarDocumentReview": "راجع مستندات السيارة",
+  "CarMaintainceReview": "الرجاء التحقق من صيانة السيارة",
+  "CarDocumentReview": "الرجاء التحقق من مستندات السيارة",
+  "CarDocumentMaintainanceReview": "الرجاء التحقق من وثائق وجدولة صيانة السيارة",
   // Car Prices
   "CarPrice Data": "اسعار السيارات",
   "CarPrice Hint": "تمكنك هذه الصفحة من البحث و إضافة وحذف الأسعار",

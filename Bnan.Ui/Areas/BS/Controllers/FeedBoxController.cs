@@ -2,6 +2,7 @@
 using Bnan.Core.Extensions;
 using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
+using Bnan.Inferastructure.Extensions;
 using Bnan.Ui.Areas.Base.Controllers;
 using Bnan.Ui.ViewModels.BS;
 using Bnan.Ui.ViewModels.CAS;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using NToastNotify;
+using System.Globalization;
 
 namespace Bnan.Ui.Areas.BS.Controllers
 {
@@ -26,7 +28,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            //To Set Title 
             var userLogin = await _userManager.GetUserAsync(User);
+            //To Set Title 
+            var titles = await setTitle("501", "5501010", "5");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var bSLayoutVM = await GetBranchesAndLayout();
 

@@ -26,7 +26,7 @@ namespace Bnan.Inferastructure.Repository
             var adminstritive = await _unitOfWork.CrCasSysAdministrativeProcedure.FindAsync(x => x.CrCasSysAdministrativeProceduresNo == AdmintritiveNo);
             var SalesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x =>x.CrCasAccountSalesPointLessor==lessorCode&& x.CrCasAccountSalesPointBrn == BranchCode && x.CrCasAccountSalesPointBank == "00");
             var UserTarget = await _unitOfWork.CrMasUserInformation.FindAsync(x =>x.CrMasUserInformationLessor==lessorCode&& x.CrMasUserInformationCode == UserLogin);
-            receipt.CrCasAccountReceiptNo = GetAccountReceiptNo(adminstritive.CrCasSysAdministrativeProceduresBranch, UserTarget.CrMasUserInformationCode);
+            receipt.CrCasAccountReceiptNo = GetAccountReceiptNo(BranchCode, UserTarget.CrMasUserInformationCode);
             receipt.CrCasAccountReceiptYear = DateTime.Now.ToString("yy");
             receipt.CrCasAccountReceiptType = "301";
             receipt.CrCasAccountReceiptLessorCode = lessorCode;

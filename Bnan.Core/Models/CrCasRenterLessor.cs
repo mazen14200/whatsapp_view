@@ -8,7 +8,7 @@ namespace Bnan.Core.Models
         public CrCasRenterLessor()
         {
             CrCasRenterContractBasicCrCasRenterContractBasic2s = new HashSet<CrCasRenterContractBasic>();
-            CrCasRenterContractBasicCrCasRenterContractBasic4s = new HashSet<CrCasRenterContractBasic>();
+            CrCasRenterContractBasicCrCasRenterContractBasic5s = new HashSet<CrCasRenterContractBasic>();
             CrCasRenterContractBasicCrCasRenterContractBasicNavigations = new HashSet<CrCasRenterContractBasic>();
             CrCasRenterContractStatistics = new HashSet<CrCasRenterContractStatistic>();
         }
@@ -54,7 +54,7 @@ namespace Bnan.Core.Models
         public virtual CrMasSupRenterNationality? CrCasRenterLessorStatisticsNationalitiesNavigation { get; set; }
         public virtual CrMasSupPostRegion? CrCasRenterLessorStatisticsRegionsNavigation { get; set; }
         public virtual ICollection<CrCasRenterContractBasic> CrCasRenterContractBasicCrCasRenterContractBasic2s { get; set; }
-        public virtual ICollection<CrCasRenterContractBasic> CrCasRenterContractBasicCrCasRenterContractBasic4s { get; set; }
+        public virtual ICollection<CrCasRenterContractBasic> CrCasRenterContractBasicCrCasRenterContractBasic5s { get; set; }
         public virtual ICollection<CrCasRenterContractBasic> CrCasRenterContractBasicCrCasRenterContractBasicNavigations { get; set; }
         public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatistics { get; set; }
     }

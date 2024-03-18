@@ -12,6 +12,7 @@ namespace Bnan.Core.Models
         public string? CrCasRenterContractBasicProcedures { get; set; }
         public string? CrCasRenterContractBasicLessor { get; set; }
         public string? CrCasRenterContractBasicBranch { get; set; }
+        public string? CrCasRenterContractBasicOwner { get; set; }
         public DateTime? CrCasRenterContractBasicIssuedDate { get; set; }
         public DateTime? CrCasRenterContractBasicAllowCanceled { get; set; }
         public DateTime? CrCasRenterContractBasicExpectedStartDate { get; set; }
@@ -66,10 +67,10 @@ namespace Bnan.Core.Models
 
         public virtual CrCasBranchInformation? CrCasRenterContractBasic1 { get; set; }
         public virtual CrCasRenterLessor? CrCasRenterContractBasic2 { get; set; }
-        public virtual CrCasRenterPrivateDriverInformation? CrCasRenterContractBasic3 { get; set; }
-        public virtual CrCasRenterLessor? CrCasRenterContractBasic4 { get; set; }
+        public virtual CrCasOwner? CrCasRenterContractBasic3 { get; set; }
+        public virtual CrCasRenterPrivateDriverInformation? CrCasRenterContractBasic4 { get; set; }
+        public virtual CrCasRenterLessor? CrCasRenterContractBasic5 { get; set; }
         public virtual CrCasCarInformation? CrCasRenterContractBasicCarSerailNoNavigation { get; set; }
         public virtual CrCasRenterLessor? CrCasRenterContractBasicNavigation { get; set; }
-        public virtual CrMasSupRenterSector? CrCasRenterContractBasicSectorNavigation { get; set; }
     }
 }

@@ -67,9 +67,9 @@
         }
 
     /* .file-upload-btn:active {
-                        border: 0;
-                        transition: all .2s ease;
-                    }*/
+                            border: 0;
+                            transition: all .2s ease;
+                        }*/
 
     .file-upload-content {
     }
@@ -249,15 +249,16 @@
                 <div class="col-md-6">
                     <div class="row" style="margin-right: -12px;width:75%;">
                         <div class="col-md-4" style="margin-right: 12px;">
-                            <input type="text" class="form-control" id="UserPhone" maxlength="20" asp-for="CrMasUserInformationMobileNo" data-val-required="@localizer["requiredFiled"]" data-val-minlength="@localizer["minLengthPhone"]" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                            @*                             <input type="text" class="form-control" id="UserPhone" maxlength="20" asp-for="CrMasUserInformationMobileNo" data-val-required="@localizer["requiredFiled"]" data-val-minlength="@localizer["minLengthPhone"]" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'')">*@
+                            <input type="text" class="form-control" id="UserPhone" value="@Model.CrMasUserInformationCallingKey@Model.CrMasUserInformationMobileNo" readonly>
                         </div>
                         <div class="col-md-2" style="margin-right: -23px;">
-                            <select class="form-select" asp-for="CrMasUserInformationCallingKey" name="CrMasUserInformationCallingKey" style="width: 90px;">
-                                @foreach (var callingKey in (List<SelectListItem>)ViewData["CallingKeys"])
-                                {
-                                    <option value="@callingKey.Text" selected="@(callingKey.Text.Trim() == Model.CrMasUserInformationCallingKey ? "selected" : null)">@callingKey.Text</option>
-                                }
-                            </select>
+                            @* <select class="form-select" asp-for="CrMasUserInformationCallingKey" name="CrMasUserInformationCallingKey" style="width: 90px;">
+                            @foreach (var callingKey in (List<SelectListItem>)ViewData["CallingKeys"])
+                            {
+                            <option value="@callingKey.Text" selected="@(callingKey.Text.Trim() == Model.CrMasUserInformationCallingKey ? "selected" : null)">@callingKey.Text</option>
+                            }
+                            </select> *@
                         </div>
                     </div>
                     <div style="margin-top:2px">
@@ -284,31 +285,31 @@
             <div class="row mt-1">
                 <div class="col-md-4">
                     <div class="row">
-                    <div class="col-md-3">
-                        <label class="form-label" for="CrMasUserInformationCreditLimit">@localizer["RemindMe"]</label>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control" style="width:155px;margin-right: 12px;" asp-for="CrMasUserInformationRemindMe" maxlength="50" id="CrMasUserInformationCreditLimit" autocomplete="off" data-val-required="@localizer["requiredFiled"]">
-                        <div style="margin-top:2px">
-                            <div style="height: 1.0em">
-                                <span asp-validation-for="@Model.CrMasUserInformationRemindMe" class="text-danger"></span>
+                        <div class="col-md-3">
+                            <label class="form-label" for="CrMasUserInformationCreditLimit">@localizer["RemindMe"]</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" style="width:155px;margin-right: 12px;" asp-for="CrMasUserInformationRemindMe" maxlength="50" id="CrMasUserInformationCreditLimit" autocomplete="off" data-val-required="@localizer["requiredFiled"]">
+                            <div style="margin-top:2px">
+                                <div style="height: 1.0em">
+                                    <span asp-validation-for="@Model.CrMasUserInformationRemindMe" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    </div>
                 </div>
-                <div class="col-md-4" >
+                <div class="col-md-4">
                     <div class="row" style="margin-right: -84px;" id="timer">
 
-                   <div class="col-md-2">
-                        <label class="form-label" for="Email">@localizer["AutoLogout"]</label>
+                        <div class="col-md-2">
+                            <label class="form-label" for="Email">@localizer["AutoLogout"]</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input type="number" class="form-control" asp-for="CrMasUserInformationExitTimer" style="margin-right: 12px;width:70px" autocomplete="off" id="ExitTimer" min="1" max="10"
+                                   oninput="if (this.value > 10) this.value = 10;"
+                                   onblur="if (this.value === '') this.value = 1;">
+                        </div>
                     </div>
-                    <div class="col-md-1">
-                        <input type="number" class="form-control" asp-for="CrMasUserInformationExitTimer" style="margin-right: 12px;width:70px" autocomplete="off" id="ExitTimer" min="1" max="10"
-                               oninput="if (this.value > 10) this.value = 10;"
-                               onblur="if (this.value === '') this.value = 1;">
-                    </div>
-                </div>
                 </div>
             </div>
             <div class="row" id="mediaQuer">
@@ -350,8 +351,8 @@
 
         </div>
         <div class="mt-3">
-@*             <button class="btn btn-primary ms-2" type="submit">@localizer["Save"]</button>
- *@            <a class="btn btn-primary ms-2" onclick="submitForm()" id="submit">@localizer["Save"]</a>
+            @*             <button class="btn btn-primary ms-2" type="submit">@localizer["Save"]</button>
+            *@            <a class="btn btn-primary ms-2" onclick="submitForm()" id="submit">@localizer["Save"]</a>
 
             <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="Home" asp-action="Index">
                 @localizer["Back"]

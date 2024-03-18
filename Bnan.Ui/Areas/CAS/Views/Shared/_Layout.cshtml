@@ -347,43 +347,97 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205003")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="Index" asp-controller="ReportContract"> @localizer["Contracts Report"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="Index" asp-controller="ReportContract"> @localizer["ActiveContracts"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205004")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Financial Transaction Of Renter"]</a>
+                                                                        <a b-9ts1qywrdg="">@localizer["ClosedContracts"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205005")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Financial Transaction Of Sales Point"]</a>
+                                                                        <a b-9ts1qywrdg="">@localizer["CanceledContracts"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205006")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Financial Transaction Of Employees"]</a>
+                                                                        <a b-9ts1qywrdg="">@localizer["DriverContracts"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205007")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Contract Statistics"]</a>
+                                                                        <a b-9ts1qywrdg="">@localizer["EmployeesContracts"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205008")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Car Stats"]</a>
+                                                                        <a b-9ts1qywrdg="">@localizer["CarsContracts"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205009")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Renter Statistics"]</a>
+                                                                        <a b-9ts1qywrdg="">@localizer["TAMMSystemMenu"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205010")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["FinancialTransactionOfRenter"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205011")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["FinancialTransactionOfSalesPoint"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205012")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["FinancialTransactionOfEmployees"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205013")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["CarStatistics"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205014")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["TenantStatistics"]</a>
+                                                                    </li>
+                                                                }
+                                                                @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205015")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["ContractStatistics"]</a>
+                                                                    </li>
+                                                                }
+                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205016")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["CarContractStatistics"]</a>
+                                                                    </li>
+                                                                }
+                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205017")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["TenantContractsStatistics"]</a>
+                                                                    </li>
+                                                                }
+                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205018")?.CrMasUserSubValidationAuthorization == true)
+                                                                {
+                                                                    <li b-9ts1qywrdg="">
+                                                                        <a b-9ts1qywrdg="">@localizer["EmployeeContractsStatistics"]</a>
                                                                     </li>
                                                                 }
                                                             }

@@ -288,6 +288,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewBag.CreditLimit = crMasUserInformation.CrMasUserInformationCreditLimit?.ToString("N2", CultureInfo.InvariantCulture);
             crMasUserInformation.CrMasUserBranchValidities = _unitOfWork.CrMasUserBranchValidity.FindAll(x => x.CrMasUserBranchValidityId == user.CrMasUserInformationCode).ToList();
             crMasUserInformation.CrCasBranchInformations = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == currentUser.CrMasUserInformationLessor&&x.CrCasBranchInformationStatus!=Status.Deleted).ToList();
+            
+            var callingKeys = _unitOfWork.CrMasSysCallingKeys.FindAll(x => x.CrMasSysCallingKeysStatus == Status.Active);
+            var callingKeyList = callingKeys.Select(c => new SelectListItem { Value = c.CrMasSysCallingKeysCode.ToString(), Text = c.CrMasSysCallingKeysNo }).ToList();
+            ViewData["CallingKeys"] = callingKeyList; // Pass the callingKeys to the view
+
             return View(crMasUserInformation);
         }
         [HttpPost]
@@ -301,6 +306,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
                     user.CrMasUserInformationTasksArName = model.CrMasUserInformationTasksArName;
                     user.CrMasUserInformationTasksEnName = model.CrMasUserInformationTasksEnName;
+                    user.CrMasUserInformationCallingKey = model.CrMasUserInformationCallingKey;
+                    user.CrMasUserInformationMobileNo = model.CrMasUserInformationMobileNo;
                     user.CrMasUserInformationCreditLimit = decimal.Parse(CreditLimit, CultureInfo.InvariantCulture);
                     user.CrMasUserInformationReasons = model.CrMasUserInformationReasons;
                     user.CrMasUserInformationAuthorizationAdmin = CrMasUserInformationAuthorizationAdmin;
@@ -648,8 +655,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             {
                 filePathSignture = "~/images/common/DefualtUserSignature.png";
             }
-            user.CrMasUserInformationCallingKey = model.CrMasUserInformationCallingKey;
-            user.CrMasUserInformationMobileNo = model.CrMasUserInformationMobileNo;
+            //user.CrMasUserInformationCallingKey = model.CrMasUserInformationCallingKey;
+            //user.CrMasUserInformationMobileNo = model.CrMasUserInformationMobileNo;
             user.CrMasUserInformationEmail = model.CrMasUserInformationEmail;
             user.CrMasUserInformationExitTimer = model.CrMasUserInformationExitTimer;
             user.CrMasUserInformationDefaultLanguage = model.CrMasUserInformationDefaultLanguage;

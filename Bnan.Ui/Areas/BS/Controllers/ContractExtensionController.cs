@@ -109,7 +109,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             contractMap.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
             contractMap.AuthType = authContract.CrCasRenterContractAuthorizationType;
-            contractMap.CasRenterPreviousBalance = contract.CrCasRenterContractBasic4?.CrCasRenterLessorAvailableBalance;
+            contractMap.CasRenterPreviousBalance = contract.CrCasRenterContractBasic5?.CrCasRenterLessorAvailableBalance;
             bsLayoutVM.ExtensionContract = contractMap;
             bsLayoutVM.SalesPoint = SalesPoint;
             bsLayoutVM.PaymentMethods = PaymentMethod;

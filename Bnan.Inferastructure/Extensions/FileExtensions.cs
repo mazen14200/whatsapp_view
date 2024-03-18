@@ -39,17 +39,22 @@ namespace Bnan.Inferastructure.Extensions
         {
             string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, folderName);
             string filePath = Path.Combine(uploadsFolder, fileName + extension);
-            string oldPathPysical= MapPath(webHostEnvironment, oldPath);
+            
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
             }
 
-            // Check if the file exists and delete it
-            if (File.Exists(oldPathPysical))
+            if (!string.IsNullOrEmpty(oldPath))
             {
-                File.Delete(oldPathPysical);
+                string oldPathPysical = MapPath(webHostEnvironment, oldPath);
+                // Check if the file exists and delete it
+                if (File.Exists(oldPathPysical))
+                {
+                    File.Delete(oldPathPysical);
+                }
             }
+            
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
@@ -62,6 +67,18 @@ namespace Bnan.Inferastructure.Extensions
         public static async Task<bool?> RemoveImage(this IWebHostEnvironment webHostEnvironment, string folderName, string fileName, string extension)
         {
             string imagePath = Path.Combine(webHostEnvironment.WebRootPath, folderName, fileName + extension);
+
+            if (File.Exists(imagePath))
+            {
+                File.Delete(imagePath);
+                return true;
+            }
+            return false;
+        }
+        public static async Task<bool?> RemoveImage(this IWebHostEnvironment webHostEnvironment, string path)
+        {
+            var pathA = MapPath(webHostEnvironment, path);
+            string imagePath = Path.Combine(webHostEnvironment.WebRootPath, pathA);
 
             if (File.Exists(imagePath))
             {

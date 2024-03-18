@@ -44,9 +44,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-//seeding database
-var data = System.IO.File.ReadAllText("BnanSaData.sql");
-app.UseDatabaseInitializer(data);
+////seeding database
+//var data = System.IO.File.ReadAllText("BnanSaData.sql");
+//app.UseDatabaseInitializer(data);
 
 //config for localization
 var supportedCultures = new[] { "en-US", "ar-EG" };
