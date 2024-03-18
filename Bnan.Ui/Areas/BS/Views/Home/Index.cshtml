@@ -35,241 +35,271 @@
     }
 </style>
 <!--  Chart -->
-<div class=" col-lg-9 col-xl-9">
+<div class="wrapper flex-grow-1 d-flex align-items-center ">
+    <div class="container-fluid ">
+        <section class="section-mainCard home-section">
+            <div class="row justify-content-center w-100 main-row ">
+                <div class=" col-lg-9 col-xl-8">
+                    <div class="card shadow">
 
-    <div class="card shadow mb-4">
+                        <div class="card-body" id="cardBody">
 
-        <div class="card-body" id="cardBody">
-
-            <div class="main-carousel-item active" id="carouselItem1">
-                <div class="row" id="first-row-of-charts">
-                    <div class="col-md-6 card-col Branch-car-col">
-                        <div class="row Branch-car-canvas-row" style="margin-top: 3%">
-                            <div class=" col-md-9 col-lg-9 col-xl-9 ">
-                                <canvas id="horizontal_bar" aria-label="chart"></canvas>
-                            </div>
-                            <div class=" ps-0 col-sm-3 col-md-3 col-lg-3 col-xl-3 pr-0"
-                                 style="display: flex;justify-content: flex-end ;">
-                                <p class="chart-p" style="margin-right:20px">@localizer["BranchCars"] : <span>@ViewBag.carCount</span></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 card-col pieChart-col">
-                        <div class="row " style="height: 240px">
-                            <div class="col-sm-8 col-md-8 col-lg-7 col-xl-8 ">
-                                <canvas id="pieChart" aria-label="chart" height="155px"></canvas>
-                            </div>
-
-                            <div class="col-sm-4 col-md-4 col-lg-5 col-xl-4 pieChart-data">
-                                <div class="chart-legend">
-                                    <div class="chart-p" style="margin-top: 14%;">
-                                        <div>
-                                            <p class="mb-2">@localizer["ExecutedContracts"] : <span>@Model.AlertContract.Count()</span></p>
-                                        </div>
-                                        <div>
-                                            <p class="mb-2">@localizer["ClosedContracts"] : <span>@Model.AlertContract.FindAll(x=>x.CrCasRenterContractAlertContractStatus==Status.Closed).Count()</span></p>
-                                        </div>
-                                        <div>
-                                            <p class="mb-2">@localizer["CanceledContracts"] : <span>@Model.AlertContract.FindAll(x=>x.CrCasRenterContractAlertContractStatus==Status.Cancel).Count()</span></p>
+                            <div class="main-carousel-item active" id="carouselItem1">
+                                <div class="row" id="first-row-of-charts">
+                                    <div class="col-md-6 card-col Branch-car-col">
+                                        <div class="row Branch-car-canvas-row" style="margin-top: 3%">
+                                            <div class=" col-md-9 col-lg-9 col-xl-9 ">
+                                                <canvas id="horizontal_bar" aria-label="chart"></canvas>
+                                            </div>
+                                            <div class=" ps-0 col-sm-3 col-md-3 col-lg-3 col-xl-3 pr-0"
+                                                 style="display: flex;justify-content: flex-end ;">
+                                                <p class="chart-p" style="margin-right:20px">@localizer["BranchCars"] : <span>@ViewBag.carCount</span></p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <br>
+
+                                    <div class="col-md-6 card-col pieChart-col">
+                                        <div class="row " style="height: 240px">
+                                            <div class="col-sm-8 col-md-8 col-lg-7 col-xl-8 ">
+                                                <canvas id="pieChart" aria-label="chart" height="155px"></canvas>
+                                            </div>
+
+                                            <div class="col-sm-4 col-md-4 col-lg-5 col-xl-4 pieChart-data">
+                                                <div class="chart-legend">
+                                                    <div class="chart-p" style="margin-top: 14%;">
+                                                        <div>
+                                                            <p class="mb-2">@localizer["ExecutedContracts"] : <span>@Model.AlertContract.Count()</span></p>
+                                                        </div>
+                                                        <div>
+                                                            <p class="mb-2">@localizer["ClosedContracts"] : <span>@Model.AlertContract.FindAll(x => x.CrCasRenterContractAlertContractStatus == Status.Closed).Count()</span></p>
+                                                        </div>
+                                                        <div>
+                                                            <p class="mb-2">@localizer["CanceledContracts"] : <span>@Model.AlertContract.FindAll(x => x.CrCasRenterContractAlertContractStatus == Status.Cancel).Count()</span></p>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- <hr color="#FF9626"> -->
+
+                                <div class="row" id="second-row-of-charts">
+
+                                    <div class="col-md-6 card-col branch-col">
+                                        <div class="row branch-row">
+                                            <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 ">
+                                                <canvas id="barChart2" aria-label="chart"></canvas>
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 branch-chart-data">
+                                                <div class="data chart-p">
+                                                    <p class="mb-2">
+                                                        @localizer["BranchCustody"] : <span id="brunch-custody">@((Model.CrCasBranchInformation?.CrCasBranchInformationTotalBalance ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
+                                                    </p>
+                                                    <p class="mb-2">
+                                                        @localizer["AvailableBalance"] : <span id="Available-balance-brunch">@((Model.CrCasBranchInformation?.CrCasBranchInformationAvailableBalance ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
+                                                    </p>
+                                                    <p class="mb-2">
+                                                        @localizer["ReservedBalance"] : <span id="used-balance-brunch">@((Model.CrCasBranchInformation?.CrCasBranchInformationReservedBalance ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
+                                                    </p>
+                                                    <!--  -->
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 card-col employee-col">
+                                        <div class="row employee-row">
+                                            <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8  ">
+                                                <canvas id="chartId" aria-label="chart"></canvas>
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 employee-chart-data">
+                                                <div class="data chart-p">
+                                                    @{
+                                                        var branchValidity = Model.CrMasUserBranchValidity;
+                                                        var totalAvaliableBalanceInBranch = branchValidity?.CrMasUserBranchValidityBranchCashAvailable +
+                                                        branchValidity?.CrMasUserBranchValidityBranchSalesPointAvailable +
+                                                        branchValidity?.CrMasUserBranchValidityBranchTransferAvailable;
+
+                                                        var totalResevedBalanceInBranch = branchValidity?.CrMasUserBranchValidityBranchCashReserved +
+                                                        branchValidity?.CrMasUserBranchValidityBranchSalesPointReserved +
+                                                        branchValidity?.CrMasUserBranchValidityBranchTransferReserved;
+
+                                                        var totalBalanceInBranch = branchValidity?.CrMasUserBranchValidityBranchSalesPointBalance +
+                                                        branchValidity?.CrMasUserBranchValidityBranchCashBalance +
+                                                        branchValidity?.CrMasUserBranchValidityBranchTransferBalance;
+
+                                                    }
+                                                    <p class="mb-2">
+                                                        @localizer["EmployeeCustody"] : <span id="employee-custody">@((totalBalanceInBranch ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
+                                                    </p>
+                                                    <p class="mb-2">
+                                                        @localizer["AvailableBalance"] : <span id="Available-balance-employee">@((totalAvaliableBalanceInBranch ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
+                                                    </p>
+                                                    <p class="mb-2">
+                                                        @localizer["ReservedBalance"] : <span id="used-balance-employee">@((totalResevedBalanceInBranch ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
+                                                    </p>
+                                                    <!--  -->
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="main-carousel-item" id="carouselItem2">
+                                <partial name="_RentedCars" />
+                            </div>
+                            <div class="main-carousel-item" id="carouselItem3">
+                                <partial name="_AvaliableCar" />
+                            </div>
+                            <div class="main-carousel-item" id="carouselItem4">
+                                <partial name="_UnAvailableCar" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-lg-3 col-xl-2  bg-transparent " id="button-on-mobile">
+                    <!-- Updated width and added new classes for the second card -->
+                    <!-- Card Body -->
+                    <div class="card-body p-0 mt-2">
+                        <div class="row align-items-center flex-row-reverse">
+                            <div class=" col-12 col-md-4 col-lg-12 Branch">
+                                @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+                                {
+                                    @Html.DropDownListFor(model => model.SelectedBranch, new SelectList(Model.CrCasBranchInformations, "CrCasBranchInformationCode", "CrCasBranchInformationEnShortName", Model.SelectedBranch), new { id = "branchList", @class = "text-left" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(model => model.SelectedBranch, new SelectList(Model.CrCasBranchInformations, "CrCasBranchInformationCode", "CrCasBranchInformationArShortName", Model.SelectedBranch), new { id = "branchList", @class = "text-right" })
+                                }
+                                <label for="brunch_name" style="color: black;">@localizer["Branch"]</label>
+                            </div>
+                            <div class=" col-6 col-md-4 col-lg-12">
+                                <div>
+                                    <button type="button" class="btn btn-secondary1  mt-2 active1" id="chart"
+                                            onclick="showCarouselItem(1) , setActiveButton(0)">
+                                        <img src="~/BranchSys/img/Rectangle 74.png"
+                                             class="chart-buttons-img">@localizer["Statistics"]
+                                    </button>
+                                </div>
+                            </div>
+                            <div class=" col-6 col-md-4 col-lg-12">
+                                <div>
+                                    <button type="button" class="btn btn-secondary1" id="toggleCarousel">
+                                        <img src="~/BranchSys/img/Rectangle 75 .png"
+                                             class="chart-buttons-img">@localizer["Rented"]
+                                    </button>
+                                </div>
+                            </div>
+                            <div class=" col-6 col-md-4 col-lg-12">
+                                <div>
+                                    <button type="button" class="btn btn-secondary1 " id="toggleCarousel2">
+                                        <img src="~/BranchSys/img/Rectangle 76.png"
+                                             class="chart-buttons-img">@localizer["Avaliable"]
+                                    </button>
+                                </div>
+                            </div>
+                            <div class=" col-6 col-md-4 col-lg-12">
+                                <div>
+                                    <button type="button" class="btn btn-secondary1 " id="toggleCarousel3">
+                                        <img src="~/BranchSys/img/Rectangle 77.png"
+                                             class="chart-buttons-img">@localizer["UnAvaliable"]
+                                    </button>
+                                </div>
+                            </div>
+                            <div class=" col-6 col-md-4 col-lg-12">
+                                <div>
+                                    <button type="button" class="btn btn-secondary1" onclick="setActiveButton(4)">
+                                        <img src="~/BranchSys/img/Rectangle 78.png"
+                                             class="chart-buttons-img">@localizer["Messages"]
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
-
-                <!-- <hr color="#FF9626"> -->
-
-                <div class="row" id="second-row-of-charts">
-
-                    <div class="col-md-6 card-col branch-col">
-                        <div class="row branch-row" style="margin-top:3%">
-                            <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 ">
-                                <canvas id="barChart2" aria-label="chart"></canvas>
-                            </div>
-                            <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 branch-chart-data">
-                                <div class="data chart-p">
-                                    <p class="mb-2">
-                                        @localizer["BranchCustody"] : <span id="brunch-custody">@((Model.CrCasBranchInformation?.CrCasBranchInformationTotalBalance ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
-                                    </p>
-                                    <p class="mb-2">
-                                        @localizer["AvailableBalance"] : <span id="Available-balance-brunch">@((Model.CrCasBranchInformation?.CrCasBranchInformationAvailableBalance ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
-                                    </p>
-                                    <p class="mb-2">
-                                        @localizer["ReservedBalance"] : <span id="used-balance-brunch">@((Model.CrCasBranchInformation?.CrCasBranchInformationReservedBalance ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
-                                    </p>
-                                    <!--  -->
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 card-col employee-col">
-                        <div class="row employee-row" style="height: 240px;margin-top:3%">
-                            <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8  ">
-                                <canvas id="chartId" aria-label="chart"></canvas>
-                            </div>
-                            <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 employee-chart-data">
-                                <div class="data chart-p">
-                                    @{
-                                        var branchValidity = Model.CrMasUserBranchValidity;
-                                        var totalAvaliableBalanceInBranch = branchValidity?.CrMasUserBranchValidityBranchCashAvailable +
-                                        branchValidity?.CrMasUserBranchValidityBranchSalesPointAvailable +
-                                        branchValidity?.CrMasUserBranchValidityBranchTransferAvailable;
-
-                                        var totalResevedBalanceInBranch = branchValidity?.CrMasUserBranchValidityBranchCashReserved +
-                                        branchValidity?.CrMasUserBranchValidityBranchSalesPointReserved +
-                                        branchValidity?.CrMasUserBranchValidityBranchTransferReserved;
-
-                                        var totalBalanceInBranch = branchValidity?.CrMasUserBranchValidityBranchSalesPointBalance +
-                                        branchValidity?.CrMasUserBranchValidityBranchCashBalance +
-                                        branchValidity?.CrMasUserBranchValidityBranchTransferBalance;
-
-                                    }
-                                    <p class="mb-2">
-                                        @localizer["EmployeeCustody"] : <span id="employee-custody">@((totalBalanceInBranch ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
-                                    </p>
-                                    <p class="mb-2">
-                                        @localizer["AvailableBalance"] : <span id="Available-balance-employee">@((totalAvaliableBalanceInBranch ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
-                                    </p>
-                                    <p class="mb-2">
-                                        @localizer["ReservedBalance"] : <span id="used-balance-employee">@((totalResevedBalanceInBranch ?? 0).ToString("N2", CultureInfo.InvariantCulture))</span>
-                                    </p>
-                                    <!--  -->
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
+            </div>
+        </section>
+    </div>
+</div>
+<div>
+    <footer class="fixed-bottom-xl" style="margin-top:1.95%">
+        <div class="before-footer-widget">
+            <svg width: 100%; height:auto viewbox="0 0 2444 132">
+                <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                      d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+                </path>
+            </svg>
+        </div>
+        <div class="container footer-buttons justify-content-center pt-1 " style="box-sizing: border-box; ">
+            <div class="row justify-content-center">
+                <!-- First row of buttons -->
+                <div class="col-sm-6 col-md-6 col-lg-3 ">
+                    <button type="button" class="btn btn-Pages mb-2">
+                        <img src="~/BranchSys/img/Rectangle 35.png">
+                        @localizer["CancelContract"]
+                    </button>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-3  ">
+                    <a class="btn btn-Pages mb-2" id="ExtensionContract">
+                        <img src="~/BranchSys/img/Rectangle 31.png">
+                        @localizer["ContractExtension"]
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-3  ">
+                    <button type="button" class="btn btn-Pages mb-2" id="ContractSettlement">
+                        <img src="~/BranchSys/img/Rectangle 30.png">
+                        @localizer["ContractSettlement"]
+                    </button>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-3  ">
+                    <a id="CreateContract" class="btn btn-Pages mb-2">
+                        <img src="~/BranchSys/img/Rectangle 29.png">
+                        @localizer["CreateContract"]
+                    </a>
                 </div>
             </div>
-            <div class="main-carousel-item" id="carouselItem2">
-                <partial name="_RentedCars" />
-            </div>
-            <div class="main-carousel-item" id="carouselItem3">
-                <partial name="_AvaliableCar" />
-            </div>
-            <div class="main-carousel-item" id="carouselItem4">
-                <partial name="_UnAvailableCar" />
+            <div class="row justify-content-center  ">
+                <!-- Second row of buttons -->
+                <div class="col-sm-6 col-md-6 col-lg-3 mb-1 ">
+                    <button type="button" class="btn btn-Pages" id="CustodyBtn">
+                        <img src="~/BranchSys/img/Rectangle 36.png" id="anmCustody">
+                        @localizer["TheCovenant"]
+                    </button>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-3 mb-1">
+                    <a class="btn btn-Pages" id="pulse-button-employee">
+                        <img src="~/BranchSys/img/Rectangle 33.png" id="anmFeedBox">
+                        @localizer["Feedbox"]
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-3  mb-1  ">
+                    <a class="btn btn-Pages " id="ReportBtn">
+                        <img src="~/BranchSys/img/Rectangle 32.png">
+                        @localizer["FinancialReport"]
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-3  mb-1 ">
+                    <a class="btn btn-Pages" id="RenterBtn">
+                        <img src="~/BranchSys/img/Rectangle 34.png">
+                        @localizer["Tenants"]
+                    </a>
+                </div>
             </div>
         </div>
-
-    </div>
-
+    </footer>
 </div>
-<div class="col-lg-3 col-xl-2  bg-transparent " id="button-on-mobile">
-    <!-- Updated width and added new classes for the second card -->
-    <!-- Card Body -->
-    <div class="card-body p-0 mt-2">
-        @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
-        {
-            @Html.DropDownListFor(model => model.SelectedBranch, new SelectList(Model.CrCasBranchInformations, "CrCasBranchInformationCode", "CrCasBranchInformationEnShortName", Model.SelectedBranch),new { id = "branchList", @class = "text-left" })
-        }
-        else
-        {
-            @Html.DropDownListFor(model => model.SelectedBranch, new SelectList(Model.CrCasBranchInformations, "CrCasBranchInformationCode", "CrCasBranchInformationArShortName", Model.SelectedBranch),new { id = "branchList", @class = "text-right" })
-        }
-        <label for="brunch_name" style="color: black;">@localizer["Branch"]</label>
-        <br>
-        <button type="button" class="btn btn-secondary1  mt-2 active1" id="chart"
-                onclick="showCarouselItem(1) , setActiveButton(0)">
-            <img src="~/BranchSys/img/Rectangle 74.png"
-                 class="chart-buttons-img">@localizer["Statistics"]
-        </button>
-        <button type="button" class="btn btn-secondary1" id="toggleCarousel">
-            <img src="~/BranchSys/img/Rectangle 75 .png"
-                 class="chart-buttons-img">@localizer["Rented"]
-        </button>
-        <button type="button" class="btn btn-secondary1 " id="toggleCarousel2">
-            <img src="~/BranchSys/img/Rectangle 76.png"
-                 class="chart-buttons-img">@localizer["Avaliable"]
-        </button>
-        <button type="button" class="btn btn-secondary1 " id="toggleCarousel3">
-            <img src="~/BranchSys/img/Rectangle 77.png"
-                 class="chart-buttons-img">@localizer["UnAvaliable"]
-        </button>
-        <button type="button" class="btn btn-secondary1" onclick="setActiveButton(4)">
-            <img src="~/BranchSys/img/Rectangle 78.png"
-                 class="chart-buttons-img">@localizer["Messages"]
-        </button>
-    </div>
-
-</div>
-<footer class="fixed-bottom-xl" style="margin-top:1.95%">
-    <div class="before-footer-widget">
-        <svg width: 100%; height:auto viewbox="0 0 2444 132">
-            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
-                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
-            </path>
-        </svg>
-    </div>
-    <div class="container footer-buttons justify-content-center pt-1 " style="box-sizing: border-box; ">
-        <div class="row justify-content-center">
-            <!-- First row of buttons -->
-            <div class="col-sm-6 col-md-6 col-lg-3 ">
-                <button type="button" class="btn btn-secondary mb-2">
-                    <img src="~/BranchSys/img/Rectangle 35.png">
-                    @localizer["CancelContract"]
-                </button>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-3  ">
-                <a class="btn btn-secondary mb-2" id="ExtensionContract">
-                    <img src="~/BranchSys/img/Rectangle 31.png">
-                    @localizer["ContractExtension"]
-                </a>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-3  ">
-                <button type="button" class="btn btn-secondary mb-2" id="ContractSettlement">
-                    <img src="~/BranchSys/img/Rectangle 30.png">
-                    @localizer["ContractSettlement"]
-                </button>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-3  ">
-                <a id="CreateContract" class="btn btn-secondary mb-2">
-                    <img src="~/BranchSys/img/Rectangle 29.png">
-                    @localizer["CreateContract"]
-                </a>
-            </div>
-        </div>
-        <div class="row justify-content-center  ">
-            <!-- Second row of buttons -->
-            <div class="col-sm-6 col-md-6 col-lg-3 mb-1 ">
-                <button type="button" class="btn btn-secondary" id="CustodyBtn">
-                    <img src="~/BranchSys/img/Rectangle 36.png" id="anmCustody">
-                    @localizer["TheCovenant"]
-                </button>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-3 mb-1">
-                <a class="btn btn-secondary" id="pulse-button-employee">
-                    <img src="~/BranchSys/img/Rectangle 33.png" id="anmFeedBox">
-                    @localizer["Feedbox"]
-                </a>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-3  mb-1  ">
-                <a class="btn btn-secondary " id="ReportBtn">
-                    <img src="~/BranchSys/img/Rectangle 32.png">
-                    @localizer["FinancialReport"]
-                </a>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-3  mb-1 ">
-                <a class="btn btn-secondary" id="RenterBtn">
-                    <img src="~/BranchSys/img/Rectangle 34.png">
-                    @localizer["Tenants"]
-                </a>
-            </div>
-        </div>
-    </div>
-</footer>
-
 @section Scripts {
     <!--Charts-->
-    <script src="~/js/toastr.js"></script>
     <script>
         $(document).ready(function () {
             ////////////////////////charts////////////////////////////////
@@ -407,7 +437,7 @@
                     return paymentMethod.enName;
                 });
             }
-            else{
+            else {
                 labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
                     return paymentMethod.arName;
                 });
@@ -568,10 +598,10 @@
             const pieChartData = {
                 labels: ['@localizer["ExpiredContract"]', '@localizer["ExpiresToday"]', '@localizer["ExpiresTomorrow"]', '@localizer["ExpiresLater"]'],
                 datasets: [{
-                    data: [@Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="3").Count(),
-                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="0").Count(),
-                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="1").Count(),
-                            @Model.AlertContract?.FindAll(x=>x.CrCasRenterContractAlertContractActiviteStatus=="2").Count()],
+                    data: [@Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "3").Count(),
+        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "0").Count(),
+        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "1").Count(),
+        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "2").Count()],
                     backgroundColor: ['rgba(242, 36, 36, 1)', '#9966FF', 'rgba(242, 143, 36, 1)', 'rgba(54, 162, 235, 1)']
                 }]
             };
@@ -807,9 +837,9 @@
     </script>
     <!--Custody Auth-->
     <script>
-        var CashAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityBranch==Model.SelectedBranch)?.CrMasUserBranchValidityBranchCashAvailable';
-        var SalesPointAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityBranch==Model.SelectedBranch)?.CrMasUserBranchValidityBranchSalesPointAvailable';
-        // var TransferAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x=>x.CrMasUserBranchValidityBranch==Model.SelectedBranch)?.CrMasUserBranchValidityBranchTransferAvailable';
+        var CashAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityBranch == Model.SelectedBranch)?.CrMasUserBranchValidityBranchCashAvailable';
+        var SalesPointAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityBranch == Model.SelectedBranch)?.CrMasUserBranchValidityBranchSalesPointAvailable';
+        // var TransferAvailable = '@user.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityBranch == Model.SelectedBranch)?.CrMasUserBranchValidityBranchTransferAvailable';
         var total = parseFloat(CashAvailable) + parseFloat(SalesPointAvailable);
         document.getElementById('CustodyBtn').addEventListener('click', function () {
             console.log(total)
@@ -831,8 +861,8 @@
             var lessorStatus = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorInformationStatus";
             var BranchStatus = "@Model?.CrCasBranchInformation?.CrCasBranchInformationStatus";
             var CarsAvaliableNo = "@ViewBag.AvaliableCars";
-            var CompanyContract = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.Where(x=>x.CrMasContractCompanyStatus==Status.Expire||x.CrMasContractCompanyStatus==Status.Renewed).Count()";
-            var CompanyDocuments = "@userInfo?.CrMasUserInformationLessorNavigation?.CrCasBranchDocuments.Where(x=>x.CrCasBranchDocumentsStatus==Status.Expire || x.CrCasBranchDocumentsStatus==Status.Renewed).Count()";
+            var CompanyContract = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.Where(x => x.CrMasContractCompanyStatus == Status.Expire || x.CrMasContractCompanyStatus == Status.Renewed).Count()";
+            var CompanyDocuments = "@userInfo?.CrMasUserInformationLessorNavigation?.CrCasBranchDocuments.Where(x => x.CrCasBranchDocumentsStatus == Status.Expire || x.CrCasBranchDocumentsStatus == Status.Renewed).Count()";
             var checkContractValidity = "";
             var selectedBranch = "@Model?.SelectedBranch";
             if (createAuth.toLowerCase() === "false" || createAuth == null || createAuth == "") {
@@ -921,8 +951,8 @@
             var userStatus = "@userInfo?.CrMasUserInformationStatus";
             var lessorStatus = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorInformationStatus";
             var BranchStatus = "@Model?.CrCasBranchInformation?.CrCasBranchInformationStatus";
-            var CompanyContract = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.Where(x=>x.CrMasContractCompanyStatus==Status.Expire||x.CrMasContractCompanyStatus==Status.Renewed).Count()";
-            var CompanyDocuments = "@userInfo?.CrMasUserInformationLessorNavigation?.CrCasBranchDocuments.Where(x=>x.CrCasBranchDocumentsStatus==Status.Expire || x.CrCasBranchDocumentsStatus==Status.Renewed).Count()";
+            var CompanyContract = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.Where(x => x.CrMasContractCompanyStatus == Status.Expire || x.CrMasContractCompanyStatus == Status.Renewed).Count()";
+            var CompanyDocuments = "@userInfo?.CrMasUserInformationLessorNavigation?.CrCasBranchDocuments.Where(x => x.CrCasBranchDocumentsStatus == Status.Expire || x.CrCasBranchDocumentsStatus == Status.Renewed).Count()";
             var checkContractValidity = "";
             var selectedBranch = "@Model?.SelectedBranch";
             if (ExtensionAuth.toLowerCase() === "false" || ExtensionAuth == null || ExtensionAuth == "") {

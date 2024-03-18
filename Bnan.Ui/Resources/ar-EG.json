@@ -47,8 +47,8 @@
   "Administrative Procedures": "الاجراءات الاداريه",
   "Finacial Procedures": "الاجراءات الماليه",
   "ActiveContracts": "عفود قائمة",
-  "ClosedContracts": "عقود مغلقة",
-  "CanceledContracts": "عقود ملغاه",
+  //"ClosedContracts": "عقود مغلقة",
+  //"CanceledContracts": "عقود ملغاه",
   "DriverContracts": "عقود السائقين",
   "EmployeesContracts": "عقود الموظفين",
   "CarsContracts": "عقود السيارات",
@@ -200,7 +200,7 @@
   "Categories": "الفئات",
   "CategoriesDistribution": "توزيع الفئات",
   "Features": "المميزات الاضافية",
-  "Advantages": "المميزات الاضافية",
+  //"Advantages": "المميزات الاضافية",
 
   "Colors": "الالوان",
   //MailsServices
@@ -387,7 +387,6 @@
   "HintSureToHoldCarFuel": "سيترتب على إيقاف بيانات وقود السيارة إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteCarFuel": "للأسف لا تستطيع حذف نوع وقود السيارة هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
 
@@ -411,7 +410,6 @@
   "HintSureToHoldCarCvt": "سيترتب على إيقاف بيانات نوع الناقل إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteCarCvt": "للأسف لا تستطيع حذف نوع الناقل هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
 
@@ -435,7 +433,6 @@
   "HintSureToHoldCarCategory": "سيترتب على إيقاف بيانات فئة السيارة إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteCarCategory": "للأسف لا تستطيع حذف فئة السيارة هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
 
@@ -459,7 +456,6 @@
   "HintSureToHoldCarAdvantage": "سيترتب على إيقاف بيانات ميزة السيارة إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteCarAdvantage": "للأسف لا تستطيع حذف ميزة السيارة هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
 
@@ -483,7 +479,6 @@
   "HintSureToHoldCarRegistration": "سيترتب على إيقاف بيانات نوع تسجيل السيارة إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteCarRegistration": "للأسف لا تستطيع حذف نوع تسجيل السيارة هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
   //User Login ------
@@ -516,8 +511,8 @@
   "RenterInformationWorkPlace": "جهة العمل",
   "RenterLessorMechanism": "آلية التعامل",
   "DateLastContract": "أخر عقد",
-  "Rented": "مستأجر",
-  "Rate": "التقييم",
+  //"Rented": "مستأجر",
+  //"Rate": "التقييم",
   "Edit RenterLessorInformation Data": "بيانات المستأجر التفصيلية",
   "Edit RenterLessorInformation Hint": "تمكنك هذه الصفحة من عرض البيانات التفصيلية للمستأجر وتحديثها",
   "Code": "الرمز",
@@ -527,14 +522,14 @@
   "RenterIDType": "نوع الهوية",
   "Date_start": "تاريخـها",
   "Date_end": "نهايتها",
-  "Gender": "الجنس",
-  "Nationality": "الجنسية",
+  //"Gender": "الجنس",
+  //"Nationality": "الجنسية",
   "sector": "القطاع",
-  "Profession": "المهنة",
+  //"Profession": "المهنة",
   "WorkPlace": "جهة العمل",
   "Bank_name": "البنـك",
   "Account_bank_numper": "رقم الحساب",
-  "Membership": "العضوية",
+  //"Membership": "العضوية",
   "DrivingType": "رخصة القيادة",
   "Mechanism_Renter": "آلية التعامل",
   "Mechanism_Rent": "آلية التعامل",
@@ -574,15 +569,14 @@
   "End_Contract": "نهايته",
   "Car_Name": "اسم السيارة",
   "Contract_Value": "قيمة العقد",
-  "Contract": "العقد",
-  "Extension": "ممدد",
+  //"Contract": "العقد",
+  //"Extension": "ممدد",
   "Standing": "قائم",
   "Renter_Name": "المستأجر",
-  "All": "الكل",
+  //"All": "الكل",
   "Today_Expired": "ينتهي اليوم",
   "Tommorow_Expired": "ينتهي غداً",
   "after_long_Expired": "ينتهي لاحقاً",
-  "Expired": "منتهي",
   "RenterContractReport Hint": "تمكنك الصفحة من الاطلاع والبحث عن العقود القائمة خلال الفترة المحددة",
   "RenterContractReport Data": "العقود القائمة",
 
@@ -606,7 +600,6 @@
   "HintSureToHoldRenterIdType": "سيترتب على إيقاف بيانات نوع الهوية إيقافها على النظام",
 
   "HintSureTo_Cannot_deleteRenterIdType": "للأسف لا تستطيع حذف نوع الهوية هذه لأنه يوجد منها عدد =",
-  "SureTo_Cannot_delete": "للأسف لا تستطيع حذفه",
 
 
   //Renter Nationality------

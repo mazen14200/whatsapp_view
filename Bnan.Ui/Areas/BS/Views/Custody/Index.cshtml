@@ -12,11 +12,6 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
-<link rel="stylesheet" href="~/css/toastr.css" />
-
-
 <link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
 @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
 {
@@ -44,117 +39,117 @@
 
 
 
-
-<section class="section-mainCard">
-    <div class="row justify-content-center w-100 h-100">
-        <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
-            <div class="card main-card ">
-                <div class="row pt-2">
-                    <a asp-action="Index" asp-area="BS" asp-controller="Home" style="width: fit-content;">
-                        <img src="~/BranchSys/Pages/img/cancel.png" alt="cancle_icon" class="cancle-icon">
-                    </a>
-                </div>
-                <div class="row layout-row custody-layout-row">
-
-                    <div class="row" style="flex-direction: row-reverse;">
-                        <div class="col justify-content-center d-flex title-row">
-                            <h1 class="card-title">
-                                @localizer["ReceivingCustody"]
-                            </h1>
-                        </div>
-
+<div class="container-fluid ">
+    <section class="section-mainCard">
+        <div class="row justify-content-center w-100 h-100">
+            <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
+                <div class="card main-card ">
+                    <div class="row pt-2">
+                        <a asp-action="Index" asp-area="BS" asp-controller="Home" style="width: fit-content;">
+                            <img src="~/BranchSys/Pages/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+                        </a>
                     </div>
-                    <div class="row justify-content-center h-100 content-row">
+                    <div class="row layout-row custody-layout-row">
 
-                        <div class="col-md-11 mx-0">
-                            <form id="form" class="needs-validation" asp-action="SendCustody" asp-controller="Custody" asp-area="BS" novalidate>
+                        <div class="row" style="flex-direction: row-reverse;">
+                            <div class="col justify-content-center d-flex title-row">
+                                <h1 class="card-title">
+                                    @localizer["ReceivingCustody"]
+                                </h1>
+                            </div>
 
-                                <input hidden asp-for="SelectedBranch" id="branch" />
-                                <input hidden id="SalesPoint" name="SalesPoint" />
-                                <input hidden id="ReferenceNo" name="ReferenceNo" value="@ViewBag.ReceiptPassingReferenceNo" />
-                                <input hidden id="ReceiptsNo" name="ReceiptsNo" />
-                                <input hidden id="TotalPayment" name="TotalPayment" />
-                                <input hidden id="TotalReceipt" name="TotalReceipt" />
-                                <input hidden id="TotalReceived" name="TotalReceived" />
-                                <fieldset>
+                        </div>
+                        <div class="row justify-content-center h-100 content-row">
 
-                                    <div class="form-card details-card">
+                            <div class="col-md-11 mx-0">
+                                <form id="form" class="needs-validation" asp-action="SendCustody" asp-controller="Custody" asp-area="BS" novalidate>
 
-                                        <div class="row g-0 pt-2" style="flex-direction:row-reverse">
-                                            <div class="col-md-auto col-lg-auto col-xl-4 d-flex data-col " style="flex-wrap: wrap;">
-                                                <div class="col-auto ps-0">
-                                                    <P>@localizer["CustodyNo"]</P>
-                                                </div>
-                                                <div class="col-auto ps-0 personal-data">
-                                                    <P>@ViewBag.ReceiptPassingReferenceNo</P>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-lg-4 col-xl-3  d-flex data-col">
-                                                <div class="col-auto ps-0">
-                                                    <P>@localizer["Date"]</P>
-                                                </div>
-                                                <div class="col-auto ps-0 personal-data">
-                                                    <P>@ViewBag.Date</P>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-lg-4 col-xl-5 d-flex" style="flex-direction: row-reverse;">
-                                                <div class="col-auto ps-0">
-                                                    <label for="selling-point-drop">@localizer["SalesPoint"]</label>
+                                    <input hidden asp-for="SelectedBranch" id="branch" />
+                                    <input hidden id="SalesPoint" name="SalesPoint" />
+                                    <input hidden id="ReferenceNo" name="ReferenceNo" value="@ViewBag.ReceiptPassingReferenceNo" />
+                                    <input hidden id="ReceiptsNo" name="ReceiptsNo" />
+                                    <input hidden id="TotalPayment" name="TotalPayment" />
+                                    <input hidden id="TotalReceipt" name="TotalReceipt" />
+                                    <input hidden id="TotalReceived" name="TotalReceived" />
+                                    <fieldset>
 
+                                        <div class="form-card details-card">
+
+                                            <div class="row g-0 pt-2" style="flex-direction:row-reverse">
+                                                <div class="col-md-auto col-lg-auto col-xl-4 d-flex data-col " style="flex-wrap: wrap;">
+                                                    <div class="col-auto ps-0">
+                                                        <P>@localizer["CustodyNo"]</P>
+                                                    </div>
+                                                    <div class="col-auto ps-0 personal-data">
+                                                        <P>@ViewBag.ReceiptPassingReferenceNo</P>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-6 col-lg-6 col-xl-6 personal-data">
-                                                    <div id="dropdown-container ">
-                                                        <div>
-                                                            <select class="form-select form-select-selling pb-0" id="selling-point-drop" style="font-size: .8rem;" asp-for="SalesPointSelected" required>
-                                                                <option selected disabled></option>
-                                                                @foreach (var item in Model.SalesPointHaveBalance)
-                                                                {
-                                                                    if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                                <div class="col-md-6 col-lg-4 col-xl-3  d-flex data-col">
+                                                    <div class="col-auto ps-0">
+                                                        <P>@localizer["Date"]</P>
+                                                    </div>
+                                                    <div class="col-auto ps-0 personal-data">
+                                                        <P>@ViewBag.Date</P>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-4 col-xl-5 d-flex" style="flex-direction: row-reverse;">
+                                                    <div class="col-auto ps-0">
+                                                        <label for="selling-point-drop">@localizer["SalesPoint"]</label>
+
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-xl-6 personal-data">
+                                                        <div id="dropdown-container ">
+                                                            <div>
+                                                                <select class="form-select form-select-selling pb-0" id="selling-point-drop" style="font-size: .8rem;" asp-for="SalesPointSelected" required>
+                                                                    <option selected disabled></option>
+                                                                    @foreach (var item in Model.SalesPointHaveBalance)
                                                                     {
-                                                                        <option class="text-right" value="@item.CrCasAccountSalesPointCode">
-                                                                            @item.CrCasAccountSalesPointArName
-                                                                        </option>
+                                                                        if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                                                        {
+                                                                            <option class="text-right" value="@item.CrCasAccountSalesPointCode">
+                                                                                @item.CrCasAccountSalesPointArName
+                                                                            </option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option class="text-left" value="@item.CrCasAccountSalesPointCode">
+                                                                                @item.CrCasAccountSalesPointEnName
+                                                                            </option>
+                                                                        }
                                                                     }
-                                                                    else
-                                                                    {
-                                                                        <option class="text-left" value="@item.CrCasAccountSalesPointCode">
-                                                                            @item.CrCasAccountSalesPointEnName
-                                                                        </option>
-                                                                    }
-                                                                }
-                                                            </select>
-                                                            <div class="row requird-field-row-last">
-                                                                <span class="requird-field" asp-validation-for="@Model.SalesPointSelected"></span>
+                                                                </select>
+                                                                <div class="row requird-field-row-last">
+                                                                    <span class="requird-field" asp-validation-for="@Model.SalesPointSelected"></span>
+                                                                </div>
                                                             </div>
                                                         </div>
+
                                                     </div>
 
                                                 </div>
-
+                                            </div>
+                                            <div id="CustodyData">
+                                                <partial name="_CustodyData" />
                                             </div>
                                         </div>
-                                        <div id="CustodyData">
-                                            <partial name="_CustodyData" />
+                                        <div class="row button-row pt-3 pb-1 ps-4">
+                                            <div class="button-card55">
+                                                <a id="SubmitBtn" class="btn btn-custom">@localizer["Save"]</a>
+                                            </div>
+                                            <div class="button-card55">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row button-row pt-3 pb-1 ps-4">
-                                        <div class="button-card55">
-                                            <a id="SubmitBtn" class="btn btn-custom">@localizer["Save"]</a>
-                                        </div>
-                                        <div class="button-card55">
-                                        </div>
-                                    </div>
-                                </fieldset>
+                                    </fieldset>
 
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
+    </section>
+</div>
 <footer class="fixed-bottom-xl">
     <div class="before-footer-widget">
         <svg width: 100%; height:auto viewbox="0 0 2444 132">

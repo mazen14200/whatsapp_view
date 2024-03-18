@@ -19,10 +19,7 @@
           .FirstOrDefaultAsync(l => l.UserName == user.UserName);
 }
 <link href="~/BranchSys/CreateContract/sb-admin-2.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <link href="~/BranchSys/CreateContract/contract.css" rel="styleSheet">
-<link rel="stylesheet" href="~/css/toastr.css" />
-
 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
 {
     <link href="~/BranchSys/CreateContract/english-style.css" rel="styleSheet">
@@ -52,7 +49,7 @@ else
         }
     </style>
 }
-
+<div class="container-fluid ">
 <section class="section-mainCard">
     <div class="row justify-content-center w-100 h-100">
         <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
@@ -1677,6 +1674,7 @@ else
         </div>
     </div>
 </section>
+</div>
 <footer class="fixed-bottom-xl">
     <div class="before-footer-widget">
         <svg width: 100%; height:auto viewbox="0 0 2444 132">
@@ -4187,7 +4185,7 @@ else
 
         // Function to send an image and PDF to WhatsApp
         const sendReceiptToWhatsApp = async () => {
-            const imageLessor = "~/images/common/Ar_Catch_Receipt.png";
+            const imageLessor = "~/images/common/Ar_Catch_Receiptttt.png";
             const imagePath = imageLessor.replace('~', '');
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
             const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
@@ -4245,22 +4243,22 @@ else
 
                 ctx.drawImage(img, 0, 0);
 
-                ctx.font = "bold 37px serif";
+                ctx.font = "bold 11px serif";
                 ctx.textAlign = "right";
                 ctx.fillStyle = "black";
                 //Date and contract no
-                ctx.fillText(AccountReceiptNo, canvas.width - 110, 300);
-                ctx.fillText(miladiDateString, canvas.width - 228, 365);
-                ctx.fillText(hijriDateString, canvas.width - 228, 420);
+                ctx.fillText(AccountReceiptNo, canvas.width - 30, 147);
+                ctx.fillText(miladiDateString, canvas.width - 50, 161);
+                ctx.fillText(hijriDateString, canvas.width - 53, 175);
                 // Receipt and type and renter and car name
-                ctx.fillText(referenceType, canvas.width - 250, 670);
-                ctx.fillText(contractNo, canvas.width - 320, 760);
+                ctx.fillText(referenceType, canvas.width - 60, 217);
+                ctx.fillText(contractNo, canvas.width - 75, 239);
                 // ctx.fillText(RenterName, canvas.width - 122, 840);
-                ctx.fillText(CarName, canvas.width - 122, 932);
+                ctx.fillText(CarName, canvas.width - 35, 280);
 
 
                 // The Table
-                var YHeight = 1190;
+                var YHeight = 333;
                 var DiscountInput = document.getElementById("Discount_Input").value;
                 var daysNo = document.getElementById('dayNo').value;
                 var TaxPercent = parseInt(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
@@ -4409,7 +4407,7 @@ else
                     //     console.log("SendImageError", errorMessage);
                     // }
                     var message = ` عزيزي / ${RenterName} , في تاريخ ${miladiDateString} , يمكنك مراجعة الفاتورة عن طريق تحميل الملف المرفق `
-                    createPdfAndSendToWhatsApp(contractNo, phoneNumber, token, blob, message);
+                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message);
                 }, 'image/png');
             };
             img.src = URL.createObjectURL(blob);
@@ -4421,16 +4419,16 @@ else
             var taxValue = totalAfterDiscount * (taxPercent / 100);
             var totalActual = parseFloat(totalAfterDiscount) + parseFloat(taxValue);
 
-            ctx.fillText(itemName, canvas.width - 240, yHeight);
-            ctx.fillText(itemValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 570, yHeight);
-            ctx.fillText(days, canvas.width - 795, yHeight);
-            ctx.fillText(itemTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1030, yHeight);
-            ctx.fillText(discountValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1325, yHeight);
-            ctx.fillText(totalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1625, yHeight);
-            ctx.fillText(taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1925, yHeight);
-            ctx.fillText(totalActual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 2232, yHeight);
+            ctx.fillText(itemName, canvas.width - 55, yHeight);
+            ctx.fillText(itemValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 133, yHeight);
+            ctx.fillText(days, canvas.width - 186, yHeight);
+            ctx.fillText(itemTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 240, yHeight);
+            ctx.fillText(discountValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 310, yHeight);
+            ctx.fillText(totalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 381, yHeight);
+            ctx.fillText(taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 454, yHeight);
+            ctx.fillText(totalActual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 530, yHeight);
 
-            return yHeight + 100; // Update yHeight for the next item
+            return yHeight + 21; // Update yHeight for the next item
         }
 
 
@@ -4453,7 +4451,7 @@ else
                         sendStaticImageToWhatsApp();
                         // setTimeout(function () {
                         //     form.submit();
-                        // }, 10000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
+                        // }, 2000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();
@@ -4464,8 +4462,8 @@ else
 
     </script>
     <script type="text/javascript">
-        function createPdfAndSendToWhatsApp(contractNo, phoneNumber, token, imageBlob, message) {
-            const doc = new jsPDF();
+        function createPdfAndSendToWhatsApp(receiptNo, phoneNumber, token, imageBlob, message) {
+            var doc = new jsPDF('p', 'pt', 'a4', true);
             const pageWidth = doc.internal.pageSize.getWidth();
             const pageHeight = doc.internal.pageSize.getHeight();
             try {
@@ -4478,7 +4476,7 @@ else
                     const imgHeight = pageHeight; // Height of the image in the PDF
                     const imgXPos = 0; // X position of the image (left edge)
                     const imgYPos = 0; // Y position of the image (top edge)
-                    doc.addImage(imageDataUrl, 'PNG', imgXPos, imgYPos, imgWidth, imgHeight);
+                    doc.addImage(imageDataUrl, 'PNG', imgXPos, imgYPos, imgWidth, imgHeight,'','FAST');
                     // Convert the PDF to a blob
                     const pdfBlob = doc.output('blob');
                     const blobUrl = URL.createObjectURL(pdfBlob);
@@ -4487,7 +4485,7 @@ else
                     const formData = new FormData();
                     formData.append("number", phoneNumber); // Append the recipient's phone number
                     formData.append("message", message); // Append the message
-                    formData.append("file", pdfBlob, `${contractNo}.pdf`); // Append the PDF blob with a filename
+                    formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
 
                     const requestOptions = {
                         method: 'POST',
