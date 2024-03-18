@@ -69,17 +69,19 @@ namespace Bnan.Ui.Areas.MAS.Controllers
             var titles = await setTitle("104", "1104001", "1");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var UserLoginbyDateAll1 =  _unitOfWork.CrMasUserLogins.GetAll(new [] { "CrMasUserLoginUserNavigation" } ).OrderByDescending(x =>x.CrMasUserLoginEntryDate).ThenByDescending(y => y.CrMasUserLoginEntryTime);
+            var UserLoginbyDateAll1 =  _unitOfWork.CrMasUserLogins.GetAll(new [] { "CrMasUserLoginUserNavigation", "CrMasUserLoginLessorNavigation" } ).OrderByDescending(x =>x.CrMasUserLoginEntryDate).ThenByDescending(y => y.CrMasUserLoginEntryTime);
 
             var lastDate = UserLoginbyDateAll1.FirstOrDefault(x => x.CrMasUserLoginNo != null).CrMasUserLoginEntryDate;
             if (lastDate != null)
             {
                 var startDate = lastDate.Value.AddMonths(-1);
-                ViewBag.StartDate = startDate.ToString("yyyy-MM-dd");
-                ViewBag.EndDate = lastDate?.ToString("yyyy-MM-dd");
-            
+                //ViewBag.StartDate = startDate.ToString("yyyy-MM-dd");
+                //ViewBag.EndDate = lastDate?.ToString("yyyy-MM-dd");
+                ViewBag.StartDate = startDate.ToString("dd/MM/yyyy");
+                ViewBag.EndDate = lastDate?.ToString("dd/MM/yyyy");
 
-            var UserLoginbyDate_filtered = UserLoginbyDateAll1.Where(x=>x.CrMasUserLoginEntryDate  <= lastDate && x.CrMasUserLoginEntryDate >= startDate);
+
+                var UserLoginbyDate_filtered = UserLoginbyDateAll1.Where(x=>x.CrMasUserLoginEntryDate  <= lastDate && x.CrMasUserLoginEntryDate >= startDate);
 
                 List<List<string>> LoginInfo_count_2 = new List<List<string>>() { new List<string>() { "rgf1", "e2" } };
                 foreach (var item in UserLoginbyDateAll1)
@@ -123,7 +125,7 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                 
                 //var UserLoginbyStatusAll = _unitOfWork.CrMasUserLogins.GetAll();
                 //return PartialView("_DataTableUserLogin", UserLoginbyStatusAll);
-                var UserLoginAll = _unitOfWork.CrMasUserLogins.GetAll(new[] { "CrMasUserLoginUserNavigation" }).OrderByDescending(x => x.CrMasUserLoginEntryDate).ThenByDescending(y => y.CrMasUserLoginEntryTime);
+                var UserLoginAll = _unitOfWork.CrMasUserLogins.GetAll(new[] { "CrMasUserLoginUserNavigation", "CrMasUserLoginLessorNavigation" }).OrderByDescending(x => x.CrMasUserLoginEntryDate).ThenByDescending(y => y.CrMasUserLoginEntryTime);
                 var UserLoginbyDateAll2 = UserLoginAll.Where(l => l.CrMasUserLoginEntryDate >= DateTime.Parse(_mini).Date).ToList();
                 var UserLoginbyDateAll = UserLoginbyDateAll2.Where(l => l.CrMasUserLoginEntryDate <= DateTime.Parse(_max).Date).ToList();
                 //var LoginInfo_count_all1 = _userLoginsService.GetAllUserLoginsCount();

@@ -30,7 +30,6 @@
   "Renter": "Renter",
   "Renter Data": "Renter Data",
   "Renter Contract": "Renter Contract",
-  "Contract": "Contract",
 
   "Renter Balances": "Renter Balances",
   //Accounts
@@ -62,7 +61,6 @@
   //Services
   "Services": "Services",
   "Alerts": "Alerts",
-  "Membership": "Membership",
   "Banks": "Banks",
   "Sales Point": "Sales Point",
   "Messages For Tenants": "Messages For Tenants",
@@ -369,7 +367,6 @@
   "HintSureToHoldCarFuel": "Car Fuel data will be holded, which results in the system being holded as well.",
 
   "HintSureTo_Cannot_deleteCarFuel": "Sorry You Can't Delete this Car Fuel because there are Count of this =",
-  "SureTo_Cannot_delete": "Sorry You Can't Delete this",
 
 
   //Car Cvts------
@@ -392,7 +389,6 @@
   "HintSureToHoldCarCvt": "vehicle type data will be holded, which results in the system being holded as well.",
 
   "HintSureTo_Cannot_deleteCarCvt": "Sorry You Can't Delete this vehicle type because there are Count of this =",
-  "SureTo_Cannot_delete": "Sorry You Can't Delete this",
 
 
   //Car Categorys------
@@ -415,10 +411,9 @@
   "HintSureToHoldCarCategory": "Car Category data will be holded, which results in the system being holded as well.",
 
   "HintSureTo_Cannot_deleteCarCategory": "Sorry You Can't Delete this Car Category because there are Count of this =",
-  "SureTo_Cannot_delete": "Sorry You Can't Delete this",
 
   //Car Advantages------
-  "Advantages": "Additional Features",
+  "Advantages_Additional": "Additional Features",
   "Advantages Hint": "The page allows you to display, add, and modify Car Features data.",
   "Advantages Data": "Car Features",
   "CarAdvantageNameEn": "Feature Name in English",
@@ -438,7 +433,6 @@
   "HintSureToHoldCarAdvantage": "Car Feature data will be holded, which results in the system being holded as well.",
 
   "HintSureTo_Cannot_deleteCarAdvantage": "Sorry You Can't Delete this Car Feature because there are Count of this =",
-  "SureTo_Cannot_delete": "Sorry You Can't Delete this",
 
 
   //Car Registrations------
@@ -462,7 +456,6 @@
   "HintSureToHoldCarRegistration": "Car Registration Type data will be holded, which results in the system being holded as well.",
 
   "HintSureTo_Cannot_deleteCarRegistration": "Sorry You Can't Delete this Car Registration Type because there are Count of this =",
-  "SureTo_Cannot_delete": "Sorry You Can't Delete this",
 
 
   //User Login ------
@@ -496,7 +489,7 @@
   "RenterInformationWorkPlace": "Work Place",
   "RenterLessorMechanism": "Evaluation",
   "DateLastContract": "Last contractual",
-  "Rented": "Rented",
+  "Rented_n": "Rented",
   "Edit RenterLessorInformation Data": "Detailed Renter Information",
   "Edit RenterLessorInformation Hint": "this page allows you to add Deal Mechanism of Renter and Display Details of Renter Information",
   "Code": "Code",
@@ -508,7 +501,7 @@
   "Date_end": "End Date",
   "Gender": "Gender",
   "Nationality": "Nationality",
-  "sector": "sector",
+  "sector": "Sector",
   "Profession": "Profession",
   "WorkPlace": "Work Place",
   "Bank_name": "Bank",
@@ -551,8 +544,7 @@
   "His_Date": "Issue_Date",
   "RenterContractReport Hint": "This page allows you to display Contracts of Renter ",
   "RenterContractReport Data": "Active Contracts of Renters",
-  "Renter_Name": "Renter Name",
-  "All": "All",
+  "Renter_Name": "Renter",
   "Today_Expired": "Expire Today",
   "Tommorow_Expired": "Expire Tomorrow",
   "after_long_Expired": "Expire after LongTime",
@@ -560,11 +552,26 @@
   "Mechanism_Rent": "Mechanism",
   "Start_Contract": "Start",
   "End_Contract": "End",
-  "Car_Name": "Car Name",
+  "Car_Name": "Car",
+  "Lessor_Name": "Company",
   "Contract_Value": "Contract Value",
   "Contract": "The Contract",
   "Extension": "Extension",
   "Standing": "Standing",
+
+
+  //Driver Contract --------
+  "DriverContract Hint": "This page allows you to display Contracts of Driver ",
+  "DriverContract Data": "Driver Contracts",
+  "Edit DriverContract Data": "Details of Driver Contracts",
+  "Edit DriverContract Hint": "this page allows you to Display Details of Driver Contracts",
+
+  //User Contract --------
+  "UserContract Hint": "This page allows you to display Contracts of Employee ",
+  "UserContract Data": "Employee Contracts",
+  "Edit UserContract Data": "Details of Employee Contracts",
+  "Edit UserContract Hint": "this page allows you to Display Details of Employee Contracts",
+
 
   //RenterIdType------
   "RenterIdTypes Hint": "The page allows you to display, add, and modify  Id Types data.",
@@ -789,7 +796,6 @@
   "CActive": "Active",
   "OnExpired": "About to expire",
   "OnExpiredd": "On Expired",
-  "Expired": "Expired",
   "NotRegister": "New",
   "CompanyContractNo": "Contract No",
   "EditContractCompany Data": "Edit Contract Data",
@@ -798,13 +804,11 @@
   "ContractCompanyActivation": "Type",
   "Subscribtion": "Subscribtion",
   "Value": "Value",
-  "Rate": "Rate",
+  "Rates": "Rate",
   "Select": "Select",
   "ContractCompanyAnnualFees": "Annual Fees",
   "DiscountRate": "Discount",
   "TaxRate": "Tax",
-  "From": "From",
-  "To": "To",
   "ServiceValue": "Value",
   "ServiceRate": "Rate",
 
@@ -1441,7 +1445,6 @@
   "KilometersCut": "Kilometers Cut",
   "AmountsTraded": "Amounts Traded",
   "DealingMechanism": "Dealing Mechanism",
-  "MemberShip": "Membership",
   "Birthdate": "Birthdate",
   "Verification": "Verification",
   "TheRenterIsAdriver": "The Renter Is A driver",
@@ -1455,9 +1458,6 @@
   "Submit": "Submit",
   "Employer": "Employer",
   "AdditionalDriverr": "Additional Driver",
-  "Nationality": "Nationality",
-  "Gender": "Gender",
-  "Profession": "Profession",
   "Typeoflicense": "Type of license",
   "Issuingit": "Issuing it",
   "Expirationdate": "Expiration date",
@@ -1503,7 +1503,7 @@
   //
   "TradedAmount": "Traded Amount",
   "Canceled": "Canceled",
-  "Extension": "Extended",
+  "Extended": "Extended",
   "Closed": "Closed",
   "Sector": "Sector",
   "StartDateLic": "Start Date",

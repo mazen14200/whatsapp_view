@@ -3,7 +3,7 @@
 @using Bnan.Core.Extensions
 @* @model IEnumerable<CrMasUserLogin>
 *@
-@model Tuple<IEnumerable<CrMasUserLogin>, List<List<string>>>
+@model IEnumerable<CrCasRenterContractBasic>
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
@@ -14,7 +14,7 @@
 }
 <style>
     body {
-        overflow: scroll;
+        overflow: hidden;
     }
 
     @@media (max-width: 600px) {
@@ -137,6 +137,10 @@
         .col-md-input5 {
             width: 285px;
         }
+
+        #Date_cusor1, #Date_cusor2 {
+            margin-right: 13px;
+        }
     </style>
 }
 else
@@ -155,6 +159,9 @@ else
 
         .col-md-input5 {
             width: 305px;
+        }
+        #Date_cusor1,#Date_cusor2{
+            margin-left: 13px;
         }
     </style>
 }
@@ -184,23 +191,36 @@ else
             </div>
             <div class="col-sm-12 col-md-14 mt-3" style="display:flex;justify-content:space-between;" id="status-filter">
                 @*DateTime Inputs*@
-                <div class="" style="display:flex;gap: 30px;-webkit-flex-item-align:center;">
+                <div class="" style="display:flex;gap: 15px;-webkit-flex-item-align:center;">
 
                         <!-- Autoclose -->
-                        <div style="width:30px;">
-                            <label class="form-label " style="">@localizer["StartDate_from"]</label>
+                    <div style="width:30px;margin-top:7px;">
+                        <label class="form-label " style="">@localizer["StartDate_from"]</label>
                         </div>
-                        <div class="dateRelative" style="width:180px;">
+                        @*<div class="dateRelative" style="width:180px;">
                             <input type="date" class="form-control dateInput" max="2024-02-15" value="@ViewBag.StartDate" id="startDateInput" />
-                        </div>
+                        </div>*@
+                    <div class="dateRelative " style="display:grid;width:220px;height:40px;">
+                        <input type="text" class="form-control " id="startDateInput" name="startDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
+                        <i class="dripicons-calendar" id="Date_cusor1" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:ltr"></i>
+                    </div>
 
                         <!-- Autoclose -->
-                    <div style="width:35px;">
+                    <div style="width:50px;margin-top:7px;">
                         <label class="form-label p-0 mt-0">@localizer["EndDate_to"]</label>
                         </div>
-                    <div class="dateRelative" style="width:180px;">
+@*                    <div class="dateRelative" style="width:180px;">
                         <input type="date" class="form-control dateInput" max="2024-02-15" value="@ViewBag.EndDate" id="endDateInput" style="background-color:white" />
-                        </div>
+                        </div>*@
+                    <div class="dateRelative " style="display:grid;width:220px;height:40px;">
+                        <input type="text" class="form-control " id="endDateInput" name="endDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
+                        <i class="dripicons-calendar" id="Date_cusor2" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:ltr"></i>
+                    </div>
+                    <div style="width:50px;">
+                        <a class="btn btn-primary" onclick="GetReportFitlerDate('All')">
+                        <i class="mdi mdi-search-web"></i>
+                    </a>
+                    </div>
                 </div>
 
 
@@ -230,544 +250,121 @@ else
                 </div>
 
             </div>
-        @if (ViewData["Data_Table"] !=null)
-        {
-            <div class="dataTable " id="dataTableR1">
-                <partial name="_DataTableReportContract" />
-            </div>
-        }
+
+        <div class="dataTable " id="dataTableR1">
+            <partial name="_DataTableReportContract" />
+        </div>
+        
 
     </div>
 </div>
 <input type="text" hidden id="aaa" />
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 @section scripts {
-    <script>
-        var date = new Date();
-        var tday = date.getDate();
-        var tMonth = date.getMonth() + 1;
-        if (tday < 10) {
-            tday = '0' + tday;
-        }
-        if (tMonth < 10) {
-            tMonth = '0' + tMonth;
-        }
-        var tYear = date.getFullYear();
+   
+   
 
-        var maxDate = tYear + '-' + tMonth + '-' + tday;
-        //endDateInput
-        document.getElementById('endDateInput').setAttribute('max', maxDate);
-        //startDateInput
-        document.getElementById('startDateInput').setAttribute('max', maxDate);
-    </script>
+
+    @*Get AccountBank Using filter*@
     <script>
-        new DataTable('#basic-datatable', {
-            scrollX: true
+        $(document).ready(function () {
+            var today = new Date();
+            var startDate = new Date();
+            var EndDate = new Date();
+            startDate.setDate(today.getDate() - 30);
+
+            var StartformattedDate = new Date('@ViewBag.StartDate');
+
+            var EndformattedDate = new Date('@ViewBag.EndDate');
+
+            
+            if (!StartformattedDate || StartformattedDate === "") {
+                StartformattedDate = today; // Set date to today if it's empty or null
+            }
+            if (!EndformattedDate || EndformattedDate === "") {
+                EndformattedDate = today; // Set date to today if it's empty or null
+            }
+
+
+
+
+            $("#startDateInput").datepicker({
+                dateFormat: 'yy/mm/dd',
+                defaultDate: StartformattedDate, // Set the minimum date to today
+                maxDate: today,
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#startDateInput").datepicker("setDate", StartformattedDate);
+            $("#startDateInput").click(function () {
+                $(this).datepicker("show");
+            });
+
+            $("#endDateInput").datepicker({
+                dateFormat: 'yy/mm/dd',
+                defaultDate: EndformattedDate,// Set the minimum date to today
+                maxDate: today,
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#endDateInput").datepicker("setDate", EndformattedDate);
+            $("#endDateInput").click(function () {
+                $(this).datepicker("show");
+            });
+
+            $("#Date_cusor1").click(function () {
+                    $(this).prevAll('input').datepicker("show");
+            });
+
+            $("#Date_cusor2").click(function () {
+                    $(this).prevAll('input').datepicker("show");
+            });
+
         });
     </script>
     <script>
-            function GetUpdatedValues(status) {
-            //var code = document.getElementById("CrMasContractCompanyNo").value;
-            var _max = document.getElementById("endDateInput").value;
-            var _mini = document.getElementById("startDateInput").value;
-            if(status == "All"){
-                    const yesBtn = document.getElementById('customRadioAll');
+        //get AccountBank By Status function
+        function GetReportFitlerDate(status) {
 
-                    // ✅ Set the radio button to checked
-                    yesBtn.checked = true;
+            var startDate = $("#startDateInput").val();
+            var endDate = $("#endDateInput").val();
+
+            console.log(startDate)
+            console.log(endDate)
+            if (status === "All") {
+                const yesBtn = document.getElementById('customRadioAll');
+                // ✅ Set the radio button to checked
+                yesBtn.checked = true;
             }
-            //var status = $("input[name='customRadio']").val();
+
+            // Clear the value from the search input
+            $("#top-search").val("");
+
             $.ajax({
                 type: "GET",
-                    data: { _max: _max, _mini: _mini, status: status },
-                    // url: "@Url.Action("GetAllContractsByDate_status", "ReportContract", new { Area = "CAS" })",
-                    url: '/CAS/ReportContract/GetAllContractsByDate_status',
-
-                success: function (result) {
-                    console.log(result);
-                    $('#dataTableR1').html(result);
-                    set_basic_datatable();
-                }
-            });
+                data: { _max: endDate,
+                    _mini: startDate,
+                    status: status 
+                 }, 
+                url: "@Url.Action("GetAllContractsByDate_status", "ReportContract", new { Area = "CAS" })",
+            success: function (response) {
+                $(".dataTable").html(response);
+                set_basic_datatable();
+                },
+            })
         }
-        $("#deleteButton").on("click", function () {
-            var status = $(this).attr("data-error")
-            var Modal = $(this).attr("data-bs-targett")
-            CheckValidation('1101003', status).done(function (data) {
-                if (data) $(Modal).modal('show');
-            });
-        })
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var startDate = document.getElementById('startDateInput');
-            var endDate = document.getElementById('endDateInput');
-
-            startDate.addEventListener('change', function () {
-                console.log('Start date changed');
-                GetUpdatedValues("All");
-                // Handle logic for start date change here
-            });
-
-            endDate.addEventListener('change', function () {
-                console.log('End date changed');
-                GetUpdatedValues("All");
-                // Handle logic for end date change here
-            });
-        });
-    </script>
-        @*Get Renter contract Using filter*@
-        <script>
-            //get Renter contract By Status function
-            function GetRenterContractFitler(status) {
-                $.ajax({
-                    type: "GET",
-                    data: {
-                        status: status
-                    },
-                    url: "@Url.Action("GetRenterContractsByStatus", "ReportContract", new { Area = "CAS" })",
-                    success: function (response) {
-                        $("#dataTableR1").html(response);
-                        set_basic_datatable();
-                    },
-                })
-            }
-
             //on Click Filter Radio Button GetLessorsByStatus
             $("input[name='customRadio']").on("click", function () {
                 // Clear the value from the search input
                 $("#top-search").val("");
                 //GetRenterContractFitler($(this).val())
-                GetUpdatedValues($(this).val());
-            })
-        </script>
-    }
-    
-
-
-@* 
-@section scripts {
-    <script>
-        //get CarRegistration By Status function
-        function GetReport1Fitler(_max, _mini) {
-            $.ajax({
-                type: "GET",
-                data: {
-                    _max: _max, _mini: _mini
-                },
-                url: "@Url.Action("GetUserLoginByDate", "Report1", new { Area = "MAS" })",
-                success: function (response) {
-                    $(".dataTable").html(response);
-                    set_basic_datatable();
-                },
-            })
-        }
-
-        //on Click Filter Radio Button GetCarRegistrationByStatus
-        $("input[name='_max']").on("Change", function () {
-            const min = document.getElementById('_mini').value;
-            GetReport1Fitler($(this).val(), min)
-        })
-    </script>
-
-    <script>
-        // Datepicker Functions
-        $(document).ready(function () {
-            var today = new Date();
-            var formattedDate = $.datepicker.formatDate('yy/mm/dd', today);
-            var status = '1';
-            var date = $("#CrMasContractCompanyDate").val();
-            var startDate = $("#CrMasContractCompanyStartDate").val();
-            var endDate = $("#CrMasContractCompanyEndDate").val();
-            var formattedDate = new Date(date);
-            var formattedStartDate = new Date(startDate);
-            var formattedEndDate = new Date(endDate);
-            console.log(status);
-            if (status == "N") {
-                if (!formattedDate || formattedDate === "") {
-                    formattedDate = today; // Set date to today if it's empty or null
-                }
-                $("#dateInput").datepicker({
-                    dateFormat: 'yy/mm/dd',
-                    defaultDate: formattedDate,
-                    maxDate: today, // Set the maximum date to today
-                }).datepicker("widget").addClass("datepicker-widget");
-                $("#dateInput").datepicker("setDate", formattedDate);
-                $("#dateInput").click(function () {
-                    $(this).datepicker("show");
-                });
-                $("#dateInput").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
-
-                if (!formattedStartDate || formattedStartDate === "") {
-                    formattedStartDate = today; // Set date to today if it's empty or null
-                }
-                $("#startDateInput").datepicker({
-                    dateFormat: 'yy/mm/dd',
-                    minDate: today,
-                    defaultDate: formattedStartDate// Set the minimum date to today
-                }).datepicker("widget").addClass("datepicker-widget");
-                $("#startDateInput").datepicker("setDate", formattedStartDate);
-                $("#startDateInput").click(function () {
-                    $(this).datepicker("show");
-                });
-                $("#startDateInput").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
-
-
-                if (!formattedEndDate || formattedEndDate === "") {
-                    formattedEndDate = today; // Set date to today if it's empty or null
-                }
-
-                $("#endDateInput").datepicker({
-                    dateFormat: 'yy/mm/dd',
-                    minDate: today,
-                    defaultDate: "+1" // Set the default date as tomorrow
-                }).datepicker("widget").addClass("datepicker-widget");
-                $("#endDateInput").datepicker("setDate", "+1"); // Set the input value as tomorrow
-                $("#endDateInput").click(function () {
-                    $(this).datepicker("show");
-                });
-                $("#endDateInput").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
-                $(".datepicker-icon").click(function () {
-                    $(this).prevAll('input').datepicker("show");
-                });
-            }
-            $("#startDateInput").on("change", function () {
-                var startDate = $(this).datepicker("getDate");
-                var minEndDate = new Date(startDate.getTime() + (24 * 60 * 60 * 1000));
-                $("#endDateInput").datepicker("option", "minDate", minEndDate);
+                GetReportFitlerDate($(this).val());
             });
-
-        });
-    </script>
-   
-    <script>
-        Datepicker Functions
-        $(document).ready(function () {
-            var today = new Date();
-            var formattedDate = $.datepicker.formatDate('yy/mm/dd', today);
-            var status = '1'
-            var date = $("#CrMasContractCompanyDate").val();
-            var startDate = $("#CrMasContractCompanyStartDate").val();
-            var endDate = $("#CrMasContractCompanyEndDate").val();
-            var formattedDate = new Date(date);
-            var formattedStartDate = new Date(startDate);
-            var formattedEndDate = new Date(endDate);
-            console.log(status);
-            if (status == "N") {
-                if (!formattedDate || formattedDate === "") {
-                    formattedDate = today; Set date to today if it's empty or null
-                }
-                $("#dateInput").datepicker({
-                    dateFormat: 'yy/mm/dd',
-                    defaultDate: formattedDate,
-                    maxDate: today, Set the maximum date to today
-                }).datepicker("widget").addClass("datepicker-widget");
-                $("#dateInput").datepicker("setDate", formattedDate);
-                $("#dateInput").click(function () {
-                    $(this).datepicker("show");
-                });
-                $("#dateInput").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
-
-                if (!formattedStartDate || formattedStartDate === "") {
-                    formattedStartDate = today; Set date to today if it's empty or null
-                }
-                $("#startDateInput").datepicker({
-                    dateFormat: 'yy/mm/dd',
-                    minDate: today,
-                    defaultDate: formattedStartDateSet the minimum date to today
-                }).datepicker("widget").addClass("datepicker-widget");
-                $("#startDateInput").datepicker("setDate", formattedStartDate);
-                $("#startDateInput").click(function () {
-                    $(this).datepicker("show");
-                });
-                $("#startDateInput").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
-
-
-                if (!formattedEndDate || formattedEndDate === "") {
-                    formattedEndDate = today; Set date to today if it's empty or null
-                }
-
-                $("#endDateInput").datepicker({
-                    dateFormat: 'yy/mm/dd',
-                    minDate: today,
-                    defaultDate: "+1" Set the default date as tomorrow
-                }).datepicker("widget").addClass("datepicker-widget");
-                $("#endDateInput").datepicker("setDate", "+1"); Set the input value as tomorrow
-                $("#endDateInput").click(function () {
-                    $(this).datepicker("show");
-                });
-                $("#endDateInput").after('<span class="datepicker-icon" style="cursor:pointer"><i class="dripicons-calendar"></i></span>');
-                $(".datepicker-icon").click(function () {
-                    $(this).prevAll('input').datepicker("show");
-                });
-            }
-            $("#startDateInput").on("change", function () {
-                var startDate = $(this).datepicker("getDate");
-                var minEndDate = new Date(startDate.getTime() + (24 * 60 * 60 * 1000));
-                $("#endDateInput").datepicker("option", "minDate", minEndDate);
-            });
-
-        });
-    </script>
-    <script>
-            $('#submitBtn').click(function (event) {
-                var data = [];
-                var CompanyContractCode = document.getElementById("CrMasContractCompanyNo").value;
-                var DateContract = document.getElementById("dateInput").value;
-                var StartDateContract = document.getElementById("startDateInput").value;
-                var EndDateContract = document.getElementById("endDateInput").value;
-                var ContractCompanyAnnualFees = document.getElementById("CrMasContractCompanyAnnualFees").value;
-                var ContractCompanyTaxRate = document.getElementById("CrMasContractCompanyTaxRate").value;
-                var ContractCompanyDiscountRate = document.getElementById("CrMasContractCompanyDiscountRate").value;
-                $('.added-div, #divOpen').each(function () {
-                    var From = $(this).find('input:eq(0)').val();
-                    var To = $(this).find('input:eq(1)').val();
-                    var Value = $(this).find('input:eq(2)').val();
-                    data.push({
-                        From: From,
-                        To: To,
-                        Value: Value
-                    });
-                });
-                CheckValidation('1101003', '@Status.Insert').done(function (data) {
-                    if (data) event.stopPropagation();
-                });
-
-
-                if (selectedOption == null || selectedOption == "") {
-                    $("#selectRequired").text('@localizer["requiredFiled"]');
-                    $("#example-select").focus();
-                    return;
-                }
-                if (ContractCompanyAnnualFees == null || ContractCompanyAnnualFees == "") {
-                    $("#annualFeesRequired").text('@localizer["requiredFiled"]');
-                    $("#CrMasContractCompanyAnnualFees").focus();
-                    return;
-                }
-
-                if (ContractCompanyDiscountRate == null || ContractCompanyDiscountRate == "") {
-                    $("#discountRateRequired").text('@localizer["requiredFiled"]');
-                    $("#CrMasContractCompanyDiscountRate").focus();
-                    return;
-                }
-                if (ContractCompanyTaxRate == null || ContractCompanyTaxRate == "") {
-                    $("#taxRateRequired").text('@localizer["requiredFiled"]');
-                    $("#CrMasContractCompanyTaxRate").focus();
-                    return;
-                }
-
-                if (selectedOption == "Value" || selectedOption == "Rate") {
-                    if ($("#To").val() == null || $("#To").val() == "") {
-                        $("#ToRequired").text('@localizer["requiredFiled"]');
-                        $("#To").focus();
-                        return;
-                    }
-                    if ($("#From").val() == null || $("#From").val() == "") {
-                        $("#FromRequired").text('@localizer["requiredFiled"]');
-                        $("#From").focus();
-                        return;
-                    }
-                    if ($("#Value").val() == null || $("#Value").val() == "") {
-                        $("#ValueRequired").text('@localizer["requiredFiled"]');
-                        $("#Value").focus();
-                        return;
-                    }
-                    if (parseInt($("#To").val()) <= parseInt($("#From").val())) {
-                        $("#To").focus();
-                        $("#ToRequired").text('@localizer["requiredGreaterThan"]');
-                        return;
-                    }
-                }
-
-
-                if (parseInt($("#To" + (counter - 1)).val()) <= parseInt($("#From" + (counter - 1)).val())) {
-                    console.log(55555555)
-                    $("#To" + (counter - 1)).focus();
-                    $("#ToRequired" + (counter - 1)).text('@localizer["requiredGreaterThan"]');
-                    $("#ValueRequired" + (counter - 1)).text("");
-                    return;
-                }
-                if (parseInt($("#To" + (counter - 1)).val()) <= parseInt($("#From" + (counter - 1)).val())) {
-                    $("#To" + (counter - 1)).focus();
-                    $("#ToRequired" + (counter - 1)).text('@localizer["requiredGreaterThan"]');
-                    $("#ValueRequired" + (counter - 1)).text("");
-                    return;
-                }
-                else {
-                    $("#ToRequired" + (counter - 1)).text('');
-                }
-
-                console.log(data)
-                Create the AJAX request
-                $.ajax({
-                    url: '/MAS/CompanyContracts/Edit',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        CompanyContractCode: CompanyContractCode,
-                        DateContract: DateContract,
-                        StartDateContract: StartDateContract,
-                        EndDateContract: EndDateContract,
-                        ContractCompanyAnnualFees: ContractCompanyAnnualFees,
-                        ContractCompanyTaxRate: ContractCompanyTaxRate,
-                        ContractCompanyDiscountRate: ContractCompanyDiscountRate,
-                        SelectedOption: selectedOption,
-                        data: data
-                    },
-                    success: function (response) {
-                        window.location.href = "/MAS/CompanyContracts/SuccesssMessageCompanyContract";
-                    },
-                    error: function (xhr, status, error) {
-                        window.location.href = "/MAS/CompanyContracts/FailedMessageCompanyContract";
-                    }
-                });
-            });
-        });
-
-
-    </script>
-    <script>
-
-        message required
-        $("#CrMasContractCompanyDiscountRate").on("input", function () {
-            if ($(this).val() === "") {
-                $("#discountRateRequired").text('@localizer["requiredFiled"]');
-            }
-            else {
-                $("#discountRateRequired").text('');
-            }
-        })
-        $("#CrMasContractCompanyTaxRate").on("input", function () {
-            if ($(this).val() === "") {
-                $("#taxRateRequired").text('@localizer["requiredFiled"]');
-            }
-            else {
-                $("#taxRateRequired").text('');
-            }
-        })
-        $("#CrMasContractCompanyAnnualFees").on("input", function () {
-            if ($(this).val() === "") {
-                $("#annualFeesRequired").text('@localizer["requiredFiled"]');
-            }
-            else {
-                $("#annualFeesRequired").text('');
-            }
-        })
-        $("#example-select").on("change", function () {
-            if ($(this).val() === "") {
-                $("#selectRequired").text('@localizer["requiredFiled"]');
-            }
-            else {
-                $("#selectRequired").text('');
-            }
-        })
-    </script>
-    <script>
-        Retrieve the selected option value from the ViewBag
-        var selectedOption = '@ViewBag.SelectOption';
-
-        Set the selected option in the select element
-        $('#example-select').val(selectedOption);
-    </script> *@
-    @* <script>
-        function deleteContract() {
-            var code = document.getElementById("CrMasContractCompanyNo").value;
-            console.log();
-            $.ajax({
-                type: "POST",
-                url: "/MAS/CompanyContracts/Delete",
-                data: { code: code },
-                success: function (result) {
-                    $('.modal').modal('hide');
-                    window.location.href = "/MAS/CompanyContracts/SuccesssMessageCompanyContract";
-                },
-                error: function (error) {
-                    window.location.href = "/MAS/CompanyContracts/FailedMessageCompanyContract";
-                }
-            });
-        }
-        $("#deleteButton").on("click", function () {
-            var status = $(this).attr("data-error")
-            var Modal = $(this).attr("data-bs-targett")
-            CheckValidation('1101003', status).done(function (data) {
-                if (data) $(Modal).modal('show');
-            });
-        })
-
-    </script>  *@
-    @* <script>
-        var date = new Date();
-        var tday = date.getDate();
-        var tMonth = date.getMonth() + 1;
-        if (tday < 10) {
-            tday = '0' + tday;
-        }
-        if (tMonth < 10) {
-            tMonth = '0' + tMonth;
-        }
-        var tYear = date.getFullYear();
-
-        var maxDate = tYear + '-' + tMonth + '-' + tday;
-        //endDateInput
-        document.getElementById('endDateInput').setAttribute('max', maxDate);
-        //startDateInput
-        document.getElementById('startDateInput').setAttribute('max', maxDate);
-    </script>
-    <script>
-        new DataTable('#basic-datatable', {
-            scrollX: true
-        });
-    </script>
-    <script>
-        function GetUpdatedValues() {
-            //var code = document.getElementById("CrMasContractCompanyNo").value;
-            var _max = document.getElementById("endDateInput").value;
-            var _mini = document.getElementById("startDateInput").value;
-            console.log(_max, _mini);
-            console.log(_max, _mini);
-            $.ajax({
-                type: "POST",
-                url: "/MAS/Report1/GetUserLoginByDate",
-                dataType: 'json',
-                data: {
-                    _max: _max,
-                    _mini: _mini
-                },
-                success: function (result) {
-                    //$('.modal').modal('hide');
-                    $('#aaa').html(result);
-                    window.location.href = "/MAS/Report1/SuccesssMessageReport1";
-                },
-                error: function (error) {
-                    window.location.href = "/MAS/Report1/FailedMessageReport1";
-                }
-            });
-        }
-        $("#deleteButton").on("click", function () {
-            var status = $(this).attr("data-error")
-            var Modal = $(this).attr("data-bs-targett")
-            CheckValidation('1101003', status).done(function (data) {
-                if (data) $(Modal).modal('show');
-            });
-        })
         
-        document.addEventListener("DOMContentLoaded", function () {
-            var startDate = document.getElementById('startDateInput');
-            var endDate = document.getElementById('endDateInput');
-
-            startDate.addEventListener('change', function () {
-                console.log('Start date changed');
-                // Handle logic for start date change here
-            });
-
-            endDate.addEventListener('change', function () {
-                console.log('End date changed');
-                GetUpdatedValues();
-                // Handle logic for end date change here
-            });
-        });
     </script>
-} *@
 
+}
+
+    
 
 <style>
     .wrapper {

@@ -1,0 +1,623 @@
+﻿@using Bnan.Ui.ViewModels.CAS
+@using Bnan.Core.Extensions
+@using Bnan.Core.Models
+@model IEnumerable<CrCasRenterContractBasic>
+
+
+@inject IViewLocalizer localizer
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = localizer["Edit DriverContract Data"];
+    ViewData["Page-Hint"] = localizer["Edit DriverContract Hint"];
+}
+
+<title>@ViewData["Title"]</title>
+
+<style>
+
+    #LessorInfoEmailWhatisapp, #LessorMobilePhone, #LessorCallFree {
+        width: 101%;
+    }
+
+    .text-danger {
+        white-space: nowrap;
+    }
+
+    .file-upload {
+        width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .file-upload-btn {
+        width: 154px;
+        margin: 0;
+        color: #fff;
+        background: #727cf5;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        border-bottom: 4px solid #727cf5;
+        transition: all .2s ease;
+        outline: none;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+        .file-upload-btn:hover {
+            background: #5661e3;
+            color: #ffffff;
+            transition: all .2s ease;
+            cursor: pointer;
+        }
+
+    .file-upload-input-picture, .file-upload-input-signature {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        width: 200px;
+        height: 200px;
+        max-height: 200px;
+        max-width: 200px;
+        outline: none;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .image-upload-wrap {
+        height: 180px;
+        width: 154px;
+        margin-top: 5px;
+        border: 4px dashed rgb(231, 231, 231);
+        position: relative;
+        display: none;
+    }
+
+        .image-dropping,
+        .image-upload-wrap:hover {
+            background-color: rgb(231, 231, 231);
+            border: 4px dashed #ffffff;
+        }
+
+    .image-title-wrap {
+        color: #222;
+        width: 154px;
+    }
+
+    .drag-text {
+        text-align: center;
+    }
+
+        .drag-text h3 {
+            font-weight: 100;
+            text-transform: uppercase;
+            padding: 60px 0;
+            font-size: 17px
+        }
+
+    .file-upload-image {
+        height: 145px;
+        width: 154px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 20px;
+        border: .5px solid rgb(231, 231, 231);
+    }
+
+    .remove-image {
+        margin: 0;
+        max-height: 200px;
+        max-width: 200px;
+        width: 100%;
+        color: #fff;
+        background: #fa5c7c;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        border-bottom: 4px solid #fa5c7c;
+        transition: all .2s ease;
+        outline: none;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .image-upload-wrap {
+        display: none
+    }
+
+    .file-upload-content {
+        display: block
+    }
+
+    .remove-image:hover {
+        background: #f35474;
+        color: #ffffff;
+        transition: all .2s ease;
+        cursor: pointer;
+    }
+
+
+
+    @@media (max-width: 1050px) {
+        #RenterLessorInformationSigntureImage {
+            position: absolute;
+            top: 145%;
+            right: 5%;
+        }
+    }
+
+    @@media (max-width: 767px) {
+        #RenterLessorInformationSigntureImage {
+            position: absolute;
+            top: 330%;
+            right: 30%;
+        }
+    }
+
+    .dateInput {
+        width: 155px !important;
+    }
+
+    .col-md-label-10 {
+        /* x-lable (+) x-input == 390 px */
+        /*width: 28.75%;*/
+        width: 115.5px;
+        height: 35px;
+    }
+
+    .col-md-input-10 {
+        width: 275px;
+        margin-top: -5px;
+        height: 35px;
+    }
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
+@if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+{
+    <style>
+        #RenterLessorInformationSigntureImage {
+            position: absolute;
+            top: 39%;
+            left: 50%;
+        }
+        #t_mar{
+            margin: 35px;
+            margin-right: 55px;
+            margin-top: 5px;
+        }
+
+        .col-md-label5 {
+            /*width: 28.75%;*/
+            width: 140px;
+            height: 40px;
+        }
+
+        .col-md-input5 {
+            width: 250px;
+            margin-top: -8px;
+            height: 40px;
+        }
+
+        .col-md-label10 {
+            /*width: 28.75%;*/
+            width: 80px;
+            height: 40px;
+        }
+
+        .col-md-input10 {
+            width: 310px;
+            margin-top: -8px;
+            height: 40px;
+        }
+
+        #Date_cusor1, #Date_cusor2 {
+            margin-right: 13px;
+        }
+    </style>
+}
+else
+{
+    <style>
+        #RenterLessorInformationSigntureImage {
+            position: absolute;
+            top: 39%;
+            right: 50%;
+        }
+
+        #t_mar {
+            margin: 35px;
+            margin-left: 55px;
+            margin-top: 5px;
+        }
+        .col-md-label5 {
+            /*width: 28.75%;*/
+            width: 90.5px;
+            height: 40px;
+        }
+
+        .col-md-input5 {
+            width: 300px;
+            margin-top:-8px;
+            height: 40px;
+        }
+
+        .col-md-label10 {
+            /*width: 28.75%;*/
+            width: 75px;
+            height: 40px;
+        }
+
+        .col-md-input10 {
+            width: 315px;
+            margin-top: -8px;
+            height: 40px;
+        }
+        #Date_cusor1, #Date_cusor2 {
+            margin-left: 13px;
+        }
+    </style>
+}
+
+
+<div class="sub-container-form" id="CAS">
+    <form class="needs-validation" novalidate asp-area="CAS" asp-controller="RenterLessorInformation" asp-action="Edit" method="post" enctype="multipart/form-data">
+        @*<div class="form-contain" style="position:relative">*@ @*For Scrolling in Form*@
+          <div class="" style="position:relative">
+                @*branch Code*@
+            <div class="row mt-2" hidden>
+                <div class="col-md-label5 formlabel">
+                    <label class="form-label" for="branchCode">@localizer["Code"]</label>
+                </div>
+                <div class="col-md-4">
+                        @*<input type="text" class="form-control" hidden asp-for="CrCasRenterLessorDealingMechanism" maxlength="100" width="80%" />*@
+                        @*<input type="text" class="form-control" hidden asp-for="CrCasRenterLessorReasons" maxlength="100" width="80%" />*@
+
+                </div>
+            </div> @*End row*@
+
+        
+            @*// Arabic arabic  *@
+    @if (requestCulture.RequestCulture.UICulture.Name == "ar-EG")
+    {
+    
+                @*RenterLessorInformation ID Ar && RenterLessorInformation name Ar *@
+                    <div class="row mt-2" style="height:10px;">
+                    </div>
+                    <div class="row mt-2" style="height:60px;">
+                    <div class="col-md-label10 formlabel">
+                        <label class="form-label" for="CrCasRenterDriverId">@localizer["RenterInformationId"]</label>
+                    </div>
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px">
+
+                            <input type="text" class="form-control" value="@ViewBag.Single_DriverId" readonly maxlength="15" id="CrCasRenterDriverId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                    </div>
+
+                    <div class="col-md-label10 formlabel">
+                        <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationArName">@localizer["RenterInformationName"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
+                            <input type="text" class="form-control" value="@ViewBag.Single_DriverNameAr" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+
+                </div> @*End row*@
+
+                    @*DateTime Inputs*@
+                    <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:70px;">
+
+                        <!-- Autoclose -->
+                        <div style="width:30px;margin-top:7px;">
+                            <label class="form-label " style="">@localizer["StartDate_from"]</label>
+                        </div>
+
+                        <div class="dateRelative " style="display:grid;width:220px;height:40px;">
+                            <input type="text" class="form-control " value="@ViewBag.startDate" id="startDateInput" name="startDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
+                            <i class="dripicons-calendar" id="Date_cusor1" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:ltr"></i>
+                        </div>
+
+                        <!-- Autoclose -->
+                        <div style="width:50px;margin-top:7px;">
+                        </div>
+                        <div style="width:20px;margin-top:7px;">
+                            <label class="form-label p-0 mt-0" style="mar">@localizer["EndDate_to"]</label>
+                        </div>
+
+                        <div class="dateRelative " style="display:grid;width:220px;height:40px;">
+                            <input type="text" class="form-control " value="@ViewBag.EndDate" id="endDateInput" name="endDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
+                            <i class="dripicons-calendar" id="Date_cusor2" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:ltr"></i>
+                        </div>
+                        <div style="width:50px;">
+                            <a class="btn btn-primary" onclick="DateChanged()">
+                                <i class="mdi mdi-search-web"></i>
+                            </a>
+                        </div>
+                    </div> @*End row*@
+
+
+
+    }
+    @*// English english *@
+    else if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+    {
+
+                @*RenterLessorInformation ID En && RenterLessorInformation name En *@
+                <div class="row mt-2" style="height:10px;">
+                </div>
+                <div class="row mt-2" style="height:60px;">
+                    <div class=" formlabel" style="width:60px;">
+                        <label class="form-label" for="CrCasRenterDriverId">@localizer["RenterInformationId"]</label>
+                    </div>
+                    <div class=" p-0 col-11" style="margin-top:-5px;width:330px;">
+                        <input type="text" class="form-control" value="@ViewBag.Single_DriverId" readonly maxlength="15" id="CrCasRenterDriverId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                    </div>
+
+                    <div class="col-md-label10 formlabel">
+                        <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["RenterInformationName"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
+                        <input type="text" class="form-control" value="@ViewBag.Single_DriverNameEn" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+
+                </div> @*End row*@
+
+                    @*DateTime Inputs*@
+                    <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:70px;">
+
+                        <!-- Autoclose -->
+                        <div style="width:30px;margin-top:7px;">
+                            <label class="form-label " style="">@localizer["StartDate_from"]</label>
+                        </div>
+
+                        <div class="dateRelative " style="display:grid;width:220px;height:40px;">
+                            <input type="text" class="form-control " value="@ViewBag.startDate" id="startDateInput" name="startDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
+                            <i class="dripicons-calendar" id="Date_cusor1" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:rtl"></i>
+                        </div>
+
+                        <!-- Autoclose -->
+                        <div style="width:50px;margin-top:7px;">
+                        </div>
+                        <div style="width:20px;margin-top:7px;">
+                            <label class="form-label p-0 mt-0">@localizer["EndDate_to"]</label>
+                        </div>
+
+                        <div class="dateRelative " style="display:grid;width:220px;height:40px;">
+                            <input type="text" class="form-control " value="@ViewBag.EndDate" id="endDateInput" name="endDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
+                            <i class="dripicons-calendar" id="Date_cusor2" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:rtl"></i>
+                        </div>
+                        <div style="width:50px;">
+                            <a class="btn btn-primary" onclick="DateChanged()">
+                                <i class="mdi mdi-search-web"></i>
+                            </a>
+                        </div>
+                    </div> @*End row*@
+
+                
+            }
+
+
+            @{
+                int? Km_Count =0;
+                int? Contract_Count = 0;
+                int? Days_Count = 0;
+                decimal? Contract_Value = 0;
+                var Counter = 0;
+                foreach (var single in Model)
+                {
+                   Contract_Value = single.CrCasRenterContractBasicExpectedTotal + Contract_Value;
+                    Contract_Count = single.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationContractCount + Contract_Count;
+                    Days_Count = single.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationDaysCount + Days_Count;
+                    Km_Count = single.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationTraveledDistance + Km_Count;
+                    Counter = Counter + 1;
+                    if (ViewBag.CountRecord == Counter)
+                    {
+
+                        @*Contract_Count  && Contract_Value  *@
+                        <div class="row mt-2">
+                            <div class="col-md-label5 formlabel">
+                                <label class="form-label" for="CrCasRenterLessorId">@localizer["Contract_Count"]</label>
+                            </div>
+                            <div class="col-md-input5 p-0 col-11" style="margin-top:-5px">
+                                <input type="text" class="form-control" value="@Counter" readonly maxlength="15" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                            </div>
+
+                            <div class="col-md-label5 formlabel">
+                                <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["Contract_Value"]</label>
+                            </div>
+                            <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
+                        @{
+                        var n = Contract_Value?.ToString();
+                        if (n != null && n?.Length > 0)
+                        {
+                            var s = n.Length;
+                            if (Convert.ToInt32(single.CrCasRenterContractBasicExpectedTotal) < 0)
+                            {
+                                n = n.Replace('٫', '.');
+                                <input type="text" class="form-control" value="@n" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+
+                            }
+                            else if (n.Length < 7)
+                            {
+                                n = n.Replace('٫', '.');
+                                var all = $"{n}";
+                                <input type="text" class="form-control" value="@all" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+
+                            }
+                            else if (n.Length == 7)
+                            {
+                                n = n.Replace('٫', '.');
+                                var f1 = n.Substring(0, 1);
+                                var f2 = n.Remove(0, 1);
+                                var all = $"{f1},{f2}";
+
+                                            <input type="text" class="form-control" value="@all" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+
+                            }
+                            else if (n.Length > 7 && n.Length < 10)
+                            {
+                                n = n.Replace('٫', '.');
+                                var f1 = n.Substring(0, s - 6);
+                                var f2 = n.Remove(0, s - 6);
+                                var all = $"{f1},{f2}";
+                                <input type="text" class="form-control" value="@all" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+
+                            }
+                            else if (n.Length > 9)
+                            {
+                                n = n.Replace('٫', '.');
+                                var f0 = n.Substring(0, s - 9);
+                                var f1 = n.Substring(0, s - 6);
+                                var f2 = n.Remove(0, s - 6);
+                                var all = $"{f0},{f1},{f2}";
+                                <input type="text" class="form-control" value="@all" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+
+                            }
+                            else
+                            {
+                                n = n.Replace('٫', '.');
+                                <input type="text" class="form-control" value="@n" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+
+                            }
+                        }
+                        }
+
+                            </div>
+
+                        </div> @*End row*@
+
+                        @*Days_Count  && KM_Count  *@
+                        <div class="row mt-2">
+                            <div class="col-md-label5 formlabel">
+                                <label class="form-label" for="CrCasRenterLessorId">@localizer["Days_Count"]</label>
+                            </div>
+                            <div class="col-md-input5 p-0 col-11" style="margin-top:-5px">
+                                <input type="text" class="form-control" value="@Days_Count" readonly maxlength="15" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                            </div>
+
+                            <div class="col-md-label5 formlabel">
+                                <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["KM_Count"]</label>
+                            </div>
+                            <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
+                                <input type="text" class="form-control" value="@Km_Count" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                            </div>
+
+                        </div> @*End row*@
+                    }
+               
+                }
+
+                <div  id="t_mar">
+                <div class="dataTable ">
+                    <partial name="_DataTable_Internal_DriverContract" />
+                </div>
+                </div>
+            }
+            @*zip code And AdditionalNumber*@
+            <div class="row mt-2">
+            </div>
+            @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
+        </div>
+
+    </form>
+    <div class="" id="buttonContainer" style="margin-top:30px;">
+        @*<button type="submit" id="saveEdit" class="btn btn-primary ms-1">@localizer["Save"]</button>*@
+
+        <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="DriverContract" asp-action="Index">
+            @localizer["Back"]
+        </a>
+    </div>
+</div>
+
+
+
+
+@section scripts {
+
+
+
+
+    @*Get AccountBank Using filter*@
+    <script>
+        $(document).ready(function () {
+            var today = new Date();
+            var startDate = new Date();
+            var EndDate = new Date();
+            startDate.setDate(today.getDate() - 30);
+
+
+            console.log('@ViewBag.startDate');
+            console.log('@ViewBag.EndDate');
+            //var StartformattedDate = new Date('2024-02-03');
+            //var StartformattedDate = new Date('yyyy-MM-dd');
+            var StartformattedDate = new Date('@ViewBag.startDate');
+
+            var EndformattedDate = new Date('@ViewBag.EndDate');
+
+
+            if (!StartformattedDate || StartformattedDate === "") {
+                StartformattedDate = today; // Set date to today if it's empty or null
+            }
+            if (!EndformattedDate || EndformattedDate === "") {
+                EndformattedDate = today; // Set date to today if it's empty or null
+            }
+
+
+
+
+            $("#startDateInput").datepicker({
+                dateFormat: 'yy/mm/dd',
+                defaultDate: StartformattedDate, // Set the minimum date to today
+                maxDate: today,
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#startDateInput").datepicker("setDate", StartformattedDate);
+            $("#startDateInput").click(function () {
+                $(this).datepicker("show");
+            });
+
+            $("#endDateInput").datepicker({
+                dateFormat: 'yy/mm/dd',
+                defaultDate: EndformattedDate,// Set the minimum date to today
+                maxDate: today,
+            }).datepicker("widget").addClass("datepicker-widget");
+            $("#endDateInput").datepicker("setDate", EndformattedDate);
+            $("#endDateInput").click(function () {
+                $(this).datepicker("show");
+            });
+
+            $("#Date_cusor1").click(function () {
+                $(this).prevAll('input').datepicker("show");
+            });
+
+            $("#Date_cusor2").click(function () {
+                $(this).prevAll('input').datepicker("show");
+            });
+
+        });
+    </script>
+
+
+    <script>
+        function DateChanged() {
+            var id = $("#CrCasRenterDriverId").val();
+            var mini = $("#startDateInput").val();
+            var max = $("#endDateInput").val();
+            var _mini = mini.replace("/", "-");
+            var _max = max.replace("/", "-");
+            console.log(mini);
+            console.log(_max);
+            console.log(id);
+            location.href = '@Url.Action("Edit2Date", "DriverContract")?_max=' + _max + '&_mini=' + _mini + '&id=' + id;
+
+
+        }
+    </script>
+}
+
+
+

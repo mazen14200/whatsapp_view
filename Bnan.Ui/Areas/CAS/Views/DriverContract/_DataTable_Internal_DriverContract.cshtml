@@ -1,23 +1,14 @@
 ﻿
 
 @using Bnan.Core.Extensions
-@*@model IEnumerable<CrCasRenterLessor>*@
+@model IEnumerable<CrCasRenterContractBasic>
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
 }
-@* 
-  "RenterInformationCode": "Code",
-  "RenterInformationId": "ID",
-  "RenterInformationNationality": "Nationality",
-  "RenterInformationAddress": "Address",
-  "RenterInformationProfession": "Profession",
-  "RenterInformationWorkPlace": "Work Place",
- 
-  
- *@
+
 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
 {
     
@@ -31,7 +22,7 @@
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
@@ -42,61 +33,23 @@
                 @{
                     int no = 1;
                 }
-                @foreach (var item in ViewData["Data_Table"] as List<CrCasRenterContractBasic>)
+                @foreach (var item in Model)
                 {
-                    @if (item.CrCasRenterContractBasicStatus == @Status.Deleted || item.CrCasRenterContractBasicStatus == @Status.Hold)
-                    {
-                        @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'" style="cursor:pointer;color:red">*@
-                        <tr style="cursor:pointer;color:red">
-                            <td id="_Nc">@no</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
-                            <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
-
-                            <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal</td>
-
-                            <td>
-                                
-                                @if (@item.CrCasRenterContractBasicStatus == Status.Active)
-                                {
-                                    @localizer["Standing"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Extension)
-                                {
-                                    @localizer["Extended"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
-                                {
-                                    @localizer["Rented_n"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Hold)
-                                {
-                                    @localizer["Hold"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Deleted)
-                                {
-                                    @localizer["Deleted"]
-                                }
-                                else
-                                {
-
-                                }
-                            </td>
-
-                            <td id="_Nc">@localizer["Contract"]</td>
-
-                        </tr>
-                    }
-                    else
-                    {
                         @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'">*@
                         <tr  >
-                            <td id="_Nc">@no</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
-                            <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
+                        <td id="_Nc">@no</td>
+
+                        <td id="_Nc" style="display:flex">
+                            <div style="display:flex;-webkit-align-items:0; gap:5px;"> 
+                            <div style="">@item.CrCasRenterContractBasicNo</div>
+                            <div style="color:red;">(@item.CrCasRenterContractBasicCopy)</div>
+                            </div>
+                        </td>
+                        <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
+                            <td>
+                                @item.CrCasRenterContractBasic4.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
+                            </td>
 
                             <td id="_Nc">
                                 @{
@@ -158,11 +111,11 @@
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == Status.Extension)
                                 {
-                                    @localizer["Extended"]
+                                    @localizer["Extension"]
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
                                 {
-                                    @localizer["Rented_n"]
+                                @localizer["Rented_n"]
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == Status.Hold)
                                 {
@@ -181,7 +134,7 @@
                             <td id="_Nc">@localizer["Contract"]</td>
 
                         </tr>
-                    }
+                    
                     no++;
                 }
             </tbody>
@@ -199,7 +152,7 @@ else
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
@@ -213,63 +166,24 @@ else
 
                     
                 
-                @foreach (var item in ViewData["Data_Table"] as List<CrCasRenterContractBasic>)
+                @foreach (var item in Model)
                 {
-                    @if (item.CrCasRenterContractBasicStatus == @Status.Deleted || item.CrCasRenterContractBasicStatus == @Status.Hold)
-                    {
-                        @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'" style="cursor:pointer;color:red">*@
-                        <tr style="cursor:pointer;color:red">
-                            <td id="_Nc">@no</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
-                            <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
-
-                            <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal?.ToString().Length</td>
-                            
-                            <td>
-
-                                @if (@item.CrCasRenterContractBasicStatus == Status.Active)
-                                {
-                                    @localizer["Standing"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Extension)
-                                {
-                                    @localizer["Extended"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
-                                {
-                                    @localizer["Rented_n"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Hold)
-                                {
-                                    @localizer["Hold"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Deleted)
-                                {
-                                    @localizer["Deleted"]
-                                }
-                                else
-                                {
-
-                                }
-                            </td>
-
-                            <td id="_Nc">@localizer["Contract"]</td>
-                            @*<td id="_Nc">@ViewBag.v1</td>*@
-                            
-
-                        </tr>
-                    }
-                    else
-                    {
                         @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'">*@
                         <tr>
-                            <td id="_Nc">@no</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
-                            <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
+                        <td id="_Nc">@no</td>
+
+                        <td id="_Nc" style="display:flex">
+                            <div style="display:flex;-webkit-align-items:0; gap:5px;">
+                                <div style="">@item.CrCasRenterContractBasicNo</div>
+                                <div style="color:red;">(@item.CrCasRenterContractBasicCopy)</div>
+                            </div>
+                        </td>
+
+                        <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
+                        <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            @item.CrCasRenterContractBasic4.CrCasRenterLessorNavigation.CrMasRenterInformationArName
+                        </td>
 
                             <td id="_Nc">
                                 @{
@@ -332,11 +246,11 @@ else
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == Status.Extension)
                                 {
-                                    @localizer["Extended"]
+                                    @localizer["Extension"]
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
                                 {
-                                    @localizer["Rented_n"]
+                                @localizer["Rented_n"]
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == Status.Hold)
                                 {
@@ -355,7 +269,7 @@ else
                             <td id="_Nc">@localizer["Contract"]</td>
                             @*<td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal</td>*@
                         </tr>
-                    }
+                    
                     no++;
                 }
 
@@ -363,3 +277,80 @@ else
         </table>
     </div>
 }
+
+@section scripts {
+
+    <script>
+        new DataTable('#basic-datatable', {
+            scrollX: true
+        });
+    </script>
+    <script>
+        function GetUpdatedValues(status) {
+            //var code = document.getElementById("CrMasContractCompanyNo").value;
+            var _max = document.getElementById("endDateInput").value;
+            var _mini = document.getElementById("startDateInput").value;
+            if (status == "All") {
+                const yesBtn = document.getElementById('customRadioAll');
+
+                // ✅ Set the radio button to checked
+                yesBtn.checked = true;
+            }
+            //var status = $("input[name='customRadio']").val();
+            $.ajax({
+                type: "GET",
+                data: { _max: _max, _mini: _mini, status: status },
+                // url: "@Url.Action("GetAllContractsByDate_status", "ReportContract", new { Area = "CAS" })",
+                url: '/CAS/ReportContract/GetAllContractsByDate_status',
+
+                success: function (result) {
+                    console.log(result);
+                    $('#dataTableR1').html(result);
+                    set_basic_datatable();
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var startDate = document.getElementById('startDateInput');
+            var endDate = document.getElementById('endDateInput');
+
+            startDate.addEventListener('change', function () {
+                console.log('Start date changed');
+                GetUpdatedValues("All");
+                // Handle logic for start date change here
+            });
+
+            endDate.addEventListener('change', function () {
+                console.log('End date changed');
+                GetUpdatedValues("All");
+                // Handle logic for end date change here
+            });
+        });
+    </script>
+    @*Get Renter contract Using filter*@
+    <script>
+        //get Renter contract By Status function
+        function GetRenterContractFitler(status) {
+            $.ajax({
+                type: "GET",
+                data: {
+                    status: status
+                },
+                url: "@Url.Action("GetRenterContractsByStatus", "ReportContract", new { Area = "CAS" })",
+                success: function (response) {
+                    $("#dataTableR1").html(response);
+                    set_basic_datatable();
+                },
+            })
+        }
+
+        //on Click Filter Radio Button GetLessorsByStatus
+        $("input[name='customRadio']").on("click", function () {
+            // Clear the value from the search input
+            $("#top-search").val("");
+            //GetRenterContractFitler($(this).val())
+            GetUpdatedValues($(this).val());
+        })
+    </script>
+    }

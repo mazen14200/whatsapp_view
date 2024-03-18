@@ -50,8 +50,10 @@
                 <tr>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["UserLoginDateTime"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["UserLoginConcate"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Lessor_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["UserLoginName"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["UserLoginConcate"]</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -67,9 +69,11 @@
                         @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
                         <td id="_Nc">@no</td>
                         <td id="_Nc"> @Model.Item2[no][1]</td>
-                        <td>@item.CrMasUserLoginConcatenateOperationEnDescription</td>
+                        <td>@item.CrMasUserLoginLessorNavigation.CrMasLessorInformationEnShortName</td>
                         <td>@item.CrMasUserLoginUserNavigation.CrMasUserInformationEnName</td>
-   
+                        <td>@item.CrMasUserLoginConcatenateOperationEnDescription</td>
+
+
                     </tr>
 
                     no++;
@@ -90,8 +94,9 @@ else
                 <tr>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["UserLoginDateTime"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["UserLoginConcate"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Lessor_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["UserLoginName"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["UserLoginConcate"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -109,8 +114,10 @@ else
                         @* <td id="_Nc"> @item.CrMasUserLoginEntryDate @item.CrMasUserLoginEntryTime</td> *@
                         @* <td id="_Nc"> @Model.Item2[Model.Item2.IndexOf(Model.Item2.Last())][1]</td> *@
                         <td id="_Nc"> @Model.Item2[no][1]</td>
+                        <td>@item.CrMasUserLoginLessorNavigation.CrMasLessorInformationArShortName</td>
+                        <td>@item.CrMasUserLoginUserNavigation.CrMasUserInformationArName</td>
                         <td>@item.CrMasUserLoginConcatenateOperationArDescription</td>
-                    <td>@item.CrMasUserLoginUserNavigation.CrMasUserInformationArName</td>
+
 
                     </tr>
 

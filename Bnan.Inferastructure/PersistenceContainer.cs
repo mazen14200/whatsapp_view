@@ -157,9 +157,10 @@ namespace Bnan.Inferastructure
 
             //CAS
             builder.Services.AddScoped<IRenterLessorInformation, CasRenterLessorInformation>();
-
             builder.Services.AddScoped<IRenterContract, CasRenterContract>();
-
+            builder.Services.AddScoped<IDriverContract, DriverContract>();
+            builder.Services.AddScoped<IUserContract, UserContract>();
+            
 
             return builder;
         }

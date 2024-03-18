@@ -132,6 +132,9 @@ namespace Bnan.Inferastructure
 
             CreateMap<CasRenterContractVM, CrCasRenterLessor>().ReverseMap();
 
+            CreateMap<DriverContractVM, CrCasRenterContractBasic>().ReverseMap();
+
+
         }
 
     }

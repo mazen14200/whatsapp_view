@@ -1,7 +1,7 @@
 ﻿
 
 @using Bnan.Core.Extensions
-@*@model Tuple<IEnumerable<CrMasUserLogin>, List<List<string>>>*@
+@model IEnumerable<CrCasRenterContractBasic>
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
@@ -62,7 +62,7 @@
                 @{
                     int no = 1;
                 }
-                @foreach (var item in ViewData["Data_Table"] as List<CrCasRenterContractBasic>)
+                @foreach (var item in Model)
                 
                     {
                         @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
@@ -72,14 +72,7 @@
                         <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
                         <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
                         <td>
-                            @foreach(var xc in ViewData["RenterNameAll"] as List<CrMasRenterInformation>){
-                                if (xc.CrMasRenterInformationId == item.CrCasRenterContractBasicRenterId)
-                                {
-                                
-                                        @xc.CrMasRenterInformationEnName
-                                }
-
-                                }
+                            @item.CrCasRenterContractBasic4.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
                         </td>
                         <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
                         <td>
@@ -89,7 +82,7 @@
                             }
                             @if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
                             {
-                                @localizer["Extension"]
+                                @localizer["Extended"]
                             }
                             else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
                             {
@@ -144,7 +137,7 @@ else
                 @{
                     int no = 1;
                 }
-                @foreach (var item in ViewData["Data_Table"] as List<CrCasRenterContractBasic>)
+                @foreach (var item in Model)
 
                 {
                     @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
@@ -154,15 +147,7 @@ else
                         <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
                         <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
                         <td>
-                            @foreach (var xc in ViewData["RenterNameAll"] as List<CrMasRenterInformation>)
-                            {
-                                if (xc.CrMasRenterInformationId == item.CrCasRenterContractBasicRenterId)
-                                {
-
-                                    @xc.CrMasRenterInformationArName
-                                }
-
-                            }
+                            @item.CrCasRenterContractBasic4.CrCasRenterLessorNavigation.CrMasRenterInformationArName               
                         </td>
                         <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
                         <td>
@@ -172,7 +157,7 @@ else
                             }
                             @if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
                             {
-                                @localizer["Extension"]
+                                @localizer["Extended"]
                             }
                             else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
                             {

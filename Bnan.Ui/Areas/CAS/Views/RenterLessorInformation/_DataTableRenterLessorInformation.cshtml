@@ -33,7 +33,7 @@
                     <th aria-label="Position: activate to sort column ascending">@localizer["DateLastContract"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationAddress"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterLessorMechanism"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Rate"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Rates"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                     @* <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th> *@
                 </tr>
@@ -51,21 +51,14 @@
                             <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterLessorId</td>
                             <td>@item.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</td>
-                            <td>@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy")</td>
-                            @*<td> @item.CrMasRenterPost.CrMasRenterPostEnShortConcatenate </td>*@
-                            <td>
-                                @foreach (var x in ViewData["Adress"] as List<CrMasRenterPost>)
-                                {
-                                    if (x.CrMasRenterPostCode == item.CrCasRenterLessorId)
-                                    {
-                                        @x.CrMasRenterPostEnShortConcatenate
-                                    }
-                                }
-                                @*@if (item.CrCasRenterLessorId == ViewBag.ConcateAdress[no - 1][0])
-                                {
-                                    @ViewBag.ConcateAdress[no - 1][2]
-                                }*@
-                            </td>
+                            <td>@item.CrCasRenterLessorDateLastContractual?.ToString("yyyy/MM/dd")</td>
+                            @{
+                                //var cc = @item.CrCasRenterLessorNavigation.CrMasRenterPost.CrMasRenterPostEnShortConcatenate;
+                                //string[] values2 = cc.Split('-');
+                                //var vv = values2[0] + " - " + values2[1];
+                                //<td> @vv</td>
+                                <td> @item.CrCasRenterLessorNavigation.CrMasRenterPost.CrMasRenterPostEnShortConcatenate</td>
+                            }
                             <td>
                                 @foreach (var item2 in ViewData["Rates"] as List<CrMasSysEvaluation>)
                                 {
@@ -87,7 +80,7 @@
                                 }
                                 else if (@item.CrCasRenterLessorStatus == Status.Rented)
                                 {
-                                    @localizer["Rented"]
+                                    @localizer["Rented_n"]
                                 }
                                 else if (@item.CrCasRenterLessorStatus == Status.Hold)
                                 {
@@ -110,33 +103,14 @@
                             <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterLessorId</td>
                             <td>@item.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</td>
-                            <td>@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy")</td>
-                            @*<td> @item.CrMasRenterPost.CrMasRenterPostEnShortConcatenate </td>*@
-                            <td>
-                                @foreach (var x in ViewData["Adress"] as List<CrMasRenterPost>)
-                                {
-                                    if (x.CrMasRenterPostCode == item.CrCasRenterLessorId)
-                                    {
-                                        @x.CrMasRenterPostEnShortConcatenate
-                                    }
-                                }
-@*                                @if (item.CrCasRenterLessorId == ViewBag.ConcateAdress[no - 1][0])
-                                {
-                                    @ViewBag.ConcateAdress[no - 1][2]
-                                }
-                                else
-                                {
-                                    var noo = 1;
-                                    foreach (var item1 in ViewBag.ConcateAdress)
-                                    {
-                                        @if (item.CrCasRenterLessorId == ViewBag.ConcateAdress[noo - 1][0])
-                                        {
-                                            @ViewBag.ConcateAdress[noo - 1][2]
-                                        }
-                                        noo = noo + 1;
-                                    }
-                                }*@
-                            </td>
+                            <td>@item.CrCasRenterLessorDateLastContractual?.ToString("yyyy/MM/dd")</td>
+                            @{
+                                //var cc = @item.CrCasRenterLessorNavigation.CrMasRenterPost.CrMasRenterPostEnShortConcatenate;
+                                //string[] values2 = cc.Split('-');
+                                //var vv = values2[0] + " - " + values2[1];
+                                //<td> @vv</td>
+                                <td> @item.CrCasRenterLessorNavigation.CrMasRenterPost.CrMasRenterPostEnShortConcatenate</td>
+                            }
 
                             <td>
                                 @foreach (var item2 in ViewData["Rates"] as List<CrMasSysEvaluation>)
@@ -158,7 +132,7 @@
                                 }
                                 else if (@item.CrCasRenterLessorStatus == Status.Rented)
                                 {
-                                    @localizer["Rented"]
+                                    @localizer["Rented_n"]
                                 }
                                 else if (@item.CrCasRenterLessorStatus == Status.Hold)
                                 {
@@ -194,7 +168,7 @@ else
                     <th aria-label="Position: activate to sort column ascending">@localizer["DateLastContract"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationAddress"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterLessorMechanism"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Rate"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Rates"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                     @* <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th> *@
                 </tr>
@@ -213,21 +187,15 @@ else
                             <td id="_Nc">@item.CrCasRenterLessorId</td>
                             <td>@item.CrCasRenterLessorNavigation.CrMasRenterInformationArName</td>
                             <td>@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy")</td>
-                            @*<td> @item.CrMasRenterPost.CrMasRenterPostEnShortConcatenate </td>*@
-                            <td>
-                                @foreach (var x in ViewData["Adress"] as List<CrMasRenterPost>)
-                                {
-                                    if (x.CrMasRenterPostCode == item.CrCasRenterLessorId)
-                                    {
-                                        @x.CrMasRenterPostArShortConcatenate
-                                    }
-                                }
-@*                                @if (item.CrCasRenterLessorId == ViewBag.ConcateAdress[no - 1][0])
-                                {
-                                    @ViewBag.ConcateAdress[no - 1][1]
-                                }*@
-                            </td>
+                            @{
+                                //var cc = @item.CrCasRenterLessorNavigation.CrMasRenterPost.CrMasRenterPostArShortConcatenate;
+                                //string[] values2 = cc.Split('-');
+                                //var vv = values2[0] + " - " + values2[1];
+                                //<td> @vv</td>
+                                <td> @item.CrCasRenterLessorNavigation.CrMasRenterPost.CrMasRenterPostArShortConcatenate</td>
                             }
+
+
                             <td>
                                 @foreach (var item2 in ViewData["Rates"] as List<CrMasSysEvaluation>)
                                 {
@@ -248,7 +216,7 @@ else
                                 }
                                 else if (@item.CrCasRenterLessorStatus == Status.Rented)
                                 {
-                                    @localizer["Rented"]
+                                    @localizer["Rented_n"]
                                 }
                                 else if (@item.CrCasRenterLessorStatus == Status.Hold)
                                 {
@@ -273,31 +241,13 @@ else
                             <td>@item.CrCasRenterLessorNavigation.CrMasRenterInformationArName</td>
                             <td>@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy")</td>
                             @*<td> @item.CrMasRenterPost.CrMasRenterPostEnShortConcatenate </td>*@
-                        <td>
-                                @foreach (var x in ViewData["Adress"] as List<CrMasRenterPost>)
-                                {
-                                    if (x.CrMasRenterPostCode == item.CrCasRenterLessorId)
-                                    {
-                                        @x.CrMasRenterPostArShortConcatenate
-                                    }
-                                }
-                                @*@if (item.CrCasRenterLessorId == ViewBag.ConcateAdress[no - 1][0])
-                            {
-                                @ViewBag.ConcateAdress[no - 1][1]
+                                @{
+                                    //var cc = @item.CrCasRenterLessorNavigation.CrMasRenterPost.CrMasRenterPostArShortConcatenate;
+                                    //string[] values2 = cc.Split('-');
+                                    //var vv = values2[0] + " - " + values2[1];
+                                    //<td> @vv</td>
+                                <td> @item.CrCasRenterLessorNavigation.CrMasRenterPost.CrMasRenterPostArShortConcatenate</td>
                             }
-                            else
-                            {
-                                var noo = 1;
-                                foreach (var item1 in ViewBag.ConcateAdress)
-                                {
-                                    @if (item.CrCasRenterLessorId == ViewBag.ConcateAdress[noo - 1][0])
-                                    {
-                                        @ViewBag.ConcateAdress[noo - 1][1]
-                                        }
-                                        noo = noo + 1;
-                                    }
-                            }*@
-                        </td>
                             
                         <td>
                                 @foreach (var item2 in ViewData["Rates"] as List<CrMasSysEvaluation>)
@@ -320,7 +270,7 @@ else
                                 }
                                 else if (@item.CrCasRenterLessorStatus == Status.Rented)
                                 {
-                                    @localizer["Rented"]
+                                    @localizer["Rented_n"]
                                 }
                                 else if (@item.CrCasRenterLessorStatus == Status.Hold)
                                 {
