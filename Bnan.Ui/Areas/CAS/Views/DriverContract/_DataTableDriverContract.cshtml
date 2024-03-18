@@ -45,33 +45,33 @@
                 @foreach (var item in Model)
                 {
 
-                    @*<tr onclick="location.href='@Url.Action("Edit", "DriverContract", new { id = item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationId })'" style="cursor:pointer;color:red">*@
-                    <tr onclick="location.href='@Url.Action("Edit", "DriverContract", new { id = item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationId })'" >
+                    @*<tr onclick="location.href='@Url.Action("Edit", "DriverContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId })'" style="cursor:pointer;color:red">*@
+                    <tr onclick="location.href='@Url.Action("Edit", "DriverContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId })'" >
                         <td id="_Nc">@no</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationId</td>
-                            <td>@item.CrCasRenterContractBasic3?.CrCasRenterPrivateDriverInformationEnName</td>
-                            <td>@item.CrCasRenterContractBasic3?.CrCasRenterPrivateDriverInformationLastContract?.ToString("dd/MM/yyyy")</td>
+                            <td id="_Nc">@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId</td>
+                            <td>@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationEnName</td>
+                            <td>@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationLastContract?.ToString("dd/MM/yyyy")</td>
 
-                            <td id="_Nc">@item.CrCasRenterContractBasic3?.CrCasRenterPrivateDriverInformationContractCount</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasic3?.CrCasRenterPrivateDriverInformationDaysCount</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasic3?.CrCasRenterPrivateDriverInformationTraveledDistance</td>
+                            <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount</td>
+                            <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationDaysCount</td>
+                            <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationTraveledDistance</td>
 
                             
                             <td>
 
-                                @if (@item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationStatus == Status.Active)
+                                @if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Active)
                                 {
                                     @localizer["Active"]
                                 }
-                                else if (@item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationStatus == Status.Rented)
+                                else if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Rented)
                                 {
                                 @localizer["Rented_n"]
                                 }
-                                else if (@item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationStatus == Status.Hold)
+                                else if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Hold)
                                 {
                                     @localizer["Hold"]
                                 }
-                            else if (@item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationStatus == Status.Deleted)
+                            else if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Deleted)
                                 {
                                     @localizer["Deleted"]
                                 }
@@ -114,33 +114,33 @@ else
                 @foreach (var item in Model)
                 {
 
-                    @*<tr onclick="location.href='@Url.Action("Edit", "DriverContract", new { id = item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationId })'" style="cursor:pointer;color:red">*@
-                    <tr onclick="location.href='@Url.Action("Edit", "DriverContract", new { id = item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationId })'">
+                    @*<tr onclick="location.href='@Url.Action("Edit", "DriverContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId })'" style="cursor:pointer;color:red">*@
+                    <tr onclick="location.href='@Url.Action("Edit", "DriverContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId })'">
                         <td id="_Nc">@no</td>
-                        <td id="_Nc">@item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationId</td>
-                        <td>@item.CrCasRenterContractBasic3?.CrCasRenterPrivateDriverInformationArName</td>
-                        <td>@item.CrCasRenterContractBasic3?.CrCasRenterPrivateDriverInformationLastContract?.ToString("dd/MM/yyyy")</td>
+                        <td id="_Nc">@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId</td>
+                        <td>@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationArName</td>
+                        <td>@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationLastContract?.ToString("dd/MM/yyyy")</td>
 
-                        <td id="_Nc">@item.CrCasRenterContractBasic3?.CrCasRenterPrivateDriverInformationContractCount</td>
-                        <td id="_Nc">@item.CrCasRenterContractBasic3?.CrCasRenterPrivateDriverInformationDaysCount</td>
-                        <td id="_Nc">@item.CrCasRenterContractBasic3?.CrCasRenterPrivateDriverInformationTraveledDistance</td>
+                        <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount</td>
+                        <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationDaysCount</td>
+                        <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationTraveledDistance</td>
 
                         
                         <td>
 
-                            @if (@item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationStatus == Status.Active)
+                            @if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Active)
                             {
                                 @localizer["Active"]
                             }
-                            else if (@item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationStatus == Status.Rented)
+                            else if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Rented)
                             {
                                 @localizer["Rented_n"]
                             }
-                            else if (@item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationStatus == Status.Hold)
+                            else if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Hold)
                             {
                                 @localizer["Hold"]
                             }
-                            else if (@item.CrCasRenterContractBasic3.CrCasRenterPrivateDriverInformationStatus == Status.Deleted)
+                            else if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Deleted)
                             {
                                 @localizer["Deleted"]
                             }
