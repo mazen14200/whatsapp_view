@@ -1375,7 +1375,7 @@ else
                                                 <p id="notes">@localizer["reasons"]</p>
                                             </div>
                                             <div class="col-sm-7 col-md-7 col-lg-7">
-                                                <textarea class="form-control text-right textarea-inputs" id="FormControl-last-Textarea" asp-for="Contract.PaymentReasons" rows="1" maxlength="100"></textarea>
+                                                <input class="form-control text-right textarea-inputs" id="FormControl-last-Textarea" asp-for="Contract.PaymentReasons" rows="1" maxlength="100">
                                             </div>
                                         </div>
                                     </div>
@@ -2770,7 +2770,8 @@ else
                                 var currentDate = new Date();
                                 var ExpiryIdDate = new Date(RenterInformation.expiryIdDate);
                                 $("#DriverCheckBtn").hide();
-                                var birthdate = RenterInformation.birthDate ? RenterInformation.birthDate.split('T')[0] : null;
+                                var birthdateformat = new Date(RenterInformation.birthDate);
+                                var birthdate = birthdateformat.getFullYear() + '/' + (birthdateformat.getMonth() + 1).toString().padStart(2, '0') + '/' + birthdateformat.getDate().toString().padStart(2, '0');
                                 var licenseExpiryDate = RenterInformation.licenseExpiryDate ? RenterInformation.licenseExpiryDate.split('T')[0] : null;
                                 var licenseIssuedDate = RenterInformation.licenseIssuedDate ? RenterInformation.licenseIssuedDate.split('T')[0] : null;
 
@@ -4112,49 +4113,31 @@ else
                     canvas.height = img.height;
                     ctx.drawImage(img, 0, 0);
 
-                    // Define text properties
-                    const fontSize = 25;
-                    ctx.font = `bold ${fontSize}px serif`;
-                    const lineHeight = fontSize + 12; // Adjust line height as needed
-                    ctx.fillStyle = 'black';
                     const CarEn = CarInformation.carInformation.crCasCarInformationConcatenateEnName;
                     const CarAr = CarInformation.carInformation.crCasCarInformationConcatenateArName;
-
-                    // Define text content and positions
-                    const textContentEn = [
-                        { text: RenterInformation.personalEnName, x: 70, y: 235 },
-                        { text: CarEn, x: 70, y: 275 },
-                        { text: $("#StartDate").text(), x: 200, y: 350 },
-                        { text: $("#EndDate").text(), x: 200, y: 390 },
-                        { text: $("#ContractNo").val(), x: 77, y: 580 }
-                    ];
-
-                    // Draw text without background
-                    textContentEn.forEach(({ text, x, y }) => {
-                        ctx.fillText(text, x, y);
-                    });
-
-                    // Format the start and end dates in Hijri calendar with Arabic locale
                     const startDate = new Date($("#StartDate").text());
                     const endDate = new Date($("#EndDate").text());
                     const options = { year: 'numeric', month: 'long', day: 'numeric' };
                     const startHijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', options).format(startDate);
                     const endHijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', options).format(endDate);
+                    const branch = '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArShortName)' + ' - ' + '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchPost.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateArName)';
 
-                    const textContentAr = [
-                        { text: RenterInformation.personalArName, x: 1000, y: 115 },
-                        { text: CarAr, x: 1000, y: 155 },
-                        { text: startHijriDate, x: 835, y: 350 },
-                        { text: endHijriDate, x: 835, y: 390 },
-                        { text: '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArShortName)' + ' - ' + '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchPost.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateArName)', x: 980, y: 460 },
-                    ];
+                    // Define text properties
+                    ctx.font = "bold 25px serif";
+                    ctx.textAlign = "right";
+                    ctx.fillStyle = "black";
+                    ctx.fillText(RenterInformation.personalArName, canvas.width - 75, 170);
+                    ctx.fillText(CarAr, canvas.width - 75, 205);
+                    ctx.fillText($("#StartDate").text(), canvas.width - 190, 358);
+                    ctx.fillText($("#EndDate").text(), canvas.width - 190, 395);
+                    ctx.fillText(branch, canvas.width - 75, 450);
 
-                    // Draw text without background
-                    textContentAr.forEach(({ text, x, y }) => {
-                        ctx.textAlign = 'right'; // Align text to the right
-                        ctx.fillText(text, x, y);
-                    });
-                    // Convert the canvas to a blob
+                    ctx.textAlign = "left";
+                    ctx.fillText(RenterInformation.personalEnName, canvas.width - 960, 270);
+                    ctx.fillText(CarEn, canvas.width - 960, 305);
+                    ctx.fillText(startHijriDate, canvas.width - 850, 358);
+                    ctx.fillText(endHijriDate, canvas.width - 850, 395);
+                    ctx.fillText($("#ContractNo").val(), canvas.width - 960, 585);
                     canvas.toBlob(async function (blob) {
                         formData.append("file", blob, "CreateContractWhatUp.png"); // Append the modified image blob with a filename
                         const requestOptions = {
@@ -4185,7 +4168,7 @@ else
 
         // Function to send an image and PDF to WhatsApp
         const sendReceiptToWhatsApp = async () => {
-            const imageLessor = "~/images/common/Ar_Catch_Receiptttt.png";
+            const imageLessor = "~/images/common/Ar_Catch_Receipt.png";
             const imagePath = imageLessor.replace('~', '');
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
             const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
@@ -4222,6 +4205,12 @@ else
             var userName = decodeHTMLEntities("@user.CrMasUserInformationArName");
             var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorArName");
             var directorOfBranch = decodeHTMLEntities("@Model.CrCasBranchInformation.CrCasBranchInformationDirectorArName");
+            var reasonPayment = document.getElementById("FormControl-last-Textarea").value;
+            // Signture Image
+            var signture = "@user.CrMasUserInformationSignature";
+            const signturePath = signture.replace('~', '');
+            var signatureImg = new Image();
+            signatureImg.src = signturePath;
             //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -4243,22 +4232,22 @@ else
 
                 ctx.drawImage(img, 0, 0);
 
-                ctx.font = "bold 11px serif";
+                ctx.font = "bold 35px serif";
                 ctx.textAlign = "right";
                 ctx.fillStyle = "black";
                 //Date and contract no
-                ctx.fillText(AccountReceiptNo, canvas.width - 30, 147);
-                ctx.fillText(miladiDateString, canvas.width - 50, 161);
-                ctx.fillText(hijriDateString, canvas.width - 53, 175);
+                ctx.fillText(AccountReceiptNo, canvas.width - 110, 610);
+                ctx.fillText(hijriDateString, canvas.width - 228, 668);
+                ctx.fillText(miladiDateString, canvas.width - 228, 722);
                 // Receipt and type and renter and car name
-                ctx.fillText(referenceType, canvas.width - 60, 217);
-                ctx.fillText(contractNo, canvas.width - 75, 239);
-                // ctx.fillText(RenterName, canvas.width - 122, 840);
-                ctx.fillText(CarName, canvas.width - 35, 280);
+                ctx.fillText(referenceType, canvas.width - 250, 895);
+                ctx.fillText(contractNo, canvas.width - 320, 985);
+                ctx.fillText(RenterName, canvas.width - 122, 1065);
+                ctx.fillText(CarName, canvas.width - 122, 1160);
 
 
                 // The Table
-                var YHeight = 333;
+                var YHeight = 1380;
                 var DiscountInput = document.getElementById("Discount_Input").value;
                 var daysNo = document.getElementById('dayNo').value;
                 var TaxPercent = parseInt(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
@@ -4372,41 +4361,23 @@ else
 
 
                 // The payed Information
-                ctx.fillText(balance, canvas.width - 330, 2285);
-                ctx.fillText(DiscountInput, canvas.width - 360, 2380);
-                ctx.fillText(TaxPercent, canvas.width - 367, 2480);
-                ctx.fillText(AmountRequired, canvas.width - 360, 2580);
-                ctx.fillText(AmountPayed, canvas.width - 360, 2675);
-                ctx.fillText(selectedText, canvas.width - 360, 2770);
-
+                ctx.fillText(balance, canvas.width - 330, 2342);
+                ctx.fillText(DiscountInput, canvas.width - 360, 2435);
+                ctx.fillText(TaxPercent, canvas.width - 367, 2523);
+                ctx.fillText(AmountRequired, canvas.width - 360, 2610);
+                ctx.fillText(AmountPayed, canvas.width - 360, 2700);
+                ctx.fillText(selectedText, canvas.width - 360, 2790);
+                ctx.fillText(reasonPayment, canvas.width - 360, 2880);
 
                 // director and renter and user
-                ctx.fillText(directorOfLessor, canvas.width - 790, 3020);
-                ctx.fillText(userName, canvas.width - 1780, 3020);
-                ctx.fillText(directorOfBranch, canvas.width - 750, 3130);
-                ctx.fillText(RenterName, canvas.width - 1780, 3130);
-
-
-
+                ctx.fillText(directorOfLessor, canvas.width - 340, 3095);
+                ctx.fillText(userName, canvas.width - 1140, 3095);
+                ctx.fillText(directorOfBranch, canvas.width - 340, 3200);
+                // ctx.fillText(RenterName, canvas.width - 1140, 3200);
+                ctx.drawImage(signatureImg, canvas.width - 1350, 3125, 200, 100);
                 canvas.toBlob(async function (blob) {
                     formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
-                    // const requestOptions = {
-                    //     method: 'POST',
-                    //     body: formData,
-                    //     headers: {
-                    //         'Authorization': `Bearer ${token}`
-                    //     }
-                    // };
-                    // // Send the request to the API endpoint
-                    // const response = await fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions);
-                    // if (response.ok) {
-                    //     const result = await response.json();
-                    //     console.log("SendImageResult", result);
-                    // } else {
-                    //     const errorMessage = await response.text(); // Get the error message as plain text
-                    //     console.log("SendImageError", errorMessage);
-                    // }
-                    var message = ` عزيزي / ${RenterName} , في تاريخ ${miladiDateString} , يمكنك مراجعة الفاتورة عن طريق تحميل الملف المرفق `
+                    var message = ` عزيزي / ${RenterName} , يمكنك مراجعة الفاتورة عن طريق تحميل الملف المرفق `
                     createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message);
                 }, 'image/png');
             };
@@ -4419,16 +4390,16 @@ else
             var taxValue = totalAfterDiscount * (taxPercent / 100);
             var totalActual = parseFloat(totalAfterDiscount) + parseFloat(taxValue);
 
-            ctx.fillText(itemName, canvas.width - 55, yHeight);
-            ctx.fillText(itemValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 133, yHeight);
-            ctx.fillText(days, canvas.width - 186, yHeight);
-            ctx.fillText(itemTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 240, yHeight);
-            ctx.fillText(discountValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 310, yHeight);
-            ctx.fillText(totalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 381, yHeight);
-            ctx.fillText(taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 454, yHeight);
-            ctx.fillText(totalActual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 530, yHeight);
+            ctx.fillText(itemName, canvas.width - 255, yHeight);
+            ctx.fillText(itemValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 570, yHeight);
+            ctx.fillText(days, canvas.width - 795, yHeight);
+            ctx.fillText(itemTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1030, yHeight);
+            ctx.fillText(discountValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1325, yHeight);
+            ctx.fillText(totalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1625, yHeight);
+            ctx.fillText(taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1925, yHeight);
+            ctx.fillText(totalActual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 2232, yHeight);
 
-            return yHeight + 21; // Update yHeight for the next item
+            return yHeight + 88; // Update yHeight for the next item
         }
 
 
@@ -4449,9 +4420,9 @@ else
                     if (somethingIsNotOkay) {
                         sendReceiptToWhatsApp();
                         sendStaticImageToWhatsApp();
-                        // setTimeout(function () {
-                        //     form.submit();
-                        // }, 2000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
+                        setTimeout(function () {
+                            form.submit();
+                        }, 2000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();
@@ -4480,7 +4451,7 @@ else
                     // Convert the PDF to a blob
                     const pdfBlob = doc.output('blob');
                     const blobUrl = URL.createObjectURL(pdfBlob);
-                    window.open(blobUrl, '_blank');
+                    // window.open(blobUrl, '_blank');
                     // Prepare form data with PDF
                     const formData = new FormData();
                     formData.append("number", phoneNumber); // Append the recipient's phone number
