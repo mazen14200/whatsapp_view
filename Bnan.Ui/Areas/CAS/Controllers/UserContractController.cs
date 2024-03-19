@@ -50,19 +50,20 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         public async Task<IActionResult> Index()
         {
             //sidebar Active
-            ViewBag.id = "#sidebarUser";
-            ViewBag.no = "2";
-            var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203002", "2");
+            ViewBag.id = "#sidebarReport";
+            ViewBag.no = "6";
+
+            var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205007", "2");
 
             await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
             subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
             subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
-            var titles = await setTitle("203", "2203002", "2");
+            var titles = await setTitle("205", "2205007", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            //var UserContractAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => x.CrCasRenterContractBasic3?.CrCasRenterPrivateUserInformationContractCount > 0 && x.CrCasRenterContractBasicPrivateUserId != null);
-            var UserContractAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor).ToList();
+            //var UserContractAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic4" }).Where(x => x.CrCasRenterContractBasic3?.CrCasRenterPrivateUserInformationContractCount > 0 && x.CrCasRenterContractBasicPrivateUserId != null);
+            var UserContractAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic4" }).Where(x => currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor).ToList();
             var AllUsers = _unitOfWork.CrMasUserInformation.FindAll(x => UserContractAll.Any(y => y.CrCasRenterContractBasicUserInsert == x.CrMasUserInformationCode)).ToList();
 
             UserContractVM userContractVM = new UserContractVM();
@@ -83,16 +84,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             {
                 var UserContractAllA = _unitOfWork.CrElmPost.FindAll(x => x.CrElmPostRegionsArName != null).ToList();
 
-                var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203002", "2");
+                var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205007", "2");
 
                 if (status == Status.All)
                 {
 
-                    var UserContractbyStatusAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor).ToList();
+                    var UserContractbyStatusAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic4" }).Where(x => currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor).ToList();
 
                     return PartialView("_DataTableUserContract", UserContractbyStatusAll);
                 }
-                var UserContractbyStatus = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor).ToList();
+                var UserContractbyStatus = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic4" }).Where(x => currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor).ToList();
 
                 return PartialView("_DataTableUserContract", UserContractbyStatus);
             }
@@ -107,16 +108,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             //sidebar Active
-            ViewBag.id = "#sidebarUser";
-            ViewBag.no = "2";
-            var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203002", "2");
+            ViewBag.id = "#sidebarReport";
+            ViewBag.no = "6";
+            var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205007", "2");
 
             //To Set Title !!!!!!!!!!!!!
-            var titles = await setTitle("203", "2203002", "2");
+            var titles = await setTitle("205", "2205007", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
 
-            //var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic3?.CrCasRenterPrivateUserInformationId == id, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => x.CrCasRenterContractBasicPrivateUserId != null).Where(x => x.CrCasRenterContractBasic3?.CrCasRenterPrivateUserInformationContractCount > 0).ToList();
-            var contract = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension ).OrderBy(x => x.CrCasRenterContractBasicNo).ThenByDescending(t => t.CrCasRenterContractBasicCopy).ToList();
+            //var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic3?.CrCasRenterPrivateUserInformationId == id, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic4" }).Where(x => x.CrCasRenterContractBasicPrivateUserId != null).Where(x => x.CrCasRenterContractBasic3?.CrCasRenterPrivateUserInformationContractCount > 0).ToList();
+            var contract = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic4" }).Where(x => currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension ).OrderBy(x => x.CrCasRenterContractBasicNo).ThenByDescending(t => t.CrCasRenterContractBasicCopy).ToList();
             contract = contract.Where(x => x.CrCasRenterContractBasicCopy > 0).ToList();
             var AllUsers = _unitOfWork.CrMasUserInformation.FindAll(x => contract.Any(y=>y.CrCasRenterContractBasicUserInsert == x.CrMasUserInformationCode  )).ToList();
 
@@ -144,23 +145,23 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         public async Task<IActionResult> Edit2Date(string _max, string _mini, string id)
         {
 
-            var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203002", "2");
+            var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205007", "2");
 
             //sidebar Active
-            ViewBag.id = "#sidebarUser";
-            ViewBag.no = "2";
+            ViewBag.id = "#sidebarReport";
+            ViewBag.no = "6";
             ViewBag.startDate = DateTime.Parse(_mini).Date.ToString("yyyy-MM-dd");
             ViewBag.EndDate = DateTime.Parse(_max).Date.ToString("yyyy-MM-dd");
             //To Set Title !!!!!!!!!!!!!
-            var titles = await setTitle("203", "2203002", "2");
+            var titles = await setTitle("205", "2205007", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
             if (!string.IsNullOrEmpty(_max) && !string.IsNullOrEmpty(_mini) && _max.Length > 0)
             {
                 // "today"  "tomorrow"   "after_longTime" 
 
                 _max = DateTime.Parse(_max).Date.AddDays(1).ToString("yyyy-MM-dd");
-                //var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic3?.CrCasRenterPrivateUserInformationId == id, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => x.CrCasRenterContractBasicPrivateUserId != null).Where(x => x.CrCasRenterContractBasic3?.CrCasRenterPrivateUserInformationContractCount > 0).ToList();
-                var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicIssuedDate < DateTime.Parse(_max).Date && x.CrCasRenterContractBasicIssuedDate >= DateTime.Parse(_mini).Date, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension ).OrderBy(x => x.CrCasRenterContractBasicNo).ThenByDescending(t => t.CrCasRenterContractBasicCopy).ToList();
+                //var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic3?.CrCasRenterPrivateUserInformationId == id, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic4" }).Where(x => x.CrCasRenterContractBasicPrivateUserId != null).Where(x => x.CrCasRenterContractBasic3?.CrCasRenterPrivateUserInformationContractCount > 0).ToList();
+                var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicIssuedDate < DateTime.Parse(_max).Date && x.CrCasRenterContractBasicIssuedDate >= DateTime.Parse(_mini).Date, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic4" }).Where(x => currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension ).OrderBy(x => x.CrCasRenterContractBasicNo).ThenByDescending(t => t.CrCasRenterContractBasicCopy).ToList();
 
                 contract = contract.Where(x => x.CrCasRenterContractBasicCopy > 0).ToList();
                 var AllUsers = _unitOfWork.CrMasUserInformation.FindAll(x => contract.Any(y => y.CrCasRenterContractBasicUserInsert == x.CrMasUserInformationCode)).ToList();

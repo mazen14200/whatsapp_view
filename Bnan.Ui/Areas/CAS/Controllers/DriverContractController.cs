@@ -50,24 +50,20 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             public async Task<IActionResult> Index()
             {
                 //sidebar Active
-                ViewBag.id = "#sidebarDriver";
-                ViewBag.no = "2";
-                var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203002", "2");
+                ViewBag.id = "#sidebarReport";
+                ViewBag.no = "5";
+                var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205006", "2");
 
                 await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
                 subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
-                var titles = await setTitle("203", "2203002", "2");
+                var titles = await setTitle("205", "2205006", "2");
                 await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-                //var DriverContractAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0 && x.CrCasRenterContractBasicPrivateDriverId != null);
-                var DriverContractAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor);
+                //var DriverContractAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0 && x.CrCasRenterContractBasicPrivateDriverId != null);
+                var DriverContractAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor);
 
-                var DriverContractAllA = _unitOfWork.CrElmPost.FindAll(x => x.CrElmPostRegionsArName != null).ToList();
-
-
-                ViewData["Adress"] = DriverContractAllA;
 
 
                 return View(DriverContractAll);
@@ -82,16 +78,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
                     var DriverContractAllA = _unitOfWork.CrElmPost.FindAll(x => x.CrElmPostRegionsArName != null).ToList();
 
-                var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203002", "2");
+                var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205006", "2");
 
                 if (status == Status.All)
                     {
 
-                        var DriverContractbyStatusAll = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Hold || l.CrCasRenterContractBasicStatus == Status.Active || l.CrCasRenterContractBasicStatus == Status.Rented, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null && x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0 && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor).ToList();
+                        var DriverContractbyStatusAll = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Hold || l.CrCasRenterContractBasicStatus == Status.Active || l.CrCasRenterContractBasicStatus == Status.Rented, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null && x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0 && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor).ToList();
 
                         return PartialView("_DataTableDriverContract", DriverContractbyStatusAll);
                     }
-                    var DriverContractbyStatus = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == status , new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null && x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0 && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor).ToList();
+                    var DriverContractbyStatus = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == status , new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null && x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0 && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor).ToList();
 
                     return PartialView("_DataTableDriverContract", DriverContractbyStatus);
                 }
@@ -106,16 +102,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             //sidebar Active
-            ViewBag.id = "#sidebarDriver";
-            ViewBag.no = "2";
-            var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203002", "2");
+            ViewBag.id = "#sidebarReport";
+            ViewBag.no = "5";
+            var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205006", "2");
 
             //To Set Title !!!!!!!!!!!!!
-            var titles = await setTitle("203", "2203002", "2");
+            var titles = await setTitle("205", "2205006", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
 
-            //var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationId == id, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null).Where(x => x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0).ToList();
-            var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId == id, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId == id && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension && x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0).OrderBy(x => x.CrCasRenterContractBasicNo).ThenByDescending(t => t.CrCasRenterContractBasicCopy).ToList();
+            //var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationId == id, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null).Where(x => x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0).ToList();
+            var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId == id, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId == id && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension && x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0).OrderBy(x => x.CrCasRenterContractBasicNo).ThenByDescending(t => t.CrCasRenterContractBasicCopy).ToList();
             contract = contract.Where(x => x.CrCasRenterContractBasicCopy > 0).ToList();
 
             if (contract == null)
@@ -141,23 +137,27 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         public async Task<IActionResult> Edit2Date(string _max, string _mini, string id)
         {
 
-            var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203002", "2");
-
+            var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205006", "2");
             //sidebar Active
-            ViewBag.id = "#sidebarDriver";
-            ViewBag.no = "2";
+            ViewBag.id = "#sidebarReport";
+            ViewBag.no = "5";
+
             ViewBag.startDate = DateTime.Parse(_mini).Date.ToString("yyyy-MM-dd");
             ViewBag.EndDate = DateTime.Parse(_max).Date.ToString("yyyy-MM-dd");
             //To Set Title !!!!!!!!!!!!!
-            var titles = await setTitle("203", "2203002", "2");
+            var titles = await setTitle("205", "2205006", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
             if (!string.IsNullOrEmpty(_max) && !string.IsNullOrEmpty(_mini) && _max.Length > 0 )
             {
                 // "today"  "tomorrow"   "after_longTime" 
 
                 _max = DateTime.Parse(_max).Date.AddDays(1).ToString("yyyy-MM-dd");
-                //var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationId == id, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null).Where(x => x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0).ToList();
-                var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicIssuedDate < DateTime.Parse(_max).Date && x.CrCasRenterContractBasicIssuedDate >= DateTime.Parse(_mini).Date, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasicSectorNavigation" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId == id && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension && x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0).OrderBy(x => x.CrCasRenterContractBasicNo).ThenByDescending(t => t.CrCasRenterContractBasicCopy).ToList();
+                //var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationId == id, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null).Where(x => x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0).ToList();
+                var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicIssuedDate < DateTime.Parse(_max).Date && x.CrCasRenterContractBasicIssuedDate >= DateTime.Parse(_mini).Date &&
+                x.CrCasRenterContractBasicPrivateDriverId == id &&
+                currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension  
+                && x.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationContractCount > 0 , new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).OrderBy(x => x.CrCasRenterContractBasicNo).ThenByDescending(t => t.CrCasRenterContractBasicCopy).ToList();
+
 
                 contract = contract.Where(x => x.CrCasRenterContractBasicCopy > 0).ToList();
                 if (contract == null)
