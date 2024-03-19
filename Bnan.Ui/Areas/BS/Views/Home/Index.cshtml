@@ -31,7 +31,6 @@
     .legend-item {
         font-size: .7rem;
         color: #000000;
-        font-weight: bold;
     }
 </style>
 <!--  Chart -->
@@ -47,21 +46,20 @@
                             <div class="main-carousel-item active" id="carouselItem1">
                                 <div class="row" id="first-row-of-charts">
                                     <div class="col-md-6 card-col Branch-car-col">
-                                        <div class="row Branch-car-canvas-row" style="margin-top: 3%">
+                                        <div class="row Branch-car-canvas-row">
                                             <div class=" col-md-9 col-lg-9 col-xl-9 ">
                                                 <canvas id="horizontal_bar" aria-label="chart"></canvas>
                                             </div>
-                                            <div class=" ps-0 col-sm-3 col-md-3 col-lg-3 col-xl-3 pr-0"
-                                                 style="display: flex;justify-content: flex-end ;">
+                                            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                                 <p class="chart-p" style="margin-right:20px">@localizer["BranchCars"] : <span>@ViewBag.carCount</span></p>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 card-col pieChart-col">
-                                        <div class="row " style="height: 240px">
-                                            <div class="col-sm-8 col-md-8 col-lg-7 col-xl-8 ">
-                                                <canvas id="pieChart" aria-label="chart" height="155px"></canvas>
+                                        <div class="row ">
+                                            <div class="col-sm-8 col-md-8 col-lg-7 col-xl-8 pieChart">
+                                                <canvas id="pieChart" aria-label="chart"></canvas>
                                             </div>
 
                                             <div class="col-sm-4 col-md-4 col-lg-5 col-xl-4 pieChart-data">
@@ -240,8 +238,8 @@
                 </path>
             </svg>
         </div>
-        <div class="container footer-buttons justify-content-center pt-1 " style="box-sizing: border-box; ">
-            <div class="row justify-content-center">
+        <div class="container footer-buttons justify-content-center py-3" style="box-sizing: border-box; ">
+            <div class="row justify-content-center footer-buttons-row">
                 <!-- First row of buttons -->
                 <div class="col-sm-6 col-md-6 col-lg-3 ">
                     <button type="button" class="btn btn-Pages mb-2">
@@ -350,8 +348,7 @@
                             ticks: {
                                 font: {
                                     family: 'Cairo, sans-serif', // Change the font family
-                                    size: 12,
-                                    weight: 'bold' // Change the font weight (e.g., 'normal', 'bold', 'bolder', 'lighter', or numeric value)
+                                    size: 10,
                                     // Change the font size
                                 }
                             }
@@ -363,8 +360,7 @@
                             ticks: {
                                 font: {
                                     family: 'Cairo, sans-serif', // Change the font family
-                                    size: 12,
-                                    weight: 'bold' // Change the font weight (e.g., 'normal', 'bold', 'bolder', 'lighter', or numeric value)
+                                    size: 10,
                                     // Change the font size
                                 }
                             },
@@ -483,8 +479,7 @@
                             ticks: {
                                 font: {
                                     family: 'Cairo, sans-serif', // Change the font family
-                                    size: 12,
-                                    weight: 'bold' // Change the font weight (e.g., 'normal', 'bold', 'bolder', 'lighter', or numeric value)
+                                    size: 10,
                                     // Change the font size
                                 }
                             }
@@ -497,8 +492,7 @@
                             ticks: {
                                 font: {
                                     family: 'Cairo, sans-serif', // Change the font family
-                                    size: 12,
-                                    weight: 'bold' // Change the font weight (e.g., 'normal', 'bold', 'bolder', 'lighter', or numeric value)
+                                    size: 10,
                                     // Change the font size
                                 }
                             }
@@ -564,8 +558,7 @@
                             ticks: {
                                 font: {
                                     family: 'Cairo, sans-serif', // Change the font family
-                                    size: 12,
-                                    weight: 'bold' // Change the font weight (e.g., 'normal', 'bold', 'bolder', 'lighter', or numeric value)
+                                    size: 10,
                                     // Change the font size
                                 }
                             }
@@ -578,8 +571,7 @@
                             ticks: {
                                 font: {
                                     family: 'Cairo, sans-serif', // Change the font family
-                                    size: 12,
-                                    weight: 'bold' // Change the font weight (e.g., 'normal', 'bold', 'bolder', 'lighter', or numeric value)
+                                    size: 10,
                                     // Change the font size
                                 }
                             }

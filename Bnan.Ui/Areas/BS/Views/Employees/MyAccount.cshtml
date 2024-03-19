@@ -175,6 +175,7 @@
                                                                 }
                                                             </select>
                                                             <input type="tel" id="phone" asp-for="@Model.UserInformation.CrMasUserInformationMobileNo" oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="20" class="account-select" autocomplete="off"> *@
+                                                                <p>@Model.UserInformation.CrMasUserInformationCallingKey@Model.UserInformation.CrMasUserInformationMobileNo</p>
                                                         </div>
                                                     </div>
                                                 </div>
