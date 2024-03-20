@@ -62,7 +62,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
                 //var DriverContractAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0 && x.CrCasRenterContractBasicPrivateDriverId != null);
-                var DriverContractAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor);
+                var DriverContractAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic3" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor);
 
 
 
@@ -112,7 +112,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             //var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationId == id, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId != null).Where(x => x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0).ToList();
             var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(l => l.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId == id, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasicPrivateDriverId == id && currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension && x.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount > 0).OrderBy(x => x.CrCasRenterContractBasicNo).ThenByDescending(t => t.CrCasRenterContractBasicCopy).ToList();
-            contract = contract.Where(x => x.CrCasRenterContractBasicCopy > 0).ToList();
+            //contract = contract.Where(x => x.CrCasRenterContractBasicCopy > 0).ToList();
 
             if (contract == null)
             {
@@ -158,8 +158,6 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 currentUser.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension  
                 && x.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationContractCount > 0 , new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic4", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).OrderBy(x => x.CrCasRenterContractBasicNo).ThenByDescending(t => t.CrCasRenterContractBasicCopy).ToList();
 
-
-                contract = contract.Where(x => x.CrCasRenterContractBasicCopy > 0).ToList();
                 if (contract == null)
                 {
                     ModelState.AddModelError("Exist", "SomeThing Wrong is happened");

@@ -12,11 +12,7 @@
   "RenterInformationCode": "Code",
   "RenterInformationId": "ID",
   "RenterInformationNationality": "Nationality",
-  "RenterInformationAddress": "Address",
-  "RenterInformationProfession": "Profession",
-  "RenterInformationWorkPlace": "Work Place",
  
-  
  *@
 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
 {
@@ -30,7 +26,7 @@
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterInformationId"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["DateLast_Contract"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
@@ -42,36 +38,50 @@
                 @{
                     int no = 1;
                 }
-                @foreach (var item in Model.crCasRenterContractBasics)
+                @foreach (var item in Model.ContractBasic_Filtered)
                 {
 
-                    @*<tr onclick="location.href='@Url.Action("Edit", "UserContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId })'" style="cursor:pointer;color:red">*@
+                    @*<tr onclick="location.href='@Url.Action("Edit", "UserContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateUserInformationId })'" style="cursor:pointer;color:red">*@
                     <tr onclick="location.href='@Url.Action("Edit", "UserContract", new { id = item.CrCasRenterContractBasicUserInsert })'">
                         <td id="_Nc">@no</td>
                         <td id="_Nc">@item.CrCasRenterContractBasicUserInsert</td>
-                            <td>@Model.crMasUserInformation.FirstOrDefault(x=>x.CrMasUserInformationCode == item.CrCasRenterContractBasicUserInsert).CrMasUserInformationArName</td>
-                            <td>@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationLastContract?.ToString("dd/MM/yyyy")</td>
+                        @{
+                            var singleUser = Model.crMasUserInformation.FirstOrDefault(x => x.CrMasUserInformationCode == item.CrCasRenterContractBasicUserInsert);
 
-                            <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationDaysCount</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationTraveledDistance</td>
+                            <td>@singleUser.CrMasUserInformationEnName</td>
 
-                            
+
+                            foreach (var ss in Model.contracts_Counts)
+                            {
+                                if (ss[0] == item.CrCasRenterContractBasicUserInsert)
+                                {
+                                    var singleDataFromCountList = ss;
+
+                                <td>@decimal.Parse(singleDataFromCountList[2]).ToString("N2",CultureInfo.InvariantCulture)</td>
+                                <td id="_Nc">@singleDataFromCountList[1]</td>
+
+                            <td></td>
+                                }
+                            }
+
+                            <td>@singleUser.CrMasUserContractValidity.CrMasUserContractValidityKm</td>
+
+                           
                             <td>
 
-                                @if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Active)
+                                @if (@singleUser.CrMasUserInformationStatus == Status.Active)
                                 {
                                     @localizer["Active"]
                                 }
-                                else if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Rented)
+                                else if (@singleUser.CrMasUserInformationStatus == Status.Rented)
                                 {
                                 @localizer["Rented_n"]
                                 }
-                                else if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Hold)
+                                else if (@singleUser.CrMasUserInformationStatus == Status.Hold)
                                 {
                                     @localizer["Hold"]
                                 }
-                            else if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Deleted)
+                                else if (@singleUser.CrMasUserInformationStatus == Status.Deleted)
                                 {
                                     @localizer["Deleted"]
                                 }
@@ -80,6 +90,7 @@
 
                                 }
                             </td>
+                     }   
                         </tr>
                     
                     
@@ -99,7 +110,7 @@ else
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterInformationId"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["DateLast_Contract"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
@@ -111,47 +122,61 @@ else
                 @{
                     int no = 1;
                 }
-                @foreach (var item in Model.crCasRenterContractBasics)
+                @foreach (var item in Model.ContractBasic_Filtered)
                 {
 
-                    @*<tr onclick="location.href='@Url.Action("Edit", "UserContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId })'" style="cursor:pointer;color:red">*@
+                    @*<tr onclick="location.href='@Url.Action("Edit", "UserContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateUserInformationId })'" style="cursor:pointer;color:red">*@
                     <tr onclick="location.href='@Url.Action("Edit", "UserContract", new { id = item.CrCasRenterContractBasicUserInsert })'">
                         <td id="_Nc">@no</td>
                         <td id="_Nc">@item.CrCasRenterContractBasicUserInsert</td>
-                        <td>@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationArName</td>
-                        <td>@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationLastContract?.ToString("dd/MM/yyyy")</td>
+                        @{
+                            var singleUser = Model.crMasUserInformation.FirstOrDefault(x => x.CrMasUserInformationCode == item.CrCasRenterContractBasicUserInsert);
 
-                        <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount</td>
-                        <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationDaysCount</td>
-                        <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationTraveledDistance</td>
+                            <td>@singleUser.CrMasUserInformationArName</td>
 
-                        
-                        <td>
 
-                            @if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Active)
+                            foreach (var ss in Model.contracts_Counts)
                             {
-                                @localizer["Active"]
-                            }
-                            else if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Rented)
-                            {
-                                @localizer["Rented_n"]
-                            }
-                            else if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Hold)
-                            {
-                                @localizer["Hold"]
-                            }
-                            else if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Deleted)
-                            {
-                                @localizer["Deleted"]
-                            }
-                            else
-                            {
+                                if (ss[0] == item.CrCasRenterContractBasicUserInsert)
+                                {
+                                    var singleDataFromCountList = ss;
 
+                                    <td>@decimal.Parse(singleDataFromCountList[2]).ToString("N2",CultureInfo.InvariantCulture)</td>
+                                    <td id="_Nc">@singleDataFromCountList[1]</td>
+
+                                    <td></td>
+                                }
                             }
-                        </td>
+
+                            <td>@singleUser.CrMasUserContractValidity.CrMasUserContractValidityKm</td>
+
+
+                            <td>
+
+                                @if (@singleUser.CrMasUserInformationStatus == Status.Active)
+                                {
+                                    @localizer["Active"]
+                                }
+                                else if (@singleUser.CrMasUserInformationStatus == Status.Rented)
+                                {
+                                    @localizer["Rented_n"]
+                                }
+                                else if (@singleUser.CrMasUserInformationStatus == Status.Hold)
+                                {
+                                    @localizer["Hold"]
+                                }
+                                else if (@singleUser.CrMasUserInformationStatus == Status.Deleted)
+                                {
+                                    @localizer["Deleted"]
+                                }
+                                else
+                                {
+
+                                }
+                            </td>
+                        }
                     </tr>
-                    
-                    
+
                     no++;
                 }
             </tbody>

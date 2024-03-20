@@ -1,7 +1,8 @@
-﻿@using Bnan.Ui.ViewModels.CAS
+﻿
+
+@using Bnan.Ui.ViewModels.CAS
 @using Bnan.Core.Extensions
-@using Bnan.Core.Models
-@model IEnumerable<CrCasRenterContractBasic>
+@model UserContractVM
 
 
 @inject IViewLocalizer localizer
@@ -9,8 +10,8 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    ViewData["Page-title"] = localizer["Edit DriverContract Data"];
-    ViewData["Page-Hint"] = localizer["Edit DriverContract Hint"];
+    ViewData["Page-title"] = localizer["Edit UserContract Data"];
+    ViewData["Page-Hint"] = localizer["Edit UserContract Hint"];
 }
 
 <title>@ViewData["Title"]</title>
@@ -293,18 +294,18 @@ else
                     </div>
                     <div class="row mt-2" style="height:60px;">
                     <div class="col-md-label10 formlabel">
-                        <label class="form-label" for="CrCasRenterDriverId">@localizer["RenterInformationId"]</label>
+                        <label class="form-label" for="CrCasRenterUserId">@localizer["RenterInformationId"]</label>
                     </div>
                     <div class="col-md-input10 p-0 col-11" style="margin-top:-5px">
 
-                            <input type="text" class="form-control" value="@ViewBag.Single_DriverId" readonly maxlength="15" id="CrCasRenterDriverId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                            <input type="text" class="form-control" value="@ViewBag.Single_UserId" readonly maxlength="15" id="CrCasRenterUserId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
                     <div class="col-md-label10 formlabel">
                         <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationArName">@localizer["RenterInformationName"]</label>
                     </div>
                     <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
-                            <input type="text" class="form-control" value="@ViewBag.Single_DriverNameAr" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                            <input type="text" class="form-control" value="@ViewBag.Single_UserNameAr" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
                     </div>
 
                 </div> @*End row*@
@@ -352,17 +353,17 @@ else
                 </div>
                 <div class="row mt-2" style="height:60px;">
                     <div class=" formlabel" style="width:60px;">
-                        <label class="form-label" for="CrCasRenterDriverId">@localizer["RenterInformationId"]</label>
+                        <label class="form-label" for="CrCasRenterUserId">@localizer["RenterInformationId"]</label>
                     </div>
                     <div class=" p-0 col-11" style="margin-top:-5px;width:330px;">
-                        <input type="text" class="form-control" value="@ViewBag.Single_DriverId" readonly maxlength="15" id="CrCasRenterDriverId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                        <input type="text" class="form-control" value="@ViewBag.Single_UserId" readonly maxlength="15" id="CrCasRenterUserId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
                     <div class="col-md-label10 formlabel">
                         <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["RenterInformationName"]</label>
                     </div>
                     <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
-                        <input type="text" class="form-control" value="@ViewBag.Single_DriverNameEn" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                        <input type="text" class="form-control" value="@ViewBag.Single_UserNameEn" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
                     </div>
 
                 </div> @*End row*@
@@ -409,7 +410,7 @@ else
                 int? Days_Count = 0;
                 decimal? Contract_Value = 0;
                 var Counter = 0;
-                foreach (var single in Model)
+                foreach (var single in Model.crCasRenterContractBasics)
                 {
                     Contract_Value = single.CrCasRenterContractBasicExpectedTotal + Contract_Value;
                     //Contract_Count = single.CrCasRenterContractBasic3.CrCasRenterPrivateUserInformationContractCount + Contract_Count;
@@ -529,10 +530,10 @@ else
         </div>
 
     </form>
-    <div class="" id="buttonContainer" style="margin-top:30px;">
+    <div class="" id="buttonContainer" style="margin-top:5px;">
         @*<button type="submit" id="saveEdit" class="btn btn-primary ms-1">@localizer["Save"]</button>*@
 
-        <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="DriverContract" asp-action="Index">
+        <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="UserContract" asp-action="Index">
             @localizer["Back"]
         </a>
     </div>
@@ -608,7 +609,7 @@ else
 
     <script>
         function DateChanged() {
-            var id = $("#CrCasRenterDriverId").val();
+            var id = $("#CrCasRenterUserId").val();
             var mini = $("#startDateInput").val();
             var max = $("#endDateInput").val();
             var _mini = mini.replace("/", "-");

@@ -42,7 +42,9 @@
                         <td id="_Nc" style="display:flex">
                             <div style="display:flex;-webkit-align-items:0; gap:5px;"> 
                             <div style="">@item.CrCasRenterContractBasicNo</div>
-                            <div style="color:red;">(@item.CrCasRenterContractBasicCopy)</div>
+                            @if(item.CrCasRenterContractBasicCopy > 0){
+                                  <div style="color:red;">(@item.CrCasRenterContractBasicCopy)</div>
+                                }
                             </div>
                         </td>
                         <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
@@ -52,18 +54,26 @@
                             </td>
 
                         <td id="_Nc">
-                                @item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture);
+                                @item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)
                         </td>
 
                             <td>
 
-                                @if (@item.CrCasRenterContractBasicStatus == Status.Active)
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
+                                {
+                                    @localizer["Closed"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Cancel)
+                                {
+                                    @localizer["Canceled"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Active)
                                 {
                                     @localizer["Standing"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Extension)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
                                 {
-                                    @localizer["Extension"]
+                                    @localizer["Extended"]
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
                                 {
@@ -83,7 +93,7 @@
                                 }
                             </td>
 
-                            <td id="_Nc">@localizer["Contract"]</td>
+                            <td id="_Nc">   </td>
 
                         </tr>
                     
@@ -127,7 +137,10 @@ else
                         <td id="_Nc" style="display:flex">
                             <div style="display:flex;-webkit-align-items:0; gap:5px;">
                                 <div style="">@item.CrCasRenterContractBasicNo</div>
-                                <div style="color:red;">(@item.CrCasRenterContractBasicCopy)</div>
+                                @if (item.CrCasRenterContractBasicCopy > 0)
+                                {
+                                    <div style="color:red;">(@item.CrCasRenterContractBasicCopy)</div>
+                                }
                             </div>
                         </td>
 
@@ -137,19 +150,27 @@ else
                             @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationArName
                         </td>
 
-                            <td id="_Nc">     
-                                  @item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture);                             
-                            </td>
+                            <td id="_Nc">
+                            @item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)
+                        </td>
 
                             <td>
 
-                                @if (@item.CrCasRenterContractBasicStatus == Status.Active)
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
+                                {
+                                    @localizer["Closed"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Cancel)
+                                {
+                                    @localizer["Canceled"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Active)
                                 {
                                     @localizer["Standing"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Extension)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
                                 {
-                                    @localizer["Extension"]
+                                    @localizer["Extended"]
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
                                 {
@@ -169,7 +190,7 @@ else
                                 }
                             </td>
 
-                            <td id="_Nc">@localizer["Contract"]</td>
+                            <td id="_Nc">    </td>
                             @*<td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal</td>*@
                         </tr>
                     
