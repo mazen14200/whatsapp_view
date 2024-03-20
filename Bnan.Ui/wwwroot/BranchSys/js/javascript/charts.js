@@ -132,19 +132,19 @@
 //  }
 //});
 
-const legendContainer = document.querySelector('.chart-legend');
-const legendItems = pieChartData.labels.map((label, index) => {
-  const dataset = pieChartData.datasets[0];
-  const backgroundColor = dataset.backgroundColor[index];
-  const legendItem = document.createElement('div');
-  legendItem.classList.add('legend-item');
-  legendItem.innerHTML = `${label}<span style="background-color:${backgroundColor}"></span>`;
-  return legendItem;
-});
+//const legendContainer = document.querySelector('.chart-legend');
+//const legendItems = pieChartData.labels.map((label, index) => {
+//  const dataset = pieChartData.datasets[0];
+//  const backgroundColor = dataset.backgroundColor[index];
+//  const legendItem = document.createElement('div');
+//  legendItem.classList.add('legend-item');
+//  legendItem.innerHTML = `${label}<span style="background-color:${backgroundColor}"></span>`;
+//  return legendItem;
+//});
 
-legendItems.forEach(item => {
-  legendContainer.appendChild(item);
-});
+//legendItems.forEach(item => {
+//  legendContainer.appendChild(item);
+//});
 
 //// Bar Chart 2
 //var barChart2 = document.getElementById("barChart2").getContext("2d");

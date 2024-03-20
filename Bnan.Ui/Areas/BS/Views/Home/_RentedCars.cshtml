@@ -5,9 +5,334 @@
 @inject IViewLocalizer localizer
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-
 }
-<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+
+<div id="carousel2" class="carousel slide carousel-dark " data-bs-ride="carousel" data-bs-interval="5000">
+    <div class="carousel-inner" id="carousel-inner1">
+        @if (Model.RentedCars != null)
+        {
+            @foreach (var item in Model.RentedCars)
+            {
+                <div class="carousel-item animate @(item == Model.RentedCars.First() ? "active" : "")">
+
+                    <div class="product1 p-2 pt-0">
+                        <div class="row flex-row-reverse">
+                            <div class="col-md-8">
+                                <div class="row " id="rented_data1">
+                                    <div class="col-lg-12 pb-1">
+                                        <p class="product-data1">
+                                            @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+                                            {
+                                            <p class="product-data1"> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateEnName</p>
+                                            }
+                                            else
+                                            {
+                                            <p class="product-data1"> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateArName</p>
+                                            }
+                                        </p>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12">
+                                        <div class="row product-data2">
+                                            <div class="col-auto">
+                                                <img src="~/BranchSys/img/transimission2.png">
+                                            </div>
+                                            <div class="col-auto">
+                                                <img src="~/BranchSys/img/gas1.png">
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <p> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionBagBags <img src="~/BranchSys/img/lbag2.png"> </p>
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <p> @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionSmallBags <img src="~/BranchSys/img/sbag2.png"></p>
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <p>  @item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionPassengers <img src="~/BranchSys/img/people2.png"></p>
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <p>@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionDoor <img src="~/BranchSys/img/doors2.png"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row car_img  align-items-center">
+                                        <div class="col-md-9 text-end">
+                                            <img class="product-image w-100" src="@Url.Content(item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionImage)"
+                                                 alt="@item.CrCasCarInformationDistributionNavigation.CrMasSupCarDistributionConcatenateArName">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="faq-container1">
+                                                    <div class="faq ">
+                                                        @{
+                                                            var carPrice = item.CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics.FirstOrDefault(x => x.CrCasPriceCarBasicNo == item.CrCasCarInformationPriceNo);
+                                                        }
+                                                        <h3 class="faq-title">@localizer["Price"]</h3>
+                                                        <div class="faq-text px-2">
+                                                            <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                <div class="col-lg-7 tabs">
+                                                                    @localizer["ExtraHourValue"]
+                                                                </div>
+                                                                <div class="col-lg-5 ">@carPrice?.CrCasPriceCarBasicExtraHourValue?.ToString("N2", CultureInfo.InvariantCulture)</div>
+                                                            </div>
+                                                            <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                <div class="col-lg-7 tabs">
+                                                                    @localizer["AdditionalKmValue"]
+                                                                </div>
+                                                                <div class="col-lg-5 ">@carPrice?.CrCasPriceCarBasicAdditionalKmValue?.ToString("N2", CultureInfo.InvariantCulture)</div>
+                                                            </div>
+                                                            <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                <div class="col-lg-7 tabs">
+                                                                    @localizer["Monthly"]
+                                                                </div>
+                                                                <div class="col-lg-5 ">@carPrice?.CrCasPriceCarBasicMonthlyRent?.ToString("N2", CultureInfo.InvariantCulture)</div>
+                                                            </div>
+                                                            <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                <div class="col-lg-7 tabs">
+                                                                    @localizer["Weekly"]
+                                                                </div>
+                                                                <div class="col-lg-5 ">@carPrice?.CrCasPriceCarBasicWeeklyRent?.ToString("N2", CultureInfo.InvariantCulture)</div>
+                                                            </div>
+                                                            <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                <div class="col-lg-7 tabs">
+                                                                    @localizer["Daily"]
+                                                                </div>
+                                                                <div class="col-lg-5 ">@carPrice?.CrCasPriceCarBasicDailyRent?.ToString("N2", CultureInfo.InvariantCulture)</div>
+                                                            </div>
+                                                        </div>
+                                                        <button class="faq-toggle">
+                                                            <i class="fas fa-chevron-down"></i>
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="faq ">
+                                                        @{
+                                                            var contract = item.CrCasRenterContractBasics.FirstOrDefault(x => x.CrCasRenterContractBasicCarSerailNo == item.CrCasCarInformationSerailNo);
+                                                        }
+                                                        <h3 class="faq-title">@localizer["ContractSummary"]</h3>
+                                                        <div class="faq-text px-2 scroll-faq-text">
+                                                            <div class="inner-scroll-faq-text">
+                                                                <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                    <div class="col-lg-5 tabs">
+                                                                        @localizer["ContractNo"]
+                                                                    </div>
+                                                                    <div class="col-lg-7 ">@contract?.CrCasRenterContractBasicNo</div>
+                                                                </div>
+                                                                <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                    <div class="col-lg-5  tabs">
+                                                                        @localizer["Renterr"]
+                                                                    </div>
+                                                                    <div class="col-lg-7">
+                                                                        @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+                                                                            @contract?.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
+                                                                        else
+                                                                            @contract?.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationArName
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                    <div class="col-lg-7 tabs">
+                                                                        @localizer["StartContract"]
+                                                                    </div>
+                                                                    <div class="col-lg-5 ">@contract?.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</div>
+                                                                </div>
+                                                                <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                    <div class="col-lg-7 tabs">
+                                                                        @localizer["EndContract"]
+                                                                    </div>
+                                                                    <div class="col-lg-5 ">@contract?.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</div>
+                                                                </div>
+                                                                <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                    <div class="col-lg-7 tabs">
+                                                                        @localizer["ContractValue"]
+                                                                    </div>
+                                                                    <div class="col-lg-5 ">@contract?.CrCasRenterContractBasicExpectedTotal?.ToString("N2", CultureInfo.InvariantCulture)</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button class="faq-toggle">
+                                                            <i class="fas fa-chevron-down"></i>
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="faq ">
+                                                        <h3 class="faq-title">@localizer["TermsRented"]</h3>
+                                                        <div class="faq-text px-2">
+                                                            <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                <div class="col-lg-7 tabs">
+                                                                    @localizer["DailyFreeKm"]
+                                                                </div>
+                                                                <div class="col-lg-5 ">@contract?.CrCasRenterContractBasicTotalDailyFreeKm</div>
+                                                            </div>
+                                                            <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                <div class="col-lg-7 tabs">
+                                                                    @localizer["FreeAdditionalHours"]
+                                                                </div>
+                                                                <div class="col-lg-5 ">@contract?.CrCasRenterContractBasicTotalFreeHours</div>
+                                                            </div>
+                                                            <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                <div class="col-lg-7  tabs">
+                                                                    @localizer["AdditionalKmValue"]
+                                                                </div>
+                                                                <div class="col-lg-5">
+                                                                    @contract?.CrCasRenterContractBasicKmValue?.ToString("N2", CultureInfo.InvariantCulture)
+                                                                </div>
+                                                            </div>
+                                                            <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                <div class="col-lg-7  tabs">
+                                                                    @localizer["ExtraHourValue"]
+                                                                </div>
+                                                                <div class="col-lg-5">
+                                                                    @contract?.CrCasRenterContractBasicHourValue?.ToString("N2", CultureInfo.InvariantCulture)
+                                                                </div>
+                                                            </div>
+                                                            <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                <div class="col-lg-7  tabs">
+                                                                    @localizer["Age"]
+                                                                </div>
+                                                                <div class="col-lg-5">
+                                                                    @carPrice?.CrCasPriceCarBasicMaxAge : @carPrice?.CrCasPriceCarBasicMinAge
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button class="faq-toggle">
+                                                            <i class="fas fa-chevron-down"></i>
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="faq ">
+                                                        @{
+                                                            var maintainaces = item.CrCasCarDocumentsMaintenances.Where(x => x.CrCasCarDocumentsMaintenanceProceduresClassification == "13");
+                                                        }
+                                                        <h3 class="faq-title">@localizer["Maintenance"]</h3>
+                                                        <div class="faq-text px-2  scroll-faq-text">
+                                                            <div class="inner-scroll-faq-text">
+                                                                @foreach (var main in maintainaces)
+                                                                {
+                                                                    <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                        <div class="col-lg-6  tabs">
+                                                                            @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+                                                                            {
+                                                                                @main.CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresEnName
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @main.CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresArName
+                                                                            }
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            @if (main.CrCasCarDocumentsMaintenanceStatus == Status.Active)
+                                                                            {
+                                                                                @localizer["CActive"]
+                                                                            }
+                                                                            else if (main.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire)
+                                                                            {
+                                                                                @localizer["OnExpired"]
+                                                                            }
+                                                                            else if (main.CrCasCarDocumentsMaintenanceStatus == Status.Expire)
+                                                                            {
+                                                                                @localizer["Expired"]
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <button class="faq-toggle">
+                                                            <i class="fas fa-chevron-down"></i>
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="faq ">
+                                                        @{
+                                                            var docs = item.CrCasCarDocumentsMaintenances.Where(x => x.CrCasCarDocumentsMaintenanceProceduresClassification == "12");
+                                                        }
+                                                        <h3 class="faq-title">@localizer["Documents Cars"]</h3>
+                                                        <div class="faq-text px-2  scroll-faq-text">
+                                                            <div class="inner-scroll-faq-text">
+                                                                @foreach (var doc in docs)
+                                                                {
+                                                                    <div class="row flex-row-reverse px-lg-2 pb-3">
+                                                                        <div class="col-lg-6  tabs">
+                                                                            @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+                                                                            {
+                                                                                @doc.CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresEnName
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @doc.CrCasCarDocumentsMaintenanceProceduresNavigation.CrMasSysProceduresArName
+                                                                            }
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            @if (doc.CrCasCarDocumentsMaintenanceStatus == Status.Active)
+                                                                            {
+                                                                                @localizer["CActive"]
+                                                                            }
+                                                                            else if (doc.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire)
+                                                                            {
+                                                                                @localizer["OnExpired"]
+                                                                            }
+                                                                            else if (doc.CrCasCarDocumentsMaintenanceStatus == Status.Expire)
+                                                                            {
+                                                                                @localizer["Expired"]
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <button class="faq-toggle">
+                                                            <i class="fas fa-chevron-down"></i>
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            }
+        }
+    </div>
+    <!-- Previous and Next buttons -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel2" data-bs-slide="prev" hidden>
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel2" id="nextButton" data-bs-slide="next" hidden>
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<script>
+    $(document).ready(function () {
+        // Trigger a click event on the "Next" control button after a delay of 5 seconds
+        setTimeout(function () {
+            $('#nextButton').trigger('click');
+        }, 5000); // 5000 milliseconds = 5 seconds
+    });
+</script>
+
+
+@* <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner1">
         @if (Model.RentedCars != null)
         {
@@ -99,4 +424,4 @@
             }
         }
     </div>
-</div>
+</div> *@
