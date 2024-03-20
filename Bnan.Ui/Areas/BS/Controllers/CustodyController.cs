@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using NToastNotify;
+using System.Globalization;
 
 namespace Bnan.Ui.Areas.BS.Controllers
 {
@@ -47,7 +48,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var autoinc = GetContractLastRecord("1", lessorCode, bsLayoutVM.SelectedBranch).CrCasSysAdministrativeProceduresNo;
             var ReferenceNo = y + "-" + sector + "304" + "-" + lessorCode + bsLayoutVM.SelectedBranch + "-" + autoinc;
             ViewBag.ReceiptPassingReferenceNo = ReferenceNo;
-            ViewBag.Date = year.ToString("yyyy/MM/dd");
+            ViewBag.Date = year.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture);
             var salesPoint = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointBrn == bsLayoutVM.SelectedBranch &&
                                                                              x.CrCasAccountSalesPointLessor == lessorCode &&
                                                                              x.CrCasAccountSalesPointTotalAvailable > 0).ToList();
