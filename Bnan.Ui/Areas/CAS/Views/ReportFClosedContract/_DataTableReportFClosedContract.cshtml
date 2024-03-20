@@ -1,0 +1,146 @@
+﻿
+
+@using Bnan.Core.Extensions
+@model IEnumerable<CrCasRenterContractBasic>
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    @*Mazen- For Scrolling*@
+    @*
+<style >
+        .container-scrol {
+            overflow: scroll;
+            height: 180px;
+            width: 900px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+            table th,
+            table td {
+                max-width: 600px;
+                padding: 8px 16px;
+                border: 1px solid #ddd;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            table thead {
+                position: sticky;
+                inset-block-start: 0;
+                background-color: #ddd;
+            }
+</style>
+    <div class="container-scrol">
+        <table class="table table-hover" >*@
+
+     <div class="col-sm-12"> 
+        @* For-scrolling *@
+
+            <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+                <thead>
+                <tr>
+                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["His_Date"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+
+                {
+                    @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
+                    <tr id="Tr_Color" style="cursor:pointer;color:black">
+                        @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
+                        <td id="_Nc">@no</td>
+                        <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
+                        <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
+                        </td>
+                        <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
+
+                        <td>   </td>
+
+
+                    </tr>
+
+                    no++;
+                }
+            </tbody>
+        </table>
+            @* </div> *@
+        @* </div> *@
+     </div> 
+}
+else
+{
+
+    <div class="col-sm-12">
+        @* For-scrolling *@
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+            <thead>
+                <tr>
+                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["His_Date"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model)
+
+                {
+                    @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
+                    <tr id="Tr_Color" style="cursor:pointer;color:black">
+                        @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
+                        <td id="_Nc">@no</td>
+                        <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
+                        <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationArName
+                        </td>
+                        <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
+
+                        <td> </td>
+
+                    </tr>
+
+                    no++;
+                }
+            </tbody>
+        </table>
+
+
+    </div>
+      
+}
+@section script{
+   
+    <script>
+        new DataTable('#basic-datatable', {
+            scrollX: true
+        });
+    </script>
+}

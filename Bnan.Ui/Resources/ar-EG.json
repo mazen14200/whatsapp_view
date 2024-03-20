@@ -522,14 +522,14 @@
   "RenterIDType": "نوع الهوية",
   "Date_start": "تاريخها",
   "Date_end": "نهايتها",
-  //"Gender": "الجنس",
-  //"Nationality": "الجنسية",
+  "Gender": "الجنس",
+  "Nationality": "الجنسية",
   "sector": "القطاع",
-  //"Profession": "المهنة",
+  "Profession": "المهنة",
   "WorkPlace": "جهة العمل",
   "Bank_name": "البنـك",
   "Account_bank_numper": "رقم الحساب",
-  "Membership": "العضوية",
+  //"Membership": "العضوية",
   "DrivingType": "رخصة القيادة",
   "Mechanism_Renter": "آلية التعامل",
   "Mechanism_Rent": "آلية التعامل",
@@ -578,6 +578,12 @@
   "after_long_Expired": "ينتهي لاحقاً",
   "RenterContractReport Hint": "تمكنك الصفحة من الاطلاع والبحث عن العقود القائمة خلال الفترة المحددة",
   "RenterContractReport Data": "العقود القائمة",
+
+  "ReportFClosedContract Hint": "تمكنك الصفحة من الاطلاع والبحث عن العقود المغلقة خلال الفترة المحددة",
+  "ReportFClosedContract Data": "العقود المغلقة",
+
+  "ReportCanceledContract Hint": "تمكنك الصفحة من الاطلاع والبحث عن العقود الملغاه خلال الفترة المحددة",
+  "ReportCanceledContract Data": "العقود الملغاه",
 
   //Driver Contract --------
   "DriverContract Hint": "تمكنك هذه الصفحة من عرض والبحث عن تفاصيل عقود السائقين",

@@ -5,7 +5,12 @@ namespace Bnan.Ui.ViewModels.CAS
 {
     public class UserContractVM
     {
-        public List<CrCasRenterContractBasic> crCasRenterContractBasics { get; set; }
-        public List<CrMasUserInformation> crMasUserInformation { get; set; }
+        public List<CrCasRenterContractBasic>? crCasRenterContractBasics { get; set; }
+        public List<CrMasUserInformation>? crMasUserInformation { get; set; }
+
+        public List<List<string>>? contracts_Counts = new List<List<string>>(); 
+        public List<CrCasRenterContractBasic>? ContractBasic_Filtered { get; set; }
+
+
     }
 }

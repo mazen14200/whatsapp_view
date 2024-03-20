@@ -45,7 +45,7 @@
                 }
                 @foreach (var item in Model)
                 {
-                    @if (item.CrCasRenterLessorStatus == @Status.Deleted || item.CrCasRenterLessorStatus == @Status.Hold)
+                    @if (item.CrCasRenterLessorDealingMechanism == "16" )
                     {
                         <tr onclick="location.href='@Url.Action("Edit", "RenterLessorInformation", new { id = item.CrCasRenterLessorId })'" style="cursor:pointer;color:red">
                             <td id="_Nc">@no</td>
@@ -180,7 +180,7 @@ else
                 }
                 @foreach (var item in Model)
                 {
-                    @if (item.CrCasRenterLessorStatus == @Status.Deleted || item.CrCasRenterLessorStatus == @Status.Hold)
+                    @if (item.CrCasRenterLessorDealingMechanism == "16")
                     {
                         <tr onclick="location.href='@Url.Action("Edit", "RenterLessorInformation", new { id = item.CrCasRenterLessorId })'" style="cursor:pointer;color:red">
                             <td id="_Nc">@no</td>

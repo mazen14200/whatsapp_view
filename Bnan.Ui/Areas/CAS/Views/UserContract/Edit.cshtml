@@ -1,7 +1,8 @@
-﻿@using Bnan.Ui.ViewModels.CAS
+﻿
+
+@using Bnan.Ui.ViewModels.CAS
 @using Bnan.Core.Extensions
-@using Bnan.Core.Models
-@model IEnumerable<CrCasRenterContractBasic>
+@model UserContractVM
 
 
 @inject IViewLocalizer localizer
@@ -408,7 +409,7 @@ else
                 int? Days_Count = 0;
                 decimal? Contract_Value = 0;
                 var Counter = 0;
-                foreach (var single in Model)
+                foreach (var single in Model.crCasRenterContractBasics)
                 {
                    Contract_Value = single.CrCasRenterContractBasicExpectedTotal + Contract_Value;
                     //Contract_Count = single.CrCasRenterContractBasic3.CrCasRenterPrivateUserInformationContractCount + Contract_Count;
@@ -527,7 +528,7 @@ else
         </div>
 
     </form>
-    <div class="" id="buttonContainer" style="margin-top:30px;">
+    <div class="" id="buttonContainer" style="margin-top:5px;">
         @*<button type="submit" id="saveEdit" class="btn btn-primary ms-1">@localizer["Save"]</button>*@
 
         <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="UserContract" asp-action="Index">

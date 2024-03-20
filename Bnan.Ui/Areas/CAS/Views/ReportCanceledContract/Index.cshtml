@@ -9,10 +9,11 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
        ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
-    ViewData["Page-title"] = @localizer["RenterContractReport Data"];
-    ViewData["Page-Hint"] = @localizer["RenterContractReport Hint"];
+    ViewData["Page-title"] = @localizer["ReportCanceledContract Data"];
+    ViewData["Page-Hint"] = @localizer["ReportCanceledContract Hint"];
 }
 <style>
+
     body {
         overflow: hidden;
     }
@@ -119,6 +120,9 @@
     }
 
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
 {
@@ -217,7 +221,7 @@ else
                         <i class="dripicons-calendar" id="Date_cusor2" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:ltr"></i>
                     </div>
                     <div style="width:50px;">
-                        <a class="btn btn-primary" onclick="GetReportFitlerDate('All')">
+                        <a class="btn btn-primary" onclick="GetReportFitlerDate()">
                         <i class="mdi mdi-search-web"></i>
                     </a>
                     </div>
@@ -227,32 +231,12 @@ else
             <div style="-webkit-flex-align:start;display:flex;gap:0px" class="p-0" >
 
 
-                <div style="display:flex; gap : 7px;">
-                    <input type="radio" id="customRadioAll" name="customRadio" value="All" class="form-check-input p-0">
-                    <label class="p-0" for="customRadioAll">@localizer["All"]</label>
-                </div>
-                    <div style="display:flex; gap : 7px;">
-                    <input type="radio" id="customRadioToday_Expired" name="customRadio" value="today" class="form-check-input">
-                    <label class="p-0" for="customRadioToday_Expired">@localizer["Today_Expired"]</label>
-                </div>
-                    <div style="display:flex; gap : 7px;">
-                        <input type="radio" id="customRadioTommorow_Expired" name="customRadio" value="tomorrow" class="form-check-input">
-                    <label class="p-0" for="customRadioTommorow_Expired">@localizer["Tommorow_Expired"]</label>
-                </div>
-                    <div style="display:flex; gap : 7px;">
-                        <input type="radio" id="customRadioafter_long_Expired" name="customRadio" value="after_longTime" class="form-check-input">
-                    <label class="p-0" for="customRadioafter_long_Expired">@localizer["after_long_Expired"]</label>
-                </div>
-                    <div style="display:flex; gap : 7px;">
-                        <input type="radio" id="customRadioStoped" name="customRadio" value="E" class="form-check-input">
-                    <label class="p-0" for="customRadioStoped">@localizer["Expired"]</label>
-                </div>
                 </div>
 
             </div>
 
         <div class="dataTable " id="dataTableR1">
-            <partial name="_DataTableReportContract" />
+                <partial name="_DataTableReportCanceledContract" />
         </div>
         
 
@@ -260,9 +244,6 @@ else
 </div>
 <input type="text" hidden id="aaa" />
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<link href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 @section scripts {
    
    
@@ -322,43 +303,40 @@ else
         });
     </script>
     <script>
-        //get AccountBank By Status function
-        function GetReportFitlerDate(status) {
+        //get Contracts By Date function
+        function GetReportFitlerDate() {
 
-            var startDate = $("#startDateInput").val();
-            var endDate = $("#endDateInput").val();
+            var _mini = $("#startDateInput").val();
+            var _max = $("#endDateInput").val();
 
-            console.log(startDate)
-            console.log(endDate)
-            if (status === "All") {
-                const yesBtn = document.getElementById('customRadioAll');
-                // ✅ Set the radio button to checked
-                yesBtn.checked = true;
-            }
-
+            console.log(_mini);
+            console.log(_max);
+            
             // Clear the value from the search input
             $("#top-search").val("");
 
+                @*//location.href = '@Url.Action("GetAllContractsByDate_status", "ReportFClosedContract")?_max=' + _max + '&_mini=' + _mini;*@
+
             $.ajax({
                 type: "GET",
-                data: { _max: endDate,
-                    _mini: startDate,
-                    status: status 
-                 }, 
-                url: "@Url.Action("GetAllContractsByDate_status", "ReportContract", new { Area = "CAS" })",
-            success: function (response) {
-                $(".dataTable").html(response);
-                set_basic_datatable();
+                    data: {
+                    _max: _max,
+                    _mini: _mini,
                 },
+                url: "@Url.Action("GetAllContractsByDate_status", "ReportCanceledContract", new { Area = "CAS" })",
+                success: function (response) {
+                    $("#dataTableR1").html(response);
+                    set_basic_datatable();
+                    },
+                    error: function (request, status, error) {
+                        // Handle error
+                        console.log(request);
+                        console.log(status);
+                        console.log(error);
+
+                    }
             })
         }
-            //on Click Filter Radio Button GetLessorsByStatus
-            $("input[name='customRadio']").on("click", function () {
-                // Clear the value from the search input
-                $("#top-search").val("");
-                //GetRenterContractFitler($(this).val())
-                GetReportFitlerDate($(this).val());
-            });
         
     </script>
 

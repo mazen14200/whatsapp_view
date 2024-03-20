@@ -65,47 +65,111 @@
                 @foreach (var item in Model)
                 
                     {
-                        @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
-                    <tr style="cursor:pointer;color:black">
-                        @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
-                        <td id="_Nc">@no</td>
-                        <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
-                        <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
-                        <td>
-                            @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
-                        </td>
-                        <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
-                        <td>
-                            @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
-                            {
-                                @localizer["Standing"]
-                            }
-                            @if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
-                            {
-                                @localizer["Extended"]
-                            }
-                            else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                            {
-                                @localizer["Today_Expired"]
-                            }
-                            else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                            {
-                                @localizer["Tommorow_Expired"]
-                            }
-                            else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                            {
-                                @localizer["after_long_Expired"]
-                            }
-                            else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
-                            {
-                                @localizer["Expired"]
-                            }
-                        </td>
+                    @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
+                    if(item.CrCasRenterContractBasicStatus == "E")
+                    {
+                        <tr id="Tr_Color" style="cursor:pointer;color:red">
+                            @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
+                            <td id="_Nc">@no</td>
+                            <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
+                            <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
+                            </td>
+                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
+                            <td>
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
+                                {
+                                    @localizer["Standing"]
+                                }
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
+                                {
+                                    @localizer["Extended"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                {
+                                    @localizer["Today_Expired"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                {
+                                    @localizer["Tommorow_Expired"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                {
+                                    @localizer["after_long_Expired"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
+                                {
+                                    @localizer["Expired"]
 
-                        <td> @localizer["Contract"]</td>
+                                    @*<script>
+                    var x = document.getElementById("Tr_Color");
+                    x.style.color = "red";
+                    </script>*@
+                                    <script>
+                                        var x = document.querySelector("Tr_Color");
+                                        x.setAttribute("style", "color:red;");
+                                    </script>
+                                }
+                            </td>
+
+                            <td> @localizer["Contract"]</td>
 
 
-                    </tr>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr id="Tr_Color" style="cursor:pointer;color:black">
+                            @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
+                            <td id="_Nc">@no</td>
+                            <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
+                            <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
+                            </td>
+                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
+                            <td>
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
+                                {
+                                    @localizer["Standing"]
+                                }
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
+                                {
+                                    @localizer["Extended"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                {
+                                    @localizer["Today_Expired"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                {
+                                    @localizer["Tommorow_Expired"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                {
+                                    @localizer["after_long_Expired"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
+                                {
+                                    @localizer["Expired"]
+
+                                    @*<script>
+                                        var x = document.getElementById("Tr_Color");
+                                        x.style.color = "red";
+                                    </script>*@
+                                    <script>
+                                        var x = document.querySelector("Tr_Color");
+                                        x.setAttribute("style", "color:red;");
+                                    </script>
+                                }
+                            </td>
+
+                            <td> @localizer["Contract"]</td>
+
+
+                        </tr>
+                    }
 
                     no++;
                 }
@@ -141,45 +205,92 @@ else
 
                 {
                     @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
-                       <tr style="cursor:pointer;color:black">
-                        @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
-                        <td id="_Nc">@no</td>
-                        <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
-                        <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
-                        <td>
-                            @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationArName               
-                        </td>
-                        <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
-                        <td>
-                            @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
-                            {
-                                @localizer["Standing"]
-                            }
-                            @if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
-                            {
-                                @localizer["Extended"]
-                            }
-                            else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                            {
-                                @localizer["Today_Expired"]
-                            }
-                            else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                            {
-                                @localizer["Tommorow_Expired"]
-                            }
-                            else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                            {
-                                @localizer["after_long_Expired"]
-                            }
-                            else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
-                            {
-                                @localizer["Expired"]
-                            }
-                        </td>
+                    if(item.CrCasRenterContractBasicStatus == "E")
+                    {
+                        <tr id="Tr_Color" style="cursor:pointer;color:red">
+                            @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
+                            <td id="_Nc">@no</td>
+                            <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
+                            <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationArName
+                            </td>
+                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
+                            <td>
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
+                                {
+                                    @localizer["Standing"]
+                                }
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
+                                {
+                                    @localizer["Extended"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                {
+                                    @localizer["Today_Expired"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                {
+                                    @localizer["Tommorow_Expired"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                {
+                                    @localizer["after_long_Expired"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
+                                {
+                                    @localizer["Expired"]
+                                    <label onload="Tr_red_Color()"> </label>
+                                }
+                            </td>
 
-                        <td> @localizer["Contract"]</td>
+                            <td> @localizer["Contract"]</td>
 
-                    </tr>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr id="Tr_Color" style="cursor:pointer;color:black">
+                            @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
+                            <td id="_Nc">@no</td>
+                            <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
+                            <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationArName
+                            </td>
+                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
+                            <td>
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
+                                {
+                                    @localizer["Standing"]
+                                }
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
+                                {
+                                    @localizer["Extended"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                {
+                                    @localizer["Today_Expired"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                {
+                                    @localizer["Tommorow_Expired"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                {
+                                    @localizer["after_long_Expired"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
+                                {
+                                    @localizer["Expired"]
+                                    <label onload="Tr_red_Color()"> </label>
+                                }
+                            </td>
+
+                            <td> @localizer["Contract"]</td>
+
+                        </tr>
+                    }
 
                     no++;
                 }
@@ -191,6 +302,19 @@ else
       
 }
 @section script{
+    @*<script>
+        var x = document.getElementById("Tr_Color");
+        x.style.color = "red";
+    </script>*@
+    <script>
+        function Tr_red_Color(){
+            var vv = document.getElementById("Tr_Color");
+            vv.style.color = "red";
+            var x = document.querySelector("Tr_Color");
+            x.setAttribute("style", "color:red;");
+        }
+
+    </script>
     <script>
         new DataTable('#basic-datatable', {
             scrollX: true

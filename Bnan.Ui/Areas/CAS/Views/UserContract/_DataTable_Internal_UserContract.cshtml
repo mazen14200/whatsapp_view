@@ -1,7 +1,8 @@
 ﻿
 
+@using Bnan.Ui.ViewModels.CAS
 @using Bnan.Core.Extensions
-@model IEnumerable<CrCasRenterContractBasic>
+@model UserContractVM
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
@@ -33,18 +34,23 @@
                 @{
                     int no = 1;
                 }
-                @foreach (var item in Model)
+                @foreach (var item in Model.crCasRenterContractBasics)
                 {
                         @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'">*@
                         <tr  >
                         <td id="_Nc">@no</td>
 
                         <td id="_Nc" style="display:flex">
-                            <div style="display:flex;-webkit-align-items:0; gap:5px;"> 
-                            <div style="">@item.CrCasRenterContractBasicNo</div>
-                            <div style="color:red;">(@item.CrCasRenterContractBasicCopy)</div>
+                            <div style="display:flex;-webkit-align-items:0; gap:5px;">
+                                <div style="">@item.CrCasRenterContractBasicNo</div>
+                                @if (item.CrCasRenterContractBasicCopy > 0 && item.CrCasRenterContractBasicStatus != "y")
+                                {
+                                    <div style="color:red;">(@item.CrCasRenterContractBasicCopy)</div>
+                                    @*<div style="color:red;">(@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicNo == item.CrCasRenterContractBasicNo).Max(x=>x.CrCasRenterContractBasicCopy))</div>*@
+                                }
                             </div>
                         </td>
+
                         <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
                             <td>
@@ -104,14 +110,21 @@
 
                             </td>
                             <td>
-
-                                @if (@item.CrCasRenterContractBasicStatus == Status.Active)
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
+                                {
+                                    @localizer["Closed"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Cancel)
+                                {
+                                    @localizer["Canceled"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Active)
                                 {
                                     @localizer["Standing"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Extension)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
                                 {
-                                    @localizer["Extension"]
+                                    @localizer["Extended"]
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
                                 {
@@ -131,7 +144,7 @@
                                 }
                             </td>
 
-                            <td id="_Nc">@localizer["Contract"]</td>
+                            <td id="_Nc">   </td>
 
                         </tr>
                     
@@ -166,7 +179,7 @@ else
 
                     
                 
-                @foreach (var item in Model)
+                @foreach (var item in Model.crCasRenterContractBasics)
                 {
                         @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'">*@
                         <tr>
@@ -175,7 +188,11 @@ else
                         <td id="_Nc" style="display:flex">
                             <div style="display:flex;-webkit-align-items:0; gap:5px;">
                                 <div style="">@item.CrCasRenterContractBasicNo</div>
-                                <div style="color:red;">(@item.CrCasRenterContractBasicCopy)</div>
+                                @if (item.CrCasRenterContractBasicCopy > 0 && item.CrCasRenterContractBasicStatus != "y")
+                                {
+                                    <div style="color:red;">(@item.CrCasRenterContractBasicCopy)</div>
+                                    @*<div style="color:red;">(@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicNo == item.CrCasRenterContractBasicNo).Max(x=>x.CrCasRenterContractBasicCopy))</div>*@
+                                }
                             </div>
                         </td>
 
@@ -240,13 +257,21 @@ else
 
                             <td>
 
-                                @if (@item.CrCasRenterContractBasicStatus == Status.Active)
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
+                                {
+                                    @localizer["Closed"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Cancel)
+                                {
+                                    @localizer["Canceled"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Active)
                                 {
                                     @localizer["Standing"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Extension)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
                                 {
-                                    @localizer["Extension"]
+                                    @localizer["Extended"]
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
                                 {
@@ -266,7 +291,7 @@ else
                                 }
                             </td>
 
-                            <td id="_Nc">@localizer["Contract"]</td>
+                            <td id="_Nc">  </td>
                             @*<td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal</td>*@
                         </tr>
                     
