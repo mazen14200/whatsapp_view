@@ -563,7 +563,7 @@ namespace Bnan.Inferastructure.Repository
             return false;
         }
 
-        public async Task<bool> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo, decimal TotalPayed, string RenterId, string UserId, string PassingType, string Reasons)
+        public async Task<bool> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo, decimal TotalPayed, string RenterId, string UserId, string PassingType, string Reasons, string pdfPath)
         {
             CrCasAccountReceipt crCasAccountReceipt = new CrCasAccountReceipt();
             var User = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == UserId && x.CrMasUserInformationLessor == LessorCode);
@@ -618,6 +618,7 @@ namespace Bnan.Inferastructure.Repository
             crCasAccountReceipt.CrCasAccountReceiptReceipt = 0;
             crCasAccountReceipt.CrCasAccountReceiptIsPassing = PassingType;
             crCasAccountReceipt.CrCasAccountReceiptReasons = Reasons;
+            crCasAccountReceipt.CrCasAccountReceiptArPdfFile = pdfPath;
 
             if (await _unitOfWork.CrCasAccountReceipt.AddAsync(crCasAccountReceipt) != null) return true;
             return false;

@@ -435,13 +435,19 @@ else
                 });
             }
         }
-        // Initial call on document ready
-        $('#ReportsData').on('click', '.modal-trigger', function () {
-            var receiptNo = $(this).data('id');
-            getDetails(receiptNo);
-        });
-
         $(document).ready(function () {
+            // Handle click on PDF link to prevent modal trigger
+            $('#ReportsData').on('click', '.pdf-link', function (e) {
+                e.stopPropagation(); // Prevent event from propagating to parent elements
+            });
+
+            // Bind click event to open modal when clicking on the table row
+            $('#ReportsData').on('click', '.modal-trigger', function () {
+                var receiptNo = $(this).data('id');
+                getDetails(receiptNo);
+            });
+
+            // Close modal when close button is clicked
             $('.close').click(function () {
                 $('#myModal').modal('hide');
             });

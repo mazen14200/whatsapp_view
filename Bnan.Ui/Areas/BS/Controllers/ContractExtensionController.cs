@@ -42,7 +42,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var bsLayoutVM = await GetBranchesAndLayout();
             var contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicStatus == Status.Active &&
                                                                            x.CrCasRenterContractBasicBranch == bsLayoutVM.SelectedBranch &&
-                                                                           x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation" });
+                                                                           x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation" });
             var contractMap = _mapper.Map<List<ContractForExtensionVM>>(contracts);
             foreach (var contract in contractMap)
             {

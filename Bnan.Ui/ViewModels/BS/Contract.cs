@@ -41,6 +41,7 @@ namespace Bnan.Ui.ViewModels.BS
         public string? TaxValue { get; set; }
         public string? TotalContractAmount { get; set; }
         public string? AdvantagesTotalValue { get; set; }
+        public string? AccountReceiptNo { get; set; }
 
     }
 }

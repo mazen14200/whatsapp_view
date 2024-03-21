@@ -75,6 +75,38 @@ namespace Bnan.Inferastructure.Extensions
             }
             return false;
         }
+        public static async Task<string?> SavePdf(this IWebHostEnvironment webHostEnvironment, string pdfFile, string lessor,string branch,string accountReceiptNo)
+        {
+            byte[] pdfBytes = Convert.FromBase64String(pdfFile.Split(",")[1]); // Split to remove the prefix "data:application/pdf;base64,"
+            string wwwrootPath = webHostEnvironment.WebRootPath;
+            //var folder = "";
+            //if (langauge == "ar") folder = "Arabic Contract";
+            //else folder = "English Contract";
+
+            // Specify the file path within the wwwroot folder
+            string Pathh = Path.Combine("images", "Company", lessor, "Branches", branch, "Receipt", accountReceiptNo + ".pdf");
+            string filePath = Path.Combine(wwwrootPath, Pathh);
+            bool isTrue=false;
+            // Write the byte array to a file
+            try
+            {
+                await System.IO.File.WriteAllBytesAsync(filePath, pdfBytes);
+                isTrue=true;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            if (isTrue)
+            {
+                string virtualPath1 = Pathh.Replace(webHostEnvironment.WebRootPath, "~").Replace("\\", "/");
+                string virtualPath = $"~/{virtualPath1}";
+
+                return virtualPath;
+            }
+            return null;
+        }
         public static async Task<bool?> RemoveImage(this IWebHostEnvironment webHostEnvironment, string path)
         {
             var pathA = MapPath(webHostEnvironment, path);

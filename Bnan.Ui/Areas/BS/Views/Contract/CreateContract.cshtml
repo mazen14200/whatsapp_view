@@ -68,7 +68,9 @@ else
                     </div>
                     <div class="row justify-content-center h-100 content-row">
                         <div class="col-md-11 mx-0">
-                            <form asp-area="BS" asp-action="CreateContract" asp-controller="Contract" id="msform" novalidate class="needs-validation">
+                            <form asp-area="BS" asp-action="CreateContract" asp-controller="Contract" id="msform" novalidate class="needs-validation" enctype="multipart/form-data">
+                                <input hidden id="PdfSave1" name="PdfSave1" />
+                                <input hidden asp-for="Contract.AccountReceiptNo" />
                                 <div class=" pe-4">
                                     <!-- progressbar -->
                                     <ul id="progressbar">
@@ -4117,26 +4119,25 @@ else
                     const CarAr = CarInformation.carInformation.crCasCarInformationConcatenateArName;
                     const startDate = new Date($("#StartDate").text());
                     const endDate = new Date($("#EndDate").text());
-                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                    const startHijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', options).format(startDate);
-                    const endHijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', options).format(endDate);
-                    const branch = '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArShortName)' + ' - ' + '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchPost.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateArName)';
-
+                    const startHijriDate = formatHijriDate(startDate);
+                    const endHijriDate = formatHijriDate(endDate);
+                    console.log(startHijriDate);
+                    const branch = '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchPost.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateArName)' + ' - ' + '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArShortName)';
                     // Define text properties
                     ctx.font = "bold 25px serif";
                     ctx.textAlign = "right";
                     ctx.fillStyle = "black";
                     ctx.fillText(RenterInformation.personalArName, canvas.width - 75, 170);
                     ctx.fillText(CarAr, canvas.width - 75, 205);
-                    ctx.fillText($("#StartDate").text(), canvas.width - 190, 358);
-                    ctx.fillText($("#EndDate").text(), canvas.width - 190, 395);
+                    ctx.fillText(startHijriDate, canvas.width - 190, 358);
+                    ctx.fillText(endHijriDate, canvas.width - 190, 395);
                     ctx.fillText(branch, canvas.width - 75, 450);
 
                     ctx.textAlign = "left";
                     ctx.fillText(RenterInformation.personalEnName, canvas.width - 960, 270);
                     ctx.fillText(CarEn, canvas.width - 960, 305);
-                    ctx.fillText(startHijriDate, canvas.width - 850, 358);
-                    ctx.fillText(endHijriDate, canvas.width - 850, 395);
+                    ctx.fillText($("#StartDate").text(), canvas.width - 850, 358);
+                    ctx.fillText($("#EndDate").text(), canvas.width - 850, 395);
                     ctx.fillText($("#ContractNo").val(), canvas.width - 960, 585);
                     canvas.toBlob(async function (blob) {
                         formData.append("file", blob, "CreateContractWhatUp.png"); // Append the modified image blob with a filename
@@ -4178,11 +4179,11 @@ else
             // Gregorian (Miladi) Date
             const miladiDate = new Date();
             const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
-            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).replace(/\//g, '-');
-
+            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).split('/').join('/');
             // Hijri Date
-            const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-            const hijriDateString = new Intl.DateTimeFormat('ar-u-ca-islamic', hijriOptions).format(miladiDate);
+            // const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+            const hijriDateString = formatHijriDate(miladiDate);
+
             // First In Page
             const contractNo = "@ViewBag.ContractNo";
             const AccountReceiptNo = "@ViewBag.AccountReceiptNo";
@@ -4231,26 +4232,38 @@ else
                 canvas.height = img.height;
 
                 ctx.drawImage(img, 0, 0);
-
-                ctx.font = "bold 35px serif";
+                ctx.font = "bold 50px serif";
                 ctx.textAlign = "right";
                 ctx.fillStyle = "black";
-                //Date and contract no
-                ctx.fillText(AccountReceiptNo, canvas.width - 110, 610);
-                ctx.fillText(hijriDateString, canvas.width - 228, 668);
-                ctx.fillText(miladiDateString, canvas.width - 228, 722);
                 // Receipt and type and renter and car name
+                ctx.fillText(AccountReceiptNo, canvas.width - 110, 610);
+                ctx.font = "bold 42px serif";
                 ctx.fillText(referenceType, canvas.width - 250, 895);
                 ctx.fillText(contractNo, canvas.width - 320, 985);
                 ctx.fillText(RenterName, canvas.width - 122, 1065);
                 ctx.fillText(CarName, canvas.width - 122, 1160);
-
 
                 // The Table
                 var YHeight = 1380;
                 var DiscountInput = document.getElementById("Discount_Input").value;
                 var daysNo = document.getElementById('dayNo').value;
                 var TaxPercent = parseInt(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
+                // The payed Information
+                const discountText = '%' + DiscountInput.toString();
+                const taxText = '%' + TaxPercent.toString();
+
+                ctx.fillText(balance, canvas.width - 330, 2342);
+                ctx.fillText(discountText, canvas.width - 360, 2435);
+                ctx.fillText(taxText, canvas.width - 367, 2523);
+                ctx.fillText(AmountRequired, canvas.width - 360, 2610);
+                ctx.fillText(AmountPayed, canvas.width - 360, 2700);
+                ctx.fillText(selectedText, canvas.width - 360, 2790);
+                ctx.fillText(reasonPayment, canvas.width - 360, 2880);
+                ctx.font = "bold 35px serif";
+                //Date and contract no
+                ctx.fillText(hijriDateString, canvas.width - 228, 668);
+                ctx.fillText(miladiDateString, canvas.width - 228, 722);
+
 
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
@@ -4360,14 +4373,7 @@ else
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// TotalAdditional
 
 
-                // The payed Information
-                ctx.fillText(balance, canvas.width - 330, 2342);
-                ctx.fillText(DiscountInput, canvas.width - 360, 2435);
-                ctx.fillText(TaxPercent, canvas.width - 367, 2523);
-                ctx.fillText(AmountRequired, canvas.width - 360, 2610);
-                ctx.fillText(AmountPayed, canvas.width - 360, 2700);
-                ctx.fillText(selectedText, canvas.width - 360, 2790);
-                ctx.fillText(reasonPayment, canvas.width - 360, 2880);
+
 
                 // director and renter and user
                 ctx.fillText(directorOfLessor, canvas.width - 340, 3095);
@@ -4457,7 +4463,11 @@ else
                     formData.append("number", phoneNumber); // Append the recipient's phone number
                     formData.append("message", message); // Append the message
                     formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
-
+                    // Convert the PDF to a base64-encoded string
+                    const pdfBase64 = doc.output('datauristring');
+                    // Set the base64-encoded PDF to the hidden input field
+                    document.getElementById('PdfSave1').value = pdfBase64;
+                    document.getElementById('Contract_AccountReceiptNo').value = receiptNo;
                     const requestOptions = {
                         method: 'POST',
                         body: formData,
@@ -4465,7 +4475,7 @@ else
                             'Authorization': `Bearer ${token}`
                         }
                     };
-
+                    console.log("pdfBlob", pdfBlob);
                     // Send the request to the API endpoint
                     fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
                         .then(response => {
@@ -4487,7 +4497,6 @@ else
             } catch (error) {
                 console.error('Error adding image to PDF:', error);
             }
-            // doc.save(`${contractNo}.pdf`); // Save the PDF with the contract number as filename
         }
     </script>
     <script>
@@ -4573,5 +4582,11 @@ else
             textArea.innerHTML = text;
             return textArea.value;
         }
+        // Function to format Hijri date
+        function formatHijriDate(date) {
+            const options = { weekday: 'long', day: 'numeric', year: 'numeric', month: 'long', calendar: 'islamic-umalqura' };
+            return date.toLocaleDateString('ar-SA', options).replace(/هـ/g, ''); // Remove "هـ" suffix
+        }
+
     </script>
 }

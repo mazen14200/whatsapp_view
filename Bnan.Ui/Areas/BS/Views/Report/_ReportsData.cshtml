@@ -42,7 +42,9 @@
             {
                 <tr class="modal-trigger" data-id="@item.CrCasAccountReceiptNo">
 
-                    <td><i class="fas fa-file-pdf"></i></td>
+                    <td>
+                        <a href="@Url.Content(item.CrCasAccountReceiptArPdfFile?.ToString())" target="_blank" class="pdf-link"><i class="fas fa-file-pdf"></i></a>
+                    </td>
                     @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                     {
                         <td class="text-right">
