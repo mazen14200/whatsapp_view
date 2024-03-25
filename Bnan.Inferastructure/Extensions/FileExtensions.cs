@@ -80,8 +80,8 @@ namespace Bnan.Inferastructure.Extensions
             byte[] pdfBytes = Convert.FromBase64String(pdfFile.Split(",")[1]); // Split to remove the prefix "data:application/pdf;base64,"
             string wwwrootPath = webHostEnvironment.WebRootPath;
             string Pathh = "";
-            if (language=="ar")Pathh = Path.Combine("images", "Company", lessor, "Branches", branch, "ArReceipt", accountReceiptNo + ".pdf");
-            else Pathh = Path.Combine("images", "Company", lessor, "Branches", branch, "EnReceipt", accountReceiptNo + ".pdf");
+            if (language=="ar")Pathh = Path.Combine("images", "Company", lessor, "Branches", branch, "Arabic Receipt", accountReceiptNo + ".pdf");
+            else Pathh = Path.Combine("images", "Company", lessor, "Branches", branch, "English Receipt", accountReceiptNo + ".pdf");
             string filePath = Path.Combine(wwwrootPath, Pathh);
             Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             // Write the byte array to a file
@@ -145,8 +145,8 @@ namespace Bnan.Inferastructure.Extensions
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100"),
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "Arabic Contract"),
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "English Contract"),
-                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "ArReceipt"),
-                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "EnReceipt"),
+                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "Arabic Receipt"),
+                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "English Receipt"),
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "Documentions")
                     };
 
@@ -170,8 +170,8 @@ namespace Bnan.Inferastructure.Extensions
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode),
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "Arabic Contract"),
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "English Contract"),
-                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "ArReceipt"),
-                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "EnReceipt"),
+                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "Arabic Receipt"),
+                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "English Receipt"),
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "Documentions")
                     };
 
