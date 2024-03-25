@@ -220,7 +220,7 @@ namespace Bnan.Ui.Areas.MAS
             string foldername = $"{"images\\Common"}";
             string filePathImageAccept = "";
             var user = await _userService.GetUserByUserNameAsync(HttpContext.User.Identity.Name);
-
+            var cvt = await _unitOfWork.CrMasSupCarCvt.FindAsync(x => x.CrMasSupCarCvtCode == model.CrMasSupCarCvtCode);
             if (user != null)
             {
                 if (model != null)
@@ -229,21 +229,34 @@ namespace Bnan.Ui.Areas.MAS
                     if (AcceptImg != null)
                     {
                         //string fileNameImg = model.CrMasSupCarCvtEnName + "_CarCvt_" + model.CrMasSupCarCvtCode.ToString();
-                        string fileNameImg = "CarCvt_" + model.CrMasSupCarCvtCode.ToString();
-                        filePathImageAccept = await AcceptImg.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
-                        model.CrMasSupCarCvtImage = filePathImageAccept;
+                        string fileNameImg = "CarFuel_" + model.CrMasSupCarCvtCode.ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوق
+                        filePathImageAccept = await AcceptImg.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png",cvt.CrMasSupCarCvtImage);
+                    }
+                    if (AcceptImg != null)
+                    {
+                        string fileNameImg = "CarFuel_" + model.CrMasSupCarCvtCode.ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوق
+                        filePathImageAccept = await AcceptImg.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png", cvt.CrMasSupCarCvtImage);
+                    }
+                    else if (!string.IsNullOrEmpty(cvt.CrMasSupCarCvtImage))
+                    {
+                        filePathImageAccept = cvt.CrMasSupCarCvtImage;
+                    }
+                    else
+                    {
+                        filePathImageAccept = "~/images/common/DefaultCar.png";
                     }
 
+                    //var contract = _mapper.Map<CrMasSupCarCvt>(model);
+                    cvt.CrMasSupCarCvtImage = filePathImageAccept;
+                    cvt.CrMasSupCarCvtReasons = model.CrMasSupCarCvtReasons;
 
-                    var contract = _mapper.Map<CrMasSupCarCvt>(model);
-
-                    _unitOfWork.CrMasSupCarCvt.Update(contract);
+                    _unitOfWork.CrMasSupCarCvt.Update(cvt);
                     _unitOfWork.Complete();
 
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107003", "1");
-                    var RecordAr = contract.CrMasSupCarCvtArName;
-                    var RecordEn = contract.CrMasSupCarCvtEnName;
+                    var RecordAr = cvt.CrMasSupCarCvtArName;
+                    var RecordEn = cvt.CrMasSupCarCvtEnName;
                     await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);

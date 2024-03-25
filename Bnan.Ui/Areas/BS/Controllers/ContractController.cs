@@ -73,12 +73,13 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var autoinc = GetContractLastRecord("1", lessorCode, bSLayoutVM.SelectedBranch).CrCasRenterContractBasicNo;
             var BasicContractNo = y + "-" + sector + "401" + "-" + lessorCode + bSLayoutVM.SelectedBranch + "-" + autoinc;
             ViewBag.ContractNo = BasicContractNo;
+
             // get data and send it to View And Create image  
             DateTime now = DateTime.Now;
             var y1 = now.ToString("yy");
             //var sector = Renter.CrCasRenterLessorSector;
             var autoinc1 = GetContractAccountReceipt(lessorCode, bSLayoutVM.SelectedBranch).CrCasAccountReceiptNo;
-            var AccountReceiptNo = y + "-" + "1" + "301" + "-" + lessorCode + bSLayoutVM.SelectedBranch + "-" + autoinc;
+            var AccountReceiptNo = y + "-" + "1" + "301" + "-" + lessorCode + bSLayoutVM.SelectedBranch + "-" + autoinc1;
             ViewBag.AccountReceiptNo = AccountReceiptNo;
 
 
@@ -96,7 +97,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             return View(bSLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateContract(BSLayoutVM bSLayoutVM, string ChoicesList, string AdditionalsList, Dictionary<string, string> Reasons, bool Contract_OutFeesTmm, string PdfSave1)
+        public async Task<IActionResult> CreateContract(BSLayoutVM bSLayoutVM, string ChoicesList, string AdditionalsList, Dictionary<string, string> Reasons, bool Contract_OutFeesTmm, string? PdfSave1,string? language)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -126,6 +127,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 //Account Receipt
                 var CheckAccountReceipt = true;
                 var passing = "";
+                var SavePdf = "";
                 if (BasicContract.CrCasRenterContractBasicAmountPaidAdvance > 0)
                 {
                    
@@ -137,10 +139,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     else {
                         passing = "1";
                     }
-                    //Add Row in BasicContract Table 
-                    bool savepdfInDataBase = true;
-                    var SavePdf = await FileExtensions.SavePdf(_hostingEnvironment, PdfSave1, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo);
-
+                    if (!string.IsNullOrEmpty(PdfSave1)&& !string.IsNullOrEmpty(language)) SavePdf = await FileExtensions.SavePdf(_hostingEnvironment, PdfSave1, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, language);
                     CheckAccountReceipt = await _ContractServices.AddAccountReceipt(BasicContract.CrCasRenterContractBasicNo, lessorCode, BasicContract.CrCasRenterContractBasicBranch,
                                                                                   ContractInfo.PaymentMethod, ContractInfo.AccountNo, BasicContract.CrCasRenterContractBasicCarSerailNo,
                                                                                   ContractInfo.SalesPoint,(decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance,
@@ -259,7 +258,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     CheckCheckUpCar && CheckAuthrization && CheckCarInfo && CheckDocAndMaintainance!=null &&
                     CheckRenterLessor&& CheckAccountReceipt&& CheckBranch&& CheckSalesPoint&&
                     CheckUserInformation&& CheckBranchValidity&& CheckMasRenter&& CheckAddDriver&& 
-                    CheckDriver&& CheckPrivateDriver&& CheckRenterAlert&& CheckRenterStatisctics)
+                    CheckDriver&& CheckPrivateDriver&& CheckRenterAlert&& CheckRenterStatisctics&&!string.IsNullOrEmpty(SavePdf))
                 {
                     try
                     {
@@ -441,6 +440,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         BirthDate = elmRenterInfo?.CrElmPersonalBirthDate,
                         ExpiryIdDate = elmRenterInfo?.CrElmPersonalExpiryIdDate,
                         KeyCountry = elmRenterInfo?.CrElmPersonalCountryKey,
+                        AvailableBalance = 0,
+                        ReservedBalance = 0,
                         Balance = 0
                     };
                     return Json(renterInformationsVM);

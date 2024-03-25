@@ -75,36 +75,37 @@ namespace Bnan.Inferastructure.Extensions
             }
             return false;
         }
-        public static async Task<string?> SavePdf(this IWebHostEnvironment webHostEnvironment, string pdfFile, string lessor,string branch,string accountReceiptNo)
+        public static async Task<string?> SavePdf(this IWebHostEnvironment webHostEnvironment, string pdfFile, string lessor,string branch,string accountReceiptNo,string language)
         {
             byte[] pdfBytes = Convert.FromBase64String(pdfFile.Split(",")[1]); // Split to remove the prefix "data:application/pdf;base64,"
             string wwwrootPath = webHostEnvironment.WebRootPath;
-            //var folder = "";
-            //if (langauge == "ar") folder = "Arabic Contract";
-            //else folder = "English Contract";
-
-            // Specify the file path within the wwwroot folder
-            string Pathh = Path.Combine("images", "Company", lessor, "Branches", branch, "Receipt", accountReceiptNo + ".pdf");
+            string Pathh = "";
+            if (language=="ar")Pathh = Path.Combine("images", "Company", lessor, "Branches", branch, "ArReceipt", accountReceiptNo + ".pdf");
+            else Pathh = Path.Combine("images", "Company", lessor, "Branches", branch, "EnReceipt", accountReceiptNo + ".pdf");
             string filePath = Path.Combine(wwwrootPath, Pathh);
-            bool isTrue=false;
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             // Write the byte array to a file
             try
             {
                 await System.IO.File.WriteAllBytesAsync(filePath, pdfBytes);
-                isTrue=true;
+                // Set isTrue to true if the file write operation is successful
+                bool isTrue = true;
+
+                if (isTrue)
+                {
+                    string virtualPath1 = Pathh.Replace(webHostEnvironment.WebRootPath, "~").Replace("\\", "/");
+                    string virtualPath = $"~/{virtualPath1}";
+                    return virtualPath;
+                }
             }
             catch (Exception ex)
             {
-
+                // Handle the exception here if needed
+                // For now, let's throw it again
                 throw;
             }
-            if (isTrue)
-            {
-                string virtualPath1 = Pathh.Replace(webHostEnvironment.WebRootPath, "~").Replace("\\", "/");
-                string virtualPath = $"~/{virtualPath1}";
 
-                return virtualPath;
-            }
+            // If the file write operation was unsuccessful, return null
             return null;
         }
         public static async Task<bool?> RemoveImage(this IWebHostEnvironment webHostEnvironment, string path)
@@ -144,7 +145,8 @@ namespace Bnan.Inferastructure.Extensions
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100"),
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "Arabic Contract"),
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "English Contract"),
-                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "Receipt"),
+                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "ArReceipt"),
+                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "EnReceipt"),
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches", "100", "Documentions")
                     };
 
@@ -168,7 +170,8 @@ namespace Bnan.Inferastructure.Extensions
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode),
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "Arabic Contract"),
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "English Contract"),
-                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "Receipt"),
+                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "ArReceipt"),
+                        GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "EnReceipt"),
                         GetDirectoryPath(webHostEnvironment.WebRootPath,"images","Company",lessorCode, "Branches",branchCode, "Documentions")
                     };
 

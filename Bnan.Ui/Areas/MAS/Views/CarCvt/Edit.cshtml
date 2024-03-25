@@ -232,6 +232,8 @@
                 </div>
             </div>
             @*AcceptImg*@
+        @if (!string.IsNullOrEmpty(Model.CrMasSupCarCvtImage))
+        {
             <div class="row mt-1">
                 <div class="col-md-4">
                     <div class="file-upload">
@@ -250,8 +252,33 @@
                         </div>
                     </div>
                 </div>
-                
-           </div>
+
+            </div>
+        }
+        else
+        {
+            <div class="row mt-1">
+                <div class="col-md-4">
+                    <div class="file-upload">
+                        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input-picture1').trigger('click')">@localizer["CarCvtImg"]</button>
+                        <div class="image-upload-wrap" style="display:block">
+                            <input class="file-upload-input-picture1" type="file" onchange="readURL(this, 'picture1');" accept="image/*" id="AcceptImg" name="AcceptImg" />
+                            <div class="drag-text">
+                                <h3>@localizer["DragAndDrop"]</h3>
+                            </div>
+                        </div>
+                        <div class="file-upload-content picture1" style="display:none">
+                            <img class="file-upload-image picture1" src="#" />
+                            <div class="image-title-wrap">
+                                <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+
 
         @* </div> *@
 
