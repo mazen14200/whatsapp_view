@@ -26,6 +26,8 @@ namespace Bnan.Inferastructure.Repository
             var adminstritive = await _unitOfWork.CrCasSysAdministrativeProcedure.FindAsync(x => x.CrCasSysAdministrativeProceduresNo == AdmintritiveNo);
             var SalesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x =>x.CrCasAccountSalesPointLessor==lessorCode&& x.CrCasAccountSalesPointBrn == BranchCode && x.CrCasAccountSalesPointBank == "00");
             var UserTarget = await _unitOfWork.CrMasUserInformation.FindAsync(x =>x.CrMasUserInformationLessor==lessorCode&& x.CrMasUserInformationCode == UserLogin);
+            var userValidity = await _unitOfWork.CrMasUserBranchValidity.FindAsync(x => x.CrMasUserBranchValidityLessor == lessorCode && x.CrMasUserBranchValidityBranch == BranchCode && x.CrMasUserBranchValidityId == UserTarget.CrMasUserInformationCode);
+            var userBranchValidityBalance = userValidity.CrMasUserBranchValidityBranchCashAvailable + userValidity.CrMasUserBranchValidityBranchSalesPointAvailable + userValidity.CrMasUserBranchValidityBranchTransferAvailable;
             receipt.CrCasAccountReceiptNo = GetAccountReceiptNo(BranchCode, UserTarget.CrMasUserInformationCode);
             receipt.CrCasAccountReceiptYear = DateTime.Now.ToString("yy");
             receipt.CrCasAccountReceiptType = "301";
@@ -43,6 +45,7 @@ namespace Bnan.Inferastructure.Repository
             receipt.CrCasAccountReceiptSalesPointPreviousBalance = SalesPoint.CrCasAccountSalesPointTotalBalance;
             receipt.CrCasAccountReceiptUser = UserTarget.CrMasUserInformationCode;
             receipt.CrCasAccountReceiptUserPreviousBalance = UserTarget.CrMasUserInformationTotalBalance;
+            receipt.CrCasAccountReceiptBranchUserPreviousBalance = userBranchValidityBalance;
             receipt.CrCasAccountReceiptIsPassing = "1";
             receipt.CrCasAccountReceiptPassingUser = UserTarget.CrMasUserInformationCode;
             receipt.CrCasAccountReceiptPassingDate = DateTime.Now;

@@ -15,7 +15,7 @@ namespace Bnan.Core.Interfaces
         Task<bool> UpdateSalesPoint(string lessorCode, string BranchCode, string SalesPointCode, string Creditor);
         Task<bool> UpdateBranchValidity(string UserCode, string lessorCode, string BranchCode, string BankNo, string Creditor);
         Task<bool> UpdateBranchValidityReceivedCustody(string UserCode, string lessorCode, string BranchCode, string AdminstritiveNo, string TotalAmount,string status);
-        Task<bool> AddAccountReceiptReceivedCustody(string AdmintritiveNo, string lessorCode, string BranchCode, string Creditor,string reasons);
+        Task<bool> AddAccountReceiptReceivedCustody(string AdmintritiveNo, string lessorCode, string BranchCode, string Creditor,string userCode, string reasons);
         Task<bool> UpdateUserInfoReceivedCustody(string UserCode, string lessorCode, string TotalAmount, string status);
         Task<bool> UpdateBranchReceivedCustody(string BranchCode, string lessorCode, string TotalAmount, string status);
         Task<bool> UpdateSalesPointReceivedCustody(string lessorCode, string BranchCode, string AdminstritiveNo, string TotalAmount, string status);

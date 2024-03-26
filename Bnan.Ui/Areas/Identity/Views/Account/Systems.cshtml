@@ -21,7 +21,153 @@
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
     var returnUrl = ViewData["returnUrl"];
 }
-<div class="limiter">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="~/LoginAndSystems/css/systems.css">
+@if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+{
+    <link rel="stylesheet" type="text/css" href="~/LoginAndSystems/css/en-systems-style.css">
+}
+<div class="navbar-div px-lg-5 px-3">
+    <nav class="navbar">
+        <div class="col-12 col-lg-9 brand">
+            <a class="navbar-brand">
+                <div class="row align-items-end flex-row-reverse mx-2">
+                    <div class="col-auto">
+                        @if (lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo != null)
+                        {
+                            <img src="@Url.Content(lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo)" class="d-inline-block align-top logo" alt="logo-image">
+                        }
+                    </div>
+                    <div class="col">
+                        @if (signinManager.IsSignedIn(User))
+                        {
+                            @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
+                            {
+                                <h1>@lessorInfo.CrMasUserInformationLessorNavigation?.CrMasLessorInformationArLongName</h1>
+                            }
+                            else
+                            {
+                                <h1>@lessorInfo.CrMasUserInformationLessorNavigation?.CrMasLessorInformationEnLongName</h1>
+                            }
+                        }
+                    </div>
+
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <div class="mode-btn">
+                <label for="switch-mode">
+                    @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+                    {
+                        <a asp-area="Identity" asp-controller="Account" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="ar-EG">
+                            <p style="font-weight: 600;" class="Arabic"> <img src="~/LoginAndSystems/images/Group.png"> العربية</p>
+                        </a>
+
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-controller="Account" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="en-US">
+                            <p style="font-weight: 600;" class="english"><img src="~/LoginAndSystems/images/Group.png"> English </p>
+                        </a>
+                    }
+                </label>
+            </div>
+            <a asp-action="Logout" asp-area="Identity" asp-controller="Account" class="exit"><img src="~/LoginAndSystems/images/Group 1.png"></a>
+        </div>
+    </nav>
+</div>
+<div class="wrapper flex-grow-1 d-flex align-items-center ">
+    <div class="limiter">
+
+        <div class="container">
+            <div class="row px-4">
+                <div class="col-md-12 text-end">
+                    <!-- <p>مرحبًا،<span> محمد عبدالله </span></p> -->
+                </div>
+
+            </div>
+        </div>
+        <div class="container container-Systems">
+            <div class="row g-3  card-row w-75 justify-content-center">
+                @if (user.CrMasUserInformationAuthorizationOwner == true)
+                {
+                    <div class="col-md-4 card1">
+                        <div class="system-card">
+                            <a href="#">
+                                <div class="card-content" style="overflow:hidden;">
+                                    <div class="img-hover-zoom">
+                                        <img class="w-100" src="~/LoginAndSystems/images/Rectangle 136 (1).png" alt="iamge for owners card">
+                                    </div>
+                                    <div class="card-name1 row p-3 card-content-text ">
+                                        <div class="col-auto">
+                                            <p class="owners">@localizer["Owner"]</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+                @if (user.CrMasUserInformationAuthorizationBranch == true)
+                {
+                    <div class="col-md-4 card2">
+                        <div class="system-card">
+                            <a asp-area="BS" asp-controller="Home" asp-action="Index">
+                                <div class="card-content" style="overflow:hidden;">
+                                    <img class="w-100" src='~/LoginAndSystems/images/branch.png'  alt="iamge for branches card" />
+                                    <div class="card-name2 row p-3 card-content-text">
+                                        <div class="col-auto">
+                                            <p class="branches">@localizer["Branches"]</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+                @if (user.CrMasUserInformationAuthorizationAdmin == true)
+                {
+                    <div class="col-md-4 card3">
+                        <div class="system-card">
+                            <a asp-area="CAS" asp-controller="Home" asp-action="index">
+                                <div class="card-content" style="overflow:hidden;">
+                                    <div class="img-hover-zoom">
+                                        <img class="w-100" src="~/LoginAndSystems/images/management.png" alt="iamge for Administration card">
+                                    </div>
+                                    <div class="card-name3 row p-3 card-content-text ">
+                                        <div class="col-auto">
+                                            <p class="Administration">@localizer["CasSystem"]</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+ <partial name="_ExpirationModalSystems" />
+ <!-- Footer -->
+<footer>
+    <div class="before-footer-widget">
+        <svg width: 100%; viewbox="0 0 2444 132">
+            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+            </path>
+        </svg>
+
+    </div>
+</footer>
+
+<!-- Footer-->
+
+@* <div class="limiter">
     <div class="navbar-div px-2">
         <nav class="navbar">
             <div class="col brand">
@@ -67,23 +213,6 @@
             </div>
         </nav>
     </div>
-    @* <div class="row " style="justify-content: flex-end;width: 85%;">
-    <p>
-    @localizer["Welcome"]،
-    <span>
-    @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
-    {
-    @user.CrMasUserInformationEnName
-    }
-    else
-    {
-    @user.CrMasUserInformationArName
-    }
-    </span>
-    </p>
-    </div> *@
-   
-    
     <div class="container container-Systems">
         @if (lessorInfo.CrMasUserInformationLessorNavigation.CrMasLessorInformationStatus==Status.Hold)
         {
@@ -202,8 +331,22 @@
 
         </div>
     </footer>
-</div>
+</div> *@
 @section Scripts {
+    <!---===============================================================================================-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+
+    <!--link to make javascript function operate-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <!--makes bootsrab animation works-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+
     <script>
         @*Expireation pop up modal*@
             // $(document).ready(function () {

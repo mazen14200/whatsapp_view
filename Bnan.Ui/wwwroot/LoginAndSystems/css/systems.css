@@ -9,10 +9,11 @@
 
 body,
 html {
-    height: 100%;
-    font-family: "cairo";
-    background-color: #FEF8E8;
-    overflow: hidden;
+  height: 100%;
+  font-family: "cairo";
+  background-color: #FEF8E8;
+  letter-spacing: .0175rem;
+
 }
 
 /*---------------------------------------------*/
@@ -52,7 +53,9 @@ li {
 .exit {
   padding-left: 18px;
 }
-
+.logo{
+  width: 150px;
+}
 /*---------------------------------------------*/
 input {
   outline: none;
@@ -86,7 +89,7 @@ nav {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 15px;
+  padding: 30px;
 
 }
 
@@ -111,9 +114,29 @@ nav {
 }
 
 .system-card {
-  border: 1px solid #FF9626;
-}
+  border: 2px solid #FF9626;
+  transition: all .5s ease-in-out;
 
+}
+.card1, .card2 , .card3{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.card1 .system-card:hover {
+  border: 2px solid #4B6FB5;
+  box-shadow: 0px 2px 20px 5px #4b6eb577;
+}
+.card2 .system-card:hover {
+  border: 2px solid #1D9CA1;
+  box-shadow: 0px 2px 20px 5px #1d9da196;
+
+}
+.card3 .system-card:hover {
+  border: 2px solid #4B6FB5;
+  box-shadow: 0px 2px 20px 5px #4b6eb577;
+
+}
 /*------------------------------------------------------------------
 [  ]*/
 
@@ -155,59 +178,39 @@ nav {
 /* ///////////////////////////// */
 footer {
   background-color: #FF9626;
-  /* height: 140px; */
+  height: 140px;
 }
 
 /*------------------------------------------------------------------
 [ Responsive ]*/
 
 /* ///////////////////// */
-.footer-widget {
-  background-color:  #FF9626 ;
+.before-footer-widget {
+  background-image: linear-gradient(2.71deg, #FF9626 64.81%, rgba(255, 150, 38, 0.18) 153.13%);
   font-size: 0;
 }
 
 /*------------------------------------------------------------------*/
 
 
-@media (max-width: 992px) {
-  .alert-validate::before {
-    visibility: visible;
-    opacity: 1;
+@media (min-width: 992px) and (min-height :845px) {
+  .system-card{
+    width: 265px;
+  }
+}
+/* footer media */
+
+
+@media (max-width:425px) {
+  .navbar-brand h1{
+    font-size: 1rem;
+  }
+}
+@media  (min-height:866px) {
+  footer {
+   height: 200px;
   }
 }
 
-/* footer media */
-@media (min-height:700px) {
-    footer {
-        position: fixed;
-        bottom: 0px;
-        left: 0;
-        right: 0;
-    }
-}
-
-@media (min-width:573px) and (min-height:866px) {
-    footer {
-        height: 250px;
-    }
-}
 
 
-@media (min-width:1400px) {
-    .container-Systems {
-        min-height: 60vh;
-    }
-}
-
-@media (min-width:578px) and (min-height:700px) {
-    .container-Systems {
-        min-height: 60vh;
-    }
-}
-
-@media (max-width: 580px) {
-    .container-Systems {
-        height: 85%;
-    }
-}

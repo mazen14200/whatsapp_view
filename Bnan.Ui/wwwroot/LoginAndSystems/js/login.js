@@ -44,12 +44,7 @@
         $(thisAlert).removeClass('alert-validate');
     }
 
-    var rememberMeCheckbox = document.getElementById('rememberMe');
-    var rememberMeInput = document.createElement('input');
-    rememberMeInput.type = 'hidden';
-    rememberMeInput.name = 'rememberMe';
-    rememberMeInput.value = rememberMeCheckbox.checked ? 'true' : 'false';
-    form.appendChild(rememberMeInput);
+
 
 
    

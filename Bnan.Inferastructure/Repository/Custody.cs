@@ -94,7 +94,7 @@ namespace Bnan.Inferastructure.Repository
             return false;
         }
         public async Task<bool> AddAccountReceiptReceivedCustody(string AdmintritiveNo, string lessorCode, string BranchCode,
-                                                                 string TotalAmount, string reasons)
+                                                                 string TotalAmount,string userCode, string reasons)
         {
 
             CrCasAccountReceipt receipt = new CrCasAccountReceipt();
@@ -102,6 +102,8 @@ namespace Bnan.Inferastructure.Repository
             var accountReceipt = _unitOfWork.CrCasAccountReceipt.Find(x => x.CrCasAccountReceiptPassingReference == AdmintritiveNo);
             var SalesPoint = await _unitOfWork.CrCasAccountSalesPoint.FindAsync(x => x.CrCasAccountSalesPointCode == accountReceipt.CrCasAccountReceiptSalesPoint);
             var UserTarget = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == adminstritive.CrCasSysAdministrativeProceduresTargeted.Trim());
+            var userValidity = await _unitOfWork.CrMasUserBranchValidity.FindAsync(x => x.CrMasUserBranchValidityLessor == lessorCode && x.CrMasUserBranchValidityBranch == BranchCode && x.CrMasUserBranchValidityId == userCode);
+            var userBranchValidityBalance = userValidity.CrMasUserBranchValidityBranchCashAvailable + userValidity.CrMasUserBranchValidityBranchSalesPointAvailable + userValidity.CrMasUserBranchValidityBranchTransferAvailable;
             receipt.CrCasAccountReceiptNo = GetAccountReceiptNo(adminstritive.CrCasSysAdministrativeProceduresBranch,UserTarget.CrMasUserInformationCode);
             receipt.CrCasAccountReceiptYear = DateTime.Now.ToString("yy");
             receipt.CrCasAccountReceiptType = "302";
@@ -120,6 +122,7 @@ namespace Bnan.Inferastructure.Repository
             receipt.CrCasAccountReceiptSalesPointPreviousBalance = SalesPoint.CrCasAccountSalesPointTotalBalance;
             receipt.CrCasAccountReceiptUser = UserTarget.CrMasUserInformationCode;
             receipt.CrCasAccountReceiptUserPreviousBalance = UserTarget.CrMasUserInformationTotalBalance;
+            receipt.CrCasAccountReceiptBranchUserPreviousBalance = userBranchValidityBalance;
             receipt.CrCasAccountReceiptIsPassing = "3";
             receipt.CrCasAccountReceiptPassingUser = adminstritive.CrCasSysAdministrativeProceduresUserInsert;
             receipt.CrCasAccountReceiptPassingDate = DateTime.Now;

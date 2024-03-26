@@ -17,37 +17,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="icon" type="image/png" href="~/images/Bnan/Support Image/Bnan.png">
-    <link rel="stylesheet" type="text/css" href="~/LoginAndSystems/vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="~/LoginAndSystems/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@200;300;400;500;600;700&family=Cairo:wght@200&display=swap"
-          rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cairo:500,400,700" rel="stylesheet">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/LoginAndSystems/css/systems.css">
-    @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
-    {
-        <link rel="stylesheet" type="text/css" href="~/LoginAndSystems/css/en-systems-style.css">
-    }
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/LoginAndSystems/css/login.css">
-    @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
-    {
-        <link rel="stylesheet" type="text/css" href="~/LoginAndSystems/css/en-login-style.css">
-    }
+
 </head>
-<body >
+<body class="d-flex flex-column min-vh-100">
 
     @RenderBody()
-    <!---===============================================================================================-->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="~/LoginAndSystems/vendor/bootstrap/js/popper.js"></script>
-    <script src="~/LoginAndSystems/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!--===============================================================================================-->
-    <!--===============================================================================================-->
-    <script src="~/LoginAndSystems/js/main.js"></script>
-    <script src="~/LoginAndSystems/js/login.js"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,12 +1,21 @@
+nav input[type="checkbox"] {
+    display: none;
+}
 
-body {
+.mode-btn input[type="checkbox"]:checked+label .english {
+    display: none;
+}
+
+.mode-btn input[type="checkbox"]:not(input[type="checkbox"]:checked)+label .Arabic {
+    display: none;
+}
+:has(#switch-mode:checked) body{
     direction: rtl;
 }
-
-.login100-form {
+:has(#switch-mode:checked) .login100-form {
     text-align: start;
-}
 
-.alert-validate::before {
+}
+:has(#switch-mode:checked) .alert-validate::before{
     left: 17px;
 }
