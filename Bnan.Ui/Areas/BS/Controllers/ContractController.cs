@@ -26,11 +26,14 @@ namespace Bnan.Ui.Areas.BS.Controllers
         private readonly IToastNotification _toastNotification;
         private readonly IStringLocalizer<ContractController> _localizer;
         private readonly IContract _ContractServices;
-        public ContractController(IStringLocalizer<ContractController> localizer, IUnitOfWork unitOfWork, UserManager<CrMasUserInformation> userManager, IMapper mapper, IToastNotification toastNotification, IContract contractServices) : base(userManager, unitOfWork, mapper)
+        private readonly IWebHostEnvironment _hostingEnvironment;
+
+        public ContractController(IStringLocalizer<ContractController> localizer, IUnitOfWork unitOfWork, UserManager<CrMasUserInformation> userManager, IMapper mapper, IToastNotification toastNotification, IContract contractServices, IWebHostEnvironment hostingEnvironment) : base(userManager, unitOfWork, mapper)
         {
             _localizer = localizer;
             _toastNotification = toastNotification;
             _ContractServices = contractServices;
+            _hostingEnvironment = hostingEnvironment;
         }
         public async Task<IActionResult> CreateContract()
         {
@@ -70,12 +73,13 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var autoinc = GetContractLastRecord("1", lessorCode, bSLayoutVM.SelectedBranch).CrCasRenterContractBasicNo;
             var BasicContractNo = y + "-" + sector + "401" + "-" + lessorCode + bSLayoutVM.SelectedBranch + "-" + autoinc;
             ViewBag.ContractNo = BasicContractNo;
+
             // get data and send it to View And Create image  
             DateTime now = DateTime.Now;
             var y1 = now.ToString("yy");
             //var sector = Renter.CrCasRenterLessorSector;
             var autoinc1 = GetContractAccountReceipt(lessorCode, bSLayoutVM.SelectedBranch).CrCasAccountReceiptNo;
-            var AccountReceiptNo = y + "-" + "1" + "301" + "-" + lessorCode + bSLayoutVM.SelectedBranch + "-" + autoinc;
+            var AccountReceiptNo = y + "-" + "1" + "301" + "-" + lessorCode + bSLayoutVM.SelectedBranch + "-" + autoinc1;
             ViewBag.AccountReceiptNo = AccountReceiptNo;
 
 
@@ -93,7 +97,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             return View(bSLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateContract(BSLayoutVM bSLayoutVM, string ChoicesList, string AdditionalsList, Dictionary<string, string> Reasons, bool Contract_OutFeesTmm)
+        public async Task<IActionResult> CreateContract(BSLayoutVM bSLayoutVM, string ChoicesList, string AdditionalsList, Dictionary<string, string> Reasons, bool Contract_OutFeesTmm, string? PdfSave1,string? language)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -111,7 +115,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var BasicContractNo = y + "-" + sector + "401" + "-" + lessorCode + Branch.CrCasBranchInformationCode + "-" + autoinc;
             if (userLogin!=null&& Renter != null && Car != null && CarPrice != null&&Branch!=null)
             {
-                //Add Row in BasicContract Table 
+                
                 var BasicContract = await _ContractServices.AddRenterContractBasic(lessorCode, Branch.CrCasBranchInformationCode, BasicContractNo, ContractInfo.RenterId, ContractInfo.DriverId,
                                                                                   ContractInfo.PrivateDriverId, ContractInfo.AdditionalDriverId, ContractInfo.SerialNo, ContractInfo.PriceNo,
                                                                                   ContractInfo.DaysNo, ContractInfo.UserAddHours, ContractInfo.UserAddKm, ContractInfo.CurrentMeter, ContractInfo.OptionTotal,
@@ -123,6 +127,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 //Account Receipt
                 var CheckAccountReceipt = true;
                 var passing = "";
+                var SavePdf = "";
                 if (BasicContract.CrCasRenterContractBasicAmountPaidAdvance > 0)
                 {
                    
@@ -134,11 +139,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     else {
                         passing = "1";
                     }
-
+                    if (!string.IsNullOrEmpty(PdfSave1)&& !string.IsNullOrEmpty(language)) SavePdf = await FileExtensions.SavePdf(_hostingEnvironment, PdfSave1, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, language);
                     CheckAccountReceipt = await _ContractServices.AddAccountReceipt(BasicContract.CrCasRenterContractBasicNo, lessorCode, BasicContract.CrCasRenterContractBasicBranch,
                                                                                   ContractInfo.PaymentMethod, ContractInfo.AccountNo, BasicContract.CrCasRenterContractBasicCarSerailNo,
                                                                                   ContractInfo.SalesPoint,(decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance,
-                                                                                  BasicContract.CrCasRenterContractBasicRenterId,userLogin.CrMasUserInformationCode, passing, ContractInfo.PaymentReasons);
+                                                                                  BasicContract.CrCasRenterContractBasicRenterId,userLogin.CrMasUserInformationCode, passing, ContractInfo.PaymentReasons,SavePdf);
                 }
 
                 //Choices
@@ -245,11 +250,15 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 var CheckRenterStatisctics = true;
                 CheckRenterStatisctics = await _ContractServices.AddRenterStatistics(BasicContract);
 
+
+               
+
+
                 if (BasicContract != null && CheckChoices && CheckAddditional && CheckAdvantages &&
                     CheckCheckUpCar && CheckAuthrization && CheckCarInfo && CheckDocAndMaintainance!=null &&
                     CheckRenterLessor&& CheckAccountReceipt&& CheckBranch&& CheckSalesPoint&&
                     CheckUserInformation&& CheckBranchValidity&& CheckMasRenter&& CheckAddDriver&& 
-                    CheckDriver&& CheckPrivateDriver&& CheckRenterAlert&& CheckRenterStatisctics)
+                    CheckDriver&& CheckPrivateDriver&& CheckRenterAlert&& CheckRenterStatisctics&&!string.IsNullOrEmpty(SavePdf))
                 {
                     try
                     {
@@ -431,6 +440,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         BirthDate = elmRenterInfo?.CrElmPersonalBirthDate,
                         ExpiryIdDate = elmRenterInfo?.CrElmPersonalExpiryIdDate,
                         KeyCountry = elmRenterInfo?.CrElmPersonalCountryKey,
+                        AvailableBalance = 0,
+                        ReservedBalance = 0,
                         Balance = 0
                     };
                     return Json(renterInformationsVM);

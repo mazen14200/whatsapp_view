@@ -58,7 +58,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("204", "2204004", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var RenterAvaiable = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == lessorCode, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic4s",
+            var RenterAvaiable = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == lessorCode, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic5s",
                                                                                                                            "CrCasRenterLessorNavigation" }).ToList();
             var RenterAvaiableVM = _mapper.Map<List<RenterLessorVM>>(RenterAvaiable);
             foreach (var item in RenterAvaiableVM)
@@ -79,7 +79,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("204", "2204004", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تحويل", "Transfer", titles[3]);
 
-            var Renter = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == id && x.CrCasRenterLessorCode == lessorCode, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic4s",
+            var Renter = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == id && x.CrCasRenterLessorCode == lessorCode, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic5s",
                                                                                                                            "CrCasRenterLessorNavigation" });
             var RenterVM = _mapper.Map<RenterLessorVM>(Renter);
 
@@ -115,7 +115,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var lessorCode = userLogin.CrMasUserInformationLessor;
 
 
-            var Renter = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == renterLessorVM.CrCasRenterLessorId && x.CrCasRenterLessorCode == lessorCode, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic4s",
+            var Renter = _unitOfWork.CrCasRenterLessor.Find(x => x.CrCasRenterLessorId == renterLessorVM.CrCasRenterLessorId && x.CrCasRenterLessorCode == lessorCode, new[] {"CrCasRenterContractBasicCrCasRenterContractBasic5s",
                                                                                                                            "CrCasRenterLessorNavigation" });
             var AddAdminstritive = await _tranferToRenter.SaveAdminstritiveTransferRenter(renterLessorVM.AdminstritiveNo, userLogin.CrMasUserInformationCode, "306", "30", lessorCode, Renter.CrCasRenterLessorId,
                                                                                    0, decimal.Parse(renterLessorVM.Amount, CultureInfo.InvariantCulture), renterLessorVM.Reasons);

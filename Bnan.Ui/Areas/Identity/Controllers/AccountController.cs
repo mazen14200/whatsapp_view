@@ -168,7 +168,7 @@ namespace Bnan.Ui.Areas.Identity.Controllers
                     var UserInforation = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == model.UserName, new[] { "CrMasUserBranchValidities.CrMasUserBranchValidity1" });
                     var branchValiditie = UserInforation.CrMasUserBranchValidities.Where(x => x.CrMasUserBranchValidityBranchStatus == Status.Active &&x.CrMasUserBranchValidityBranchRecStatus!=Status.Deleted).Count();
                     if (UserInforation.CrMasUserInformationAuthorizationBranch == true && branchValiditie == 0) UserInforation.CrMasUserInformationAuthorizationBranch = false;
-                    UserInforation.CrMasUserInformationOperationStatus = true;
+                    //UserInforation.CrMasUserInformationOperationStatus = true;
                     UserInforation.CrMasUserInformationEntryLastDate = DateTime.Now.Date;
                     UserInforation.CrMasUserInformationEntryLastTime = DateTime.Now.TimeOfDay;
                     await _userService.SaveChanges(UserInforation);

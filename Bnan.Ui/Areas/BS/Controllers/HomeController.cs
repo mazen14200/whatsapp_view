@@ -41,7 +41,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
 
             var Cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationStatus != Status.Deleted && x.CrCasCarInformationStatus != Status.Sold && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch, new[] { "CrCasCarInformationDistributionNavigation" }).ToList();
-            var carsRented = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch && x.CrCasCarInformationStatus == Status.Rented, new[] { "CrCasCarInformationDistributionNavigation" }).ToList();
+            var carsRented = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch && x.CrCasCarInformationStatus == Status.Rented, new[] { "CrCasCarInformationDistributionNavigation","CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics" }).ToList();
 
             var carsAvailable = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch && x.CrCasCarInformationStatus == Status.Active &&
                                                                                 x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationBranchStatus == Status.Active &&
@@ -218,7 +218,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var BranchCode = userLogin.CrMasUserInformationDefaultBranch;
-            var RentedCars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == BranchCode && x.CrCasCarInformationStatus == Status.Rented, new[] { "CrCasCarInformationDistributionNavigation" }).ToList();
+            var RentedCars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == BranchCode && x.CrCasCarInformationStatus == Status.Rented,
+                                                                                 new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics" , "CrCasRenterContractBasics.CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasCarDocumentsMaintenances.CrCasCarDocumentsMaintenanceProceduresNavigation" }).ToList();
             var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode).ToList();
 
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
@@ -243,7 +244,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                            x.CrCasCarInformationStatus == Status.Maintaince || x.CrCasCarInformationPriceStatus == false ||
                                                                                            x.CrCasCarInformationBranchStatus != Status.Active || x.CrCasCarInformationOwnerStatus != Status.Active ||
                                                                                           (x.CrCasCarInformationStatus == Status.Active && x.CrCasCarInformationForSaleStatus == Status.ForSale)),
-                                                                                          new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics" }).ToList();
+                                                                                          new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics", "CrCasCarDocumentsMaintenances.CrCasCarDocumentsMaintenanceProceduresNavigation" }).ToList();
 
             var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode&&x.CrCasBranchInformationStatus!=Status.Deleted).ToList();
 
@@ -253,7 +254,6 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 RentedCars = null,
                 UnAvaliableCars = carsUnAvailable,
                 AvaliableCars = null,
-                DocumentsMaintenances = null,
                 SelectedBranch = BranchCode,
             };
             return PartialView("_UnAvailableCar", bSLayoutVM);
@@ -270,8 +270,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                 x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationBranchStatus == Status.Active &&
                                                                                 x.CrCasCarInformationOwnerStatus == Status.Active &&
                                                                                (x.CrCasCarInformationForSaleStatus == Status.Active || x.CrCasCarInformationForSaleStatus == Status.RendAndForSale),
-                                                                               new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics" }).ToList();
-            var documentsMaintenance = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == "100", new[] { "CrCasCarDocumentsMaintenanceProceduresNavigation" }).ToList();
+                                                                               new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics", "CrCasCarDocumentsMaintenances.CrCasCarDocumentsMaintenanceProceduresNavigation" }).ToList();
             var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode && x.CrCasBranchInformationStatus != Status.Deleted).ToList();
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
@@ -279,7 +278,6 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 RentedCars = null,
                 UnAvaliableCars = null,
                 AvaliableCars = carsAvailable,
-                DocumentsMaintenances = documentsMaintenance,
                 SelectedBranch = BranchCode,
 
             };

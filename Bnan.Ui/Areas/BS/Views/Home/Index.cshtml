@@ -299,6 +299,78 @@
 @section Scripts {
     <!--Charts-->
     <script>
+        // function activee() {
+        //     // Find the current active item
+        //     var currentActiveItem = document.querySelector('.carousel-item.active');
+
+        //     // Find the next sibling of the current active item
+        //     var nextItem = currentActiveItem.nextElementSibling;
+        //     console.log(nextItem);
+        //     // If there is no next sibling (i.e., current item is the last one), select the first item as the next item
+        //     if (!nextItem) {
+        //         nextItem = document.querySelector('.carousel-item:first-child');
+        //     }
+        //     // Remove the active class from the current item
+        //     currentActiveItem.classList.remove('active');
+
+        //     // Add the active class to the next item
+        //     nextItem.classList.add('active');
+        // }
+        
+
+        
+       
+        function faq() {
+            const container1Toggles = document.querySelectorAll(".faq-container1 .faq-toggle");
+            const container2Toggles = document.querySelectorAll(".faq-container2 .faq-toggle");
+            const container3Toggles = document.querySelectorAll(".faq-container3 .faq-toggle");
+
+            const container1Faqs = document.querySelectorAll(".faq-container1 .faq");
+            const container2Faqs = document.querySelectorAll(".faq-container2 .faq");
+            const container3Faqs = document.querySelectorAll(".faq-container3 .faq");
+            console.log(container2Toggles)
+            console.log(container2Faqs)
+
+            function toggleFAQs(toggles, faqs) {
+                toggles.forEach((toggle) => {
+                    toggle.addEventListener('click', () => {
+                        const faq = toggle.parentElement;
+                        const isActive = faq.classList.contains('active');
+                        console.log(555555555555555)
+
+                        if (isActive) {
+                            // Close the clicked FAQ
+                            faq.style.display = 'none';
+                            faq.classList.remove('active');
+                            faqs.forEach((faq) => {
+                                faq.style.display = 'block';
+                                faq.classList.remove('active');
+
+                            });
+                        } else {
+                            // Open the clicked FAQ and close others
+                            faqs.forEach((faq) => {
+                                if (faq != toggle.parentElement) {
+                                    faq.style.display = 'none';
+                                    faq.classList.remove('active');
+                                }
+                            });
+
+                            faq.style.display = 'block';
+                            faq.classList.add('active');
+
+                        }
+                    });
+                });
+            }
+
+            toggleFAQs(container1Toggles, container1Faqs);
+            toggleFAQs(container2Toggles, container2Faqs);
+            toggleFAQs(container3Toggles, container3Faqs);
+        }
+        
+    </script>
+    <script>
         $(document).ready(function () {
             ////////////////////////charts////////////////////////////////
             //Cars
@@ -661,8 +733,8 @@
                 showCarouselItem(2);
                 loadRentedCars();
                 setTimeout(function () {
-                    initCarousel();
-                }, 1000);
+                    faq();
+                }, 500);
             }
             else {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
@@ -692,8 +764,8 @@
                 setActiveButton(2);
                 loadAvaliableCars();
                 setTimeout(function () {
-                    initCarousel2();
-                }, 1000);
+                    faq();
+                }, 500);
             }
             else {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
@@ -721,8 +793,8 @@
                 setActiveButton(3);
                 loadUnAvaliableCars();
                 setTimeout(function () {
-                    initCarousel3();
-                }, 1000);
+                    faq();
+                }, 500);
             }
             else {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };

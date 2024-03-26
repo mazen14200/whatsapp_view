@@ -217,31 +217,40 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         public async Task<IActionResult> Edit(CarFuelVM model, IFormFile? AcceptImg)
         {
             string foldername = $"{"images\\Common"}";
-            string filePathImageAccept = "";
+            string filePathImageAccept = null;
             var user = await _userService.GetUserByUserNameAsync(HttpContext.User.Identity.Name);
-
+            var fuel =await _unitOfWork.CrMasSupCarFuel.FindAsync(x=>x.CrMasSupCarFuelCode==model.CrMasSupCarFuelCode);
             if (user != null)
             {
-                if (model != null)
+                if (model != null && fuel!=null)
                 {
 
+                    
                     if (AcceptImg != null)
                     {
-                        string fileNameImg = "CarFuel_" + model.CrMasSupCarFuelCode.ToString();
-                        filePathImageAccept = await AcceptImg.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
-                        model.CrMasSupCarFuelImage = filePathImageAccept;
+                        string fileNameImg = "CarFuel_" + model.CrMasSupCarFuelCode.ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوق
+                        filePathImageAccept = await AcceptImg.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png", fuel.CrMasSupCarFuelImage);
+                    }
+                    else if (!string.IsNullOrEmpty(fuel.CrMasSupCarFuelImage))
+                    {
+                        filePathImageAccept = fuel.CrMasSupCarFuelImage;
+                    }
+                    else
+                    {
+                        filePathImageAccept = "~/images/common/DefaultCar.png";
                     }
 
+                    //var contract = _mapper.Map<CrMasSupCarFuel>(model);
+                    fuel.CrMasSupCarFuelImage = filePathImageAccept;
+                    fuel.CrMasSupCarFuelReasons = model.CrMasSupCarFuelReasons;
 
-                    var contract = _mapper.Map<CrMasSupCarFuel>(model);
-
-                    _unitOfWork.CrMasSupCarFuel.Update(contract);
+                    _unitOfWork.CrMasSupCarFuel.Update(fuel);
                     _unitOfWork.Complete();
 
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107002", "1");
-                    var RecordAr = contract.CrMasSupCarFuelArName;
-                    var RecordEn = contract.CrMasSupCarFuelEnName;
+                    var RecordAr = fuel.CrMasSupCarFuelArName;
+                    var RecordEn = fuel.CrMasSupCarFuelEnName;
                     await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);

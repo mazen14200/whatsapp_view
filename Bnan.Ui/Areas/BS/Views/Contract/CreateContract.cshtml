@@ -68,7 +68,10 @@ else
                     </div>
                     <div class="row justify-content-center h-100 content-row">
                         <div class="col-md-11 mx-0">
-                            <form asp-area="BS" asp-action="CreateContract" asp-controller="Contract" id="msform" novalidate class="needs-validation">
+                            <form asp-area="BS" asp-action="CreateContract" asp-controller="Contract" id="msform" novalidate class="needs-validation" enctype="multipart/form-data">
+                                <input hidden id="PdfSave1" name="PdfSave1" />
+                                <input hidden asp-for="Contract.AccountReceiptNo" />
+                                <input hidden id="language" name="language" />
                                 <div class=" pe-4">
                                     <!-- progressbar -->
                                     <ul id="progressbar">
@@ -1689,13 +1692,13 @@ else
     <partial name="_ValidationScriptsPartial" />
     <!--makes bootsrab animation works-->
     @*     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-     *@    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.9.2/dist/umd/popper.min.js"
+         <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.9.2/dist/umd/popper.min.js"
                        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
                        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
             integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
             crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>*@
     <script src="~/BranchSys/CreateContract/contract.js"></script>
     <script src="~/BranchSys/CreateContract/contract2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
@@ -2726,7 +2729,6 @@ else
                     console.log("PriceNumberOfCar", PriceNumberOfCar);
 
                     GetAdvantages(PriceNumberOfCar);
-                    // GetCarInfo(SerialNumberOfCar);
                     // Use Promises to ensure data is available before proceeding
                     Promise.all([getCarChoices(PriceNumberOfCar), getCarAdditional(PriceNumberOfCar), GetCarInfo(SerialNumberOfCar)])
                         .then(([choicesData, additionalsData, carInformation]) => {
@@ -2765,6 +2767,8 @@ else
                             // This Check to If driverIsRenter Or not
                             else if (driverRadio1.checked) {
                                 clearDataDriver();
+                                clearDataAddDriver();
+                                clearPaymentData();
                                 IsThereAdditionalDriver();
                                 DriverInformation = RenterInformation;
                                 var currentDate = new Date();
@@ -4117,26 +4121,25 @@ else
                     const CarAr = CarInformation.carInformation.crCasCarInformationConcatenateArName;
                     const startDate = new Date($("#StartDate").text());
                     const endDate = new Date($("#EndDate").text());
-                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                    const startHijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', options).format(startDate);
-                    const endHijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', options).format(endDate);
-                    const branch = '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArShortName)' + ' - ' + '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchPost.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateArName)';
-
+                    const startHijriDate = formatHijriDate(startDate);
+                    const endHijriDate = formatHijriDate(endDate);
+                    console.log(startHijriDate);
+                    const branch = '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchPost.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateArName)' + ' - ' + '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArShortName)';
                     // Define text properties
                     ctx.font = "bold 25px serif";
                     ctx.textAlign = "right";
                     ctx.fillStyle = "black";
                     ctx.fillText(RenterInformation.personalArName, canvas.width - 75, 170);
                     ctx.fillText(CarAr, canvas.width - 75, 205);
-                    ctx.fillText($("#StartDate").text(), canvas.width - 190, 358);
-                    ctx.fillText($("#EndDate").text(), canvas.width - 190, 395);
+                    ctx.fillText(startHijriDate, canvas.width - 190, 358);
+                    ctx.fillText(endHijriDate, canvas.width - 190, 395);
                     ctx.fillText(branch, canvas.width - 75, 450);
 
                     ctx.textAlign = "left";
                     ctx.fillText(RenterInformation.personalEnName, canvas.width - 960, 270);
                     ctx.fillText(CarEn, canvas.width - 960, 305);
-                    ctx.fillText(startHijriDate, canvas.width - 850, 358);
-                    ctx.fillText(endHijriDate, canvas.width - 850, 395);
+                    ctx.fillText($("#StartDate").text(), canvas.width - 850, 358);
+                    ctx.fillText($("#EndDate").text(), canvas.width - 850, 395);
                     ctx.fillText($("#ContractNo").val(), canvas.width - 960, 585);
                     canvas.toBlob(async function (blob) {
                         formData.append("file", blob, "CreateContractWhatUp.png"); // Append the modified image blob with a filename
@@ -4167,7 +4170,7 @@ else
         };
 
         // Function to send an image and PDF to WhatsApp
-        const sendReceiptToWhatsApp = async () => {
+        const sendArReceiptToWhatsApp = async () => {
             const imageLessor = "~/images/common/Ar_Catch_Receipt.png";
             const imagePath = imageLessor.replace('~', '');
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
@@ -4178,11 +4181,13 @@ else
             // Gregorian (Miladi) Date
             const miladiDate = new Date();
             const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
-            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).replace(/\//g, '-');
+            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).split('/').join('/');
+            console.log("miladiDateString", miladiDateString)
 
             // Hijri Date
-            const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-            const hijriDateString = new Intl.DateTimeFormat('ar-u-ca-islamic', hijriOptions).format(miladiDate);
+            // const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+            const hijriDateString = formatHijriDate(miladiDate);
+
             // First In Page
             const contractNo = "@ViewBag.ContractNo";
             const AccountReceiptNo = "@ViewBag.AccountReceiptNo";
@@ -4191,6 +4196,8 @@ else
             const CarName = CarInformation.carInformation.crCasCarInformationConcatenateArName;
             // last in page
             const balance = RenterInformation.availableBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            console.log("balance", balance)
+
             var DiscountInput = document.getElementById("Discount_Input").value;
             var AmountPayedInput = document.getElementById("AmountPayed").value;
             const discountRate = parseFloat(DiscountInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -4231,31 +4238,44 @@ else
                 canvas.height = img.height;
 
                 ctx.drawImage(img, 0, 0);
-
-                ctx.font = "bold 35px serif";
+                ctx.font = "bold 50px serif";
                 ctx.textAlign = "right";
                 ctx.fillStyle = "black";
-                //Date and contract no
-                ctx.fillText(AccountReceiptNo, canvas.width - 110, 610);
-                ctx.fillText(hijriDateString, canvas.width - 228, 668);
-                ctx.fillText(miladiDateString, canvas.width - 228, 722);
                 // Receipt and type and renter and car name
+                ctx.fillText(AccountReceiptNo, canvas.width - 110, 610);
+                ctx.font = "bold 42px serif";
                 ctx.fillText(referenceType, canvas.width - 250, 895);
                 ctx.fillText(contractNo, canvas.width - 320, 985);
                 ctx.fillText(RenterName, canvas.width - 122, 1065);
                 ctx.fillText(CarName, canvas.width - 122, 1160);
-
 
                 // The Table
                 var YHeight = 1380;
                 var DiscountInput = document.getElementById("Discount_Input").value;
                 var daysNo = document.getElementById('dayNo').value;
                 var TaxPercent = parseInt(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
+                // The payed Information
+                const discountText = '%' + DiscountInput.toString();
+                const taxText = '%' + TaxPercent.toString();
+
+                ctx.fillText(balance, canvas.width - 330, 2342);
+                ctx.fillText(discountText, canvas.width - 360, 2435);
+                ctx.fillText(taxText, canvas.width - 367, 2523);
+                ctx.fillText(AmountRequired, canvas.width - 360, 2610);
+                ctx.fillText(AmountPayed, canvas.width - 360, 2700);
+                ctx.fillText(selectedText, canvas.width - 360, 2790);
+                ctx.fillText(reasonPayment, canvas.width - 360, 2880);
+                ctx.font = "bold 35px serif";
+                //Date and contract no
+                ctx.fillText(hijriDateString, canvas.width - 228, 668);
+                ctx.fillText(miladiDateString, canvas.width - 228, 722);
 
 
+                console.log("CarInformation.carPrice.crCasPriceCarBasicDailyRent", CarInformation.carPrice.crCasPriceCarBasicDailyRent)
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
                 if (parseFloat(CarInformation.carPrice.crCasPriceCarBasicDailyRent) > 0) {
-                    YHeight = calculateAndDraw(ctx, canvas, "الايجار", CarInformation.carPrice.crCasPriceCarBasicDailyRent, daysNo, DiscountInput, TaxPercent, YHeight);
+                    console.log("CarInformation.carPrice.crCasPriceCarBasicDailyRent", CarInformation.carPrice.crCasPriceCarBasicDailyRent)
+                    YHeight = calculateAndDrawAr(ctx, canvas, "الايجار", CarInformation.carPrice.crCasPriceCarBasicDailyRent, daysNo, DiscountInput, TaxPercent, YHeight);
                 }
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
 
@@ -4282,13 +4302,13 @@ else
                     }
                 }
                 if (parseFloat(FeesTammValue) > 0) {
-                    YHeight = calculateAndDraw(ctx, canvas, "التفويض", FeesTammValue, 1, DiscountInput, TaxPercent, YHeight);
+                    YHeight = calculateAndDrawAr(ctx, canvas, "التفويض", FeesTammValue, 1, DiscountInput, TaxPercent, YHeight);
                 }
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Auth
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Advantages
                 if (parseFloat(AdvantagesValue) > 0) {
-                    YHeight = calculateAndDraw(ctx, canvas, "المميزات", AdvantagesValue, daysNo, DiscountInput, TaxPercent, YHeight);
+                    YHeight = calculateAndDrawAr(ctx, canvas, "المميزات الاضافية", AdvantagesValue, daysNo, DiscountInput, TaxPercent, YHeight);
                 }
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Advantages
 
@@ -4305,7 +4325,7 @@ else
                     }
                 }
                 if (additionalDriverValue > 0) {
-                    YHeight = calculateAndDraw(ctx, canvas, "سائق اضافي", additionalDriverValue, 1, DiscountInput, TaxPercent, YHeight);
+                    YHeight = calculateAndDrawAr(ctx, canvas, "سائق اضافي", additionalDriverValue, 1, DiscountInput, TaxPercent, YHeight);
                 }
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Additional Driver
 
@@ -4326,7 +4346,7 @@ else
                     privateDriverValue = 0;
                 }
                 if (privateDriverValue > 0) {
-                    YHeight = calculateAndDraw(ctx, canvas, "سائق خاص", privateDriverValue, daysNo, DiscountInput, TaxPercent, YHeight);
+                    YHeight = calculateAndDrawAr(ctx, canvas, "سائق خاص", privateDriverValue, daysNo, DiscountInput, TaxPercent, YHeight);
                 }
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Private Driver
 
@@ -4340,7 +4360,7 @@ else
                     choicesValue = 0;
                 }
                 if (choicesValue > 0) {
-                    YHeight = calculateAndDraw(ctx, canvas, "الخيارات", choicesValue, daysNo, DiscountInput, TaxPercent, YHeight);
+                    YHeight = calculateAndDrawAr(ctx, canvas, "الخيارات", choicesValue, daysNo, DiscountInput, TaxPercent, YHeight);
                 }
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////TotalChoices
 
@@ -4355,19 +4375,12 @@ else
                     additionalValue = 0;
                 }
                 if (additionalValue > 0) {
-                    YHeight = calculateAndDraw(ctx, canvas, "الاضافات", additionalValue, 1, DiscountInput, TaxPercent, YHeight);
+                    YHeight = calculateAndDrawAr(ctx, canvas, "الاضافات", additionalValue, 1, DiscountInput, TaxPercent, YHeight);
                 }
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// TotalAdditional
 
 
-                // The payed Information
-                ctx.fillText(balance, canvas.width - 330, 2342);
-                ctx.fillText(DiscountInput, canvas.width - 360, 2435);
-                ctx.fillText(TaxPercent, canvas.width - 367, 2523);
-                ctx.fillText(AmountRequired, canvas.width - 360, 2610);
-                ctx.fillText(AmountPayed, canvas.width - 360, 2700);
-                ctx.fillText(selectedText, canvas.width - 360, 2790);
-                ctx.fillText(reasonPayment, canvas.width - 360, 2880);
+
 
                 // director and renter and user
                 ctx.fillText(directorOfLessor, canvas.width - 340, 3095);
@@ -4383,21 +4396,20 @@ else
             };
             img.src = URL.createObjectURL(blob);
         };
-        function calculateAndDraw(ctx, canvas, itemName, itemValue, days, discountInput, taxPercent, yHeight) {
+        function calculateAndDrawAr(ctx, canvas, itemName, itemValue, days, discountInput, taxPercent, yHeight) {
             var itemTotal = parseFloat(itemValue) * parseInt(days);
             var discountValue = itemTotal * (parseFloat(discountInput) / 100);
             var totalAfterDiscount = itemTotal - discountValue;
             var taxValue = totalAfterDiscount * (taxPercent / 100);
             var totalActual = parseFloat(totalAfterDiscount) + parseFloat(taxValue);
-
-            ctx.fillText(itemName, canvas.width - 255, yHeight);
-            ctx.fillText(itemValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 570, yHeight);
-            ctx.fillText(days, canvas.width - 795, yHeight);
-            ctx.fillText(itemTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1030, yHeight);
-            ctx.fillText(discountValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1325, yHeight);
-            ctx.fillText(totalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1625, yHeight);
-            ctx.fillText(taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1925, yHeight);
-            ctx.fillText(totalActual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 2232, yHeight);
+            ctx.fillText(itemName, canvas.width - 235, yHeight);
+            ctx.fillText(itemValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 540, yHeight);
+            ctx.fillText(days, canvas.width - 775, yHeight);
+            ctx.fillText(itemTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 970, yHeight);
+            ctx.fillText(discountValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1270, yHeight);
+            ctx.fillText(totalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1560, yHeight);
+            ctx.fillText(taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1880, yHeight);
+            ctx.fillText(totalActual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 2180, yHeight);
 
             return yHeight + 88; // Update yHeight for the next item
         }
@@ -4409,20 +4421,30 @@ else
             var form = document.getElementById('msform');
             // Get the submit button
             var submitButton = document.getElementById('submitForm');
+
             // Add a click event listener to the submit button
             submitButton.addEventListener('click', function (event) {
                 // Prevent the default form submission
                 event.preventDefault();
                 // Check if the form is valid and something is not okay
                 if ($("#msform").valid()) {
+                    var AmountPayed = document.getElementById("AmountPayed").value;
                     // Submit the form
                     CheckIfCanPayLessThanTotalAmount();
                     if (somethingIsNotOkay) {
-                        sendReceiptToWhatsApp();
                         sendStaticImageToWhatsApp();
+                        if(parseFloat(AmountPayed)>0){
+                            if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                                $("#language").val("en");
+                            }
+                            else {
+                                sendArReceiptToWhatsApp();
+                                $("#language").val("ar");
+                            }
+                        }
                         setTimeout(function () {
                             form.submit();
-                        }, 2000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
+                        }, 5000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();
@@ -4451,13 +4473,20 @@ else
                     // Convert the PDF to a blob
                     const pdfBlob = doc.output('blob');
                     const blobUrl = URL.createObjectURL(pdfBlob);
+                    const pdfBase64 = doc.output('datauristring');
+                    // Set the base64-encoded PDF to the hidden input field
+                    document.getElementById('PdfSave1').value = pdfBase64;
+                    document.getElementById('Contract_AccountReceiptNo').value = receiptNo;
+                    console.log("pdfBase64", pdfBase64)
+                    console.log("receiptNo", receiptNo)
                     // window.open(blobUrl, '_blank');
                     // Prepare form data with PDF
                     const formData = new FormData();
                     formData.append("number", phoneNumber); // Append the recipient's phone number
                     formData.append("message", message); // Append the message
                     formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
-
+                    
+                    // Convert the PDF to a base64-encoded string
                     const requestOptions = {
                         method: 'POST',
                         body: formData,
@@ -4465,7 +4494,7 @@ else
                             'Authorization': `Bearer ${token}`
                         }
                     };
-
+                    console.log("pdfBlob", pdfBlob);
                     // Send the request to the API endpoint
                     fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
                         .then(response => {
@@ -4487,7 +4516,6 @@ else
             } catch (error) {
                 console.error('Error adding image to PDF:', error);
             }
-            // doc.save(`${contractNo}.pdf`); // Save the PDF with the contract number as filename
         }
     </script>
     <script>
@@ -4573,5 +4601,11 @@ else
             textArea.innerHTML = text;
             return textArea.value;
         }
+        // Function to format Hijri date
+        function formatHijriDate(date) {
+            const options = { weekday: 'long', day: 'numeric', year: 'numeric', month: 'long', calendar: 'islamic-umalqura' };
+            return date.toLocaleDateString('ar-SA', options).replace(/هـ/g, ''); // Remove "هـ" suffix
+        }
+
     </script>
 }

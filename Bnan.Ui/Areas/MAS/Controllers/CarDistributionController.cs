@@ -192,30 +192,30 @@ namespace Bnan.Ui.Areas.MAS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var CrMasSupCarDistribution = _mapper.Map<CrMasSupCarDistribution>(CrMasSupCarDistributionVM);
+                //var CrMasSupCarDistribution = _mapper.Map<CrMasSupCarDistribution>(CrMasSupCarDistributionVM);
                 string foldername = $"{"images\\Bnan\\Models"}";
                 string filePathImage;
-
+                var oldCrMasSupCarDistribution= _unitOfWork.CrMasSupCarDistribution.Find(x=>x.CrMasSupCarDistributionCode== CrMasSupCarDistributionVM.CrMasSupCarDistributionCode);
                 if (CarDistributionFile != null)
                 {
-                    string fileNameImg = CrMasSupCarDistribution.CrMasSupCarDistributionModel;
-                    filePathImage = await CarDistributionFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png");
-                    CrMasSupCarDistribution.CrMasSupCarDistributionImage = filePathImage;
+                    string fileNameImg = CrMasSupCarDistributionVM.CrMasSupCarDistributionModel + "_" + DateTime.Now.ToString("yyyyMMddHHmmss"); // اسم مبني على التاريخ والوق
+                    filePathImage = await CarDistributionFile.SaveImageAsync(_webHostEnvironment, foldername, fileNameImg, ".png",oldCrMasSupCarDistribution.CrMasSupCarDistributionImage);
+                    oldCrMasSupCarDistribution.CrMasSupCarDistributionImage = filePathImage;
                 }
-                else if (CrMasSupCarDistributionVM.CrMasSupCarDistributionImage != null)
+                else if (!string.IsNullOrEmpty(CrMasSupCarDistributionVM.CrMasSupCarDistributionImage))
                 {
-                    CrMasSupCarDistribution.CrMasSupCarDistributionImage = CrMasSupCarDistributionVM.CrMasSupCarDistributionImage;
+                    oldCrMasSupCarDistribution.CrMasSupCarDistributionImage = CrMasSupCarDistributionVM.CrMasSupCarDistributionImage;
                 }
                 else {
-                    CrMasSupCarDistribution.CrMasSupCarDistributionImage = "~/images/common/DefaultCar.png";
+                    oldCrMasSupCarDistribution.CrMasSupCarDistributionImage = "~/images/common/DefaultCar.png";
                 }
-
-                await _CarDistribution.editCarDisribtion(CrMasSupCarDistribution);
+                oldCrMasSupCarDistribution.CrMasSupCarDistributionReasons= CrMasSupCarDistributionVM.CrMasSupCarDistributionReasons;
+                await _CarDistribution.editCarDisribtion(oldCrMasSupCarDistribution);
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 // SaveTracing
                 var (mainTask, subTask, system, currentUser) = await SetTrace("107", "1107007", "1");
-                var RecordAr = CrMasSupCarDistribution.CrMasSupCarDistributionConcatenateArName;
-                var RecordEn = CrMasSupCarDistribution.CrMasSupCarDistributionConcatenateEnName;
+                var RecordAr = CrMasSupCarDistributionVM.CrMasSupCarDistributionConcatenateArName;
+                var RecordEn = CrMasSupCarDistributionVM.CrMasSupCarDistributionConcatenateEnName;
                 await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                 subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
