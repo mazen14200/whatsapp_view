@@ -340,10 +340,10 @@
 
                         if (isActive) {
                             // Close the clicked FAQ
-                            faq.style.display = 'none';
+                            // faq.style.display = 'none';
                             faq.classList.remove('active');
                             faqs.forEach((faq) => {
-                                faq.style.display = 'block';
+                                // faq.style.display = 'block';
                                 faq.classList.remove('active');
 
                             });
@@ -351,12 +351,12 @@
                             // Open the clicked FAQ and close others
                             faqs.forEach((faq) => {
                                 if (faq != toggle.parentElement) {
-                                    faq.style.display = 'none';
+                                    // faq.style.display = 'none';
                                     faq.classList.remove('active');
                                 }
                             });
 
-                            faq.style.display = 'block';
+                            // faq.style.display = 'block';
                             faq.classList.add('active');
 
                         }

@@ -62,14 +62,14 @@
                     @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
                     {
                         <a asp-area="Identity" asp-controller="Account" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="ar-EG">
-                            <p style="font-weight: 600;" class="Arabic"> <img src="~/LoginAndSystems/images/Group.png"> العربية</p>
+                            <p style="font-weight: 600;" class="Arabic"> <i class="fa-solid fa-globe"></i> العربية</p>
                         </a>
 
                     }
                     else
                     {
                         <a asp-area="Identity" asp-controller="Account" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="en-US">
-                            <p style="font-weight: 600;" class="english"><img src="~/LoginAndSystems/images/Group.png"> English </p>
+                            <p style="font-weight: 600;" class="english"><i class="fa-solid fa-globe"></i> English </p>
                         </a>
                     }
                 </label>

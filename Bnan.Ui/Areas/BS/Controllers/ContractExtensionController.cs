@@ -76,9 +76,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
                 bsLayoutVM.ExtensionContracts = contractMap.Where(x => x.AuthEndDate > DateTime.Now &&
                                                                                                (x.CrCasRenterContractBasicNo.Contains(search) ||
-                                                                                                x.CrCasRenterContractBasic4.CrCasRenterLessorNavigation.CrMasRenterInformationArName.Contains(search) ||
+                                                                                                x.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationArName.Contains(search) ||
                                                                                                 x.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName.Contains(search) ||
-                                                                                                x.CrCasRenterContractBasic4.CrCasRenterLessorNavigation.CrMasRenterInformationEnName.ToLower().Contains(search) ||
+                                                                                                x.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationEnName.ToLower().Contains(search) ||
                                                                                                 x.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName.ToLower().Contains(search))).ToList();
                 return PartialView("_ContractExtension", bsLayoutVM);
             }
@@ -95,7 +95,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var bsLayoutVM = await GetBranchesAndLayout();
             var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == id,
-                                                                                     new[] { "CrCasRenterContractBasic4.CrCasRenterLessorNavigation",
+                                                                                     new[] { "CrCasRenterContractBasic5.CrCasRenterLessorNavigation",
                                                                                              "CrCasRenterContractBasicCarSerailNoNavigation"}).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();
             var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode &&
                 x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);

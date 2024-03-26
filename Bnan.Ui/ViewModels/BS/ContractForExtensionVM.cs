@@ -81,7 +81,7 @@ namespace Bnan.Ui.ViewModels.BS
         public string? AccountNo { get; set; }
 
 
-        public virtual CrCasRenterLessor? CrCasRenterContractBasic4 { get; set; }
+        public virtual CrCasRenterLessor? CrCasRenterContractBasic5 { get; set; }
         public virtual CrCasCarInformation? CrCasRenterContractBasicCarSerailNoNavigation { get; set; }
 
     }

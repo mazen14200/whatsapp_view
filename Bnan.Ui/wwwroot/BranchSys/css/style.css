@@ -678,3 +678,112 @@ footer {
         flex-direction: column-reverse;
     }
 }
+
+/* /////////////////////////////////////////////////////////// */
+/* /////////////////////////////////////////////////////////// */
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgba(128, 128, 128, 0.678);
+    background: #fffdfd;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #d68d3f;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+@media (max-width: 992px) {
+    .main-row {
+        flex-direction: column-reverse;
+    }
+}
+
+@media (max-width: 800px) {
+
+    .hide-on-mobile {
+        font-size: .8rem !important;
+    }
+
+    .extra-small-mobile {
+        font-size: .8rem !important;
+    }
+
+    .userName {
+        font-size: .8rem;
+    }
+}
+
+@media (max-width: 712px) {
+    .hide-on-mobile {
+        display: none;
+    }
+
+    .on-mobile p {
+        display: none;
+    }
+
+    .userName {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 560px) {
+    .on-mobile img {
+        display: none;
+    }
+}
+
+@media (max-width: 402px) {
+    .userName {
+        font-size: .7rem !important;
+    }
+
+    .dripicons-message, .dripicons-bell {
+        font-size: 17px !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .nav {
+        padding: 0.5rem 0.6rem !important;
+    }
+
+    .img-profile {
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+
+    #userDropdown {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .btn-secondary1 {
+        font-size: 12px;
+    }
+
+    .faq-text {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 320px) {
+
+    #userDropdown {
+        flex-direction: column;
+    }
+
+    .btn-secondary1 {
+        font-size: 12px;
+    }
+}
+

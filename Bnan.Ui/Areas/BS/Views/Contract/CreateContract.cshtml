@@ -17,9 +17,11 @@
           .Include(l => l.CrMasUserInformationLessorNavigation)
           .Include(l => l.CrMasUserContractValidity)
           .FirstOrDefaultAsync(l => l.UserName == user.UserName);
+    var lessorInfo = await userManager.Users.Include(l => l.CrMasUserInformationLessorNavigation).ThenInclude(l => l.CrMasLessorImage).FirstOrDefaultAsync(x => x.UserName == user.UserName);
 }
 <link href="~/BranchSys/CreateContract/sb-admin-2.min.css" rel="stylesheet">
 <link href="~/BranchSys/CreateContract/contract.css" rel="styleSheet">
+<link href="~/BranchSys/css/loader.css" rel="styleSheet">
 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
 {
     <link href="~/BranchSys/CreateContract/english-style.css" rel="styleSheet">
@@ -1570,7 +1572,7 @@ else
                     </div>
                 </div>
                 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-                <div class="modal fade" id="thirdPopupModal" tabindex="-1" data-bs-backdrop="static"
+               @*  <div class="modal fade" id="thirdPopupModal" tabindex="-1" data-bs-backdrop="static"
                      aria-labelledby="thirdPopupModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
                         <div class="modal-content spinner-modal-content">
@@ -1584,7 +1586,7 @@ else
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> *@
                 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
                 <div class="modal fade" id="paymentPopupModal" tabindex="-1"
                      aria-labelledby="payPopupModalLabel" aria-hidden="true">
@@ -1656,20 +1658,18 @@ else
                     <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
                         <div class="modal-content Picsignature-modal-content pt-5 pb-5">
                             <div class="modal-body Picsignature">
-                                <form>
-                                    <div class="upload-container">
-                                        <img class="upload-icon" src="~/BranchSys/CreateContract/img/Rectangle 144.png"
-                                             alt="Upload Icon">
-                                        <p>ارفق صورة التوقيع</p>
-                                        <input type="file" id="imageUpload" accept="image/*"
-                                               style="display: none;">
-                                    </div>
-                                    <br>
-                                    <button id="image-submit-Btn" class="check-btn"
-                                            style="width: 200px;">
-                                        قبول التوقيع
-                                    </button>
-                                </form>
+                                <div class="upload-container">
+                                    <img class="upload-icon" src="~/BranchSys/CreateContract/img/Rectangle 144.png"
+                                         alt="Upload Icon">
+                                    <p>ارفق صورة التوقيع</p>
+                                    <input type="file" id="imageUpload" accept="image/*"
+                                           style="display: none;">
+                                </div>
+                                <br>
+                                <button id="image-submit-Btn" class="check-btn"
+                                        style="width: 200px;">
+                                    قبول التوقيع
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1677,6 +1677,18 @@ else
             </div>
         </div>
     </section>
+    <div class="main" style="display:none">
+        <div class="container1">
+            <div>   <img src="@Url.Content(lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo)" class="logo"></div>
+            <br>
+            <div class="container2">
+                <div class="dash uno"></div>
+                <div class="dash dos"></div>
+                <div class="dash tres"></div>
+                <div class="dash cuatro"></div>
+            </div>
+        </div>
+    </div>
 </div>
 <footer class="fixed-bottom-xl">
     <div class="before-footer-widget">
@@ -1703,6 +1715,60 @@ else
     <script src="~/BranchSys/CreateContract/contract2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // // //////////////////////////////////////////////// رفع صورة التوقيع ////////////////////////////////////////////////////////////////////////
+            const uploadContainer = document.querySelector('.upload-container');
+            const imageUpload = document.getElementById('imageUpload');
+            const imageSubmitBtn = document.getElementById('image-submit-Btn');
+            var imgeURL;
+            console.log("uploadContainer", uploadContainer)
+            console.log("imageUpload", imageUpload)
+            console.log("imageSubmitBtn", imageSubmitBtn)
+
+            const uploadedImg = null;
+            uploadContainer.addEventListener('click', function () {
+                imageUpload.click();
+            });
+
+            imageUpload.addEventListener('change', function () {
+                const file = imageUpload.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const imageURL = e.target.result;
+                        const previewImage = document.createElement('img');
+                        previewImage.classList.add('preview-image');
+                        previewImage.src = imageURL;
+                        imgeURL = imageURL
+                        uploadContainer.innerHTML = '';
+                        uploadContainer.appendChild(previewImage);
+                        uploadContainer.classList.add('previewing');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            imageSubmitBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                if (uploadContainer.firstChild) {
+                    uploadContainer.innerHTML = '';
+                    uploadContainer.classList.remove('previewing');
+                    uploadContainer.innerHTML = ' <img class="upload-icon" src="img/Rectangle 144.png" alt="Upload Icon"><p>ارفق صورة التوقيع</p>';
+                    console.log(imgeURL)
+                }
+                $('#PicsignatureModal').modal('hide');
+
+                // $('#thirdPopupModal').modal('show');
+                $('.main').show(); // Show the main container
+                setTimeout(function () {
+                    // $('#thirdPopupModal').modal('hide');
+                    $('.main').hide(); // Show the main container
+                }, 5000);
+            });
+        });
+    </script>
     <script>
 
 
@@ -1876,10 +1942,12 @@ else
             $("#birth-date-step1").val('');
             ////////////////////////////////
             $('#checkModalToggle').modal('hide');
-            $('#thirdPopupModal').modal('show');
+            // $('#thirdPopupModal').modal('show');
+            $('.main').show(); // Show the main container
             $('#WrongCodeMessage').text('');
             setTimeout(function () {
-                $('#thirdPopupModal').modal('hide');
+                // $('#thirdPopupModal').modal('hide');
+                $('.main').hide(); // Show the main container
                 console.log(RenterInformation);
                 var firstCharacterFromID = RenterInformation.renterID.charAt(0);
                 var currentDate = new Date();
@@ -2158,9 +2226,12 @@ else
             var currentDate = new Date();
             var ExpiryIdDate = new Date(DriverInformation.expiryIdDate);
             $('#checkModalToggleDriver').modal('hide');
-            $('#thirdPopupModal').modal('show');
+            // $('#thirdPopupModal').modal('show');
+            $('.main').show(); // Show the main container
+
             setTimeout(function () {
-                $('#thirdPopupModal').modal('hide');
+                // $('#thirdPopupModal').modal('hide');
+                $('.main').hide(); // Show the main container
 
                 console.log(DriverInformation);
 
@@ -2441,9 +2512,12 @@ else
             var currentDate = new Date();
             var ExpiryIdDate = new Date(AddDriverInformation.expiryIdDate);
             $('#checkModalToggleAddDriver').modal('hide');
-            $('#thirdPopupModal').modal('show');
+            // $('#thirdPopupModal').modal('show');
+            $('.main').show(); // Show the main container
             setTimeout(function () {
-                $('#thirdPopupModal').modal('hide');
+                // $('#thirdPopupModal').modal('hide');
+                $('.main').hide(); // Show the main container
+
                 setTimeout(function () {
                     // var birthdate = AddDriverInformation.birthDate ? AddDriverInformation.birthDate.split('T')[0] : null;
                     var birthdateformat = new Date(AddDriverInformation.birthDate);
@@ -4383,9 +4457,9 @@ else
 
 
                 // director and renter and user
-                ctx.fillText(directorOfLessor, canvas.width - 340, 3095);
-                ctx.fillText(userName, canvas.width - 1140, 3095);
-                ctx.fillText(directorOfBranch, canvas.width - 340, 3200);
+                ctx.fillText(directorOfLessor, canvas.width - 340, 3055);
+                ctx.fillText(userName, canvas.width - 1140, 3055);
+                ctx.fillText(directorOfBranch, canvas.width - 340, 3185);
                 // ctx.fillText(RenterName, canvas.width - 1140, 3200);
                 ctx.drawImage(signatureImg, canvas.width - 1350, 3125, 200, 100);
                 canvas.toBlob(async function (blob) {
@@ -4402,7 +4476,7 @@ else
             var totalAfterDiscount = itemTotal - discountValue;
             var taxValue = totalAfterDiscount * (taxPercent / 100);
             var totalActual = parseFloat(totalAfterDiscount) + parseFloat(taxValue);
-            ctx.fillText(itemName, canvas.width - 235, yHeight);
+            ctx.fillText(itemName, canvas.width - 230, yHeight);
             ctx.fillText(itemValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 540, yHeight);
             ctx.fillText(days, canvas.width - 775, yHeight);
             ctx.fillText(itemTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 970, yHeight);
@@ -4432,8 +4506,9 @@ else
                     // Submit the form
                     CheckIfCanPayLessThanTotalAmount();
                     if (somethingIsNotOkay) {
+                        $('.main').show(); // Show the main container with fade effect
                         sendStaticImageToWhatsApp();
-                        if(parseFloat(AmountPayed)>0){
+                        if (parseFloat(AmountPayed) > 0) {
                             if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
                                 $("#language").val("en");
                             }
@@ -4485,7 +4560,7 @@ else
                     formData.append("number", phoneNumber); // Append the recipient's phone number
                     formData.append("message", message); // Append the message
                     formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
-                    
+
                     // Convert the PDF to a base64-encoded string
                     const requestOptions = {
                         method: 'POST',

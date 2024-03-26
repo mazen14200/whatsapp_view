@@ -230,8 +230,8 @@ scrollContainer.addEventListener('mousemove', (e) => {
 	scrollContainer.scrollLeft = scrollLeft - walkX;
 	scrollContainer.scrollTop = scrollTop - walkY;
 });
- // /////////////////////////////////////////////////////////////////////  
- // ////////////////////////////////////////////////////////////////////////////////
+// // /////////////////////////////////////////////////////////////////////  
+// // ////////////////////////////////////////////////////////////////////////////////
 function openThirdPopuppp() {
 	// Hide the second popup modal
 	$('#paymentPopupModal').modal('hide');
@@ -245,30 +245,12 @@ function openThirdPopuppp() {
 		$('#checkModalToggle').modal('show'); // Show the checkModalToggle modal
 	}, 5000); // Adjust the duration as needed (in milliseconds)
 }
-document.addEventListener('DOMContentLoaded', function () {
-	document.querySelector('#AuthorizationForm').addEventListener('submit', function (event) {
-		event.preventDefault();
-
-		$.ajax({
-			type: 'POST',
-			url: 'https://jsonplaceholder.typicode.com/posts', // Using JSONPlaceholder as a mock server
-			data: $(this).serialize(),
-			success: function (response) {
-				// Handle the response from the mock server
-				console.log('Form data submitted successfully:', response);
-				openThirdPopuppp()
-
-			},
-			error: function (error) {
-				// Handle any errors
-				console.error('Error submitting form data:', error);
-			}
-		});
-
-	});
-
+document.getElementById('AuthorizationDaysBtn').addEventListener('click', function () {
+	var inputValue = document.getElementById('days-number-of-authorization').value;
+	openThirdPopuppp()
+	console.log(inputValue);
 });
- // ///////////////////////////////////////////////////////////////////////////
+// // ///////////////////////////////////////////////////////////////////////////
 function OpenHandSignPopup() {
 	// Hide the second popup modal
 	$('#signaturePopupModal').modal('hide');
@@ -278,18 +260,16 @@ function OpenHandSignPopup() {
 
 
 }
-// // ///////////////////////////////////////////////////////////////////////////////////
+// // ///////////////////////////////////////كتابة التوقيع////////////////////////////////////////////
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
-// Variables for drawing
 var drawing = false;
 var prevX = 0;
 var prevY = 0;
 var currX = 0;
 var currY = 0;
 
-// Draw a line between the previous point and the current point
 function drawLine(x0, y0, x1, y1) {
 	ctx.beginPath();
 	ctx.moveTo(x0, y0);
@@ -298,7 +278,6 @@ function drawLine(x0, y0, x1, y1) {
 	ctx.closePath();
 }
 
-// Add event listeners to handle mouse events
 canvas.addEventListener('mousedown', function (e) {
 	drawing = true;
 	prevX = e.clientX - canvas.getBoundingClientRect().left;
@@ -318,92 +297,77 @@ canvas.addEventListener('mouseup', function () {
 	drawing = false;
 });
 
-// Clear the canvas
-// function clearCanvas() {
-// 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-// }
 
 // document.getElementById('clear').addEventListener('click', function () {
 // 	clearCanvas();
 // });
 
-// Save the canvas as an image
 function saveCanvas() {
 	var dataURL = canvas.toDataURL();
-	var link = document.createElement('a');
-	link.download = 'signature.png';
-	link.href = dataURL;
-	link.click();
+	imgURL = dataURL
+	console.log(imgURL)
 }
 
-document.getElementById('save').addEventListener('click', function () {
+document.getElementById('written-senature').addEventListener('click', function () {
 	saveCanvas();
 	$('#handsignatureModal').modal('hide');
 
-	// Open the third popup modal
 	$('#thirdPopupModal').modal('show');
-	// Close the third popup modal after 5 seconds
 	setTimeout(function () {
 		$('#thirdPopupModal').modal('hide');
-	}, 5000); // Adjust the duration as needed (in milliseconds)
+	}, 5000);
 });
 // // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function OpenPicSignPopup() {
-	// Hide the second popup modal
 	$('#signaturePopupModal').modal('hide');
 
-	// Open the third popup modal
 	$('#PicsignatureModal').modal('show');
 
 
 }
-// // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const uploadContainer = document.querySelector('.upload-container');
-const imageUpload = document.getElementById('imageUpload');
-const imageSubmitBtn = document.getElementById('image-submit-Btn');
+//// // //////////////////////////////////////////////// رفع صورة التوقيع ////////////////////////////////////////////////////////////////////////
+//const uploadContainer = document.querySelector('.upload-container');
+//const imageUpload = document.getElementById('imageUpload');
+//const imageSubmitBtn = document.getElementById('image-submit-Btn');
+//var imgeURL
+//const uploadedImg = null
+//uploadContainer.addEventListener('click', function () {
+//	imageUpload.click();
+//});
 
-uploadContainer.addEventListener('click', function () {
-	imageUpload.click();
-});
+//imageUpload.addEventListener('change', function () {
+//	const file = imageUpload.files[0];
+//	if (file) {
+//		const reader = new FileReader();
+//		reader.onload = function (e) {
+//			const imageURL = e.target.result;
+//			const previewImage = document.createElement('img');
+//			previewImage.classList.add('preview-image');
+//			previewImage.src = imageURL;
+//			imgeURL = imageURL
+//			uploadContainer.innerHTML = '';
+//			uploadContainer.appendChild(previewImage);
+//			uploadContainer.classList.add('previewing');
+//		};
+//		reader.readAsDataURL(file);
+//	}
+//});
 
-imageUpload.addEventListener('change', function () {
-	const file = imageUpload.files[0];
-	if (file) {
-		const reader = new FileReader();
-		reader.onload = function (e) {
-			const imageURL = e.target.result;
-			const previewImage = document.createElement('img');
-			previewImage.classList.add('preview-image');
-			previewImage.src = imageURL;
-			uploadContainer.innerHTML = '';
-			uploadContainer.appendChild(previewImage);
-			uploadContainer.classList.add('previewing');
-		};
-		reader.readAsDataURL(file);
-	}
-});
+//imageSubmitBtn.addEventListener('click', function (event) {
+//	event.preventDefault();
+//	if (uploadContainer.firstChild) {
+//		uploadContainer.innerHTML = '';
+//		uploadContainer.classList.remove('previewing');
+//		uploadContainer.innerHTML = ' <img class="upload-icon" src="img/Rectangle 144.png" alt="Upload Icon"><p>ارفق صورة التوقيع</p>';
+//		console.log(imgeURL)
+//	}
+//	$('#PicsignatureModal').modal('hide');
 
-imageSubmitBtn.addEventListener('click', function (event) {
-	event.preventDefault(); // Prevent the default form submission behavior
-	if (uploadContainer.firstChild) {
-		// Image is selected and previewed, you can perform further actions here
-		console.log('Image submitted!');
-		uploadContainer.innerHTML = ''; // Remove the image from the preview container
-		uploadContainer.classList.remove('previewing'); // Reset the preview state
-		uploadContainer.innerHTML = ' <img class="upload-icon" src="img/Rectangle 144.png" alt="Upload Icon"><p>ارفق صورة التوقيع</p>';
-
-	} else {
-		// No image selected or previewed
-		console.log('Please select an image.');
-	}
-	$('#PicsignatureModal').modal('hide');
-
-	// Open the third popup modal
-	$('#thirdPopupModal').modal('show');
-	// Close the third popup modal after 5 seconds
-	setTimeout(function () {
-		$('#thirdPopupModal').modal('hide');
-	}, 5000); // Adjust the duration as needed (in milliseconds)
-});
+//	$('#thirdPopupModal').modal('show');
+//	setTimeout(function () {
+//		$('#thirdPopupModal').modal('hide');
+//	}, 5000);
+//});
 // ///////%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 

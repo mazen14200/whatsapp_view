@@ -118,24 +118,24 @@
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="img-profile rounded-circle" src="@Url.Content(user.CrMasUserInformationPicture?.ToString())" style="margin-right: 12px;height:53px;width:53px">
-                            <div style="display: flex; flex-direction: column;">
+                            <div class="userName" style="display: flex; flex-direction: column;">
                                 @if (signinManager.IsSignedIn(User))
                                 {
                                     @if (requestCulture.RequestCulture.UICulture.Name != "en-US")
                                     {
-                                        <span class=" text-dark font-weight-bold" style="font-size: 16px;">
+                                        <span class=" text-dark font-weight-bold">
                                             @((await userManager.GetUserAsync(User)).CrMasUserInformationArName)
                                         </span>
-                                        <span class="text-dark" style="font-size: 13px;font-weight: 400;">
+                                        <span class="text-dark" >
                                             @((await userManager.GetUserAsync(User)).CrMasUserInformationTasksArName)
                                         </span>
                                     }
                                     else
                                     {
-                                        <span class=" text-dark font-weight-bold" style="font-size: 16px;">
+                                        <span class=" text-dark font-weight-bold">
                                             @((await userManager.GetUserAsync(User)).CrMasUserInformationEnName)
                                         </span>
-                                        <span class="text-dark" style="font-size: 13px;font-weight: 400;">
+                                        <span class="text-dark">
                                             @((await userManager.GetUserAsync(User)).CrMasUserInformationTasksEnName)
                                         </span>
                                     }
