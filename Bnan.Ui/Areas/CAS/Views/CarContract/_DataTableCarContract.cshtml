@@ -1,7 +1,7 @@
 ﻿@using Bnan.Core.Extensions
 @using Bnan.Ui.ViewModels.CAS
 
-@model UserContractVM
+@model CarContractVM
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
@@ -10,7 +10,7 @@
 }
 @* 
   "RenterInformationCode": "Code",
-  "UserContractId": "ID",
+  "CarContractId": "ID",
   "RenterInformationNationality": "Nationality",
  
  *@
@@ -26,7 +26,7 @@
             <thead>
                 <tr role="row">
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
-                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["UserContractId"]</th>
+                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["CarContractId"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
@@ -44,20 +44,20 @@
                 @foreach (var item in Model.ContractBasic_Filtered)
                 {
 
-                    @*<tr onclick="location.href='@Url.Action("Edit", "UserContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateUserInformationId })'" style="cursor:pointer;color:red">*@
-                    <tr onclick="location.href='@Url.Action("Edit", "UserContract", new { id = item.CrCasRenterContractBasicUserInsert })'">
+                    @*<tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateCarInformationId })'" style="cursor:pointer;color:red">*@
+                    <tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasRenterContractBasicCarSerailNo })'">
                         <td id="_Nc">@no</td>
-                        <td id="_Nc">@item.CrCasRenterContractBasicUserInsert</td>
+                        <td id="_Nc">@item.CrCasRenterContractBasicCarSerailNo</td>
                         @{
-                            var singleUser = Model.crMasUserInformation.FirstOrDefault(x => x.CrMasUserInformationCode == item.CrCasRenterContractBasicUserInsert);
+                            var singleCar = Model.crCasCarInformation.FirstOrDefault(x => x.CrCasCarInformationSerailNo == item.CrCasRenterContractBasicCarSerailNo);
 
-                            <td>@singleUser.CrMasUserInformationEnName</td>
-                            <td>@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicUserInsert == item.CrCasRenterContractBasicUserInsert).Max(x=>x.CrCasRenterContractBasicIssuedDate)?.ToString("dd/MM/yyyy")</td>
+                            <td>@singleCar.CrCasCarInformationConcatenateEnName</td>
+                            <td>@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicCarSerailNo == item.CrCasRenterContractBasicCarSerailNo).Max(x=>x.CrCasRenterContractBasicIssuedDate)?.ToString("dd/MM/yyyy")</td>
 
 
                             foreach (var ss in Model.contracts_Counts)
                             {
-                                if (ss[0] == item.CrCasRenterContractBasicUserInsert)
+                                if (ss[0] == item.CrCasRenterContractBasicCarSerailNo)
                                 {
                                     var singleDataFromCountList = ss;
 
@@ -68,24 +68,24 @@
                                 }
                             }
 
-                            <td>@singleUser.CrMasUserContractValidity.CrMasUserContractValidityKm</td>
+                            <td>@singleCar.CrCasCarInformationCurrentMeter</td>
 
                            
                             <td>
 
-                                @if (@singleUser.CrMasUserInformationStatus == Status.Active)
+                                @if (@singleCar.CrCasCarInformationStatus == Status.Active)
                                 {
                                     @localizer["Active"]
                                 }
-                                else if (@singleUser.CrMasUserInformationStatus == Status.Rented)
+                                else if (@singleCar.CrCasCarInformationStatus == Status.Rented)
                                 {
                                 @localizer["Rented_n"]
                                 }
-                                else if (@singleUser.CrMasUserInformationStatus == Status.Hold)
+                                else if (@singleCar.CrCasCarInformationStatus == Status.Hold)
                                 {
                                     @localizer["Hold"]
                                 }
-                                else if (@singleUser.CrMasUserInformationStatus == Status.Deleted)
+                                else if (@singleCar.CrCasCarInformationStatus == Status.Deleted)
                                 {
                                     @localizer["Deleted"]
                                 }
@@ -112,7 +112,7 @@ else
             <thead>
                 <tr role="row">
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
-                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["UserContractId"]</th>
+                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["CarContractId"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
@@ -130,20 +130,20 @@ else
                 @foreach (var item in Model.ContractBasic_Filtered)
                 {
 
-                    @*<tr onclick="location.href='@Url.Action("Edit", "UserContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateUserInformationId })'" style="cursor:pointer;color:red">*@
-                    <tr onclick="location.href='@Url.Action("Edit", "UserContract", new { id = item.CrCasRenterContractBasicUserInsert })'">
+                    @*<tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateCarInformationId })'" style="cursor:pointer;color:red">*@
+                    <tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasRenterContractBasicCarSerailNo })'">
                         <td id="_Nc">@no</td>
-                        <td id="_Nc">@item.CrCasRenterContractBasicUserInsert</td>
+                        <td id="_Nc">@item.CrCasRenterContractBasicCarSerailNo</td>
                         @{
-                            var singleUser = Model.crMasUserInformation.FirstOrDefault(x => x.CrMasUserInformationCode == item.CrCasRenterContractBasicUserInsert);
+                            var singleCar = Model.crCasCarInformation.FirstOrDefault(x => x.CrCasCarInformationSerailNo == item.CrCasRenterContractBasicCarSerailNo);
 
-                            <td>@singleUser.CrMasUserInformationArName</td>
-                            <td>@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicUserInsert == item.CrCasRenterContractBasicUserInsert).Max(x=>x.CrCasRenterContractBasicIssuedDate)?.ToString("dd/MM/yyyy")</td>
+                            <td>@singleCar.CrCasCarInformationConcatenateArName</td>
+                            <td>@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicCarSerailNo == item.CrCasRenterContractBasicCarSerailNo).Max(x=>x.CrCasRenterContractBasicIssuedDate)?.ToString("dd/MM/yyyy")</td>
 
 
                             foreach (var ss in Model.contracts_Counts)
                             {
-                                if (ss[0] == item.CrCasRenterContractBasicUserInsert)
+                                if (ss[0] == item.CrCasRenterContractBasicCarSerailNo)
                                 {
                                     var singleDataFromCountList = ss;
 
@@ -154,24 +154,24 @@ else
                                 }
                             }
 
-                            <td>@singleUser.CrMasUserContractValidity.CrMasUserContractValidityKm</td>
+                            <td>@singleCar.CrCasCarInformationCurrentMeter</td>
 
 
                             <td>
 
-                                @if (@singleUser.CrMasUserInformationStatus == Status.Active)
+                                @if (@singleCar.CrCasCarInformationStatus == Status.Active)
                                 {
                                     @localizer["Active"]
                                 }
-                                else if (@singleUser.CrMasUserInformationStatus == Status.Rented)
+                                else if (@singleCar.CrCasCarInformationStatus == Status.Rented)
                                 {
                                     @localizer["Rented_n"]
                                 }
-                                else if (@singleUser.CrMasUserInformationStatus == Status.Hold)
+                                else if (@singleCar.CrCasCarInformationStatus == Status.Hold)
                                 {
                                     @localizer["Hold"]
                                 }
-                                else if (@singleUser.CrMasUserInformationStatus == Status.Deleted)
+                                else if (@singleCar.CrCasCarInformationStatus == Status.Deleted)
                                 {
                                     @localizer["Deleted"]
                                 }

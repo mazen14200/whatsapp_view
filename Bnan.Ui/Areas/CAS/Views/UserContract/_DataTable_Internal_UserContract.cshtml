@@ -9,107 +9,104 @@
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
 }
+<style>
 
+    div.scroll {
+        /*        background-color: #fed9ff;
+                width: 600px;*/
+        /*height: 150px;*/
+        overflow-x: hidden;
+        overflow-y: auto;
+        text-align: center;
+        /*padding: 20px;*/
+        position: relative;
+        /*overflow: auto;*/
+        max-height: 25vh;
+        width: 100%;
+    }
+
+
+    th.scroll_1 {
+        top: 0;
+        position: sticky;
+        background-color: #E4F3FC;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        /*box-shadow: inset 0 0 5px grey;*/
+        border-radius: 2px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        /*background: #b30000;*/
+        border-radius: 2px;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            /*background: #b30000;*/
+        }
+</style>
+
+<button onload="ChangeScroll()" hidden> click</button>
 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
 {
-    
-       <div class="col-sm-12">
+
+    <div class="col-sm-12 scroll">
         @* For-scrolling *@
         <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
 
-            <thead>
+            <div>
                 <tr role="row">
-                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
-                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
+                    <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
                 </tr>
-            </thead>
+            </div>
+            <div >
             <tbody>
 
-                @{
-                    int no = 1;
-                }
-                @foreach (var item in Model.crCasRenterContractBasics)
-                {
+                    @{
+                        int no = 1;
+                    }
+                    @foreach (var item in Model.crCasRenterContractBasics)
+                    {
                         @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'">*@
-                        <tr  >
+                    <tr>
                         <td id="_Nc">@no</td>
 
                         <td id="_Nc" style="display:flex">
                             <div style="display:flex;-webkit-align-items:0; gap:5px;">
                                 <div style="">@item.CrCasRenterContractBasicNo</div>
-                                @if (item.CrCasRenterContractBasicCopy > 0 && item.CrCasRenterContractBasicStatus != "y")
-                                {
+                                    @if (item.CrCasRenterContractBasicCopy > 0 && item.CrCasRenterContractBasicStatus != "y")
+                                    {
                                     <div style="color:red;">(@item.CrCasRenterContractBasicCopy)</div>
-                                    @*<div style="color:red;">(@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicNo == item.CrCasRenterContractBasicNo).Max(x=>x.CrCasRenterContractBasicCopy))</div>*@
-                                }
+                                        @*<div style="color:red;">(@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicNo == item.CrCasRenterContractBasicNo).Max(x=>x.CrCasRenterContractBasicCopy))</div>*@
+                                    }
                             </div>
                         </td>
 
                         <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
-                            <td>
+                        <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
+                        <td>
                                 @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
-                            </td>
+                        </td>
 
-                            <td id="_Nc">
-                                @{
-                                    var n = @item.CrCasRenterContractBasicExpectedTotal?.ToString();
-                                    if (n != null && n?.Length > 0)
-                                    {
-                                        var s = n.Length;
-                                        if (Convert.ToInt32(item.CrCasRenterContractBasicExpectedTotal) < 0)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            @n
-                                        }
-                                        else if (n.Length < 7)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var all = $"{n}";
-                                            @all
-                                        }
-                                        else if (n.Length == 7)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var f1 = n.Substring(0, 1);
-                                            var f2 = n.Remove(0, 1);
-                                            var all = $"{f1},{f2}";
-                                            @all
-                                        }
-                                        else if (n.Length > 7 && n.Length < 10)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var f1 = n.Substring(0, s - 6);
-                                            var f2 = n.Remove(0, s - 6);
-                                            var all = $"{f1},{f2}";
-                                            @all
-                                        }
-                                        else if (n.Length > 9)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var f0 = n.Substring(0, s - 9);
-                                            var f1 = n.Substring(0, s - 6);
-                                            var f2 = n.Remove(0, s - 6);
-                                            var all = $"{f0},{f1},{f2}";
-                                            @all
-                                        }
-                                        else
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            @n
-                                        }
-                                    }
-                                }
-
-
-                            </td>
-                            <td>
+                        <td id="_Nc">
+                            @item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture);
+                        </td>
+                        <td>
                                 @if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
                                 {
                                     @localizer["Closed"]
@@ -128,7 +125,7 @@
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
                                 {
-                                @localizer["Rented_n"]
+                                    @localizer["Rented_n"]
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == Status.Hold)
                                 {
@@ -142,36 +139,38 @@
                                 {
 
                                 }
-                            </td>
+                        </td>
 
-                            <td id="_Nc">   </td>
+                        <td id="_Nc">   </td>
 
-                        </tr>
-                    
-                    no++;
-                }
+                    </tr>
+
+                        no++;
+                    }
             </tbody>
+            </div>
+            
         </table>
     </div>
 }
 else
 {
-    <div class="col-sm-12">
+    <div class="col-sm-12 scroll ">
         @* For-scrolling *@
         <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
-            <thead>
+            <div >
                 <tr role="row">
-                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
-                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
+                <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
+                <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
+                <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
+                <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
+                <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
+                <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
                 </tr>
-            </thead>
-            <tbody>
+            </div>
+            <tbody >
 
                 @{
                     int no = 1;
@@ -202,58 +201,9 @@ else
                             @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationArName
                         </td>
 
-                            <td id="_Nc">
-                                @{
-                                    var n = @item.CrCasRenterContractBasicExpectedTotal?.ToString();
-                                    if(n != null && n?.Length > 0)
-                                    {
-                                        var s = n.Length;
-                                        if (Convert.ToInt32(item.CrCasRenterContractBasicExpectedTotal) < 0)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            @n
-                                        }
-                                        else if (n.Length < 7)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var all = $"{n}";
-                                            @all
-                                        }
-                                        else if (n.Length == 7)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var f1 = n.Substring(0, 1);
-                                            var f2 = n.Remove(0, 1);
-                                            var all = $"{f1},{f2}";
-                                            @all
-                                        }
-                                        else if (n.Length > 7 && n.Length < 10)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var f1 = n.Substring(0, s-6);
-                                            var f2 = n.Remove(0, s-6);
-                                            var all = $"{f1},{f2}";
-                                            @all
-                                        }
-                                        else if (n.Length > 9)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var f0 = n.Substring(0, s - 9);
-                                            var f1 = n.Substring(0, s - 6);
-                                            var f2 = n.Remove(0, s - 6);
-                                            var all = $"{f0},{f1},{f2}";
-                                            @all
-                                        }
-                                        else
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            @n
-                                        }
-                                    }
-                                }
-                                
-                                
-                            </td>
+                        <td id="_Nc">
+                            @item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)
+                        </td>
 
                             <td>
 
@@ -306,9 +256,11 @@ else
 @section scripts {
 
     <script>
-        new DataTable('#basic-datatable', {
-            scrollX: true
-        });
+        function ChangeScroll(){
+            var el = document.getElementsByClassName("dataTables_scrollBody");
+            el.style.max-height = "20vh";
+        }
+
     </script>
     <script>
         function GetUpdatedValues(status) {

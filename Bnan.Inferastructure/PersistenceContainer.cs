@@ -160,6 +160,9 @@ namespace Bnan.Inferastructure
             builder.Services.AddScoped<IRenterContract, CasRenterContract>();
             builder.Services.AddScoped<IDriverContract, DriverContract>();
             builder.Services.AddScoped<IUserContract, UserContract>();
+            builder.Services.AddScoped<ICarContract, CarContract>();
+            builder.Services.AddScoped<IFinancialTransactionOfRenter, FinancialTransactionOfRenter>();
+
             
 
             return builder;

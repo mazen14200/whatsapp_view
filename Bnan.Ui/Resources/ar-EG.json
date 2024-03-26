@@ -598,6 +598,42 @@
   "Edit UserContract Data": "البيانات التفصيلية لعقود موظف",
   "Edit UserContract Hint": "تمكنك هذه الصفحة من عرض البيانات التفصيلية لعقود موظف",
 
+  //Car Contract --------
+  "CarContract Hint": "تمكنك هذه الصفحة من عرض والبحث عن تفاصيل عقود سيارة",
+  "CarContract Data": "عقود سيارة",
+  "Edit CarContract Data": "البيانات التفصيلية لعقود سيارة",
+  "Edit CarContract Hint": "تمكنك هذه الصفحة من عرض البيانات التفصيلية لعقود سيارة",
+
+  //FinancialTransactionOfRenter --------
+  "FinancialTransactionOfRenter Hint": "تمكنك الصفحة من الإطلاع والبحث وعرض المستأجرين وأرصدتهم والدخول على التقرير التفصيلي للمستأجر",
+  "FinancialTransactionOfRenter Data": "الحركة المالية للمستأجر",
+  "Edit FinancialTransactionOfRenter Data": "البيانات التفصيلية للحركة المالية للمستأجر",
+  "Edit FinancialTransactionOfRenter Hint": "تمكنك هذه الصفحة من البحث والإطلاع على تفاصيل القيود للمستأجر",
+
+  "FTR_CurrentBalance": "الرصيد الحالي",
+  "FTR_TotalCreditor": "مجموع الدائن",
+  "FTR_TotalDebitor": "مجموع المدين",
+  "FTR_Serial_No": "رقم القيد",
+  "FTR_Date_Issue": "تاريخ القيد",
+  "FTR_Reference_Type": "نوع المرجع",
+  "FTR_Creditor": "الدائن",
+  "FTR_Debtor": "المدين",
+  "FTR_previuos_Balance": "الرصيد السابق",
+  "FTR_User_Transector": "منفذ العملية",
+  "FTR_Reasons": "الملاحظات",
+  "FTR_Id": "الهوية",
+  "FTR_Balance": "الرصيد",
+  "FTR_Avilable_Balance": "الرصيد المتاح",
+  "FTR_Reserved_Balance": "الرصيد المحجوز",
+  "FTR_All_Total_Money_Transaction": "حجم المبالغ المتداولة",
+  "FTR_Count_Receipt_Bonds": "عدد سندات القبض",
+  "FTR_Count_Receipt_Exchanges": "عدد سندات الصرف",
+
+
+  "NoDataToShow": "لا توجد بيانات لعرضها !!",
+  "DriverContractId": "رقم السائق",
+  "UserContractId": "رقم الموظف",
+  "CarContractId": "الرقم التسلسلي",
 
   //RenterIdTypes------
   "RenterIdTypes Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل نوع الهوية",
