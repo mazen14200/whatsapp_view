@@ -64,17 +64,17 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewBag.StartDate = "";
             ViewBag.EndDate = "";
 
-            var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205004", "2");
+            var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205005", "2");
 
 
-            var titles = await setTitle("205", "2205004", "2");
+            var titles = await setTitle("205", "2205005", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var RenterContract_Basic_All = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic4", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasicStatus == Status.Cancel && x.CrCasRenterContractBasicLessor == currentUser.CrMasUserInformationLessor ).OrderByDescending(x => x.CrCasRenterContractBasicRenterId).ThenByDescending(y => y.CrCasRenterContractBasicIssuedDate).ToList();
-            
+            var RenterContract_Basic_All = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicStatus == Status.Cancel && x.CrCasRenterContractBasicLessor == currentUser.CrMasUserInformationLessor, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic4", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).OrderByDescending(x => x.CrCasRenterContractBasicRenterId).ThenByDescending(y => y.CrCasRenterContractBasicIssuedDate).ToList();
+
             //--------------------------------
 
-            var RenterContract_Basic_All_Date = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic4", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasicStatus == Status.Cancel && x.CrCasRenterContractBasicLessor == currentUser.CrMasUserInformationLessor).OrderByDescending(y => y.CrCasRenterContractBasicIssuedDate).ToList();
+            var RenterContract_Basic_All_Date = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicStatus == Status.Cancel && x.CrCasRenterContractBasicLessor == currentUser.CrMasUserInformationLessor, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic4", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).OrderByDescending(x => x.CrCasRenterContractBasicRenterId).ThenByDescending(y => y.CrCasRenterContractBasicIssuedDate).ToList();
 
             if (RenterContract_Basic_All_Date.Count > 1)
             {
@@ -89,6 +89,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     //var UserLoginbyDate_filtered = UserLoginbyDateAll1.Where(x => x.CrMasUserLoginEntryDate <= lastDate && x.CrMasUserLoginEntryDate >= startDate);
                 }
             }
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
             return View("Index", RenterContract_Basic_All);
 
 
@@ -102,7 +107,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewBag.id = "#sidebarRenter";
             ViewBag.no = "4";
 
-            var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205004", "2");
+            var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205005", "2");
 
             if (!string.IsNullOrEmpty(_max) && !string.IsNullOrEmpty(_mini))
             {
@@ -111,15 +116,36 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 _max = DateTime.Parse(_max).Date.AddDays(1).ToString("yyyy-MM-dd");
 
 
-                var RenterContract_Basic_All1 = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic4", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).Where(x => x.CrCasRenterContractBasicIssuedDate < DateTime.Parse(_max).Date && x.CrCasRenterContractBasicIssuedDate >= DateTime.Parse(_mini).Date && x.CrCasRenterContractBasicStatus == Status.Cancel && x.CrCasRenterContractBasicLessor == currentUser.CrMasUserInformationLessor).OrderByDescending(x => x.CrCasRenterContractBasicRenterId).ThenByDescending(y => y.CrCasRenterContractBasicIssuedDate).ToList();
+                var RenterContract_Basic_All1 = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicIssuedDate < DateTime.Parse(_max).Date && x.CrCasRenterContractBasicIssuedDate >= DateTime.Parse(_mini).Date && x.CrCasRenterContractBasicStatus == Status.Cancel && x.CrCasRenterContractBasicLessor == currentUser.CrMasUserInformationLessor, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic4", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).OrderByDescending(x => x.CrCasRenterContractBasicRenterId).ThenByDescending(y => y.CrCasRenterContractBasicIssuedDate).ToList();
 
                 return PartialView("_DataTableReportCanceledContract", RenterContract_Basic_All1);
 
             }
             return PartialView();
         }
-  
- 
+
+        public async Task<IActionResult> FailedMessageReport_NoData()
+        {
+            //sidebar Active
+            ViewBag.id = "#sidebarReport";
+            ViewBag.no = "4";
+            var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205005", "2");
+
+            var RenterContract_Basic_All = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicStatus == Status.Cancel && x.CrCasRenterContractBasicLessor == currentUser.CrMasUserInformationLessor, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic4", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).OrderByDescending(x => x.CrCasRenterContractBasicExpectedTotal).ToList();
+
+            if (RenterContract_Basic_All?.Count() < 1)
+            {
+                ViewBag.Data = "0";
+                //_toastNotification.AddErrorToastMessage(_localizer["NoDataToShow"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                return View();
+            }
+            else
+            {
+                ViewBag.Data = "1";
+                return RedirectToAction("Index");
+            }
+
+        }
 
 
 

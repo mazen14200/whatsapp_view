@@ -67,7 +67,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("203", "2203001", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var RenterLessorInformationAll = _unitOfWork.CrCasRenterLessor.GetAll(new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation.CrMasRenterPost", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation" , "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation" , "CrCasRenterLessorSectorNavigation", "CrCasRenterLessorCodeNavigation", "CrCasRenterLessorStatisticsGenderNavigation", "CrCasRenterLessorMembershipNavigation" }).Where(x=>x.CrCasRenterLessorCode == currentUser.CrMasUserInformationLessor);
+            var RenterLessorInformationAll = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == currentUser.CrMasUserInformationLessor, new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation.CrMasRenterPost", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation" , "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation" , "CrCasRenterLessorSectorNavigation", "CrCasRenterLessorCodeNavigation", "CrCasRenterLessorStatisticsGenderNavigation", "CrCasRenterLessorMembershipNavigation" }).ToList();
             
             var rates = _unitOfWork.CrMasSysEvaluation.FindAll(x=>x.CrMasSysEvaluationsClassification=="1" && x.CrMasSysEvaluationsStatus=="A").ToList();
             ViewData["Rates"] = rates;
@@ -99,10 +99,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
                 if (status == Status.All)
                 {
-                    var RenterLessorInformationbyStatusAll = _unitOfWork.CrCasRenterLessor.FindAll(l => l.CrCasRenterLessorStatus == Status.Hold || l.CrCasRenterLessorStatus == Status.Active || l.CrCasRenterLessorStatus == Status.Rented , new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation.CrMasRenterPost", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation", "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation" , "CrCasRenterLessorSectorNavigation" , "CrCasRenterLessorCodeNavigation" , "CrCasRenterLessorStatisticsGenderNavigation" , "CrCasRenterLessorMembershipNavigation" }).Where(x => x.CrCasRenterLessorCode == currentUser.CrMasUserInformationLessor).ToList();
+                    var RenterLessorInformationbyStatusAll = _unitOfWork.CrCasRenterLessor.FindAll(l => (l.CrCasRenterLessorStatus == Status.Active || l.CrCasRenterLessorStatus == Status.Rented) && l.CrCasRenterLessorCode == currentUser.CrMasUserInformationLessor, new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation.CrMasRenterPost", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation", "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation" , "CrCasRenterLessorSectorNavigation" , "CrCasRenterLessorCodeNavigation" , "CrCasRenterLessorStatisticsGenderNavigation" , "CrCasRenterLessorMembershipNavigation" }).ToList();
                     return PartialView("_DataTableRenterLessorInformation", RenterLessorInformationbyStatusAll);
                 }
-                var RenterLessorInformationbyStatus = _unitOfWork.CrCasRenterLessor.FindAll(l => l.CrCasRenterLessorStatus == status , new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation.CrMasRenterPost", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation", "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation" , "CrCasRenterLessorSectorNavigation", "CrCasRenterLessorCodeNavigation", "CrCasRenterLessorStatisticsGenderNavigation", "CrCasRenterLessorMembershipNavigation" }).Where(x => x.CrCasRenterLessorCode == currentUser.CrMasUserInformationLessor).ToList();
+                var RenterLessorInformationbyStatus = _unitOfWork.CrCasRenterLessor.FindAll(l => l.CrCasRenterLessorStatus == status && l.CrCasRenterLessorCode == currentUser.CrMasUserInformationLessor, new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation.CrMasRenterPost", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation", "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation" , "CrCasRenterLessorSectorNavigation", "CrCasRenterLessorCodeNavigation", "CrCasRenterLessorStatisticsGenderNavigation", "CrCasRenterLessorMembershipNavigation" }).ToList();
                 return PartialView("_DataTableRenterLessorInformation", RenterLessorInformationbyStatus);
             }
             return PartialView();
@@ -194,6 +194,28 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             return RedirectToAction("Index", "RenterLessorInformation");
         }
 
+        public async Task<IActionResult> FailedMessageReport_NoData()
+        {
+            //sidebar Active
+            ViewBag.id = "#sidebarRenter";
+            ViewBag.no = "0";
+            var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203001", "2");
 
+            var RenterLessorInformationAll = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == currentUser.CrMasUserInformationLessor, new[] { "CrCasRenterLessorStatisticsNationalitiesNavigation", "CrCasRenterLessorNavigation.CrMasRenterPost", "CrCasRenterLessorStatisticsJobsNavigation", "CrCasRenterLessorStatisticsCityNavigation", "CrCasRenterLessorStatisticsRegionsNavigation", "CrCasRenterLessorIdtrypeNavigation", "CrCasRenterLessorSectorNavigation", "CrCasRenterLessorCodeNavigation", "CrCasRenterLessorStatisticsGenderNavigation", "CrCasRenterLessorMembershipNavigation" }).ToList();
+
+
+            if (RenterLessorInformationAll?.Count() < 1)
+            {
+                ViewBag.Data = "0";
+                //_toastNotification.AddErrorToastMessage(_localizer["NoDataToShow"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
+                return View();
+            }
+            else
+            {
+                ViewBag.Data = "1";
+                return RedirectToAction("Index");
+            }
+
+        }
     }
 }

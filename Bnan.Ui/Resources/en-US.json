@@ -577,6 +577,43 @@
   "Edit UserContract Data": "Details of Employee Contracts",
   "Edit UserContract Hint": "this page allows you to Display Details of Employee Contracts",
 
+  //Car Contract --------
+  "CarContract Hint": "This page allows you to display Contracts of Car ",
+  "CarContract Data": "Car Contracts",
+  "Edit CarContract Data": "Details of Car Contracts",
+  "Edit CarContract Hint": "this page allows you to Display Details of Car Contracts",
+
+  //FinancialTransactionOfRenter --------
+  "FinancialTransactionOfRenter Hint": "This page allows you to display The Financial Transaction Of Renters",
+  "FinancialTransactionOfRenter Data": "Financial Transaction Of Renters",
+  "Edit FinancialTransactionOfRenter Data": "Details of Financial Transaction Of Renters",
+  "Edit FinancialTransactionOfRenter Hint": "this page allows you to Display Details of Financial Transaction Of Renters",
+
+  "FTR_CurrentBalance": "Current Balance",
+  "FTR_TotalCreditor": "Total Creditor",
+  "FTR_TotalDebitor": "Total Debitor",
+  "FTR_Serial_No": "Serial No",
+  "FTR_Date_Issue": "Issue Date",
+  "FTR_Reference_Type": "Reference_Type",
+  "FTR_Creditor": "Creditor",
+  "FTR_Debtor": "Debtor",
+  "FTR_previuos_Balance": "previuos_Balance",
+  "FTR_User_Transector": "User_Transector",
+  "FTR_Reasons": "Reasons",
+  "FTR_Id": "ID",
+  "FTR_Balance": "Balance",
+  "FTR_Avilable_Balance": "Avilable_Balance",
+  "FTR_Reserved_Balance": "Reserved_Balance",
+  "FTR_All_Total_Money_Transaction": "Total Money Transaction",
+  "FTR_Count_Receipt_Bonds": "Count Receipt Bonds",
+  "FTR_Count_Receipt_Exchanges": "Count Receipt Exchanges",
+
+  "NoDataToShow": "!! No Data To Show",
+
+  "DriverContractId": "Driver No",
+  "UserContractId": "Employee No",
+  "CarContractId": "serial No",
+
 
   //RenterIdType------
   "RenterIdTypes Hint": "The page allows you to display, add, and modify  Id Types data.",

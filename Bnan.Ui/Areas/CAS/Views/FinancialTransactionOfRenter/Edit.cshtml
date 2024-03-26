@@ -1,7 +1,8 @@
-﻿@using Bnan.Ui.ViewModels.CAS
+﻿
+
+@using Bnan.Ui.ViewModels.CAS
 @using Bnan.Core.Extensions
-@using Bnan.Core.Models
-@model IEnumerable<CrCasRenterContractBasic>
+@model FinancialTransactionOfRenterVM
 
 
 @inject IViewLocalizer localizer
@@ -9,8 +10,8 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    ViewData["Page-title"] = localizer["Edit DriverContract Data"];
-    ViewData["Page-Hint"] = localizer["Edit DriverContract Hint"];
+    ViewData["Page-title"] = localizer["Edit FinancialTransactionOfRenter Data"];
+    ViewData["Page-Hint"] = localizer["Edit FinancialTransactionOfRenter Hint"];
 }
 
 <title>@ViewData["Title"]</title>
@@ -192,7 +193,6 @@
             margin: 35px;
             margin-right: 55px;
             margin-top: 5px;
-            height:200px;
         }
 
         .col-md-label5 {
@@ -273,14 +273,16 @@ else
         @*<div class="form-contain" style="position:relative">*@ @*For Scrolling in Form*@
           <div class="" style="position:relative">
             @*<div class="col-sm-12 col-md-9" style="margin-top:20px;height:50px;">
-                <div class="col-sm-12 col-md-4 ">
-                    <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="CAS" asp-controller="DriverContract" asp-action="Index">
+                <div class="col-sm-12 col-md-4 p-0">
+                    <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="CAS" asp-controller="CarContract" asp-action="Index">
                         <i class="mdi mdi-window-close"></i>
                     </a>
                 </div>
             </div>*@
             <div class="col-sm-12 col-md-9" style="margin-top:0px;height:20px;">
             </div>
+
+
                 @*branch Code*@
             <div class="row mt-2" hidden>
                 <div class="col-md-label5 formlabel">
@@ -298,28 +300,101 @@ else
     @if (requestCulture.RequestCulture.UICulture.Name == "ar-EG")
     {
     
-                @*RenterLessorInformation ID Ar && RenterLessorInformation name Ar *@
+                @*RenterLessorInformation ID Ar -- RenterLessorInformation name Ar -- profession Ar*@
                     @*<div class="row mt-2" style="height:10px;">
                     </div>*@
-                    <div class="row mt-2" style="height:60px;">
-                    <div class="col-md-label10 formlabel" style="width:95px;">
-                        <label class="form-label" for="CrCasRenterDriverId">@localizer["DriverContractId"]</label>
+                    <div class="row mt-2" style="height:60px">
+                    <div class="col-md-label10 formlabel" style="width:110px;" >
+                        <label class="form-label" for="CrCasRenterCarId">@localizer["CarContractId"]</label>
                     </div>
-                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:295px;">
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:280px;">
 
-                            <input type="text" class="form-control" value="@ViewBag.Single_DriverId" readonly maxlength="15" id="CrCasRenterDriverId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                            <input type="text" class="form-control" value="@ViewBag.Single_FT_RenterId" readonly maxlength="15" id="CrCasRenterCarId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
-                    <div class="col-md-label10 formlabel" style="width:63px;">
+                    <div class="col-md-label10 formlabel" style="width:53px;">
                         <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationArName">@localizer["RenterInformationName"]</label>
                     </div>
-                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
-                            <input type="text" class="form-control" value="@ViewBag.Single_DriverNameAr" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:337px;">
+                            <input type="text" class="form-control" value="@ViewBag.Single_FT_RenterNameAr" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
                     </div>
 
                 </div> @*End row*@
 
-                    @*DateTime Inputs*@
+
+
+
+                @*UserBalanceInBranch -- AvailableBalance -- ReservedBalance *@
+                <div class="row mt-2" style="height:60px">
+                    <div class="col-md-label10 formlabel" style="width:100px;">
+                        <label class="form-label" for="UserBalanceInBranch">@localizer["UserBalanceInBranch"]</label>
+                    </div>
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:290px;">
+
+                        <input type="text" class="form-control" value="@ViewBag.UserBalanceInBranch" readonly maxlength="15" id="UserBalanceInBranch" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                    </div>
+
+                    <div class="col-md-label10 formlabel" style="width:100px;">
+                        <label class="form-label" for="AvailableBalance">@localizer["AvailableBalance"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:290px;">
+                        <input type="text" class="form-control" id="AvailableBalance" value="@ViewBag.AvailableBalance" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+
+                    <div class="col-md-label10 formlabel" style="width:100px;">
+                        <label class="form-label" for="ReservedBalance">@localizer["ReservedBalance"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:290px;">
+                        <input type="text" class="form-control" id="ReservedBalance" value="@ViewBag.ReservedBalance" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+                </div> @*End row*@
+
+
+
+                @*FTR_CurrentBalance -- FTR_TotalCreditor -- FTR_TotalDebitor *@
+                <div class="row mt-2" style="height:60px">
+                    <div class="col-md-label10 formlabel" style="width:100px;">
+                        <label class="form-label" for="FTR_CurrentBalance">@localizer["FTR_CurrentBalance"]</label>
+                    </div>
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:290px;">
+
+                        <input type="text" class="form-control" value="@ViewBag.FTR_CurrentBalance" readonly maxlength="15" id="FTR_CurrentBalance" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                    </div>
+
+                    @{
+
+                        var Debtor_Count = "0.00";
+                        var Creditor_Count = "0.00";
+                        var Counter = "0";
+
+                        foreach (var single_Count in Model.All_Counts)
+                        {
+                            if (single_Count[0] == ViewBag.Single_FT_RenterId)
+                            {
+                                Counter = single_Count[1];
+                                Creditor_Count = single_Count[2];
+                                Debtor_Count = single_Count[3];
+                            }
+                        }
+                    <div class="col-md-label10 formlabel" style="width:100px;">
+                        <label class="form-label" for="FTR_TotalCreditor">@localizer["FTR_TotalCreditor"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:290px;">
+                        <input type="text" class="form-control" id="FTR_TotalCreditor" value="@Creditor_Count" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+
+                    <div class="col-md-label10 formlabel" style="width:100px;">
+                        <label class="form-label" for="FTR_TotalDebitor">@localizer["FTR_TotalDebitor"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:290px;">
+                        <input type="text" class="form-control" id="FTR_TotalDebitor" value="@Debtor_Count" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+                }
+
+                </div> @*End row*@
+
+
+                @*DateTime Inputs*@
                     <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:70px;">
 
                         <!-- Autoclose -->
@@ -360,21 +435,92 @@ else
                 @*<div class="row mt-2" style="height:10px;">
                 </div>*@
                 <div class="row mt-2" style="height:60px;">
-                    <div class=" formlabel" style="width:95px;">
-                        <label class="form-label" for="CrCasRenterDriverId">@localizer["DriverContractId"]</label>
+                    <div class=" formlabel" style="width:85px;">
+                        <label class="form-label" for="CrCasRenterCarId">@localizer["CarContractId"]</label>
                     </div>
-                    <div class=" p-0 col-11" style="margin-top:-5px;width:295px;">
-                        <input type="text" class="form-control" value="@ViewBag.Single_DriverId" readonly maxlength="15" id="CrCasRenterDriverId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                    <div class=" p-0 col-11" style="margin-top:-5px;width:305px;">
+                        <input type="text" class="form-control" value="@ViewBag.Single_FT_RenterId" readonly maxlength="15" id="CrCasRenterCarId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
-                    <div class="col-md-label10 formlabel">
+                    <div class="col-md-label10 formlabel" style="width:63px;">
                         <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["RenterInformationName"]</label>
                     </div>
-                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
-                            <input type="text" class="form-control" value="@ViewBag.Single_DriverNameEn" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:327px;">
+                            <input type="text" class="form-control" value="@ViewBag.Single_FT_RenterNameEn" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
                     </div>
 
                 </div> @*End row*@
+
+
+                @*UserBalanceInBranch -- AvailableBalance -- ReservedBalance *@
+                <div class="row mt-2" style="height:60px">
+                    <div class="col-md-label10 formlabel" style="width:185px;">
+                        <label class="form-label" for="UserBalanceInBranch">@localizer["UserBalanceInBranch"]</label>
+                    </div>
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:205px;">
+
+                        <input type="text" class="form-control" value="@ViewBag.UserBalanceInBranch" readonly maxlength="15" id="UserBalanceInBranch" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                    </div>
+
+                    <div class="col-md-label10 formlabel" style="width:150px;">
+                        <label class="form-label" for="AvailableBalance">@localizer["AvailableBalance"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:240px;">
+                        <input type="text" class="form-control" id="AvailableBalance" value="@ViewBag.AvailableBalance" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+
+                    <div class="col-md-label10 formlabel" style="width:150px;">
+                        <label class="form-label" for="ReservedBalance">@localizer["ReservedBalance"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:240px;">
+                        <input type="text" class="form-control" id="ReservedBalance" value="@ViewBag.ReservedBalance" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+                </div> @*End row*@
+
+                @*FTR_CurrentBalance -- FTR_TotalCreditor -- FTR_TotalDebitor *@
+                <div class="row mt-2" style="height:60px">
+                    <div class="col-md-label10 formlabel" style="width:135px;">
+                        <label class="form-label" for="FTR_CurrentBalance">@localizer["FTR_CurrentBalance"]</label>
+                    </div>
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:255px;">
+
+                        <input type="text" class="form-control" value="@ViewBag.FTR_CurrentBalance" readonly maxlength="15" id="FTR_CurrentBalance" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                    </div>
+                    @{
+
+                        var Debtor_Count = "0.00";
+                        var Creditor_Count = "0.00";
+                        var Counter = "0";
+
+                        foreach (var single_Count in Model.All_Counts)
+                        {
+                            if (single_Count[0] == ViewBag.Single_FT_RenterId)
+                            {
+                                Counter = single_Count[1];
+                                Creditor_Count = single_Count[2];
+                                Debtor_Count = single_Count[3];
+                            }
+                        }
+                    <div class="col-md-label10 formlabel" style="width:125px;">
+                        <label class="form-label" for="FTR_TotalCreditor">@localizer["FTR_TotalCreditor"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:265px;">
+                        <input type="text" class="form-control" id="FTR_TotalCreditor" value="@Creditor_Count" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+
+                    <div class="col-md-label10 formlabel" style="width:115px;">
+                        <label class="form-label" for="FTR_TotalDebitor">@localizer["FTR_TotalDebitor"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:275px;">
+                        <input type="text" class="form-control" id="FTR_TotalDebitor" value="@Debtor_Count" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+                }
+                </div> @*End row*@
+
+
+
+
+
 
                     @*DateTime Inputs*@
                     <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:70px;">
@@ -408,77 +554,16 @@ else
                     </div> @*End row*@
 
                 }
-            
 
 
-            
-            @{
-                int? Km_Count =0;
-                int? Contract_Count = 0;
-                int? Days_Count = 0;
-                decimal? Contract_Value = 0;
-                var Counter = 0;
-                foreach (var single in Model)
-                {
-                   Contract_Value = single.CrCasRenterContractBasicExpectedTotal + Contract_Value;
-                    Contract_Count = single.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationContractCount + Contract_Count;
-                    Days_Count = single.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationDaysCount + Days_Count;
-                    Km_Count = single.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationTraveledDistance + Km_Count;
-                    Counter = Counter + 1;
-                    if (ViewBag.CountRecord == Counter)
-                    {
-
-                        @*Contract_Count  && Contract_Value  *@
-                        <div class="row mt-2">
-                            <div class="col-md-label5 formlabel">
-                                <label class="form-label" for="CrCasRenterLessorId">@localizer["Contract_Count"]</label>
-                            </div>
-                            <div class="col-md-input5 p-0 col-11" style="margin-top:-5px">
-                                <input type="text" class="form-control" value="@Counter" readonly maxlength="15" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-                            </div>
-
-                            <div class="col-md-label5 formlabel">
-                                <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["Contract_Value"]</label>
-                            </div>
-                            <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
-                        
-                                <input type="text" class="form-control" value="@Contract_Value?.ToString("N2",CultureInfo.InvariantCulture)" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
-                        
-                            </div>
-
-                        </div> @*End row*@
-
-                        @*Days_Count  && KM_Count  *@
-                        <div class="row mt-2">
-                            <div class="col-md-label5 formlabel">
-                                <label class="form-label" for="CrCasRenterLessorId">@localizer["Days_Count"]</label>
-                            </div>
-                            <div class="col-md-input5 p-0 col-11" style="margin-top:-5px">
-                                <input type="text" class="form-control" value="@Days_Count" readonly maxlength="15" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-                            </div>
-
-                            <div class="col-md-label5 formlabel">
-                                <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["KM_Count"]</label>
-                            </div>
-                            <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
-                                <input type="text" class="form-control" value="@Km_Count" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
-                            </div>
-
-                        </div> @*End row*@
-                    }
-               
-                }
-
-                //style = "height:200px;overflow:scroll;"
-                <div class="dataTable " id="t_mar" style="height:230px;" >
-                    <partial name="_DataTable_Internal_DriverContract" />
+                <div class="dataTable " id="t_mar" style="height:200px;">
+                    <partial name="_DataTable_Internal_Contract" />
                 </div>
-                if (ViewBag.CountRecord == 0)
+                @if (ViewBag.CountRecord == 0)
                 {
-                    <div class="row mt-2" id="Section" style="height:90px;">
-                    </div> @*End row*@
+                    //<div class="row mt-2" id="Section" style="height:30px;">
+                    //</div> @*End row*@
                 }
-            }
             @*zip code And AdditionalNumber*@
             <div class="row mt-2">
             </div>
@@ -487,13 +572,12 @@ else
         <div class="mt-3" id="buttonContainer">
 
             @*<a class="btn btn-primary ms-1" id="saveEdit">@localizer["Save"]</a>*@
-
-            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="DriverContract" asp-action="Index">
+            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="FinancialTransactionOfRenter" asp-action="Index">
                 @localizer["Back"]
             </a>
         </div>
-    </form>
 
+    </form>
 </div>
 
 
@@ -504,6 +588,13 @@ else
 
 
     @*Get AccountBank Using filter*@
+    <script>
+        $(document).ready(function () {
+            $('#t_mar').DataTable({
+                "scrollY": "200px",
+                "scrollCollapse": true,
+            });
+        </script>
     <script>
         $(document).ready(function () {
             var today = new Date();
@@ -563,7 +654,7 @@ else
 
     <script>
         function DateChanged() {
-            var id = $("#CrCasRenterDriverId").val();
+            var id = $("#CrCasRenterCarId").val();
             var mini = $("#startDateInput").val();
             var max = $("#endDateInput").val();
             var _mini = mini.replace("/", "-");
@@ -571,7 +662,7 @@ else
             console.log(mini);
             console.log(_max);
             console.log(id);
-            location.href = '@Url.Action("Edit2Date", "DriverContract")?_max=' + _max + '&_mini=' + _mini + '&id=' + id;
+            location.href = '@Url.Action("Edit2Date", "FinancialTransactionOfRenter")?_max=' + _max + '&_mini=' + _mini + '&id=' + id;
 
 
         }

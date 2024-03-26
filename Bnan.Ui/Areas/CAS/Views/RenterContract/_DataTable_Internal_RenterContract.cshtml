@@ -18,25 +18,69 @@
  
   
  *@
+<style>
+
+    div.scroll {
+        /*        background-color: #fed9ff;
+                    width: 600px;*/
+        /*height: 150px;*/
+        overflow-x: hidden;
+        overflow-y: auto;
+        text-align: center;
+        /*padding: 20px;*/
+        position: relative;
+        /*overflow: auto;*/
+        max-height: 37vh;
+        width: 100%;
+    }
+
+
+    th.scroll_1 {
+        top: 0;
+        position: sticky;
+        background-color: #E4F3FC;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        /*box-shadow: inset 0 0 5px grey;*/
+        border-radius: 2px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        /*background: #b30000;*/
+        border-radius: 2px;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            /*background: #b30000;*/
+        }
+</style>
 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
 {
     
-       <div class="col-sm-12">
+       <div class="col-sm-12 scroll">
         @* For-scrolling *@
         <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
 
-            <thead>
+            <div>
                 <tr role="row">
-                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
-                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
+                    <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
                 </tr>
-            </thead>
+            </div>
             <tbody>
 
                 @{
@@ -47,36 +91,37 @@
                     @if (item.CrCasRenterContractBasicStatus == @Status.Deleted || item.CrCasRenterContractBasicStatus == @Status.Hold)
                     {
                         @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'" style="cursor:pointer;color:red">*@
-                        <tr style="cursor:pointer;color:red">
+                        <tr style="color:red">
                             <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
                             <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
 
-                            <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal</td>
-
+                    <td id="_Nc">
+                                @item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)
+                    </td>
                             <td>
-                                
-                                @if (@item.CrCasRenterContractBasicStatus == Status.Active)
+
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
                                 {
                                     @localizer["Standing"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Extension)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
                                 {
                                     @localizer["Extended"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
                                 {
-                                    @localizer["Rented_n"]
+                                    @localizer["Closed"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Hold)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Cancel)
                                 {
-                                    @localizer["Hold"]
+                                    @localizer["Canceled"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Deleted)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
                                 {
-                                    @localizer["Deleted"]
+                                    @localizer["Expired"]
                                 }
                                 else
                                 {
@@ -99,78 +144,29 @@
                             <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
 
                             <td id="_Nc">
-                                @{
-                                    var n = @item.CrCasRenterContractBasicExpectedTotal?.ToString();
-                                    if (n != null && n?.Length > 0)
-                                    {
-                                        var s = n.Length;
-                                        if (Convert.ToInt32(item.CrCasRenterContractBasicExpectedTotal) < 0)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            @n
-                                        }
-                                        else if (n.Length < 7)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var all = $"{n}";
-                                            @all
-                                        }
-                                        else if (n.Length == 7)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var f1 = n.Substring(0, 1);
-                                            var f2 = n.Remove(0, 1);
-                                            var all = $"{f1},{f2}";
-                                            @all
-                                        }
-                                        else if (n.Length > 7 && n.Length < 10)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var f1 = n.Substring(0, s - 6);
-                                            var f2 = n.Remove(0, s - 6);
-                                            var all = $"{f1},{f2}";
-                                            @all
-                                        }
-                                        else if (n.Length > 9)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var f0 = n.Substring(0, s - 9);
-                                            var f1 = n.Substring(0, s - 6);
-                                            var f2 = n.Remove(0, s - 6);
-                                            var all = $"{f0},{f1},{f2}";
-                                            @all
-                                        }
-                                        else
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            @n
-                                        }
-                                    }
-                                }
-
-
+                                  @item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)
                             </td>
                             <td>
 
-                                @if (@item.CrCasRenterContractBasicStatus == Status.Active)
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
                                 {
                                     @localizer["Standing"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Extension)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
                                 {
                                     @localizer["Extended"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
                                 {
-                                    @localizer["Rented_n"]
+                                    @localizer["Closed"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Hold)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Cancel)
                                 {
-                                    @localizer["Hold"]
+                                    @localizer["Canceled"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Deleted)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
                                 {
-                                    @localizer["Deleted"]
+                                    @localizer["Expired"]
                                 }
                                 else
                                 {
@@ -190,21 +186,21 @@
 }
 else
 {
-    <div class="col-sm-12">
+    <div class="col-sm-12 scroll">
         @* For-scrolling *@
         <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
-            <thead>
+            <div>
                 <tr role="row">
-                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
-                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
+                    <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
                 </tr>
-            </thead>
+            </div>
             <tbody>
 
                 @{
@@ -218,36 +214,36 @@ else
                     @if (item.CrCasRenterContractBasicStatus == @Status.Deleted || item.CrCasRenterContractBasicStatus == @Status.Hold)
                     {
                         @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'" style="cursor:pointer;color:red">*@
-                        <tr style="cursor:pointer;color:red">
+                        <tr style="color:red">
                             <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
                             <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
 
-                            <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal?.ToString().Length</td>
+                            <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)</td>
                             
                             <td>
 
-                                @if (@item.CrCasRenterContractBasicStatus == Status.Active)
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
                                 {
                                     @localizer["Standing"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Extension)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
                                 {
                                     @localizer["Extended"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
                                 {
-                                    @localizer["Rented_n"]
+                                    @localizer["Closed"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Hold)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Cancel)
                                 {
-                                    @localizer["Hold"]
+                                    @localizer["Canceled"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Deleted)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
                                 {
-                                    @localizer["Deleted"]
+                                    @localizer["Expired"]
                                 }
                                 else
                                 {
@@ -271,80 +267,30 @@ else
                             <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
 
-                            <td id="_Nc">
-                                @{
-                                    var n = @item.CrCasRenterContractBasicExpectedTotal?.ToString();
-                                    if(n != null && n?.Length > 0)
-                                    {
-                                        var s = n.Length;
-                                        if (Convert.ToInt32(item.CrCasRenterContractBasicExpectedTotal) < 0)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            @n
-                                        }
-                                        else if (n.Length < 7)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var all = $"{n}";
-                                            @all
-                                        }
-                                        else if (n.Length == 7)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var f1 = n.Substring(0, 1);
-                                            var f2 = n.Remove(0, 1);
-                                            var all = $"{f1},{f2}";
-                                            @all
-                                        }
-                                        else if (n.Length > 7 && n.Length < 10)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var f1 = n.Substring(0, s-6);
-                                            var f2 = n.Remove(0, s-6);
-                                            var all = $"{f1},{f2}";
-                                            @all
-                                        }
-                                        else if (n.Length > 9)
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            var f0 = n.Substring(0, s - 9);
-                                            var f1 = n.Substring(0, s - 6);
-                                            var f2 = n.Remove(0, s - 6);
-                                            var all = $"{f0},{f1},{f2}";
-                                            @all
-                                        }
-                                        else
-                                        {
-                                            n = n.Replace('٫', '.');
-                                            @n
-                                        }
-                                    }
-                                }
-                                
-                                
-                            </td>
+                            <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)</td>
+
 
                             <td>
 
-                                @if (@item.CrCasRenterContractBasicStatus == Status.Active)
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
                                 {
                                     @localizer["Standing"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Extension)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
                                 {
                                     @localizer["Extended"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Rented)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
                                 {
-                                    @localizer["Rented_n"]
+                                    @localizer["Closed"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Hold)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Cancel)
                                 {
-                                    @localizer["Hold"]
+                                    @localizer["Canceled"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == Status.Deleted)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
                                 {
-                                    @localizer["Deleted"]
+                                    @localizer["Expired"]
                                 }
                                 else
                                 {

@@ -68,7 +68,7 @@
                     @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
                     if(item.CrCasRenterContractBasicStatus == "E")
                     {
-                        <tr id="Tr_Color" style="cursor:pointer;color:red">
+                        <tr id="Tr_Color" style="color:red">
                             @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
                             <td id="_Nc">@no</td>
                             <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
@@ -82,9 +82,17 @@
                                 {
                                     @localizer["Standing"]
                                 }
-                                @if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
                                 {
                                     @localizer["Extended"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
+                                {
+                                    @localizer["Closed"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Cancel)
+                                {
+                                    @localizer["Canceled"]
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
                                 {
@@ -120,7 +128,7 @@
                     }
                     else
                     {
-                        <tr id="Tr_Color" style="cursor:pointer;color:black">
+                        <tr id="Tr_Color" >
                             @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
                             <td id="_Nc">@no</td>
                             <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
@@ -134,9 +142,17 @@
                                 {
                                     @localizer["Standing"]
                                 }
-                                @if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
                                 {
                                     @localizer["Extended"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
+                                {
+                                    @localizer["Closed"]
+                                }
+                                else if (@item.CrCasRenterContractBasicStatus == @Status.Cancel)
+                                {
+                                    @localizer["Canceled"]
                                 }
                                 else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
                                 {
@@ -207,7 +223,7 @@ else
                     @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
                     if(item.CrCasRenterContractBasicStatus == "E")
                     {
-                        <tr id="Tr_Color" style="cursor:pointer;color:red">
+                        <tr id="Tr_Color" style="color:red">
                             @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
                             <td id="_Nc">@no</td>
                             <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
@@ -250,7 +266,7 @@ else
                     }
                     else
                     {
-                        <tr id="Tr_Color" style="cursor:pointer;color:black">
+                        <tr id="Tr_Color">
                             @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
                             <td id="_Nc">@no</td>
                             <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
