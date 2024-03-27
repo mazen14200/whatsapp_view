@@ -5,6 +5,7 @@ using Bnan.Core.Models;
 using Bnan.Inferastructure.Extensions;
 using Bnan.Inferastructure.Repository;
 using Bnan.Ui.Areas.Base.Controllers;
+using Bnan.Ui.ViewModels.BS;
 using Bnan.Ui.ViewModels.CAS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -59,7 +60,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("205", "2205010", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            var FinancialTransactionOfRenterAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode , new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptRenter", "CrCasAccountReceiptUserNavigation", "CrCasAccountReceiptAccountNavigation", "CrCasAccountReceiptBankNavigation" }).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
+            var FinancialTransactionOfRenterAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && (x.CrCasAccountReceiptType == "301" || x.CrCasAccountReceiptType == "302"), new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptRenter", "CrCasAccountReceiptUserNavigation", "CrCasAccountReceiptAccountNavigation", "CrCasAccountReceiptBankNavigation" }).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
             var AllRenterLessor = _unitOfWork.CrCasRenterLessor.GetAll().Where(x => FinancialTransactionOfRenterAll.Any(y => y.CrCasAccountReceiptLessorCode == x.CrCasRenterLessorCode && y.CrCasAccountReceiptRenterId == x.CrCasRenterLessorId)).ToList();
 
             List<CrCasAccountReceipt>? FinancialTransactionOfRente_Filtered = new List<CrCasAccountReceipt>();
@@ -121,7 +122,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("205", "2205010", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
 
-            var FinancialTransactionOfRenterAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && id == x.CrCasAccountReceiptRenterId, new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptRenter", "CrCasAccountReceiptUserNavigation", "CrCasAccountReceiptAccountNavigation", "CrCasAccountReceiptBankNavigation" }).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
+            var FinancialTransactionOfRenterAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && id == x.CrCasAccountReceiptRenterId && (x.CrCasAccountReceiptType == "301" || x.CrCasAccountReceiptType == "302"), new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptRenter", "CrCasAccountReceiptUserNavigation", "CrCasAccountReceiptAccountNavigation", "CrCasAccountReceiptBankNavigation" }).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
             var AllRenterLessor = _unitOfWork.CrCasRenterLessor.GetAll().Where(x => FinancialTransactionOfRenterAll.Any(y => y.CrCasAccountReceiptLessorCode == x.CrCasRenterLessorCode && y.CrCasAccountReceiptRenterId == x.CrCasRenterLessorId)).ToList();
 
 
@@ -177,10 +178,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewBag.Single_FT_RenterNameAr = Single_data.CrMasRenterInformationArName;
             ViewBag.Single_FT_RenterNameEn = Single_data.CrMasRenterInformationEnName;
 
-            ViewBag.UserBalanceInBranch = "0000";
+            
             ViewBag.AvailableBalance = Single_data_Account_Reciept?.CrCasRenterLessorAvailableBalance?.ToString("N2", CultureInfo.InvariantCulture);
             ViewBag.ReservedBalance = Single_data_Account_Reciept?.CrCasRenterLessorReservedBalance?.ToString("N2", CultureInfo.InvariantCulture);
-            ViewBag.FTR_CurrentBalance = Single_data_Account_Reciept?.CrCasRenterLessorBalance?.ToString("N2", CultureInfo.InvariantCulture);
+            ViewBag.FTR_Balance = Single_data_Account_Reciept?.CrCasRenterLessorBalance?.ToString("N2", CultureInfo.InvariantCulture);
 
             return View(FT_RenterVM);
         }
@@ -204,7 +205,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             if (!string.IsNullOrEmpty(_max) && !string.IsNullOrEmpty(_mini) && _max.Length > 0)
             {
                 _max = DateTime.Parse(_max).Date.AddDays(1).ToString("yyyy-MM-dd");
-                var FinancialTransactionOfRenterAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptDate < DateTime.Parse(_max).Date && x.CrCasAccountReceiptDate >= DateTime.Parse(_mini).Date && currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && id == x.CrCasAccountReceiptRenterId, new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptRenter", "CrCasAccountReceiptUserNavigation", "CrCasAccountReceiptAccountNavigation", "CrCasAccountReceiptBankNavigation" }).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
+                var FinancialTransactionOfRenterAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptDate < DateTime.Parse(_max).Date && x.CrCasAccountReceiptDate >= DateTime.Parse(_mini).Date && currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && id == x.CrCasAccountReceiptRenterId  && (x.CrCasAccountReceiptType=="301" || x.CrCasAccountReceiptType == "302") , new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptRenter", "CrCasAccountReceiptUserNavigation", "CrCasAccountReceiptAccountNavigation", "CrCasAccountReceiptBankNavigation" }).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
 
                 var AllRenterLessor = _unitOfWork.CrCasRenterLessor.GetAll().Where(x => FinancialTransactionOfRenterAll.Any(y => y.CrCasAccountReceiptLessorCode == x.CrCasRenterLessorCode && y.CrCasAccountReceiptRenterId == x.CrCasRenterLessorId)).ToList();
 
@@ -260,11 +261,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 ViewBag.Single_FT_RenterId = Single_data.CrMasRenterInformationId;
                 ViewBag.Single_FT_RenterNameAr = Single_data.CrMasRenterInformationArName;
                 ViewBag.Single_FT_RenterNameEn = Single_data.CrMasRenterInformationEnName;
-
-                ViewBag.UserBalanceInBranch = "0000";
+                
                 ViewBag.AvailableBalance = Single_data_Account_Reciept?.CrCasRenterLessorAvailableBalance?.ToString("N2", CultureInfo.InvariantCulture);
                 ViewBag.ReservedBalance = Single_data_Account_Reciept?.CrCasRenterLessorReservedBalance?.ToString("N2", CultureInfo.InvariantCulture);
-                ViewBag.FTR_CurrentBalance = Single_data_Account_Reciept?.CrCasRenterLessorBalance?.ToString("N2", CultureInfo.InvariantCulture);
+                ViewBag.FTR_Balance = Single_data_Account_Reciept?.CrCasRenterLessorBalance?.ToString("N2", CultureInfo.InvariantCulture);
 
                 return View(FT_RenterVM);
 
@@ -278,7 +278,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             ViewBag.no = "9";
             var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205010", "2");
 
-            var FinancialTransactionOfRenterAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode, new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptRenter", "CrCasAccountReceiptUserNavigation", "CrCasAccountReceiptAccountNavigation", "CrCasAccountReceiptBankNavigation" }).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
+            var FinancialTransactionOfRenterAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && (x.CrCasAccountReceiptType == "301" || x.CrCasAccountReceiptType == "302"), new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptRenter", "CrCasAccountReceiptUserNavigation", "CrCasAccountReceiptAccountNavigation", "CrCasAccountReceiptBankNavigation" }).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
             if (FinancialTransactionOfRenterAll?.Count() < 1)
             {
                 ViewBag.Data = "0";
@@ -291,6 +291,55 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 return RedirectToAction("Index");
             }
 
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetReceiptDetails(string ReceiptNo)
+        {
+            var receipt = await _unitOfWork.CrCasAccountReceipt.FindAsync(x => x.CrCasAccountReceiptNo == ReceiptNo, new[] {
+                                                                                                                            "CrCasAccountReceiptReferenceTypeNavigation",
+                                                                                                                            "CrCasAccountReceiptBankNavigation",
+                                                                                                                            "CrCasAccountReceiptSalesPointNavigation",
+                                                                                                                            "CrCasAccountReceiptPaymentMethodNavigation",
+                                                                                                                             "CrCasAccountReceiptAccountNavigation"});
+            var userRecevied = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == receipt.CrCasAccountReceiptPassingUser);
+            if (receipt == null) return Json(false);
+            ReceiptDetailsVM receiptDetails = new ReceiptDetailsVM();
+
+            receiptDetails.ReceiptNo = ReceiptNo;
+            receiptDetails.Date = receipt.CrCasAccountReceiptDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
+            receiptDetails.Creditor = receipt.CrCasAccountReceiptPayment?.ToString("N2", CultureInfo.InvariantCulture);
+            receiptDetails.Debit = receipt.CrCasAccountReceiptReceipt?.ToString("N2", CultureInfo.InvariantCulture);
+            receiptDetails.ReferenceNo = receipt.CrCasAccountReceiptReferenceNo;
+            receiptDetails.ReferenceTypeAr = receipt.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceArName;
+            receiptDetails.ReferenceTypeEn = receipt.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceEnName;
+            if (receipt.CrCasAccountReceiptBank == "00")
+            {
+                receiptDetails.AccountBankCode = "";
+                receiptDetails.BankAr = "";
+                receiptDetails.BankEn = "";
+            }
+            else
+            {
+                receiptDetails.AccountBankCode = receipt.CrCasAccountReceiptAccountNavigation?.CrCasAccountBankIban;
+                receiptDetails.BankAr = receipt.CrCasAccountReceiptBankNavigation?.CrMasSupAccountBankArName;
+                receiptDetails.BankEn = receipt.CrCasAccountReceiptBankNavigation?.CrMasSupAccountBankEnName;
+            }
+            receiptDetails.SalesPointAr = receipt.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointArName;
+            receiptDetails.SalesPointEn = receipt.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointEnName;
+            receiptDetails.PaymentMethodAr = receipt.CrCasAccountReceiptPaymentMethodNavigation?.CrMasSupAccountPaymentMethodArName;
+            receiptDetails.PaymentMethodEn = receipt.CrCasAccountReceiptPaymentMethodNavigation?.CrMasSupAccountPaymentMethodEnName;
+            receiptDetails.CustodyNo = receipt.CrCasAccountReceiptPassingReference;
+            receiptDetails.StatusReceipt = receipt.CrCasAccountReceiptIsPassing;
+            receiptDetails.UserReceivedAr = userRecevied?.CrMasUserInformationArName;
+            receiptDetails.UserReceivedEn = userRecevied?.CrMasUserInformationEnName;
+            receiptDetails.ReceivedDate = receipt.CrCasAccountReceiptPassingDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
+            receiptDetails.Reasons = receipt.CrCasAccountReceiptReasons;
+
+
+
+            return Json(receiptDetails);
         }
     }
 }
