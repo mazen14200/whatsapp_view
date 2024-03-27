@@ -606,7 +606,7 @@
 
   //FinancialTransactionOfRenter --------
   "FinancialTransactionOfRenter Hint": "تمكنك الصفحة من الإطلاع والبحث وعرض المستأجرين وأرصدتهم والدخول على التقرير التفصيلي للمستأجر",
-  "FinancialTransactionOfRenter Data": "الحركة المالية للمستأجر",
+  "FinancialTransactionOfRenter Data": "الحركة المالية للمستأجرين",
   "Edit FinancialTransactionOfRenter Data": "البيانات التفصيلية للحركة المالية للمستأجر",
   "Edit FinancialTransactionOfRenter Hint": "تمكنك هذه الصفحة من البحث والإطلاع على تفاصيل القيود للمستأجر",
 
@@ -615,19 +615,19 @@
   "FTR_TotalDebitor": "مجموع المدين",
   "FTR_Serial_No": "رقم القيد",
   "FTR_Date_Issue": "تاريخ القيد",
-  "FTR_Reference_Type": "نوع المرجع",
+  "FTR_Reference_Type": "المرجع",
   "FTR_Creditor": "الدائن",
   "FTR_Debtor": "المدين",
   "FTR_previuos_Balance": "الرصيد السابق",
-  "FTR_User_Transector": "منفذ العملية",
+  "FTR_User_Transector": "الموظف",
   "FTR_Reasons": "الملاحظات",
   "FTR_Id": "الهوية",
   "FTR_Balance": "الرصيد",
   "FTR_Avilable_Balance": "الرصيد المتاح",
   "FTR_Reserved_Balance": "الرصيد المحجوز",
-  "FTR_All_Total_Money_Transaction": "حجم المبالغ المتداولة",
-  "FTR_Count_Receipt_Bonds": "عدد سندات القبض",
-  "FTR_Count_Receipt_Exchanges": "عدد سندات الصرف",
+  "FTR_All_Total_Money_Transaction": "المبالغ المتداولة",
+  "FTR_Count_Receipt_Bonds": "سندات القبض",
+  "FTR_Count_Receipt_Exchanges": "سندات الصرف",
 
 
   "NoDataToShow": "لا توجد بيانات لعرضها !!",

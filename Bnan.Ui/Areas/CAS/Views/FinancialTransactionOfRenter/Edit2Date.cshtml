@@ -16,6 +16,8 @@
 
 <title>@ViewData["Title"]</title>
 
+
+
 <style>
 
     #LessorInfoEmailWhatisapp, #LessorMobilePhone, #LessorCallFree {
@@ -174,22 +176,47 @@
         height: 35px;
     }
 
+    .modal-dialog {
+        max-width: 700px;
+        margin: 2rem auto;
+        margin-left: 600px;
+        margin-top: 140px;
+    }
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <link href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
+<link href="~/BranchSys/Pages/css/mixed_style.css" rel="styleSheet" />
+
 
 @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
 {
+    @*<link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet" />*@
     <style>
+        .Direction_Page {
+            direction: rtl;
+        }
+
+        .d-flex {
+            gap: 10px;
+            display: flex;
+            -webkit-align-items: 0;
+        }
+
+        .mgCenter {
+            margin-left: 220px;
+        }
+
         #RenterLessorInformationSigntureImage {
             position: absolute;
             top: 39%;
             left: 50%;
         }
-        #t_mar{
+
+        .t_mar {
             margin: 35px;
             margin-right: 55px;
             margin-top: 5px;
@@ -226,18 +253,35 @@
 }
 else
 {
+    @*<link href="~/BranchSys/Pages/css/style.css" rel="styleSheet" />*@
+
     <style>
+        .Direction_Page {
+            direction: ltr;
+        }
+
+        .d-flex {
+            gap: 10px;
+            display: flex;
+            -webkit-align-items: 0;
+        }
+
+        .mgCenter {
+            margin-right: 220px;
+        }
+
         #RenterLessorInformationSigntureImage {
             position: absolute;
             top: 39%;
             right: 50%;
         }
 
-        #t_mar {
+        .t_mar {
             margin: 35px;
             margin-left: 55px;
             margin-top: 5px;
         }
+
         .col-md-label5 {
             /*width: 28.75%;*/
             width: 90.5px;
@@ -246,7 +290,7 @@ else
 
         .col-md-input5 {
             width: 300px;
-            margin-top:-8px;
+            margin-top: -8px;
             height: 40px;
         }
 
@@ -261,6 +305,7 @@ else
             margin-top: -8px;
             height: 40px;
         }
+
         #Date_cusor1, #Date_cusor2 {
             margin-left: 13px;
         }
@@ -305,12 +350,12 @@ else
                 @*<div class="row mt-2" style="height:10px;">
                 </div>*@
                 <div class="row mt-2" style="height:60px">
-                    <div class="col-md-label10 formlabel" style="width:110px;">
-                        <label class="form-label" for="CrCasRenterCarId">@localizer["CarContractId"]</label>
+                    <div class="col-md-label10 formlabel" style="width:55px;">
+                        <label class="form-label" for="FTR_Id">@localizer["FTR_Id"]</label>
                     </div>
-                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:280px;">
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:335px;">
 
-                        <input type="text" class="form-control" value="@ViewBag.Single_FT_RenterId" readonly maxlength="15" id="CrCasRenterCarId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                        <input type="text" class="form-control" value="@ViewBag.Single_FT_RenterId" readonly maxlength="15" id="FTR_Id" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
                     <div class="col-md-label10 formlabel" style="width:53px;">
@@ -324,72 +369,29 @@ else
 
 
 
-                @*UserBalanceInBranch -- AvailableBalance -- ReservedBalance *@
+                @*FTR_Balance -- AvailableBalance -- ReservedBalance *@
                 <div class="row mt-2" style="height:60px">
-                    <div class="col-md-label10 formlabel" style="width:100px;">
-                        <label class="form-label" for="UserBalanceInBranch">@localizer["UserBalanceInBranch"]</label>
+                    <div class="col-md-label10 formlabel" style="width:50px;">
+                        <label class="form-label" for="FTR_Balance">@localizer["FTR_Balance"]</label>
                     </div>
-                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:290px;">
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:340px;">
 
-                        <input type="text" class="form-control" value="@ViewBag.UserBalanceInBranch" readonly maxlength="15" id="UserBalanceInBranch" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                        <input type="text" class="form-control" value="@ViewBag.FTR_Balance" readonly maxlength="15" id="FTR_Balance" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
-                    <div class="col-md-label10 formlabel" style="width:100px;">
+                    <div class="col-md-label10 formlabel" style="width:95px;">
                         <label class="form-label" for="AvailableBalance">@localizer["AvailableBalance"]</label>
                     </div>
-                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:290px;">
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:295px;">
                         <input type="text" class="form-control" id="AvailableBalance" value="@ViewBag.AvailableBalance" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
                     </div>
 
-                    <div class="col-md-label10 formlabel" style="width:100px;">
+                    <div class="col-md-label10 formlabel" style="width:105px;">
                         <label class="form-label" for="ReservedBalance">@localizer["ReservedBalance"]</label>
                     </div>
-                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:290px;">
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:285px;">
                         <input type="text" class="form-control" id="ReservedBalance" value="@ViewBag.ReservedBalance" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
                     </div>
-                </div> @*End row*@
-
-
-                @*FTR_CurrentBalance -- FTR_TotalCreditor -- FTR_TotalDebitor *@
-                <div class="row mt-2" style="height:60px">
-                    <div class="col-md-label10 formlabel" style="width:100px;">
-                        <label class="form-label" for="FTR_CurrentBalance">@localizer["FTR_CurrentBalance"]</label>
-                    </div>
-                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:290px;">
-
-                        <input type="text" class="form-control" value="@ViewBag.FTR_CurrentBalance" readonly maxlength="15" id="FTR_CurrentBalance" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-                    </div>
-
-                    @{
-
-                        var Debtor_Count = "0.00";
-                        var Creditor_Count = "0.00";
-                        var Counter = "0";
-
-                        foreach (var single_Count in Model.All_Counts)
-                        {
-                            if (single_Count[0] == ViewBag.Single_FT_RenterId)
-                            {
-                                Counter = single_Count[1];
-                                Creditor_Count = single_Count[2];
-                                Debtor_Count = single_Count[3];
-                            }
-                        }
-                        <div class="col-md-label10 formlabel" style="width:100px;">
-                            <label class="form-label" for="FTR_TotalCreditor">@localizer["FTR_TotalCreditor"]</label>
-                        </div>
-                        <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:290px;">
-                            <input type="text" class="form-control" id="FTR_TotalCreditor" value="@Creditor_Count" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
-                        </div>
-
-                        <div class="col-md-label10 formlabel" style="width:100px;">
-                            <label class="form-label" for="FTR_TotalDebitor">@localizer["FTR_TotalDebitor"]</label>
-                        </div>
-                        <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:290px;">
-                            <input type="text" class="form-control" id="FTR_TotalDebitor" value="@Debtor_Count" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
-                        </div>
-                    }
-                    
                 </div> @*End row*@
 
 
@@ -436,11 +438,11 @@ else
                 @*<div class="row mt-2" style="height:10px;">
             </div>*@
                 <div class="row mt-2" style="height:60px;">
-                    <div class=" formlabel" style="width:85px;">
-                        <label class="form-label" for="CrCasRenterCarId">@localizer["CarContractId"]</label>
+                    <div class=" formlabel" style="width:35px;">
+                        <label class="form-label" for="FTR_Id">@localizer["FTR_Id"]</label>
                     </div>
-                    <div class=" p-0 col-11" style="margin-top:-5px;width:305px;">
-                        <input type="text" class="form-control" value="@ViewBag.Single_FT_RenterId" readonly maxlength="15" id="CrCasRenterCarId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                    <div class=" p-0 col-11" style="margin-top:-5px;width:355px;">
+                        <input type="text" class="form-control" value="@ViewBag.Single_FT_RenterId" readonly maxlength="15" id="FTR_Id" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
                     <div class="col-md-label10 formlabel" style="width:63px;">
@@ -454,14 +456,14 @@ else
 
 
 
-                @*UserBalanceInBranch -- AvailableBalance -- ReservedBalance *@
-                <div class="row mt-2" style="height:60px">
-                    <div class="col-md-label10 formlabel" style="width:185px;">
-                        <label class="form-label" for="UserBalanceInBranch">@localizer["UserBalanceInBranch"]</label>
+                @*FTR_Balance -- AvailableBalance -- ReservedBalance *@
+                <div class="row mt-2" style="height:70px">
+                    <div class="col-md-label10 formlabel" style="width:70px;">
+                        <label class="form-label" for="FTR_Balance">@localizer["FTR_Balance"]</label>
                     </div>
-                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:205px;">
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:320px;">
 
-                        <input type="text" class="form-control" value="@ViewBag.UserBalanceInBranch" readonly maxlength="15" id="UserBalanceInBranch" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                        <input type="text" class="form-control" value="@ViewBag.FTR_Balance" readonly maxlength="15" id="FTR_Balance" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
                     <div class="col-md-label10 formlabel" style="width:150px;">
@@ -471,56 +473,14 @@ else
                         <input type="text" class="form-control" id="AvailableBalance" value="@ViewBag.AvailableBalance" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
                     </div>
 
-                    <div class="col-md-label10 formlabel" style="width:150px;">
+                    <div class="col-md-label10 formlabel" style="width:155px;">
                         <label class="form-label" for="ReservedBalance">@localizer["ReservedBalance"]</label>
                     </div>
-                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:240px;">
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:235px;">
                         <input type="text" class="form-control" id="ReservedBalance" value="@ViewBag.ReservedBalance" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
                     </div>
                 </div> @*End row*@
 
-                
-                @*FTR_CurrentBalance -- FTR_TotalCreditor -- FTR_TotalDebitor *@
-                <div class="row mt-2" style="height:60px">
-                    <div class="col-md-label10 formlabel" style="width:135px;">
-                        <label class="form-label" for="FTR_CurrentBalance">@localizer["FTR_CurrentBalance"]</label>
-                    </div>
-                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:255px;">
-
-                        <input type="text" class="form-control" value="@ViewBag.FTR_CurrentBalance" readonly maxlength="15" id="FTR_CurrentBalance" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-                    </div>
-
-                    @{
-
-                        var Debtor_Count = "0.00";
-                        var Creditor_Count = "0.00";
-                        var Counter = "0";
-
-                        foreach (var single_Count in Model.All_Counts)
-                        {
-                            if (single_Count[0] == ViewBag.Single_FT_RenterId)
-                            {
-                                Counter = single_Count[1];
-                                Creditor_Count = single_Count[2];
-                                Debtor_Count = single_Count[3];
-                            }
-                        }
-                    <div class="col-md-label10 formlabel" style="width:125px;">
-                        <label class="form-label" for="FTR_TotalCreditor">@localizer["FTR_TotalCreditor"]</label>
-                    </div>
-                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:265px;">
-                            <input type="text" class="form-control" id="FTR_TotalCreditor" value="@Creditor_Count" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
-                    </div>
-
-                    <div class="col-md-label10 formlabel" style="width:115px;">
-                        <label class="form-label" for="FTR_TotalDebitor">@localizer["FTR_TotalDebitor"]</label>
-                    </div>
-                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:275px;">
-                            <input type="text" class="form-control" id="FTR_TotalDebitor" value="@Debtor_Count" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
-                    </div>
-                }
-                    
-            </div> @*End row*@
 
                 @*DateTime Inputs*@
                 <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:70px;">
@@ -557,7 +517,7 @@ else
             }
 
 
-                <div id="t_mar" style="height:200px;">
+                <div id="t_mar" style="height:290px;">
                 <div class="dataTable ">
                     <partial name="_DataTable_Internal_Contract" />
                 </div>
@@ -587,10 +547,250 @@ else
 
 
 
+<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content Direction_Page" style="width:700px;">
+            <div class="modal-header " style="border-bottom:0px;">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="width:30px;color:#074EAD;font-size:22px;">&times;</button>
+                <h5 class="modal-title card-title text-center mgCenter" style="color:#074EAD;">@localizer["DetailsOfContract"]</h5>
+            </div>
+            <div class="modal-body p-0">
+                <div class="data-details">
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <p>@localizer["ReceiptNo"]</p>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p id="ReceiptNo"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <p>@localizer["Date"]</p>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p id="Date"></p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["Creditor"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="Creditor"></P>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["Debit"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="Debit"></P>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["ReferenceNo"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="ReferenceNo"></P>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["ReferenceType"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="ReferenceType"></P>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["AccountBankCode"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p id="AccountBankCode"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P> @localizer["Bank"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="Bank"></P>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <p> @localizer["SalesPoint"] </p>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p id="SalesPoint"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P> @localizer["PaymentMethod"] </P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="PaymentMethod"></P>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <p>@localizer["CustodyNo"]</p>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="CustodyNo"></P>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["StatusReceipt"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="StatusReceipt"></P>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <p> @localizer["UserReceived"]</p>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="UserReceived"></P>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <P>@localizer["ReceivedDate"]</P>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <p id="ReceivedDate"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-7 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                                <p> @localizer["reasons"]</p>
+                            </div>
+                            <div class="col-auto personal-data">
+                                <P id="reasons"></P>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex flex-row-reverse">
+                            <div class="col-auto p-0">
+                            </div>
+                            <div class="col-auto personal-data">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section scripts {
 
 
+    <script>
+        function getDetails(ReceiptNo) {
+            console.log("Mazzen1")
+            if (ReceiptNo != null && ReceiptNo != "" & ReceiptNo != undefined) {
+                console.log("Mazzen2")
+                $.ajax({
+                    type: "GET",
+                    data: {
+                        ReceiptNo: ReceiptNo,
+                    },
+                    url: "@Url.Action("GetReceiptDetails", "FinancialTransactionOfRenter", new { Area = "CAS" })",
+                    success: function (response) {
+                        if (response != null) {
+                            console.log(response)
+                            $("#ReceiptNo").text(response.receiptNo);
+                            $("#Date").text(response.date);
+                            $("#Creditor").text(response.creditor);
+                            $("#Debit").text(response.debit);
+                            $("#ReferenceNo").text(response.referenceNo);
+                            $("#AccountBankCode").text(response.accountBankCode);
+                            $("#Reasons").text(response.reasons);
 
+                            if ("@requestCulture?.RequestCulture.UICulture.Name" == "ar-EG") {
+                                $("#ReferenceType").text(response.referenceTypeAr);
+                                $("#Bank").text(response.bankAr);
+                                $("#SalesPoint").text(response.salesPointAr);
+                                $("#PaymentMethod").text(response.paymentMethodAr);
+                                $("#UserReceived").text(response.userReceivedAr);
+                            }
+                            else {
+                                $("#ReferenceType").text(response.referenceTypeEn);
+                                $("#Bank").text(response.bankEn);
+                                $("#SalesPoint").text(response.salesPointEn);
+                                $("#PaymentMethod").text(response.paymentMethodEn);
+                                $("#UserReceived").text(response.userReceivedEn);
+                            }
+
+                            $("#ReceivedDate").text(response.receivedDate);
+                            $("#CustodyNo").text(response.custodyNo);
+                            if (response.statusReceipt == @Status.Custody) {
+                                $("#StatusReceipt").text('@localizer["Custody"]');
+                            }
+                            else if (response.statusReceipt == @Status.Booked) {
+                                $("#StatusReceipt").text('@localizer["booked"]');
+                            }
+                            else if (response.statusReceipt == @Status.Transfer) {
+                                $("#StatusReceipt").text('@localizer["Transfer"]');
+                            }
+                            else if (response.statusReceipt == @Status.Change) {
+                                $("#StatusReceipt").text('@localizer["TransferAuto"]');
+                            }
+                        }
+                        $('#myModal').modal('show');
+                    },
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            //// Handle click on PDF link to prevent modal trigger
+            //$('#ReportsData').on('click', '.pdf-link', function (e) {
+            //    e.stopPropagation(); // Prevent event from propagating to parent elements
+            //});
+
+            // Bind click event to open modal when clicking on the table row
+            //$('#ReportsData').on('click', '.modal-trigger', function () {
+            //    var receiptNo = $(this).data('id');
+            //    getDetails(receiptNo);
+            //});
+
+            // Close modal when close button is clicked
+            $('.close').click(function () {
+                $('#myModal').modal('hide');
+            });
+        });
+    </script>
 
     @*Get AccountBank Using filter*@
     <script>
@@ -654,7 +854,7 @@ else
 
     <script>
         function DateChanged() {
-            var id = $("#CrCasRenterCarId").val();
+            var id = $("#FTR_Id").val();
             var mini = $("#startDateInput").val();
             var max = $("#endDateInput").val();
             var _mini = mini.replace("/", "-");

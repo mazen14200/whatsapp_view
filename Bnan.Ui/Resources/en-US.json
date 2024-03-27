@@ -585,28 +585,28 @@
 
   //FinancialTransactionOfRenter --------
   "FinancialTransactionOfRenter Hint": "This page allows you to display The Financial Transaction Of Renters",
-  "FinancialTransactionOfRenter Data": "Financial Transaction Of Renters",
-  "Edit FinancialTransactionOfRenter Data": "Details of Financial Transaction Of Renters",
-  "Edit FinancialTransactionOfRenter Hint": "this page allows you to Display Details of Financial Transaction Of Renters",
+  "FinancialTransactionOfRenter Data": "Financial Transaction Of The Renter",
+  "Edit FinancialTransactionOfRenter Data": "Details of Financial Transaction Of The Renter",
+  "Edit FinancialTransactionOfRenter Hint": "this page allows you to Display Details of Financial Transaction Of The Renter",
 
   "FTR_CurrentBalance": "Current Balance",
   "FTR_TotalCreditor": "Total Creditor",
   "FTR_TotalDebitor": "Total Debitor",
   "FTR_Serial_No": "Serial No",
   "FTR_Date_Issue": "Issue Date",
-  "FTR_Reference_Type": "Reference_Type",
+  "FTR_Reference_Type": "Reference",
   "FTR_Creditor": "Creditor",
   "FTR_Debtor": "Debtor",
-  "FTR_previuos_Balance": "previuos_Balance",
-  "FTR_User_Transector": "User_Transector",
+  "FTR_previuos_Balance": "previuos Balance",
+  "FTR_User_Transector": "User Transector",
   "FTR_Reasons": "Reasons",
   "FTR_Id": "ID",
   "FTR_Balance": "Balance",
-  "FTR_Avilable_Balance": "Avilable_Balance",
-  "FTR_Reserved_Balance": "Reserved_Balance",
-  "FTR_All_Total_Money_Transaction": "Total Money Transaction",
-  "FTR_Count_Receipt_Bonds": "Count Receipt Bonds",
-  "FTR_Count_Receipt_Exchanges": "Count Receipt Exchanges",
+  "FTR_Avilable_Balance": "Avilable Balance",
+  "FTR_Reserved_Balance": "Reserved Balance",
+  "FTR_All_Total_Money_Transaction": "Money Transaction",
+  "FTR_Count_Receipt_Bonds": "Receipt Bonds",
+  "FTR_Count_Receipt_Exchanges": "Receipt Exchanges",
 
   "NoDataToShow": "!! No Data To Show",
 
@@ -1125,7 +1125,7 @@
 
 
   "AccountBankLessorCode": "Lessor Code",
-  "AccountBankCode": "IBan No.",
+  "AccountBankCode": "IBan No",
 
 
 
