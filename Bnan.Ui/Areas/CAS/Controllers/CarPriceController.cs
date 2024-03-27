@@ -111,6 +111,22 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (carPrice > 0) ModelState.AddModelError("CrCasPriceCarBasicDistributionCode", _localizer["IsExists"]);
             }
             else ModelState.AddModelError("CrCasPriceCarBasicDistributionCode", _localizer["RessureFromNameCar"]);
+            //Convert String to Decimal And Send It to model
+            carPriceVM.CrCasPriceCarBasicDailyRent=decimal.Parse(carPriceVM.DailyRent, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasPriceCarBasicWeeklyRent = decimal.Parse(carPriceVM.WeeklyRent, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasPriceCarBasicMonthlyRent = decimal.Parse(carPriceVM.MonthlyRent, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasPriceCarBasicYearlyRent = decimal.Parse(carPriceVM.YearlyRent, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasPriceCarBasicAdditionalKmValue = decimal.Parse(carPriceVM.AdditionalKmValue,CultureInfo.InvariantCulture);
+            carPriceVM.CrCasPriceCarBasicAdditionalDriverValue = decimal.Parse(carPriceVM.AdditionalDriverValue, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasPriceCarBasicPrivateDriverValue = decimal.Parse(carPriceVM.PrivateDriverValue, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasCarPriceBasicInFeesTamm = decimal.Parse(carPriceVM.InFeesTamm, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasCarPriceBasicOutFeesTamm=decimal.Parse(carPriceVM.OutFeesTamm, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasPriceCarBasicExtraHourValue = decimal.Parse(carPriceVM.ExtraHourValue, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasPriceCarBasicRentalTaxRate = decimal.Parse(carPriceVM.RentalTaxRate, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasPriceCarBasicCompensationAccident = decimal.Parse(carPriceVM.CompensationAccident, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasPriceCarBasicCompensationFire = decimal.Parse(carPriceVM.CompensationFire, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasPriceCarBasicCompensationTheft = decimal.Parse(carPriceVM.CompensationTheft, CultureInfo.InvariantCulture);
+            carPriceVM.CrCasPriceCarBasicCompensationDrowning = decimal.Parse(carPriceVM.CompensationDrowning, CultureInfo.InvariantCulture);
 
             if (ModelState.IsValid)
             {
@@ -185,6 +201,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 return RedirectToAction("CarPrice");
             }
+            var titles = await setTitle("202", "2202007", "2");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "اضافة", "Add", titles[3]);
             ViewBag.LessorCode = lessorCode;
             ViewBag.Options = _unitOfWork.CrMasSupContractOption.FindAll(x => x.CrMasSupContractOptionsStatus == Status.Active);
             ViewBag.Additional = _unitOfWork.CrMasSupContractAdditional.FindAll(x => x.CrMasSupContractAdditionalStatus == Status.Active);

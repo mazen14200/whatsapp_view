@@ -174,51 +174,51 @@
                             @*Rend Peroid*@
                             <div class="row mt-2">
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicDailyRent">@localizer["DailyRent"]</label>
+                                    <label class="form-label" asp-for="DailyRent">@localizer["DailyRent"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicDailyRent" maxlength="9" oninput="validateInput9Digit(this)">
+                                    <input type="text" class="form-control" asp-for="DailyRent" maxlength="9" oninput="validateInput9Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em;width: 145px;">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicDailyRent" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.DailyRent" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicWeeklyRent">@localizer["WeeklyRent"]</label>
+                                    <label class="form-label" asp-for="WeeklyRent">@localizer["WeeklyRent"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicWeeklyRent" maxlength="9" oninput="validateInput9Digit(this)">
+                                    <input type="text" class="form-control" asp-for="WeeklyRent" maxlength="9" oninput="validateInput9Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em;width: 150px;">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicWeeklyRent" class="text-danger"></span>
-                                            <span id="WeeklyRent" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.WeeklyRent" class="text-danger"></span>
+                                            <span id="CarWeeklyRent" class="text-danger"></span>
 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicMonthlyRent">@localizer["MonthlyRent"]</label>
+                                    <label class="form-label" asp-for="MonthlyRent">@localizer["MonthlyRent"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicMonthlyRent" maxlength="9" oninput="validateInput9Digit(this)">
+                                    <input type="text" class="form-control" asp-for="MonthlyRent" maxlength="9" oninput="validateInput9Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em;width: 150px;">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicMonthlyRent" class="text-danger"></span>
-                                            <span id="MonthlyRent" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.MonthlyRent" class="text-danger"></span>
+                                            <span id="CarMonthlyRent" class="text-danger"></span>
 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicYearlyRent">@localizer["YearlyRent"]</label>
+                                    <label class="form-label" asp-for="YearlyRent">@localizer["YearlyRent"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicYearlyRent" maxlength="9" oninput="validateInput9Digit(this)">
+                                    <input type="text" class="form-control" asp-for="YearlyRent" maxlength="9" oninput="validateInput9Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em;width: 150px;">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicYearlyRent" class="text-danger"></span>
-                                            <span id="YearlyRent" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.YearlyRent" class="text-danger"></span>
+                                            <span id="CarYearlyRent" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -226,46 +226,46 @@
                             @*ِAdditional Hour and Km and Tax rate*@
                             <div class="row mt-2">
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicAdditionalKmValue">@localizer["AdditionalKmValue"]</label>
+                                    <label class="form-label" asp-for="AdditionalKmValue">@localizer["AdditionalKmValue"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicAdditionalKmValue" maxlength="6" oninput="validateInput3Digit(this)">
+                                    <input type="text" class="form-control" asp-for="AdditionalKmValue" maxlength="6" oninput="validateInput3Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicAdditionalKmValue" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.AdditionalKmValue" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicExtraHourValue">@localizer["ExtraHourValue"]</label>
+                                    <label class="form-label" asp-for="ExtraHourValue">@localizer["ExtraHourValue"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicExtraHourValue" maxlength="6" oninput="validateInput3Digit(this)">
+                                    <input type="text" class="form-control" asp-for="ExtraHourValue" maxlength="6" oninput="validateInput3Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicExtraHourValue" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.ExtraHourValue" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicAdditionalDriverValue">@localizer["AdditionalDriverValue"]</label>
+                                    <label class="form-label" asp-for="AdditionalDriverValue">@localizer["AdditionalDriverValue"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicAdditionalDriverValue" maxlength="6" oninput="validateInput3Digit(this)">
+                                    <input type="text" class="form-control" asp-for="AdditionalDriverValue" maxlength="6" oninput="validateInput3Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicAdditionalDriverValue" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.AdditionalDriverValue" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicPrivateDriverValue">@localizer["PrivateDriverValue"]</label>
+                                    <label class="form-label" asp-for="PrivateDriverValue">@localizer["PrivateDriverValue"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicPrivateDriverValue" maxlength="6" oninput="validateInput3Digit(this)">
+                                    <input type="text" class="form-control" asp-for="PrivateDriverValue" maxlength="6" oninput="validateInput3Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicPrivateDriverValue" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.PrivateDriverValue" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -273,36 +273,36 @@
                             @*ِAdditional Driver and InFees and OutFess Value*@
                             <div class="row mt-2">
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasCarPriceBasicInFeesTamm">@localizer["InFeesTamm"]</label>
+                                    <label class="form-label" asp-for="InFeesTamm">@localizer["InFeesTamm"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasCarPriceBasicInFeesTamm" maxlength="6" oninput="validateInput3Digit(this)">
+                                    <input type="text" class="form-control" asp-for="InFeesTamm" maxlength="6" oninput="validateInput3Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasCarPriceBasicInFeesTamm" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.InFeesTamm" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasCarPriceBasicOutFeesTamm">@localizer["OutFeesTamm"]</label>
+                                    <label class="form-label" asp-for="OutFeesTamm">@localizer["OutFeesTamm"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasCarPriceBasicOutFeesTamm" maxlength="6" oninput="validateInput3Digit(this)">
+                                    <input type="text" class="form-control" asp-for="OutFeesTamm" maxlength="6" oninput="validateInput3Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasCarPriceBasicOutFeesTamm" class="text-danger"></span>
-                                            <span id="OutFeesTamm" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.OutFeesTamm" class="text-danger"></span>
+                                            <span id="CarOutFeesTamm" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1 formlabel">
-                                    <label class="form-label" asp-for="CrCasPriceCarBasicRentalTaxRate">@localizer["TaxRate"]</label>
+                                    <label class="form-label" asp-for="RentalTaxRate">@localizer["TaxRate"]</label>
                                 </div>
                                 <div class="col-md-1 col-11">
-                                    <input type="text" class="form-control" asp-for="CrCasPriceCarBasicRentalTaxRate" maxlength="6" oninput="validateInput3Digit(this)">
+                                    <input type="text" class="form-control" asp-for="RentalTaxRate" maxlength="6" oninput="validateInput3Digit(this)">
                                     <div style="margin-top:2px">
                                         <div style="height: 1.35em">
-                                            <span asp-validation-for="@Model.CrCasPriceCarBasicRentalTaxRate" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.RentalTaxRate" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -412,46 +412,46 @@
                                 @*ِCompensationss*@
                                 <div class="row mt-2">
                                     <div class="col-md-1 formlabel">
-                                        <label class="form-label" asp-for="CrCasPriceCarBasicCompensationAccident">@localizer["CompensationAccident"]</label>
+                                        <label class="form-label" asp-for="CompensationAccident">@localizer["CompensationAccident"]</label>
                                     </div>
                                     <div class="col-md-1 col-11">
-                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationAccident" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <input type="text" class="form-control" asp-for="CompensationAccident" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                                         <div style="margin-top:2px">
                                             <div style="height: 1.35em">
-                                                <span asp-validation-for="@Model.CrCasPriceCarBasicCompensationAccident" class="text-danger"></span>
+                                                <span asp-validation-for="@Model.CompensationAccident" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-1 formlabel">
-                                        <label class="form-label" asp-for="CrCasPriceCarBasicCompensationTheft">@localizer["CompensationTheft"]</label>
+                                        <label class="form-label" asp-for="CompensationTheft">@localizer["CompensationTheft"]</label>
                                     </div>
                                     <div class="col-md-1 col-11">
-                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationTheft" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <input type="text" class="form-control" asp-for="CompensationTheft" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                                         <div style="margin-top:2px">
                                             <div style="height: 1.35em">
-                                                <span asp-validation-for="@Model.CrCasPriceCarBasicCompensationTheft" class="text-danger"></span>
+                                                <span asp-validation-for="@Model.CompensationTheft" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-1 formlabel">
-                                        <label class="form-label" asp-for="CrCasPriceCarBasicCompensationDrowning">@localizer["CompensationDrowning"]</label>
+                                        <label class="form-label" asp-for="CompensationDrowning">@localizer["CompensationDrowning"]</label>
                                     </div>
                                     <div class="col-md-1 col-11">
-                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationDrowning" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <input type="text" class="form-control" asp-for="CompensationDrowning" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                                         <div style="margin-top:2px">
                                             <div style="height: 1.35em">
-                                                <span asp-validation-for="@Model.CrCasPriceCarBasicCompensationDrowning" class="text-danger"></span>
+                                                <span asp-validation-for="@Model.CompensationDrowning" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-1 formlabel">
-                                        <label class="form-label" asp-for="CrCasPriceCarBasicCompensationFire">@localizer["CompensationFire"]</label>
+                                        <label class="form-label" asp-for="CompensationFire">@localizer["CompensationFire"]</label>
                                     </div>
                                     <div class="col-md-1 col-11">
-                                        <input type="text" class="form-control" asp-for="CrCasPriceCarBasicCompensationFire" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                        <input type="text" class="form-control" asp-for="CompensationFire" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                                         <div style="margin-top:2px">
                                             <div style="height: 1.35em">
-                                                <span asp-validation-for="@Model.CrCasPriceCarBasicCompensationFire" class="text-danger"></span>
+                                                <span asp-validation-for="@Model.CompensationFire" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -748,36 +748,36 @@
         function handleNextButtonClick() {
             if ($("#form").valid()) {
                 // Get the values of the input fields
-                var dailyRent = parseInt($("#CrCasPriceCarBasicDailyRent").val());
-                var weeklyRent = parseInt($("#CrCasPriceCarBasicWeeklyRent").val());
-                var monthlyRent = parseInt($("#CrCasPriceCarBasicMonthlyRent").val());
-                var yearlyRent = parseInt($("#CrCasPriceCarBasicYearlyRent").val());
+                var dailyRent = parseFloat($("#DailyRent").val());
+                var weeklyRent = parseFloat($("#WeeklyRent").val());
+                var monthlyRent = parseFloat($("#MonthlyRent").val());
+                var yearlyRent = parseFloat($("#YearlyRent").val());
                 var MinAge = parseInt($("#CrCasPriceCarBasicMinAge").val());
                 var MaxAge = parseInt($("#CrCasPriceCarBasicMaxAge").val());
-                var InFeesTamm = parseInt($("#CrCasCarPriceBasicInFeesTamm").val());
-                var OutFeesTamm = parseInt($("#CrCasCarPriceBasicOutFeesTamm").val());
+                var InFeesTamm = parseFloat($("#InFeesTamm").val());
+                var OutFeesTamm = parseFloat($("#OutFeesTamm").val());
 
                 // Perform the validations
                 if (weeklyRent >= dailyRent) {
                     // Weekly rent should be greater than daily rent
-                    $("#WeeklyRent").text('@localizer["WeeklyRentError"]');
+                    $("#CarWeeklyRent").text('@localizer["WeeklyRentError"]');
                     return; // Stop further execution
                 }
                 else {
-                    $("#WeeklyRent").text('');
+                    $("#CarWeeklyRent").text('');
                 }
                 if (monthlyRent >= weeklyRent) {
                     // Monthly rent should be greater than weekly rent
-                    $("#MonthlyRent").text('@localizer["MonthlyRentError"]');
+                    $("#CarMonthlyRent").text('@localizer["MonthlyRentError"]');
                     return; // Stop further execution
                 }
                 else {
-                    $("#MonthlyRent").text('');
+                    $("#CarMonthlyRent").text('');
 
                 }
                 if (yearlyRent >= monthlyRent) {
                     // Yearly rent should be greater than monthly rent
-                    $("#YearlyRent").text('@localizer["YearlyRentError"]');
+                    $("#CarYearlyRent").text('@localizer["YearlyRentError"]');
                     return; // Stop further execution
                 }
                 else {
@@ -796,11 +796,11 @@
 
                 if (OutFeesTamm < InFeesTamm) {
                     // Yearly rent should be greater than monthly rent
-                    $("#OutFeesTamm").text('@localizer["OutFeesTammError"]');
+                    $("#CarOutFeesTamm").text('@localizer["OutFeesTammError"]');
                     return; // Stop further execution
                 }
                 else {
-                    $("#OutFeesTamm").text('');
+                    $("#CarOutFeesTamm").text('');
                 }
 
                 hideAllTabPanes();
