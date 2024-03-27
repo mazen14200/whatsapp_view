@@ -20,12 +20,16 @@ nav {
     background-color: rgba(255, 206, 148, 1);
     padding: .5rem 1rem !important;
 }
-
+/*######################################################## */
+.on-mobile {
+    text-align: end;
+}
+/*######################################################## */
 .notes_box {
     direction: rtl;
 }
 
-.inputs, .form-control1, .form-control2, .form-select-last, .form-select-selling, .textarea-inputs {
+.inputs, .form-control1, .form-control2, .form-select-last, .form-select-selling, .textarea-inputs, .form-select-settel {
     border-radius: 8px;
     border: 2px solid #faa64d;
     resize: none;
@@ -34,8 +38,8 @@ nav {
 
 .textarea-inputs {
     border-top: none;
-/*    min-height: calc(3em + 0.75rem + calc(var(--bs-border-width)* 2)) !important;
-*/}
+    min-height: calc(3em + 0.75rem + calc(var(--bs-border-width)* 2)) !important;
+}
 
 .inputs {
     height: 32px;
@@ -62,6 +66,12 @@ nav {
     padding-bottom: 0;
 }
 
+.form-select-settel {
+    border-top: none;
+    padding-bottom: 0;
+    text-align: end;
+}
+
 .form-select-selling {
     text-align: center;
     display: block;
@@ -78,6 +88,14 @@ nav {
 }
 
 .form-control:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #ff9626;
+    box-shadow: 0px 9px 20px 0rem #ff962610;
+    border-top: none;
+}
+
+.form-select:focus {
     color: var(--bs-body-color);
     background-color: var(--bs-body-bg);
     border-color: #ff9626;
@@ -174,12 +192,12 @@ nav {
 .btn-custom {
     color: #fff !important;
     background-color: #FF9626 !important;
-    border-color: #FF9626 !important;
-    padding-top: 0 !important;
-    padding-bottom: 1px !important;
-    padding-right: 15px !important;
-    border-radius: 8px !important;
-    padding-left: 15px !important;
+    border-color: #FF9626;
+    padding-top: 0;
+    padding-bottom: 1px;
+    padding-right: 15px;
+    border-radius: 8px;
+    padding-left: 15px;
 }
 
     .btn-custom:hover {
@@ -246,8 +264,8 @@ nav {
 
 .profile-pic {
     border: 1px solid #F69726;
-    height: 120px;
-    width: 120px;
+    height: 100px;
+    width: 100px;
     left: 50%;
     padding: 10px;
     fill: #F69726;
@@ -372,10 +390,15 @@ nav {
     text-align: end;
     position: relative;
     /* margin-top: 10px; */
+    height: 88%;
+}
+
+.invalid-feedback {
+    color: red;
 }
 
 .content-row {
-    width: 100%;
+    /* width: 100%; */
     align-items: center;
     justify-content: center;
 }
@@ -385,7 +408,7 @@ nav {
     border: 1px solid #39629c9c;
     border-radius: 7px;
     box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
-    padding: 20px 10px 10px 10px;
+    padding: 20px 10px 40px 10px;
     box-sizing: border-box;
     width: 94%;
     position: relative;
@@ -395,7 +418,7 @@ nav {
 .layout-row {
     align-items: center;
     justify-content: center;
-    height: 80%;
+    height: 88%;
 }
 
 .custody-layout-row {
@@ -415,6 +438,7 @@ nav {
     width: 100%;
     margin: 0;
     position: relative;
+    /* height: 88%; */
 }
 
 fieldset {
@@ -427,6 +451,7 @@ fieldset {
     display: flex;
     flex-direction: column;
     color: black;
+    /* height: 100%; */
 }
 
 
@@ -519,7 +544,7 @@ textarea {
 
 /* For webkit-based browsers (Chrome, Safari) */
 
-/*.table-scroll {
+.table-scroll {
     height: 350px;
     overflow: auto;
     direction: rtl;
@@ -569,15 +594,16 @@ textarea {
     background: rgba(255, 150, 38, 0.40);
     border-radius: 5px;
     height: 10px;
+    \
 }
 
 .table {
     --bs-table-hover-bg: #fff7de;
     width: 100%;
-}*/
+}
 
 /* options fieldset table style */
-/*.table-bordered thead th {
+.table-bordered thead th {
     border-bottom-width: 1px;
     border: 1px solid rgba(255, 150, 38, 0.64);
     text-align: center;
@@ -595,9 +621,9 @@ textarea {
     font-weight: 400;
     line-height: normal;
     position: sticky;
-    top: 0;*/
+    top: 0;
     /* /// background-color:rgba(223, 221, 221, 0.274);*/
-/*}
+}
 
 .table td {
     color: #39629C;
@@ -605,11 +631,12 @@ textarea {
 
 .table tbody tr {
     cursor: pointer;
-}*/
+}
 
 /* /////////////global////////////// */
 .container-fluid {
     height: 85%;
+    position: relative;
 }
 
 .section-mainCard {
@@ -648,7 +675,7 @@ footer {
     z-index: -9999;
     background-color: #FF992E;
     width: 100%;
-    height: 240px;
+    height: 200px;
 }
 /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 .alert {
@@ -678,7 +705,6 @@ footer {
 .Not-ended-Docs-Num {
     color: #FF992E;
 }
-
 /* /////////////////////////////////////////////////tenant-details-css//////////////////////////////////////////////////// */
 .personal-data {
     color: #39629C;
@@ -866,34 +892,36 @@ footer {
     flex-direction: row-reverse;
 }
 
-
-/* action Buttons*/
-#SettlementForm .action-button {
-    width: fit-content;
-    background: transparent;
-    font-weight: bold;
-    color: #FF9626;
-    border: 0 none;
-    border-radius: 0px;
-    cursor: pointer;
-    padding: 10px 5px;
-    margin: 10px 5px;
+#SettlementForm {
+    height: 97%;
 }
+    /* action Buttons*/
+    #SettlementForm .action-button {
+        width: fit-content;
+        background: transparent;
+        font-weight: bold;
+        color: #FF9626;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
 
 
 
-/*Previous Buttons*/
-#SettlementForm .action-button-previous {
-    width: fit-content;
-    background: transparent;
-    font-weight: bold;
-    color: #FF9626;
-    border: 0 none;
-    border-radius: 0px;
-    cursor: pointer;
-    padding: 10px 5px;
-    margin: 10px 5px;
-}
+    /*Previous Buttons*/
+    #SettlementForm .action-button-previous {
+        width: fit-content;
+        background: transparent;
+        font-weight: bold;
+        color: #FF9626;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
 
 /*progressbar*/
 #progressbar {
@@ -986,7 +1014,7 @@ footer {
 
 /* /////////////////////////////////////SettlementCard1//////////////////////////////////// */
 .SettlementCard1 {
-    gap: 10px
+    /* gap:17px */
 }
 
 .data-row-Settl {
@@ -1029,11 +1057,11 @@ footer {
 
 .expensesRow {
     min-height: 30vh;
-    gap: 20px;
+    /* gap: 20px; */
 }
 
 .expensesDiv-textarea {
-    height: 80%;
+    height: 90%;
 }
 
 /* /////////////////////////////////////SettlementCard3//////////////////////////////////// */
@@ -1046,11 +1074,11 @@ footer {
 
 .compensation-Row {
     min-height: 30vh;
-    gap: 20px
+    gap: 40px
 }
 
 .compensation-Div-textarea {
-    height: 80%;
+    height: 90%;
 }
 
 /* /////////////////////////الفحص الظاهري///////////////////////////////// */
@@ -1104,13 +1132,13 @@ flex-direction: row-reverse;
 }
 
 .upload__img-box {
-    width: 79px;
-    height: 97px;
+    width: 100px;
+    height: 100px;
     background-color: rgba(217, 217, 217, 0.32);
     display: inline-block;
 }
 
-.upload__img-close {
+.upload__img-close1, .upload__img-close2, .upload__img-close3 {
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -1126,8 +1154,10 @@ flex-direction: row-reverse;
 
 .textarea_table {
     border: none;
-    height: 24px;
+    /* height: 24px; */
     resize: none;
+    width: 100%;
+    background-color: white;
 }
 
 
@@ -1139,12 +1169,13 @@ flex-direction: row-reverse;
     padding-bottom: 100%;
     width: 100%;
     height: 100%;
+    background-size: cover;
 }
 
 .upload-container-checking {
     position: relative;
-    width: 79px;
-    height: 97px;
+    width: 100px;
+    height: 100px;
     border-radius: 4px;
     display: flex;
     flex-direction: column;
@@ -1464,9 +1495,15 @@ flex-direction: row-reverse;
 
 @media (max-width:1000px) {
     .expensesRow {
-        gap: 20px
+        gap: 40px
     }
 }
+/* @media (max-height:700px) {
+    #SettlementForm fieldset {
+        height: 80%;
+    
+    }
+} */
 /*======================================================================
 //           ========================== account Media ==============================================================================================
 //          =====================================================================*/
@@ -1558,4 +1595,192 @@ flex-direction: row-reverse;
     .feed-card {
         gap: 3.5em
     }
+}
+/*======================================================================
+//           ==========================  loader ==============================================================================================
+//          =====================================================================*/
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    right: 50%
+}
+
+.container2 {
+    display: flex;
+}
+
+.dash {
+    margin: 0 15px;
+    width: 37px;
+    height: 10px;
+    border-radius: 8px;
+    background: #237cb3;
+    box-shadow: 0 0 10px 0 #237cb3;
+}
+
+.uno {
+    margin-right: -18px;
+    transform-origin: center left;
+    animation: spin 3s linear infinite;
+}
+
+.dos {
+    transform-origin: center right;
+    animation: spin2 3s linear infinite;
+    animation-delay: .2s;
+}
+
+.tres {
+    transform-origin: center right;
+    animation: spin3 3s linear infinite;
+    animation-delay: .3s;
+}
+
+.cuatro {
+    transform-origin: center right;
+    animation: spin4 3s linear infinite;
+    animation-delay: .4s;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(360deg);
+    }
+
+    30% {
+        transform: rotate(370deg);
+    }
+
+    35% {
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin2 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    20% {
+        transform: rotate(0deg);
+    }
+
+    30% {
+        transform: rotate(-180deg);
+    }
+
+    35% {
+        transform: rotate(-190deg);
+    }
+
+    40% {
+        transform: rotate(-180deg);
+    }
+
+    78% {
+        transform: rotate(-180deg);
+    }
+
+    95% {
+        transform: rotate(-360deg);
+    }
+
+    98% {
+        transform: rotate(-370deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes spin3 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    27% {
+        transform: rotate(0deg);
+    }
+
+    40% {
+        transform: rotate(180deg);
+    }
+
+    45% {
+        transform: rotate(190deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+
+    62% {
+        transform: rotate(180deg);
+    }
+
+    75% {
+        transform: rotate(360deg);
+    }
+
+    80% {
+        transform: rotate(370deg);
+    }
+
+    85% {
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin4 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    38% {
+        transform: rotate(0deg);
+    }
+
+    60% {
+        transform: rotate(-360deg);
+    }
+
+    65% {
+        transform: rotate(-370deg);
+    }
+
+    75% {
+        transform: rotate(-360deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+.container1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+.logo {
+    width: 200px;
 }
