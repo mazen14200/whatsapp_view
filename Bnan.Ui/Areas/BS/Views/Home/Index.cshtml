@@ -38,7 +38,7 @@
     <div class="container-fluid ">
         <section class="section-mainCard home-section">
             <div class="row justify-content-center w-100 main-row ">
-                <div class=" col-lg-9 col-xl-8">
+                <div class="col-xl-8">
                     <div class="card shadow">
 
                         <div class="card-body" id="cardBody">
@@ -164,12 +164,12 @@
                     </div>
 
                 </div>
-                <div class="col-lg-3 col-xl-2  bg-transparent " id="button-on-mobile">
+                <div class="col-xl-2  bg-transparent " id="button-on-mobile">
                     <!-- Updated width and added new classes for the second card -->
                     <!-- Card Body -->
                     <div class="card-body p-0 mt-2">
                         <div class="row align-items-center flex-row-reverse">
-                            <div class=" col-12 col-md-4 col-lg-12 Branch">
+                            <div class=" col-md-4 col-lg-4 col-xl-12 Branch">
                                 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
                                 {
                                     @Html.DropDownListFor(model => model.SelectedBranch, new SelectList(Model.CrCasBranchInformations, "CrCasBranchInformationCode", "CrCasBranchInformationEnShortName", Model.SelectedBranch), new { id = "branchList", @class = "text-left" })
@@ -180,7 +180,7 @@
                                 }
                                 <label for="brunch_name" style="color: black;">@localizer["Branch"]</label>
                             </div>
-                            <div class=" col-6 col-md-4 col-lg-12">
+                            <div class=" col-6 col-md-4 col-lg-4 col-xl-12">
                                 <div>
                                     <button type="button" class="btn btn-secondary1  mt-2 active1" id="chart"
                                             onclick="showCarouselItem(1) , setActiveButton(0)">
@@ -189,7 +189,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class=" col-6 col-md-4 col-lg-12">
+                            <div class=" col-6 col-md-4 col-lg-4 col-xl-12">
                                 <div>
                                     <button type="button" class="btn btn-secondary1" id="toggleCarousel">
                                         <img src="~/BranchSys/img/Rectangle 75 .png"
@@ -197,7 +197,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class=" col-6 col-md-4 col-lg-12">
+                            <div class=" col-6 col-md-4 col-lg-4 col-xl-12">
                                 <div>
                                     <button type="button" class="btn btn-secondary1 " id="toggleCarousel2">
                                         <img src="~/BranchSys/img/Rectangle 76.png"
@@ -205,7 +205,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class=" col-6 col-md-4 col-lg-12">
+                            <div class=" col-6 col-md-4 col-lg-4 col-xl-12">
                                 <div>
                                     <button type="button" class="btn btn-secondary1 " id="toggleCarousel3">
                                         <img src="~/BranchSys/img/Rectangle 77.png"
@@ -213,7 +213,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class=" col-6 col-md-4 col-lg-12">
+                            <div class=" col-6 col-md-4 col-lg-4 col-xl-12">
                                 <div>
                                     <button type="button" class="btn btn-secondary1" onclick="setActiveButton(4)">
                                         <img src="~/BranchSys/img/Rectangle 78.png"

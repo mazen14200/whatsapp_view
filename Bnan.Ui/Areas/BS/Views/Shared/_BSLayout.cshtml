@@ -117,7 +117,7 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-profile rounded-circle" src="@Url.Content(user.CrMasUserInformationPicture?.ToString())" style="margin-right: 12px;height:53px;width:53px">
+                            <img class="img-profile rounded-circle" src="@Url.Content(user.CrMasUserInformationPicture?.ToString())">
                             <div class="userName" style="display: flex; flex-direction: column;">
                                 @if (signinManager.IsSignedIn(User))
                                 {

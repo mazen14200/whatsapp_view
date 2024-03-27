@@ -27,7 +27,11 @@ nav {
     border: 1px solid #4e73df;
     padding: 0.5rem 0.6rem;
 }
-
+.img-profile {
+    margin-right: 12px;
+    height: 53px;
+    width: 53px
+}
 .dropdown-item-custom {
     display: flex;
     flex-direction: row-reverse;
@@ -784,6 +788,17 @@ footer {
 
     .btn-secondary1 {
         font-size: 12px;
+    }
+}
+@media (max-width: 1200px) {
+    .main-row {
+        flex-direction: column-reverse;
+    }
+}
+
+@media (min-width:950px)and (max-width: 1350px) {
+    .faq-text {
+        font-size: .75rem;
     }
 }
 
