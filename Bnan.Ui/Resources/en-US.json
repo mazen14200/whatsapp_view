@@ -589,6 +589,12 @@
   "Edit FinancialTransactionOfRenter Data": "Details of Financial Transaction Of The Renter",
   "Edit FinancialTransactionOfRenter Hint": "this page allows you to Display Details of Financial Transaction Of The Renter",
 
+  //FinancialTransactionOfSalesPoint --------
+  "FinancialTransactionOfSalesPoint Hint": "This page allows you to display The Financial Transaction Of Sales Points",
+  "FinancialTransactionOfSalesPoint Data": "Financial Transaction Of The Sales Point",
+  "Edit FinancialTransactionOfSalesPoint Data": "Details of Financial Transaction Of The Sales Point",
+  "Edit FinancialTransactionOfSalesPoint Hint": "this page allows you to Display Details of Financial Transaction Of The Sales Point",
+
   "FTR_CurrentBalance": "Current Balance",
   "FTR_TotalCreditor": "Total Creditor",
   "FTR_TotalDebitor": "Total Debitor",
@@ -613,6 +619,13 @@
   "DriverContractId": "Driver No",
   "UserContractId": "Employee No",
   "CarContractId": "serial No",
+  "FTR_No": "No",
+
+  "FTS_Name": "Sales Point",
+  "FTS_Branch": "Brach",
+  "FTS_Bank": "Bank",
+  "FTS_IBAn": "IBAN",
+  "FTS_Account_Name": "Account Name",
 
 
   //RenterIdType------

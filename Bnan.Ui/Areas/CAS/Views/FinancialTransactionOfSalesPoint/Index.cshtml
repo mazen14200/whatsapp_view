@@ -1,0 +1,100 @@
+﻿@using Bnan.Core.Extensions
+@using Bnan.Ui.ViewModels.CAS
+
+@model FinancialTransactionOfSalesPointVM
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+       ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}"; 
+    ViewData["Page-title"] = @localizer["FinancialTransactionOfSalesPoint Data"];
+    ViewData["Page-Hint"] = @localizer["FinancialTransactionOfSalesPoint Hint"];
+}
+<style>
+    body {
+        overflow: hidden
+    }
+
+    @@media (max-width: 600px) {
+        #basic-datatable1_wrapper .row:first-child > div {
+            text-align: left;
+            overflow: scroll;
+            text-overflow: ellipsis;
+        }
+
+            #basic-datatable1_wrapper .row:first-child > div:last-child > * {
+                text-align: right;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+
+    /*     td,th {
+            text-align: center;
+        } */
+
+    #_Nc {
+        text-align: center;
+    }
+
+    
+</style>
+
+<div class="sub-container">
+    <div class="container-fluid">
+        <div class="row">
+            @*filter*@
+            <div class="col-sm-12 col-md-9">
+                <div class="col-sm-12 col-md-4 p-0">
+                    <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="CAS" asp-controller="Home" asp-action="Index">
+                        <i class="mdi mdi-window-close"></i>
+                    </a>
+                    @*<a class="btn btn-secondary InsertBtn" onclick="CheckValidation('1103002', '@Status.Insert', '@Url.Action("AddSalesPointContract", "SalesPointContract")')">
+                        @localizer["Add SalesPointContract Data"]
+                    </a> *@
+                </div>
+            </div>
+
+            @*search And Fitler Radio Button*@
+            <div class="col-sm-12 col-md-3 p-0">
+                <div class="input-group" style="width: 95%;">
+                    <input class="form-control dropdown-toggle" type="search" id="top-search" style="width: 96%;" placeholder="@localizer["search"]...">
+                    <span class="mdi mdi-magnify search-icon" style="color:#a7a4a4;"></span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 mt-3" id="status-filter">
+            </div>
+        </div>
+
+
+        <div class="dataTable " >
+            <partial name="_DataTableContract" />
+        </div>
+    </div>
+</div>
+
+
+
+
+<style>
+    .wrapper {
+        margin-bottom: 60px;
+        overflow: hidden;
+        background-image: url("~/Pictures/bg.jpg") !important;
+    }
+
+    .table-bordered td,
+    .table-bordered th {
+        border: none;
+    }
+</style>
+

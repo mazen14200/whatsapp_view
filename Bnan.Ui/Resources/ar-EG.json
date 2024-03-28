@@ -610,6 +610,12 @@
   "Edit FinancialTransactionOfRenter Data": "البيانات التفصيلية للحركة المالية للمستأجر",
   "Edit FinancialTransactionOfRenter Hint": "تمكنك هذه الصفحة من البحث والإطلاع على تفاصيل القيود للمستأجر",
 
+  //FinancialTransactionOfSalesPoint --------
+  "FinancialTransactionOfSalesPoint Hint": "تمكنك الصفحة من الإطلاع والبحث وعرض نقاط البيع وأرصدتهم والدخول على التقرير التفصيلي لنقاط البيع",
+  "FinancialTransactionOfSalesPoint Data": "الحركة المالية لنقاط البيع",
+  "Edit FinancialTransactionOfSalesPoint Data": "البيانات التفصيلية للحركة المالية لنقطة بيع",
+  "Edit FinancialTransactionOfSalesPoint Hint": "تمكنك هذه الصفحة من البحث والإطلاع على تفاصيل القيود لنقطة بيع",
+
   "FTR_CurrentBalance": "الرصيد الحالي",
   "FTR_TotalCreditor": "مجموع الدائن",
   "FTR_TotalDebitor": "مجموع المدين",
@@ -634,6 +640,13 @@
   "DriverContractId": "رقم السائق",
   "UserContractId": "رقم الموظف",
   "CarContractId": "الرقم التسلسلي",
+  "FTR_No": "الرقم",
+
+  "FTS_Name": "نقطة البيع",
+  "FTS_Branch": "الفرع",
+  "FTS_Bank": "البنك",
+  "FTS_IBAn": "رقم الحساب",
+  "FTS_Account_Name": "اسم الحساب",
 
   //RenterIdTypes------
   "RenterIdTypes Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل نوع الهوية",

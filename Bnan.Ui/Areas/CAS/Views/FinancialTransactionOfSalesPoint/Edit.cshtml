@@ -2,7 +2,7 @@
 
 @using Bnan.Ui.ViewModels.CAS
 @using Bnan.Core.Extensions
-@model FinancialTransactionOfRenterVM
+@model FinancialTransactionOfSalesPointVM
 
 
 @inject IViewLocalizer localizer
@@ -10,8 +10,8 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    ViewData["Page-title"] = localizer["Edit FinancialTransactionOfRenter Data"];
-    ViewData["Page-Hint"] = localizer["Edit FinancialTransactionOfRenter Hint"];
+    ViewData["Page-title"] = localizer["Edit FinancialTransactionOfSalesPoint Data"];
+    ViewData["Page-Hint"] = localizer["Edit FinancialTransactionOfSalesPoint Hint"];
 }
 
 <title>@ViewData["Title"]</title>
@@ -145,7 +145,7 @@
 
 
     @@media (max-width: 1050px) {
-        #RenterLessorInformationSigntureImage {
+        #SalesPointLessorInformationSigntureImage {
             position: absolute;
             top: 145%;
             right: 5%;
@@ -153,7 +153,7 @@
     }
 
     @@media (max-width: 767px) {
-        #RenterLessorInformationSigntureImage {
+        #SalesPointLessorInformationSigntureImage {
             position: absolute;
             top: 330%;
             right: 30%;
@@ -212,7 +212,7 @@
         .mgCenter {
             margin-left: 200px;
         }
-        #RenterLessorInformationSigntureImage {
+        #SalesPointLessorInformationSigntureImage {
             position: absolute;
             top: 39%;
             left: 50%;
@@ -269,7 +269,7 @@ else
         .mgCenter {
             margin-right: 220px;
         }
-        #RenterLessorInformationSigntureImage {
+        #SalesPointLessorInformationSigntureImage {
             position: absolute;
             top: 39%;
             right: 50%;
@@ -308,10 +308,12 @@ else
         }
     </style>
 }
+<input type="text" hidden value="@ViewBag.Single_FT_SalesPointId" readonly maxlength="15" id="FTR_Id" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+
 
 
 <div class="sub-container-form" id="CAS">
-    <form class="needs-validation" novalidate asp-area="CAS" asp-controller="RenterLessorInformation" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <form class="needs-validation" novalidate asp-area="CAS" asp-controller="SalesPointLessorInformation" asp-action="Edit" method="post" enctype="multipart/form-data">
         @*<div class="form-contain" style="position:relative">*@ @*For Scrolling in Form*@
           <div class="" style="position:relative">
             @*<div class="col-sm-12 col-md-9" style="margin-top:20px;height:50px;">
@@ -331,8 +333,8 @@ else
                     <label class="form-label" for="branchCode">@localizer["Code"]</label>
                 </div>
                 <div class="col-md-4">
-                        @*<input type="text" class="form-control" hidden asp-for="CrCasRenterLessorDealingMechanism" maxlength="100" width="80%" />*@
-                        @*<input type="text" class="form-control" hidden asp-for="CrCasRenterLessorReasons" maxlength="100" width="80%" />*@
+                        @*<input type="text" class="form-control" hidden asp-for="CrCasSalesPointLessorDealingMechanism" maxlength="100" width="80%" />*@
+                        @*<input type="text" class="form-control" hidden asp-for="CrCasSalesPointLessorReasons" maxlength="100" width="80%" />*@
 
                 </div>
             </div> @*End row*@
@@ -342,28 +344,61 @@ else
     @if (requestCulture.RequestCulture.UICulture.Name == "ar-EG")
     {
     
-                @*RenterLessorInformation ID Ar -- RenterLessorInformation name Ar -- profession Ar*@
+                @*SalesPointLessorInformation ID Ar -- SalesPointLessorInformation name Ar -- profession Ar*@
                     @*<div class="row mt-2" style="height:10px;">
                     </div>*@
                     <div class="row mt-2" style="height:60px">
                     <div class="col-md-label10 formlabel" style="width:55px;" >
-                        <label class="form-label" for="FTR_Id">@localizer["FTR_Id"]</label>
+                        <label class="form-label" for="FTR_No">@localizer["FTR_No"]</label>
                     </div>
                     <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:335px;">
 
-                            <input type="text" class="form-control" value="@ViewBag.Single_FT_RenterId" readonly maxlength="15" id="FTR_Id" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                        <input type="text" class="form-control" value="@ViewBag.Single_FT_SalesPointNo" readonly maxlength="15" id="FTR_No" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
-                    <div class="col-md-label10 formlabel" style="width:53px;">
-                        <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationArName">@localizer["RenterInformationName"]</label>
+                    <div class="col-md-label10 formlabel" style="width:90px;">
+                        <label class="form-label" for="CrCasSalesPointLessorNavigation.CrMasSalesPointInformationArName">@localizer["FTS_Name"]</label>
                     </div>
-                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:337px;">
-                            <input type="text" class="form-control" value="@ViewBag.Single_FT_RenterNameAr" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:300px;">
+                            <input type="text" class="form-control" value="@ViewBag.Single_FT_SalesPointNameAr" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+
+
+                    <div class="col-md-label10 formlabel" style="width:45px;">
+                        <label class="form-label" for="FTS_Branch">@localizer["FTS_Branch"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:345px;">
+                        <input type="text" class="form-control" id="FTS_Branch" value="@ViewBag.FTS_BranchAr" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
                     </div>
 
                 </div> @*End row*@
 
 
+                @*FTS_BankEn -- FTS_IBAn -- FTS_Account_Name Ar *@
+                <div class="row mt-2" style="height:70px">
+                    <div class="col-md-label10 formlabel" style="width:50px;">
+                        <label class="form-label" for="FTS_Bank">@localizer["FTS_Bank"]</label>
+                    </div>
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:340px;">
+
+                        <input type="text" class="form-control" value="@ViewBag.FTS_BankAr" readonly maxlength="15" id="FTS_Bank" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                    </div>
+
+                    <div class="col-md-label10 formlabel" style="width:100px;">
+                        <label class="form-label" for="FTS_Account_Name">@localizer["FTS_Account_Name"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:290px;">
+                        <input type="text" class="form-control" id="FTS_Account_Name" value="@ViewBag.FTS_Account_NameAr" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+
+                    <div class="col-md-label10 formlabel" style="width:90px;">
+                        <label class="form-label" for="FTS_IBAn">@localizer["FTS_IBAn"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:200px;">
+                        <input type="text" class="form-control" id="FTS_IBAn" value="@ViewBag.FTS_IBAn" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+
+                </div> @*End row*@
 
 
                 @*FTR_Balance -- AvailableBalance -- ReservedBalance *@
@@ -373,7 +408,7 @@ else
                     </div>
                     <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:340px;">
 
-                        <input type="text" class="form-control" value="@ViewBag.FTR_Balance" readonly maxlength="15" id="FTR_Balance" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                        <input type="text" class="form-control" value="@ViewBag.FTR_Balance" readonly maxlength="15" id="FTR_Balance" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
                     <div class="col-md-label10 formlabel" style="width:95px;">
@@ -429,26 +464,61 @@ else
     else if (requestCulture.RequestCulture.UICulture.Name == "en-US")
     {
 
-                @*RenterLessorInformation ID En && RenterLessorInformation name En *@
+                @*SalesPointLessorInformation ID En && SalesPointLessorInformation name En *@
                 @*<div class="row mt-2" style="height:10px;">
                 </div>*@
                 <div class="row mt-2" style="height:60px;">
                     <div class=" formlabel" style="width:35px;">
-                        <label class="form-label" for="FTR_Id">@localizer["FTR_Id"]</label>
+                        <label class="form-label" for="FTR_No">@localizer["FTR_No"]</label>
                     </div>
                     <div class=" p-0 col-11" style="margin-top:-5px;width:355px;">
-                        <input type="text" class="form-control" value="@ViewBag.Single_FT_RenterId" readonly maxlength="15" id="FTR_Id" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                        <input type="text" class="form-control" value="@ViewBag.Single_FT_SalesPointNo" readonly maxlength="15" id="FTR_No" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
-                    <div class="col-md-label10 formlabel" style="width:63px;">
-                        <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["RenterInformationName"]</label>
+                    <div class="col-md-label10 formlabel" style="width:93px;">
+                        <label class="form-label" for="CrCasSalesPointLessorNavigation.CrMasSalesPointInformationEnName">@localizer["FTS_Name"]</label>
                     </div>
-                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:327px;">
-                            <input type="text" class="form-control" value="@ViewBag.Single_FT_RenterNameEn" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:297px;">
+                        <input type="text" class="form-control" value="@ViewBag.Single_FT_SalesPointNameEn" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+
+
+                    <div class="col-md-label10 formlabel" style="width:55px;">
+                        <label class="form-label" for="FTS_Branch">@localizer["FTS_Branch"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:335px;">
+                        <input type="text" class="form-control" id="FTS_Branch" value="@ViewBag.FTS_BranchEn" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
                     </div>
 
                 </div> @*End row*@
 
+
+
+                @*FTS_BankEn -- FTS_IBAn -- FTS_Account_Name *@
+                <div class="row mt-2" style="height:70px">
+                    <div class="col-md-label10 formlabel" style="width:55px;">
+                        <label class="form-label" for="FTS_Bank">@localizer["FTS_Bank"]</label>
+                    </div>
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:335px;">
+
+                        <input type="text" class="form-control" value="@ViewBag.FTS_BankEn" readonly maxlength="15" id="FTS_Bank" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                    </div>
+
+                    <div class="col-md-label10 formlabel" style="width:125px;">
+                        <label class="form-label" for="FTS_Account_Name">@localizer["FTS_Account_Name"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:265px;">
+                        <input type="text" class="form-control" id="FTS_Account_Name" value="@ViewBag.FTS_Account_NameEn" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+
+                    <div class="col-md-label10 formlabel" style="width:50px;">
+                        <label class="form-label" for="FTS_IBAn">@localizer["FTS_IBAn"]</label>
+                    </div>
+                    <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:340px;">
+                        <input type="text" class="form-control" id="FTS_IBAn" value="@ViewBag.FTS_IBAn" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                    </div>
+
+                </div> @*End row*@
 
                 @*FTR_Balance -- AvailableBalance -- ReservedBalance *@
                 <div class="row mt-2" style="height:70px">
@@ -457,7 +527,7 @@ else
                     </div>
                     <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:320px;">
 
-                        <input type="text" class="form-control" value="@ViewBag.FTR_Balance" readonly maxlength="15" id="FTR_Balance" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                        <input type="text" class="form-control" value="@ViewBag.FTR_Balance" readonly maxlength="15" id="FTR_Balance" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
                     <div class="col-md-label10 formlabel" style="width:150px;">
@@ -510,7 +580,7 @@ else
                 }
 
 
-            <div class="dataTable t_mar" id="ReportsData" style="height:260px;">
+            <div class="dataTable t_mar" id="ReportsData" style="height:190px;">
                     <partial name="_DataTable_Internal_Contract" />
                 </div>
                 @if (ViewBag.CountRecord == 0)
@@ -526,7 +596,7 @@ else
         <div class="mt-3" id="buttonContainer">
 
             @*<a class="btn btn-primary ms-1" id="saveEdit">@localizer["Save"]</a>*@
-            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="FinancialTransactionOfRenter" asp-action="Index">
+            <a type="button" class="btn btn-danger ms-2" title="@localizer["Back"]" asp-area="CAS" asp-controller="FinancialTransactionOfSalesPoint" asp-action="Index">
                 @localizer["Back"]
             </a>
         </div>
@@ -715,7 +785,7 @@ else
                     data: {
                         ReceiptNo: ReceiptNo,
                     },
-                    url: "@Url.Action("GetReceiptDetails", "FinancialTransactionOfRenter", new { Area = "CAS" })",
+                    url: "@Url.Action("GetReceiptDetails", "FinancialTransactionOfSalesPoint", new { Area = "CAS" })",
                     success: function (response) {
                         if (response != null) {
                             console.log(response)
@@ -851,7 +921,7 @@ else
             console.log(mini);
             console.log(_max);
             console.log(id);
-            location.href = '@Url.Action("Edit2Date", "FinancialTransactionOfRenter")?_max=' + _max + '&_mini=' + _mini + '&id=' + id;
+            location.href = '@Url.Action("Edit2Date", "FinancialTransactionOfSalesPoint")?_max=' + _max + '&_mini=' + _mini + '&id=' + id;
 
 
         }
