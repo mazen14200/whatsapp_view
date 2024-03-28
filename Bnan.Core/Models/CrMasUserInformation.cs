@@ -8,6 +8,7 @@ namespace Bnan.Core.Models
     {
         public CrMasUserInformation()
         {
+            CrCasAccountContractTaxOweds = new HashSet<CrCasAccountContractTaxOwed>();
             CrCasAccountReceipts = new HashSet<CrCasAccountReceipt>();
             CrCasRenterContractStatisticCrCasRenterContractStatisticsUserCloseNavigations = new HashSet<CrCasRenterContractStatistic>();
             CrCasRenterContractStatisticCrCasRenterContractStatisticsUserOpenNavigations = new HashSet<CrCasRenterContractStatistic>();
@@ -60,6 +61,7 @@ namespace Bnan.Core.Models
         public string? CrMasUserInformationReasons { get; set; }
         public virtual CrMasLessorInformation? CrMasUserInformationLessorNavigation { get; set; }
         public virtual CrMasUserContractValidity CrMasUserContractValidity { get; set; } = null!;
+        public virtual ICollection<CrCasAccountContractTaxOwed> CrCasAccountContractTaxOweds { get; set; }
         public virtual ICollection<CrCasAccountReceipt> CrCasAccountReceipts { get; set; }
         public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatisticCrCasRenterContractStatisticsUserCloseNavigations { get; set; }
         public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatisticCrCasRenterContractStatisticsUserOpenNavigations { get; set; }

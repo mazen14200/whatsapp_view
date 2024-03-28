@@ -7,6 +7,8 @@ namespace Bnan.Core.Models
     {
         public CrCasSysAdministrativeProcedure()
         {
+            CrCasAccountContractCompanyOweds = new HashSet<CrCasAccountContractCompanyOwed>();
+            CrCasAccountContractTaxOweds = new HashSet<CrCasAccountContractTaxOwed>();
             CrMasUserContractValidities = new HashSet<CrMasUserContractValidity>();
         }
 
@@ -38,6 +40,8 @@ namespace Bnan.Core.Models
         public virtual CrMasSysProcedure? CrCasSysAdministrativeProceduresCodeNavigation { get; set; }
         public virtual CrMasSupRenterSector? CrCasSysAdministrativeProceduresSectorNavigation { get; set; }
         public virtual CrMasUserInformation? CrCasSysAdministrativeProceduresUserInsertNavigation { get; set; }
+        public virtual ICollection<CrCasAccountContractCompanyOwed> CrCasAccountContractCompanyOweds { get; set; }
+        public virtual ICollection<CrCasAccountContractTaxOwed> CrCasAccountContractTaxOweds { get; set; }
         public virtual ICollection<CrMasUserContractValidity> CrMasUserContractValidities { get; set; }
     }
 }

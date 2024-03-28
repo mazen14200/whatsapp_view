@@ -7,6 +7,7 @@ namespace Bnan.Core.Models
     {
         public CrMasContractCompany()
         {
+            CrCasAccountContractCompanyOweds = new HashSet<CrCasAccountContractCompanyOwed>();
             CrMasContractCompanyDetaileds = new HashSet<CrMasContractCompanyDetailed>();
         }
 
@@ -34,6 +35,7 @@ namespace Bnan.Core.Models
         public virtual CrMasLessorInformation? CrMasContractCompanyLessorNavigation { get; set; }
         public virtual CrMasSysProcedure? CrMasContractCompanyProceduresNavigation { get; set; }
         public virtual CrMasSupRenterSector? CrMasContractCompanySectorNavigation { get; set; }
+        public virtual ICollection<CrCasAccountContractCompanyOwed> CrCasAccountContractCompanyOweds { get; set; }
         public virtual ICollection<CrMasContractCompanyDetailed> CrMasContractCompanyDetaileds { get; set; }
     }
 }
