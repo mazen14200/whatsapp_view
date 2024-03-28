@@ -394,7 +394,7 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205011")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["FinancialTransactionOfSalesPoint"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="FinancialTransactionOfSalesPoint" asp-action="FailedMessageReport_NoData">@localizer["FinancialTransactionOfSalesPoint"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205012")?.CrMasUserSubValidationAuthorization == true)
