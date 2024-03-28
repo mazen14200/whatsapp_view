@@ -4245,7 +4245,7 @@ else
 
         // Function to send an image and PDF to WhatsApp
         const sendArReceiptToWhatsApp = async () => {
-            const imageLessor = "~/images/common/Ar_Catch_Receipt.png";
+            const imageLessor ="@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArCatchReceipt";
             const imagePath = imageLessor.replace('~', '');
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
             const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
@@ -4457,8 +4457,8 @@ else
 
 
                 // director and renter and user
-                ctx.fillText(directorOfLessor, canvas.width - 340, 3090);
-                ctx.fillText(userName, canvas.width - 1140, 3085);
+                ctx.fillText(directorOfLessor, canvas.width - 340, 3050);
+                ctx.fillText(userName, canvas.width - 1140, 3050);
                 ctx.fillText(directorOfBranch, canvas.width - 340, 3190);
                 // ctx.fillText(RenterName, canvas.width - 1140, 3200);
                 ctx.drawImage(signatureImg, canvas.width - 1350, 3125, 200, 100);
