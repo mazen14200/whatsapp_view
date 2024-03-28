@@ -16,6 +16,9 @@
 <title>@ViewData["Title"]</title>
 
 <style>
+    .h_new {
+        height: 40px;
+    }
     .row {
         align-items: center;
     }
@@ -171,7 +174,7 @@
     <form class="needs-validation" novalidate asp-area="MAS" asp-controller="CarBrand" asp-action="Edit" method="post" enctype="multipart/form-data">
         @* <div class="form-contain"> //to make Scroll *@ 
             @*CarBrand Code*@
-            <div class="row mt-2">
+            <div class="row h_new mt-2">
                 <div class="col-md-2">
                     <label class="form-label" for="CarBrandCode">@localizer["CarBrandCode"]</label>
                 </div>
@@ -188,7 +191,7 @@
             @* @if (requestCulture.RequestCulture.UICulture.Name != "en-US") *@
             
                 @*CarBrand name arabic*@
-                <div class="row mt-2">
+                <div class="row h_new mt-2">
                     <div class="col-md-2">
                         <label class="form-label" for="CarBrandNameAr">@localizer["CarBrandNameAr"]</label>
                     </div>
@@ -202,7 +205,7 @@
                     </div>
                 </div>
                 @*CarBrand name English*@
-                <div class="row mt-2">
+                <div class="row h_new mt-2">
                     <div class="col-md-2">
                         <label class="form-label" for="CarBrandNameEn">@localizer["CarBrandNameEn"]</label>
                     </div>
@@ -217,7 +220,7 @@
                 </div>
             
             @*reasons*@
-            <div class="row mt-2">
+            <div class="row h_new mt-2">
                 <div class="col-md-2">
                     <label class="form-label" for="Reasons">@localizer["reasons"]</label>
                 </div>
@@ -231,7 +234,7 @@
                 </div>
             </div>
             @*AcceptImg*@
-            <div class="row mt-1">
+            <div class="row">
                 <div class="col-md-4">
                     <div class="file-upload">
                         <button class="file-upload-btn" type="button" onclick="$('.file-upload-input-picture1').trigger('click')">@localizer["CarBrandImg"]</button>
@@ -256,7 +259,7 @@
 
         @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
 
-        <div class="mt-4" id="buttonContainer">
+        <div class="mt-1" id="buttonContainer">
 
             <button type="submit" id="saveEdit" class="btn btn-primary ms-1">@localizer["Save"]</button>
 
