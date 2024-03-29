@@ -7,6 +7,7 @@ using Bnan.Inferastructure.Repository;
 using Bnan.Ui.Areas.Base.Controllers;
 using Bnan.Ui.ViewModels.BS;
 using Bnan.Ui.ViewModels.MAS;
+using Bnan.Ui.ViewModels.CAS;
 using MessagePack;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -89,12 +90,17 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     //var UserLoginbyDate_filtered = UserLoginbyDateAll1.Where(x => x.CrMasUserLoginEntryDate <= lastDate && x.CrMasUserLoginEntryDate >= startDate);
                 }
             }
+            var query_Alert = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertLessor == currentUser.CrMasUserInformationLessor ).ToList(); 
+
+            ReportActiveContractVM reportActiveContractVM = new ReportActiveContractVM();
+            reportActiveContractVM.crCasRenterContractBasic = RenterContract_Basic_All;
+            reportActiveContractVM.crCasRenterContractAlert = query_Alert;
 
             await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
             subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
             subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
-            return View("Index", RenterContract_Basic_All);
+            return View("Index", reportActiveContractVM);
 
 
 
@@ -109,6 +115,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205003", "2");
 
+            var query_Alert_All = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertLessor == currentUser.CrMasUserInformationLessor).ToList();
+
+
             if (!string.IsNullOrEmpty(_max) && !string.IsNullOrEmpty(_mini))
             {
                 // "today"  "tomorrow"   "after_longTime" 
@@ -119,7 +128,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
                     var RenterContract_Basic_All1 = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicIssuedDate < DateTime.Parse(_max).Date && x.CrCasRenterContractBasicIssuedDate >= DateTime.Parse(_mini).Date && (x.CrCasRenterContractBasicStatus == Status.Active || x.CrCasRenterContractBasicStatus == Status.Expire) && x.CrCasRenterContractBasicLessor == currentUser.CrMasUserInformationLessor, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic4", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).OrderByDescending(x => x.CrCasRenterContractBasicRenterId).ThenByDescending(y => y.CrCasRenterContractBasicIssuedDate).ToList();
 
-                    return PartialView("_DataTableReportContract", RenterContract_Basic_All1);
+                    ReportActiveContractVM reportActiveContractVM = new ReportActiveContractVM();
+                    reportActiveContractVM.crCasRenterContractBasic = RenterContract_Basic_All1;
+                    reportActiveContractVM.crCasRenterContractAlert = query_Alert_All;
+
+                    return PartialView("_DataTableReportContract", reportActiveContractVM);
 
                 }
                 else
@@ -149,7 +162,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         RenterContract_Basic_All = RenterContract_Basic_All.Where(x => x.CrCasRenterContractBasicStatus == status).ToList(); // E to ended
                     }
 
-                    return PartialView("_DataTableReportContract", RenterContract_Basic_All);
+                    ReportActiveContractVM reportActiveContractVM = new ReportActiveContractVM();
+                    reportActiveContractVM.crCasRenterContractBasic = RenterContract_Basic_All;
+                    reportActiveContractVM.crCasRenterContractAlert = query_Alert_All;
+
+                    return PartialView("_DataTableReportContract", reportActiveContractVM);
 
                 }
 

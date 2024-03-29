@@ -21,7 +21,7 @@
         /*padding: 20px;*/
         position: relative;
         /*overflow: auto;*/
-        max-height: 22vh;
+        max-height: 35vh;
         width: 100%;
     }
 
@@ -77,7 +77,8 @@
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Debtor"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_previuos_Balance"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_User_Transector"]</th>
-                <th class="scroll_1" aria-label="Position: activate to sort column ascending"></th>
+                <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTS_Pdf"]</th>
+                @*<th class="scroll_1" aria-label="Position: activate to sort column ascending"></th>*@
                 </tr>
             </div>
             <div >
@@ -85,11 +86,12 @@
 
                     @{
                         int no = 1;
+
                     }
                     @foreach (var item in Model.crCasAccountReceipt)
                     {
                         @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'">*@
-                    <tr onclick="getDetails('@item.CrCasAccountReceiptNo')" style="cursor:pointer;">
+                <tr onclick="getDetails('@item.CrCasAccountReceiptNo')" style="cursor:pointer;">
                         <td id="_Nc">@no</td>
 
                         <td id="_Nc">@item.CrCasAccountReceiptNo</td>
@@ -101,7 +103,20 @@
                         <td id="_Nc">@item.CrCasAccountReceiptReceipt?.ToString("N2",CultureInfo.InvariantCulture)</td>
                         <td id="_Nc">@item.CrCasAccountReceiptRenterPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
                         <td>@item.CrCasAccountReceiptUserNavigation.CrMasUserInformationEnName</td>
-                        <td>@item.CrCasAccountReceiptReasons</td>
+
+                            @{
+                                var Link_pdf = item.CrCasAccountReceiptEnPdfFile;
+                                var Target_pdf = "#";
+                                if (Link_pdf?.Count() > 2)
+                                {
+                                    Target_pdf = "_blank";
+                                }
+                            }
+
+                    <td>
+                        <a href="@Link_pdf" target="@Target_pdf" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="Link Pdf"></a>
+                    </td>
+                        @*<td>@item.CrCasAccountReceiptReasons</td>*@
 
 
                     </tr>
@@ -129,7 +144,8 @@ else
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Debtor"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_previuos_Balance"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_User_Transector"]</th>
-                <th class="scroll_1" aria-label="Position: activate to sort column ascending"></th>
+                <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTS_Pdf"]</th>
+                @*<th class="scroll_1" aria-label="Position: activate to sort column ascending"></th>*@
             </tr>
             </div>
             <tbody >
@@ -154,7 +170,22 @@ else
                     <td id="_Nc">@item.CrCasAccountReceiptReceipt?.ToString("N2",CultureInfo.InvariantCulture)</td>
                     <td id="_Nc">@item.CrCasAccountReceiptRenterPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
                     <td>@item.CrCasAccountReceiptUserNavigation.CrMasUserInformationArName</td>
-                    <td>@item.CrCasAccountReceiptReasons</td>
+
+
+                        @{
+                            var Link_pdf = item.CrCasAccountReceiptArPdfFile;
+                            var Target_pdf = "#";
+                            if (Link_pdf?.Count() > 2)
+                            {
+                                Target_pdf = "_blank";
+                            }
+                        }
+
+                <td>
+                    <a href="@Link_pdf" target="@Target_pdf" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="Link Pdf"></a>
+                </td>
+
+                    @*<td>@item.CrCasAccountReceiptReasons</td>*@
 
 
                 </tr>

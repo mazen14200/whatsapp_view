@@ -1,9 +1,8 @@
-﻿
-
-@using Bnan.Core.Extensions
+﻿@using Bnan.Core.Extensions
+@using Bnan.Ui.ViewModels.CAS
 @* @model IEnumerable<CrMasUserLogin>
 *@
-@model IEnumerable<CrCasRenterContractBasic>
+@model ReportActiveContractVM
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
@@ -94,9 +93,9 @@
         text-align: center;
     } */
 
-/*     #_Nc {
+     #_Nc {
         text-align: center;
-    } */
+    } 
     .grid-container {
         display: grid;
         grid-template-columns: 1fr 1fr;

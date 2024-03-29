@@ -576,6 +576,9 @@
   "Today_Expired": "ينتهي اليوم",
   "Tommorow_Expired": "ينتهي غداً",
   "after_long_Expired": "ينتهي لاحقاً",
+  "Sh_Today_Expired": "اليوم",
+  "Sh_Tommorow_Expired": "غداً",
+  "Sh_after_long_Expired": "لاحقاً",
   "RenterContractReport Hint": "تمكنك الصفحة من الاطلاع والبحث عن العقود القائمة خلال الفترة المحددة",
   "RenterContractReport Data": "العقود القائمة",
 
@@ -647,6 +650,7 @@
   "FTS_Bank": "البنك",
   "FTS_IBAn": "رقم الحساب",
   "FTS_Account_Name": "اسم الحساب",
+  "FTS_Pdf": "السند",
 
   //RenterIdTypes------
   "RenterIdTypes Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل نوع الهوية",

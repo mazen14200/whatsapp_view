@@ -171,8 +171,15 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             //sidebar Active
             ViewBag.id = "#sidebarReport";
             ViewBag.no = "10";
-            ViewBag.startDate = DateTime.Parse(_mini).Date.ToString("yyyy-MM-dd");
-            ViewBag.EndDate = DateTime.Parse(_max).Date.ToString("yyyy-MM-dd");
+            if (id != null)
+            {
+                ViewBag.startDate = DateTime.Parse(_mini).Date.ToString("yyyy-MM-dd");
+                ViewBag.EndDate = DateTime.Parse(_max).Date.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
             //To Set Title !!!!!!!!!!!!!
             var titles = await setTitle("205", "2205011", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);

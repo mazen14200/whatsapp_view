@@ -553,6 +553,9 @@
   "Today_Expired": "Expire Today",
   "Tommorow_Expired": "Expire Tomorrow",
   "after_long_Expired": "Expire after LongTime",
+  "Sh_Today_Expired": "Today",
+  "Sh_Tommorow_Expired": "Tomorrow",
+  "Sh_after_long_Expired": "LongTime",
   "Expired": "Expired",
   "Mechanism_Rent": "Mechanism",
   "Start_Contract": "Start",
@@ -626,7 +629,7 @@
   "FTS_Bank": "Bank",
   "FTS_IBAn": "IBAN",
   "FTS_Account_Name": "Account Name",
-
+  "FTS_Pdf": "Document",
 
   //RenterIdType------
   "RenterIdTypes Hint": "The page allows you to display, add, and modify  Id Types data.",

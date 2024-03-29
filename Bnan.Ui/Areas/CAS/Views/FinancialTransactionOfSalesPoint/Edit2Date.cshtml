@@ -18,6 +18,7 @@
 
 
 
+
 <style>
 
     #LessorInfoEmailWhatisapp, #LessorMobilePhone, #LessorCallFree {
@@ -46,7 +47,7 @@
         transition: all .2s ease;
         outline: none;
         text-transform: uppercase;
-        font-weight: 700;
+        font-weight: 680;
     }
 
         .file-upload-btn:hover {
@@ -123,7 +124,7 @@
         transition: all .2s ease;
         outline: none;
         text-transform: uppercase;
-        font-weight: 700;
+        font-weight: 680;
     }
 
     .image-upload-wrap {
@@ -175,13 +176,16 @@
         margin-top: -5px;
         height: 35px;
     }
-
-    .modal-dialog {
-        max-width: 650px;
-        margin: 2rem auto;
-        margin-left: 625px;
-        margin-top: 140px;
+    .personal-data{
+        /*font-weight: bold;*/
+        /*font-weight: 999;*/
     }
+    .fontBold_Class{
+        font-weight: 590;
+        /*color:darkblue;*/
+        color:#0B05B8;
+    }
+
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -195,55 +199,67 @@
 @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
 {
     @*<link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet" />*@
-    <style>
-        .Direction_Page {
-            direction: rtl;
+     <style>
+        .modal-dialog {
+            max-width: 610px;
+            margin: 2rem auto;
+            margin-left: 625px;
+            margin-top: 140px;
+        }
+        .col-md-7{
+            width:300px;
+        }
+
+        .col-md-5 {
+            width: 200px;
+        }
+        .Direction_Page{
+            direction:rtl;
+
         }
 
         .d-flex {
-            gap: 10px;
+            gap: 15px;
             display: flex;
             -webkit-align-items: 0;
         }
 
         .mgCenter {
-            margin-left: 200px;
+            margin-left:185px;
         }
-
         #SalesPointLessorInformationSigntureImage {
             position: absolute;
             top: 39%;
             left: 50%;
         }
-
-        .t_mar {
-            margin: 35px;
-            margin-right: 55px;
-            margin-top: 5px;
+        .t_mar{
+            @*margin: 35px;*@
+            margin-right: 20px;
+            @*margin-top: 5px;*@
         }
 
         .col-md-label5 {
             /*width: 28.75%;*/
             width: 140px;
-            height: 40px;
+            height: 30px;
         }
 
         .col-md-input5 {
             width: 250px;
             margin-top: -8px;
-            height: 40px;
+            height: 30px;
         }
 
         .col-md-label10 {
             /*width: 28.75%;*/
             width: 80px;
-            height: 40px;
+            height: 30px;
         }
 
         .col-md-input10 {
             width: 310px;
             margin-top: -8px;
-            height: 40px;
+            height: 30px;
         }
 
         #Date_cusor1, #Date_cusor2 {
@@ -256,20 +272,31 @@ else
     @*<link href="~/BranchSys/Pages/css/style.css" rel="styleSheet" />*@
 
     <style>
+        .modal-dialog {
+            max-width: 480px;
+            margin: 2rem auto;
+            margin-left: 625px;
+            margin-top: 140px;
+        }
+        .col-md-7{
+            width:270px;
+        }
+
+        .col-md-5 {
+            width: 150px;
+        }
         .Direction_Page {
             direction: ltr;
         }
 
         .d-flex {
-            gap: 10px;
-            display: flex;
-            -webkit-align-items: 0;
+            gap: 15px;
+            display:flex;
+            -webkit-align-items:0;
         }
-
         .mgCenter {
-            margin-right: 220px;
+            margin-right: 148px;
         }
-
         #SalesPointLessorInformationSigntureImage {
             position: absolute;
             top: 39%;
@@ -277,41 +304,41 @@ else
         }
 
         .t_mar {
-            margin: 35px;
-            margin-left: 55px;
-            margin-top: 5px;
+            @*margin: 35px;*@
+            margin-left: 20px;
+            @*margin-top: 5px;*@
         }
-
         .col-md-label5 {
             /*width: 28.75%;*/
             width: 90.5px;
-            height: 40px;
+            height: 30px;
         }
 
         .col-md-input5 {
             width: 300px;
-            margin-top: -8px;
-            height: 40px;
+            margin-top:-8px;
+            height: 30px;
         }
 
         .col-md-label10 {
             /*width: 28.75%;*/
             width: 75px;
-            height: 40px;
+            height: 30px;
         }
 
         .col-md-input10 {
             width: 315px;
             margin-top: -8px;
-            height: 40px;
+            height: 30px;
         }
-
         #Date_cusor1, #Date_cusor2 {
             margin-left: 13px;
         }
     </style>
 }
-   <input type="text" hidden value="@ViewBag.Single_FT_SalesPointId" readonly maxlength="15" id="FTR_Id" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+
+<input type="text" hidden value="@ViewBag.Single_FT_SalesPointId" readonly maxlength="15" id="FTR_Id" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+
 
 
 <div class="sub-container-form" id="CAS">
@@ -319,15 +346,14 @@ else
         @*<div class="form-contain" style="position:relative">*@ @*For Scrolling in Form*@
           <div class="" style="position:relative">
             @*<div class="col-sm-12 col-md-9" style="margin-top:20px;height:50px;">
-            <div class="col-sm-12 col-md-4 p-0">
-            <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="CAS" asp-controller="CarContract" asp-action="Index">
-            <i class="mdi mdi-window-close"></i>
-            </a>
-            </div>
+                <div class="col-sm-12 col-md-4 p-0">
+                    <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="CAS" asp-controller="CarContract" asp-action="Index">
+                        <i class="mdi mdi-window-close"></i>
+                    </a>
+                </div>
             </div>*@
-            <div class="col-sm-12 col-md-9" style="margin-top:0px;height:20px;">
+            <div class="col-sm-12 col-md-9" style="margin-top:0px;height:10px;">
             </div>
-
 
 
                 @*branch Code*@
@@ -346,15 +372,15 @@ else
             @*// Arabic arabic  *@
     @if (requestCulture.RequestCulture.UICulture.Name == "ar-EG")
     {
-
+    
                 @*SalesPointLessorInformation ID Ar -- SalesPointLessorInformation name Ar -- profession Ar*@
-                @*<div class="row mt-2" style="height:10px;">
-                </div>*@
-                <div class="row mt-2" style="height:60px">
-                    <div class="col-md-label10 formlabel" style="width:55px;">
+                    @*<div class="row mt-2" style="height:10px;">
+                    </div>*@
+                    <div class="row mt-2" style="height:35px">
+                    <div class="col-md-label10 formlabel" style="width:55px;" >
                         <label class="form-label" for="FTR_No">@localizer["FTR_No"]</label>
                     </div>
-                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:335px;">
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:290px;">
 
                         <input type="text" class="form-control" value="@ViewBag.Single_FT_SalesPointNo" readonly maxlength="15" id="FTR_No" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
@@ -363,7 +389,7 @@ else
                         <label class="form-label" for="CrCasSalesPointLessorNavigation.CrMasSalesPointInformationArName">@localizer["FTS_Name"]</label>
                     </div>
                     <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:300px;">
-                        <input type="text" class="form-control" value="@ViewBag.Single_FT_SalesPointNameAr" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                            <input type="text" class="form-control" value="@ViewBag.Single_FT_SalesPointNameAr" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
                     </div>
 
 
@@ -377,13 +403,12 @@ else
                 </div> @*End row*@
 
 
-
                 @*FTS_BankEn -- FTS_IBAn -- FTS_Account_Name Ar *@
-                <div class="row mt-2" style="height:70px">
+                <div class="row mt-2" style="height:35px">
                     <div class="col-md-label10 formlabel" style="width:50px;">
                         <label class="form-label" for="FTS_Bank">@localizer["FTS_Bank"]</label>
                     </div>
-                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:340px;">
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:295px;">
 
                         <input type="text" class="form-control" value="@ViewBag.FTS_BankAr" readonly maxlength="15" id="FTS_Bank" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
@@ -406,11 +431,11 @@ else
 
 
                 @*FTR_Balance -- AvailableBalance -- ReservedBalance *@
-                <div class="row mt-2" style="height:60px">
+                <div class="row mt-2" style="height:35px">
                     <div class="col-md-label10 formlabel" style="width:50px;">
                         <label class="form-label" for="FTR_Balance">@localizer["FTR_Balance"]</label>
                     </div>
-                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:340px;">
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:295px;">
 
                         <input type="text" class="form-control" value="@ViewBag.FTR_Balance" readonly maxlength="15" id="FTR_Balance" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
@@ -432,37 +457,35 @@ else
 
 
                 @*DateTime Inputs*@
-                <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:70px;">
+                    <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:45px;">
 
-                    <!-- Autoclose -->
-                    <div style="width:30px;margin-top:7px;">
-                        <label class="form-label " style="">@localizer["StartDate_from"]</label>
-                    </div>
+                        <!-- Autoclose -->
+                        <div style="width:30px;margin-top:7px;">
+                            <label class="form-label " style="">@localizer["StartDate_from"]</label>
+                        </div>
 
-                    <div class="dateRelative " style="display:grid;width:220px;height:40px;">
-                        <input type="text" class="form-control " id="startDateInput" name="startDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
-                        <i class="dripicons-calendar" id="Date_cusor1" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:ltr"></i>
-                    </div>
+                        <div class="dateRelative " style="display:grid;width:220px;height:40px;">
+                            <input type="text" class="form-control " id="startDateInput" name="startDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
+                            <i class="dripicons-calendar" id="Date_cusor1" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:ltr"></i>
+                        </div>
 
-                    <!-- Autoclose -->
-                    <div style="width:50px;margin-top:7px;">
-                    </div>
-                    <div style="width:20px;margin-top:7px;">
-                        <label class="form-label p-0 mt-0" style="mar">@localizer["EndDate_to"]</label>
-                    </div>
+                        <!-- Autoclose -->
+                        <div style="width:50px;margin-top:7px;">
+                        </div>
+                        <div style="width:20px;margin-top:7px;">
+                            <label class="form-label p-0 mt-0" style="mar">@localizer["EndDate_to"]</label>
+                        </div>
 
-                    <div class="dateRelative " style="display:grid;width:220px;height:40px;">
-                        <input type="text" class="form-control " id="endDateInput" name="endDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
-                        <i class="dripicons-calendar" id="Date_cusor2" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:ltr"></i>
-                    </div>
-                    <div style="width:50px;">
-                        <a class="btn btn-primary" onclick="DateChanged()">
-                            <i class="mdi mdi-search-web"></i>
-                        </a>
-                    </div>
-                </div> @*End row*@
-
-
+                        <div class="dateRelative " style="display:grid;width:220px;height:40px;">
+                            <input type="text" class="form-control " id="endDateInput" name="endDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
+                            <i class="dripicons-calendar" id="Date_cusor2" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:ltr"></i>
+                        </div>
+                        <div style="width:50px;">
+                            <a class="btn btn-primary" onclick="DateChanged()">
+                                <i class="mdi mdi-search-web"></i>
+                            </a>
+                        </div>
+                    </div> @*End row*@
 
 
     }
@@ -470,14 +493,14 @@ else
     else if (requestCulture.RequestCulture.UICulture.Name == "en-US")
     {
 
-                @*SalesPointLessorInformation ID En && SalesPointLessorInformation name En -- FTS_Branch*@
+                @*SalesPointLessorInformation ID En && SalesPointLessorInformation name En *@
                 @*<div class="row mt-2" style="height:10px;">
-            </div>*@
-                <div class="row mt-2" style="height:60px;">
+                </div>*@
+                <div class="row mt-2" style="height:35px;">
                     <div class=" formlabel" style="width:35px;">
                         <label class="form-label" for="FTR_No">@localizer["FTR_No"]</label>
                     </div>
-                    <div class=" p-0 col-11" style="margin-top:-5px;width:355px;">
+                    <div class=" p-0 col-11" style="margin-top:-5px;width:310px;">
                         <input type="text" class="form-control" value="@ViewBag.Single_FT_SalesPointNo" readonly maxlength="15" id="FTR_No" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
@@ -501,11 +524,11 @@ else
 
 
                 @*FTS_BankEn -- FTS_IBAn -- FTS_Account_Name *@
-                <div class="row mt-2" style="height:70px">
+                <div class="row mt-2" style="height:35px">
                     <div class="col-md-label10 formlabel" style="width:55px;">
                         <label class="form-label" for="FTS_Bank">@localizer["FTS_Bank"]</label>
                     </div>
-                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:335px;">
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:290px;">
 
                         <input type="text" class="form-control" value="@ViewBag.FTS_BankEn" readonly maxlength="15" id="FTS_Bank" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
@@ -527,11 +550,11 @@ else
                 </div> @*End row*@
 
                 @*FTR_Balance -- AvailableBalance -- ReservedBalance *@
-                <div class="row mt-2" style="height:70px">
+                <div class="row mt-2" style="height:35px">
                     <div class="col-md-label10 formlabel" style="width:70px;">
                         <label class="form-label" for="FTR_Balance">@localizer["FTR_Balance"]</label>
                     </div>
-                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:320px;">
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:275px;">
 
                         <input type="text" class="form-control" value="@ViewBag.FTR_Balance" readonly maxlength="15" id="FTR_Balance" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'SalesPointLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
@@ -552,52 +575,48 @@ else
                 </div> @*End row*@
 
 
-                @*DateTime Inputs*@
-                <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:70px;">
+                    @*DateTime Inputs*@
+                    <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:45px;">
 
-                    <!-- Autoclose -->
-                    <div style="width:30px;margin-top:7px;">
-                        <label class="form-label " style="">@localizer["StartDate_from"]</label>
-                    </div>
+                        <!-- Autoclose -->
+                        <div style="width:30px;margin-top:7px;">
+                            <label class="form-label " style="">@localizer["StartDate_from"]</label>
+                        </div>
 
-                    <div class="dateRelative " style="display:grid;width:220px;height:40px;">
-                        <input type="text" class="form-control " id="startDateInput" name="startDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
-                        <i class="dripicons-calendar" id="Date_cusor1" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:rtl"></i>
-                    </div>
+                        <div class="dateRelative " style="display:grid;width:220px;height:40px;">
+                            <input type="text" class="form-control " id="startDateInput" name="startDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
+                            <i class="dripicons-calendar" id="Date_cusor1" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:rtl"></i>
+                        </div>
 
-                    <!-- Autoclose -->
-                    <div style="width:50px;margin-top:7px;">
-                    </div>
-                    <div style="width:20px;margin-top:7px;">
-                        <label class="form-label p-0 mt-0">@localizer["EndDate_to"]</label>
-                    </div>
+                        <!-- Autoclose -->
+                        <div style="width:50px;margin-top:7px;">
+                        </div>
+                        <div style="width:20px;margin-top:7px;">
+                            <label class="form-label p-0 mt-0">@localizer["EndDate_to"]</label>
+                        </div>
 
-                    <div class="dateRelative " style="display:grid;width:220px;height:40px;">
-                        <input type="text" class="form-control " id="endDateInput" name="endDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
-                        <i class="dripicons-calendar" id="Date_cusor2" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:rtl"></i>
-                    </div>
-                    <div style="width:50px;">
-                        <a class="btn btn-primary" onclick="DateChanged()">
-                            <i class="mdi mdi-search-web"></i>
-                        </a>
-                    </div>
-                </div> @*End row*@
+                        <div class="dateRelative " style="display:grid;width:220px;height:40px;">
+                            <input type="text" class="form-control " id="endDateInput" name="endDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
+                            <i class="dripicons-calendar" id="Date_cusor2" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px; direction:rtl"></i>
+                        </div>
+                        <div style="width:50px;">
+                            <a class="btn btn-primary" onclick="DateChanged()">
+                                <i class="mdi mdi-search-web"></i>
+                            </a>
+                        </div>
+                    </div> @*End row*@
 
-                
-            }
+                }
 
 
-                <div id="t_mar" style="height:210px;">
-                <div class="dataTable ">
+            <div class="dataTable t_mar" id="ReportsData" style="height:340px;">
                     <partial name="_DataTable_Internal_Contract" />
-                </div>
                 </div>
                 @if (ViewBag.CountRecord == 0)
                 {
                     //<div class="row mt-2" id="Section" style="height:30px;">
                     //</div> @*End row*@
                 }
-            
             @*zip code And AdditionalNumber*@
             <div class="row mt-2">
             </div>
@@ -610,29 +629,28 @@ else
                 @localizer["Back"]
             </a>
         </div>
+
     </form>
-
 </div>
-
 
 
 
 <div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content Direction_Page" style="width:700px;background-color:#FFE9D5;opacity:0.99;color:#574632;">
-            <div class="modal-header " style="border-bottom:0px;">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="width:30px;color:#074EAD;font-size:22px;background-color:#F2C48D;">&times;</button>
-                <h5 class="modal-title card-title text-center mgCenter" style="color:#074EAD;">@localizer["DetailsOfContract"]</h5>
+        <div class="modal-content Direction_Page" style="width:700px;background-color:#FFE9D5;opacity:0.99;color:#784F38;font-weight: 480;">
+            <div class="modal-header " style="border-bottom:0px;height:0px">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="width:30px;color:#074EAD;font-size:22px;background-color:#FFE9D5;border:none;">&times;</button>
+                <h5 class="modal-title card-title text-center mgCenter" style="color:#784F38;font-size:16px;">@localizer["DetailsOfContract"]</h5>
             </div>
             <div class="modal-body p-0">
-                <div class="data-details">
+                <div class="data-details" style="margin-top:1px">
                     <div class="row flex-row-reverse">
                         <div class="col-md-7 d-flex flex-row-reverse">
                             <div class="col-auto p-0">
                                 <p>@localizer["ReceiptNo"]</p>
                             </div>
                             <div class="col-auto personal-data">
-                                <p id="ReceiptNo"></p>
+                                <p class="fontBold_Class" id="ReceiptNo"></p>
                             </div>
                         </div>
                         <div class="col-md-5 d-flex flex-row-reverse">
@@ -640,7 +658,7 @@ else
                                 <p>@localizer["Date"]</p>
                             </div>
                             <div class="col-auto personal-data">
-                                <p id="Date"></p>
+                                <p class="fontBold_Class" id="Date"></p>
                             </div>
                         </div>
 
@@ -652,7 +670,7 @@ else
                                 <P>@localizer["Creditor"]</P>
                             </div>
                             <div class="col-auto personal-data">
-                                <P id="Creditor"></P>
+                                <p class="fontBold_Class" id="Creditor"></P>
                             </div>
                         </div>
                         <div class="col-md-5 d-flex flex-row-reverse">
@@ -660,7 +678,7 @@ else
                                 <P>@localizer["Debit"]</P>
                             </div>
                             <div class="col-auto personal-data">
-                                <P id="Debit"></P>
+                                <p class="fontBold_Class" id="Debit"></P>
                             </div>
                         </div>
 
@@ -671,7 +689,7 @@ else
                                 <P>@localizer["ReferenceNo"]</P>
                             </div>
                             <div class="col-auto personal-data">
-                                <P id="ReferenceNo"></P>
+                                <p class="fontBold_Class" id="ReferenceNo"></P>
                             </div>
                         </div>
                         <div class="col-md-5 d-flex flex-row-reverse">
@@ -679,7 +697,7 @@ else
                                 <P>@localizer["ReferenceType"]</P>
                             </div>
                             <div class="col-auto personal-data">
-                                <P id="ReferenceType"></P>
+                                <p class="fontBold_Class" id="ReferenceType"></P>
                             </div>
                         </div>
 
@@ -690,7 +708,7 @@ else
                                 <P>@localizer["AccountBankCode"]</P>
                             </div>
                             <div class="col-auto personal-data">
-                                <p id="AccountBankCode"></p>
+                                <p class="fontBold_Class" id="AccountBankCode"></p>
                             </div>
                         </div>
                         <div class="col-md-5 d-flex flex-row-reverse">
@@ -698,7 +716,7 @@ else
                                 <P> @localizer["Bank"]</P>
                             </div>
                             <div class="col-auto personal-data">
-                                <P id="Bank"></P>
+                                <p class="fontBold_Class" id="Bank"></P>
                             </div>
                         </div>
 
@@ -709,7 +727,7 @@ else
                                 <p> @localizer["SalesPoint"] </p>
                             </div>
                             <div class="col-auto personal-data">
-                                <p id="SalesPoint"></p>
+                                <p class="fontBold_Class" id="SalesPoint"></p>
                             </div>
                         </div>
                         <div class="col-md-5 d-flex flex-row-reverse">
@@ -717,7 +735,7 @@ else
                                 <P> @localizer["PaymentMethod"] </P>
                             </div>
                             <div class="col-auto personal-data">
-                                <P id="PaymentMethod"></P>
+                                <p class="fontBold_Class" id="PaymentMethod"></P>
                             </div>
                         </div>
 
@@ -728,7 +746,7 @@ else
                                 <p>@localizer["CustodyNo"]</p>
                             </div>
                             <div class="col-auto personal-data">
-                                <P id="CustodyNo"></P>
+                                <p class="fontBold_Class" id="CustodyNo"></P>
                             </div>
                         </div>
                         <div class="col-md-5 d-flex flex-row-reverse">
@@ -736,7 +754,7 @@ else
                                 <P>@localizer["StatusReceipt"]</P>
                             </div>
                             <div class="col-auto personal-data">
-                                <P id="StatusReceipt"></P>
+                                <p class="fontBold_Class" id="StatusReceipt"></P>
                             </div>
                         </div>
                     </div>
@@ -746,7 +764,7 @@ else
                                 <p> @localizer["UserReceived"]</p>
                             </div>
                             <div class="col-auto personal-data">
-                                <P id="UserReceived"></P>
+                                <p class="fontBold_Class" id="UserReceived"></P>
                             </div>
                         </div>
                         <div class="col-md-5 d-flex flex-row-reverse">
@@ -754,7 +772,7 @@ else
                                 <P>@localizer["ReceivedDate"]</P>
                             </div>
                             <div class="col-auto personal-data">
-                                <p id="ReceivedDate"></p>
+                                <p class="fontBold_Class" id="ReceivedDate"></p>
                             </div>
                         </div>
                     </div>
@@ -764,7 +782,7 @@ else
                                 <p> @localizer["reasons"]</p>
                             </div>
                             <div class="col-auto personal-data">
-                                <P id="reasons"></P>
+                                <p class="fontBold_Class" id="reasons"></P>
                             </div>
                         </div>
                         <div class="col-md-5 d-flex flex-row-reverse">
@@ -780,6 +798,7 @@ else
         </div>
     </div>
 </div>
+
 
 
 @section scripts {
@@ -863,6 +882,7 @@ else
     </script>
 
     @*Get AccountBank Using filter*@
+
     <script>
         $(document).ready(function () {
             var today = new Date();
@@ -871,13 +891,11 @@ else
             startDate.setDate(today.getDate() - 30);
 
 
-            console.log('@ViewBag.startDate');
-            console.log('@ViewBag.EndDate');
-            //var StartformattedDate = new Date('2024-02-03');
-            //var StartformattedDate = new Date('yyyy-MM-dd');
-            var StartformattedDate = new Date('@ViewBag.startDate');
+            var startDates = $("startDateInput").val();
+            var StartformattedDate = new Date(startDates);
 
-            var EndformattedDate = new Date('@ViewBag.EndDate');
+            var EndDates = $("endDateInput").val();
+            var EndformattedDate = new Date(EndDates);
 
 
             if (!StartformattedDate || StartformattedDate === "") {
@@ -892,20 +910,20 @@ else
 
             $("#startDateInput").datepicker({
                 dateFormat: 'yy/mm/dd',
-                defaultDate: StartformattedDate, // Set the minimum date to today
+                defaultDate: startDate, // Set the minimum date to today
                 maxDate: today,
             }).datepicker("widget").addClass("datepicker-widget");
-            $("#startDateInput").datepicker("setDate", StartformattedDate);
+            $("#startDateInput").datepicker("setDate", startDate);
             $("#startDateInput").click(function () {
                 $(this).datepicker("show");
             });
 
             $("#endDateInput").datepicker({
                 dateFormat: 'yy/mm/dd',
-                defaultDate: EndformattedDate,// Set the minimum date to today
+                defaultDate: today,// Set the minimum date to today
                 maxDate: today,
             }).datepicker("widget").addClass("datepicker-widget");
-            $("#endDateInput").datepicker("setDate", EndformattedDate);
+            $("#endDateInput").datepicker("setDate", today);
             $("#endDateInput").click(function () {
                 $(this).datepicker("show");
             });

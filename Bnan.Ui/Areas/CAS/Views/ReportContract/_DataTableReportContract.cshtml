@@ -1,7 +1,6 @@
-﻿
-
+﻿@using Bnan.Ui.ViewModels.CAS
 @using Bnan.Core.Extensions
-@model IEnumerable<CrCasRenterContractBasic>
+@model ReportActiveContractVM
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
@@ -54,7 +53,7 @@
                     <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,7 +61,7 @@
                 @{
                     int no = 1;
                 }
-                @foreach (var item in Model)
+                @foreach (var item in Model.crCasRenterContractBasic)
                 
                     {
                     @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
@@ -78,51 +77,42 @@
                             </td>
                             <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
                             <td>
-                                @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
-                                {
-                                    @localizer["Standing"]
+                                @{
+                                    var Alert_single = Model.crCasRenterContractAlert?.FirstOrDefault(x => x.CrCasRenterContractAlertNo == item.CrCasRenterContractBasicNo);
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
+                                
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
                                 {
-                                    @localizer["Extended"]
+                                @localizer["Expired"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "0")
                                 {
-                                    @localizer["Closed"]
+                                    @localizer["Sh_Today_Expired"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.Cancel)
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "1")
                                 {
-                                    @localizer["Canceled"]
+                                    @localizer["Sh_Tommorow_Expired"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "2")
                                 {
-                                    @localizer["Today_Expired"]
+                                    @localizer["Sh_after_long_Expired"]
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                                {
-                                    @localizer["Tommorow_Expired"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                                {
-                                    @localizer["after_long_Expired"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
-                                {
-                                    @localizer["Expired"]
 
-                                    @*<script>
-                    var x = document.getElementById("Tr_Color");
-                    x.style.color = "red";
-                    </script>*@
-                                    <script>
-                                        var x = document.querySelector("Tr_Color");
-                                        x.setAttribute("style", "color:red;");
-                                    </script>
-                                }
                             </td>
 
-                            <td> @localizer["Contract"]</td>
 
+                            @{
+                                var Link_pdf = item.CrCasRenterContractBasicEnPdfFile;
+                                var Target_pdf = "#";
+                                if (Link_pdf?.Count() > 2)
+                                {
+                                    Target_pdf = "_blank";
+                                }
+                            }
+
+                            <td id="_Nc">
+                                <a href="@Link_pdf" target="@Target_pdf" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="Link Pdf"></a>
+                            </td>
 
                         </tr>
                     }
@@ -138,51 +128,43 @@
                             </td>
                             <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
                             <td>
-                                @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
-                                {
-                                    @localizer["Standing"]
+                                @{
+                                    var Alert_single = Model.crCasRenterContractAlert?.FirstOrDefault(x => x.CrCasRenterContractAlertNo == item.CrCasRenterContractBasicNo);
                                 }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
-                                {
-                                    @localizer["Extended"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.Closed)
-                                {
-                                    @localizer["Closed"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.Cancel)
-                                {
-                                    @localizer["Canceled"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                                {
-                                    @localizer["Today_Expired"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                                {
-                                    @localizer["Tommorow_Expired"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                                {
-                                    @localizer["after_long_Expired"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
+
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
                                 {
                                     @localizer["Expired"]
-
-                                    @*<script>
-                                        var x = document.getElementById("Tr_Color");
-                                        x.style.color = "red";
-                                    </script>*@
-                                    <script>
-                                        var x = document.querySelector("Tr_Color");
-                                        x.setAttribute("style", "color:red;");
-                                    </script>
                                 }
+
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "0")
+                                {
+                                @localizer["Sh_Today_Expired"]
+                                }
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "1")
+                                {
+                                @localizer["Sh_Tommorow_Expired"]
+                                }
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "2")
+                                {
+                                @localizer["Sh_after_long_Expired"]
+                                }
+
                             </td>
 
-                            <td> @localizer["Contract"]</td>
 
+                            @{
+                                var Link_pdf = item.CrCasRenterContractBasicEnPdfFile;
+                                var Target_pdf = "#";
+                                if (Link_pdf?.Count() > 2)
+                                {
+                                    Target_pdf = "_blank";
+                                }
+                            }
+
+                            <td id="_Nc">
+                                <a href="@Link_pdf" target="@Target_pdf" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="Link Pdf"></a>
+                            </td>
 
                         </tr>
                     }
@@ -209,7 +191,7 @@ else
                     <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -217,7 +199,7 @@ else
                 @{
                     int no = 1;
                 }
-                @foreach (var item in Model)
+                @foreach (var item in Model.crCasRenterContractBasic)
 
                 {
                     @* <tr onclick="location.href='@Url.Action("Edit", "UserLogin", new { id = item.CrMasUserLoginsCode })'" style="cursor:pointer;color:red"> *@
@@ -233,35 +215,42 @@ else
                             </td>
                             <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
                             <td>
-                                @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
-                                {
-                                    @localizer["Standing"]
+                                @{
+                                    var Alert_single = Model.crCasRenterContractAlert?.FirstOrDefault(x => x.CrCasRenterContractAlertNo == item.CrCasRenterContractBasicNo);
                                 }
-                                @if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
-                                {
-                                    @localizer["Extended"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                                {
-                                    @localizer["Today_Expired"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                                {
-                                    @localizer["Tommorow_Expired"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                                {
-                                    @localizer["after_long_Expired"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
+
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
                                 {
                                     @localizer["Expired"]
-                                    <label onload="Tr_red_Color()"> </label>
                                 }
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "0")
+                                {
+                                @localizer["Sh_Today_Expired"]
+                                }
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "1")
+                                {
+                                @localizer["Sh_Tommorow_Expired"]
+                                }
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "2")
+                                {
+                                @localizer["Sh_after_long_Expired"]
+                                }
+
                             </td>
 
-                            <td> @localizer["Contract"]</td>
 
+                            @{
+                                var Link_pdf = item.CrCasRenterContractBasicArPdfFile;
+                                var Target_pdf = "#";
+                                if (Link_pdf?.Count() > 2)
+                                {
+                                    Target_pdf = "_blank";
+                                }
+                            }
+
+                            <td id="_Nc">
+                                <a href="@Link_pdf" target="@Target_pdf" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="Link Pdf"></a>
+                            </td>
                         </tr>
                     }
                     else
@@ -276,35 +265,42 @@ else
                             </td>
                             <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
                             <td>
-                                @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
-                                {
-                                    @localizer["Standing"]
+                                @{
+                                    var Alert_single = Model.crCasRenterContractAlert?.FirstOrDefault(x => x.CrCasRenterContractAlertNo == item.CrCasRenterContractBasicNo);
                                 }
-                                @if (@item.CrCasRenterContractBasicStatus == @Status.Extension)
-                                {
-                                    @localizer["Extended"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                                {
-                                    @localizer["Today_Expired"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                                {
-                                    @localizer["Tommorow_Expired"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.AboutToExpire)
-                                {
-                                    @localizer["after_long_Expired"]
-                                }
-                                else if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
+
+                                @if (@item.CrCasRenterContractBasicStatus == @Status.Expire)
                                 {
                                     @localizer["Expired"]
-                                    <label onload="Tr_red_Color()"> </label>
                                 }
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "0")
+                                {
+                                @localizer["Sh_Today_Expired"]
+                                }
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "1")
+                                {
+                                @localizer["Sh_Tommorow_Expired"]
+                                }
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "2")
+                                {
+                                @localizer["Sh_after_long_Expired"]
+                                }
+
                             </td>
 
-                            <td> @localizer["Contract"]</td>
 
+                            @{
+                                var Link_pdf = item.CrCasRenterContractBasicArPdfFile;
+                                var Target_pdf = "#";
+                                if (Link_pdf?.Count() > 2)
+                                {
+                                    Target_pdf = "_blank";
+                                }
+                            }
+
+                            <td id="_Nc">
+                                <a href="@Link_pdf" target="@Target_pdf" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="Link Pdf"></a>
+                            </td>
                         </tr>
                     }
 

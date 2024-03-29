@@ -33,11 +33,11 @@
                     <th  id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th  id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["FTR_No"]</th>
                     <th  aria-label="Position: activate to sort column ascending">@localizer["FTS_Name"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["FTS_Branch"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Balance"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Avilable_Balance"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Reserved_Balance"]</th>
-                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Count_Receipt_Bonds"]</th>
-                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Count_Receipt_Exchanges"]</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -58,11 +58,12 @@
                             var single_Recipt_Exchanges = Model.crCasAccountReceipt.Count(x => x.CrCasAccountReceiptSalesPoint == item.CrCasAccountReceiptSalesPoint && ViewBag.CurrentLessor == x.CrCasAccountReceiptLessorCode && x.CrCasAccountReceiptType == "302");
 
                             <td>@item.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointEnName</td>
+                            <td >@item.CrCasAccountReceiptNavigation?.CrCasBranchInformationEnShortName</td>
                             <td id="_Nc">@item.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointTotalAvailable?.ToString("N2",CultureInfo.InvariantCulture)</td>
                             <td id="_Nc">@item.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointTotalReserved?.ToString("N2",CultureInfo.InvariantCulture)</td>
                             <td id="_Nc">@item.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointTotalBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
-                            <td id="_Nc">@single_Recipt_Bonds</td>
-                            <td id="_Nc">@single_Recipt_Exchanges</td>
+                            //<td id="_Nc">@single_Recipt_Bonds</td>
+                            //<td id="_Nc">@single_Recipt_Exchanges</td>
                         }
                         </tr>
                     
@@ -83,11 +84,11 @@ else
                     <th  id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th  id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["FTR_No"]</th>
                     <th  aria-label="Position: activate to sort column ascending">@localizer["FTS_Name"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["FTS_Branch"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Balance"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Avilable_Balance"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Reserved_Balance"]</th>
-                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Count_Receipt_Bonds"]</th>
-                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Count_Receipt_Exchanges"]</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -108,11 +109,12 @@ else
                             var single_Recipt_Exchanges = Model.crCasAccountReceipt.Count(x => x.CrCasAccountReceiptSalesPoint == item.CrCasAccountReceiptSalesPoint && ViewBag.CurrentLessor == x.CrCasAccountReceiptLessorCode && x.CrCasAccountReceiptType == "302");
 
                             <td>@item.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointArName</td>
+                            <td >@item.CrCasAccountReceiptNavigation?.CrCasBranchInformationArShortName</td>
                             <td id="_Nc">@item.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointTotalAvailable?.ToString("N2",CultureInfo.InvariantCulture)</td>
                             <td id="_Nc">@item.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointTotalReserved?.ToString("N2",CultureInfo.InvariantCulture)</td>
                             <td id="_Nc">@item.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointTotalBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
-                            <td id="_Nc">@single_Recipt_Bonds</td>
-                            <td id="_Nc">@single_Recipt_Exchanges</td>
+                            //<td id="_Nc">@single_Recipt_Bonds</td>
+                            //<td id="_Nc">@single_Recipt_Exchanges</td>
                         }
                         </tr>
 
