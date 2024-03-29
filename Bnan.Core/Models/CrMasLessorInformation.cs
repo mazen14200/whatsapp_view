@@ -8,6 +8,8 @@ namespace Bnan.Core.Models
         public CrMasLessorInformation()
         {
             CrCasAccountBanks = new HashSet<CrCasAccountBank>();
+            CrCasAccountContractCompanyOweds = new HashSet<CrCasAccountContractCompanyOwed>();
+            CrCasAccountContractTaxOweds = new HashSet<CrCasAccountContractTaxOwed>();
             CrCasBeneficiaries = new HashSet<CrCasBeneficiary>();
             CrCasBranchDocuments = new HashSet<CrCasBranchDocument>();
             CrCasBranchInformations = new HashSet<CrCasBranchInformation>();
@@ -53,6 +55,8 @@ namespace Bnan.Core.Models
         public virtual CrCasLessorClassification? CrMasLessorInformationClassificationNavigation { get; set; }
         public virtual CrMasLessorImage CrMasLessorImage { get; set; } = null!;
         public virtual ICollection<CrCasAccountBank> CrCasAccountBanks { get; set; }
+        public virtual ICollection<CrCasAccountContractCompanyOwed> CrCasAccountContractCompanyOweds { get; set; }
+        public virtual ICollection<CrCasAccountContractTaxOwed> CrCasAccountContractTaxOweds { get; set; }
         public virtual ICollection<CrCasBeneficiary> CrCasBeneficiaries { get; set; }
         public virtual ICollection<CrCasBranchDocument> CrCasBranchDocuments { get; set; }
         public virtual ICollection<CrCasBranchInformation> CrCasBranchInformations { get; set; }

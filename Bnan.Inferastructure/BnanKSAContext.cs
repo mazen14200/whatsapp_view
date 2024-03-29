@@ -19,6 +19,8 @@ namespace Bnan.Core.Models
         }
 
         public virtual DbSet<CrCasAccountBank> CrCasAccountBanks { get; set; } = null!;
+        public virtual DbSet<CrCasAccountContractCompanyOwed> CrCasAccountContractCompanyOweds { get; set; } = null!;
+        public virtual DbSet<CrCasAccountContractTaxOwed> CrCasAccountContractTaxOweds { get; set; } = null!;
         public virtual DbSet<CrCasAccountReceipt> CrCasAccountReceipts { get; set; } = null!;
         public virtual DbSet<CrCasAccountSalesPoint> CrCasAccountSalesPoints { get; set; } = null!;
         public virtual DbSet<CrCasBeneficiary> CrCasBeneficiaries { get; set; } = null!;
@@ -124,6 +126,7 @@ namespace Bnan.Core.Models
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
             modelBuilder.Entity<CrMasUserInformation>().Ignore(x => x.Email).Ignore(x => x.EmailConfirmed)
                 .Ignore(x => x.NormalizedEmail).Ignore(x => x.PhoneNumber).Ignore(x => x.PhoneNumberConfirmed);
+
             modelBuilder.Entity<CrCasAccountBank>(entity =>
             {
                 entity.HasKey(e => e.CrCasAccountBankCode);
@@ -189,6 +192,175 @@ namespace Bnan.Core.Models
                     .WithMany(p => p.CrCasAccountBanks)
                     .HasForeignKey(d => d.CrCasAccountBankNo)
                     .HasConstraintName("FK_CR_Cas_Account_Bank_CR_Mas_Sup_Account_Bank");
+            });
+
+            modelBuilder.Entity<CrCasAccountContractCompanyOwed>(entity =>
+            {
+                entity.HasKey(e => e.CrCasAccountContractCompanyOwedNo);
+
+                entity.ToTable("CR_Cas_Account_Contract_Company_Owed");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedAccrualPaymentNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Accrual_Payment_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedAccrualStatus).HasColumnName("CR_Cas_Account_Contract_Company_Owed_Accrual_Status");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedAfterAmount)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_After_Amount");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedAmount)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Amount");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedBeforeAmount)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Before_Amount");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedCompanyCode)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Company_Code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedContractCom)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Contract_Com")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedContractValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Contract_Value");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedDaliayValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Daliay_Value");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Date");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedDatePayment)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Date_Payment");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedDiscountPercentage)
+                    .HasColumnType("decimal(5, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Discount_Percentage");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedPercentage)
+                    .HasColumnType("decimal(5, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Percentage");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedTaxPercentage)
+                    .HasColumnType("decimal(5, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Tax_Percentage");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedTaxValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Tax_Value");
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedType)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Type")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountContractCompanyOwedValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Company_Owed_Value");
+
+                entity.HasOne(d => d.CrCasAccountContractCompanyOwedAccrualPaymentNoNavigation)
+                    .WithMany(p => p.CrCasAccountContractCompanyOweds)
+                    .HasForeignKey(d => d.CrCasAccountContractCompanyOwedAccrualPaymentNo)
+                    .HasConstraintName("fk_CR_Cas_Account_Contract_Company_Owed_CR_Cas_Sys_Administrative_Procedures");
+
+                entity.HasOne(d => d.CrCasAccountContractCompanyOwedCompanyCodeNavigation)
+                    .WithMany(p => p.CrCasAccountContractCompanyOweds)
+                    .HasForeignKey(d => d.CrCasAccountContractCompanyOwedCompanyCode)
+                    .HasConstraintName("fk_CR_Cas_Account_Contract_Company_Owed_CR_Mas_Lessor_Information");
+
+                entity.HasOne(d => d.CrCasAccountContractCompanyOwedContractComNavigation)
+                    .WithMany(p => p.CrCasAccountContractCompanyOweds)
+                    .HasForeignKey(d => d.CrCasAccountContractCompanyOwedContractCom)
+                    .HasConstraintName("fk_CR_Cas_Account_Contract_Company_Owed_CR_Mas_Contract_Company");
+            });
+
+            modelBuilder.Entity<CrCasAccountContractTaxOwed>(entity =>
+            {
+                entity.HasKey(e => e.CrCasAccountContractTaxOwedContractNo);
+
+                entity.ToTable("CR_Cas_Account_Contract_Tax_Owed");
+
+                entity.Property(e => e.CrCasAccountContractTaxOwedContractNo)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Contract_Tax_Owed_Contract_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountContractTaxOwedContractValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Tax_Owed_Contract_Value");
+
+                entity.Property(e => e.CrCasAccountContractTaxOwedDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Account_Contract_Tax_Owed_Date");
+
+                entity.Property(e => e.CrCasAccountContractTaxOwedIsPaid).HasColumnName("CR_Cas_Account_Contract_Tax_Owed_Is_Paid");
+
+                entity.Property(e => e.CrCasAccountContractTaxOwedLessor)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Contract_Tax_Owed_Lessor")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountContractTaxOwedPayCode)
+                    .HasMaxLength(22)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Contract_Tax_Owed_Pay_Code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrCasAccountContractTaxOwedPayDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CR_Cas_Account_Contract_Tax_Owed_Pay_Date");
+
+                entity.Property(e => e.CrCasAccountContractTaxOwedPercentage)
+                    .HasColumnType("decimal(5, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Tax_Owed_Percentage");
+
+                entity.Property(e => e.CrCasAccountContractTaxOwedUserCode)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Account_Contract_Tax_Owed_User_Code");
+
+                entity.Property(e => e.CrCasAccountContractTaxOwedValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Account_Contract_Tax_Owed_Value");
+
+                entity.HasOne(d => d.CrCasAccountContractTaxOwedLessorNavigation)
+                    .WithMany(p => p.CrCasAccountContractTaxOweds)
+                    .HasForeignKey(d => d.CrCasAccountContractTaxOwedLessor)
+                    .HasConstraintName("fk_CR_Cas_Account_Contract_Tax_Owed_CR_Mas_Lessor_Information");
+
+                entity.HasOne(d => d.CrCasAccountContractTaxOwedPayCodeNavigation)
+                    .WithMany(p => p.CrCasAccountContractTaxOweds)
+                    .HasForeignKey(d => d.CrCasAccountContractTaxOwedPayCode)
+                    .HasConstraintName("fk_CR_Cas_Account_Contract_Tax_Owed_CR_Cas_Sys_Administrative_Procedures");
+
+                entity.HasOne(d => d.CrCasAccountContractTaxOwedUserCodeNavigation)
+                    .WithMany(p => p.CrCasAccountContractTaxOweds)
+                    .HasForeignKey(d => d.CrCasAccountContractTaxOwedUserCode)
+                    .HasConstraintName("fk_CR_Cas_Account_Contract_Tax_Owed_CR_Mas_User_Information");
             });
 
             modelBuilder.Entity<CrCasAccountReceipt>(entity =>
@@ -2210,6 +2382,68 @@ namespace Bnan.Core.Models
 
                 entity.Property(e => e.CrCasRenterContractBasicCopy).HasColumnName("CR_Cas_Renter_Contract_Basic_Copy");
 
+                entity.Property(e => e.CrCasRenterContractBasicActualAmountRequired)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Amount_Required");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualCloseDateTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Close_DateTime");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualCurrentReadingMeter).HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Current_Reading_Meter");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualDailyRent)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Daily_Rent");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualDays).HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Days");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualDiscountValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Discount_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualExtraHours).HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Extra_Hours");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualExtraHoursValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Extra_Hours_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualExtraKm).HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Extra_KM");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualExtraKmValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Extra_Km_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualFreeKm).HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Free_KM");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualOptionsValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Options_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualPrivateDriverValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Private_Driver_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualRentValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Rent_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualTaxValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Tax_Value");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualTotal)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Total");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualValueAfterDiscount)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Value_After_Discount");
+
+                entity.Property(e => e.CrCasRenterContractBasicActualValueBeforDiscount)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Actual_Value_Befor_Discount");
+
                 entity.Property(e => e.CrCasRenterContractBasicAdditionalDriverId)
                     .HasMaxLength(20)
                     .HasColumnName("CR_Cas_Renter_Contract_Basic_Additional_Driver_Id");
@@ -2225,6 +2459,10 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrCasRenterContractBasicAllowCanceled)
                     .HasColumnType("datetime")
                     .HasColumnName("CR_Cas_Renter_Contract_Basic_Allow_Canceled");
+
+                entity.Property(e => e.CrCasRenterContractBasicAmountPaid)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Amount_Paid");
 
                 entity.Property(e => e.CrCasRenterContractBasicAmountPaidAdvance)
                     .HasColumnType("decimal(13, 2)")
@@ -2256,6 +2494,18 @@ namespace Bnan.Core.Models
                     .HasMaxLength(20)
                     .HasColumnName("CR_Cas_Renter_Contract_Basic_Car_Serail_No");
 
+                entity.Property(e => e.CrCasRenterContractBasicClosePreviousBalance)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Close_Previous_Balance");
+
+                entity.Property(e => e.CrCasRenterContractBasicCompensationDescription)
+                    .HasMaxLength(200)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Compensation_Description");
+
+                entity.Property(e => e.CrCasRenterContractBasicCompensationValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Compensation_Value");
+
                 entity.Property(e => e.CrCasRenterContractBasicCurrentReadingMeter).HasColumnName("CR_Cas_Renter_Contract_Basic_Current_Reading_Meter");
 
                 entity.Property(e => e.CrCasRenterContractBasicDailyFreeKm).HasColumnName("CR_Cas_Renter_Contract_Basic_Daily_Free_KM");
@@ -2265,6 +2515,12 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrCasRenterContractBasicDailyRent)
                     .HasColumnType("decimal(13, 2)")
                     .HasColumnName("CR_Cas_Renter_Contract_Basic_Daily_Rent");
+
+                entity.Property(e => e.CrCasRenterContractBasicDelayMechanism)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Delay_Mechanism")
+                    .IsFixedLength();
 
                 entity.Property(e => e.CrCasRenterContractBasicDriverId)
                     .HasMaxLength(20)
@@ -2319,6 +2575,14 @@ namespace Bnan.Core.Models
                 entity.Property(e => e.CrCasRenterContractBasicExpectedValueBeforDiscount)
                     .HasColumnType("decimal(13, 2)")
                     .HasColumnName("CR_Cas_Renter_Contract_Basic_Expected_Value_Befor_Discount");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpensesDescription)
+                    .HasMaxLength(200)
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Expenses_Description");
+
+                entity.Property(e => e.CrCasRenterContractBasicExpensesValue)
+                    .HasColumnType("decimal(13, 2)")
+                    .HasColumnName("CR_Cas_Renter_Contract_Basic_Expenses_Value");
 
                 entity.Property(e => e.CrCasRenterContractBasicFreeHours).HasColumnName("CR_Cas_Renter_Contract_Basic_Free_Hours");
 
@@ -6399,8 +6663,6 @@ namespace Bnan.Core.Models
                     .HasColumnType("decimal(13, 2)")
                     .HasColumnName("CR_Mas_User_Information_Total_Balance")
                     .HasDefaultValueSql("((0))");
-
-               
 
                 entity.HasOne(d => d.CrMasUserInformationLessorNavigation)
                     .WithMany(p => p.CrMasUserInformations)

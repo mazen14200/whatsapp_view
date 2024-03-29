@@ -54,6 +54,31 @@ namespace Bnan.Core.Models
         public decimal? CrCasRenterContractBasicPreviousBalance { get; set; }
         public decimal? CrCasRenterContractBasicAmountRequired { get; set; }
         public decimal? CrCasRenterContractBasicAmountPaidAdvance { get; set; }
+        public DateTime? CrCasRenterContractBasicActualCloseDateTime { get; set; }
+        public string? CrCasRenterContractBasicDelayMechanism { get; set; }
+        public int? CrCasRenterContractBasicActualDays { get; set; }
+        public int? CrCasRenterContractBasicActualExtraHours { get; set; }
+        public int? CrCasRenterContractBasicActualCurrentReadingMeter { get; set; }
+        public int? CrCasRenterContractBasicActualFreeKm { get; set; }
+        public int? CrCasRenterContractBasicActualExtraKm { get; set; }
+        public decimal? CrCasRenterContractBasicActualDailyRent { get; set; }
+        public decimal? CrCasRenterContractBasicActualRentValue { get; set; }
+        public decimal? CrCasRenterContractBasicActualExtraHoursValue { get; set; }
+        public decimal? CrCasRenterContractBasicActualExtraKmValue { get; set; }
+        public decimal? CrCasRenterContractBasicActualOptionsValue { get; set; }
+        public decimal? CrCasRenterContractBasicActualPrivateDriverValue { get; set; }
+        public decimal? CrCasRenterContractBasicActualValueBeforDiscount { get; set; }
+        public decimal? CrCasRenterContractBasicActualDiscountValue { get; set; }
+        public decimal? CrCasRenterContractBasicActualValueAfterDiscount { get; set; }
+        public decimal? CrCasRenterContractBasicActualTaxValue { get; set; }
+        public decimal? CrCasRenterContractBasicActualTotal { get; set; }
+        public decimal? CrCasRenterContractBasicClosePreviousBalance { get; set; }
+        public decimal? CrCasRenterContractBasicExpensesValue { get; set; }
+        public string? CrCasRenterContractBasicExpensesDescription { get; set; }
+        public decimal? CrCasRenterContractBasicCompensationValue { get; set; }
+        public string? CrCasRenterContractBasicCompensationDescription { get; set; }
+        public decimal? CrCasRenterContractBasicActualAmountRequired { get; set; }
+        public decimal? CrCasRenterContractBasicAmountPaid { get; set; }
         public string? CrCasRenterContractBasicArPdfFile { get; set; }
         public string? CrCasRenterContractBasicEnPdfFile { get; set; }
         public string? CrCasRenterContractBasicArTga { get; set; }
