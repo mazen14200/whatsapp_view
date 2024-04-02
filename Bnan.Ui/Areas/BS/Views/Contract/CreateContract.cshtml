@@ -4317,12 +4317,12 @@ else
                 ctx.fillStyle = "black";
                 // Receipt and type and renter and car name
                 ctx.fillText(AccountReceiptNo, canvas.width - 110, 610);
+                ctx.fillText(RenterName, canvas.width - 125, 1075);
+                ctx.fillText(CarName, canvas.width - 125, 1175);
+
                 ctx.font = "bold 42px serif";
                 ctx.fillText(referenceType, canvas.width - 250, 895);
                 ctx.fillText(contractNo, canvas.width - 320, 985);
-                ctx.fillText(RenterName, canvas.width - 122, 1065);
-                ctx.fillText(CarName, canvas.width - 122, 1160);
-
                 // The Table
                 var YHeight = 1380;
                 var DiscountInput = document.getElementById("Discount_Input").value;
@@ -4332,13 +4332,13 @@ else
                 const discountText = '%' + DiscountInput.toString();
                 const taxText = '%' + TaxPercent.toString();
 
-                ctx.fillText(balance, canvas.width - 330, 2342);
-                ctx.fillText(discountText, canvas.width - 360, 2435);
-                ctx.fillText(taxText, canvas.width - 367, 2523);
-                ctx.fillText(AmountRequired, canvas.width - 360, 2610);
-                ctx.fillText(AmountPayed, canvas.width - 360, 2700);
-                ctx.fillText(selectedText, canvas.width - 360, 2790);
-                ctx.fillText(reasonPayment, canvas.width - 360, 2880);
+                ctx.fillText(balance, canvas.width - 330, 2392);
+                ctx.fillText(discountText, canvas.width - 360, 2485);
+                ctx.fillText(taxText, canvas.width - 367, 2573);
+                ctx.fillText(AmountRequired, canvas.width - 360, 2660);
+                ctx.fillText(AmountPayed, canvas.width - 360, 2750);
+                ctx.fillText(selectedText, canvas.width - 360, 2840);
+                ctx.fillText(reasonPayment, canvas.width - 360, 2930);
                 ctx.font = "bold 35px serif";
                 //Date and contract no
                 ctx.fillText(hijriDateString, canvas.width - 228, 668);
@@ -4454,6 +4454,26 @@ else
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// TotalAdditional
 
 
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
+                var tTotal = calculateTotalAmountPerDay(parseFloat(CarInformation.carPrice.crCasPriceCarBasicDailyRent), parseFloat(FeesTammValue), parseFloat(AdvantagesValue), parseFloat(privateDriverValue), parseFloat(additionalDriverValue), parseFloat(additionalValue), parseFloat(choicesValue), daysNo);
+                var tTotalDiscount = calculateTotalDiscountAmount(tTotal, DiscountInput);
+                var tTotalAfterDiscount = tTotal - tTotalDiscount;
+                var tTotalTax = (tTotalAfterDiscount) * (TaxPercent / 100);
+                console.log("tTotal", tTotal);
+                console.log("tTotalDiscount", tTotalDiscount);
+                console.log("tTotalAfterDiscount", tTotalAfterDiscount);
+                console.log("tTotalTax", tTotalTax);
+
+                // // الاجمالي
+
+                ctx.fillText(tTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 970, 2250);
+                ctx.fillText(tTotalDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1270, 2250);
+                ctx.fillText(tTotalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1560, 2250);
+                ctx.fillText(tTotalTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1880, 2250);
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
+
+
+
 
 
                 // director and renter and user
@@ -4487,7 +4507,16 @@ else
 
             return yHeight + 88; // Update yHeight for the next item
         }
-
+        function calculateTotalAmountPerDay(rent,auth,feature,privateDriver,additionalDriver,additionals,choices,days){
+            var daysNo = parseInt(days);
+            var total = (rent * daysNo) + (auth) + (feature * daysNo) + (additionalDriver) + (privateDriver * daysNo) + (additionals) + (choices * daysNo);
+            return total;
+        }
+        function calculateTotalDiscountAmount(total, discount) {
+            var discountValue = parseFloat(discount) / 100;
+            var totalDiscount = total * discountValue;
+            return totalDiscount;
+        }
 
         // submit Form
         document.addEventListener('DOMContentLoaded', function () {

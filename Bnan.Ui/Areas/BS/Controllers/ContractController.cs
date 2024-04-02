@@ -250,15 +250,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 var CheckRenterStatisctics = true;
                 CheckRenterStatisctics = await _ContractServices.AddRenterStatistics(BasicContract);
 
-
-               
-
-
                 if (BasicContract != null && CheckChoices && CheckAddditional && CheckAdvantages &&
                     CheckCheckUpCar && CheckAuthrization && CheckCarInfo && CheckDocAndMaintainance!=null &&
                     CheckRenterLessor&& CheckAccountReceipt&& CheckBranch&& CheckSalesPoint&&
                     CheckUserInformation&& CheckBranchValidity&& CheckMasRenter&& CheckAddDriver&& 
-                    CheckDriver&& CheckPrivateDriver&& CheckRenterAlert&& CheckRenterStatisctics&&!string.IsNullOrEmpty(SavePdf))
+                    CheckDriver&& CheckPrivateDriver&& CheckRenterAlert&& CheckRenterStatisctics)
                 {
                     try
                     {
