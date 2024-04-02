@@ -106,9 +106,12 @@
 
                             @{
                                 var Link_pdf = item.CrCasAccountReceiptEnPdfFile;
+                                //var Link_pdf = $"/images/Company/{item.CrCasAccountReceiptLessorCode}/Branches/{item.CrCasAccountReceiptBranchCode}/English Receipt/{item.CrCasAccountReceiptNo}.pdf";
+
                                 var Target_pdf = "#";
                                 if (Link_pdf?.Count() > 2)
                                 {
+                                    Link_pdf = Link_pdf.Replace("~", "");
                                     Target_pdf = "_blank";
                                 }
                             }
@@ -174,9 +177,12 @@ else
 
                         @{
                             var Link_pdf = item.CrCasAccountReceiptArPdfFile;
+                            //var Link_pdf = $"/images/Company/{item.CrCasAccountReceiptLessorCode}/Branches/{item.CrCasAccountReceiptBranchCode}/Arabic Receipt/{item.CrCasAccountReceiptNo}.pdf";
+
                             var Target_pdf = "#";
                             if (Link_pdf?.Count() > 2)
                             {
+                                Link_pdf = Link_pdf.Replace("~", "");
                                 Target_pdf = "_blank";
                             }
                         }

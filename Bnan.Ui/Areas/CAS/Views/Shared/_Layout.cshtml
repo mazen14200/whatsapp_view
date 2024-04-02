@@ -247,7 +247,7 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2203003")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Renter Balances"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="RenterBalances" asp-action="FailedMessageReport_NoData">@localizer["Renter Balances1"]</a>
                                                                     </li>
                                                                 }
                                                             }
@@ -400,7 +400,7 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205012")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["FinancialTransactionOfEmployees"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="FinancialTransactionOfEmployee" asp-action="FailedMessageReport_NoData">@localizer["FinancialTransactionOfEmployees"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205013")?.CrMasUserSubValidationAuthorization == true)

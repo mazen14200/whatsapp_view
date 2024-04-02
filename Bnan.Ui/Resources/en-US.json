@@ -32,6 +32,7 @@
   "Renter Contract": "Renter Contract",
 
   "Renter Balances": "Renter Balances",
+  "Renter Balances1": "Renter Debts",
   //Accounts
   "Accounts": "Accounts",
   "Cash Feeding": "Cash Feeding",
@@ -592,11 +593,24 @@
   "Edit FinancialTransactionOfRenter Data": "Details of Financial Transaction Of The Renter",
   "Edit FinancialTransactionOfRenter Hint": "this page allows you to Display Details of Financial Transaction Of The Renter",
 
+  //RenterBalances --------
+  "RenterBalances Hint": "This page allows you to display The Renter Debts",
+  "RenterBalances Data": "Renter Debts",
+  "Edit RenterBalances Data": "Details of Renter Debts",
+  "Edit RenterBalances Hint": "this page allows you to Display Details of Renter Debts",
+
   //FinancialTransactionOfSalesPoint --------
   "FinancialTransactionOfSalesPoint Hint": "This page allows you to display The Financial Transaction Of Sales Points",
   "FinancialTransactionOfSalesPoint Data": "Financial Transaction Of The Sales Point",
   "Edit FinancialTransactionOfSalesPoint Data": "Details of Financial Transaction Of The Sales Point",
   "Edit FinancialTransactionOfSalesPoint Hint": "this page allows you to Display Details of Financial Transaction Of The Sales Point",
+
+  //FinancialTransactionOfEmployee --------
+  "FinancialTransactionOfEmployee Hint": "This page allows you to display The Financial Transaction Of Employees",
+  "FinancialTransactionOfEmployee Data": "Financial Transaction Of The Employee",
+  "Edit FinancialTransactionOfEmployee Data": "Details of Financial Transaction Of The Employee",
+  "Edit FinancialTransactionOfEmployee Hint": "this page allows you to Display Details of Financial Transaction Of The Employee",
+
 
   "FTR_CurrentBalance": "Current Balance",
   "FTR_TotalCreditor": "Total Creditor",
@@ -630,6 +644,12 @@
   "FTS_IBAn": "IBAN",
   "FTS_Account_Name": "Account Name",
   "FTS_Pdf": "Document",
+  "FTE_status_Reserved": "Reserved",
+  "FTE_status_deported": "deported",
+  "FTE_status_Custody": "Custody",
+
+  "FTR_Credit_Limit": "Credit Limit",
+
 
   //RenterIdType------
   "RenterIdTypes Hint": "The page allows you to display, add, and modify  Id Types data.",

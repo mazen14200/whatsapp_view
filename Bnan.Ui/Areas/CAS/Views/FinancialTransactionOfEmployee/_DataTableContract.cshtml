@@ -1,0 +1,162 @@
+﻿@using Bnan.Core.Extensions
+@using Bnan.Ui.ViewModels.CAS
+
+@model FinancialTransactionOfEmployeeVM
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+@* 
+  "EmployeeInformationCode": "Code",
+  "CarContractId": "ID",
+  "EmployeeInformationNationality": "Nationality",
+ 
+ *@
+ <style>
+    #_Nc{
+        text-align: center;
+    }
+ </style>
+<style>
+    ._Tr_black {
+        border-image:fill;
+    }
+
+    ._Tr_red {
+        color:red;
+    }
+</style>
+
+@{
+    var class_color_black = "_Tr_black";
+    var class_color_red = "_Tr_red";
+    var color_tr = "";
+
+}
+
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    
+       <div class="col-sm-12">
+        @* For-scrolling *@
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+
+            <thead>
+                <tr role="row">
+                    <th  id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th  id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["UserContractId"]</th>
+                    <th  aria-label="Position: activate to sort column ascending">@localizer["Name"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Balance"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Avilable_Balance"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Reserved_Balance"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Credit_Limit"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Count_Receipt_Bonds"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Count_Receipt_Exchanges"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model.FinancialTransactionOfEmployee_Filtered)
+                {
+                    if (item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationAvailableBalance > item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCreditLimit)
+                    {
+                        color_tr = class_color_red;
+                    }
+                    else
+                    {
+                        color_tr = class_color_black;
+                    }
+
+                    @*<tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasEmployeeContractBasic4.CrCasEmployeePrivateCarInformationId })'" style="cursor:pointer;color:red">*@
+                    <tr class="@color_tr" onclick="location.href='@Url.Action("Edit", "FinancialTransactionOfEmployee", new { id = item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode })'">
+                        <td id="_Nc">@no</td>
+                        <td id="_Nc">@item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode</td>
+                        @{
+                            var singleEmployee = item.CrCasAccountReceiptUserNavigation;
+                            
+                            var single_Recipt_Bonds = Model.crCasAccountReceipt.Count(x => x.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode == item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode && ViewBag.CurrentLessor == x.CrCasAccountReceiptLessorCode && x.CrCasAccountReceiptType=="301");
+                            var single_Recipt_Exchanges = Model.crCasAccountReceipt.Count(x => x.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode == item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode && ViewBag.CurrentLessor == x.CrCasAccountReceiptLessorCode && x.CrCasAccountReceiptType == "302");
+
+                            <td>@singleEmployee?.CrMasUserInformationEnName</td>
+                            <td id="_Nc">@singleEmployee?.CrMasUserInformationTotalBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@singleEmployee?.CrMasUserInformationAvailableBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@singleEmployee?.CrMasUserInformationReservedBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@singleEmployee?.CrMasUserInformationCreditLimit?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@single_Recipt_Bonds</td>
+                            <td id="_Nc">@single_Recipt_Exchanges</td>
+                        }
+                        </tr>
+                    
+                    
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="col-sm-12">
+        @* For-scrolling *@
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+            <thead>
+                <tr role="row">
+                    <th  id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th  id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["UserContractId"]</th>
+                    <th  aria-label="Position: activate to sort column ascending">@localizer["Name"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Balance"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Avilable_Balance"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Reserved_Balance"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Credit_Limit"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Count_Receipt_Bonds"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Count_Receipt_Exchanges"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model.FinancialTransactionOfEmployee_Filtered)
+                {
+                    if (item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationAvailableBalance > item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCreditLimit)
+                    {
+                        color_tr = class_color_red;
+                    }
+                    else
+                    {
+                        color_tr = class_color_black;
+                    }
+
+                    @*<tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasEmployeeContractBasic4.CrCasEmployeePrivateCarInformationId })'" style="cursor:pointer;color:red">*@
+                    <tr class="@color_tr" onclick="location.href='@Url.Action("Edit", "FinancialTransactionOfEmployee", new { id = item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode })'">
+                        <td id="_Nc">@no</td>
+                        <td id="_Nc">@item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode</td>
+                        @{
+                            var singleEmployee = item.CrCasAccountReceiptUserNavigation;
+
+                            var single_Recipt_Bonds = Model.crCasAccountReceipt.Count(x => x.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode == item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode && ViewBag.CurrentLessor == x.CrCasAccountReceiptLessorCode && x.CrCasAccountReceiptType == "301");
+                            var single_Recipt_Exchanges = Model.crCasAccountReceipt.Count(x => x.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode == item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode && ViewBag.CurrentLessor == x.CrCasAccountReceiptLessorCode && x.CrCasAccountReceiptType == "302");
+
+                            <td>@singleEmployee?.CrMasUserInformationArName</td>
+                            <td id="_Nc">@singleEmployee?.CrMasUserInformationTotalBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@singleEmployee?.CrMasUserInformationAvailableBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@singleEmployee?.CrMasUserInformationReservedBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@singleEmployee?.CrMasUserInformationCreditLimit?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@single_Recipt_Bonds</td>
+                            <td id="_Nc">@single_Recipt_Exchanges</td>
+                        }
+                    </tr>
+
+
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
