@@ -184,6 +184,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
             
 
             ViewBag.RenterLessorCount = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == lessorCode).Count();
+            ViewBag.ContractForSettelment = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode&&(x.CrCasRenterContractBasicStatus==Status.Active||x.CrCasRenterContractBasicStatus==Status.Expire)).Count();
+            ViewBag.ContractForExtension = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode&&x.CrCasRenterContractBasicBranch== bSLayoutVM.SelectedBranch&&x.CrCasRenterContractBasicStatus==Status.Active).Count();
+           
             ViewBag.AcccountReceiptCount = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == lessorCode &&
                                                                                      x.CrCasAccountReceiptBranchCode==bSLayoutVM.SelectedBranch).Count();
 

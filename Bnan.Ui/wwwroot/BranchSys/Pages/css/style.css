@@ -880,7 +880,6 @@ footer {
     font-size: .75rem;
     box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
-
 /* =========================================================================Settlement ==================================================== */
 /* Hide all except first fieldset */
 #SettlementForm fieldset:not(:first-of-type) {
@@ -1040,13 +1039,16 @@ footer {
     margin-left: 10px;
 }
 
-#hover-image-Settlement {
+#hover-image-Settlement, #contract-value-Settlement2,
+#contract-value-Settlement3,
+#contract-value-Settlement4 {
     cursor: pointer;
 }
 
 /* .form-card5-settl{
     gap:15px;
 } */
+
 /* /////////////////////////////////////SettlementCard2//////////////////////////////////// */
 .expensesDiv {
     display: flex;
@@ -1057,7 +1059,6 @@ footer {
 
 .expensesRow {
     min-height: 30vh;
-    /* gap: 20px; */
 }
 
 .expensesDiv-textarea {
@@ -1074,7 +1075,7 @@ footer {
 
 .compensation-Row {
     min-height: 30vh;
-    gap: 40px
+    /* gap: 40px */
 }
 
 .compensation-Div-textarea {
@@ -1226,43 +1227,6 @@ flex-direction: row-reverse;
 }
 
 /***************************************************cards-media**************************************************/
-
-@media (max-width: 320px) {
-
-    .Search-col {
-        padding: 0;
-    }
-}
-
-@media (max-width: 375px) {
-
-    .extra-small-mobile {
-        display: none;
-    }
-}
-
-@media (max-width: 425px) {
-
-    #progressbar li {
-        font-size: 9px;
-    }
-}
-
-@media (max-width: 646px) {
-
-    .hide-on-mobile {
-        display: none;
-    }
-
-    .on-mobile {
-        flex-direction: column-reverse;
-        padding-top: 16px;
-    }
-
-        .on-mobile p {
-            margin-left: 0px;
-        }
-}
 
 @media (min-height: 650px) {
     .extension2-card {
@@ -1493,17 +1457,26 @@ flex-direction: row-reverse;
     }
 }
 
-@media (max-width:1000px) {
-    .expensesRow {
-        gap: 40px
+@media (max-width:740px) {
+    .contract-Settl-row {
+        flex-wrap: wrap;
+    }
+    /* .seacrh-icon-col1{
+        padding-bottom: 20px;
+    } */
+}
+
+@media (min-width:1200px) and (max-width:1300px) {
+    .Settlement-date {
+        padding-right: 50px;
     }
 }
-/* @media (max-height:700px) {
-    #SettlementForm fieldset {
-        height: 80%;
-    
+
+@media (max-width:425px) {
+    .col-SettlTime {
+        flex-wrap: wrap;
     }
-} */
+}
 /*======================================================================
 //           ========================== account Media ==============================================================================================
 //          =====================================================================*/

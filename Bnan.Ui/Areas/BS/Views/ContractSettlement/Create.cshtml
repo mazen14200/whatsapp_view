@@ -1,0 +1,1302 @@
+﻿@using Bnan.Ui.ViewModels.BS;
+@model BSLayoutVM
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+<link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
+@if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+{
+    <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">
+}
+<!-- MultiStep Form -->
+<div class="container-fluid" id="grad1">
+    <section class="section-mainCard">
+        <div class="row justify-content-center w-100 h-100">
+            <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
+                <div class="card main-card ">
+                    <div class="row pt-2">
+                        <a asp-action="Index" asp-area="BS" asp-controller="ContractSettlement" style="width: fit-content;">
+                            <img src="~/BranchSys/Pages/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+                        </a>
+                    </div>
+
+                    <div class="row flex-row-reverse">
+                        <div class="col justify-content-center d-flex title-row">
+                            <span class="card-title">
+                                تسوية العقد
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-center content-row h-100">
+
+                        <div class="col-md-11 mx-0">
+
+                            <form id="SettlementForm" class="needs-validation" novalidate>
+                                <div class=" ">
+                                    <!-- progressbar -->
+                                    <ul id="progressbar">
+                                        <li class="active" id="Rental_terms">@localizer["TermsRented"]</li>
+                                        <li id="Expenses">@localizer["Expenses"]</li>
+                                        <li id="compensation">@localizer["Compensations"]</li>
+                                        <li id="check">@localizer["VirtualInspection"]</li>
+                                        <li id="payment">@localizer["Payment"]</li>
+
+
+                                    </ul>
+                                </div>
+                                <fieldset id="firstFieldset">
+                                    <div class="form-card SettlementCard1 ">
+                                        <a href="#" target="_blank" class="pdf-anchor"><img src="~/BranchSys/Pages/img/pdf.png" alt="pdf for contract details" class="pdf_img"></a>
+                                        <div class="row data-row-Settl ">
+                                            <div class="col-xl-4 data-col-Settl contract-Settl-row ">
+                                                <div class="col-auto ">
+                                                    <P>@localizer["ContractNo"]</P>
+                                                </div>
+                                                <div class="col-auto personal-data ">
+                                                    <P>@Model.ContractSettlement.CrCasRenterContractBasicNo</P>
+                                                </div>
+                                                <div class="col-md-8 col-lg-10 seacrh-icon-col ">
+                                                    <div>
+                                                        <img src="~/BranchSys/Pages/img/seacrh-icon.png" alt="seacrh-icon Image" id="hover-image-Settlement">
+                                                    </div>
+                                                    <div class="dropdown-content" id="dropdown-content-Settlement">
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["Renterr"] </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                                                                {
+                                                                    <p>@Model.ContractSettlement.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>@Model.ContractSettlement.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationArName</p>
+                                                                }
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["Car"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                                                                {
+                                                                    <p>@Model.ContractSettlement.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateEnName</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>@Model.ContractSettlement.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateArName</p>
+                                                                }
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["StartContract"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)</p>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["ExpectedEndContract"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : @localizer["ExpectedDaysNo"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicExpectedRentalDays</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : @localizer["EndAuth"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.AuthEndDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-md-auto col-lg-6 data-col-Settl flex-wrap Settlement-date ">
+                                                <div class="col-auto ">
+                                                    <P>@localizer["SettlementDate"]</P>
+                                                </div>
+                                                <div class="col-auto personal-data ">
+                                                    <P>@DateTime.Now.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</P>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row data-row-Settl">
+                                            <div class=" col-xl-8 data-col-Settl flex-wrap ">
+                                                <div class="col-auto ">
+                                                    <P>@localizer["ContractValue"]</P>
+                                                </div>
+                                                <div class="col-auto personal-data ">
+                                                    <P>@Model.ContractSettlement.CrCasRenterContractBasicExpectedTotal</P>
+                                                </div>
+                                                <div class="col-md-6 col-lg-5 col-xl-5 seacrh-icon-col">
+                                                    <div>
+                                                        <img src="~/BranchSys/Pages/img/seacrh-icon.png" alt="seacrh-icon Image" id="contract-value-Settlement2">
+                                                    </div>
+                                                    <div class="dropdown-content" id="dropdown-content-Settlement2">
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["RentalValue"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicExpectedRentValue?.ToString("N2", CultureInfo.InvariantCulture)</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["DelegationValue"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicAuthorizationValue?.ToString("N2", CultureInfo.InvariantCulture)</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["Features"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.AdvantagesValue</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["AdditionalDriver"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicAdditionalDriverValue?.ToString("N2", CultureInfo.InvariantCulture)</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["PrivateDriver"] </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicExpectedPrivateDriverValue?.ToString("N2", CultureInfo.InvariantCulture)</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["Choices"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicExpectedOptionsValue?.ToString("N2", CultureInfo.InvariantCulture)</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["Additionals"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p> @Model.ContractSettlement.CrCasRenterContractBasicAdditionalValue?.ToString("N2", CultureInfo.InvariantCulture) </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["DiscountValue"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p> @Model.ContractSettlement.CrCasRenterContractBasicExpectedDiscountValue?.ToString("N2", CultureInfo.InvariantCulture) </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: @localizer["TaxValue"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p> @Model.ContractSettlement.CrCasRenterContractBasicExpectedTaxValue?.ToString("N2", CultureInfo.InvariantCulture) </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row data-row-Settl g-3">
+                                            <div class="col-md-auto col-lg-4  data-col-Settl flex-wrap">
+                                                <div class="col-auto">
+                                                    <label for="contract_real_endTime">
+                                                        @localizer["EndOfSettlement"]
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="date" id="contract_real_endTime" class="form-control inputs" name="contract-end-date" aria-describedby="inputGroupPrepend" required>
+                                                    <div class="row requird-field-row-last">
+                                                        <div class="invalid-feedback" style="display: none;">
+                                                            هذا الحقل مطلوب
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4 data-col-Settl col-SettlTime ">
+                                                <div class="col-auto">
+                                                    <label for="settlementTime">
+                                                        @localizer["SettlementTiming"]
+                                                    </label>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <div class="col-auto">
+                                                        <input type="time" class="form-control form-control2"
+                                                               id="settlementTime" name="settlementTime" autocomplete="off" style="border-top: none; width: 100%;"
+                                                               required>
+                                                        <div class="row requird-field-row-last">
+                                                            <div class="invalid-feedback" style="display: none;">
+                                                                هذا الحقل مطلوب
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4  data-col-Settl flex-wrap" id="mechanismSettlement" style="display:none">
+                                                <div class="col-auto">
+                                                    <label for="Settlement-mechanism">
+                                                        @localizer["SettlementMechanism"]
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="offset">
+                                                        <select class="form-select form-select-settel" id="Settlement-mechanism" name="Settlement mechanism" required>
+                                                            <option selected disabled>
+                                                            </option>
+                                                            <option value="0">@localizer["Without"]</option>
+                                                            <option value="1">@localizer["Day"]</option>
+                                                            <option value="2">@localizer["DayHalf"]</option>
+                                                            <option value="3">@localizer["DayQuarter"]</option>
+                                                        </select>
+
+                                                        <div class="row requird-field-row-last">
+                                                            <div class="invalid-feedback" style="display: none;">
+                                                                هذا الحقل مطلوب
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row data-row-Settl">
+                                            <div class="col-md-auto col-lg-4  data-col-Settl flex-wrap">
+                                                <div class="col-auto">
+                                                    <p>@localizer["ActualNumberOfDays"]</p>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <P id="daysNo">0</P>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4 data-col-Settl ">
+                                                <div class="col-auto">
+                                                    <p>@localizer["AddHours"]</p>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <span id="diffHours">00</span>:<span id="diffMinutes">00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row data-row-Settl">
+                                            <div class="col-md-auto col-lg-4  data-col-Settl flex-wrap">
+                                                <div class="col-auto">
+                                                    <p>@localizer["ReceivingBranch"] </p>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                                                    {
+                                                        <P>@Model.ContractSettlement?.CrCasRenterContractBasic1?.CrCasBranchInformationEnShortName</P>
+                                                    }
+                                                    else
+                                                    {
+                                                        <P>@Model.ContractSettlement?.CrCasRenterContractBasic1?.CrCasBranchInformationArShortName</P>
+                                                    }
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4 data-col-Settl ">
+                                                <div class="col-auto">
+                                                    <p>@localizer["DeliveryBranch"]</p>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                                                    {
+                                                        <P>@Model.CrCasBranchInformation?.CrCasBranchInformationEnShortName</P>
+                                                    }
+                                                    else
+                                                    {
+                                                        <P>@Model.CrCasBranchInformation?.CrCasBranchInformationArShortName</P>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row data-row-Settl ">
+                                            <div class="col-md-auto col-lg-4  data-col-Settl flex-wrap">
+
+                                                <div class="col-auto ">
+                                                    <label class="form-check-label" for="expenses">@localizer["Expense"]</label>
+                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="expenses" name="checked-expenses">
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4 data-col-Settl mb-4 ">
+
+                                                <div class="col-auto ">
+                                                    <label class="form-check-label" for="compensation-check">@localizer["Compensation"]</label>
+                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="compensation-check" name="checked-compensation">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row button-row">
+                                        <div class="button-card">
+                                            <img src="~/BranchSys/Pages/img/Group.png" alt="Button Image"
+                                                 class="next action-button"
+                                                 style="vertical-align: middle; ">
+                                            <input type="button" name="next" class="next action-button"
+                                                   value="@localizer["next"]" />
+                                        </div>
+                                        <div class="button-card">
+                                        </div>
+                                    </div>
+
+
+                                </fieldset>
+                                <fieldset id="SecondFieldset">
+                                    <div class="form-card form-card1">
+                                        <div class="row flex-row-reverse">
+                                            <div class="row">
+                                                <div class="expensesDiv align-items-baseline ">
+                                                    <div class="col-auto">
+                                                        <label id="expensesValue" for="expensesValue-input">قيمة المصروفات</label>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <input type="tel" class="form-control form-control1" style="width: 130px;" id="expensesValue-input" name="expensesValue-input" aria-describedby="inputGroupPrepend" autocomplete="off" required>
+                                                        <div class="row requird-field-row-last">
+                                                            <div class="invalid-feedback" style="display: none;">
+                                                                هذا الحقل مطلوب
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row flex-row-reverse expensesRow g-5">
+                                            <div class="col-lg-5">
+
+                                                <div class="row expensesDiv expensesDiv-textarea ">
+                                                    <div class="col-auto">
+                                                        <label id="Expense-statement" for="Expense-statement-input">بيان المصروفات</label>
+                                                    </div>
+                                                    <div class="col-lg-9" style="height: 100%;">
+                                                        <textarea class="form-control textarea-inputs h-100" cols="25" name="Expense-statement" id="Expense-statement-input" aria-describedby="inputGroupPrepend" required></textarea>
+                                                        <div class="row requird-field-row-last">
+                                                            <div class="invalid-feedback" style="display: none;">
+                                                                هذا الحقل مطلوب
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="upload__box d-flex">
+                                                    <div class="upload_img-wrap_inner" style="display: flex;
+                                                                  flex-wrap: wrap;
+                                                                  gap: 10px ">
+                                                        <div class="upload__img-box " id="FirstUpload-img">
+                                                        </div>
+                                                        <div class="upload__btn-box" id="upload__btn-box">
+                                                            <label class="upload__btn">
+                                                                <div class="upload-container-checking">
+                                                                    <img class="upload-icon"
+                                                                         src="~/BranchSys/Pages/img/Group (1).png"
+                                                                         alt="Upload Icon" id="addImage">
+                                                                    <input type="file" multiple
+                                                                           accept="image/*"
+                                                                           id="Expenses-images"
+                                                                           class="upload__inputfile ">
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <p style="color: red;" id="ExpensesError">  </p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row button-row">
+                                        <div class="button-card">
+                                            <img src="~/BranchSys/Pages/img/Group.png" alt="Button Image"
+                                                 class="next action-button"
+                                                 style="vertical-align: middle; ">
+                                            <input type="button" name="next" class="next action-button"
+                                                   value="التالي" />
+                                        </div>
+                                        <div class="button-card">
+                                            <input type="button" name="previous"
+                                                   class="previous action-button-previous"
+                                                   value="السابق" />
+                                            <img src="~/BranchSys/Pages/img/Vector.png" alt="Button Image"
+                                                 class="previous action-button-previous"
+                                                 style="vertical-align: middle; ">
+                                        </div>
+                                    </div>
+
+
+                                </fieldset>
+                                <fieldset id="ThirdFieldset">
+                                    <div class="form-card form-card1">
+                                        <div class="row flex-row-reverse">
+                                            <div class="row">
+                                                <div class="expensesDiv align-items-baseline ">
+                                                    <div class="col-auto">
+                                                        <p> التأمين </p>
+                                                    </div>
+                                                    <div class="col-auto personal-data">
+                                                        <p>ضد الغير </p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="compensation-Div align-items-baseline ">
+                                                <div class="col-auto">
+                                                    <label for="compensation-input">قيمة التعويضات </label>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <input type="tel" class="form-control form-control1" style="width: 130px;" id="compensation-input" name="compensation-input" aria-describedby="inputGroupPrepend" autocomplete="off" required>
+                                                    <div class="row requird-field-row-last">
+                                                        <div class="invalid-feedback" style="display: none;">
+                                                            هذا الحقل مطلوب
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row flex-row-reverse compensation-Row  g-5">
+                                            <div class="col-lg-5">
+
+                                                <div class="row compensation-Div compensation-Div-textarea ">
+                                                    <div class="col-auto">
+                                                        <label for="compensation-statement-input">بيان التعويضات </label>
+                                                    </div>
+                                                    <div class="col-lg-9" style="height: 100%;">
+                                                        <textarea class="form-control textarea-inputs h-100" cols="25" name="compensation-statement" id="compensation-statement-input" aria-describedby="inputGroupPrepend" required></textarea>
+                                                        <div class="row requird-field-row-last">
+                                                            <div class="invalid-feedback" style="display: none;">
+                                                                هذا الحقل مطلوب
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="upload__box d-flex">
+                                                    <div class="upload_img-wrap_inner" style="display: flex;
+                                                                  flex-wrap: wrap;
+                                                                  gap: 10px ">
+                                                        <div class="upload__img-box " id="FirstUpload-img2">
+                                                        </div>
+                                                        <div class="upload__btn-box">
+                                                            <label class="upload__btn">
+                                                                <div class="upload-container-checking">
+                                                                    <img class="upload-icon"
+                                                                         src="~/BranchSys/Pages/img/Group (1).png"
+                                                                         alt="Upload Icon" id="AddImageCompensation">
+                                                                    <input type="file" multiple
+                                                                           accept="image/*"
+                                                                           id="compensation-images"
+                                                                           class="upload__inputfile ">
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <p style="color: red;" id='compensationError'> </p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row button-row">
+                                        <div class="button-card">
+                                            <img src="img/Group.png" alt="Button Image"
+                                                 class="next action-button"
+                                                 style="vertical-align: middle; ">
+                                            <input type="button" name="next" class="next action-button"
+                                                   value="التالي" />
+                                        </div>
+                                        <div class="button-card">
+                                            <input type="button" name="previous"
+                                                   class="previous action-button-previous"
+                                                   value="السابق" />
+                                            <img src="~/BranchSys/Pages/img/Vector.png" alt="Button Image"
+                                                 class="previous action-button-previous"
+                                                 style="vertical-align: middle; ">
+                                        </div>
+                                    </div>
+
+
+                                </fieldset>
+                                <fieldset id="FourthFieldset">
+                                    <div class="form-card">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row CurrentReadingg_row flex-row-reverse">
+                                                    <div class="col-md-6 sett_checkField">
+                                                        <div class="col-auto ">
+                                                            <p> العداد عند التسليم</p>
+                                                        </div>
+                                                        <div class="col personal-data">
+                                                            <p>43.950</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 sett_checkField">
+                                                        <div class="col-auto ">
+                                                            <p> الكيلات الاضافية </p>
+                                                        </div>
+                                                        <div class="col personal-data">
+                                                            <p>161.00</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row CurrentReadingg_row flex-row-reverse">
+                                                    <div class="col-md-6 sett_checkField flex-wrap">
+                                                        <div class="col-auto">
+                                                            <label id="CurrentReadingg"
+                                                                   for="CurrentReadingg-input">
+                                                                القراءة الحالية
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <input type="tel" class="form-control form-control1"
+                                                                   style="width: 130px;"
+                                                                   id="CurrentReadingg-input"
+                                                                   name="CurrentReadingg-input" aria-describedby="inputGroupPrepend" autocomplete="off" required>
+                                                            <div class="row requird-field-row-last">
+                                                                <div class="invalid-feedback" style="display: none;">
+                                                                    هذا الحقل مطلوب
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 sett_checkField">
+                                                        <div class="col-auto ">
+                                                            <p> الكيلات الاضافية </p>
+                                                        </div>
+                                                        <div class="col personal-data">
+                                                            <p>161.00</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="upload__box d-flex">
+                                                    <div class="upload_img-wrap_inner" style="display: flex;
+                                                                  flex-wrap: wrap;
+                                                                  gap: 10px ">
+                                                        <div class="upload__img-box " id="FirstUpload-img3">
+                                                        </div>
+                                                        <div class="upload__btn-box">
+                                                            <label class="upload__btn">
+                                                                <div class="upload-container-checking">
+                                                                    <img class="upload-icon"
+                                                                         src="~/BranchSys/Pages/img/Group (1).png"
+                                                                         alt="Upload Icon" id="">
+                                                                    <input type="file" multiple
+                                                                           accept="image/*"
+                                                                           id="examination-images"
+                                                                           class="upload__inputfile ">
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <p style="color: red;" id="examinationError"> </p>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="table-scroll " id="SettlementTable">
+                                                    <table class="table table-bordered  table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"
+                                                                    class="value-tabel-header">
+                                                                    ملاحظات
+                                                                </th>
+                                                                <th scope="col"
+                                                                    style='border-left: 1px solid #ff9626a3; width: 40%; '>
+                                                                    بنود الفحص
+                                                                </th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="text-center">
+                                                                    <textarea class="textarea_table"
+                                                                              id="Tires-textarea"
+                                                                              maxlength="100"
+                                                                              name="Tires-textarea"></textarea>
+                                                                </td>
+                                                                <td class="tabel-data-checkbox-td">
+                                                                    <label class="form-check-label" for="tires">الإطارات</label>
+                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="tires" name="checked-tires">
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+
+                                                                <td class="text-center">
+                                                                    <textarea class="textarea_table"
+                                                                              id="lights-textarea"
+                                                                              maxlength="100"
+                                                                              name="lights-textarea"></textarea>
+                                                                </td>
+                                                                <td class="tabel-data-checkbox-td">
+                                                                    <label class="form-check-label" for="lights">الأنوار</label>
+                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="lights" name="checked-lights">
+
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-center">
+                                                                    <textarea class="textarea_table"
+                                                                              id="Air_conditioner-textarea"
+                                                                              maxlength="100"
+                                                                              name="Air_conditioner-textarea"></textarea>
+                                                                </td>
+                                                                <td class="tabel-data-checkbox-td">
+                                                                    <label class="form-check-label" for="air_conditioner">المكيف</label>
+                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="air_conditioner" name="checked-air_conditioner">
+
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-center">
+                                                                    <textarea class="textarea_table"
+                                                                              id="Safety_Security-textarea"
+                                                                              maxlength="100"
+                                                                              name="Safety_Security-textarea"></textarea>
+                                                                </td>
+                                                                <td class="tabel-data-checkbox-td">
+                                                                    <label class="form-check-label" for="saftey"> الأمن والسلامة </label>
+                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="saftey" name="checked-saftey">
+
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-center">
+                                                                    <textarea class="textarea_table"
+                                                                              id="wiper-textarea"
+                                                                              maxlength="100"
+                                                                              name="wiper-textarea"></textarea>
+                                                                </td>
+                                                                <td class="tabel-data-checkbox-td">
+                                                                    <label class="form-check-label" for="wipers"> المساحات</label>
+                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="wipers" name="checked-wipers">
+
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-center">
+                                                                    <textarea class="textarea_table"
+                                                                              id="signals-textarea"
+                                                                              maxlength="100"
+                                                                              name="signals-textarea"></textarea>
+                                                                </td>
+                                                                <td class="tabel-data-checkbox-td">
+                                                                    <label class="form-check-label" for="signals"> الإشارات</label>
+                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="signals" name="checked-signals">
+
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-center">
+                                                                    <textarea class="textarea_table"
+                                                                              id="cleanliness-textarea"
+                                                                              maxlength="100"
+                                                                              name="cleanliness-textarea"></textarea>
+                                                                </td>
+                                                                <td class="tabel-data-checkbox-td">
+                                                                    <label class="form-check-label" for="cleanliness"> النظافة</label>
+                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="cleanliness" name="checked-cleanliness">
+
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-center">
+                                                                    <textarea class="textarea_table"
+                                                                              id="Front_brake-textarea"
+                                                                              maxlength="100"
+                                                                              name="Front_brake-textarea"></textarea>
+                                                                </td>
+                                                                <td class="tabel-data-checkbox-td">
+                                                                    <label class="form-check-label" for="FrontBreak"> الفرامل الأمامية</label>
+                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="FrontBreak" name="checked-FrontBreak">
+
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-center">
+                                                                    <textarea class="textarea_table"
+                                                                              id="Rear_brake-textarea"
+                                                                              maxlength="100"
+                                                                              name="Rear_brake-textarea"></textarea>
+                                                                </td>
+                                                                <td class="tabel-data-checkbox-td">
+                                                                    <label class="form-check-label" for="BackBrakes"> الفرامل الخلفية</label>
+                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="BackBrakes" name="checked-BackBrakes">
+
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row button-row">
+                                        <div class="button-card">
+                                            <img src="~/BranchSys/Pages/img/Group.png" alt="Button Image"
+                                                 class="next action-button"
+                                                 style="vertical-align: middle; ">
+                                            <input type="button" name="next" class="next action-button"
+                                                   value="التالي" />
+                                        </div>
+                                        <div class="button-card">
+                                            <input type="button" name="previous"
+                                                   class="previous action-button-previous"
+                                                   value="السابق" />
+                                            <img src="~/BranchSys/Pages/img/Vector.png" alt="Button Image"
+                                                 class="previous action-button-previous"
+                                                 style="vertical-align: middle; ">
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                                <fieldset id="FifthFieldset">
+                                    <div class="form-card form-card5-settl">
+                                        <div class="row data-col-Settl g-3">
+                                            <div class="col-xl-4 data-col-Settl contract-Settl-row ">
+                                                <div class="col-auto ">
+                                                    <P>رقم العقد  </P>
+                                                </div>
+                                                <div class="col-auto personal-data ">
+                                                    <P>23-1-60-5001-1020136</P>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 seacrh-icon-col1">
+                                                    <div>
+
+                                                        <img src="~/BranchSys/Pages/img/seacrh-icon.png" alt="seacrh-icon Image" id="contract-value-Settlement3">
+                                                    </div>
+                                                    <div class="dropdown-content" id="dropdown-content-Settlement3">
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>  : المستأجر </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>نايف هشام هشام  المعمر</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : السيارة</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>مازدا - سي اكس 30 - سماوي - 2021-دددد</p>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: بداية العقد</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>  10:30 pm   2024/1/30</p>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : نهاية العقد </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>  11:30 am   2024/5/30</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : عدد الأيام   </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>3</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : نهاية التفويض</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>  10:30 pm   2024/6/30</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : نسبة الخصم</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p> 115 </p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> :  نسبة القيمة المضافة</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p> ۲۲٥.۷٥ </p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : قيمة الساعة الاضافية</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p> ۱٥۰٥.۰۰ </p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : قيمة الكيلو  الاضافي  </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p> ۱٥۰٥.۰۰ </p>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-md-auto col-lg-6 data-col-Settl flex-wrap Settlement-date">
+                                                <div class="col-auto ">
+                                                    <P> تاريخ التسوية</P>
+                                                </div>
+                                                <div class="col-auto personal-data ">
+                                                    <P>2020/11/29</P>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row data-col-Settl g-3">
+                                            <div class=" col-xl-8 data-col-Settl flex-wrap ">
+                                                <div class="col-auto ">
+                                                    <P>قيمة العقد</P>
+                                                </div>
+                                                <div class="col-auto personal-data ">
+                                                    <P>4,235.45</P>
+                                                </div>
+                                                <div class="col-md-6 col-lg-5 col-xl-5 seacrh-icon-col">
+                                                    <div>
+
+                                                        <img src="~/BranchSys/Pages/img/seacrh-icon.png" alt="seacrh-icon Image" id="contract-value-Settlement4">
+                                                    </div>
+                                                    <div class="dropdown-content" id="dropdown-content-Settlement4">
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> :الايجار </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>   </p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>: التفويض</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p></p>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p>:  المميزات الاضافية</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>  </p>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> :السائق  الاضافي</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p> </p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> :السائق الخاص </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p></p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> :الخيارات  </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>  </p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> :الاضافات  </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>  </p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> :قيمة الساعات الاضافية   </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>  </p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> :قيمة الكيلوات الاضافية  </p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>  </p>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row data-col-Settl g-3">
+
+                                            <div class="col-md-4">
+                                                <div class="data-col-Settl">
+                                                    <div class="col-auto "><p> قيمة العقد بعد الخصم </p></div>
+                                                    <div class="col-auto personal-data p-0"><p>۱٥۰٥.۰۰</p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <div class="data-col-Settl">
+                                                    <div class="col-auto "><p>قيمة الضريبة  </p></div>
+                                                    <div class="col-auto personal-data p-0"><p>۲۲٥.۷٥</p></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row data-col-Settl g-3">
+                                            <div class="col-md-4">
+                                                <div class="data-col-Settl">
+                                                    <div class="col-auto "><p>إجمالي العقد   </p></div>
+                                                    <div class="col-auto personal-data p-0"><p>۱٥۰٥.۰۰</p></div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="data-col-Settl">
+                                                    <div class="col-auto "><p> إجمالي المصروفات</p></div>
+                                                    <div class="col-auto personal-data p-0"><p>۱٥۰٥.۰۰</p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <div class="data-col-Settl">
+                                                    <div class="col-auto "><p>إجمالي التعويضات   </p></div>
+                                                    <div class="col-auto personal-data p-0"><p>۱٥۰٥.۰۰</p></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row data-col-Settl g-3">
+                                            <div class="col-md-4">
+                                                <div class="data-col-Settl">
+                                                    <div class="col-auto "><p>رصيد سابق    </p></div>
+                                                    <div class="col-auto personal-data p-0"><p>۰۰.۹٦ </p></div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="data-col-Settl">
+                                                    <div class="col-auto "><p> المبلغ المطلوب </p></div>
+                                                    <div class="col-auto personal-data p-0"><p>۱۷۲۹.۷۹</p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <div class="data-col-Settl">
+                                                    <div class="col-auto "><p> الباقي على المستأجر</p></div>
+                                                    <div class="col-auto personal-data p-0"><p>۱۷۳۰.۷٥</p></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row data-col-Settl g-3">
+                                            <div class="col-md-auto col-lg-4 data-col-Settl">
+                                                <div class="col-auto">
+                                                    <label id="amount-paid" for="amount-paid-input">
+                                                        المبلغ المدفوع
+                                                    </label>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <input type="text" class="form-control form-control2"
+                                                           id="amount-paid-input" name="amount-paid" autocomplete="off"
+                                                           required>
+                                                    <div class="row requird-field-row-last">
+                                                        <div class="invalid-feedback" style="display: none;">
+                                                            هذا الحقل مطلوب
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-auto col-lg-4 d-flex flex-nowrap data-col-Settl">
+                                                <div class="col-auto d-flex ps-0">
+                                                    <label id="payment-method" for="payment-method-select">طريقة الدفع</label>
+
+                                                </div>
+
+                                                <div class="col-auto ">
+                                                    <div class="offset">
+                                                        <select class="form-select form-select-last" id="payment-method-select" name="payment-method" required>
+                                                            <option selected disabled>
+                                                            </option>
+                                                            <option value="نقدا"> نقدا</option>
+                                                            <option value="مدي"> مدي</option>
+                                                            <option value="فيزا"> فيزا</option>
+                                                            <option value="فيزا"> ماسترد كارد</option>
+
+                                                        </select>
+
+                                                        <div class="row requird-field-row-last">
+                                                            <div class="invalid-feedback" style="display: none;">
+                                                                هذا الحقل مطلوب
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto  data-col-Settl ">
+
+                                                <div class="col-auto d-flex ps-0 ">
+                                                    <label id="selling-point" for="selling-point-dropdown"> نقطة البيع </label>
+
+                                                </div>
+
+                                                <div class="col-auto ">
+                                                    <div class="offset">
+                                                        <select class="form-select form-select-last"
+                                                                id="selling-point-dropdown" name="selling-point" required>
+                                                            <option selected disabled>           </option>
+                                                            <option value=""> hghghghhfhfgfghdfdfgdgdcg           </option>
+                                                            <option value="">            </option>
+                                                            <option value="">             </option>
+                                                        </select>
+                                                        <div class="row requird-field-row-last">
+                                                            <div class="invalid-feedback" style="display: none;">
+                                                                هذا الحقل مطلوب
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="row p-2" style="flex-direction:row-reverse">
+                                            <div class="col-auto">
+                                                <label id="notes" for="FormControl-last-Textarea">ملاحظات</label>
+                                            </div>
+                                            <div class="col-sm-10 col-md-7 col-lg-7">
+                                                <textarea class="form-control textarea-inputs"
+                                                          rows="1"
+                                                          maxlength="100" name="notes"></textarea>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row button-row align-items-center"
+                                         style="padding: 6px 7px 0px 20px;">
+                                        <div class="button-card  gap-2">
+                                            <button type="submit" class="btn btn-custom next">حفظ</button>
+
+                                        </div>
+                                        <div class="button-card">
+                                            <input type="button" name="previous"
+                                                   class="previous action-button-previous" value="السابق" />
+                                            <img src="~/BranchSys/Pages/img/Vector.png" alt="Button Image"
+                                                 class="previous action-button-previous"
+                                                 style="vertical-align: middle; margin-right: 10px;">
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<footer class="fixed-bottom-xl">
+    <div class="before-footer-widget">
+        <svg width: 100%; height:auto viewbox="0 0 2444 132">
+            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+            </path>
+        </svg>
+    </div>
+
+</footer>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/BranchSys/Pages/js/Settlement.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const now = new Date();
+            const year = now.getFullYear().toString().padStart(4, '0');
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const dateValue = `${year}-${month}-${day}`;
+
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const timeValue = `${hours}:${minutes}`;
+
+            document.getElementById("contract_real_endTime").value = dateValue;
+            document.getElementById("settlementTime").value = timeValue;
+
+        });
+        //To Hide mechanismSettlement..
+        document.addEventListener("DOMContentLoaded", function () {
+            const endDateString = "@Model.ContractSettlement.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)";
+            const endDate = new Date(endDateString);
+            const currentDate = new Date();
+            const elementToHide = document.getElementById("mechanismSettlement");
+            console.log("endDate", endDate)
+            console.log("currentDate", currentDate)
+            if (currentDate > endDate) {
+                if (elementToHide) {
+                    elementToHide.style.display = "";
+                }
+            }
+
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const startContractDateString = "@Model.ContractSettlement.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture)";
+            const startContractDate = new Date(startContractDateString);
+
+            function calculateDifference() {
+                const settlementDateString = document.getElementById("contract_real_endTime").value;
+                const settlementTimeString = document.getElementById("settlementTime").value;
+
+                const settlementDateTimeString = settlementDateString + "T" + settlementTimeString;
+                const settlementDateTime = new Date(settlementDateTimeString);
+
+                const timeDiff = Math.abs(settlementDateTime.getTime() - startContractDate.getTime());
+                const diffDays = Math.floor(timeDiff / (1000 * 3600 * 24)); // Difference in days
+                const diffHours = Math.floor((timeDiff % (1000 * 3600 * 24)) / (1000 * 3600)); // Remaining difference in hours
+                const diffMinutes = Math.floor((timeDiff % (1000 * 3600)) / (1000 * 60)); // Remaining difference in minutes
+
+                $("#daysNo").text(diffDays);
+                $("#diffHours").text(diffHours.toString().padStart(2, '0'));
+                $("#diffMinutes").text(diffMinutes.toString().padStart(2, '0'));
+
+                console.log("Difference in days:", diffDays);
+                console.log("Remaining difference in hours:", diffHours);
+                console.log("Remaining difference in minutes:", diffMinutes);
+            }
+
+            document.getElementById("contract_real_endTime").addEventListener("change", calculateDifference);
+            document.getElementById("settlementTime").addEventListener("change", calculateDifference);
+
+            // Call calculateDifference function when the page loads
+            calculateDifference();
+        });
+    </script>
+}

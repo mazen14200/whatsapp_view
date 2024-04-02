@@ -1572,20 +1572,20 @@ else
                     </div>
                 </div>
                 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-               @*  <div class="modal fade" id="thirdPopupModal" tabindex="-1" data-bs-backdrop="static"
-                     aria-labelledby="thirdPopupModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
-                        <div class="modal-content spinner-modal-content">
+                @*  <div class="modal fade" id="thirdPopupModal" tabindex="-1" data-bs-backdrop="static"
+                aria-labelledby="thirdPopupModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
+                <div class="modal-content spinner-modal-content">
 
-                            <div class="modal-body spinner-modal">
-                                <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <circle class="path" fill="none" stroke-width="6"
-                                            stroke-linecap="round" cx="33" cy="33" r="30"> </circle>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
+                <div class="modal-body spinner-modal">
+                <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle class="path" fill="none" stroke-width="6"
+                stroke-linecap="round" cx="33" cy="33" r="30"> </circle>
+                </svg>
+                </div>
+                </div>
+                </div>
                 </div> *@
                 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
                 <div class="modal fade" id="paymentPopupModal" tabindex="-1"
@@ -4245,7 +4245,7 @@ else
 
         // Function to send an image and PDF to WhatsApp
         const sendArReceiptToWhatsApp = async () => {
-            const imageLessor ="@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArCatchReceipt";
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArCatchReceipt";
             const imagePath = imageLessor.replace('~', '');
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
             const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
@@ -4343,7 +4343,13 @@ else
                 //Date and contract no
                 ctx.fillText(hijriDateString, canvas.width - 228, 668);
                 ctx.fillText(miladiDateString, canvas.width - 228, 722);
-
+                /////////////////////////ForTest/////////////////
+                const hours = miladiDate.getHours().toString().padStart(2, '0');
+                const minutes = miladiDate.getMinutes().toString().padStart(2, '0');
+                const seconds = miladiDate.getSeconds().toString().padStart(2, '0');
+                const timeString = `${hours}:${minutes}:${seconds}`;
+                ctx.fillText(timeString, canvas.width - 228, 760);
+                ///////////////////////////
 
                 console.log("CarInformation.carPrice.crCasPriceCarBasicDailyRent", CarInformation.carPrice.crCasPriceCarBasicDailyRent)
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
@@ -4470,6 +4476,7 @@ else
                 ctx.fillText(tTotalDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1270, 2250);
                 ctx.fillText(tTotalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1560, 2250);
                 ctx.fillText(tTotalTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1880, 2250);
+                ctx.fillText(AmountRequired.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 2180, 2250);
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
 
 
@@ -4507,7 +4514,7 @@ else
 
             return yHeight + 88; // Update yHeight for the next item
         }
-        function calculateTotalAmountPerDay(rent,auth,feature,privateDriver,additionalDriver,additionals,choices,days){
+        function calculateTotalAmountPerDay(rent, auth, feature, privateDriver, additionalDriver, additionals, choices, days) {
             var daysNo = parseInt(days);
             var total = (rent * daysNo) + (auth) + (feature * daysNo) + (additionalDriver) + (privateDriver * daysNo) + (additionals) + (choices * daysNo);
             return total;

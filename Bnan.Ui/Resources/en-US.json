@@ -816,6 +816,8 @@
   "PleaseChooseAtLeastOneValue": "Sorry.....you must choose at least one value",
   "toastMessageExistRenters": "Sorry.....there is no renters in company",
   "toastMessageExistReceipts": "Sorry.....there is no receipts in branch",
+  "toastMessageExistContractsForSettelement": "Sorry.....there is no contract to settlement in branch",
+  "toastMessageExistContractsForExtension": "Sorry.....there is no contract to extension in branch",
 
   "Existing": "This field is Existed.",
   "Exist": "ExistEn",
@@ -1662,6 +1664,24 @@
   "PleaseChooseCar": "Please Choose Car",
   "VerificationCode": "your verification code ",
   "PleaseEnterMobile": "Please Enter Your Mobile Number First",
-  "ContractsExtension": "Contract Extension"
+  "ContractsExtension": "Contract Extension",
+  "Expenses": "Expenses",
+  "Compensations": "Compensations",
+  "Expense": "Expenses",
+  "Compensation": "Compensations",
+  "ExpectedEndContract": "Expected End Contract",
+  "ExpectedDaysNo": "Expected Days No",
+  "ActualNumberOfDays": "ActualNumberOfDays",
+  "AddHours": "Additional Hours",
+  "SettlementDate": "SettlementDate",
+  "ReceivingBranch": "Receiving Branch",
+  "DeliveryBranch": "Delivery Branch",
+  "Without": "Without",
+  "Day": "Day",
+  "DayHalf": "Half a day",
+  "DayQuarter": "A quarter of a day",
+  "EndOfSettlement": "End Of Settlement",
+  "SettlementTiming": "Settlement Timing",
+  "SettlementMechanism": "Settlement Mechanism"
 
 }

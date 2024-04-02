@@ -2,6 +2,19 @@ body {
     direction: rtl;
 }
 
+#progressbar #Rental_terms:after {
+    left: 50%
+}
+
+#progressbar #payment:after {
+    width: 60%;
+    right: 50%;
+}
+
+.button-card img {
+    transform: rotateY(180deg);
+}
+
 .radio-container {
     gap: 10px
 }
@@ -16,6 +29,10 @@ body {
 
 textarea {
     direction: ltr;
+}
+
+.notes_box {
+    direction: rtl;
 }
 
 .table-scroll {
@@ -56,9 +73,7 @@ textarea {
 .form-outline .fa-search {
     right: 10px;
 }
-.notes_box {
-    direction: ltr;
-}
+
 @media (max-width:960px) {
     .pdf_img {
         top: 75px;
