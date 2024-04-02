@@ -50,6 +50,7 @@
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["His_Date"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["FTS_Branch"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
@@ -72,10 +73,20 @@
                             <td id="_Nc">@no</td>
                             <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
                             <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@item.CrCasRenterContractBasic1?.CrCasBranchInformationEnName</td>
                             <td>
-                                @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
+                                @if (item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName?.Count()> 45)
+                                {
+                                    @item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName?.Substring(0,45)
+
+                                }
+                                else
+                                {
+                                    @item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName
+
+                                }
                             </td>
-                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
+                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateEnName</td>
                             <td>
                                 @{
                                     var Alert_single = Model.crCasRenterContractAlert?.FirstOrDefault(x => x.CrCasRenterContractAlertNo == item.CrCasRenterContractBasicNo);
@@ -85,7 +96,7 @@
                                 {
                                 @localizer["Expired"]
                                 }
-                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "0")
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "0" && item.CrCasRenterContractBasicStatus == "A")
                                 {
                                     @localizer["Sh_Today_Expired"]
                                 }
@@ -123,10 +134,20 @@
                             <td id="_Nc">@no</td>
                             <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
                             <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@item.CrCasRenterContractBasic1?.CrCasBranchInformationEnName</td>
                             <td>
-                                @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
+                                @if (item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName?.Count() > 45)
+                                {
+                                    @item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName?.Substring(0,45)
+
+                                }
+                                else
+                                {
+                                    @item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName
+
+                                }
                             </td>
-                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
+                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateEnName</td>
                             <td>
                                 @{
                                     var Alert_single = Model.crCasRenterContractAlert?.FirstOrDefault(x => x.CrCasRenterContractAlertNo == item.CrCasRenterContractBasicNo);
@@ -137,7 +158,7 @@
                                     @localizer["Expired"]
                                 }
 
-                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "0")
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "0" && item.CrCasRenterContractBasicStatus == "A")
                                 {
                                 @localizer["Sh_Today_Expired"]
                                 }
@@ -188,6 +209,7 @@ else
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["His_Date"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["FTS_Branch"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
@@ -210,10 +232,20 @@ else
                             <td id="_Nc">@no</td>
                             <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
                             <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@item.CrCasRenterContractBasic1?.CrCasBranchInformationArName</td>
                             <td>
-                                @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationArName
+                                @if (item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationArName?.Count() > 45)
+                                {
+                                    @item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationArName?.Substring(0,45)
+
+                                }
+                                else
+                                {
+                                    @item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationArName
+
+                                }
                             </td>
-                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
+                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateArName</td>
                             <td>
                                 @{
                                     var Alert_single = Model.crCasRenterContractAlert?.FirstOrDefault(x => x.CrCasRenterContractAlertNo == item.CrCasRenterContractBasicNo);
@@ -223,7 +255,7 @@ else
                                 {
                                     @localizer["Expired"]
                                 }
-                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "0")
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "0" && item.CrCasRenterContractBasicStatus == "A")
                                 {
                                 @localizer["Sh_Today_Expired"]
                                 }
@@ -241,9 +273,11 @@ else
 
                             @{
                                 var Link_pdf = item.CrCasRenterContractBasicArPdfFile;
+
                                 var Target_pdf = "#";
                                 if (Link_pdf?.Count() > 2)
                                 {
+                                    Link_pdf = Link_pdf.Replace("~", "");
                                     Target_pdf = "_blank";
                                 }
                             }
@@ -260,10 +294,20 @@ else
                             <td id="_Nc">@no</td>
                             <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
                             <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@item.CrCasRenterContractBasic1?.CrCasBranchInformationArName</td>
                             <td>
-                                @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationArName
+                                @if (item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationArName?.Count() > 45)
+                                {
+                                    @item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationArName?.Substring(0,45)
+
+                                }
+                                else
+                                {
+                                    @item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationArName
+
+                                }
                             </td>
-                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
+                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateArName</td>
                             <td>
                                 @{
                                     var Alert_single = Model.crCasRenterContractAlert?.FirstOrDefault(x => x.CrCasRenterContractAlertNo == item.CrCasRenterContractBasicNo);
@@ -273,7 +317,7 @@ else
                                 {
                                     @localizer["Expired"]
                                 }
-                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "0")
+                                else if (@Alert_single?.CrCasRenterContractAlertContractActiviteStatus == "0" && item.CrCasRenterContractBasicStatus == "A")
                                 {
                                 @localizer["Sh_Today_Expired"]
                                 }

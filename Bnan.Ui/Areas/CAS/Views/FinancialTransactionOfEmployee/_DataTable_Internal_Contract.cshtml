@@ -2,7 +2,7 @@
 
 @using Bnan.Ui.ViewModels.CAS
 @using Bnan.Core.Extensions
-@model FinancialTransactionOfRenterVM
+@model FinancialTransactionOfEmployeeVM
 @inject IViewLocalizer localizer
 @inject IOptions<RequestLocalizationOptions> options
 @{
@@ -76,7 +76,7 @@
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Creditor"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Debtor"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_previuos_Balance"]</th>
-                <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_User_Transector"]</th>
+                <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTS_Pdf"]</th>
                 @*<th class="scroll_1" aria-label="Position: activate to sort column ascending"></th>*@
                 </tr>
@@ -89,7 +89,7 @@
                     }
                     @foreach (var item in Model.crCasAccountReceipt)
                     {
-                        @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'">*@
+                        @*<tr onclick="location.href='@Url.Action("Edit", "EmployeeContract", new { id = item.CrCasEmployeeLessorId })'">*@
                     <tr onclick="getDetails('@item.CrCasAccountReceiptNo')" style="cursor:pointer;">
                         <td id="_Nc">@no</td>
 
@@ -97,16 +97,28 @@
 
 
                         <td id="_Nc">@item.CrCasAccountReceiptDate?.ToString("dd/MM/yyyy")</td>
-                        <td >@item.CrCasAccountReceiptReferenceTypeNavigation.CrMasSupAccountReceiptReferenceEnName</td>
+                        <td >@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceEnName</td>
                         <td id="_Nc">@item.CrCasAccountReceiptPayment?.ToString("N2",CultureInfo.InvariantCulture)</td>
                         <td id="_Nc">@item.CrCasAccountReceiptReceipt?.ToString("N2",CultureInfo.InvariantCulture)</td>
-                        <td id="_Nc">@item.CrCasAccountReceiptRenterPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
-                        <td>@item.CrCasAccountReceiptUserNavigation.CrMasUserInformationEnName</td>
+                        <td id="_Nc">@item.CrCasAccountReceiptUserPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                        <td>
+                            @if(item.CrCasAccountReceiptIsPassing =="1"){
+                                    @localizer["FTE_status_Custody"]
+
+                            }
+                            else if (item.CrCasAccountReceiptIsPassing == "2")
+                            {
+                                    @localizer["FTE_status_Reserved"]
+
+                            }
+                            else if (item.CrCasAccountReceiptIsPassing == "3")
+                            {
+                                    @localizer["FTE_status_deported"]
+                            }
+                        </td>
 
                             @{
                                 var Link_pdf = item.CrCasAccountReceiptEnPdfFile;
-                                //var Link_pdf = $"/images/Company/{item.CrCasAccountReceiptLessorCode}/Branches/{item.CrCasAccountReceiptBranchCode}/English Receipt/{item.CrCasAccountReceiptNo}.pdf";
-
                                 var Target_pdf = "#";
                                 if (Link_pdf?.Count() > 2)
                                 {
@@ -146,7 +158,7 @@ else
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Creditor"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Debtor"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_previuos_Balance"]</th>
-                <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_User_Transector"]</th>
+                <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTS_Pdf"]</th>
                 @*<th class="scroll_1" aria-label="Position: activate to sort column ascending"></th>*@
             </tr>
@@ -161,23 +173,36 @@ else
 
                 @foreach (var item in Model.crCasAccountReceipt)
                 {
-                        @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'">*@
+                        @*<tr onclick="location.href='@Url.Action("Edit", "EmployeeContract", new { id = item.CrCasEmployeeLessorId })'">*@
             <tr onclick="getDetails('@item.CrCasAccountReceiptNo')" style="cursor:pointer;">
                     <td id="_Nc">@no</td>
 
                     <td id="_Nc">@item.CrCasAccountReceiptNo</td>
 
                     <td id="_Nc">@item.CrCasAccountReceiptDate?.ToString("dd/MM/yyyy")</td>
-                    <td>@item.CrCasAccountReceiptReferenceTypeNavigation.CrMasSupAccountReceiptReferenceArName</td>
+                    <td>@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceArName</td>
                     <td id="_Nc">@item.CrCasAccountReceiptPayment?.ToString("N2",CultureInfo.InvariantCulture)</td>
                     <td id="_Nc">@item.CrCasAccountReceiptReceipt?.ToString("N2",CultureInfo.InvariantCulture)</td>
-                    <td id="_Nc">@item.CrCasAccountReceiptRenterPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
-                    <td>@item.CrCasAccountReceiptUserNavigation.CrMasUserInformationArName</td>
+                <td id="_Nc">@item.CrCasAccountReceiptUserPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                <td>
+                            @if (item.CrCasAccountReceiptIsPassing == "1")
+                            {
+                                @localizer["FTE_status_Custody"]
+
+                            }
+                            else if (item.CrCasAccountReceiptIsPassing == "2")
+                            {
+                                @localizer["FTE_status_Reserved"]
+
+                            }
+                            else if (item.CrCasAccountReceiptIsPassing == "3")
+                            {
+                                @localizer["FTE_status_deported"]
+                            }
+                </td>
 
                         @{
                             var Link_pdf = item.CrCasAccountReceiptArPdfFile;
-                            //var Link_pdf = $"/images/Company/4001/Branches/102/Arabic%20Receipt/{item.CrCasAccountReceiptNo}.pdf";
-                            //var Link_pdf = $"/images/Company/{item.CrCasAccountReceiptLessorCode}/Branches/{item.CrCasAccountReceiptBranchCode}/Arabic Receipt/{item.CrCasAccountReceiptNo}.pdf";
                             var Target_pdf = "#";
                             if (Link_pdf?.Count() > 2)
                             {
@@ -255,16 +280,16 @@ else
             });
         });
     </script>
-    @*Get Renter contract Using filter*@
+    @*Get Employee contract Using filter*@
     <script>
-        //get Renter contract By Status function
-        function GetRenterContractFitler(status) {
+        //get Employee contract By Status function
+        function GetEmployeeContractFitler(status) {
             $.ajax({
                 type: "GET",
                 data: {
                     status: status
                 },
-                url: "@Url.Action("GetRenterContractsByStatus", "ReportContract", new { Area = "CAS" })",
+                url: "@Url.Action("GetEmployeeContractsByStatus", "ReportContract", new { Area = "CAS" })",
                 success: function (response) {
                     $("#dataTableR1").html(response);
                     set_basic_datatable();
@@ -276,7 +301,7 @@ else
         $("input[name='customRadio']").on("click", function () {
             // Clear the value from the search input
             $("#top-search").val("");
-            //GetRenterContractFitler($(this).val())
+            //GetEmployeeContractFitler($(this).val())
             GetUpdatedValues($(this).val());
         })
     </script>

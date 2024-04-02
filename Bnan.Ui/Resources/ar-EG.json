@@ -31,6 +31,7 @@
   "Renter": "المستأجرين",
   "Renter Data": "بينات المستأجرين",
   "Renter Contract": "عقود المستأجرين",
+  "Renter Balances1": "مديونات المستأجرين",
   "Renter Balances": "ارصده المستأجرين",
   "Contract": "العقد",
   //Accounts
@@ -607,11 +608,11 @@
   "Edit CarContract Data": "البيانات التفصيلية لعقود سيارة",
   "Edit CarContract Hint": "تمكنك هذه الصفحة من عرض البيانات التفصيلية لعقود سيارة",
 
-  //FinancialTransactionOfRenter --------
-  "FinancialTransactionOfRenter Hint": "تمكنك الصفحة من الإطلاع والبحث وعرض المستأجرين وأرصدتهم والدخول على التقرير التفصيلي للمستأجر",
-  "FinancialTransactionOfRenter Data": "الحركة المالية للمستأجرين",
-  "Edit FinancialTransactionOfRenter Data": "البيانات التفصيلية للحركة المالية للمستأجر",
-  "Edit FinancialTransactionOfRenter Hint": "تمكنك هذه الصفحة من البحث والإطلاع على تفاصيل القيود للمستأجر",
+  //RenterBalances --------
+  "RenterBalances Hint": "تمكنك الصفحة من الإطلاع والبحث وعرض المستأجرين ومديوناتهم",
+  "RenterBalances Data": "مديونات المستأجرين",
+  "Edit RenterBalances Data": "البيانات التفصيلية لمديونات المستأجر",
+  "Edit RenterBalances Hint": "تمكنك هذه الصفحة من البحث والإطلاع على تفاصيل مديونات المستأجرين",
 
   //FinancialTransactionOfSalesPoint --------
   "FinancialTransactionOfSalesPoint Hint": "تمكنك الصفحة من الإطلاع والبحث وعرض نقاط البيع وأرصدتهم والدخول على التقرير التفصيلي لنقاط البيع",
@@ -619,14 +620,22 @@
   "Edit FinancialTransactionOfSalesPoint Data": "البيانات التفصيلية للحركة المالية لنقطة بيع",
   "Edit FinancialTransactionOfSalesPoint Hint": "تمكنك هذه الصفحة من البحث والإطلاع على تفاصيل القيود لنقطة بيع",
 
+  //FinancialTransactionOfEmployee --------
+  "FinancialTransactionOfEmployee Hint": "تمكنك الصفحة من الإطلاع والبحث وعرض للموظفين وأرصدتهم والدخول على التقرير التفصيلي للموظفين",
+  "FinancialTransactionOfEmployee Data": "الحركة المالية للموظف",
+  "Edit FinancialTransactionOfEmployee Data": "البيانات التفصيلية للحركة المالية للموظف",
+  "Edit FinancialTransactionOfEmployee Hint": "تمكنك هذه الصفحة من البحث والإطلاع على تفاصيل القيود للموظف",
+
+
+
   "FTR_CurrentBalance": "الرصيد الحالي",
   "FTR_TotalCreditor": "مجموع الدائن",
   "FTR_TotalDebitor": "مجموع المدين",
   "FTR_Serial_No": "رقم القيد",
   "FTR_Date_Issue": "تاريخ القيد",
   "FTR_Reference_Type": "المرجع",
-  "FTR_Creditor": "الدائن",
-  "FTR_Debtor": "المدين",
+  "FTR_Creditor": "دائن",
+  "FTR_Debtor": "مدين",
   "FTR_previuos_Balance": "الرصيد السابق",
   "FTR_User_Transector": "الموظف",
   "FTR_Reasons": "الملاحظات",
@@ -651,6 +660,9 @@
   "FTS_IBAn": "رقم الحساب",
   "FTS_Account_Name": "اسم الحساب",
   "FTS_Pdf": "السند",
+  "FTE_status_Reserved": "محجوز",
+  "FTE_status_deported": "مرحل",
+  "FTE_status_Custody": "عهدة",
 
   //RenterIdTypes------
   "RenterIdTypes Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل نوع الهوية",
@@ -950,6 +962,7 @@
   "PaymentNameAr": "اسم طريقة الدفع عربي",
   "AcceptImg": "طريقة الدفع",
   "RejectImg": "طريقة الدفع",
+  "FTR_Credit_Limit": "الحد الإئتماني للعهدة",
 
   //Edit Payment
 

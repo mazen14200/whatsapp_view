@@ -67,12 +67,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205003", "2");
 
-            
+
             var titles = await setTitle("205", "2205003", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
             var RenterContract_Basic_All = _unitOfWork.CrCasRenterContractBasic.FindAll(x => (x.CrCasRenterContractBasicStatus == Status.Active || x.CrCasRenterContractBasicStatus == Status.Expire) && x.CrCasRenterContractBasicLessor == currentUser.CrMasUserInformationLessor, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic4", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).OrderByDescending(x => x.CrCasRenterContractBasicRenterId).ThenByDescending(y => y.CrCasRenterContractBasicIssuedDate).ToList();
-            
+
             //--------------------------------
 
             var RenterContract_Basic_All_Date = _unitOfWork.CrCasRenterContractBasic.FindAll(x => (x.CrCasRenterContractBasicStatus == Status.Active || x.CrCasRenterContractBasicStatus == Status.Expire) && x.CrCasRenterContractBasicLessor == currentUser.CrMasUserInformationLessor, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic4", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic5" }).OrderByDescending(y => y.CrCasRenterContractBasicIssuedDate).ToList();
@@ -90,7 +90,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     //var UserLoginbyDate_filtered = UserLoginbyDateAll1.Where(x => x.CrMasUserLoginEntryDate <= lastDate && x.CrMasUserLoginEntryDate >= startDate);
                 }
             }
-            var query_Alert = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertLessor == currentUser.CrMasUserInformationLessor ).ToList(); 
+            var query_Alert = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertLessor == currentUser.CrMasUserInformationLessor).ToList();
 
             ReportActiveContractVM reportActiveContractVM = new ReportActiveContractVM();
             reportActiveContractVM.crCasRenterContractBasic = RenterContract_Basic_All;
@@ -105,7 +105,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
 
         }
-        
+
         [HttpGet]
         public async Task<PartialViewResult> GetAllContractsByDate_statusAsync(string _max, string _mini, string status)
         {
@@ -145,12 +145,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     if (status == "today")
                     {
                         var query_Alert = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertLessor == currentUser.CrMasUserInformationLessor && x.CrCasRenterContractAlertContractActiviteStatus == "0").ToList();
-                        RenterContract_Basic_All = RenterContract_Basic_All.Where(x => query_Alert.Any(y => y.CrCasRenterContractAlertNo == x.CrCasRenterContractBasicNo)).ToList();
+                        RenterContract_Basic_All = RenterContract_Basic_All.Where(x => query_Alert.Any(y => y.CrCasRenterContractAlertNo == x.CrCasRenterContractBasicNo && x.CrCasRenterContractBasicStatus == "A")).ToList();
                     }
                     else if (status == "tomorrow")
                     {
-                        var query_Alert = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertLessor == currentUser.CrMasUserInformationLessor && x.CrCasRenterContractAlertContractActiviteStatus=="1").ToList();
-                        RenterContract_Basic_All = RenterContract_Basic_All.Where(x => query_Alert.Any(y=>y.CrCasRenterContractAlertNo==x.CrCasRenterContractBasicNo)).ToList();
+                        var query_Alert = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertLessor == currentUser.CrMasUserInformationLessor && x.CrCasRenterContractAlertContractActiviteStatus == "1").ToList();
+                        RenterContract_Basic_All = RenterContract_Basic_All.Where(x => query_Alert.Any(y => y.CrCasRenterContractAlertNo == x.CrCasRenterContractBasicNo)).ToList();
                     }
                     else if (status == "after_longTime")
                     {
@@ -173,7 +173,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             }
             return PartialView();
         }
-   
+
 
         public IActionResult SuccesssMessageReport1()
         {
@@ -186,7 +186,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             return RedirectToAction("Index");
 
         }
- 
+
 
 
 
