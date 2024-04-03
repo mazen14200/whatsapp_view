@@ -46,6 +46,14 @@
   "Reports": "Reports",
   "Administrative Procedures": "Administrative Procedures",
   "Finacial Procedures": "Finacial Procedures",
+  "ActiveContracts": "Active Contracts",
+  "DriverContracts": "Driver Contracts",
+  "EmployeesContracts": "Employees Contracts",
+  "CarsContracts": "Cars Contracts",
+  "TAMMSystemMenu": "TAMM System Menu",
+  "FinancialTransactionOfRenter": "Financial Transaction Of Renter",
+  "FinancialTransactionOfSalesPoint": "Financial Transaction Of SalesPoint",
+  "FinancialTransactionOfEmployees": "Financial Transaction Of Employees",
   "Contracts Report": "Contracts",
   "Financial Transaction Of Renter": "Financial Transaction Of Renter",
   "Financial Transaction Of Sales Point": "Financial Transaction Of Sales Point",
@@ -1702,6 +1710,7 @@
   "DayQuarter": "A quarter of a day",
   "EndOfSettlement": "End Of Settlement",
   "SettlementTiming": "Settlement Timing",
-  "SettlementMechanism": "Settlement Mechanism"
+  "SettlementMechanism": "Settlement Mechanism",
+  "Total": "Total"
 
 }

@@ -72,11 +72,13 @@ const hideErrorMessage = (field) => {
               next_fs = current_fs.nextElementSibling.nextElementSibling;
 
           } else if (!ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
-            next_fs = current_fs.nextElementSibling.nextElementSibling.nextElementSibling;
+              next_fs = current_fs.nextElementSibling.nextElementSibling.nextElementSibling;
+              $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
+              $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling.nextElementSibling)).addClass("active");
           }
           else{
               next_fs = current_fs.nextElementSibling;
-
+              $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
           }
         }
 

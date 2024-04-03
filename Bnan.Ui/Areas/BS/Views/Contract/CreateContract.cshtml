@@ -985,12 +985,12 @@ else
                                                  class="next action-button"
                                                  style="vertical-align: middle; margin-right: 10px;">
                                             <input type="button" name="next" class="next action-button"
-                                                   value="التالي" />
+                                                   value="@localizer["Next"]" />
                                         </div>
                                         <div class="button-card">
                                             <input type="button" name="previous"
                                                    class="previous action-button-previous"
-                                                   value="السابق" />
+                                                   value="@localizer["Previous"]" />
                                             <img src="~/BranchSys/CreateContract/Vector.png" alt="Button Image"
                                                  class="previous action-button-previous"
                                                  style="vertical-align: middle; margin-right: 10px;">
@@ -1348,7 +1348,7 @@ else
                                                             <option selected disabled></option>
                                                             @foreach (var payment in Model.PaymentMethods)
                                                             {
-                                                                @if ("@requestCulture?.RequestCulture.UICulture.Name" != "en-US")
+                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
                                                                 {
                                                                     <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
                                                                 }
@@ -3568,11 +3568,12 @@ else
             }
             // Populate the tbody with the received data
             optionsList.forEach(function (option) {
+                var nameLabel = "@requestCulture?.RequestCulture.UICulture.Name" === "en-US" ? option.enName : option.arName;
                 var row = $("<tr>");
                 row.append("<td class='text-center'>" + option.optionsValue + "</td>");
                 row.append("<td class='tabel-data-checkbox-td-Add'>" +
                     "<label class='Delivery-to-another-branch' for='checkbox-" + option.optionsNo + "'>" +
-                    option.arName + "</label>" +
+                    nameLabel + "</label>" +
                     "<input class='Delivery-to-another-branch-input ChkChoicesList' type='checkbox' name='Additions' " +
                     "value='" + option.optionsCode + "' data-val='" + option.optionsValue + "' id='checkbox - " + option.optionsNo + "'>" +
                     "</td>");
@@ -3582,7 +3583,7 @@ else
             // Add the total row
             var totalRow = $("<tr>");
             totalRow.append("<td class='text-center' id='TotalChoices'>0.00</td>");
-            totalRow.append("<td class='text-center'>المجموع</td>");
+            totalRow.append("<td class='text-center'>@localizer["Total"]</td>");
             tbodyContainer.append(totalRow);
         }
         function getCarChoices(priceNumber) {
@@ -3668,10 +3669,11 @@ else
             }
             // Populate the tbody with the received data
             additionalList.forEach(function (add) {
+                var nameLabel = "@requestCulture?.RequestCulture.UICulture.Name" === "en-US" ? add.enName : add.arName;
                 var row = $("<tr>");
                 row.append("<td class='text-center'>" + add.addValue + "</td>");
                 row.append("<td class='tabel-data-checkbox-td-Add'>" +
-                    "<label class='Delivery-to-another-branch ' for='checkbox-" + add.AddNo + "'>" + add.arName + "</label>"
+                    "<label class='Delivery-to-another-branch ' for='checkbox-" + add.AddNo + "'>" + nameLabel + "</label>"
                     +
                     "<input class='Delivery-to-another-branch-input ChkAddList' type='checkbox' name='Additions' " + "value='" + add.addCode + "' data-val='" + add.addValue + "' id='checkbox-" + add.addNo + "'>" +
                     "</td>");
@@ -3681,7 +3683,7 @@ else
             // Add the total row
             var totalRow = $("<tr>");
             totalRow.append("<td class='text-center' id='TotalAdditionals'>0.00</td>");
-            totalRow.append("<td class='text-center'>المجموع</td>");
+            totalRow.append("<td class='text-center'>@localizer["Total"]</td>");
             tbodyContainer.append(totalRow);
         }
         // Function to get CarAdditional data
@@ -4243,7 +4245,7 @@ else
             }
         };
 
-        // Function to send an image and PDF to WhatsApp
+        // Function to send an image and Ar PDF to WhatsApp
         const sendArReceiptToWhatsApp = async () => {
             const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArCatchReceipt";
             const imagePath = imageLessor.replace('~', '');
@@ -4465,18 +4467,13 @@ else
                 var tTotalDiscount = calculateTotalDiscountAmount(tTotal, DiscountInput);
                 var tTotalAfterDiscount = tTotal - tTotalDiscount;
                 var tTotalTax = (tTotalAfterDiscount) * (TaxPercent / 100);
-                console.log("tTotal", tTotal);
-                console.log("tTotalDiscount", tTotalDiscount);
-                console.log("tTotalAfterDiscount", tTotalAfterDiscount);
-                console.log("tTotalTax", tTotalTax);
-
+                var TotalAmountMinisPerviousBalance = parseFloat(TotalAmount) + parseFloat(RenterInformation.availableBalance);
                 // // الاجمالي
-
                 ctx.fillText(tTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 970, 2250);
                 ctx.fillText(tTotalDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1270, 2250);
                 ctx.fillText(tTotalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1560, 2250);
                 ctx.fillText(tTotalTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1880, 2250);
-                ctx.fillText(AmountRequired.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 2180, 2250);
+                ctx.fillText(TotalAmountMinisPerviousBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 310, 2250);
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
 
 
@@ -4514,6 +4511,273 @@ else
 
             return yHeight + 88; // Update yHeight for the next item
         }
+
+        // Function to send an image and En PDF to WhatsApp
+        const sendEnReceiptToWhatsApp = async () => {
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageEnCatchReceipt";
+            const imagePath = imageLessor.replace('~', '');
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
+            const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
+            const mobileNo = '@user.CrMasUserInformationMobileNo';     // Assuming this variable contains the mobile number.
+            const phoneNumber = callingKey + mobileNo;
+            //Data Receipt
+            // Gregorian (Miladi) Date
+            const miladiDate = new Date();
+            const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).split('/').join('/');
+            const hijriDateString = formatHijriEnDate(miladiDate);
+
+            // First In Page
+            const contractNo = "@ViewBag.ContractNo";
+            const AccountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const referenceType = "Create Contract";
+            const RenterName = decodeHTMLEntities(RenterInformation.personalEnName);
+            const CarName = CarInformation.carInformation.crCasCarInformationConcatenateEnName;
+            // last in page
+            const balance = RenterInformation.availableBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            var DiscountInput = document.getElementById("Discount_Input").value;
+            var AmountPayedInput = document.getElementById("AmountPayed").value;
+            const discountRate = parseFloat(DiscountInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const TaxPercent = parseFloat(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const AmountRequired = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            var selectElement = document.getElementById("Contract_PaymentMethod");
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            // Get the text of the selected option
+            const selectedText = selectedOption.textContent || selectedOption.innerText;
+            //get Data Director lessor and branch and get renter and user
+            var userName = decodeHTMLEntities("@user.CrMasUserInformationEnName");
+            var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorEnName");
+            var directorOfBranch = decodeHTMLEntities("@Model.CrCasBranchInformation.CrCasBranchInformationDirectorEnName");
+            var reasonPayment = document.getElementById("FormControl-last-Textarea").value;
+            // Signture Image
+            var signture = "@user.CrMasUserInformationSignature";
+            const signturePath = signture.replace('~', '');
+            var signatureImg = new Image();
+            signatureImg.src = signturePath;
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            // Get Image And Text On
+            // Read the image file as a Blob
+            const responseImage = await fetch(imagePath);
+            const blob = await responseImage.blob();
+            // Prepare form data
+            const formData = new FormData();
+            formData.append("number", phoneNumber); // Append the recipient's phone number
+            formData.append("message", " "); // Append the message
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                ctx.drawImage(img, 0, 0);
+                ctx.font = "bold 50px serif";
+                ctx.textAlign = "left";
+                ctx.fillStyle = "black";
+                // Receipt and type and renter and car name
+                ctx.fillText(AccountReceiptNo, canvas.width - 2370, 610);
+                ctx.fillText(RenterName, canvas.width - 2360, 1070);
+                ctx.fillText(CarName, canvas.width - 2360, 1180);
+
+                ctx.font = "bold 42px serif";
+                ctx.fillText(referenceType, canvas.width - 2160, 895);
+                ctx.fillText(contractNo, canvas.width - 2000, 980);
+                // The Table
+                var YHeight = 1380;
+                var DiscountInput = document.getElementById("Discount_Input").value;
+                var daysNo = document.getElementById('dayNo').value;
+                var TaxPercent = parseInt(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate);
+                // The payed Information
+                const discountText = '%' + DiscountInput.toString();
+                const taxText = '%' + TaxPercent.toString();
+
+                ctx.fillText(balance, canvas.width - 2040, 2392);
+                ctx.fillText(discountText, canvas.width - 2090, 2485);
+                ctx.fillText(taxText, canvas.width - 2180, 2573);
+                ctx.fillText(AmountRequired, canvas.width - 2020, 2660);
+                ctx.fillText(AmountPayed, canvas.width - 2100, 2750);
+                ctx.fillText(selectedText, canvas.width - 2010, 2840);
+                ctx.fillText(reasonPayment, canvas.width - 2170, 2930);
+                ctx.font = "bold 35px serif";
+                //Date and contract no
+                ctx.fillText(hijriDateString, canvas.width - 2300, 668);
+                ctx.fillText(miladiDateString, canvas.width - 2270, 722);
+                /////////////////////////ForTest/////////////////
+                const hours = miladiDate.getHours().toString().padStart(2, '0');
+                const minutes = miladiDate.getMinutes().toString().padStart(2, '0');
+                const seconds = miladiDate.getSeconds().toString().padStart(2, '0');
+                const timeString = `${hours}:${minutes}:${seconds}`;
+                ctx.fillText(timeString, canvas.width - 2270, 760);
+                ///////////////////////////
+
+                console.log("CarInformation.carPrice.crCasPriceCarBasicDailyRent", CarInformation.carPrice.crCasPriceCarBasicDailyRent)
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
+                if (parseFloat(CarInformation.carPrice.crCasPriceCarBasicDailyRent) > 0) {
+                    console.log("CarInformation.carPrice.crCasPriceCarBasicDailyRent", CarInformation.carPrice.crCasPriceCarBasicDailyRent)
+                    YHeight = calculateAndDrawEn(ctx, canvas, "Rent", CarInformation.carPrice.crCasPriceCarBasicDailyRent, daysNo, DiscountInput, TaxPercent, YHeight);
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Auth
+                var InFeesTamm = CarInformation.carPrice.crCasCarPriceBasicInFeesTamm;
+                var OutFeesTamm = CarInformation.carPrice.crCasCarPriceBasicOutFeesTamm;
+                var OutFeesTammInput = document.getElementById('Delegate-out');
+                var FeesTammValue = 0;
+                if (OutFeesTammInput.checked) {
+                    if (parseFloat(OutFeesTamm) != null) {
+                        FeesTammValue = parseFloat(OutFeesTamm);
+                    }
+                    else {
+                        FeesTammValue = 0;
+                    }
+                }
+                else {
+                    if (parseFloat(InFeesTamm) != null) {
+                        FeesTammValue = parseFloat(InFeesTamm);
+                    }
+                    else {
+                        FeesTammValue = 0;
+                    }
+                }
+                if (parseFloat(FeesTammValue) > 0) {
+                    YHeight = calculateAndDrawEn(ctx, canvas, "Delegation", FeesTammValue, 1, DiscountInput, TaxPercent, YHeight);
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Auth
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Advantages
+                if (parseFloat(AdvantagesValue) > 0) {
+                    YHeight = calculateAndDrawEn(ctx, canvas, "Features", AdvantagesValue, daysNo, DiscountInput, TaxPercent, YHeight);
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Advantages
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Additional Driver
+                var additionalDriver = document.getElementById("addational-driver");
+                var additionalDriverValue = 0;
+                if (additionalDriver.checked) {
+                    var AddDriverValue = CarInformation.carPrice.crCasPriceCarBasicAdditionalDriverValue;
+                    if (parseInt(AddDriverValue) != null) {
+                        additionalDriverValue = parseFloat(AddDriverValue);
+                    }
+                    else {
+                        additionalDriverValue = 0;
+                    }
+                }
+                if (additionalDriverValue > 0) {
+                    YHeight = calculateAndDrawEn(ctx, canvas, "Add Driver", additionalDriverValue, 1, DiscountInput, TaxPercent, YHeight);
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Additional Driver
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Private Driver
+                var privateDriverRadio1 = document.getElementById("PrivateDriver");
+                var privateDriverID = $("#driver-dropdown").val();
+                var privateDriverValue = 0;
+                if (privateDriverRadio1.checked && privateDriverID != null) {
+                    var privateDriver = CarInformation.carPrice.crCasPriceCarBasicPrivateDriverValue;
+                    if (privateDriver != null) {
+                        privateDriverValue = parseFloat(privateDriver);
+                    }
+                    else {
+                        privateDriverValue = 0;
+                    }
+                }
+                else {
+                    privateDriverValue = 0;
+                }
+                if (privateDriverValue > 0) {
+                    YHeight = calculateAndDrawEn(ctx, canvas, "Private Driver", privateDriverValue, daysNo, DiscountInput, TaxPercent, YHeight);
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Private Driver
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// TotalChoices
+                var TotalChoices = $("#TotalChoices").text();
+                var choicesValue = 0;
+                if (TotalChoices != null && TotalChoices != 0 && TotalChoices != "" && TotalChoices != undefined) {
+                    choicesValue = parseFloat(TotalChoices);
+                }
+                else {
+                    choicesValue = 0;
+                }
+                if (choicesValue > 0) {
+                    YHeight = calculateAndDrawEn(ctx, canvas, "Options", choicesValue, daysNo, DiscountInput, TaxPercent, YHeight);
+                }
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////TotalChoices
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// TotalAdditional
+
+                var TotalAdditionals = $("#TotalAdditionals").text();
+                var additionalValue = 0;
+                if (TotalAdditionals != null && TotalAdditionals != 0 && TotalAdditionals != "" && TotalAdditionals != undefined) {
+                    additionalValue = parseFloat(TotalAdditionals);
+                }
+                else {
+                    additionalValue = 0;
+                }
+                if (additionalValue > 0) {
+                    YHeight = calculateAndDrawEn(ctx, canvas, "Additionals", additionalValue, 1, DiscountInput, TaxPercent, YHeight);
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// TotalAdditional
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
+                var tTotal = calculateTotalAmountPerDay(parseFloat(CarInformation.carPrice.crCasPriceCarBasicDailyRent), parseFloat(FeesTammValue), parseFloat(AdvantagesValue), parseFloat(privateDriverValue), parseFloat(additionalDriverValue), parseFloat(additionalValue), parseFloat(choicesValue), daysNo);
+                var tTotalDiscount = calculateTotalDiscountAmount(tTotal, DiscountInput);
+                var tTotalAfterDiscount = tTotal - tTotalDiscount;
+                var tTotalTax = (tTotalAfterDiscount) * (TaxPercent / 100);
+                var TotalAmountMinisPerviousBalance = parseFloat(TotalAmount) + parseFloat(RenterInformation.availableBalance);
+                // // الاجمالي
+                ctx.fillText(tTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1510, 2250);
+                ctx.fillText(tTotalDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1200, 2250);
+                ctx.fillText(tTotalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 910, 2250);
+                ctx.fillText(tTotalTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 620, 2250);
+                ctx.fillText(TotalAmountMinisPerviousBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 310, 2250);
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
+
+
+
+
+
+                // director and renter and user
+                ctx.fillText(directorOfLessor, canvas.width - 2150, 3050);
+                ctx.fillText(userName, canvas.width - 1110, 3050);
+                ctx.fillText(directorOfBranch, canvas.width - 1150, 3180);
+                ctx.drawImage(signatureImg, canvas.width - 2200, 3125, 200, 100);
+                canvas.toBlob(async function (blob) {
+                    formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
+                    var message = `Dear / ${RenterName}, you can review the invoice by downloading the attached file.`
+                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message);
+                }, 'image/png');
+            };
+            img.src = URL.createObjectURL(blob);
+        };
+        function calculateAndDrawEn(ctx, canvas, itemName, itemValue, days, discountInput, taxPercent, yHeight) {
+            var itemTotal = parseFloat(itemValue) * parseInt(days);
+            var discountValue = itemTotal * (parseFloat(discountInput) / 100);
+            var totalAfterDiscount = itemTotal - discountValue;
+            var taxValue = totalAfterDiscount * (taxPercent / 100);
+            var totalActual = parseFloat(totalAfterDiscount) + parseFloat(taxValue);
+            ctx.fillText(itemName, canvas.width - 2300, yHeight);
+            ctx.fillText(itemValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1950, yHeight);
+            ctx.fillText(days, canvas.width - 1700, yHeight);
+            ctx.fillText(itemTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1510, yHeight);
+            ctx.fillText(discountValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1200, yHeight);
+            ctx.fillText(totalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 910, yHeight);
+            ctx.fillText(taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 620, yHeight);
+            ctx.fillText(totalActual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 310, yHeight);
+
+            return yHeight + 88; // Update yHeight for the next item
+        }
+
+
+
+
+
+
+
         function calculateTotalAmountPerDay(rent, auth, feature, privateDriver, additionalDriver, additionals, choices, days) {
             var daysNo = parseInt(days);
             var total = (rent * daysNo) + (auth) + (feature * daysNo) + (additionalDriver) + (privateDriver * daysNo) + (additionals) + (choices * daysNo);
@@ -4547,10 +4811,11 @@ else
                         if (parseFloat(AmountPayed) > 0) {
                             if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
                                 $("#language").val("en");
+                                sendEnReceiptToWhatsApp();
                             }
                             else {
-                                sendArReceiptToWhatsApp();
                                 $("#language").val("ar");
+                                sendArReceiptToWhatsApp();
                             }
                         }
                         setTimeout(function () {
@@ -4717,6 +4982,9 @@ else
             const options = { weekday: 'long', day: 'numeric', year: 'numeric', month: 'long', calendar: 'islamic-umalqura' };
             return date.toLocaleDateString('ar-SA', options).replace(/هـ/g, ''); // Remove "هـ" suffix
         }
-
+        function formatHijriEnDate(date) {
+            const options = { weekday: 'long', day: 'numeric', year: 'numeric', month: 'long', calendar: 'islamic-umalqura' };
+            return date.toLocaleDateString('en-US-u-ca-islamic-umalqura', options).replace(/AH/g, ''); // Remove "AH" suffix
+        }
     </script>
 }
