@@ -18,6 +18,6 @@ namespace Bnan.Core.Interfaces
         Task<bool> UpdateBranchValidity(string BranchCode, string LessorCode, string UserId, string PaymentMethod, decimal AmountPaid);
         Task<bool> UpdateUserBalance(string BranchCode, string LessorCode, string UserId, string PaymentMethod, decimal AmountPaid);
         Task<bool> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo,
-                                     decimal TotalPayed, string RenterId, string UserId, string PassingType, string Reasons);
+                                     decimal TotalPayed, string RenterId, string UserId, string PassingType, string Reasons,string SavePdf,string language);
     }
 }
