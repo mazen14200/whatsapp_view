@@ -105,7 +105,8 @@ namespace Bnan.Inferastructure.Repository
         public IGenric<CrMasSysEvaluation> CrMasSysEvaluation { get; private set; }
         public IGenric<CrMasSupCarBrand> CrMasSupCarBrand { get; private set; }
         public IGenric<CrCasRenterContractStatistic> CrCasRenterContractStatistic { get; private set; }
-
+        public IGenric<CrCasAccountContractTaxOwed> CrCasAccountContractTaxOwed { get; private set; }
+        
 
         public UnitOfWork(BnanKSAContext context)
         {
@@ -191,8 +192,9 @@ namespace Bnan.Inferastructure.Repository
             CrMasSysEvaluation = new BaseRepository<CrMasSysEvaluation>(_context);
             CrMasSupCarBrand = new BaseRepository<CrMasSupCarBrand>(_context);
             CrCasRenterContractStatistic = new BaseRepository<CrCasRenterContractStatistic>(_context);
-        }
-        public int Complete()
+            CrCasAccountContractTaxOwed = new BaseRepository<CrCasAccountContractTaxOwed>(_context);
+    }
+    public int Complete()
         {
             return _context.SaveChanges();
         }

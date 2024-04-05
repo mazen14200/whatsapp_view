@@ -67,17 +67,17 @@
     
        <div class="col-sm-12 scroll">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1566px; ">
 
             <div>
                 <tr role="row">
                     <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
-                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
-                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
-                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
-                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
-                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                <th class="scroll_1" style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
+                <th class="scroll_1" style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
+                <th class="scroll_1" style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
+                <th class="scroll_1" aria-label="Position: activate to sort column ascending"> @localizer["Contract_Value"]</th>
+                <th class="scroll_1" style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                     <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
                 </tr>
             </div>
@@ -88,20 +88,27 @@
                 }
                 @foreach (var item in ViewData["Data_Table"] as List<CrCasRenterContractBasic>)
                 {
-                    @if (item.CrCasRenterContractBasicStatus == @Status.Deleted || item.CrCasRenterContractBasicStatus == @Status.Hold)
+                    @if (item.CrCasRenterContractBasicStatus == @Status.Expire || item.CrCasRenterContractBasicStatus == @Status.Deleted)
                     {
                         @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'" style="cursor:pointer;color:red">*@
                         <tr style="color:red">
                             <td id="_Nc">@no</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
-                            <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
+                            @if (item.CrCasRenterContractBasicCopy > 0)
+                            {
+                        <td id="_Nc">@item.CrCasRenterContractBasicNo <em style='color: red;font-style:normal'> &ensp;(@item.CrCasRenterContractBasicCopy)</em></td>
+                            }
+                            else
+                            {
+                        <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
+                            }
+                    <td style="text-align:start">@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align:start">@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align:start">@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
 
                     <td id="_Nc">
                                 @item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)
                     </td>
-                            <td>
+                    <td style="text-align:start">
 
                                 @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
                                 {
@@ -129,8 +136,20 @@
                                 }
                             </td>
 
-                            <td id="_Nc">@localizer["Contract"]</td>
 
+                            @{
+                                var Link_pdf = item.CrCasRenterContractBasicEnPdfFile;
+                                var Target_pdf = "#";
+                                if (Link_pdf?.Count() > 2)
+                                {
+                                    Link_pdf = Link_pdf.Replace("~", "");
+                                    Target_pdf = "_blank";
+                                }
+                            }
+
+                    <td>
+                        <a href="@Link_pdf" target="@Target_pdf" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="Link Pdf"></a>
+                    </td>
                         </tr>
                     }
                     else
@@ -138,15 +157,22 @@
                         @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'">*@
                         <tr  >
                             <td id="_Nc">@no</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
-                            <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
+                            @if (item.CrCasRenterContractBasicCopy > 0)
+                            {
+                        <td id="_Nc">@item.CrCasRenterContractBasicNo <em style='color: red;font-style:normal'> &ensp;(@item.CrCasRenterContractBasicCopy)</em></td>
+                            }
+                            else
+                            {
+                        <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
+                            }
+                    <td style="text-align:start">@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align:start">@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align:start">@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
 
                             <td id="_Nc">
                                   @item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)
                             </td>
-                            <td>
+                    <td style="text-align:start">
 
                                 @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
                                 {
@@ -174,8 +200,20 @@
                                 }
                             </td>
 
-                            <td id="_Nc">@localizer["Contract"]</td>
 
+                            @{
+                                var Link_pdf = item.CrCasRenterContractBasicEnPdfFile;
+                                var Target_pdf = "#";
+                                if (Link_pdf?.Count() > 2)
+                                {
+                                    Link_pdf = Link_pdf.Replace("~", "");
+                                    Target_pdf = "_blank";
+                                }
+                            }
+
+                    <td>
+                        <a href="@Link_pdf" target="@Target_pdf" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="Link Pdf"></a>
+                    </td>
                         </tr>
                     }
                     no++;
@@ -188,16 +226,16 @@ else
 {
     <div class="col-sm-12 scroll">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1566px; ">
             <div>
                 <tr role="row">
                     <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterContractId"]</th>
-                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Start_Contract"]</th>
-                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["End_Contract"]</th>
-                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
+                <th class="scroll_1" style="text-align:start" aria-label="Position: activate to sort column ascending"> @localizer["Start_Contract"]</th>
+                <th class="scroll_1" style="text-align:start" aria-label="Position: activate to sort column ascending"> @localizer["End_Contract"]</th>
+                    <th class="scroll_1" style="text-align:start" aria-label="Position: activate to sort column ascending"> @localizer["Car_Name"]</th>
                     <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
-                    <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                <th class="scroll_1" style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                     <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
                 </tr>
             </div>
@@ -211,19 +249,26 @@ else
                 
                 @foreach (var item in ViewData["Data_Table"] as List<CrCasRenterContractBasic>)
                 {
-                    @if (item.CrCasRenterContractBasicStatus == @Status.Deleted || item.CrCasRenterContractBasicStatus == @Status.Hold)
+                    @if (item.CrCasRenterContractBasicStatus == @Status.Expire || item.CrCasRenterContractBasicStatus == @Status.Deleted)
                     {
                         @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'" style="cursor:pointer;color:red">*@
                         <tr style="color:red">
                             <td id="_Nc">@no</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
-                            <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
+                            @if (item.CrCasRenterContractBasicCopy > 0)
+                            {
+                        <td id="_Nc">@item.CrCasRenterContractBasicNo <em style='color: red;font-style:normal'> &ensp;(@item.CrCasRenterContractBasicCopy)</em></td>
+                            }
+                            else
+                            {
+                        <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
+                            }
+                    <td style="text-align:start">@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align:start">@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align:start">@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
 
                             <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)</td>
-                            
-                            <td>
+
+                    <td style="text-align:start">
 
                                 @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
                                 {
@@ -251,8 +296,21 @@ else
                                 }
                             </td>
 
-                            <td id="_Nc">@localizer["Contract"]</td>
-                            @*<td id="_Nc">@ViewBag.v1</td>*@
+
+                            @{
+                                var Link_pdf = item.CrCasRenterContractBasicArPdfFile;
+                                var Target_pdf = "#";
+                                if (Link_pdf?.Count() > 2)
+                                {
+                                    Link_pdf = Link_pdf.Replace("~", "");
+                                    Target_pdf = "_blank";
+                                }
+                            }
+
+                    <td>
+                        <a href="@Link_pdf" target="@Target_pdf" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="Link Pdf"></a>
+                    </td>
+                    @*<td id="_Nc">@ViewBag.v1</td>*@
                             
 
                         </tr>
@@ -262,15 +320,22 @@ else
                         @*<tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'">*@
                         <tr>
                             <td id="_Nc">@no</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
-                            <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
+                            @if (item.CrCasRenterContractBasicCopy > 0)
+                            {
+                        <td id="_Nc">@item.CrCasRenterContractBasicNo <em style='color: red;font-style:normal'> &ensp;(@item.CrCasRenterContractBasicCopy)</em></td>
+                            }
+                            else
+                            {
+                        <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
+                            }
+                    <td style="text-align:start">@item.CrCasRenterContractBasicExpectedStartDate?.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align:start">@item.CrCasRenterContractBasicExpectedEndDate?.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align:start">@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
 
                             <td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)</td>
 
 
-                            <td>
+                    <td style="text-align:start">
 
                                 @if (@item.CrCasRenterContractBasicStatus == @Status.Active)
                                 {
@@ -298,8 +363,20 @@ else
                                 }
                             </td>
 
-                            <td id="_Nc">@localizer["Contract"]</td>
-                            @*<td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal</td>*@
+                            @{
+                                var Link_pdf = item.CrCasRenterContractBasicArPdfFile;
+                                var Target_pdf = "#";
+                                if (Link_pdf?.Count() > 2)
+                                {
+                                    Link_pdf = Link_pdf.Replace("~", "");
+                                    Target_pdf = "_blank";
+                                }
+                            }
+
+                    <td>
+                        <a href="@Link_pdf" target="@Target_pdf" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="Link Pdf"></a>
+                    </td>
+                    @*<td id="_Nc">@item.CrCasRenterContractBasicExpectedTotal</td>*@
                         </tr>
                     }
                     no++;

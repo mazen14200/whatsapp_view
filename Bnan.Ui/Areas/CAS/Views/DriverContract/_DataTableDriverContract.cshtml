@@ -23,18 +23,18 @@
     
        <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
 
             <thead>
                 <tr role="row">
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["DriverContractId"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["DateLast_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
+                    <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["DateLast_Contract"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
+                    <th style="text-align:start" data-orderable="false" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,15 +49,15 @@
                     <tr onclick="location.href='@Url.Action("Edit", "DriverContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId })'" >
                         <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId</td>
-                            <td>@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationEnName</td>
-                            <td>@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationLastContract?.ToString("dd/MM/yyyy")</td>
+                        <td style="text-align:start">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationEnName</td>
+                        <td style="text-align:start">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationLastContract?.ToString("dd/MM/yyyy")</td>
 
                             <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount</td>
                             <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationDaysCount</td>
-                            <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationTraveledDistance</td>
+                        <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationTraveledDistance?.ToString("N2",CultureInfo.InvariantCulture)</td>
 
-                            
-                            <td>
+
+                        <td style="text-align:start">
 
                                 @if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Active)
                                 {
@@ -93,17 +93,17 @@ else
 {
     <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
             <thead>
                 <tr role="row">
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["DriverContractId"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["DateLast_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["DateLast_Contract"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
+                    <th data-orderable="false" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -116,17 +116,17 @@ else
 
                     @*<tr onclick="location.href='@Url.Action("Edit", "DriverContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId })'" style="cursor:pointer;color:red">*@
                     <tr onclick="location.href='@Url.Action("Edit", "DriverContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId })'">
-                        <td id="_Nc">@no</td>
-                        <td id="_Nc">@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId</td>
-                        <td>@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationArName</td>
-                        <td>@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationLastContract?.ToString("dd/MM/yyyy")</td>
+                        <td id="_Nc">&emsp; @no</td>
+                        <td id="_Nc">&emsp; @item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationId</td>
+                        <td style="text-align:start">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationArName</td>
+                        <td style="text-align:start">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationLastContract?.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture)</td>
 
-                        <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount</td>
-                        <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationDaysCount</td>
-                        <td id="_Nc">@item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationTraveledDistance</td>
+                        <td id="_Nc">&emsp; @item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationContractCount</td>
+                        <td id="_Nc">&emsp; @item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationDaysCount</td>
+                        <td id="_Nc">&emsp; @item.CrCasRenterContractBasic4?.CrCasRenterPrivateDriverInformationTraveledDistance?.ToString("N2",CultureInfo.InvariantCulture)</td>
 
-                        
-                        <td>
+
+                        <td style="text-align:start">
 
                             @if (@item.CrCasRenterContractBasic4.CrCasRenterPrivateDriverInformationStatus == Status.Active)
                             {

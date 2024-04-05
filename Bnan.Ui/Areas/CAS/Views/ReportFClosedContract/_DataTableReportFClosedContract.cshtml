@@ -45,7 +45,7 @@
      <div class="col-sm-12"> 
         @* For-scrolling *@
 
-            <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+            <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
                 <thead>
                 <tr>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
@@ -53,7 +53,7 @@
                     <th aria-label="Position: activate to sort column ascending">@localizer["His_Date"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,15 +68,34 @@
                     <tr id="Tr_Color" >
                         @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
                         <td id="_Nc">@no</td>
-                        <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
+                        @if (item.CrCasRenterContractBasicCopy > 0)
+                        {
+                            <td id="_Nc">@item.CrCasRenterContractBasicNo <em style='color: red;font-style:normal'> &ensp;(@item.CrCasRenterContractBasicCopy)</em></td>
+                        }
+                        else
+                        {
+                            <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
+                        }
                         <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
                         <td>
                             @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
                         </td>
                         <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateEnName</td>
 
-                        <td>   </td>
 
+                        @{
+                            var Link_pdf = item.CrCasRenterContractBasicEnPdfFile;
+                            var Target_pdf = "#";
+                            if (Link_pdf?.Count() > 2)
+                            {
+                                Link_pdf = Link_pdf.Replace("~", "");
+                                Target_pdf = "_blank";
+                            }
+                        }
+
+                        <td id="_Nc">
+                            <a href="@Link_pdf" target="@Target_pdf" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="Link Pdf"></a>
+                        </td>
 
                     </tr>
 
@@ -93,7 +112,7 @@ else
 
     <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
             <thead>
                 <tr>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
@@ -101,7 +120,7 @@ else
                     <th aria-label="Position: activate to sort column ascending">@localizer["His_Date"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -116,15 +135,34 @@ else
                     <tr id="Tr_Color" >
                         @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
                         <td id="_Nc">@no</td>
-                        <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
+                        @if (item.CrCasRenterContractBasicCopy > 0)
+                        {
+                            <td id="_Nc">@item.CrCasRenterContractBasicNo <em style='color: red;font-style:normal'> &ensp;(@item.CrCasRenterContractBasicCopy)</em></td>
+                        }
+                        else
+                        {
+                            <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
+                        }
                         <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
                         <td>
                             @item.CrCasRenterContractBasic5.CrCasRenterLessorNavigation.CrMasRenterInformationArName
                         </td>
                         <td>@item.CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationConcatenateArName</td>
 
-                        <td> </td>
 
+                        @{
+                            var Link_pdf = item.CrCasRenterContractBasicArPdfFile;
+                            var Target_pdf = "#";
+                            if (Link_pdf?.Count() > 2)
+                            {
+                                Link_pdf = Link_pdf.Replace("~", "");
+                                Target_pdf = "_blank";
+                            }
+                        }
+
+                        <td id="_Nc">
+                            <a href="@Link_pdf" target="@Target_pdf" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="Link Pdf"></a>
+                        </td>
                     </tr>
 
                     no++;
@@ -135,12 +173,4 @@ else
 
     </div>
       
-}
-@section script{
-   
-    <script>
-        new DataTable('#basic-datatable', {
-            scrollX: true
-        });
-    </script>
 }

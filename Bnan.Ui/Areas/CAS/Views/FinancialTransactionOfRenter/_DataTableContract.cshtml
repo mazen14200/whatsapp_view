@@ -26,7 +26,7 @@
     
        <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
 
             <thead>
                 <tr role="row">
@@ -82,7 +82,7 @@ else
 {
     <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
             <thead>
                 <tr role="row">
                     <th  id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
@@ -106,8 +106,8 @@ else
 
                     @*<tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateCarInformationId })'" style="cursor:pointer;color:red">*@
                       <tr onclick="location.href='@Url.Action("Edit", "FinancialTransactionOfRenter", new { id = item.CrCasAccountReceiptRenterId })'">
-                        <td id="_Nc">@no</td>
-                        <td id="_Nc">@item.CrCasAccountReceiptRenterId</td>
+                        <td id="_Nc">&emsp; @no</td>
+                        <td id="_Nc">&emsp; @item.CrCasAccountReceiptRenterId</td>
                         @{
                             var singleRenter = item.CrCasAccountReceiptRenter;
 

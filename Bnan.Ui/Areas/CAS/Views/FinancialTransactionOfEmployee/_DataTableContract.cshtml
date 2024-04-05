@@ -41,7 +41,7 @@
     
        <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
 
             <thead>
                 <tr role="row">
@@ -103,7 +103,7 @@ else
 {
     <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
             <thead>
                 <tr role="row">
                     <th  id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
@@ -135,8 +135,8 @@ else
 
                     @*<tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasEmployeeContractBasic4.CrCasEmployeePrivateCarInformationId })'" style="cursor:pointer;color:red">*@
                     <tr class="@color_tr" onclick="location.href='@Url.Action("Edit", "FinancialTransactionOfEmployee", new { id = item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode })'">
-                        <td id="_Nc">@no</td>
-                        <td id="_Nc">@item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode</td>
+                        <td id="_Nc">&emsp; @no</td>
+                        <td id="_Nc">&emsp; @item.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode</td>
                         @{
                             var singleEmployee = item.CrCasAccountReceiptUserNavigation;
 

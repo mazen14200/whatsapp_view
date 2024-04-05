@@ -21,19 +21,19 @@
     
        <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
 
             <thead>
                 <tr role="row">
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["CarContractId"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
+                    <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
+                    <th style="text-align:start" data-orderable="false" >@localizer["Status"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,8 +51,8 @@
                         @{
                             var singleCar = Model.crCasCarInformation.FirstOrDefault(x => x.CrCasCarInformationSerailNo == item.CrCasRenterContractBasicCarSerailNo);
 
-                            <td>@singleCar.CrCasCarInformationConcatenateEnName</td>
-                            <td>@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicCarSerailNo == item.CrCasRenterContractBasicCarSerailNo).Max(x=>x.CrCasRenterContractBasicIssuedDate)?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:start">@singleCar.CrCasCarInformationConcatenateEnName</td>
+                            <td style="text-align:start">@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicCarSerailNo == item.CrCasRenterContractBasicCarSerailNo).Max(x=>x.CrCasRenterContractBasicIssuedDate)?.ToString("dd/MM/yyyy")</td>
 
 
                             foreach (var ss in Model.contracts_Counts)
@@ -61,17 +61,17 @@
                                 {
                                     var singleDataFromCountList = ss;
 
-                                <td>@decimal.Parse(singleDataFromCountList[2]).ToString("N2",CultureInfo.InvariantCulture)</td>
+                                    <td id="_Nc">@decimal.Parse(singleDataFromCountList[2]).ToString("N2",CultureInfo.InvariantCulture)</td>
                                 <td id="_Nc">@singleDataFromCountList[1]</td>
 
-                            <td></td>
+                                <td id="_Nc"></td>
                                 }
                             }
 
-                            <td>@singleCar.CrCasCarInformationCurrentMeter</td>
+                            <td id="_Nc">@singleCar.CrCasCarInformationCurrentMeter?.ToString("N2",CultureInfo.InvariantCulture)</td>
 
-                           
-                            <td>
+
+                            <td style="text-align:start">
 
                                 @if (@singleCar.CrCasCarInformationStatus == Status.Active)
                                 {
@@ -79,7 +79,7 @@
                                 }
                                 else if (@singleCar.CrCasCarInformationStatus == Status.Rented)
                                 {
-                                @localizer["Rented_n"]
+                                    @localizer["Car_Rented"]
                                 }
                                 else if (@singleCar.CrCasCarInformationStatus == Status.Hold)
                                 {
@@ -108,18 +108,18 @@ else
 {
     <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
             <thead>
                 <tr role="row">
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["CarContractId"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
+                    <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
+                    <th style="text-align:start" data-orderable="false">@localizer["Status"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -132,13 +132,13 @@ else
 
                     @*<tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateCarInformationId })'" style="cursor:pointer;color:red">*@
                     <tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasRenterContractBasicCarSerailNo })'">
-                        <td id="_Nc">@no</td>
-                        <td id="_Nc">@item.CrCasRenterContractBasicCarSerailNo</td>
+                        <td id="_Nc">&emsp; @no</td>
+                        <td id="_Nc">&emsp; @item.CrCasRenterContractBasicCarSerailNo</td>
                         @{
                             var singleCar = Model.crCasCarInformation.FirstOrDefault(x => x.CrCasCarInformationSerailNo == item.CrCasRenterContractBasicCarSerailNo);
 
-                            <td>@singleCar.CrCasCarInformationConcatenateArName</td>
-                            <td>@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicCarSerailNo == item.CrCasRenterContractBasicCarSerailNo).Max(x=>x.CrCasRenterContractBasicIssuedDate)?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:start">@singleCar.CrCasCarInformationConcatenateArName</td>
+                            <td style="text-align:start">@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicCarSerailNo == item.CrCasRenterContractBasicCarSerailNo).Max(x=>x.CrCasRenterContractBasicIssuedDate)?.ToString("dd/MM/yyyy")</td>
 
 
                             foreach (var ss in Model.contracts_Counts)
@@ -147,17 +147,17 @@ else
                                 {
                                     var singleDataFromCountList = ss;
 
-                                    <td>@decimal.Parse(singleDataFromCountList[2]).ToString("N2",CultureInfo.InvariantCulture)</td>
-                                    <td id="_Nc">@singleDataFromCountList[1]</td>
+                                    <td id="_Nc">&emsp; @decimal.Parse(singleDataFromCountList[2]).ToString("N2",CultureInfo.InvariantCulture)</td>
+                                    <td id="_Nc">&emsp; @singleDataFromCountList[1]</td>
 
-                                    <td></td>
+                                    <td id="_Nc">&emsp; </td>
                                 }
                             }
 
-                            <td>@singleCar.CrCasCarInformationCurrentMeter</td>
+                            <td id="_Nc">&emsp; @singleCar.CrCasCarInformationCurrentMeter?.ToString("N2",CultureInfo.InvariantCulture)</td>
 
 
-                            <td>
+                            <td style="text-align:start">
 
                                 @if (@singleCar.CrCasCarInformationStatus == Status.Active)
                                 {
@@ -165,7 +165,7 @@ else
                                 }
                                 else if (@singleCar.CrCasCarInformationStatus == Status.Rented)
                                 {
-                                    @localizer["Rented_n"]
+                                    @localizer["Car_Rented"]
                                 }
                                 else if (@singleCar.CrCasCarInformationStatus == Status.Hold)
                                 {

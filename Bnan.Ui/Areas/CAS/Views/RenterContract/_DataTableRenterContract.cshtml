@@ -23,7 +23,7 @@
     
        <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
 
             <thead>
                 <tr role="row">
@@ -34,8 +34,9 @@
                     <th aria-label="Position: activate to sort column ascending">@localizer["DateLast_Contract"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
+                    <th aria-label="Position: activate to sort column ascending">&emsp;&emsp; @localizer["KM_Count"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -50,13 +51,13 @@
                         <tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'" style="cursor:pointer;color:red">
                             <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterLessorId</td>
-                            <td>@item.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</td>
-                            <td>@item.CrCasRenterLessorDateFirstInteraction?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorDateFirstInteraction?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy")</td>
 
                             <td id="_Nc">@item.CrCasRenterLessorContractCount</td>
                             <td id="_Nc">@item.CrCasRenterLessorContractDays</td>
-                            <td id="_Nc">@item.CrCasRenterLessorContractKm</td>
+                            <td id="_Nc">@item.CrCasRenterLessorContractKm?.ToString("N2",CultureInfo.InvariantCulture)</td>
 
                             }
                             <td>
@@ -89,13 +90,13 @@
                         <tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'">
                             <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterLessorId</td>
-                            <td>@item.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</td>
-                            <td>@item.CrCasRenterLessorDateFirstInteraction?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorDateFirstInteraction?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy")</td>
 
                             <td id="_Nc">@item.CrCasRenterLessorContractCount</td>
                             <td id="_Nc">@item.CrCasRenterLessorContractDays</td>
-                            <td id="_Nc">@item.CrCasRenterLessorContractKm</td>
+                            <td id="_Nc">@item.CrCasRenterLessorContractKm?.ToString("N2",CultureInfo.InvariantCulture)</td>
 
                             <td>
 
@@ -132,18 +133,18 @@ else
 {
     <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
-            <thead>
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+            <thead >
                 <tr role="row">
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterInformationId"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["DateFrist_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["DateLast_Contract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th style="text-align:start">@localizer["DateFrist_Contract"]</th>
+                    <th style="text-align:start">@localizer["DateLast_Contract"]</th>
+                    <th id="_Nc" >@localizer["Contract_Count"]</th>
+                    <th id="_Nc" >@localizer["Days_Count"]</th>
+                    <th class=" text-end" id="_Nc">&emsp;&emsp;&emsp;&emsp;&emsp; @localizer["KM_Count"]</th>
+                    <th class="w-15 text-end" data-orderable="false" style="width:90px;text-align:start">@localizer["Status"] </th>
                 </tr>
             </thead>
             <tbody>
@@ -158,13 +159,13 @@ else
                         <tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'" style="cursor:pointer;color:red">
                             <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterLessorId</td>
-                            <td>@item.CrCasRenterLessorNavigation.CrMasRenterInformationArName</td>
-                            <td>@item.CrCasRenterLessorDateFirstInteraction?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorNavigation.CrMasRenterInformationArName</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorDateFirstInteraction?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy")</td>
 
-                            <td id="_Nc">@item.CrCasRenterLessorContractCount</td>
+                            <td id="_Nc">&#160;&#160; @item.CrCasRenterLessorContractCount</td>
                             <td id="_Nc">@item.CrCasRenterLessorContractDays</td>
-                            <td id="_Nc">@item.CrCasRenterLessorContractKm</td>
+                            <td id="_Nc">@item.CrCasRenterLessorContractKm?.ToString("N2",CultureInfo.InvariantCulture)</td>
 
                             <td>
 
@@ -196,13 +197,13 @@ else
                         <tr onclick="location.href='@Url.Action("Edit", "RenterContract", new { id = item.CrCasRenterLessorId })'">
                             <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterLessorId</td>
-                            <td>@item.CrCasRenterLessorNavigation.CrMasRenterInformationArName</td>
-                            <td>@item.CrCasRenterLessorDateFirstInteraction?.ToString("dd/MM/yyyy")</td>
-                            <td>@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorNavigation.CrMasRenterInformationArName</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorDateFirstInteraction?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy")</td>
 
-                            <td id="_Nc">@item.CrCasRenterLessorContractCount</td>
+                            <td id="_Nc">&emsp; @item.CrCasRenterLessorContractCount</td>
                             <td id="_Nc">@item.CrCasRenterLessorContractDays</td>
-                            <td id="_Nc">@item.CrCasRenterLessorContractKm</td>
+                            <td id="_Nc">@item.CrCasRenterLessorContractKm?.ToString("N2",CultureInfo.InvariantCulture)</td>
 
                             <td>
 
@@ -235,3 +236,4 @@ else
         </table>
     </div>
 }
+

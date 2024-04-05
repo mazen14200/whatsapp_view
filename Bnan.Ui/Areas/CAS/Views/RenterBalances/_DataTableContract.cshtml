@@ -26,14 +26,14 @@
     
        <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
 
             <thead>
                 <tr role="row">
                     <th  id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th  id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["FTR_Id"]</th>
                     <th  aria-label="Position: activate to sort column ascending">@localizer["Name"]</th>
-                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Balance"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Avilable_Balance"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Reserved_Balance"]</th>
@@ -59,7 +59,7 @@
 
                             
                             <td>@singleRenter?.CrMasRenterInformationEnName</td>
-                            <td id="_Nc">@singleRenter_Balances?.CrCasRenterLessorDateLastContractual?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                            <td >@singleRenter_Balances?.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture)</td>
                             <td id="_Nc">@singleRenter_Balances?.CrCasRenterLessorBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
                             <td id="_Nc">@singleRenter_Balances?.CrCasRenterLessorAvailableBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
                             <td id="_Nc">@singleRenter_Balances?.CrCasRenterLessorReservedBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
@@ -78,13 +78,13 @@ else
 {
     <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
             <thead>
                 <tr role="row">
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["FTR_Id"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Name"]</th>
-                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
+                    <th aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Balance"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Avilable_Balance"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Reserved_Balance"]</th>
@@ -109,7 +109,7 @@ else
                             
 
                             <td >@singleRenter?.CrMasRenterInformationArName</td>
-                            <td id="_Nc">@singleRenter_Balances?.CrCasRenterLessorDateLastContractual?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                            <td>@singleRenter_Balances?.CrCasRenterLessorDateLastContractual?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
                             <td id="_Nc">@singleRenter_Balances?.CrCasRenterLessorBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
                             <td id="_Nc">@singleRenter_Balances?.CrCasRenterLessorAvailableBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
                             <td id="_Nc">@singleRenter_Balances?.CrCasRenterLessorReservedBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>

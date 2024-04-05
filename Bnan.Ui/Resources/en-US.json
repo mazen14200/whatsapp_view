@@ -551,9 +551,12 @@
   "ReportCanceledContract Hint": "This page allows you to display Canceled Contracts of Renter ",
   "ReportCanceledContract Data": "Canceled Contracts of Renters",
   "Renter_Name": "Renter",
-  "Today_Expired": "Expire Today",
-  "Tommorow_Expired": "Expire Tomorrow",
-  "after_long_Expired": "Expire after LongTime",
+  "Today_Expired": "Today",
+  "Tommorow_Expired": "Tomorrow",
+  "after_long_Expired": "LongTime",
+  "Contract_Today_Expired": "Expire Today",
+  "Contract_Tommorow_Expired": "Expire Tomorrow",
+  "Contract_after_long_Expired": "Expire after LongTime",
   "Sh_Today_Expired": "Today",
   "Sh_Tommorow_Expired": "Tomorrow",
   "Sh_after_long_Expired": "LongTime",
@@ -567,6 +570,7 @@
   "Contract": "The Contract",
   "Extension": "Extension",
   "Standing": "Standing",
+  "Car_Rented": "Rented",
 
 
   //Driver Contract --------
@@ -649,6 +653,23 @@
   "FTE_status_Custody": "Custody",
 
   "FTR_Credit_Limit": "Credit Limit",
+
+  //TaxOwed --------
+  "TaxOwed Hint": "This page allows you to display The Tax Owed Of Contracts",
+  "TaxOwed Data": "Tax Owed",
+  "Edit TaxOwed Data": "Details of Tax Owed",
+  "Edit TaxOwed Hint": "this page allows you to Display Details of Tax Owed",
+
+  "TaxOwed_ContractNo": "Contract No",
+  "TaxOwed_duedate": "due date",
+  "TaxOwed_ContractValue": "Contract Value",
+  "TaxOwed_Percentage": "Percentage",
+  "TaxOwed_Value": "Value",
+  "TaxOwed_Status": "Status",
+  "TaxOwed_Pay_Date": "Pay Date",
+  "TaxOwed_Pay_No": "Pay No",
+  "status_Is_Paid": "Is Paid",
+  "status_Not_Paid": "Not Paid",
 
 
   //RenterIdType------

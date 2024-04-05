@@ -18,13 +18,13 @@
     }
 
     @@media (max-width: 600px) {
-        #basic-datatable1_wrapper .row:first-child > div {
+        #example_datable1_wrapper .row:first-child > div {
             text-align: left;
             overflow: scroll;
             text-overflow: ellipsis;
         }
 
-            #basic-datatable1_wrapper .row:first-child > div:last-child > * {
+            #example_datable .row:first-child > div:last-child > * {
                 text-align: right;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -119,6 +119,14 @@
             GetRenterContractFitler($(this).val())
         })
     </script>
+    @*<script>
+        var oTable = $('#example_datable').dataTable({
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 2, 3] },
+                { "bSearchable": false, "aTargets": [ 2, 3] }
+            ]
+        });
+    </script>*@
 }
 
 

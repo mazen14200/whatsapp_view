@@ -184,6 +184,9 @@
 @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
 {
     <style>
+        .wid{
+            width:205px;
+        }
         #RenterLessorInformationSigntureImage {
             position: absolute;
             top: 39%;
@@ -222,11 +225,15 @@
         #Date_cusor1, #Date_cusor2 {
             margin-right: 13px;
         }
+
     </style>
 }
 else
 {
     <style>
+        .wid {
+            width: 250px;
+        }
         #RenterLessorInformationSigntureImage {
             position: absolute;
             top: 39%;
@@ -307,7 +314,7 @@ else
                     <div class="col-md-label10 formlabel" style="width:95px;">
                         <label class="form-label" for="CrCasRenterUserId">@localizer["UserContractId"]</label>
                     </div>
-                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:295px;">
+                    <div class="col-md-input10 p-0 col-11" style="margin-top:-5px;width:250px;">
 
                             <input type="text" class="form-control" value="@ViewBag.Single_UserId" readonly maxlength="15" id="CrCasRenterUserId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
@@ -322,7 +329,7 @@ else
                 </div> @*End row*@
 
                     @*DateTime Inputs*@
-                    <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:70px;">
+                    <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:45px;">
 
                         <!-- Autoclose -->
                         <div style="width:30px;margin-top:7px;">
@@ -362,14 +369,14 @@ else
                 @*<div class="row mt-2" style="height:10px;">
                 </div>*@
                 <div class="row mt-2" style="height:60px;">
-                    <div class=" formlabel" style="width:95px;">
+                    <div class=" formlabel" style="width:115px;">
                         <label class="form-label" for="CrCasRenterUserId">@localizer["UserContractId"]</label>
                     </div>
-                    <div class=" p-0 col-11" style="margin-top:-5px;width:295px;">
+                    <div class=" p-0 col-11" style="margin-top:-5px;width:230px;">
                         <input type="text" class="form-control" value="@ViewBag.Single_UserId" readonly maxlength="15" id="CrCasRenterUserId" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                     </div>
 
-                    <div class="col-md-label10 formlabel">
+                    <div class="col-md-label10 formlabel" style="width:65px">
                         <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["RenterInformationName"]</label>
                     </div>
                     <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
@@ -379,7 +386,7 @@ else
                 </div> @*End row*@
 
                     @*DateTime Inputs*@
-                    <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:70px;">
+                    <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:45px;">
 
                         <!-- Autoclose -->
                         <div style="width:30px;margin-top:7px;">
@@ -435,37 +442,65 @@ else
                     if (ViewBag.CountRecord == Counter)
                     {
                         @*Contract_Count  && Contract_Value  *@
-                        <div class="row mt-2">
+                        <div class="row mt-2" style="height:25px;">
                             <div class="col-md-label5 formlabel">
                                 <label class="form-label" for="CrCasRenterLessorId">@localizer["Contract_Count"]</label>
                             </div>
-                            <div class="col-md-input5 p-0 col-11" style="margin-top:-5px">
+                            <div class=" p-0 col-11 wid" style="margin-top:-5px;">
                                 <input type="text" class="form-control" value="@Counter" readonly maxlength="15" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
                             </div>
 
-                            <div class="col-md-label5 formlabel">
-                                <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["Contract_Value"]</label>
-                            </div>
-                            <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
-                                <input type="text" class="form-control" value="@Contract_Value?.ToString("N2",CultureInfo.InvariantCulture)" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
-                            </div>
+                            @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+                            {
+                                <div class="col-md-label5 formlabel" style="width:125px;">
+                                    <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["Contract_Value"]</label>
+                                </div>
+                                <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:220px;">
+                                    <input type="text" class="form-control" value="@Contract_Value?.ToString("N2",CultureInfo.InvariantCulture)" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-label5 formlabel">
+                                    <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["Contract_Value"]</label>
+                                </div>
+                                <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
+                                    <input type="text" class="form-control" value="@Contract_Value?.ToString("N2",CultureInfo.InvariantCulture)" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                                </div>
+                            }
+
+
 
                         </div> @*End row*@
 
                         @*Days_Count  && KM_Count  *@
-                        <div class="row mt-2">
-                            <div class="col-md-label5 formlabel">
-                                <label class="form-label" for="CrCasRenterLessorId">@localizer["Days_Count"]</label>
-                            </div>
-                            <div class="col-md-input5 p-0 col-11" style="margin-top:-5px">
-                                <input type="text" class="form-control" value="@Days_Count" readonly maxlength="15" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
-                            </div>
+                        <div class="row mt-2" style="height:25px;">
+                            @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+                            {
+                                <div class="col-md-label5 formlabel" style="width:105px;">
+                                    <label class="form-label" for="CrCasRenterLessorId">@localizer["Days_Count"]</label>
+                                </div>
+                                <div class=" p-0 col-11 " style="margin-top:-5px;width:240px;">
+                                    <input type="text" class="form-control" value="@Days_Count" readonly maxlength="15" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-label5 formlabel" style="width:70px;">
+                                    <label class="form-label" for="CrCasRenterLessorId">@localizer["Days_Count"]</label>
+                                </div>
+                                <div class=" p-0 col-11 " style="margin-top:-5px;width:270px;">
+                                    <input type="text" class="form-control" value="@Days_Count" readonly maxlength="15" id="RenterLessorInformationGovNo" style="width:96%" data-val-regex="@localizer["requiredNoLengthFiled","10"]" oninput="validateInput(event, 'RenterLessorInformationGovNo', 'gov-error', '7')" id="LessorGovNo">
+                                </div>
+                            }
+
+
 
                             <div class="col-md-label5 formlabel">
                                 <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["KM_Count"]</label>
                             </div>
                             <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
-                                <input type="text" class="form-control" value="@Km_Count" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
+                                <input type="text" class="form-control" value="@Km_Count?.ToString("N2",CultureInfo.InvariantCulture)" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
                             </div>
 
                         </div> @*End row*@
@@ -475,7 +510,7 @@ else
 
                 }
 
-                <div class="dataTable " id="t_mar" style="height:230px;">
+                <div class="dataTable " id="t_mar" style="height:290px;">
                     <partial name="_DataTable_Internal_UserContract" />
                 </div>
                 if (ViewBag.CountRecord == 0)

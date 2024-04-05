@@ -71,12 +71,12 @@
                 <tr role="row">
                 <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                 <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["FTR_Serial_No"]</th>
-                <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["FTR_Date_Issue"]</th>
-                <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["FTR_Reference_Type"]</th>
+                <th class="scroll_1" style="text-align:start" >@localizer["FTR_Date_Issue"]</th>
+                <th class="scroll_1" style="text-align:start" >@localizer["FTR_Reference_Type"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Creditor"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Debtor"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_previuos_Balance"]</th>
-                <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                <th class="scroll_1" style="text-align:start">@localizer["Status"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTS_Pdf"]</th>
                 @*<th class="scroll_1" aria-label="Position: activate to sort column ascending"></th>*@
                 </tr>
@@ -96,12 +96,12 @@
                         <td id="_Nc">@item.CrCasAccountReceiptNo</td>
 
 
-                        <td id="_Nc">@item.CrCasAccountReceiptDate?.ToString("dd/MM/yyyy")</td>
-                        <td >@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceEnName</td>
+                    <td style="text-align:start">@item.CrCasAccountReceiptDate?.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align:start">@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceEnName</td>
                         <td id="_Nc">@item.CrCasAccountReceiptPayment?.ToString("N2",CultureInfo.InvariantCulture)</td>
                         <td id="_Nc">@item.CrCasAccountReceiptReceipt?.ToString("N2",CultureInfo.InvariantCulture)</td>
                         <td id="_Nc">@item.CrCasAccountReceiptUserPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
-                        <td>
+                    <td style="text-align:start">
                             @if(item.CrCasAccountReceiptIsPassing =="1"){
                                     @localizer["FTE_status_Custody"]
 
@@ -153,12 +153,12 @@ else
                 <tr role="row">
                 <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
                 <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["FTR_Serial_No"]</th>
-                <th class="scroll_1" aria-label="Position: activate to sort column ascending">@localizer["FTR_Date_Issue"]</th>
-                <th class="scroll_1"  aria-label="Position: activate to sort column ascending">@localizer["FTR_Reference_Type"]</th>
+                <th class="scroll_1" style="text-align:start" >@localizer["FTR_Date_Issue"]</th>
+                <th class="scroll_1" style="text-align:start">@localizer["FTR_Reference_Type"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Creditor"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_Debtor"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTR_previuos_Balance"]</th>
-                <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                <th class="scroll_1" style="text-align:start">@localizer["Status"]</th>
                 <th class="scroll_1" id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["FTS_Pdf"]</th>
                 @*<th class="scroll_1" aria-label="Position: activate to sort column ascending"></th>*@
             </tr>
@@ -179,12 +179,12 @@ else
 
                     <td id="_Nc">@item.CrCasAccountReceiptNo</td>
 
-                    <td id="_Nc">@item.CrCasAccountReceiptDate?.ToString("dd/MM/yyyy")</td>
-                    <td>@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceArName</td>
+                <td style="text-align:start" >@item.CrCasAccountReceiptDate?.ToString("dd/MM/yyyy")</td>
+                <td style="text-align:start">@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceArName</td>
                     <td id="_Nc">@item.CrCasAccountReceiptPayment?.ToString("N2",CultureInfo.InvariantCulture)</td>
                     <td id="_Nc">@item.CrCasAccountReceiptReceipt?.ToString("N2",CultureInfo.InvariantCulture)</td>
                 <td id="_Nc">@item.CrCasAccountReceiptUserPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)</td>
-                <td>
+                <td style="text-align:start">
                             @if (item.CrCasAccountReceiptIsPassing == "1")
                             {
                                 @localizer["FTE_status_Custody"]

@@ -44,7 +44,7 @@
      <div class="col-sm-12"> 
         @* For-scrolling *@
 
-            <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+            <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
                 <thead>
                 <tr>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
@@ -53,7 +53,7 @@
                     <th aria-label="Position: activate to sort column ascending">@localizer["FTS_Branch"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th data-orderable="false" style="text-align:start">@localizer["Status"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
                 </tr>
             </thead>
@@ -71,7 +71,14 @@
                         <tr id="Tr_Color" style="color:red">
                             @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
                             <td id="_Nc">@no</td>
-                            <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
+                            @if (item.CrCasRenterContractBasicCopy > 0)
+                            {
+                                <td id="_Nc">@item.CrCasRenterContractBasicNo <em style='color: red;font-style:normal'> &ensp;(@item.CrCasRenterContractBasicCopy)</em></td>
+                            }
+                            else
+                            {
+                                <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
+                            }
                             <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasic1?.CrCasBranchInformationEnName</td>
                             <td>
@@ -132,7 +139,14 @@
                         <tr id="Tr_Color" >
                             @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
                             <td id="_Nc">@no</td>
-                            <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
+                            @if (item.CrCasRenterContractBasicCopy > 0)
+                            {
+                                <td id="_Nc">@item.CrCasRenterContractBasicNo <em style='color: red;font-style:normal'> &ensp;(@item.CrCasRenterContractBasicCopy)</em></td>
+                            }
+                            else
+                            {
+                                <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
+                            }
                             <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasic1?.CrCasBranchInformationEnName</td>
                             <td>
@@ -203,7 +217,7 @@ else
 
     <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
             <thead>
                 <tr>
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
@@ -212,7 +226,7 @@ else
                     <th aria-label="Position: activate to sort column ascending">@localizer["FTS_Branch"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Renter_Name"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["Car_Name"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th class=" text-end" data-orderable="false">@localizer["Status"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract"]</th>
                 </tr>
             </thead>
@@ -230,7 +244,15 @@ else
                         <tr id="Tr_Color" style="color:red">
                             @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
                             <td id="_Nc">@no</td>
-                            <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
+
+                            @if (item.CrCasRenterContractBasicCopy > 0)
+                            {
+                                <td id="_Nc">@item.CrCasRenterContractBasicNo <em style='color: red;font-style:normal'> &ensp;(@item.CrCasRenterContractBasicCopy)</em></td>
+                            }
+                            else
+                            {
+                                <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
+                            }
                             <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasic1?.CrCasBranchInformationArName</td>
                             <td>
@@ -292,7 +314,16 @@ else
                         <tr id="Tr_Color">
                             @* <td id="_Nc">@item.CrMasUserLoginNo</td> *@
                             <td id="_Nc">@no</td>
-                            <td id="_Nc"> @item.CrCasRenterContractBasicNo</td>
+
+                        @if (item.CrCasRenterContractBasicCopy > 0)
+                        {
+                    <td id="_Nc">@item.CrCasRenterContractBasicNo <em style='color: red;font-style:normal'> &ensp;(@item.CrCasRenterContractBasicCopy)</em></td>
+                        }
+                        else
+                        {
+                    <td id="_Nc">@item.CrCasRenterContractBasicNo</td>
+                        }
+
                             <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("dd/MM/yyyy")</td>
                             <td>@item.CrCasRenterContractBasic1?.CrCasBranchInformationArName</td>
                             <td>

@@ -574,12 +574,16 @@
   "Extension": "ممدد",
   "Standing": "قائم",
   "Renter_Name": "المستأجر",
-  "Today_Expired": "ينتهي اليوم",
-  "Tommorow_Expired": "ينتهي غداً",
-  "after_long_Expired": "ينتهي لاحقاً",
+  "Today_Expired": "اليوم",
+  "Tommorow_Expired": "غداً",
+  "after_long_Expired": "لاحقاً",
+  "Contract_Today_Expired": "ينتهي اليوم",
+  "Contract_Tommorow_Expired": "ينتهي غداً",
+  "Contract_after_long_Expired": "ينتهي لاحقاً",
   "Sh_Today_Expired": "اليوم",
   "Sh_Tommorow_Expired": "غداً",
   "Sh_after_long_Expired": "لاحقاً",
+
   "RenterContractReport Hint": "تمكنك الصفحة من الاطلاع والبحث عن العقود القائمة خلال الفترة المحددة",
   "RenterContractReport Data": "العقود القائمة",
 
@@ -663,6 +667,26 @@
   "FTE_status_Reserved": "محجوز",
   "FTE_status_deported": "مرحل",
   "FTE_status_Custody": "عهدة",
+
+
+
+  //TaxOwed --------
+  "TaxOwed Hint": "تمكنك الصفحة من الإطلاع والبحث عن جميع مستحقات القيمة المضافة للعقود",
+  "TaxOwed Data": "مستحقات القيمة المضافة",
+  "Edit TaxOwed Data": "البيانات التفصيلية لمستحقات القيمة المضافة",
+  "Edit TaxOwed Hint": "تمكنك هذه الصفحة من البحث والإطلاع على تفاصيل مستحقات القيمة المضافة",
+
+  "TaxOwed_ContractNo": "رقم العقد",
+  "TaxOwed_duedate": "تاريخ الاستحقاق",
+  "TaxOwed_ContractValue": "قيمة العقد",
+  "TaxOwed_Percentage": "النسبة",
+  "TaxOwed_Value": "القيمة",
+  "TaxOwed_Status": "الحالة",
+  "TaxOwed_Pay_Date": "تاريخ التسديد",
+  "TaxOwed_Pay_No": "رقم التسديد",
+  "status_Is_Paid": "مسدد",
+  "status_Not_Paid": "غير مسدد",
+
 
   //RenterIdTypes------
   "RenterIdTypes Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل نوع الهوية",
@@ -1341,6 +1365,7 @@
   "DaysCount": "العقود",
   "Add Car": "اضافة سيارة",
   "Rented": "مؤجرة",
+  "Car_Rented": "مؤجرة",
   "Maintaince": "صيانة",
   "Repair": "اصلاح",
   "ForSale": "للبيع فقط",

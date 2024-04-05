@@ -23,7 +23,7 @@
     
        <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
 
             <thead>
                 <tr role="row">
@@ -31,10 +31,10 @@
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["RenterInformationId"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["DateLastContract"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationAddress"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterLessorMechanism"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Rates"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th data-orderable="false">@localizer["RenterInformationAddress"]</th>
+                    <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["RenterLessorMechanism"]</th>
+                    <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["Rates"]</th>
+                    <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["Status"] </th>
                     @* <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th> *@
                 </tr>
             </thead>
@@ -51,7 +51,7 @@
                             <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterLessorId</td>
                             <td>@item.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</td>
-                            <td>@item.CrCasRenterLessorDateLastContractual?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture)</td>
                             @{
                                 //var cc = @item.CrCasRenterLessorNavigation.CrMasRenterPost.CrMasRenterPostEnShortConcatenate;
                                 //string[] values2 = cc.Split('-');
@@ -59,7 +59,7 @@
                                 //<td> @vv</td>
                                 <td> @item.CrCasRenterLessorNavigation.CrMasRenterPost.CrMasRenterPostEnShortConcatenate</td>
                             }
-                            <td>
+                            <td style="text-align:start">
                                 @foreach (var item2 in ViewData["Rates"] as List<CrMasSysEvaluation>)
                                 {
                                     if (item2.CrMasSysEvaluationsCode == @item.CrCasRenterLessorDealingMechanism)
@@ -69,10 +69,10 @@
                                 }
 
                             </td>
-                            <td>@item.CrCasRenterLessorEvaluationValue</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorEvaluationValue</td>
 
                             }
-                            <td>
+                            <td style="text-align:start">
 
                                 @if (@item.CrCasRenterLessorStatus == Status.Active)
                                 {
@@ -103,7 +103,7 @@
                             <td id="_Nc">@no</td>
                             <td id="_Nc">@item.CrCasRenterLessorId</td>
                             <td>@item.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</td>
-                            <td>@item.CrCasRenterLessorDateLastContractual?.ToString("yyyy/MM/dd")</td>
+                            <td>@item.CrCasRenterLessorDateLastContractual?.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture)</td>
                             @{
                                 //var cc = @item.CrCasRenterLessorNavigation.CrMasRenterPost.CrMasRenterPostEnShortConcatenate;
                                 //string[] values2 = cc.Split('-');
@@ -112,7 +112,7 @@
                                 <td> @item.CrCasRenterLessorNavigation.CrMasRenterPost.CrMasRenterPostEnShortConcatenate</td>
                             }
 
-                            <td>
+                            <td style="text-align:start">
                                 @foreach (var item2 in ViewData["Rates"] as List<CrMasSysEvaluation>)
                                 {
                                     if (item2.CrMasSysEvaluationsCode == @item.CrCasRenterLessorDealingMechanism)
@@ -122,9 +122,9 @@
                                 }
 
                             </td>
-                            <td>@item.CrCasRenterLessorEvaluationValue</td>
+                            <td style="text-align:start">@item.CrCasRenterLessorEvaluationValue</td>
 
-                            <td>
+                            <td style="text-align:start">
 
                                 @if (@item.CrCasRenterLessorStatus == Status.Active)
                                 {
@@ -159,7 +159,7 @@ else
 {
     <div class="col-sm-12">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
             <thead>
                 <tr role="row">
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
@@ -167,9 +167,9 @@ else
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["DateLastContract"]</th>
                     <th aria-label="Position: activate to sort column ascending">@localizer["RenterInformationAddress"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["RenterLessorMechanism"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Rates"]</th>
-                    <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th>
+                    <th class="text-end" data-orderable="false">@localizer["RenterLessorMechanism"]</th>
+                    <th id="_Nc" >@localizer["Rates"]</th>
+                    <th class="text-end" data-orderable="false">@localizer["Status"] </th>
                     @* <th aria-label="Position: activate to sort column ascending">@localizer["Status"]</th> *@
                 </tr>
             </thead>
@@ -206,7 +206,7 @@ else
                                 }
 
                             </td>
-                            <td>@item.CrCasRenterLessorEvaluationValue</td>
+                            <td id="_Nc">&emsp; @item.CrCasRenterLessorEvaluationValue</td>
 
                             <td>
 
@@ -260,7 +260,7 @@ else
                                 
                         </td>
 
-                            <td>@item.CrCasRenterLessorEvaluationValue</td>
+                            <td id="_Nc">@item.CrCasRenterLessorEvaluationValue</td>
 
                             <td>
 

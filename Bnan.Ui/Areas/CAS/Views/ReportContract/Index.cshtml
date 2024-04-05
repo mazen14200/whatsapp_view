@@ -222,33 +222,65 @@ else
                     </div>
                 </div>
 
+                @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+                {
 
-            <div style="-webkit-flex-align:start;display:flex;gap:0px" class="p-0" >
+
+                    <div style="-webkit-flex-align:start;display:flex;gap:13px" class="p-0" >
 
 
-                <div style="display:flex; gap : 7px;">
-                    <input type="radio" id="customRadioAll" name="customRadio" value="All" class="form-check-input p-0">
-                    <label class="p-0" for="customRadioAll">@localizer["All"]</label>
-                </div>
-                    <div style="display:flex; gap : 7px;">
-                    <input type="radio" id="customRadioToday_Expired" name="customRadio" value="today" class="form-check-input">
-                    <label class="p-0" for="customRadioToday_Expired">@localizer["Today_Expired"]</label>
-                </div>
-                    <div style="display:flex; gap : 7px;">
-                        <input type="radio" id="customRadioTommorow_Expired" name="customRadio" value="tomorrow" class="form-check-input">
-                    <label class="p-0" for="customRadioTommorow_Expired">@localizer["Tommorow_Expired"]</label>
-                </div>
-                    <div style="display:flex; gap : 7px;">
-                        <input type="radio" id="customRadioafter_long_Expired" name="customRadio" value="after_longTime" class="form-check-input">
-                    <label class="p-0" for="customRadioafter_long_Expired">@localizer["after_long_Expired"]</label>
-                </div>
-                    <div style="display:flex; gap : 7px;">
-                        <input type="radio" id="customRadioStoped" name="customRadio" value="E" class="form-check-input">
-                    <label class="p-0" for="customRadioStoped">@localizer["Expired"]</label>
-                </div>
-                </div>
+                        <div style="display:flex; gap : 7px;">
+                            <input type="radio" id="customRadioAll" name="customRadio" value="All" class="form-check-input p-0">
+                            <label class="p-0" for="customRadioAll">@localizer["All"]</label>
+                        </div>
+                        <div style="display:flex; gap : 7px;">
+                            <input type="radio" id="customRadioToday_Expired" name="customRadio" value="today" class="form-check-input">
+                            <label class="p-0" for="customRadioToday_Expired">@localizer["Today_Expired"]</label>
+                        </div>
+                        <div style="display:flex; gap : 7px;">
+                            <input type="radio" id="customRadioTommorow_Expired" name="customRadio" value="tomorrow" class="form-check-input">
+                            <label class="p-0" for="customRadioTommorow_Expired">@localizer["Tommorow_Expired"]</label>
+                        </div>
+                        <div style="display:flex; gap : 7px;">
+                            <input type="radio" id="customRadioafter_long_Expired" name="customRadio" value="after_longTime" class="form-check-input">
+                            <label class="p-0" for="customRadioafter_long_Expired">@localizer["after_long_Expired"]</label>
+                        </div>
+                        <div style="display:flex; gap : 7px;">
+                            <input type="radio" id="customRadioStoped" name="customRadio" value="E" class="form-check-input">
+                            <label class="p-0" for="customRadioStoped">@localizer["Expired"]</label>
+                        </div>
+                    </div>
+                }
+                else
+                {
 
+                    <div style="-webkit-flex-align:start;display:flex;gap:0px" class="p-0">
+
+
+                        <div style="display:flex; gap : 7px;">
+                            <input type="radio" id="customRadioAll" name="customRadio" value="All" class="form-check-input p-0">
+                            <label class="p-0" for="customRadioAll">@localizer["All"]</label>
+                        </div>
+                        <div style="display:flex; gap : 7px;">
+                            <input type="radio" id="customRadioToday_Expired" name="customRadio" value="today" class="form-check-input">
+                            <label class="p-0" for="customRadioToday_Expired">@localizer["Today_Expired"]</label>
+                        </div>
+                        <div style="display:flex; gap : 7px;">
+                            <input type="radio" id="customRadioTommorow_Expired" name="customRadio" value="tomorrow" class="form-check-input">
+                            <label class="p-0" for="customRadioTommorow_Expired">@localizer["Tommorow_Expired"]</label>
+                        </div>
+                        <div style="display:flex; gap : 7px;">
+                            <input type="radio" id="customRadioafter_long_Expired" name="customRadio" value="after_longTime" class="form-check-input">
+                            <label class="p-0" for="customRadioafter_long_Expired">@localizer["after_long_Expired"]</label>
+                        </div>
+                        <div style="display:flex; gap : 7px;">
+                            <input type="radio" id="customRadioStoped" name="customRadio" value="E" class="form-check-input">
+                            <label class="p-0" for="customRadioStoped">@localizer["Expired"]</label>
+                        </div>
+                    </div>
+                }
             </div>
+            
 
         <div class="dataTable " id="dataTableR1">
             <partial name="_DataTableReportContract" />

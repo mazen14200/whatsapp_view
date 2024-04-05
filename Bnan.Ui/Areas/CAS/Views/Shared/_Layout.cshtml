@@ -299,7 +299,7 @@
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2204005")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["Tax Dues"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-action="FailedMessageReport_NoData" asp-controller="TaxDues">@localizer["Tax Dues"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2204006")?.CrMasUserSubValidationAuthorization == true)
