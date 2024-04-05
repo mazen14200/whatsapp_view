@@ -1,0 +1,80 @@
+﻿@using Bnan.Ui.ViewModels.BS;
+@model BSLayoutVM
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+
+<table class="table table-bordered table-hover" id="extensionTable">
+    <thead>
+        <tr>
+            <th scope="col">@localizer["Contract"]</th>
+            <th scope="col" class="@(requestCulture?.RequestCulture.UICulture.Name == "ar-EG" ? "text-right" : "text-left")">
+                @localizer["Car"]
+            </th>
+            <th scope="col" class="@(requestCulture?.RequestCulture.UICulture.Name == "ar-EG" ? "text-right" : "text-left")">
+                @localizer["Renterr"]
+            </th>
+            <th scope="col">@localizer["Remaining"]</th>
+            <th scope="col">@localizer["Date"] </th>
+            <th scope="col">@localizer["ContractNo"]</th>
+            <th scope="col">@localizer["No"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int no = 1;
+        }
+        @foreach (var item in Model.ContractSettlements)
+        {
+            <tr onclick="location.href='@Url.Action("Create", "ContractSettlement", new { id = item.CrCasRenterContractBasicNo })'" style="cursor:pointer">
+
+                <td> <a href="#"><img src="~/BranchSys/Pages/img/Rectangle 193.png" alt="pdf file link"></a></td>
+
+                @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                {
+                    <td class="car text-left">
+                        @item.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateEnName
+                    </td>
+                }
+                else
+                {
+                    <td class="car text-right">
+                        @item.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateArName
+                    </td>
+                }
+
+                @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                {
+                    <td class="car text-left">
+                        @item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationEnName
+                    </td>
+                }
+                else
+                {
+                    <td class="car text-right">
+                        @item.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationArName
+                    </td>
+                }
+                @{
+                    var DaysNo = (item.CrCasRenterContractBasicExpectedEndDate - DateTime.Now)?.Days;
+                }
+                <td>@DaysNo</td>
+                <td>@item.CrCasRenterContractBasicIssuedDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</td>
+                <td>
+                    @item.CrCasRenterContractBasicNo
+                    @if (item.CrCasRenterContractBasicCopy > 0)
+                    {
+                        <span class="text-danger">(@item.CrCasRenterContractBasicCopy)</span>
+                    }
+                </td>
+                <td scope="row">@no</td>
+
+            </tr>
+            no++;
+        }
+
+    </tbody>
+</table>

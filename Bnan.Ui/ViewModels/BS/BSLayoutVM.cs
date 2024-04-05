@@ -57,8 +57,9 @@ namespace Bnan.Ui.ViewModels.BS
         //Extension Contract
         public List<ContractForExtensionVM>? ExtensionContracts { get; set; }
         public ContractForExtensionVM? ExtensionContract { get; set; }
-
-
+        // ContractSettlement
+        public List<ContractSettlementVM>? ContractSettlements { get; set; }
+        public ContractSettlementVM? ContractSettlement { get; set; }
         public string? SelectedBranch { get; set; }
 
 

@@ -362,9 +362,9 @@ namespace Bnan.Inferastructure.Repository
                 renterContractBasic.CrCasRenterContractBasicAdditionalDriverValue = 0;
 
             };
-            renterContractBasic.CrCasRenterContractBasicPrivateDriverValue = carPrice.CrCasPriceCarBasicPrivateDriverValue ?? 0;
             if (!string.IsNullOrEmpty(PrivateDriver))
             {
+                renterContractBasic.CrCasRenterContractBasicPrivateDriverValue = carPrice.CrCasPriceCarBasicPrivateDriverValue ?? 0;
                 renterContractBasic.CrCasRenterContractBasicPrivateDriverId = PrivateDriver;
                 renterContractBasic.CrCasRenterContractBasicExpectedPrivateDriverValue = renterContractBasic.CrCasRenterContractBasicPrivateDriverValue * int.Parse(DaysNo);
             }
@@ -372,6 +372,7 @@ namespace Bnan.Inferastructure.Repository
             {
                 renterContractBasic.CrCasRenterContractBasicPrivateDriverId = null;
                 renterContractBasic.CrCasRenterContractBasicExpectedPrivateDriverValue = 0;
+                renterContractBasic.CrCasRenterContractBasicPrivateDriverValue = 0;
             };
             //Get Data From Car Price Info
 
@@ -563,7 +564,8 @@ namespace Bnan.Inferastructure.Repository
             return false;
         }
 
-        public async Task<bool> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo, decimal TotalPayed, string RenterId, string UserId, string PassingType, string Reasons, string pdfPath)
+        public async Task<bool> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo, decimal TotalPayed,
+                                                                                                                        string RenterId, string UserId, string PassingType, string Reasons, string pdfPath, string language)
         {
             CrCasAccountReceipt crCasAccountReceipt = new CrCasAccountReceipt();
             var User = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == UserId && x.CrMasUserInformationLessor == LessorCode);
@@ -619,8 +621,11 @@ namespace Bnan.Inferastructure.Repository
             crCasAccountReceipt.CrCasAccountReceiptReceipt = 0;
             crCasAccountReceipt.CrCasAccountReceiptIsPassing = PassingType;
             crCasAccountReceipt.CrCasAccountReceiptReasons = Reasons;
-            crCasAccountReceipt.CrCasAccountReceiptArPdfFile = pdfPath;
-
+            if (!string.IsNullOrEmpty(language))
+            {
+                if (language == "ar") crCasAccountReceipt.CrCasAccountReceiptArPdfFile = pdfPath;
+                else crCasAccountReceipt.CrCasAccountReceiptEnPdfFile = pdfPath;
+            }
             if (await _unitOfWork.CrCasAccountReceipt.AddAsync(crCasAccountReceipt) != null) return true;
             return false;
         }

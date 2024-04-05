@@ -23,13 +23,16 @@ namespace Bnan.Ui.Areas.BS.Controllers
         private readonly IStringLocalizer<ContractExtensionController> _localizer;
         private readonly IAdminstritiveProcedures _adminstritiveProcedures;
         private readonly IContractExtension _contractExtension;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public ContractExtensionController(IStringLocalizer<ContractExtensionController> localizer, IUnitOfWork unitOfWork, UserManager<CrMasUserInformation> userManager, IMapper mapper, IToastNotification toastNotification, IAdminstritiveProcedures adminstritiveProcedures, IContractExtension contractExtension) : base(userManager, unitOfWork, mapper)
+
+        public ContractExtensionController(IStringLocalizer<ContractExtensionController> localizer, IUnitOfWork unitOfWork, UserManager<CrMasUserInformation> userManager, IMapper mapper, IToastNotification toastNotification, IAdminstritiveProcedures adminstritiveProcedures, IContractExtension contractExtension, IWebHostEnvironment hostingEnvironment) : base(userManager, unitOfWork, mapper)
         {
             _localizer = localizer;
             _toastNotification = toastNotification;
             _adminstritiveProcedures = adminstritiveProcedures;
             _contractExtension = contractExtension;
+            _hostingEnvironment = hostingEnvironment;
         }
         public async Task<IActionResult> Index()
         {
@@ -62,7 +65,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var bsLayoutVM = await GetBranchesAndLayout();
             var contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicStatus == Status.Active &&
                                                                            x.CrCasRenterContractBasicBranch == bsLayoutVM.SelectedBranch &&
-                                                                           x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic4.CrCasRenterLessorNavigation" });
+                                                                           x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation" });
             var contractMap = _mapper.Map<List<ContractForExtensionVM>>(contracts);
             foreach (var contract in contractMap)
             {
@@ -96,7 +99,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var bsLayoutVM = await GetBranchesAndLayout();
             var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == id,
                                                                                      new[] { "CrCasRenterContractBasic5.CrCasRenterLessorNavigation",
-                                                                                             "CrCasRenterContractBasicCarSerailNoNavigation"}).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();
+                                                                                             "CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationDistributionNavigation"}).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();
             var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode &&
                 x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);
             var contractMap = _mapper.Map<ContractForExtensionVM>(contract);
@@ -106,17 +109,27 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                              x.CrCasAccountSalesPointBankStatus == Status.Active &&
                                                                              x.CrCasAccountSalesPointStatus == Status.Active &&
                                                                              x.CrCasAccountSalesPointBranchStatus == Status.Active).ToList();
-
+            var advatagesContract = _unitOfWork.CrCasRenterContractAdvantage.FindAll(x => x.CrCasRenterContractAdvantagesNo == contract.CrCasRenterContractBasicNo).Sum(x=>x.CrCasContractAdvantagesValue);
+            var ChoicesContract = _unitOfWork.CrCasRenterContractChoice.FindAll(x => x.CrCasRenterContractChoiceNo == contract.CrCasRenterContractBasicNo).Sum(x=>x.CrCasContractChoiceValue);
+            //Get ACcount Receipt
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var autoinc1 = GetContractAccountReceipt(lessorCode, bsLayoutVM.SelectedBranch).CrCasAccountReceiptNo;
+            var AccountReceiptNo = y + "-" + "1" + "301" + "-" + lessorCode + bsLayoutVM.SelectedBranch + "-" + autoinc1;
+            ViewBag.AccountReceiptNo = AccountReceiptNo;
+            //////////////////////////////////
             contractMap.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
             contractMap.AuthType = authContract.CrCasRenterContractAuthorizationType;
             contractMap.CasRenterPreviousBalance = contract.CrCasRenterContractBasic5?.CrCasRenterLessorAvailableBalance;
+            contractMap.AdvatagesValue = advatagesContract?.ToString("N2");
+            contractMap.ChoicesValue = ChoicesContract?.ToString("N2");
             bsLayoutVM.ExtensionContract = contractMap;
             bsLayoutVM.SalesPoint = SalesPoint;
             bsLayoutVM.PaymentMethods = PaymentMethod;
             return View(bsLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(BSLayoutVM bSLayoutVM, string ExtensionValue, string reasons)
+        public async Task<IActionResult> Create(BSLayoutVM bSLayoutVM, string ExtensionValue, string reasons, string? PdfSave1, string? language)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -145,6 +158,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     var CheckUserInformation = true;
 
                     var passing = "";
+                    var SavePdf = "";
                     if (decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture) !=null&& decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture) > 0)
                     {
 
@@ -157,11 +171,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         {
                             passing = "1";
                         }
-
+                        if (!string.IsNullOrEmpty(PdfSave1) && !string.IsNullOrEmpty(language)) SavePdf = await FileExtensions.SavePdf(_hostingEnvironment, PdfSave1, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, language);
                         CheckAccountReceipt = await _contractExtension.AddAccountReceipt(NewContract.CrCasRenterContractBasicNo, lessorCode, NewContract.CrCasRenterContractBasicBranch,
                                                                                       ContractInfo.PaymentMethod, ContractInfo.AccountNo, NewContract.CrCasRenterContractBasicCarSerailNo,
                                                                                       ContractInfo.SalesPoint, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture),
-                                                                                      NewContract.CrCasRenterContractBasicRenterId, userLogin.CrMasUserInformationCode, passing, reasons);
+                                                                                      NewContract.CrCasRenterContractBasicRenterId, userLogin.CrMasUserInformationCode, passing, reasons,SavePdf,language);
                         //Update Branch Balance , But first Check if passing equal 4 or not 
                         if (passing != "4") CheckBranch = await _contractExtension.UpdateBranchBalance(Branch.CrCasBranchInformationCode, lessorCode, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture));
                         //Update SalesPoint Balance , But first Check if passing equal 4 or not 
@@ -273,6 +287,27 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 return Json(new { SalesPoints = SalesPointVMList, AccountBank = AccountBankVMList, Type = Type });
             }
             return Json(null);
+        }
+        private CrCasAccountReceipt GetContractAccountReceipt(string LessorCode, string BranchCode)
+        {
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var Lrecord = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == LessorCode &&
+                                                                       x.CrCasAccountReceiptYear == y && x.CrCasAccountReceiptBranchCode == BranchCode)
+                                                             .Max(x => x.CrCasAccountReceiptNo.Substring(x.CrCasAccountReceiptNo.Length - 6, 6));
+
+            CrCasAccountReceipt c = new CrCasAccountReceipt();
+            if (Lrecord != null)
+            {
+                Int64 val = Int64.Parse(Lrecord) + 1;
+                c.CrCasAccountReceiptNo = val.ToString("000000");
+            }
+            else
+            {
+                c.CrCasAccountReceiptNo = "000001";
+            }
+
+            return c;
         }
     }
 

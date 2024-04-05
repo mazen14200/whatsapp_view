@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bnan.Ui.ViewModels.BS
 {
-    public class ContractForExtensionVM
+    public class ContractSettlementVM
     {
         public string CrCasRenterContractBasicNo { get; set; } = null!;
         public int CrCasRenterContractBasicCopy { get; set; }
@@ -78,14 +78,13 @@ namespace Bnan.Ui.ViewModels.BS
         public string? TaxValue { get; set; }
         public string? TotalContract { get; set; }
         public string? TotalAmount { get; set; }
-        public string? AdvatagesValue { get; set; }
-        public string? ChoicesValue { get; set; }
         public string? AccountNo { get; set; }
-        public string? AccountReceiptNo { get; set; }
+        public string? AdvantagesValue { get; set; }
 
 
         public virtual CrCasRenterLessor? CrCasRenterContractBasic5 { get; set; }
         public virtual CrCasCarInformation? CrCasRenterContractBasicCarSerailNoNavigation { get; set; }
+        public virtual CrCasBranchInformation? CrCasRenterContractBasic1 { get; set; }
 
     }
 }

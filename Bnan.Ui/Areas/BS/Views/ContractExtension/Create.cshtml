@@ -18,6 +18,7 @@
           .Include(l => l.CrMasUserInformationLessorNavigation)
           .Include(l => l.CrMasUserContractValidity)
           .FirstOrDefaultAsync(l => l.UserName == user.UserName);
+    var lessorInfo = await userManager.Users.Include(l => l.CrMasUserInformationLessorNavigation).ThenInclude(l => l.CrMasLessorImage).FirstOrDefaultAsync(x => x.UserName == user.UserName);
 }
 
 
@@ -25,8 +26,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
 <link rel="stylesheet" href="~/css/toastr.css" />
-
-
+<link href="~/BranchSys/css/loader.css" rel="styleSheet">
 <link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
 @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
 {
@@ -37,371 +37,387 @@
         background-color: white;
     }
 </style>
-<section class="section-mainCard">
-    <div class="row justify-content-center w-100 h-100">
-        <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
-            <div class="card main-card ">
-                <div class="row pt-2">
-                    <a asp-action="Index" asp-area="BS" asp-controller="Home" style="width: fit-content;">
-                        <img src="~/BranchSys/Pages/img/cancel.png" alt="cancle_icon" class="cancle-icon">
-                    </a>
-                </div>
-                <div class="row layout-row">
-
-                    <div class="row" style="flex-direction: row-reverse;">
-                        <div class="col justify-content-center d-flex title-row">
-                            <h1 class="card-title">
-                                @localizer["ContractExtension"]
-                            </h1>
-                        </div>
-
+<div class="container-fluid ">
+    <section class="section-mainCard">
+        <div class="row justify-content-center w-100 h-100">
+            <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
+                <div class="card main-card ">
+                    <div class="row pt-2">
+                        <a asp-action="Index" asp-area="BS" asp-controller="Home" style="width: fit-content;">
+                            <img src="~/BranchSys/Pages/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+                        </a>
                     </div>
-                    <div class="row justify-content-center h-100 content-row">
+                    <div class="row layout-row">
 
-                        <div class="col-md-11 mx-0">
+                        <div class="row" style="flex-direction: row-reverse;">
+                            <div class="col justify-content-center d-flex title-row">
+                                <h1 class="card-title">
+                                    @localizer["ContractExtension"]
+                                </h1>
+                            </div>
 
-                            <form id="msform" class="needs-validation" asp-area="BS" asp-action="Create" asp-controller="ContractExtension" novalidate>
-                                <input hidden asp-for="SelectedBranch" />
-                                <input hidden asp-for="ExtensionContract.CrCasRenterContractBasicNo" />
-                                <!-- i send values here to input -->
-                                <input hidden asp-for="ExtensionContract.TotalAmount" />
-                                <input hidden asp-for="ExtensionContract.TotalContract" />
-                                <input hidden asp-for="ExtensionContract.TaxValue" />
-                                <input hidden asp-for="ExtensionContract.DiscountValue" />
-                                <input hidden asp-for="ExtensionContract.RentValue" />
-                                <input hidden asp-for="ExtensionContract.DaysNo" />
-                                <input hidden id="ExtensionValue" name="ExtensionValue" />
+                        </div>
+                        <div class="row justify-content-center h-100 content-row">
 
-                                <fieldset>
-                                    <div class="form-card extension2-card">
-                                        <a href="https://drive.google.com/file/d/1q2Mb1uLGjLIvRphej_9X4zHhc9OuCcyB/view" target="_blank" class="pdf-anchor"><img src="~/BranchSys/Pages/img/pdf.png" alt="pdf for contract details" class="pdf_img"></a>
-                                        <div class="row g-0 " style="flex-direction: row-reverse;align-items: flex-start;">
-                                            <div class=" col-md-7 col-lg-7 d-flex " style="flex-direction:row-reverse;flex-wrap:wrap">
-                                                <div class="col-auto ">
-                                                    <P>@localizer["ContractNo"]</P>
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <P>@Model.ExtensionContract.CrCasRenterContractBasicNo</P>
-                                                </div>
-                                                <div class="col-lg-6 col-md-12 seacrh-icon-col">
-                                                    <div class="col-sm-12  d-flex justify-content-end">
+                            <div class="col-md-11 mx-0">
 
-                                                        <img src="~/BranchSys/Pages/img/seacrh-icon.png"
-                                                             alt="seacrh-icon Image" id="hover-image-extension2">
+                                <form id="msform" class="needs-validation" asp-area="BS" asp-action="Create" asp-controller="ContractExtension" novalidate>
+                                    <input hidden asp-for="SelectedBranch" />
+                                    <input hidden asp-for="ExtensionContract.CrCasRenterContractBasicNo" />
+                                    <!-- i send values here to input -->
+                                    <input hidden asp-for="ExtensionContract.TotalAmount" />
+                                    <input hidden asp-for="ExtensionContract.TotalContract" />
+                                    <input hidden asp-for="ExtensionContract.TaxValue" />
+                                    <input hidden asp-for="ExtensionContract.DiscountValue" />
+                                    <input hidden asp-for="ExtensionContract.RentValue" />
+                                    <input hidden asp-for="ExtensionContract.DaysNo" />
+                                    <input hidden id="ExtensionValue" name="ExtensionValue" />
+                                    <input hidden id="PdfSave1" name="PdfSave1" />
+                                    <input hidden asp-for="ExtensionContract.AccountReceiptNo" />
+                                    <input hidden id="language" name="language" />
+                                    <fieldset>
+                                        <div class="form-card extension2-card">
+                                            <a href="https://drive.google.com/file/d/1q2Mb1uLGjLIvRphej_9X4zHhc9OuCcyB/view" target="_blank" class="pdf-anchor"><img src="~/BranchSys/Pages/img/pdf.png" alt="pdf for contract details" class="pdf_img"></a>
+                                            <div class="row g-0 " style="flex-direction: row-reverse;align-items: flex-start;">
+                                                <div class=" col-md-7 col-lg-7 d-flex " style="flex-direction:row-reverse;flex-wrap:wrap">
+                                                    <div class="col-auto ">
+                                                        <P>@localizer["ContractNo"]</P>
                                                     </div>
-                                                    <div class="dropdown-content  dropdown-content-extension" id="dropdown-content-extension2">
-                                                        <div class="row dropdown-content-row">
-                                                            <div class="col-4 ">
-                                                                <p>@localizer["ExpectedEndDate"]</p>
-                                                            </div>
-                                                            <div class="col personal-data">
-                                                                <p>@Model.ExtensionContract.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row dropdown-content-row">
-                                                            <div class="col-4 ">
-                                                                <p>@localizer["DaysRemaining"]</p>
-                                                            </div>
-                                                            <div class="col personal-data">
-                                                                <p>@((Model.ExtensionContract.CrCasRenterContractBasicExpectedEndDate - DateTime.Now)?.Days)</p>
-                                                            </div>
+                                                    <div class="col-auto personal-data">
+                                                        <P>@Model.ExtensionContract.CrCasRenterContractBasicNo</P>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-12 seacrh-icon-col">
+                                                        <div class="col-sm-12  d-flex justify-content-end">
 
+                                                            <img src="~/BranchSys/Pages/img/seacrh-icon.png"
+                                                                 alt="seacrh-icon Image" id="hover-image-extension2">
                                                         </div>
-                                                        <div class="row dropdown-content-row">
-                                                            <div class="col-4 ">
-                                                                <p>@localizer["AuthType"]</p>
+                                                        <div class="dropdown-content  dropdown-content-extension" id="dropdown-content-extension2">
+                                                            <div class="row dropdown-content-row">
+                                                                <div class="col-4 ">
+                                                                    <p>@localizer["ExpectedEndDate"]</p>
+                                                                </div>
+                                                                <div class="col personal-data">
+                                                                    <p>@Model.ExtensionContract.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="col personal-data">
-                                                                <p>
-                                                                    @if (Model.ExtensionContract.AuthType == true)
+                                                            <div class="row dropdown-content-row">
+                                                                <div class="col-4 ">
+                                                                    <p>@localizer["DaysRemaining"]</p>
+                                                                </div>
+                                                                <div class="col personal-data">
+                                                                    <p>@((Model.ExtensionContract.CrCasRenterContractBasicExpectedEndDate - DateTime.Now)?.Days)</p>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row dropdown-content-row">
+                                                                <div class="col-4 ">
+                                                                    <p>@localizer["AuthType"]</p>
+                                                                </div>
+                                                                <div class="col personal-data">
+                                                                    <p>
+                                                                        @if (Model.ExtensionContract.AuthType == true)
+                                                                        {
+                                                                            @localizer["OutFees"]
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @localizer["InFees"]
+                                                                        }
+                                                                    </p>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row dropdown-content-row">
+                                                                <div class="col-4 ">
+                                                                    <p>@localizer["Renterr"]</p>
+                                                                </div>
+                                                                <div class="col personal-data">
+                                                                    @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
                                                                     {
-                                                                        @localizer["OutFees"]
+                                                                        <p>@Model.ExtensionContract.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</p>
                                                                     }
                                                                     else
                                                                     {
-                                                                        @localizer["InFees"]
+                                                                        <p>@Model.ExtensionContract.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationArName</p>
                                                                     }
-                                                                </p>
-                                                            </div>
+                                                                </div>
 
-                                                        </div>
-                                                        <div class="row dropdown-content-row">
-                                                            <div class="col-4 ">
-                                                                <p>@localizer["Renterr"]</p>
                                                             </div>
-                                                            <div class="col personal-data">
-                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
-                                                                {
-                                                                    <p>@Model.ExtensionContract.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</p>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <p>@Model.ExtensionContract.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationArName</p>
-                                                                }
-                                                            </div>
+                                                            <div class="row dropdown-content-row">
+                                                                <div class="col-4 ">
+                                                                    <p> @localizer["Car"]</p>
+                                                                </div>
+                                                                <div class="col personal-data">
+                                                                    @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                                                                    {
+                                                                        <p>@Model.ExtensionContract.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateEnName</p>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <p>@Model.ExtensionContract.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateArName</p>
+                                                                    }
+                                                                </div>
 
-                                                        </div>
-                                                        <div class="row dropdown-content-row">
-                                                            <div class="col-4 ">
-                                                                <p> @localizer["Car"]</p>
                                                             </div>
-                                                            <div class="col personal-data">
-                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
-                                                                {
-                                                                    <p>@Model.ExtensionContract.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateEnName</p>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <p>@Model.ExtensionContract.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateArName</p>
-                                                                }
+                                                            <div class="row dropdown-content-row">
+                                                                <div class="col-4 ">
+                                                                    <p>@localizer["DiscountRate"]</p>
+                                                                </div>
+                                                                <div class="col personal-data">
+                                                                    <p>@Model.ExtensionContract.CrCasRenterContractBasicUserDiscountRate %</p>
+                                                                </div>
                                                             </div>
-
-                                                        </div>
-                                                        <div class="row dropdown-content-row">
-                                                            <div class="col-4 ">
-                                                                <p>@localizer["DiscountRate"]</p>
-                                                            </div>
-                                                            <div class="col personal-data">
-                                                                <p>@Model.ExtensionContract.CrCasRenterContractBasicUserDiscountRate %</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row dropdown-content-row">
-                                                            <div class="col-4 ">
-                                                                <p>@localizer["TaxValue"]</p>
-                                                            </div>
-                                                            <div class="col personal-data">
-                                                                <p>@Model.ExtensionContract.CrCasRenterContractBasicExpectedTaxValue</p>
+                                                            <div class="row dropdown-content-row">
+                                                                <div class="col-4 ">
+                                                                    <p>@localizer["TaxValue"]</p>
+                                                                </div>
+                                                                <div class="col personal-data">
+                                                                    <p>@Model.ExtensionContract.CrCasRenterContractBasicExpectedTaxValue</p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-auto col-lg-3 d-flex "
-                                                 style="flex-direction:row-reverse;align-items: center;">
-                                                <div class="col-auto">
-                                                    <P>@localizer["EndAuth"]</P>
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <P>@Model.ExtensionContract.AuthEndDate?.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture)</P>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row " style="flex-direction: row-reverse;">
-                                            <div class=" col-md-auto col-lg-4 d-flex "
-                                                 style="flex-direction:row-reverse;align-items: center;">
-                                                <div class="col-auto">
-                                                    <P> @localizer["Netcontract"]</P>
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <P>@Model.ExtensionContract.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)</P>
+                                                <div class="col-md-auto col-lg-3 d-flex "
+                                                     style="flex-direction:row-reverse;align-items: center;">
+                                                    <div class="col-auto">
+                                                        <P>@localizer["EndAuth"]</P>
+                                                    </div>
+                                                    <div class="col-auto personal-data">
+                                                        <P>@Model.ExtensionContract.AuthEndDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</P>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-auto col-lg-4 d-flex "
-                                                 style="flex-direction:row-reverse;align-items: center;">
-                                                <div class="col-auto">
-                                                    <P>@localizer["AmountPaid"]</P>
+                                            <div class="row " style="flex-direction: row-reverse;">
+                                                <div class=" col-md-auto col-lg-4 d-flex "
+                                                     style="flex-direction:row-reverse;align-items: center;">
+                                                    <div class="col-auto">
+                                                        <P> @localizer["Netcontract"]</P>
+                                                    </div>
+                                                    <div class="col-auto personal-data">
+                                                        <P>@Model.ExtensionContract.CrCasRenterContractBasicExpectedTotal?.ToString("N2", CultureInfo.InvariantCulture)</P>
+                                                    </div>
                                                 </div>
-                                                <div class="col-auto personal-data">
-                                                    <P>@Model.ExtensionContract.CrCasRenterContractBasicAmountPaidAdvance?.ToString("N2",CultureInfo.InvariantCulture)</P>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row flex-row-reverse">
-                                            <div class="col-md-auto col-lg-4 d-flex " style="flex-direction:row-reverse;align-items: baseline;">
-                                                <div class="col-auto">
-                                                    <label id="days-number" for="days-number-input">
-                                                        @localizer["ExtensionDays"]
-                                                    </label>
-                                                </div>
-                                                <div class="col-auto ps-0">
-                                                    <input type="text" class="form-control form-control1"
-                                                           id="dayNo" asp-for="ExtensionContract.DaysNo" aria-describedby="inputGroupPrepend" autocomplete="off"
-                                                           oninput="this.value=this.value.replace(/[^0-9]/g,'');if(parseInt(this.value)> 365) this.value = '365';" onfocusout="CalculateContract()" maxlength="3" autofocus required>
-                                                    <span class="requird-field" id="requird_field_PaymentMethod" asp-validation-for="@Model.ExtensionContract.DaysNo"></span>
+                                                <div class="col-md-auto col-lg-4 d-flex "
+                                                     style="flex-direction:row-reverse;align-items: center;">
+                                                    <div class="col-auto">
+                                                        <P>@localizer["AmountPaid"]</P>
+                                                    </div>
+                                                    <div class="col-auto personal-data">
+                                                        <P>@Model.ExtensionContract.CrCasRenterContractBasicAmountPaidAdvance?.ToString("N2", CultureInfo.InvariantCulture)</P>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class=" col-md-auto col-lg-3  d-flex "
-                                                 style="flex-direction:row-reverse;align-items: center;">
-                                                <div class="col-auto">
-                                                    <P>@localizer["EndDate"]</P>
+                                            <div class="row flex-row-reverse">
+                                                <div class="col-md-auto col-lg-4 d-flex " style="flex-direction:row-reverse;align-items: baseline;">
+                                                    <div class="col-auto">
+                                                        <label id="days-number" for="days-number-input">
+                                                            @localizer["ExtensionDays"]
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-auto ps-0">
+                                                        <input type="text" class="form-control form-control1"
+                                                               id="dayNo" asp-for="ExtensionContract.DaysNo" aria-describedby="inputGroupPrepend" autocomplete="off"
+                                                               oninput="this.value=this.value.replace(/[^0-9]/g,'');if(parseInt(this.value)> 365) this.value = '365';" onfocusout="CalculateContract()" maxlength="3" autofocus required>
+                                                        <span class="requird-field" id="requird_field_PaymentMethod" asp-validation-for="@Model.ExtensionContract.DaysNo"></span>
+                                                    </div>
                                                 </div>
-                                                <div class="col-auto personal-data">
-                                                    <P id="EndDate"></P>
+                                                <div class=" col-md-auto col-lg-3  d-flex "
+                                                     style="flex-direction:row-reverse;align-items: center;">
+                                                    <div class="col-auto">
+                                                        <P>@localizer["EndDate"]</P>
+                                                    </div>
+                                                    <div class="col-auto personal-data">
+                                                        <P id="EndDate"></P>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-auto col-lg-4 d-flex "
+                                                     style="flex-direction:row-reverse;align-items: center;">
+                                                    <div class="col-auto">
+                                                        <P>@localizer["TotalContractDays"]</P>
+                                                    </div>
+                                                    <div class="col-auto personal-data">
+                                                        <P id="ExpectedDaysNo"></P>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-auto col-lg-4 d-flex "
-                                                 style="flex-direction:row-reverse;align-items: center;">
-                                                <div class="col-auto">
-                                                    <P>@localizer["TotalContractDays"]</P>
+                                            <div class="row " style="flex-direction: row-reverse;">
+                                                <div class="col-md-auto col-lg-4 d-flex "
+                                                     style="flex-direction:row-reverse;align-items: center;">
+                                                    <div class="col-auto">
+                                                        <P>@localizer["TotalContract"]</P>
+                                                    </div>
+                                                    <div class="col-auto personal-data">
+                                                        <P id="RentValue">0.00</P>
+                                                    </div>
                                                 </div>
-                                                <div class="col-auto personal-data">
-                                                    <P id="ExpectedDaysNo"></P>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row " style="flex-direction: row-reverse;">
-                                            <div class="col-md-auto col-lg-4 d-flex "
-                                                 style="flex-direction:row-reverse;align-items: center;">
-                                                <div class="col-auto">
-                                                    <P>@localizer["TotalContract"]</P>
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <P id="RentValue">0.00</P>
-                                                </div>
-                                            </div>
 
-                                            <div class="col-md-auto col-lg-3 d-flex "
-                                                 style="flex-direction:row-reverse;align-items: center;">
-                                                <div class="col-auto">
-                                                    <P>@localizer["DiscountValue"]</P>
+                                                <div class="col-md-auto col-lg-3 d-flex "
+                                                     style="flex-direction:row-reverse;align-items: center;">
+                                                    <div class="col-auto">
+                                                        <P>@localizer["DiscountValue"]</P>
+                                                    </div>
+                                                    <div class="col-auto personal-data">
+                                                        <P id="DiscountValue">0.00</P>
+                                                    </div>
                                                 </div>
-                                                <div class="col-auto personal-data">
-                                                    <P id="DiscountValue">0.00</P>
+                                                <div class="col-md-auto col-lg-4 d-flex "
+                                                     style="flex-direction:row-reverse;align-items: center;">
+                                                    <div class="col-auto">
+                                                        <P>@localizer["TaxValue"]</P>
+                                                    </div>
+                                                    <div class="col-auto personal-data">
+                                                        <P id="TaxValue">0.00</P>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-auto col-lg-4 d-flex "
-                                                 style="flex-direction:row-reverse;align-items: center;">
-                                                <div class="col-auto">
-                                                    <P>@localizer["TaxValue"]</P>
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <P id="TaxValue">0.00</P>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="flex-direction: row-reverse;">
-                                            <div class="col-md-auto col-lg-4 d-flex "
-                                                 style="flex-direction:row-reverse;align-items: center;">
-                                                <div class="col-auto">
-                                                    <P>@localizer["NetContract"]</P>
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <P id="TotalContract">0.00</P>
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-md-auto col-lg-4 d-flex "
+                                                     style="flex-direction:row-reverse;align-items: center;">
+                                                    <div class="col-auto">
+                                                        <P>@localizer["NetContract"]</P>
+                                                    </div>
+                                                    <div class="col-auto personal-data">
+                                                        <P id="TotalContract">0.00</P>
 
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-md-auto col-lg-3 d-flex "
-                                                 style="flex-direction:row-reverse;align-items: center;">
-                                                <div class="col-auto">
-                                                    <P>@localizer["PreviousBalance"]</P>
+                                                <div class="col-md-auto col-lg-3 d-flex "
+                                                     style="flex-direction:row-reverse;align-items: center;">
+                                                    <div class="col-auto">
+                                                        <P>@localizer["PreviousBalance"]</P>
+                                                    </div>
+                                                    <div class="col-auto personal-data">
+                                                        <P>@Model.ExtensionContract.CasRenterPreviousBalance?.ToString("N2", CultureInfo.InvariantCulture)</P>
+                                                    </div>
                                                 </div>
-                                                <div class="col-auto personal-data">
-                                                    <P>@Model.ExtensionContract.CasRenterPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)</P>
+                                                <div class="col-md-auto col-lg-4 d-flex "
+                                                     style="flex-direction:row-reverse;align-items: center;">
+                                                    <div class="col-auto">
+                                                        <P>@localizer["AmountRequired"]</P>
+                                                    </div>
+                                                    <div class="col-auto personal-data">
+                                                        <P id="TotalAmount">0.00</P>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-auto col-lg-4 d-flex "
-                                                 style="flex-direction:row-reverse;align-items: center;">
-                                                <div class="col-auto">
-                                                    <P>@localizer["AmountRequired"]</P>
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <P id="TotalAmount">0.00</P>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="flex-direction: row-reverse;">
-                                            <div class="col-md-auto col-lg-4 d-flex "
-                                                 style="flex-direction:row-reverse;">
-                                                <div class="col-auto">
-                                                    <label id="amount-paid" for="amount-paid-input">
-                                                        @localizer["AmountPaid"]
-                                                    </label>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <input type="text" class="form-control form-control2" asp-for="ExtensionContract.AmountPayed" autocomplete="off" oninput="handleAmountPayed(this)" autocomplete="off" readonly>
-                                                    <div class="row requird-field-row-last">
+                                            <div class="row" style="flex-direction: row-reverse;">
+                                                <div class="col-md-auto col-lg-4 d-flex "
+                                                     style="flex-direction:row-reverse;">
+                                                    <div class="col-auto">
+                                                        <label id="amount-paid" for="amount-paid-input">
+                                                            @localizer["AmountPaid"]
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <input type="text" class="form-control form-control2" asp-for="ExtensionContract.AmountPayed" autocomplete="off" oninput="handleAmountPayed(this)" autocomplete="off" readonly>
                                                         <div class="row requird-field-row-last">
-                                                            <p class="requird_field_AmountPayed"></p>
+                                                            <div class="row requird-field-row-last">
+                                                                <p class="requird_field_AmountPayed"></p>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                            </div>
-                                            @{
-                                                if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() == 0)
-                                                {
-                                                    Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "1");
-                                                }
-                                                else if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() > 0 && Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointBank != "00").Count() == 0)
-                                                {
-                                                    Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "3" || x.CrMasSupAccountPaymentMethodClassification == "1");
-                                                }
-                                                else if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() > 0 && Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointBank != "00").Count() > 0)
-                                                {
-                                                    Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "2" || x.CrMasSupAccountPaymentMethodClassification == "3" || x.CrMasSupAccountPaymentMethodClassification == "1");
-                                                }
-                                            }
-                                            <div class="col-md-4 col-xl-4 d-flex " style="flex-direction:row-reverse;flex-wrap: nowrap;">
-                                                <div class="col-auto d-flex ps-0" style="justify-content: flex-end;">
-                                                    <label id="payment-method" for="payment-method-select">@localizer["PaymentMethod"]</label>
                                                 </div>
-                                                <div class="col-auto">
-                                                    <div class="offset">
-                                                        <select class="form-select-last" asp-for="ExtensionContract.PaymentMethod" style="font-size:14px;" disabled>
-                                                            <option selected disabled></option>
-                                                            @foreach (var payment in Model.PaymentMethods)
-                                                            {
-                                                                if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
-                                                                {
-                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-left">@payment.CrMasSupAccountPaymentMethodEnName</option>
-                                                                }
-                                                            }
-                                                        </select>
+                                                @{
+                                                    if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() == 0)
+                                                    {
+                                                        Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "1");
+                                                    }
+                                                    else if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() > 0 && Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointBank != "00").Count() == 0)
+                                                    {
+                                                        Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "3" || x.CrMasSupAccountPaymentMethodClassification == "1");
+                                                    }
+                                                    else if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() > 0 && Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointBank != "00").Count() > 0)
+                                                    {
+                                                        Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "2" || x.CrMasSupAccountPaymentMethodClassification == "3" || x.CrMasSupAccountPaymentMethodClassification == "1");
+                                                    }
+                                                }
+                                                <div class="col-md-4 col-xl-4 d-flex " style="flex-direction:row-reverse;flex-wrap: nowrap;">
+                                                    <div class="col-auto d-flex ps-0" style="justify-content: flex-end;">
+                                                        <label id="payment-method" for="payment-method-select">@localizer["PaymentMethod"]</label>
                                                     </div>
-                                                    <span class="requird-field" id="requird_field_PaymentMethod" asp-validation-for="@Model.Contract.PaymentMethod"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-auto col-lg-4 d-flex " style="flex-direction:row-reverse;">
-
-                                                <div class="col-auto d-flex ps-0 " style="justify-content: flex-end;">
-                                                    <label id="selling-point" for="selling-point-dropdown">@localizer["SalesPoint"]</label>
-
-                                                </div>
-
-                                                <div class="col-auto">
-                                                    <div class="offset">
-                                                        <select class="form-select-last" asp-for="ExtensionContract.SalesPoint" style="font-size:14px;width:240px!important" disabled>
-                                                        </select>
+                                                    <div class="col-auto">
+                                                        <div class="offset">
+                                                            <select class="form-select-last" asp-for="ExtensionContract.PaymentMethod" style="font-size:14px;" disabled>
+                                                                <option selected disabled></option>
+                                                                @foreach (var payment in Model.PaymentMethods)
+                                                                {
+                                                                    if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                                                    {
+                                                                        <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-left">@payment.CrMasSupAccountPaymentMethodEnName</option>
+                                                                    }
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <span class="requird-field" id="requird_field_PaymentMethod" asp-validation-for="@Model.Contract.PaymentMethod"></span>
                                                     </div>
-                                                    <span class="requird-field" id="requird_field_SalesPoint" asp-validation-for="@Model.ExtensionContract.SalesPoint"></span>
+                                                </div>
+                                                <div class="col-md-auto col-lg-4 d-flex " style="flex-direction:row-reverse;">
+
+                                                    <div class="col-auto d-flex ps-0 " style="justify-content: flex-end;">
+                                                        <label id="selling-point" for="selling-point-dropdown">@localizer["SalesPoint"]</label>
+
+                                                    </div>
+
+                                                    <div class="col-auto">
+                                                        <div class="offset">
+                                                            <select class="form-select-last" asp-for="ExtensionContract.SalesPoint" style="font-size:14px;width:240px!important" disabled>
+                                                            </select>
+                                                        </div>
+                                                        <span class="requird-field" id="requird_field_SalesPoint" asp-validation-for="@Model.ExtensionContract.SalesPoint"></span>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="row p-2" style="flex-direction:row-reverse">
+                                                <div class="col-auto">
+                                                    <label id="notes" for="FormControl-last-Textarea">@localizer["reasons"]</label>
+                                                </div>
+                                                <div class="col-sm-10 col-md-7 col-lg-7">
+                                                    <input class="form-control textarea-inputs" maxlength="100" id="reasons" name="reasons">
                                                 </div>
 
-
                                             </div>
                                         </div>
-                                        <div class="row p-2" style="flex-direction:row-reverse">
-                                            <div class="col-auto">
-                                                <label id="notes" for="FormControl-last-Textarea">@localizer["reasons"]</label>
+                                        <div class="row button-row pt-3 pb-2 ps-4" style=" justify-content: space-between;">
+                                            <div class="button-card gap-4 ">
+                                                <a class="btn btn-custom" asp-action="Index" asp-area="BS" asp-controller="ContractExtension">@localizer["Backk"]</a>
+                                                <a class="btn btn-custom" id="submitForm">@localizer["Save"]</a>
                                             </div>
-                                            <div class="col-sm-10 col-md-7 col-lg-7">
-                                                <input class="form-control textarea-inputs" maxlength="100" id="reasons" name="reasons">
-                                            </div>
-
+                                            <div class="button-card"></div>
                                         </div>
-                                    </div>
-                                    <div class="row button-row pt-3 pb-2 ps-4" style=" justify-content: space-between;">
-                                        <div class="button-card gap-4 ">
-                                            <a class="btn btn-custom" asp-action="Index" asp-area="BS" asp-controller="ContractExtension">@localizer["Backk"]</a>
-                                            <a class="btn btn-custom" id="submitForm">@localizer["Save"]</a>
-                                        </div>
-                                        <div class="button-card"></div>
-                                    </div>
 
-                                </fieldset>
+                                    </fieldset>
 
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+    <div class="main" style="display:none">
+        <div class="container1">
+            <div>   <img src="@Url.Content(lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo)" class="logo"></div>
+            <br>
+            <div class="container2">
+                <div class="dash uno"></div>
+                <div class="dash dos"></div>
+                <div class="dash tres"></div>
+                <div class="dash cuatro"></div>
+            </div>
+        </div>
     </div>
-</section>
+</div>
 <footer class="fixed-bottom-xl">
     <div class="before-footer-widget">
         <svg width: 100%; height:auto viewbox="0 0 2444 132">
@@ -423,6 +439,8 @@
             integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
     <script>
         const image = document.getElementById('hover-image-extension2');
         const dropdown = document.getElementById('dropdown-content-extension2');
@@ -462,7 +480,7 @@
             if (parseInt(daysNo) > 0) {
                 $("#ExtensionContract_DaysNo").val(ExpectedDaysNo);
                 var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-                var formattedstartDate = "@Model.ExtensionContract.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd HH:mm:ss",CultureInfo.InvariantCulture)";
+                var formattedstartDate = "@Model.ExtensionContract.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)";
                 var StartDate = new Date(formattedstartDate);
                 StartDate.setDate(StartDate.getDate() + parseInt(ExpectedDaysNo));
                 var formattedEndDate = StartDate.toLocaleDateString('ja-JP', options);
@@ -470,17 +488,17 @@
 
                 document.getElementById('EndDate').textContent = formattedEndDate;
                 document.getElementById('ExpectedDaysNo').textContent = ExpectedDaysNo.toString();
-
-                choicesValue = "@Model.ExtensionContract.CrCasRenterContractBasicExpectedOptionsValue";
-                var AdditionalValueForDay = "@Model.ExtensionContract.CrCasRenterContractBasicAdditionalValue";
-                additionalValue = parseFloat(AdditionalValueForDay) * parseInt(ExpectedDaysNo);
-                var privateDriverValueForDay = '@Model.ExtensionContract.CrCasRenterContractBasicExpectedPrivateDriverValue';
+                var choicesPerDay = "@Model.ExtensionContract.ChoicesValue"
+                choicesValue = parseFloat(choicesPerDay) * parseInt(ExpectedDaysNo);
+                additionalValue = parseFloat("@Model.ExtensionContract.CrCasRenterContractBasicAdditionalValue");
+                var privateDriverValueForDay = '@Model.ExtensionContract.CrCasRenterContractBasicPrivateDriverValue';
                 privateDriverValue = parseFloat(privateDriverValueForDay) * parseInt(ExpectedDaysNo);
-                additionalDriverValue = parseFloat('@Model.ExtensionContract.CrCasRenterContractBasicExpectedPrivateDriverValue');
+                additionalDriverValue = parseFloat('@Model.ExtensionContract.CrCasRenterContractBasicAdditionalDriverValue');
                 FeesTammValue = parseFloat('@Model.ExtensionContract.CrCasRenterContractBasicAuthorizationValue');
-
+                var advantages = parseFloat('@Model.ExtensionContract.AdvatagesValue');
+                advantagesValueTotal = advantages * parseInt(ExpectedDaysNo);
                 var totalRental = parseInt(ExpectedDaysNo) * parseFloat(RentalDayPrice);
-                rentValue = parseFloat(totalRental) + parseFloat(choicesValue) + parseFloat(additionalValue) + parseFloat(privateDriverValue) + parseFloat(additionalDriverValue) + parseFloat(FeesTammValue);
+                rentValue = parseFloat(totalRental) + parseFloat(choicesValue) + parseFloat(privateDriverValue) + parseFloat(advantagesValueTotal)+parseFloat(additionalDriverValue)+parseFloat(FeesTammValue)+parseFloat(additionalValue);
 
 
 
@@ -553,11 +571,11 @@
             CalculateTotalAmount();
         };
         function CalculateTax() {
-            var TaxPercent = parseInt("@Model.ExtensionContract.CrCasRenterContractBasicTaxRate");
+            var TaxPercent = parseFloat("@Model.ExtensionContract.CrCasRenterContractBasicTaxRate");
             console.log("TaxPercent", TaxPercent);
 
             if (TaxPercent != null && TaxPercent != "" && TaxPercent != undefined && TaxPercent != 0) {
-                taxValue = rentValue * (TaxPercent / 100);
+                taxValue = (rentValue-discountValue) * (TaxPercent / 100);
             }
             else {
                 taxValue = 0;
@@ -569,17 +587,17 @@
         }
         function CalculateTotalAmount() {
             // Get Total Of amount Required
-            var RenterBalance = '@Model.ExtensionContract.CasRenterPreviousBalance?.ToString("N2",CultureInfo.InvariantCulture)'
-            var PreviousTotalContract = '@Model.ExtensionContract.CrCasRenterContractBasicExpectedTotal?.ToString("N2",CultureInfo.InvariantCulture)'
+            var RenterBalance = '@Model.ExtensionContract.CasRenterPreviousBalance?.ToString("N2", CultureInfo.InvariantCulture)'
+            var PreviousTotalContract = '@Model.ExtensionContract.CrCasRenterContractBasicExpectedTotal?.ToString("N2", CultureInfo.InvariantCulture)'
             RenterBalance = RenterBalance.replace(/,/g, '');
             PreviousTotalContract = PreviousTotalContract.replace(/,/g, '');
-            totalContract = parseFloat(discountValue) + parseFloat(taxValue) + parseFloat(rentValue);
+            totalContract =parseFloat(rentValue)- parseFloat(discountValue) + parseFloat(taxValue);
             console.log("totalContract", totalContract);
             console.log("RenterBalance", RenterBalance);
             console.log("rentValue", rentValue);
             console.log("PreviousTotalContract", PreviousTotalContract);
             document.getElementById('TotalContract').textContent = totalContract.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            TotalAmount = ( parseFloat(totalContract) - parseFloat(PreviousTotalContract) ) - parseFloat(RenterBalance);
+            TotalAmount = (parseFloat(totalContract) - parseFloat(PreviousTotalContract)) - parseFloat(RenterBalance);
             $("#ExtensionValue").val(parseFloat(totalContract) - parseFloat(PreviousTotalContract));
             if (TotalAmount < 0) {
                 TotalAmount = 0;
@@ -687,6 +705,371 @@
         });
     </script>
     <script>
+        // Function to send a static image file to WhatsApp
+        const sendStaticImageToWhatsApp = async () => {
+            const imageLessor = "@user.CrMasUserInformationLessorNavigation.CrMasLessorImage.CrMasLessorImageContractExtensionCard";
+            const imagePath = imageLessor.replace('~', '');
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
+            const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key
+            const mobileNo = '@user.CrMasUserInformationMobileNo'; // Assuming this variable contains the mobile number
+            const phoneNumber = callingKey + mobileNo;
+            const messageText = " "; // Replace with your message
+            const contractNo = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicNo)';
+
+            try {
+                // Read the image file as a Blob
+                const responseImage = await fetch(imagePath);
+                const blob = await responseImage.blob();
+                // Prepare form data
+                const formData = new FormData();
+                formData.append("number", phoneNumber); // Append the recipient's phone number
+                formData.append("message", messageText); // Append the message
+
+                // Create a canvas element
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                // Create an image element
+                const img = new Image();
+
+                // When the image is loaded, draw it on the canvas
+                img.onload = function () {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+
+                    const CarEn = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationDistributionNavigation?.CrMasSupCarDistributionConcatenateEnName)';
+                    const CarAr = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationDistributionNavigation?.CrMasSupCarDistributionConcatenateArName)';
+                    const RenterArName = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationArName)';
+                    const RenterEnName = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName)';
+                    var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+                    var formattedstartDate = "@Model.ExtensionContract.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture)";
+                    var StartDate = new Date(formattedstartDate);
+                    const startHijriDate = formatHijriDate(StartDate);
+                    console.log("formattedstartDate", formattedstartDate);
+                    console.log("startHijriDate", startHijriDate);
+
+                    var endDateInput = $("#EndDate").text();
+                    var EndDate = new Date(endDateInput);
+                    var formattedEndDate = EndDate.toLocaleDateString('ja-JP', options);
+                    const endHijriDate = formatHijriDate(EndDate);
+                    console.log("formattedEndDate", formattedEndDate);
+                    console.log("endHijriDate", endHijriDate);
+
+
+                    const branch = '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchPost?.CrCasBranchPostCityNavigation?.CrMasSupPostCityConcatenateArName)' + ' - ' + '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArShortName)';
+                    // Define text properties
+                    ctx.font = "bold 25px serif";
+                    ctx.textAlign = "right";
+                    ctx.fillStyle = "black";
+                    ctx.fillText(RenterArName, canvas.width - 75, 170);
+                    ctx.fillText(CarAr, canvas.width - 75, 205);
+                    ctx.fillText(startHijriDate, canvas.width - 190, 358);
+                    ctx.fillText(endHijriDate, canvas.width - 190, 395);
+                    ctx.fillText(branch, canvas.width - 75, 450);
+
+                    ctx.textAlign = "left";
+                    ctx.fillText(RenterEnName, canvas.width - 960, 270);
+                    ctx.fillText(CarEn, canvas.width - 960, 305);
+                    ctx.fillText(formattedstartDate, canvas.width - 850, 358);
+                    ctx.fillText(formattedEndDate, canvas.width - 850, 395);
+                    ctx.fillText(contractNo, canvas.width - 960, 585);
+                    canvas.toBlob(async function (blob) {
+                        formData.append("file", blob, "ExtensionContractWhatUp.png"); // Append the modified image blob with a filename
+                        const requestOptions = {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        };
+                        // Send the request to the API endpoint
+                        const response = await fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions);
+                        if (response.ok) {
+                            const result = await response.json();
+                            console.log("SendImageResult", result);
+                        } else {
+                            const errorMessage = await response.text(); // Get the error message as plain text
+                            console.log("SendImageError", errorMessage);
+                        }
+                        // createPdfAndSendToWhatsApp(contractNo, phoneNumber, token, blob);
+                    }, 'image/png');
+                };
+                // Set the source of the image element
+                img.src = URL.createObjectURL(blob);
+            } catch (error) {
+                console.log('SendImageError', error);
+            }
+        };
+
+        // Function to send an image and Ar PDF to WhatsApp
+        const sendArReceiptToWhatsApp = async () => {
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArCatchReceipt";
+            const imagePath = imageLessor.replace('~', '');
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
+            const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
+            const mobileNo = '@user.CrMasUserInformationMobileNo';     // Assuming this variable contains the mobile number.
+            const phoneNumber = callingKey + mobileNo;
+            //Data Receipt
+            // Gregorian (Miladi) Date
+            const miladiDate = new Date();
+            const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).split('/').join('/');
+            console.log("miladiDateString", miladiDateString)
+
+            // Hijri Date
+            // const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+            const hijriDateString = formatHijriDate(miladiDate);
+
+            // First In Page
+            const contractNo = "@Model.ExtensionContract.CrCasRenterContractBasicNo";
+            const AccountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const referenceType = "تمديد عقد";
+            const RenterName = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationArName)';
+            const CarName = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationDistributionNavigation?.CrMasSupCarDistributionConcatenateArName)';
+
+            // last in page
+            const balanceR = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorAvailableBalance)';
+            const balance =parseFloat(balanceR);
+            console.log("balanceR", balanceR)
+            console.log("balance", balance)
+
+            var DiscountInput = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicUserDiscountRate)';
+            var TaxRateInput = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicTaxRate)';
+            var AmountPayedInput = document.getElementById("ExtensionContract_AmountPayed").value;
+            const discountRate = parseFloat(DiscountInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const TaxPercent = parseFloat(TaxRateInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const AmountRequired = $("#TotalAmount").text().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            var selectElement = document.getElementById("ExtensionContract_PaymentMethod");
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            // Get the text of the selected option
+            const selectedText = selectedOption.textContent || selectedOption.innerText;
+            //get Data Director lessor and branch and get renter and user
+            var userName = decodeHTMLEntities("@user.CrMasUserInformationArName");
+            var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorArName");
+            var directorOfBranch = decodeHTMLEntities("@Model.CrCasBranchInformation.CrCasBranchInformationDirectorArName");
+            var reasonPayment = document.getElementById("reasons").value;
+            // Signture Image
+            var signture = "@user.CrMasUserInformationSignature";
+            const signturePath = signture.replace('~', '');
+            var signatureImg = new Image();
+            signatureImg.src = signturePath;
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            // Get Image And Text On
+            // Read the image file as a Blob
+            const responseImage = await fetch(imagePath);
+            const blob = await responseImage.blob();
+            // Prepare form data
+            const formData = new FormData();
+            formData.append("number", phoneNumber); // Append the recipient's phone number
+            formData.append("message", " "); // Append the message
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                ctx.drawImage(img, 0, 0);
+                ctx.font = "bold 50px serif";
+                ctx.textAlign = "right";
+                ctx.fillStyle = "black";
+                // Receipt and type and renter and car name
+                ctx.fillText(AccountReceiptNo, canvas.width - 110, 610);
+                ctx.fillText(RenterName, canvas.width - 125, 1075);
+                ctx.fillText(CarName, canvas.width - 125, 1175);
+
+                ctx.font = "bold 42px serif";
+                ctx.fillText(referenceType, canvas.width - 250, 895);
+                ctx.fillText(contractNo, canvas.width - 320, 985);
+                // The Table
+                var YHeight = 1380;
+                var daysNo = document.getElementById('dayNo').value;
+                // The payed Information
+                const discountText = '%' + discountRate.toString();
+                const taxText = '%' + TaxPercent.toString();
+
+                ctx.fillText(balanceR.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 330, 2392);
+                ctx.fillText(discountText, canvas.width - 360, 2485);
+                ctx.fillText(taxText, canvas.width - 367, 2573);
+                ctx.fillText(AmountRequired, canvas.width - 360, 2660);
+                ctx.fillText(AmountPayed, canvas.width - 360, 2750);
+                ctx.fillText(selectedText, canvas.width - 360, 2840);
+                ctx.fillText(reasonPayment, canvas.width - 360, 2930);
+                ctx.font = "bold 35px serif";
+                //Date and contract no
+                ctx.fillText(hijriDateString, canvas.width - 228, 668);
+                ctx.fillText(miladiDateString, canvas.width - 228, 722);
+                /////////////////////////ForTest/////////////////
+                const hours = miladiDate.getHours().toString().padStart(2, '0');
+                const minutes = miladiDate.getMinutes().toString().padStart(2, '0');
+                const seconds = miladiDate.getSeconds().toString().padStart(2, '0');
+                const timeString = `${hours}:${minutes}:${seconds}`;
+                ctx.fillText(timeString, canvas.width - 228, 760);
+                ///////////////////////////
+
+                var Rent = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicDailyRent)'
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
+                if (parseFloat(Rent) > 0) {
+                    console.log("Rent", Rent)
+                    YHeight = calculateAndDrawAr(ctx, canvas, "الايجار", Rent, daysNo, DiscountInput, TaxPercent, YHeight);
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Auth
+                // var FeesTamm = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicAuthorizationValue)';
+                // var FeesTammValue = 0;
+                // if (parseFloat(FeesTamm) != null) {
+                //     FeesTammValue = parseFloat(FeesTamm);
+                // }
+                // else {
+                //     FeesTammValue = 0;
+                // }
+
+
+
+
+                // if (parseFloat(FeesTammValue) > 0) {
+                //     YHeight = calculateAndDrawAr(ctx, canvas, "التفويض", FeesTammValue, 1, DiscountInput, TaxPercent, YHeight);
+                // }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Auth
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Advantages
+                var AdvantagesValue = parseFloat('@Model.ExtensionContract.AdvatagesValue');
+                if (AdvantagesValue > 0) {
+                    YHeight = calculateAndDrawAr(ctx, canvas, "المميزات الاضافية", AdvantagesValue, daysNo, DiscountInput, TaxPercent, YHeight);
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Advantages
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Additional Driver
+                // var additionalDriverValue = 0;
+                // var AddDriverValue = '@Model.ExtensionContract.CrCasRenterContractBasicAdditionalDriverValue';
+                // if (parseFloat(AddDriverValue) != null) {
+                //     additionalDriverValue = parseFloat(AddDriverValue);
+                // }
+                // else {
+                //     additionalDriverValue = 0;
+                // }
+
+                // if (additionalDriverValue > 0) {
+                //     YHeight = calculateAndDrawAr(ctx, canvas, "سائق اضافي", additionalDriverValue, 1, DiscountInput, TaxPercent, YHeight);
+                // }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Additional Driver
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Private Driver
+                var privateDriverValue = 0;
+                var privateDriver = '@Model.ExtensionContract.CrCasRenterContractBasicPrivateDriverValue';
+                if (parseFloat(privateDriver) != null) {
+                    privateDriverValue = parseFloat(privateDriver);
+                }
+                else {
+                    privateDriverValue = 0;
+                }
+
+                if (privateDriverValue > 0) {
+                    YHeight = calculateAndDrawAr(ctx, canvas, "سائق خاص", privateDriverValue, daysNo, DiscountInput, TaxPercent, YHeight);
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Private Driver
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// TotalChoices
+                var TotalChoices = parseFloat('@Model.ExtensionContract.ChoicesValue');
+                var choicesValue = 0;
+                if (TotalChoices != null && TotalChoices != 0 && TotalChoices != "" && TotalChoices != undefined) {
+                    choicesValue = parseFloat(TotalChoices);
+                }
+                else {
+                    choicesValue = 0;
+                }
+                if (choicesValue > 0) {
+                    YHeight = calculateAndDrawAr(ctx, canvas, "الخيارات", choicesValue, daysNo, DiscountInput, TaxPercent, YHeight);
+                }
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////TotalChoices
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// TotalAdditional
+
+                // var TotalAdditionals = parseFloat('@Model.ExtensionContract.CrCasRenterContractBasicAdditionalValue');
+                // var additionalValue = 0;
+                // if (TotalAdditionals != null && TotalAdditionals != 0 && TotalAdditionals != "" && TotalAdditionals != undefined) {
+                //     additionalValue = parseFloat(TotalAdditionals);
+                // }
+                // else {
+                //     additionalValue = 0;
+                // }
+                // if (additionalValue > 0) {
+                //     YHeight = calculateAndDrawAr(ctx, canvas, "الاضافات", additionalValue, 1, DiscountInput, TaxPercent, YHeight);
+                // }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// TotalAdditional
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
+                var tTotal = calculateTotalAmountPerDay(parseFloat('@Model.ExtensionContract.CrCasRenterContractBasicDailyRent'), parseFloat(AdvantagesValue), parseFloat(privateDriverValue), parseFloat(choicesValue), daysNo);
+                var tTotalDiscount = calculateTotalDiscountAmount(tTotal, DiscountInput);
+                var tTotalAfterDiscount = tTotal - tTotalDiscount;
+                var tTotalTax = (tTotalAfterDiscount) * (TaxPercent / 100);
+                var TotalAmountMinisPerviousBalance = tTotalTax + tTotalAfterDiscount;
+                // // الاجمالي
+                ctx.fillText(tTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 970, 2250);
+                ctx.fillText(tTotalDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1270, 2250);
+                ctx.fillText(tTotalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1560, 2250);
+                ctx.fillText(tTotalTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1880, 2250);
+                ctx.fillText(TotalAmountMinisPerviousBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 2180, 2250);
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
+
+                // director and renter and user
+                ctx.fillText(directorOfLessor, canvas.width - 340, 3050);
+                ctx.fillText(userName, canvas.width - 1140, 3050);
+                ctx.fillText(directorOfBranch, canvas.width - 340, 3190);
+                ctx.drawImage(signatureImg, canvas.width - 1350, 3125, 200, 100);
+                canvas.toBlob(async function (blob) {
+                    formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
+                    var message = ` عزيزي / ${RenterName} , يمكنك مراجعة الفاتورة عن طريق تحميل الملف المرفق `
+                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message);
+                }, 'image/png');
+            };
+            img.src = URL.createObjectURL(blob);
+        };
+        function calculateAndDrawAr(ctx, canvas, itemName, itemValue, days, discountInput, taxPercent, yHeight) {
+            var itemTotal = parseFloat(itemValue) * parseInt(days);
+            var discountValue = itemTotal * (parseFloat(discountInput) / 100);
+            var totalAfterDiscount = itemTotal - discountValue;
+            var taxValue = totalAfterDiscount * (taxPercent / 100);
+            var totalActual = parseFloat(totalAfterDiscount) + parseFloat(taxValue);
+            ctx.fillText(itemName, canvas.width - 230, yHeight);
+            ctx.fillText(itemValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 540, yHeight);
+            ctx.fillText(days, canvas.width - 775, yHeight);
+            ctx.fillText(itemTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 970, yHeight);
+            ctx.fillText(discountValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1270, yHeight);
+            ctx.fillText(totalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1560, yHeight);
+            ctx.fillText(taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1880, yHeight);
+            ctx.fillText(totalActual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 2180, yHeight);
+
+            return yHeight + 88; // Update yHeight for the next item
+        }
+
+
+
+
+
+
+
+
+
+         function calculateTotalAmountPerDay(rent, feature, privateDriver, choices, days) {
+            var daysNo = parseInt(days);
+            var total = (rent * daysNo) + (feature * daysNo) + (privateDriver * daysNo) + (choices * daysNo);
+            return total;
+        }
+        function calculateTotalDiscountAmount(total, discount) {
+            var discountValue = parseFloat(discount) / 100;
+            var totalDiscount = total * discountValue;
+            return totalDiscount;
+        }
+
         // submit Form
         document.addEventListener('DOMContentLoaded', function () {
             // Get the form element
@@ -705,7 +1088,18 @@
                     // Submit the form
                     CheckIfCanPayLessThanTotalAmount();
                     if (somethingIsNotOkay) {
-                        form.submit();
+                        $('.main').show(); // Show the main container with fade effect
+                        sendStaticImageToWhatsApp();
+                        if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                                $("#language").val("en");
+                            }
+                            else {
+                                $("#language").val("ar");
+                                sendArReceiptToWhatsApp();
+                            }
+                        setTimeout(function () {
+                            form.submit();
+                        }, 5000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();
@@ -714,5 +1108,82 @@
             });
         });
 
+    </script>
+    <script type="text/javascript">
+        function createPdfAndSendToWhatsApp(receiptNo, phoneNumber, token, imageBlob, message) {
+            var doc = new jsPDF('p', 'pt', 'a4', true);
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            try {
+                // Convert the image blob to a base64 DataURL
+                const reader = new FileReader();
+                reader.onload = function () {
+                    const imageDataUrl = reader.result;
+                    // Add the image to the PDF
+                    const imgWidth = pageWidth; // Width of the image in the PDF
+                    const imgHeight = pageHeight; // Height of the image in the PDF
+                    const imgXPos = 0; // X position of the image (left edge)
+                    const imgYPos = 0; // Y position of the image (top edge)
+                    doc.addImage(imageDataUrl, 'PNG', imgXPos, imgYPos, imgWidth, imgHeight, '', 'FAST');
+                    // Convert the PDF to a blob
+                    const pdfBlob = doc.output('blob');
+                    const blobUrl = URL.createObjectURL(pdfBlob);
+                    const pdfBase64 = doc.output('datauristring');
+                    // Set the base64-encoded PDF to the hidden input field
+                    document.getElementById('PdfSave1').value = pdfBase64;
+                    document.getElementById('ExtensionContract_AccountReceiptNo').value = receiptNo;
+                    console.log("pdfBase64", pdfBase64)
+                    console.log("receiptNo", receiptNo)
+                    // window.open(blobUrl, '_blank');
+                    // Prepare form data with PDF
+                    const formData = new FormData();
+                    formData.append("number", phoneNumber); // Append the recipient's phone number
+                    formData.append("message", message); // Append the message
+                    formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
+
+                    // Convert the PDF to a base64-encoded string
+                    const requestOptions = {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    };
+                    console.log("pdfBlob", pdfBlob);
+                    // Send the request to the API endpoint
+                    fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                return response.text().then(error => Promise.reject(error));
+                            }
+                        })
+                        .then(result => {
+                            console.log("SendPDFResult", result);
+                        })
+                        .catch(error => {
+                            console.log("SendPDFError", error);
+                        });
+                };
+
+                reader.readAsDataURL(imageBlob); // Start reading the image blob
+            } catch (error) {
+                console.error('Error adding image to PDF:', error);
+            }
+        }
+    </script>
+    <script>
+        // Function to format Hijri date
+        function formatHijriDate(date) {
+            const options = { weekday: 'long', day: 'numeric', year: 'numeric', month: 'long', calendar: 'islamic-umalqura' };
+            return date.toLocaleDateString('ar-SA', options).replace(/هـ/g, ''); // Remove "هـ" suffix
+        }
+         // To decode some string
+        function decodeHTMLEntities(text) {
+            var textArea = document.createElement("textarea");
+            textArea.innerHTML = text;
+            return textArea.value;
+        }
     </script>
 }

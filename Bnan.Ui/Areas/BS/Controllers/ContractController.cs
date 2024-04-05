@@ -143,7 +143,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     CheckAccountReceipt = await _ContractServices.AddAccountReceipt(BasicContract.CrCasRenterContractBasicNo, lessorCode, BasicContract.CrCasRenterContractBasicBranch,
                                                                                   ContractInfo.PaymentMethod, ContractInfo.AccountNo, BasicContract.CrCasRenterContractBasicCarSerailNo,
                                                                                   ContractInfo.SalesPoint,(decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance,
-                                                                                  BasicContract.CrCasRenterContractBasicRenterId,userLogin.CrMasUserInformationCode, passing, ContractInfo.PaymentReasons,SavePdf);
+                                                                                  BasicContract.CrCasRenterContractBasicRenterId,userLogin.CrMasUserInformationCode, passing, ContractInfo.PaymentReasons,SavePdf, language);
                 }
 
                 //Choices

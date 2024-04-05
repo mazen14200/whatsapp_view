@@ -1,0 +1,110 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.BS;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
+@using Newtonsoft.Json;
+@model BSLayoutVM
+@inject IViewLocalizer localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+<link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
+@if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+{
+    <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">
+}
+<div class="container-fluid">
+    <section class="section-mainCard">
+        <div class="row justify-content-center w-100 h-100">
+            <div class="col-11 col-sm-10 col-md-11 col-lg-11 col-xl-10 text-center p-0 ">
+                <div class="card main-card ">
+                    <div class="row pt-2">
+                        <a asp-area="BS" asp-action="Index" asp-controller="Home" style="width: fit-content;">
+                            <img src="~/BranchSys/Pages/img/cancel.png" alt="cancle_icon" class="cancle-icon">
+                        </a>
+                    </div>
+                    <div class="row layout-row">
+
+                        <div class="row" style="flex-direction: row-reverse;">
+                            <div class="col justify-content-center d-flex title-row">
+                                <h1 class="card-title">
+                                    @localizer["ContractSettlement"]
+                                </h1>
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-center h-100 content-row">
+
+                            <div class="col-md-11 mx-0">
+
+                                <form id="contract-extension-form">
+
+                                    <fieldset>
+                                        <div class="form-card">
+                                            <div class="row pb-4 seacrh-row align-items-baseline" style="flex-direction: row-reverse;flex-wrap: wrap;">
+                                                <div class="col-auto">
+                                                    <label for="search"> @localizer["search"]</label>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="form-outline" data-mdb-input-init>
+                                                        <span class="fa fa-search"></span>
+                                                        <input type="search" id="search" class="form-control inputs" name="search" aria-label="Search" autofocus />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row table-row">
+                                                <div class="col table-scroll w-100  dataTable">
+                                                    <partial name="_ContractSettlement" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </fieldset>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<footer class="fixed-bottom-xl">
+    <div class="before-footer-widget">
+        <svg width: 100%; height:auto viewbox="0 0 2444 132">
+            <path fill="rgba(254, 248, 232, 1)" fill-rule="evenodd"
+                  d="M1222 0h1222c-444.13 88-852.127 132-1223.993 132C849.253 132 442.585 88.263 0 .789V0h1222z">
+            </path>
+        </svg>
+    </div>
+
+</footer>
+@section scripts {
+  
+    <script>
+        //get AccountBank By Status and Search function
+        function GetContractFilter(search) {
+            $.ajax({
+                type: "GET",
+                data: {
+                    search: search
+                },
+                url: "@Url.Action("GetContractBySearch", "ContractSettlement", new { Area = "BS" })",
+                success: function (response) {
+                    $(".dataTable").html(response);
+                },
+            });
+        }
+
+        //on Change Search Input
+        $("#search").on("input", function () {
+            var searchValue = $(this).val();
+            GetContractFilter(searchValue);
+        });
+    </script>
+    }

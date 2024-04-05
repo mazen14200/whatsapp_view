@@ -47,7 +47,7 @@
   "Reports": "التقارير",
   "Administrative Procedures": "الاجراءات الاداريه",
   "Finacial Procedures": "الاجراءات الماليه",
-  "ActiveContracts": "عفود قائمة",
+  "ActiveContracts": "عقود قائمة",
   //"ClosedContracts": "عقود مغلقة",
   //"CanceledContracts": "عقود ملغاه",
   "DriverContracts": "عقود السائقين",
@@ -865,6 +865,8 @@
   "PleaseChooseAtLeastOneValue": "عفواً ..... يجب اختيار قيمة واحدة على الاقل",
   "toastMessageExistRenters": "عفواً ..... لا يوجد مستأجرين بالشركة",
   "toastMessageExistReceipts": "عفواً ..... لا يوجد قيود بالفرع",
+  "toastMessageExistContractsForSettelement": "عفواً ..... لا يوجد عقود للتسوية بالفرع",
+  "toastMessageExistContractsForExtension": "عفواً ..... لا يوجد عقود للتمديد بالفرع",
 
   "Existing": "هذا الحقل مسجل من قبل",
   "Exist": "ExistAr",
@@ -1704,6 +1706,24 @@
   "PleaseChooseCar": "من فضلك اختر سيارة",
   //
   "VerificationCode": "رمز التحقق",
-  "ContractsExtension": "تمديد العقود"
-
+  "ContractsExtension": "تمديد العقود",
+  "Expenses": "المصروفات",
+  "Compensations": "التعويضات",
+  "Expense": "مصروفات",
+  "Compensation": "تعويضات",
+  "ExpectedEndContract": "نهاية العقد المتوقعة",
+  "ExpectedDaysNo": "عدد الأيام المتوقعه",
+  "SettlementDate": "تاريخ التسوية",
+  "ActualNumberOfDays": "عدد الأيام الفعلية",
+  "AddHours": "ساعات إضافية",
+  "ReceivingBranch": "فرع الاستلام",
+  "DeliveryBranch": "فرع التسليم",
+  "Without": "بدون",
+  "Day": "يوم",
+  "DayHalf": "نص يوم",
+  "DayQuarter": "ربع يوم",
+  "EndOfSettlement": "نهاية التسوية",
+  "SettlementTiming": "توقيت التسوية",
+  "SettlementMechanism": "آلية التسوية",
+  "Total": "المجموع"
 }

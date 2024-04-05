@@ -316,10 +316,10 @@
         //     // Add the active class to the next item
         //     nextItem.classList.add('active');
         // }
-        
 
-        
-       
+
+
+
         function faq() {
             const container1Toggles = document.querySelectorAll(".faq-container1 .faq-toggle");
             const container2Toggles = document.querySelectorAll(".faq-container2 .faq-toggle");
@@ -368,7 +368,7 @@
             toggleFAQs(container2Toggles, container2Faqs);
             toggleFAQs(container3Toggles, container3Faqs);
         }
-        
+
     </script>
     <script>
         $(document).ready(function () {
@@ -662,10 +662,10 @@
             const pieChartData = {
                 labels: ['@localizer["ExpiredContract"]', '@localizer["ExpiresToday"]', '@localizer["ExpiresTomorrow"]', '@localizer["ExpiresLater"]'],
                 datasets: [{
-                    data: [@Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "3").Count(),
-        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "0").Count(),
-        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "1").Count(),
-        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "2").Count()],
+                    data: [@Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractStatus == "E").Count(),
+        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "0" && x.CrCasRenterContractAlertContractStatus == "A").Count(),
+        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "1" && x.CrCasRenterContractAlertContractStatus == "A").Count(),
+        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "2" && x.CrCasRenterContractAlertContractStatus == "A").Count()],
                     backgroundColor: ['rgba(242, 36, 36, 1)', '#9966FF', 'rgba(242, 143, 36, 1)', 'rgba(54, 162, 235, 1)']
                 }]
             };
@@ -1019,7 +1019,14 @@
             var CompanyDocuments = "@userInfo?.CrMasUserInformationLessorNavigation?.CrCasBranchDocuments.Where(x => x.CrCasBranchDocumentsStatus == Status.Expire || x.CrCasBranchDocumentsStatus == Status.Renewed).Count()";
             var checkContractValidity = "";
             var selectedBranch = "@Model?.SelectedBranch";
-            if (ExtensionAuth.toLowerCase() === "false" || ExtensionAuth == null || ExtensionAuth == "") {
+            var ContractForExtension = '@ViewBag.ContractForExtension';
+
+            if (ContractForExtension == '0') {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageExistContractsForExtension"]');
+                return
+            }
+            else if (ExtensionAuth.toLowerCase() === "false" || ExtensionAuth == null || ExtensionAuth == "") {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["toastMessage"]');
                 return
@@ -1088,6 +1095,93 @@
             }
         })
 
+    </script>
+    <!--Contract Settelment-->
+    <script>
+        document.getElementById('ContractSettlement').addEventListener('click', function () {
+            var SettelmentAuth = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityEnd";
+            var userStatus = "@userInfo?.CrMasUserInformationStatus";
+            var lessorStatus = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorInformationStatus";
+            var BranchStatus = "@Model?.CrCasBranchInformation?.CrCasBranchInformationStatus";
+            var CompanyContract = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasContractCompanies.Where(x => x.CrMasContractCompanyStatus == Status.Expire || x.CrMasContractCompanyStatus == Status.Renewed).Count()";
+            var CompanyDocuments = "@userInfo?.CrMasUserInformationLessorNavigation?.CrCasBranchDocuments.Where(x => x.CrCasBranchDocumentsStatus == Status.Expire || x.CrCasBranchDocumentsStatus == Status.Renewed).Count()";
+            var checkContractValidity = "";
+            var selectedBranch = "@Model?.SelectedBranch";
+            var ContractForSettelment = '@ViewBag.ContractForSettelment';
+
+            if (ContractForSettelment == '0') {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageExistContractsForSettelement"]');
+                return
+            }
+            else if (SettelmentAuth.toLowerCase() === "false" || SettelmentAuth == null || SettelmentAuth == "") {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessage"]');
+                return
+            }
+            else if (userStatus !== "@Status.Active") {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageUserHold"]');
+                return
+            }
+            else if (BranchStatus !== "@Status.Active") {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageBranchHold"]');
+                return
+            }
+            else if (lessorStatus !== "@Status.Active") {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageLessorHold"]');
+                return
+            }
+            else if (CompanyContract > 0) {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["toastMessageCompanyContractExpired"]');
+                return
+            }
+            else if (CompanyDocuments > 0) {
+                $.ajax({
+                    url: "/BS/Home/CheckCompanyDocuments", // Replace YourController with your actual controller name
+                    type: "GET",
+                    data: { selectedBranch: selectedBranch },
+                    success: function (data) {
+                        var checkContract = data;
+                        if (checkContract == "100") {
+                            toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                            toastr.error('@localizer["toastMessageCompanyDocumentRegister"]');
+                            return
+                        }
+                        else if (checkContract == "101") {
+                            toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                            toastr.error('@localizer["toastMessageCompanyDocumentChamber"]');
+                            return
+                        }
+                        else if (checkContract == "102") {
+                            toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                            toastr.error('@localizer["toastMessageCompanyDocumentTransferPermission"]');
+                            return
+                        }
+                        else if (checkContract == "103") {
+                            toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                            toastr.error('@localizer["toastMessageCompanyDocumentLicenceMunicipale"]');
+                            return
+                        }
+                        else if (checkContract == "104") {
+                            toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                            toastr.error('@localizer["toastMessageCompanyDocumentLicenceAddress"]');
+                            return
+                        }
+                        else {
+                            window.location.href = "/BS/ContractExtension/Index";
+                        }
+                    }
+                });
+
+            }
+            else {
+                window.location.href = "/BS/ContractSettlement/Index";
+            }
+        });
     </script>
 }
 
