@@ -153,6 +153,9 @@
 
 <div class="sub-container-form">
     <form class="needs-validation" novalidate asp-area="MAS" asp-controller="CarCategory" asp-action="AddCarCategory" enctype="multipart/form-data">
+        
+        <div id="form_height" style="height:540px;">
+
         @* <div class="form-contain"> *@ @* For-scrolling *@
             @*CarCategory code*@
             <div class="row mt-2">
@@ -216,7 +219,9 @@
             
 
              @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
-        @* </div> *@
+         </div> 
+        @*</div>*@
+
 
         <div class="mt-3">
             <button class="btn btn-primary" type="submit">@localizer["Save"]</button>

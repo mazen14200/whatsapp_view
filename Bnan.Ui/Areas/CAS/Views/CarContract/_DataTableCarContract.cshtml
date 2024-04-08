@@ -29,7 +29,6 @@
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["CarContractId"]</th>
                     <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
                     <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
-                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
@@ -41,51 +40,38 @@
                 @{
                     int no = 1;
                 }
-                @foreach (var item in Model.ContractBasic_Filtered)
+                @foreach (var item in Model.crCasCarInformation)
                 {
 
                     @*<tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateCarInformationId })'" style="cursor:pointer;color:red">*@
-                    <tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasRenterContractBasicCarSerailNo })'">
+                    <tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasCarInformationSerailNo })'">
                         <td id="_Nc">@no</td>
-                        <td id="_Nc">@item.CrCasRenterContractBasicCarSerailNo</td>
+                        <td id="_Nc">@item.CrCasCarInformationSerailNo</td>
                         @{
-                            var singleCar = Model.crCasCarInformation.FirstOrDefault(x => x.CrCasCarInformationSerailNo == item.CrCasRenterContractBasicCarSerailNo);
 
-                            <td style="text-align:start">@singleCar.CrCasCarInformationConcatenateEnName</td>
-                            <td style="text-align:start">@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicCarSerailNo == item.CrCasRenterContractBasicCarSerailNo).Max(x=>x.CrCasRenterContractBasicIssuedDate)?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:start">@item.CrCasCarInformationConcatenateEnName</td>
+                            <td style="text-align:start">@item.CrCasCarInformationLastContractDate?.ToString("dd/MM/yyyy")</td>
 
-
-                            foreach (var ss in Model.contracts_Counts)
-                            {
-                                if (ss[0] == item.CrCasRenterContractBasicCarSerailNo)
-                                {
-                                    var singleDataFromCountList = ss;
-
-                                    <td id="_Nc">@decimal.Parse(singleDataFromCountList[2]).ToString("N2",CultureInfo.InvariantCulture)</td>
-                                <td id="_Nc">@singleDataFromCountList[1]</td>
-
-                                <td id="_Nc"></td>
-                                }
-                            }
-
-                            <td id="_Nc">@singleCar.CrCasCarInformationCurrentMeter?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">&emsp; @item.CrCasCarInformationConractCount</td>
+                            <td id="_Nc">&emsp; @item.CrCasCarInformationConractDaysNo</td>
+                            <td id="_Nc">&emsp; @item.CrCasCarInformationCurrentMeter?.ToString("N2",CultureInfo.InvariantCulture)</td>
 
 
                             <td style="text-align:start">
 
-                                @if (@singleCar.CrCasCarInformationStatus == Status.Active)
+                                @if (@item.CrCasCarInformationStatus == Status.Active)
                                 {
                                     @localizer["Active"]
                                 }
-                                else if (@singleCar.CrCasCarInformationStatus == Status.Rented)
+                                else if (@item.CrCasCarInformationStatus == Status.Rented)
                                 {
                                     @localizer["Car_Rented"]
                                 }
-                                else if (@singleCar.CrCasCarInformationStatus == Status.Hold)
+                                else if (@item.CrCasCarInformationStatus == Status.Hold)
                                 {
                                     @localizer["Hold"]
                                 }
-                                else if (@singleCar.CrCasCarInformationStatus == Status.Deleted)
+                                else if (@item.CrCasCarInformationStatus == Status.Deleted)
                                 {
                                     @localizer["Deleted"]
                                 }
@@ -115,7 +101,6 @@ else
                     <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["CarContractId"]</th>
                     <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["RenterInformationName"]</th>
                     <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["LastDateContract"]</th>
-                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract_Value"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Contract_Count"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["Days_Count"]</th>
                     <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["KM_Count"]</th>
@@ -127,51 +112,37 @@ else
                 @{
                     int no = 1;
                 }
-                @foreach (var item in Model.ContractBasic_Filtered)
+                @foreach (var item in Model.crCasCarInformation)
                 {
 
                     @*<tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasRenterContractBasic4.CrCasRenterPrivateCarInformationId })'" style="cursor:pointer;color:red">*@
-                    <tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasRenterContractBasicCarSerailNo })'">
+                    <tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasCarInformationSerailNo })'">
                         <td id="_Nc">&emsp; @no</td>
-                        <td id="_Nc">&emsp; @item.CrCasRenterContractBasicCarSerailNo</td>
-                        @{
-                            var singleCar = Model.crCasCarInformation.FirstOrDefault(x => x.CrCasCarInformationSerailNo == item.CrCasRenterContractBasicCarSerailNo);
+                        <td id="_Nc">&emsp; @item.CrCasCarInformationSerailNo</td>
 
-                            <td style="text-align:start">@singleCar.CrCasCarInformationConcatenateArName</td>
-                            <td style="text-align:start">@Model.crCasRenterContractBasics.Where(x=>x.CrCasRenterContractBasicCarSerailNo == item.CrCasRenterContractBasicCarSerailNo).Max(x=>x.CrCasRenterContractBasicIssuedDate)?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:start">@item.CrCasCarInformationConcatenateArName</td>
+                            <td style="text-align:start">@item.CrCasCarInformationLastContractDate?.ToString("dd/MM/yyyy")</td>
 
-
-                            foreach (var ss in Model.contracts_Counts)
-                            {
-                                if (ss[0] == item.CrCasRenterContractBasicCarSerailNo)
-                                {
-                                    var singleDataFromCountList = ss;
-
-                                    <td id="_Nc">&emsp; @decimal.Parse(singleDataFromCountList[2]).ToString("N2",CultureInfo.InvariantCulture)</td>
-                                    <td id="_Nc">&emsp; @singleDataFromCountList[1]</td>
-
-                                    <td id="_Nc">&emsp; </td>
-                                }
-                            }
-
-                            <td id="_Nc">&emsp; @singleCar.CrCasCarInformationCurrentMeter?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                        <td id="_Nc">&emsp; @item.CrCasCarInformationConractCount</td>
+                        <td id="_Nc">&emsp; @item.CrCasCarInformationConractDaysNo</td>
+                        <td id="_Nc">&emsp; @item.CrCasCarInformationCurrentMeter?.ToString("N2",CultureInfo.InvariantCulture)</td>
 
 
                             <td style="text-align:start">
 
-                                @if (@singleCar.CrCasCarInformationStatus == Status.Active)
+                                @if (@item.CrCasCarInformationStatus == Status.Active)
                                 {
                                     @localizer["Active"]
                                 }
-                                else if (@singleCar.CrCasCarInformationStatus == Status.Rented)
+                                else if (@item.CrCasCarInformationStatus == Status.Rented)
                                 {
                                     @localizer["Car_Rented"]
                                 }
-                                else if (@singleCar.CrCasCarInformationStatus == Status.Hold)
+                                else if (@item.CrCasCarInformationStatus == Status.Hold)
                                 {
                                     @localizer["Hold"]
                                 }
-                                else if (@singleCar.CrCasCarInformationStatus == Status.Deleted)
+                                else if (@item.CrCasCarInformationStatus == Status.Deleted)
                                 {
                                     @localizer["Deleted"]
                                 }
@@ -180,7 +151,7 @@ else
 
                                 }
                             </td>
-                        }
+                        
                     </tr>
 
                     no++;

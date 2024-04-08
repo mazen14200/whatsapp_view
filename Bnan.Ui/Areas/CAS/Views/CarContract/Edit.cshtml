@@ -315,7 +315,7 @@ else
                 @*RenterLessorInformation ID Ar && RenterLessorInformation name Ar *@
                     @*<div class="row mt-2" style="height:10px;">
                     </div>*@
-                    <div class="row mt-2" style="height:60px">
+                    <div class="row mt-2" style="height:40px">
                     <div class="col-md-label10 formlabel" style="width:110px;" >
                         <label class="form-label" for="CrCasRenterCarId">@localizer["CarContractId"]</label>
                     </div>
@@ -373,7 +373,7 @@ else
                 @*RenterLessorInformation ID En && RenterLessorInformation name En *@
                 @*<div class="row mt-2" style="height:10px;">
                 </div>*@
-                <div class="row mt-2" style="height:60px;">
+                <div class="row mt-2" style="height:40px;">
                     <div class=" formlabel" style="width:85px;">
                         <label class="form-label" for="CrCasRenterCarId">@localizer["CarContractId"]</label>
                     </div>
@@ -446,7 +446,7 @@ else
                     {
 
                         @*Contract_Count  && Contract_Value  *@
-                        <div class="row mt-2" style="height:25px;">
+                        <div class="row mt-2" style="height:28px;">
                             <div class="col-md-label5 formlabel">
                                 <label class="form-label" for="CrCasRenterLessorId">@localizer["Contract_Count"]</label>
                             </div>
@@ -457,7 +457,7 @@ else
                             @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
                             {
                                 <div class="col-md-label5 formlabel" style="width:125px;">
-                                    <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["Contract_Value"]</label>
+                                    <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["Contract_s_Value"]</label>
                                 </div>
                                 <div class="col-md-6 p-0 col-11" style="margin-top:-6px;width:220px;">
                                     <input type="text" class="form-control" value="@Contract_Value?.ToString("N2",CultureInfo.InvariantCulture)" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
@@ -466,7 +466,7 @@ else
                             else
                             {
                                 <div class="col-md-label5 formlabel">
-                                    <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["Contract_Value"]</label>
+                                    <label class="form-label" for="CrCasRenterLessorNavigation.CrMasRenterInformationEnName">@localizer["Contract_s_Value"]</label>
                                 </div>
                                 <div class="col-md-6 p-0 col-11" style="margin-top:-6px">
                                     <input type="text" class="form-control" value="@Contract_Value?.ToString("N2",CultureInfo.InvariantCulture)" readonly maxlength="100" width="80%" oninput="this.value=this.value.replace(/[^\u0600-\u06FF\ufb50-\ufdff\ufe70-\ufeff\s]/g, '')" />
@@ -513,7 +513,7 @@ else
                 }
 
 
-                <div class="dataTable " id="t_mar" style="height:290px;">
+                <div class="dataTable " id="t_mar" style="height:300px;">
                     <partial name="_DataTable_Internal_CarContract" />
                 </div>
                 if (ViewBag.CountRecord == 0)

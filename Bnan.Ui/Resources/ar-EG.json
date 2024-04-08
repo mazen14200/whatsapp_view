@@ -571,6 +571,7 @@
   "Car_Name": "السيارة",
   "Lessor_Name": "الشركة",
   "Contract_Value": "قيمة العقد",
+  "Contract_s_Value": "قيمة العقود",
   "Extension": "ممدد",
   "Standing": "قائم",
   "Renter_Name": "المستأجر",
@@ -617,6 +618,14 @@
   "RenterBalances Data": "مديونات المستأجرين",
   "Edit RenterBalances Data": "البيانات التفصيلية لمديونات المستأجر",
   "Edit RenterBalances Hint": "تمكنك هذه الصفحة من البحث والإطلاع على تفاصيل مديونات المستأجرين",
+
+
+
+  //FinancialTransactionOfRenter --------
+  "FinancialTransactionOfRenter Hint": "تمكنك الصفحة من الإطلاع والبحث وعرض المستأجرين وأرصدتهم والدخول على التقرير التفصيلي للمستأجرين",
+  "FinancialTransactionOfRenter Data": "الحركة المالية للمستأجر",
+  "Edit FinancialTransactionOfRenter Data": "البيانات التفصيلية للحركة المالية لمستأجر",
+  "Edit FinancialTransactionOfRenter Hint": "تمكنك هذه الصفحة من البحث والإطلاع على تفاصيل القيود لمستأجر",
 
   //FinancialTransactionOfSalesPoint --------
   "FinancialTransactionOfSalesPoint Hint": "تمكنك الصفحة من الإطلاع والبحث وعرض نقاط البيع وأرصدتهم والدخول على التقرير التفصيلي لنقاط البيع",

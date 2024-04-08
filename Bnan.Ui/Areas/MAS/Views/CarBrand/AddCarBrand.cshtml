@@ -151,6 +151,9 @@
 
 <div class="sub-container-form">
     <form class="needs-validation" novalidate asp-area="MAS" asp-controller="CarBrand" asp-action="AddCarBrand" enctype="multipart/form-data">
+        
+        <div id="form_height" style="height:540px;">
+
         @* <div class="form-contain"> *@ @* For-scrolling *@
             @*CarBrand code*@
             <div class="row mt-2">
@@ -214,7 +217,7 @@
             @*CarBrand Image*@
              <div class="row mt-1">
                 <div class="col-md-4">
-                    <div class="file-upload">
+                    <div class="file-upload" style="margin-top:-20px;">
                         <button class="file-upload-btn1" type="button" onclick="$('.file-upload-input-picture1').trigger('click')">@localizer["CarBrandImg"]</button>
                         <div class="image-upload-wrap">
                             <input class="file-upload-input-picture1" type="file" onchange="readURL(this, 'picture');" accept="image/*" id="AcceptImg" name="AcceptImg" />
@@ -234,7 +237,9 @@
 
 
              @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
-        @* </div> *@
+        </div>
+
+             @* </div> *@
 
         <div class="mt-3">
             <button class="btn btn-primary" type="submit">@localizer["Save"]</button>
