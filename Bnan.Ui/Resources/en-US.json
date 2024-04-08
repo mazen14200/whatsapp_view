@@ -575,6 +575,7 @@
   "Car_Name": "Car",
   "Lessor_Name": "Company",
   "Contract_Value": "Contract Value",
+  "Contract_s_Value": "Contracts Value",
   "Contract": "The Contract",
   "Extension": "Extension",
   "Standing": "Standing",
@@ -599,17 +600,19 @@
   "Edit CarContract Data": "Details of Car Contracts",
   "Edit CarContract Hint": "this page allows you to Display Details of Car Contracts",
 
-  //FinancialTransactionOfRenter --------
-  "FinancialTransactionOfRenter Hint": "This page allows you to display The Financial Transaction Of Renters",
-  "FinancialTransactionOfRenter Data": "Financial Transaction Of The Renter",
-  "Edit FinancialTransactionOfRenter Data": "Details of Financial Transaction Of The Renter",
-  "Edit FinancialTransactionOfRenter Hint": "this page allows you to Display Details of Financial Transaction Of The Renter",
 
   //RenterBalances --------
   "RenterBalances Hint": "This page allows you to display The Renter Debts",
   "RenterBalances Data": "Renter Debts",
   "Edit RenterBalances Data": "Details of Renter Debts",
   "Edit RenterBalances Hint": "this page allows you to Display Details of Renter Debts",
+
+
+  //FinancialTransactionOfRenter --------
+  "FinancialTransactionOfRenter Hint": "This page allows you to display The Financial Transaction Of ٌRenters",
+  "FinancialTransactionOfRenter Data": "Financial Transaction Of The Renter",
+  "Edit FinancialTransactionOfRenter Data": "Details of Financial Transaction Of The Renter",
+  "Edit FinancialTransactionOfRenter Hint": "this page allows you to Display Details of Financial Transaction Of The Renter",
 
   //FinancialTransactionOfSalesPoint --------
   "FinancialTransactionOfSalesPoint Hint": "This page allows you to display The Financial Transaction Of Sales Points",
@@ -622,6 +625,7 @@
   "FinancialTransactionOfEmployee Data": "Financial Transaction Of The Employee",
   "Edit FinancialTransactionOfEmployee Data": "Details of Financial Transaction Of The Employee",
   "Edit FinancialTransactionOfEmployee Hint": "this page allows you to Display Details of Financial Transaction Of The Employee",
+
 
 
   "FTR_CurrentBalance": "Current Balance",

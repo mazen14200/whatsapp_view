@@ -58,41 +58,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("205", "2205008", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
 
-            //var CarContractAll = _unitOfWork.CrCasRenterContractBasic.GetAll(new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic4" }).Where(x => x.CrCasRenterContractBasic3?.CrCasRenterPrivateCarInformationContractCount > 0 && x.CrCasRenterContractBasicPrivateCarId != null);
-            var CarContractAll = _unitOfWork.CrCasRenterContractBasic.FindAll(x => currentCar.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic4" }).OrderByDescending(x => x.CrCasRenterContractBasicExpectedTotal).ToList();
-            var AllCars = _unitOfWork.CrCasCarInformation.GetAll(new[] { "CrCasCarInformation1" }).Where(x => CarContractAll.Any(y => y.CrCasRenterContractBasicCarSerailNo == x.CrCasCarInformationSerailNo)).ToList();
+            var AllCars = _unitOfWork.CrCasCarInformation.FindAll(x => currentCar.CrMasUserInformationLessor == x.CrCasCarInformationLessor && x.CrCasCarInformationConractCount > 0 && x.CrCasCarInformationLastContractDate != null, new[] { "CrCasCarInformation1" }).ToList();
 
-            List<CrCasRenterContractBasic>? ContractBasic_Filtered = new List<CrCasRenterContractBasic>();
-
-            List<List<string>>? contracts_Counts = new List<List<string>>();
-
-            foreach (var contract in CarContractAll)
-            {
-                var contract_count = 0;
-                decimal? contract_Total = 0;
-                var x = ContractBasic_Filtered.Find(x => x.CrCasRenterContractBasicCarSerailNo == contract.CrCasRenterContractBasicCarSerailNo);
-                if (x == null)
-                {
-                    var counter = 0;
-                    foreach (var contract_2 in CarContractAll)
-                    {
-                        if (contract.CrCasRenterContractBasicCarSerailNo == contract_2.CrCasRenterContractBasicCarSerailNo)
-                        {
-                            contract_Total = contract_2.CrCasRenterContractBasicExpectedTotal + contract_Total;
-                            counter = counter + 1;
-                        }
-
-                    }
-                    contracts_Counts.Add(new List<string> { contract.CrCasRenterContractBasicCarSerailNo, counter.ToString(), contract_Total.ToString() });
-                    ContractBasic_Filtered.Add(contract);
-                }
-            }
+           
 
             CarContractVM userContractVM = new CarContractVM();
-            userContractVM.crCasRenterContractBasics = CarContractAll;
             userContractVM.crCasCarInformation = AllCars;
-            userContractVM.contracts_Counts = contracts_Counts;
-            userContractVM.ContractBasic_Filtered = ContractBasic_Filtered;
 
             await _userLoginsService.SaveTracing(currentCar.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
             subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,

@@ -171,6 +171,9 @@
  *@
 <div class="sub-container-form">
     <form class="needs-validation" novalidate asp-area="MAS" asp-controller="CarRegistration" asp-action="Edit" method="post" enctype="multipart/form-data">
+       
+        <div id="form_height" style="height:530px;">
+
         @* <div class="form-contain"> //to make Scroll *@ 
             @*CarRegistration Code*@
             <div class="row mt-2">
@@ -236,7 +239,10 @@
 
         @* </div> *@
 
+
         @Html.ValidationMessage("NoCHanged", null, new { @class = "text-danger" })
+
+        </div>
 
         <div class="mt-4" id="buttonContainer">
 
