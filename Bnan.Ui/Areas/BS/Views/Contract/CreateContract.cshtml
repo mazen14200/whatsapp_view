@@ -71,7 +71,8 @@ else
                     <div class="row justify-content-center h-100 content-row">
                         <div class="col-md-11 mx-0">
                             <form asp-area="BS" asp-action="CreateContract" asp-controller="Contract" id="msform" novalidate class="needs-validation" enctype="multipart/form-data">
-                                <input hidden id="PdfSave1" name="PdfSave1" />
+                                <input hidden id="PdfSaveAr" name="PdfSaveAr" />
+                                <input hidden id="PdfSaveEn" name="PdfSaveEn" />
                                 <input hidden asp-for="Contract.AccountReceiptNo" />
                                 <input hidden id="language" name="language" />
                                 <div class=" pe-4">
@@ -4489,7 +4490,7 @@ else
                 canvas.toBlob(async function (blob) {
                     formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
                     var message = ` عزيزي / ${RenterName} , يمكنك مراجعة الفاتورة عن طريق تحميل الملف المرفق `
-                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message);
+                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message, "PdfSaveAr");
                 }, 'image/png');
             };
             img.src = URL.createObjectURL(blob);
@@ -4749,7 +4750,7 @@ else
                 canvas.toBlob(async function (blob) {
                     formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
                     var message = `Dear / ${RenterName}, you can review the invoice by downloading the attached file.`
-                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message);
+                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message, "PdfSaveEn");
                 }, 'image/png');
             };
             img.src = URL.createObjectURL(blob);
@@ -4809,14 +4810,8 @@ else
                         $('.main').show(); // Show the main container with fade effect
                         sendStaticImageToWhatsApp();
                         if (parseFloat(AmountPayed) > 0) {
-                            if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
-                                $("#language").val("en");
-                                sendEnReceiptToWhatsApp();
-                            }
-                            else {
-                                $("#language").val("ar");
-                                sendArReceiptToWhatsApp();
-                            }
+                            sendEnReceiptToWhatsApp();
+                            sendArReceiptToWhatsApp();
                         }
                         setTimeout(function () {
                             form.submit();
@@ -4831,7 +4826,7 @@ else
 
     </script>
     <script type="text/javascript">
-        function createPdfAndSendToWhatsApp(receiptNo, phoneNumber, token, imageBlob, message) {
+        function createPdfAndSendToWhatsApp(receiptNo, phoneNumber, token, imageBlob, message, InputPdf) {
             var doc = new jsPDF('p', 'pt', 'a4', true);
             const pageWidth = doc.internal.pageSize.getWidth();
             const pageHeight = doc.internal.pageSize.getHeight();
@@ -4851,41 +4846,78 @@ else
                     const blobUrl = URL.createObjectURL(pdfBlob);
                     const pdfBase64 = doc.output('datauristring');
                     // Set the base64-encoded PDF to the hidden input field
-                    document.getElementById('PdfSave1').value = pdfBase64;
+                    document.getElementById(InputPdf).value = pdfBase64;
                     document.getElementById('Contract_AccountReceiptNo').value = receiptNo;
-                    console.log("pdfBase64", pdfBase64)
-                    console.log("receiptNo", receiptNo)
+
                     // window.open(blobUrl, '_blank');
                     // Prepare form data with PDF
-                    const formData = new FormData();
-                    formData.append("number", phoneNumber); // Append the recipient's phone number
-                    formData.append("message", message); // Append the message
-                    formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
+                    if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US" && InputPdf == "PdfSaveEn") {
+                        const formData = new FormData();
+                        formData.append("number", phoneNumber); // Append the recipient's phone number
+                        formData.append("message", message); // Append the message
+                        formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
 
-                    // Convert the PDF to a base64-encoded string
-                    const requestOptions = {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    };
-                    console.log("pdfBlob", pdfBlob);
-                    // Send the request to the API endpoint
-                    fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
-                        .then(response => {
-                            if (response.ok) {
-                                return response.json();
-                            } else {
-                                return response.text().then(error => Promise.reject(error));
+                        // Convert the PDF to a base64-encoded string
+                        const requestOptions = {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Authorization': `Bearer ${token}`
                             }
-                        })
-                        .then(result => {
-                            console.log("SendPDFResult", result);
-                        })
-                        .catch(error => {
-                            console.log("SendPDFError", error);
-                        });
+                        };
+                        console.log("pdfBlob", pdfBlob);
+                        // Send the request to the API endpoint
+                        fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
+                            .then(response => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else {
+                                    return response.text().then(error => Promise.reject(error));
+                                }
+                            })
+                            .then(result => {
+                                console.log("SendPDFResult", result);
+                            })
+                            .catch(error => {
+                                console.log("SendPDFError", error);
+                            });
+
+                    }
+                    else if ("@requestCulture?.RequestCulture.UICulture.Name" == "ar-EG" && InputPdf == "PdfSaveAr") {
+                        if(InputPdf == "PdfSaveAr"){
+                            const formData = new FormData();
+                            formData.append("number", phoneNumber); // Append the recipient's phone number
+                            formData.append("message", message); // Append the message
+                            formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
+
+                            // Convert the PDF to a base64-encoded string
+                            const requestOptions = {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'Authorization': `Bearer ${token}`
+                                }
+                            };
+                            console.log("pdfBlob", pdfBlob);
+                            // Send the request to the API endpoint
+                            fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
+                                .then(response => {
+                                    if (response.ok) {
+                                        return response.json();
+                                    } else {
+                                        return response.text().then(error => Promise.reject(error));
+                                    }
+                                })
+                                .then(result => {
+                                    console.log("SendPDFResult", result);
+                                })
+                                .catch(error => {
+                                    console.log("SendPDFError", error);
+                                });
+                        }
+                        }
+                        
+
                 };
 
                 reader.readAsDataURL(imageBlob); // Start reading the image blob

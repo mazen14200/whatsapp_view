@@ -29,7 +29,7 @@
         }
         @foreach (var item in Model.ContractSettlements)
         {
-            <tr onclick="location.href='@Url.Action("Create", "ContractSettlement", new { id = item.CrCasRenterContractBasicNo })'" style="cursor:pointer">
+            <tr onclick="location.href='@Url.Action("Create", "ContractSettlement", new { ContractNo = item.CrCasRenterContractBasicNo })'" style="cursor:pointer">
 
                 <td> <a href="#"><img src="~/BranchSys/Pages/img/Rectangle 193.png" alt="pdf file link"></a></td>
 

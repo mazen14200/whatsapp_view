@@ -36,8 +36,16 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var bsLayoutVM = await GetBranchesAndLayout();
             var contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => (x.CrCasRenterContractBasicStatus == Status.Active ||x.CrCasRenterContractBasicStatus==Status.Expire) &&
-                                                                           
-                                                                           x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasic1" });
+                                                                               x.CrCasRenterContractBasicLessor == lessorCode &&x.CrCasRenterContractBasicBranch==bsLayoutVM.SelectedBranch,
+                                                                               new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasic1" }).ToList();
+            var contractReceivingTheCarFromAnotherBranch = _unitOfWork.CrCasRenterContractAdditional.FindAll(x => x.CrCasRenterContractAdditionalCode == "5000000003").ToList();
+            foreach (var item in contractReceivingTheCarFromAnotherBranch)
+            {
+                var contract2 = _unitOfWork.CrCasRenterContractBasic.Find(x => x.CrCasRenterContractBasicNo == item.CrCasRenterContractAdditionalNo && (x.CrCasRenterContractBasicStatus == Status.Active || x.CrCasRenterContractBasicStatus == Status.Expire) &&
+                                                                               x.CrCasRenterContractBasicLessor == lessorCode,
+                                                                               new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasic1" });
+                if (contract2!=null&&!contracts.Contains(contract2)) contracts.Add(contract2);
+            }
             var contractMap = _mapper.Map<List<ContractSettlementVM>>(contracts);
             foreach (var contract in contractMap)
             {
@@ -54,8 +62,17 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var bsLayoutVM = await GetBranchesAndLayout();
-            var contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => (x.CrCasRenterContractBasicStatus == Status.Active || x.CrCasRenterContractBasicStatus == Status.Expire)&&
-                                                                               x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasic1" });
+            var contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => (x.CrCasRenterContractBasicStatus == Status.Active || x.CrCasRenterContractBasicStatus == Status.Expire) &&
+                                                                               x.CrCasRenterContractBasicLessor == lessorCode && x.CrCasRenterContractBasicBranch == bsLayoutVM.SelectedBranch,
+                                                                               new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasic1" }).ToList();
+            var contractReceivingTheCarFromAnotherBranch = _unitOfWork.CrCasRenterContractAdditional.FindAll(x => x.CrCasRenterContractAdditionalCode == "5000000003").ToList();
+            foreach (var item in contractReceivingTheCarFromAnotherBranch)
+            {
+                var contract2 = _unitOfWork.CrCasRenterContractBasic.Find(x => x.CrCasRenterContractBasicNo == item.CrCasRenterContractAdditionalNo && (x.CrCasRenterContractBasicStatus == Status.Active || x.CrCasRenterContractBasicStatus == Status.Expire) &&
+                                                                               x.CrCasRenterContractBasicLessor == lessorCode,
+                                                                               new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasic1" });
+                if (contract2 != null && !contracts.Contains(contract2)) contracts.Add(contract2);
+            }
             var contractMap = _mapper.Map<List<ContractSettlementVM>>(contracts);
             foreach (var contract in contractMap)
             {
@@ -80,7 +97,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(string id)
+        public async Task<IActionResult> Create(string ContractNo)
         {
             //To Set Title 
             var titles = await setTitle("501", "5501004", "5");
@@ -88,12 +105,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var bsLayoutVM = await GetBranchesAndLayout();
-            var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == id,
+            var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == ContractNo,
                                                                                      new[] { "CrCasRenterContractBasic5.CrCasRenterLessorNavigation",
                                                                                              "CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarAdvantages",
                                                                                              "CrCasRenterContractBasic1"}).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();
-            var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode &&
-                x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);
+            var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode &&x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);
             var contractMap = _mapper.Map<ContractSettlementVM>(contract);
             var PaymentMethod = _unitOfWork.CrMasSupAccountPaymentMethod.FindAll(x => x.CrMasSupAccountPaymentMethodStatus == Status.Active && x.CrMasSupAccountPaymentMethodClassification != "4").ToList();
             var SalesPoint = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == lessorCode &&

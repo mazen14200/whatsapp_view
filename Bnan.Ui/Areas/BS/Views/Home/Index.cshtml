@@ -1099,7 +1099,7 @@
     <!--Contract Settelment-->
     <script>
         document.getElementById('ContractSettlement').addEventListener('click', function () {
-            var SettelmentAuth = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityEnd";
+            // var SettelmentAuth = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityEnd";
             var userStatus = "@userInfo?.CrMasUserInformationStatus";
             var lessorStatus = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorInformationStatus";
             var BranchStatus = "@Model?.CrCasBranchInformation?.CrCasBranchInformationStatus";
@@ -1114,11 +1114,11 @@
                 toastr.error('@localizer["toastMessageExistContractsForSettelement"]');
                 return
             }
-            else if (SettelmentAuth.toLowerCase() === "false" || SettelmentAuth == null || SettelmentAuth == "") {
-                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                toastr.error('@localizer["toastMessage"]');
-                return
-            }
+            // else if (SettelmentAuth.toLowerCase() === "false" || SettelmentAuth == null || SettelmentAuth == "") {
+            //     toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+            //     toastr.error('@localizer["toastMessage"]');
+            //     return
+            // }
             else if (userStatus !== "@Status.Active") {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["toastMessageUserHold"]');

@@ -1,9 +1,21 @@
 ﻿@using Bnan.Ui.ViewModels.BS;
+@using Microsoft.AspNetCore.Identity
 @model BSLayoutVM
 @inject IViewLocalizer localizer
+@using Microsoft.EntityFrameworkCore;
+@inject UserManager<CrMasUserInformation> userManager
+@inject SignInManager<CrMasUserInformation> signinManager
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    var user = await userManager.GetUserAsync(User);
+    var userInfo = await userManager.Users
+      .Include(l => l.CrMasUserMainValidations)
+      .Include(l => l.CrMasUserSubValidations)
+      .Include(x => x.CrMasUserBranchValidities)
+      .Include(x => x.CrMasUserContractValidity)
+      .Include(l => l.CrMasUserInformationLessorNavigation)
+      .FirstOrDefaultAsync(l => l.UserName == user.UserName);
 }
 <link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
 @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
@@ -150,7 +162,7 @@
                                                     <P>@localizer["ContractValue"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data ">
-                                                    <P>@Model.ContractSettlement.CrCasRenterContractBasicExpectedTotal</P>
+                                                    <P>@Model.ContractSettlement.CrCasRenterContractBasicExpectedTotal?.ToString("N2", CultureInfo.InvariantCulture)</P>
                                                 </div>
                                                 <div class="col-md-6 col-lg-5 col-xl-5 seacrh-icon-col">
                                                     <div>
@@ -256,24 +268,24 @@
                                                 </div>
 
                                             </div>
-                                            <div class="col-md-4 data-col-Settl col-SettlTime ">
+                                            <div class="col-md-auto col-lg-4  data-col-Settl flex-wrap">
                                                 <div class="col-auto">
-                                                    <label for="settlementTime">
-                                                        @localizer["SettlementTiming"]
-                                                    </label>
+                                                    <p>@localizer["ActualNumberOfDays"]</p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <div class="col-auto">
-                                                        <input type="time" class="form-control form-control2"
-                                                               id="settlementTime" name="settlementTime" autocomplete="off" style="border-top: none; width: 100%;"
-                                                               required>
-                                                        <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <P id="daysNo">0</P>
+                                                </div>
 
+                                            </div>
+                                        </div>
+                                        <div class="row data-row-Settl">
+
+                                            <div class="col-md-4 data-col-Settl ">
+                                                <div class="col-auto">
+                                                    <p>@localizer["AddHours"]</p>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <span id="diffHours">00</span>:<span id="diffMinutes">00</span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-lg-4  data-col-Settl flex-wrap" id="mechanismSettlement" style="display:none">
@@ -302,25 +314,6 @@
 
                                                 </div>
 
-                                            </div>
-                                        </div>
-                                        <div class="row data-row-Settl">
-                                            <div class="col-md-auto col-lg-4  data-col-Settl flex-wrap">
-                                                <div class="col-auto">
-                                                    <p>@localizer["ActualNumberOfDays"]</p>
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <P id="daysNo">0</P>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-md-4 data-col-Settl ">
-                                                <div class="col-auto">
-                                                    <p>@localizer["AddHours"]</p>
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <span id="diffHours">00</span>:<span id="diffMinutes">00</span>
-                                                </div>
                                             </div>
                                         </div>
 
@@ -561,7 +554,7 @@
                                     </div>
                                     <div class="row button-row">
                                         <div class="button-card">
-                                            <img src="img/Group.png" alt="Button Image"
+                                            <img src="~/BranchSys/Pages/img/Group.png" alt="Button Image"
                                                  class="next action-button"
                                                  style="vertical-align: middle; ">
                                             <input type="button" name="next" class="next action-button"
@@ -837,7 +830,7 @@
                                                 <div class="col-auto personal-data ">
                                                     <P>23-1-60-5001-1020136</P>
                                                 </div>
-                                                <div class="col-md-6 col-lg-6 seacrh-icon-col1">
+                                                <div class="col-md-8 col-lg-10 seacrh-icon-col1">
                                                     <div>
 
                                                         <img src="~/BranchSys/Pages/img/seacrh-icon.png" alt="seacrh-icon Image" id="contract-value-Settlement3">
@@ -848,7 +841,7 @@
                                                                 <p>  : المستأجر </p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>نايف هشام هشام  المعمر</p>
+                                                                <p>نايف هشام هشام المعمر</p>
                                                             </div>
 
                                                         </div>
@@ -1252,51 +1245,81 @@
 
         });
         //To Hide mechanismSettlement..
+        // document.addEventListener("DOMContentLoaded", function () {
+        //     const endDateString = "@Model.ContractSettlement.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)";
+        //     const endDate = new Date(endDateString);
+        //     const currentDate = new Date();
+        //     const elementToHide = document.getElementById("mechanismSettlement");
+        //     console.log("endDate", endDate)
+        //     console.log("currentDate", currentDate)
+        //     if (currentDate > endDate) {
+        //         if (elementToHide) {
+        //             elementToHide.style.display = "";
+        //         }
+        //     }
+
+        // });
+
         document.addEventListener("DOMContentLoaded", function () {
-            const endDateString = "@Model.ContractSettlement.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)";
-            const endDate = new Date(endDateString);
-            const currentDate = new Date();
             const elementToHide = document.getElementById("mechanismSettlement");
-            console.log("endDate", endDate)
-            console.log("currentDate", currentDate)
-            if (currentDate > endDate) {
-                if (elementToHide) {
-                    elementToHide.style.display = "";
-                }
-            }
-
-        });
-
-        document.addEventListener("DOMContentLoaded", function () {
+            var SettelmentAuth = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityEnd";
             const startContractDateString = "@Model.ContractSettlement.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture)";
+            const TotalFreeHours = "@Model.ContractSettlement.CrCasRenterContractBasicTotalFreeHours";
+            const MaxHours = "@Model.ContractSettlement.CrCasRenterContractBasicHourMax";
+            console.log("TotalFreeHours", TotalFreeHours);
+            console.log("MaxHours", MaxHours);
+            console.log("SettelmentAuth", SettelmentAuth);
+
             const startContractDate = new Date(startContractDateString);
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            const currentSecond = now.getSeconds();
+            // Convert hour, minute, and second to strings if needed
+            const hourString = currentHour.toString().padStart(2, '0'); // Pad with zero if single digit
+            const minuteString = currentMinute.toString().padStart(2, '0'); // Pad with zero if single digit
+            const secondString = currentSecond.toString().padStart(2, '0'); // Pad with zero if single digit
+            const timeString = `${hourString}:${minuteString}:${secondString}`;
 
             function calculateDifference() {
                 const settlementDateString = document.getElementById("contract_real_endTime").value;
-                const settlementTimeString = document.getElementById("settlementTime").value;
 
-                const settlementDateTimeString = settlementDateString + "T" + settlementTimeString;
+                const settlementDateTimeString = settlementDateString + "T" + timeString;
                 const settlementDateTime = new Date(settlementDateTimeString);
 
                 const timeDiff = Math.abs(settlementDateTime.getTime() - startContractDate.getTime());
                 const diffDays = Math.floor(timeDiff / (1000 * 3600 * 24)); // Difference in days
                 const diffHours = Math.floor((timeDiff % (1000 * 3600 * 24)) / (1000 * 3600)); // Remaining difference in hours
                 const diffMinutes = Math.floor((timeDiff % (1000 * 3600)) / (1000 * 60)); // Remaining difference in minutes
-
+                var diff = parseInt(diffHours) - parseInt(TotalFreeHours) - parseInt(MaxHours);
+                console.log("diff", diff);
                 $("#daysNo").text(diffDays);
-                $("#diffHours").text(diffHours.toString().padStart(2, '0'));
-                $("#diffMinutes").text(diffMinutes.toString().padStart(2, '0'));
-
+                if (diff >= 0 && diffMinutes >= 0) {
+                    $("#diffHours").text(diff.toString().padStart(2, '0'));
+                    $("#diffMinutes").text(diffMinutes.toString().padStart(2, '0'));
+                    if (elementToHide) {
+                        elementToHide.style.display = "";
+                    }
+                }
+                else { 
+                    $("#diffHours").text("00");
+                    $("#diffMinutes").text("00");
+                }
+                if (SettelmentAuth.toLowerCase() === "false" || SettelmentAuth == null || SettelmentAuth == "") {
+                    $("#contract_real_endTime").prop('readonly', true).css('background-color', 'white');
+                }
                 console.log("Difference in days:", diffDays);
                 console.log("Remaining difference in hours:", diffHours);
                 console.log("Remaining difference in minutes:", diffMinutes);
             }
 
             document.getElementById("contract_real_endTime").addEventListener("change", calculateDifference);
-            document.getElementById("settlementTime").addEventListener("change", calculateDifference);
 
             // Call calculateDifference function when the page loads
             calculateDifference();
         });
+    </script>
+    <script>
+
     </script>
 }
