@@ -44,9 +44,9 @@
                     </div>
                     <div class="row justify-content-center content-row h-100">
 
-                        <div class="col-md-11 mx-0">
+                        <div class="col-md-11 mx-0 h-100">
 
-                            <form id="SettlementForm" class="needs-validation" novalidate>
+                            <form id="SettlementForm" asp-area="BS" asp-controller="ContractSettlement" asp-action="Create" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                                 <div class=" ">
                                     <!-- progressbar -->
                                     <ul id="progressbar">
@@ -296,7 +296,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="offset">
-                                                        <select class="form-select form-select-settel" id="Settlement-mechanism" name="Settlement mechanism" required>
+                                                        <select class="form-select form-select-settel" id="Settlement-mechanism" asp-for="ContractSettlement.SettlementMechanism">
                                                             <option selected disabled>
                                                             </option>
                                                             <option value="0">@localizer["Without"]</option>
@@ -306,9 +306,7 @@
                                                         </select>
 
                                                         <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
+                                                            <span class="requird-field" id="requird_field_SettlementMechanism" asp-validation-for="@Model.ContractSettlement.SettlementMechanism"></span>
                                                         </div>
                                                     </div>
 
@@ -355,7 +353,7 @@
 
                                                 <div class="col-auto ">
                                                     <label class="form-check-label" for="expenses">@localizer["Expense"]</label>
-                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="expenses" name="checked-expenses">
+                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="expenses-check" name="checked-expenses">
 
                                                 </div>
 
@@ -392,11 +390,9 @@
                                                         <label id="expensesValue" for="expensesValue-input">قيمة المصروفات</label>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <input type="tel" class="form-control form-control1" style="width: 130px;" id="expensesValue-input" name="expensesValue-input" aria-describedby="inputGroupPrepend" autocomplete="off" required>
+                                                        <input type="tel" class="form-control form-control1" style="width: 130px;" id="expensesValue-input" asp-for="ContractSettlement.ExpensesValue" aria-describedby="inputGroupPrepend" autocomplete="off" required>
                                                         <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
+                                                            <span class="requird-field" id="requird_field_ExpensesValue" asp-validation-for="@Model.ContractSettlement.ExpensesValue"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -411,11 +407,9 @@
                                                         <label id="Expense-statement" for="Expense-statement-input">بيان المصروفات</label>
                                                     </div>
                                                     <div class="col-lg-9" style="height: 100%;">
-                                                        <textarea class="form-control textarea-inputs h-100" cols="25" name="Expense-statement" id="Expense-statement-input" aria-describedby="inputGroupPrepend" required></textarea>
+                                                        <textarea class="form-control textarea-inputs h-100" cols="25" asp-for="ContractSettlement.ExpensesReasons" id="Expense-statement-input" aria-describedby="inputGroupPrepend"></textarea>
                                                         <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
+                                                            <span class="requird-field" id="requird_field_ExpensesReasons" asp-validation-for="@Model.ContractSettlement.ExpensesReasons"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -430,13 +424,8 @@
                                                         <div class="upload__btn-box" id="upload__btn-box">
                                                             <label class="upload__btn">
                                                                 <div class="upload-container-checking">
-                                                                    <img class="upload-icon"
-                                                                         src="~/BranchSys/Pages/img/Group (1).png"
-                                                                         alt="Upload Icon" id="addImage">
-                                                                    <input type="file" multiple
-                                                                           accept="image/*"
-                                                                           id="Expenses-images"
-                                                                           class="upload__inputfile ">
+                                                                    <img class="upload-icon" src="~/BranchSys/Pages/img/Group (1).png" alt="Upload Icon" id="addImage">
+                                                                    <input type="file" multiple accept="image/*" id="Expenses-images" class="upload__inputfile ">
                                                                 </div>
                                                             </label>
                                                         </div>
@@ -493,11 +482,9 @@
                                                     <label for="compensation-input">قيمة التعويضات </label>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <input type="tel" class="form-control form-control1" style="width: 130px;" id="compensation-input" name="compensation-input" aria-describedby="inputGroupPrepend" autocomplete="off" required>
+                                                    <input type="tel" class="form-control form-control1" style="width: 130px;" id="compensation-input" asp-for="ContractSettlement.CompensationValue" aria-describedby="inputGroupPrepend" autocomplete="off" required>
                                                     <div class="row requird-field-row-last">
-                                                        <div class="invalid-feedback" style="display: none;">
-                                                            هذا الحقل مطلوب
-                                                        </div>
+                                                        <span class="requird-field" id="requird_field_CompensationValue" asp-validation-for="@Model.ContractSettlement.CompensationValue"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -512,32 +499,23 @@
                                                         <label for="compensation-statement-input">بيان التعويضات </label>
                                                     </div>
                                                     <div class="col-lg-9" style="height: 100%;">
-                                                        <textarea class="form-control textarea-inputs h-100" cols="25" name="compensation-statement" id="compensation-statement-input" aria-describedby="inputGroupPrepend" required></textarea>
+                                                        <textarea class="form-control textarea-inputs h-100" cols="25" asp-for="ContractSettlement.CompensationReasons" id="compensation-statement-input" aria-describedby="inputGroupPrepend" required></textarea>
                                                         <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
+                                                            <span class="requird-field" id="requird_field_CompensationReasons" asp-validation-for="@Model.ContractSettlement.CompensationReasons"></span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="upload__box d-flex">
-                                                    <div class="upload_img-wrap_inner" style="display: flex;
-                                                                  flex-wrap: wrap;
-                                                                  gap: 10px ">
+                                                    <div class="upload_img-wrap_inner" style="display: flex;flex-wrap: wrap; gap: 10px ">
                                                         <div class="upload__img-box " id="FirstUpload-img2">
                                                         </div>
                                                         <div class="upload__btn-box">
                                                             <label class="upload__btn">
                                                                 <div class="upload-container-checking">
-                                                                    <img class="upload-icon"
-                                                                         src="~/BranchSys/Pages/img/Group (1).png"
-                                                                         alt="Upload Icon" id="AddImageCompensation">
-                                                                    <input type="file" multiple
-                                                                           accept="image/*"
-                                                                           id="compensation-images"
-                                                                           class="upload__inputfile ">
+                                                                    <img class="upload-icon" src="~/BranchSys/Pages/img/Group (1).png" alt="Upload Icon" id="AddImageCompensation">
+                                                                    <input type="file" multiple accept="image/*" id="compensation-images" class="upload__inputfile ">
                                                                 </div>
                                                             </label>
                                                         </div>
@@ -603,10 +581,7 @@
                                                             </label>
                                                         </div>
                                                         <div class="col-auto">
-                                                            <input type="tel" class="form-control form-control1"
-                                                                   style="width: 130px;"
-                                                                   id="CurrentReadingg-input"
-                                                                   name="CurrentReadingg-input" aria-describedby="inputGroupPrepend" autocomplete="off" required>
+                                                            <input type="tel" class="form-control form-control1" style="width: 130px;"id="CurrentReadingg-input"name="CurrentReadingg-input" aria-describedby="inputGroupPrepend" autocomplete="off" >
                                                             <div class="row requird-field-row-last">
                                                                 <div class="invalid-feedback" style="display: none;">
                                                                     هذا الحقل مطلوب
@@ -658,142 +633,17 @@
                                                             <tr>
                                                                 <th scope="col"
                                                                     class="value-tabel-header">
-                                                                    ملاحظات
+                                                                    @localizer["reasons"]
                                                                 </th>
                                                                 <th scope="col"
                                                                     style='border-left: 1px solid #ff9626a3; width: 40%; '>
-                                                                    بنود الفحص
+                                                                    @localizer["CheckUpNames"]
                                                                 </th>
 
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="Tires-textarea"
-                                                                              maxlength="100"
-                                                                              name="Tires-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="tires">الإطارات</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="tires" name="checked-tires">
-
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="lights-textarea"
-                                                                              maxlength="100"
-                                                                              name="lights-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="lights">الأنوار</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="lights" name="checked-lights">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="Air_conditioner-textarea"
-                                                                              maxlength="100"
-                                                                              name="Air_conditioner-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="air_conditioner">المكيف</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="air_conditioner" name="checked-air_conditioner">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="Safety_Security-textarea"
-                                                                              maxlength="100"
-                                                                              name="Safety_Security-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="saftey"> الأمن والسلامة </label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="saftey" name="checked-saftey">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="wiper-textarea"
-                                                                              maxlength="100"
-                                                                              name="wiper-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="wipers"> المساحات</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="wipers" name="checked-wipers">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="signals-textarea"
-                                                                              maxlength="100"
-                                                                              name="signals-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="signals"> الإشارات</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="signals" name="checked-signals">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="cleanliness-textarea"
-                                                                              maxlength="100"
-                                                                              name="cleanliness-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="cleanliness"> النظافة</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="cleanliness" name="checked-cleanliness">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="Front_brake-textarea"
-                                                                              maxlength="100"
-                                                                              name="Front_brake-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="FrontBreak"> الفرامل الأمامية</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="FrontBreak" name="checked-FrontBreak">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="Rear_brake-textarea"
-                                                                              maxlength="100"
-                                                                              name="Rear_brake-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="BackBrakes"> الفرامل الخلفية</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="BackBrakes" name="checked-BackBrakes">
-
-                                                                </td>
-
-                                                            </tr>
+                                                        <tbody id="CheckBody">
+                                                            <partial name="_CheckUpListSettlement" />
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -1189,7 +1039,7 @@
                                     <div class="row button-row align-items-center"
                                          style="padding: 6px 7px 0px 20px;">
                                         <div class="button-card  gap-2">
-                                            <button type="submit" class="btn btn-custom next">حفظ</button>
+                                            <button id="submitForm" class="btn btn-custom next">حفظ</button>
 
                                         </div>
                                         <div class="button-card">
@@ -1301,7 +1151,7 @@
                         elementToHide.style.display = "";
                     }
                 }
-                else { 
+                else {
                     $("#diffHours").text("00");
                     $("#diffMinutes").text("00");
                 }
@@ -1320,6 +1170,212 @@
         });
     </script>
     <script>
+        function clearExpensesData() {
+            $("#expensesValue-input").val('');
+            $("#Expense-statement-input").val('');
+            $("#requird_field_ExpensesValue").text('').css("color", "");
+            $("#requird_field_ExpensesReasons").text('').css("color", "");
+            $("#ExpensesError").text('');
+            ExpensesArray.splice(0, ExpensesArray.length);
+            $('#SecondFieldset .upload__img-box').remove();
+            console.log("ExpensesArray", ExpensesArray);
+        }
 
+        function clearCompensationData() {
+            $("#compensation-input").val('');
+            $("#compensation-statement-input").val('');
+            $("#requird_field_CompensationValue").text('').css("color", "");
+            $("#requird_field_CompensationReasons").text('').css("color", "");
+            $("#compensationError").text('');
+            compensationArray.splice(0, compensationArray.length);
+            $('#ThirdFieldset .upload__img-box').remove();
+            console.log("compensationArray", compensationArray);
+        }
     </script>
+    <script>
+        // $("#Settlement-mechanism").change(function () {
+        //     console.log($("#SettlementForm"));
+        // })
+
+        const nextButtons = document.querySelectorAll(".next");
+
+        Array.from(nextButtons).forEach((nextBtn) => {
+            nextBtn.addEventListener("click", (event) => {
+                var field = nextBtn.closest("fieldset");
+                const ExpensesCheckbox = document.getElementById('expenses-check');
+                const CompensationCheckbox = document.getElementById('compensation-check');
+                const firsetfield = document.getElementById('firstFieldset');
+                const fieldsets = document.querySelectorAll("fieldset");
+                console.log("firsetfield", firsetfield);
+                console.log("SettlementForm", $("#SettlementForm").valid());
+
+                if ($("#SettlementForm").valid()) {
+                    const current_fs = nextBtn.closest("fieldset");
+                    let next_fs = current_fs.nextElementSibling;
+                    console.log("current_fs.id", current_fs.id);
+                    if (current_fs.id === 'firstFieldset') {
+
+                        $("#ExpensesError").text('');
+                        $("#requird_field_ExpensesValue").text('').css("color", "");
+                        $("#requird_field_ExpensesReasons").text('').css("color", "");
+                        if (!ExpensesCheckbox.checked && CompensationCheckbox.checked) {
+                            clearExpensesData();
+                            $("#requird_field_CompensationValue").text('').css("color", "");
+                            $("#requird_field_CompensationReasons").text('').css("color", "");
+                            $("#compensationError").text('');
+                            next_fs = current_fs.nextElementSibling.nextElementSibling;
+                            $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.style.display = "flex";
+                            current_fs.style.display = "none";
+
+                        } else if (!ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
+                            clearExpensesData();
+                            clearCompensationData();
+                            next_fs = current_fs.nextElementSibling.nextElementSibling.nextElementSibling;
+                            $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
+                            $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling.nextElementSibling)).addClass("active");
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.style.display = "flex";
+                            current_fs.style.display = "none";
+                        }
+                        else {
+                            next_fs = current_fs.nextElementSibling;
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.style.display = "flex";
+                            current_fs.style.display = "none";
+                        }
+                    }
+
+                    if (current_fs.id === 'SecondFieldset') {
+                        $("#ExpensesError").text('');
+                        var imgs = true;
+                        // Check if the div contains at least one img element
+                        if ($('.upload__img-box img').length > 0) {
+                            console.log("The div contains at least one img element");
+                        } else {
+                            imgs = false;
+                            console.log("The div does not contain any img elements");
+                        }
+                        if (imgs) {
+                            if (ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
+                                clearCompensationData();
+                                next_fs = current_fs.nextElementSibling.nextElementSibling;
+                                $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs.style.display = "flex";
+                                current_fs.style.display = "none";
+                            }
+                            else {
+                                $("#requird_field_CompensationValue").text('').css("color", "");
+                                $("#requird_field_CompensationReasons").text('').css("color", "");
+                                $("#compensationError").text('');
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs.style.display = "flex";
+                                current_fs.style.display = "none";
+                            }
+                        }
+                        else {
+                            $("#ExpensesError").text('@localizer["ExpensesMessageImageRequired"]');
+                        }
+
+                    }
+                    if (current_fs.id === 'ThirdFieldset') {
+                        $("#compensationError").text('');
+                        var imgs = true;
+                        // Check if the div contains at least one img element
+                        if ($('.upload__img-box img.close2').length > 0) {
+                            console.log("The div contains at least one img element");
+                        } else {
+                            imgs = false;
+                            console.log("The div does not contain any img elements");
+                        }
+                        if (imgs) {
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.style.display = "flex";
+                            current_fs.style.display = "none";
+                        }
+                        else {
+                            $("#compensationError").text('@localizer["ExpensesMessageImageRequired"]');
+                        }
+
+                    }
+                    if (current_fs.id === 'FourthFieldset') {
+                        var allChecked = true;
+                        var currentMeter = true;
+                        var imgs = true;
+
+                        // Check checkboxes
+                        var checkboxes = document.querySelectorAll(".CheckUp");
+                        checkboxes.forEach(function (checkbox) {
+                            if (!checkbox.checked) {
+                                allChecked = false;
+                            }
+                        });
+
+                        // Check currentMeterSpan
+                        var currentMeterSpan = $("#requird_field_CurrentMeter");
+                        if (currentMeterSpan.text().trim() === "") {
+                            console.log("Span is empty");
+                        } else {
+                            currentMeter = false;
+                            console.log("Span is not empty");
+                        }
+
+                        // Check if the div contains at least one img element
+                        if ($('.upload__img-box img.close3').length > 0) {
+                            console.log("The div contains at least one img element");
+                        } else {
+                            imgs = false;
+                            console.log("The div does not contain any img elements");
+                        }
+                    }
+
+                }
+            });
+        });
+
+        const previousButtons = document.querySelectorAll(".previous");
+
+        Array.from(previousButtons).forEach((prevBtn) => {
+            prevBtn.addEventListener("click", (event) => {
+                const ExpensesCheckbox = document.getElementById('expenses-check');
+                const CompensationCheckbox = document.getElementById('compensation-check');
+                const current_fs = prevBtn.closest("fieldset");
+                let previous_fs = current_fs.previousElementSibling;
+                if (current_fs.id === 'FourthFieldset') {
+
+                    if (ExpensesCheckbox.checked && CompensationCheckbox.checked) {
+                        previous_fs = current_fs.previousElementSibling;
+                    } else if (!ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
+                        previous_fs = current_fs.previousElementSibling.previousElementSibling.previousElementSibling;
+                        $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling)).removeClass("active");
+                        $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling.previousElementSibling)).removeClass("active");
+                    } else if (ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
+                        previous_fs = current_fs.previousElementSibling.previousElementSibling;
+                        $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling)).removeClass("active");
+                    }
+                }
+
+                if (current_fs.id === 'ThirdFieldset') {
+
+                    if (!ExpensesCheckbox.checked && CompensationCheckbox.checked) {
+                        previous_fs = current_fs.previousElementSibling.previousElementSibling;
+                        $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling)).removeClass("active");
+
+                    }
+                }
+                Array.from(previous_fs.elements).forEach((field) => {
+                    //field.addEventListener('input', () => {
+                    //    hideErrorMessage(field);
+                    //});
+                });
+                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+                previous_fs.style.display = "flex";
+                current_fs.style.display = "none";
+            });
+        });
+    </script>
+    
 }

@@ -80,6 +80,16 @@ namespace Bnan.Ui.ViewModels.BS
         public string? TotalAmount { get; set; }
         public string? AccountNo { get; set; }
         public string? AdvantagesValue { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? SettlementMechanism { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? ExpensesValue { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? ExpensesReasons { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? CompensationValue { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? CompensationReasons { get; set; }
 
 
         public virtual CrCasRenterLessor? CrCasRenterContractBasic5 { get; set; }

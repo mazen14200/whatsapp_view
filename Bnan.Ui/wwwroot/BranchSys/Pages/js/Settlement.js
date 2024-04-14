@@ -2,6 +2,9 @@
 let current_fs, next_fs, previous_fs;
 const ExpensesCheckbox = document.getElementById('expenses');
 const CompensationCheckbox = document.getElementById('compensation-check');
+var compensationArray = [];
+var ExpensesArray= [];
+
 jQuery(document).ready(function () {
 
     ExpensesImgUpload();
@@ -11,151 +14,150 @@ jQuery(document).ready(function () {
 
 //=======================================â€™Moving Between Fieldsets=============================================================
 
-(() => {
-    "use strict";
+//(() => {
+//    "use strict";
 
-    // Assuming your "next" button has a class of "next"
-    const nextButtons = document.querySelectorAll(".next");
-    const ExpensesCheckbox = document.getElementById('expenses');
-    const CompensationCheckbox = document.getElementById('compensation-check');
-    const firsetfield = document.getElementById('firstFieldset');
-    const fieldsets = document.querySelectorAll("fieldset");
-
-
-    // Function to hide error message
-    //const hideErrorMessage = (field) => {
-    //    const errorMessage = field.parentNode.querySelector(".invalid-feedback");
-    //    if (errorMessage) {
-    //        errorMessage.style.display = "none";
-    //    }
-    //};
+//    // Assuming your "next" button has a class of "next"
+//    const nextButtons = document.querySelectorAll(".next");
+//    const ExpensesCheckbox = document.getElementById('expenses');
+//    const CompensationCheckbox = document.getElementById('compensation-check');
+//    const firsetfield = document.getElementById('firstFieldset');
+//    const fieldsets = document.querySelectorAll("fieldset");
 
 
-    Array.from(nextButtons).forEach((nextBtn) => {
-        nextBtn.addEventListener("click", (event) => {
-            const fieldset = nextBtn.closest("fieldset");
-            let isValid = true;
-            Array.from(fieldset.elements).forEach((field) => {
-                //if (field.checkValidity() === false) {
-                //    isValid = false;
-                //    const errorMessage = field.parentNode.querySelector(".invalid-feedback");
-                //    if (errorMessage) {
-                //        errorMessage.style.display = "block";
-                //    }
-                //}
-            });
+//    // Function to hide error message
+//    //const hideErrorMessage = (field) => {
+//    //    const errorMessage = field.parentNode.querySelector(".invalid-feedback");
+//    //    if (errorMessage) {
+//    //        errorMessage.style.display = "none";
+//    //    }
+//    //};
 
 
-            // Add input event listeners to all input fields within the fieldsets
-            fieldsets.forEach((fieldset) => {
-                Array.from(fieldset.elements).forEach((field) => {
-                    //field.addEventListener('input', () => {
-                    //    hideErrorMessage(field);
-                    //});
-                });
-            });
-            if (!isValid) {
-                event.preventDefault();
-                event.stopPropagation();
-
-            } else {
-
-                const current_fs = nextBtn.closest("fieldset");
-                let next_fs = current_fs.nextElementSibling;
+//    Array.from(nextButtons).forEach((nextBtn) => {
+//        nextBtn.addEventListener("click", (event) => {
+//            const fieldset = nextBtn.closest("fieldset");
+//            let isValid = true;
+//            Array.from(fieldset.elements).forEach((field) => {
+//                //if (field.checkValidity() === false) {
+//                //    isValid = false;
+//                //    const errorMessage = field.parentNode.querySelector(".invalid-feedback");
+//                //    if (errorMessage) {
+//                //        errorMessage.style.display = "block";
+//                //    }
+//                //}
+//            });
 
 
-                if (current_fs.id === 'firstFieldset') {
+//            // Add input event listeners to all input fields within the fieldsets
+//            fieldsets.forEach((fieldset) => {
+//                Array.from(fieldset.elements).forEach((field) => {
+//                    //field.addEventListener('input', () => {
+//                    //    hideErrorMessage(field);
+//                    //});
+//                });
+//            });
+//            if (!isValid) {
+//                event.preventDefault();
+//                event.stopPropagation();
 
-                    if (!ExpensesCheckbox.checked && CompensationCheckbox.checked) {
-                        next_fs = current_fs.nextElementSibling.nextElementSibling;
-                        $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
+//            } else {
 
-                    } else if (!ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
-                        next_fs = current_fs.nextElementSibling.nextElementSibling.nextElementSibling;
-                        $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
-                        $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling.nextElementSibling)).addClass("active");
-
-
-                    }
-                    else {
-                        next_fs = current_fs.nextElementSibling;
-
-                    }
-                }
-
-                if (current_fs.id === 'SecondFieldset') {
-
-                    if (ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
-                        next_fs = current_fs.nextElementSibling.nextElementSibling;
-                        $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
-
-                    }
-                }
-
-                Array.from(next_fs.elements).forEach((field) => {
-                    //field.addEventListener('input', () => {
-                    //    hideErrorMessage(field);
-                    //});
-                });
+//                const current_fs = nextBtn.closest("fieldset");
+//                let next_fs = current_fs.nextElementSibling;
 
 
-                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+//                if (current_fs.id === 'firstFieldset') {
 
-                next_fs.style.display = "flex";
-                current_fs.style.display = "none";
-            }
-        });
-    });
+//                    if (!ExpensesCheckbox.checked && CompensationCheckbox.checked) {
+//                        next_fs = current_fs.nextElementSibling.nextElementSibling;
+//                        $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
 
-    const previousButtons = document.querySelectorAll(".previous");
+//                    } else if (!ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
+//                        next_fs = current_fs.nextElementSibling.nextElementSibling.nextElementSibling;
+//                        $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
+//                        $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling.nextElementSibling)).addClass("active");
 
-    Array.from(previousButtons).forEach((prevBtn) => {
-        prevBtn.addEventListener("click", (event) => {
-            const current_fs = prevBtn.closest("fieldset");
-            let previous_fs = current_fs.previousElementSibling;
-            if (current_fs.id === 'FourthFieldset') {
 
-                if (ExpensesCheckbox.checked && CompensationCheckbox.checked) {
-                    previous_fs = current_fs.previousElementSibling;
-                } else if (!ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
-                    previous_fs = current_fs.previousElementSibling.previousElementSibling.previousElementSibling;
-                    $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling)).removeClass("active");
-                    $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling.previousElementSibling)).removeClass("active");
-                } else if (ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
-                    previous_fs = current_fs.previousElementSibling.previousElementSibling;
-                    $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling)).removeClass("active");
+//                    }
+//                    else {
+//                        next_fs = current_fs.nextElementSibling;
 
-                }
+//                    }
+//                }
 
-            }
+//                if (current_fs.id === 'SecondFieldset') {
 
-            if (current_fs.id === 'ThirdFieldset') {
+//                    if (ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
+//                        next_fs = current_fs.nextElementSibling.nextElementSibling;
+//                        $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
 
-                if (!ExpensesCheckbox.checked && CompensationCheckbox.checked) {
-                    previous_fs = current_fs.previousElementSibling.previousElementSibling;
-                    $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling)).removeClass("active");
+//                    }
+//                }
 
-                }
-            }
-            Array.from(previous_fs.elements).forEach((field) => {
-                //field.addEventListener('input', () => {
-                //    hideErrorMessage(field);
-                //});
-            });
-            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+//                Array.from(next_fs.elements).forEach((field) => {
+//                    //field.addEventListener('input', () => {
+//                    //    hideErrorMessage(field);
+//                    //});
+//                });
 
-            previous_fs.style.display = "flex";
-            current_fs.style.display = "none";
-        });
-    });
-})();
+
+//                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+//                next_fs.style.display = "flex";
+//                current_fs.style.display = "none";
+//            }
+//        });
+//    });
+
+//    const previousButtons = document.querySelectorAll(".previous");
+
+//    Array.from(previousButtons).forEach((prevBtn) => {
+//        prevBtn.addEventListener("click", (event) => {
+//            const current_fs = prevBtn.closest("fieldset");
+//            let previous_fs = current_fs.previousElementSibling;
+//            if (current_fs.id === 'FourthFieldset') {
+
+//                if (ExpensesCheckbox.checked && CompensationCheckbox.checked) {
+//                    previous_fs = current_fs.previousElementSibling;
+//                } else if (!ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
+//                    previous_fs = current_fs.previousElementSibling.previousElementSibling.previousElementSibling;
+//                    $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling)).removeClass("active");
+//                    $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling.previousElementSibling)).removeClass("active");
+//                } else if (ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
+//                    previous_fs = current_fs.previousElementSibling.previousElementSibling;
+//                    $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling)).removeClass("active");
+
+//                }
+
+//            }
+
+//            if (current_fs.id === 'ThirdFieldset') {
+
+//                if (!ExpensesCheckbox.checked && CompensationCheckbox.checked) {
+//                    previous_fs = current_fs.previousElementSibling.previousElementSibling;
+//                    $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling)).removeClass("active");
+
+//                }
+//            }
+//            Array.from(previous_fs.elements).forEach((field) => {
+//                //field.addEventListener('input', () => {
+//                //    hideErrorMessage(field);
+//                //});
+//            });
+//            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+//            previous_fs.style.display = "flex";
+//            current_fs.style.display = "none";
+//        });
+//    });
+//})();
 
 //====================================================================================================
 //========================================Upload Expenses Imgs Lists============================================================
 //====================================================================================================
 function ExpensesImgUpload() {
     var imgWrap = '';
-    var ExpensesArray = [];
     var uploadBtnBox = document.getElementById('Expenses-images');
     var errorMessageDiv = document.getElementById('ExpensesError');
     $('#Expenses-images').each(function () {
@@ -181,7 +183,7 @@ function ExpensesImgUpload() {
                         $('.upload__img-close1').length +
                         "' data-file='" +
                         f.name +
-                        "' class='img-bg'><div class='upload__img-close1'><img src='~/BranchSys/Pages/img/delete.png'></div></div></div>";
+                        "' class='img-bg'><div class='upload__img-close1'><img src='/BranchSys/Pages/img/delete.png'></div></div></div>";
                     imgWrap.append(html);
                     ExpensesArray.push({
                         f, url: e.target.result
@@ -218,7 +220,6 @@ function ExpensesImgUpload() {
 //====================================================================================================
 function compensationImgUpload() {
     var imgWrap = '';
-    var compensationArray = [];
     var uploadBtnBox = document.getElementById('compensation-images');
     var errorMessageDiv = document.getElementById('compensationError');
     $('#compensation-images').each(function () {
@@ -245,7 +246,7 @@ function compensationImgUpload() {
                         $('.upload__img-close2').length +
                         "' data-file='" +
                         f.name +
-                        "' class='img-bg'><div class='upload__img-close2'><img src='~/BranchSys/Pages/img/delete.png'></div></div></div>";
+                        "' class='img-bg'><div class='upload__img-close2'><img class='close2' src='/BranchSys/Pages/img/delete.png'></div></div></div>";
                     imgWrap.append(html);
                     compensationArray.push({
                         f, url: e.target.result
@@ -314,7 +315,7 @@ function examinationImgUpload() {
                         $('.upload__img-close3').length +
                         "' data-file='" +
                         f.name +
-                        "' class='img-bg'><div class='upload__img-close3'><img src='~/BranchSys/Pages/img/delete.png'></div></div></div>";
+                        "' class='img-bg'><div class='upload__img-close3'><img class='close3' src='~/BranchSys/Pages/img/delete.png'></div></div></div>";
                     imgWrap.append(html);
                     examinationArray.push({
                         f, url: e.target.result

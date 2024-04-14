@@ -69,7 +69,7 @@ else
                         </div>
                     </div>
                     <div class="row justify-content-center h-100 content-row">
-                        <div class="col-md-11 mx-0">
+                        <div class="col-md-11 mx-0 h-100">
                             <form asp-area="BS" asp-action="CreateContract" asp-controller="Contract" id="msform" novalidate class="needs-validation" enctype="multipart/form-data">
                                 <input hidden id="PdfSaveAr" name="PdfSaveAr" />
                                 <input hidden id="PdfSaveEn" name="PdfSaveEn" />
@@ -3244,6 +3244,7 @@ else
                 }
                 else if (currentField === "check") {
                     // Initialize variables
+                    clearPaymentData();
                     var allChecked = true;
                     var currentMeter = true;
                     var imgs = true;
@@ -3571,13 +3572,14 @@ else
             optionsList.forEach(function (option) {
                 var nameLabel = "@requestCulture?.RequestCulture.UICulture.Name" === "en-US" ? option.enName : option.arName;
                 var row = $("<tr>");
-                row.append("<td class='text-center'>" + option.optionsValue + "</td>");
-                row.append("<td class='tabel-data-checkbox-td-Add'>" +
-                    "<label class='Delivery-to-another-branch' for='checkbox-" + option.optionsNo + "'>" +
-                    nameLabel + "</label>" +
-                    "<input class='Delivery-to-another-branch-input ChkChoicesList' type='checkbox' name='Additions' " +
-                    "value='" + option.optionsCode + "' data-val='" + option.optionsValue + "' id='checkbox - " + option.optionsNo + "'>" +
-                    "</td>");
+                var valueCell = $("<td class='text-center' data-value='" + option.optionsValue + "'>" + option.optionsValue + "</td>");
+                var optionsCol = $("<td class='tabel-data-checkbox-td-Add'>");
+                var optionsDiv = $("<div class='options-col'>");
+                optionsDiv.append("<label class='Delivery-to-another-branch' for='checkbox-" + option.optionsNo + "'>" + nameLabel + "</label>");
+                optionsDiv.append("<input class='Delivery-to-another-branch-input ChkChoicesList' type='checkbox' name='Additions' value='" + option.optionsCode + "' data-val='" + option.optionsValue + "' id='checkbox-" + option.optionsNo + "'>");
+                optionsCol.append(optionsDiv);
+                row.append(valueCell);
+                row.append(optionsCol);
                 tbodyContainer.append(row);
             });
 
@@ -3672,12 +3674,14 @@ else
             additionalList.forEach(function (add) {
                 var nameLabel = "@requestCulture?.RequestCulture.UICulture.Name" === "en-US" ? add.enName : add.arName;
                 var row = $("<tr>");
-                row.append("<td class='text-center'>" + add.addValue + "</td>");
-                row.append("<td class='tabel-data-checkbox-td-Add'>" +
-                    "<label class='Delivery-to-another-branch ' for='checkbox-" + add.AddNo + "'>" + nameLabel + "</label>"
-                    +
-                    "<input class='Delivery-to-another-branch-input ChkAddList' type='checkbox' name='Additions' " + "value='" + add.addCode + "' data-val='" + add.addValue + "' id='checkbox-" + add.addNo + "'>" +
-                    "</td>");
+                var valueCell = $("<td class='text-center'>" + add.addValue + "</td>");
+                var optionsCol = $("<td class='tabel-data-checkbox-td-Add'>");
+                var optionsDiv = $("<div class='options-col'>");
+                optionsDiv.append("<label class='Delivery-to-another-branch' for='checkbox-" + add.AddNo + "'>" + nameLabel + "</label>");
+                optionsDiv.append("<input class='Delivery-to-another-branch-input ChkAddList' type='checkbox' name='Additions' value='" + add.addCode + "' data-val='" + add.addValue + "' id='checkbox-" + add.addNo + "'>");
+                optionsCol.append(optionsDiv);
+                row.append(valueCell);
+                row.append(optionsCol);
                 tbodyContainer.append(row);
             });
 
