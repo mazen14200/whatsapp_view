@@ -90,6 +90,8 @@ namespace Bnan.Ui.ViewModels.BS
         public string? CompensationValue { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public string? CompensationReasons { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? CurrentMeter { get; set; }
 
 
         public virtual CrCasRenterLessor? CrCasRenterContractBasic5 { get; set; }

@@ -820,11 +820,11 @@ footer {
 
 .requird-field {
     /* margin-bottom: 0px; */
-    font-size: 10px;
+    font-size: 14px;
     color: red;
     width: fit-content;
-    display: none;
-}
+/*    display: none;
+*/}
 
 .requird-field-row-last {
     justify-content: flex-end;

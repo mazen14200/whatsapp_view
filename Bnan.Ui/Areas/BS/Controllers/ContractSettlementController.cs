@@ -97,7 +97,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(string ContractNo)
+        public async Task<IActionResult> Create(string id)
         {
             //To Set Title 
             var titles = await setTitle("501", "5501004", "5");
@@ -105,7 +105,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var bsLayoutVM = await GetBranchesAndLayout();
-            var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == ContractNo,
+            var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == id,
                                                                                      new[] { "CrCasRenterContractBasic5.CrCasRenterLessorNavigation",
                                                                                              "CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarAdvantages",
                                                                                              "CrCasRenterContractBasic1"}).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();

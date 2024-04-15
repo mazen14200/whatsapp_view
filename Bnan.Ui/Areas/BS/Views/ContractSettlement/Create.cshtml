@@ -55,8 +55,6 @@
                                         <li id="compensation">@localizer["Compensations"]</li>
                                         <li id="check">@localizer["VirtualInspection"]</li>
                                         <li id="payment">@localizer["Payment"]</li>
-
-
                                     </ul>
                                 </div>
                                 <fieldset id="firstFieldset">
@@ -387,7 +385,7 @@
                                             <div class="row">
                                                 <div class="expensesDiv align-items-baseline ">
                                                     <div class="col-auto">
-                                                        <label id="expensesValue" for="expensesValue-input">قيمة المصروفات</label>
+                                                        <label id="expensesValue" for="expensesValue-input">@localizer["ExpenseValue"]</label>
                                                     </div>
                                                     <div class="col-auto">
                                                         <input type="tel" class="form-control form-control1" style="width: 130px;" id="expensesValue-input" asp-for="ContractSettlement.ExpensesValue" aria-describedby="inputGroupPrepend" autocomplete="off" required>
@@ -404,7 +402,7 @@
 
                                                 <div class="row expensesDiv expensesDiv-textarea ">
                                                     <div class="col-auto">
-                                                        <label id="Expense-statement" for="Expense-statement-input">بيان المصروفات</label>
+                                                        <label id="Expense-statement" for="Expense-statement-input">@localizer["ExpenseStatement"]</label>
                                                     </div>
                                                     <div class="col-lg-9" style="height: 100%;">
                                                         <textarea class="form-control textarea-inputs h-100" cols="25" asp-for="ContractSettlement.ExpensesReasons" id="Expense-statement-input" aria-describedby="inputGroupPrepend"></textarea>
@@ -446,12 +444,12 @@
                                                  class="next action-button"
                                                  style="vertical-align: middle; ">
                                             <input type="button" name="next" class="next action-button"
-                                                   value="التالي" />
+                                                   value="@localizer["Next"]" />
                                         </div>
                                         <div class="button-card">
                                             <input type="button" name="previous"
                                                    class="previous action-button-previous"
-                                                   value="السابق" />
+                                                   value="@localizer["Previous"]" />
                                             <img src="~/BranchSys/Pages/img/Vector.png" alt="Button Image"
                                                  class="previous action-button-previous"
                                                  style="vertical-align: middle; ">
@@ -466,10 +464,10 @@
                                             <div class="row">
                                                 <div class="expensesDiv align-items-baseline ">
                                                     <div class="col-auto">
-                                                        <p> التأمين </p>
+                                                        <p> @localizer["CrMasUserContractValidityInsurance"] </p>
                                                     </div>
                                                     <div class="col-auto personal-data">
-                                                        <p>ضد الغير </p>
+                                                        <p>@localizer["AgainstOthers"] </p>
                                                     </div>
                                                 </div>
 
@@ -479,7 +477,7 @@
                                         <div class="row">
                                             <div class="compensation-Div align-items-baseline ">
                                                 <div class="col-auto">
-                                                    <label for="compensation-input">قيمة التعويضات </label>
+                                                    <label for="compensation-input">@localizer["CompensationValue"]</label>
                                                 </div>
                                                 <div class="col-auto">
                                                     <input type="tel" class="form-control form-control1" style="width: 130px;" id="compensation-input" asp-for="ContractSettlement.CompensationValue" aria-describedby="inputGroupPrepend" autocomplete="off" required>
@@ -496,7 +494,7 @@
 
                                                 <div class="row compensation-Div compensation-Div-textarea ">
                                                     <div class="col-auto">
-                                                        <label for="compensation-statement-input">بيان التعويضات </label>
+                                                        <label for="compensation-statement-input">@localizer["CompensationStatement"]</label>
                                                     </div>
                                                     <div class="col-lg-9" style="height: 100%;">
                                                         <textarea class="form-control textarea-inputs h-100" cols="25" asp-for="ContractSettlement.CompensationReasons" id="compensation-statement-input" aria-describedby="inputGroupPrepend" required></textarea>
@@ -536,12 +534,12 @@
                                                  class="next action-button"
                                                  style="vertical-align: middle; ">
                                             <input type="button" name="next" class="next action-button"
-                                                   value="التالي" />
+                                                   value="@localizer["Next"]" />
                                         </div>
                                         <div class="button-card">
                                             <input type="button" name="previous"
                                                    class="previous action-button-previous"
-                                                   value="السابق" />
+                                                   value="@localizer["Previous"]" />
                                             <img src="~/BranchSys/Pages/img/Vector.png" alt="Button Image"
                                                  class="previous action-button-previous"
                                                  style="vertical-align: middle; ">
@@ -557,18 +555,18 @@
                                                 <div class="row CurrentReadingg_row flex-row-reverse">
                                                     <div class="col-md-6 sett_checkField">
                                                         <div class="col-auto ">
-                                                            <p> العداد عند التسليم</p>
+                                                            <p> @localizer["ReadingBefore"]</p>
                                                         </div>
                                                         <div class="col personal-data">
-                                                            <p>43.950</p>
+                                                            <p id="PreviousKM">@Model.ContractSettlement.CrCasRenterContractBasicCurrentReadingMeter?.ToString("N0")</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 sett_checkField">
                                                         <div class="col-auto ">
-                                                            <p> الكيلات الاضافية </p>
+                                                            <p> @localizer["DailyFreeKm"] </p>
                                                         </div>
                                                         <div class="col personal-data">
-                                                            <p>161.00</p>
+                                                            <p id="FreeKM">@Model.ContractSettlement.CrCasRenterContractBasicTotalDailyFreeKm?.ToString("N0")</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -577,43 +575,39 @@
                                                         <div class="col-auto">
                                                             <label id="CurrentReadingg"
                                                                    for="CurrentReadingg-input">
-                                                                القراءة الحالية
+                                                                @localizer["CurrentMeter"]
                                                             </label>
                                                         </div>
-                                                        <div class="col-auto">
-                                                            <input type="tel" class="form-control form-control1" style="width: 130px;"id="CurrentReadingg-input"name="CurrentReadingg-input" aria-describedby="inputGroupPrepend" autocomplete="off" >
-                                                            <div class="row requird-field-row-last">
-                                                                <div class="invalid-feedback" style="display: none;">
-                                                                    هذا الحقل مطلوب
+                                                        <div class="col-lg-auto  d-flex flex-column align-items-end">
+                                                            <input type="text" class="form-control form-control1" style="width: 130px;" id="CurrentMeter" asp-for="ContractSettlement.CurrentMeter" aria-describedby="inputGroupPrepend" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off" maxlength="7">
+                                                            <div class="row requird-field-row-last mb-2" style="height: 52px;">
+                                                                <div class="col-12">
+                                                                    <span class="requird-field" style="font-size: .625rem;" id="requird_field_CurrentMeter" asp-validation-for="@Model.ContractSettlement.CurrentMeter"></span>
+                                                                    <div>
+                                                                        <span class="requird-field" id="Error_CurrentMeter" style="font-size: .625rem; color: red;"></span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 sett_checkField">
                                                         <div class="col-auto ">
-                                                            <p> الكيلات الاضافية </p>
+                                                            <p> @localizer["AdditionalKm"] </p>
                                                         </div>
                                                         <div class="col personal-data">
-                                                            <p>161.00</p>
+                                                            <p id="AdditionalKM">0</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="upload__box d-flex">
-                                                    <div class="upload_img-wrap_inner" style="display: flex;
-                                                                  flex-wrap: wrap;
-                                                                  gap: 10px ">
+                                                    <div class="upload_img-wrap_inner" style="display: flex; flex-wrap: wrap; gap: 10px ">
                                                         <div class="upload__img-box " id="FirstUpload-img3">
                                                         </div>
                                                         <div class="upload__btn-box">
                                                             <label class="upload__btn">
                                                                 <div class="upload-container-checking">
-                                                                    <img class="upload-icon"
-                                                                         src="~/BranchSys/Pages/img/Group (1).png"
-                                                                         alt="Upload Icon" id="">
-                                                                    <input type="file" multiple
-                                                                           accept="image/*"
-                                                                           id="examination-images"
-                                                                           class="upload__inputfile ">
+                                                                    <img class="upload-icon" src="~/BranchSys/Pages/img/Group (1).png" alt="Upload Icon" id="">
+                                                                    <input type="file" multiple accept="image/*" id="examination-images" class="upload__inputfile ">
                                                                 </div>
                                                             </label>
                                                         </div>
@@ -623,9 +617,7 @@
                                                 <div class="row">
                                                     <p style="color: red;" id="examinationError"> </p>
                                                 </div>
-
                                             </div>
-
                                             <div class="col-lg-6">
                                                 <div class="table-scroll " id="SettlementTable">
                                                     <table class="table table-bordered  table-hover">
@@ -657,12 +649,12 @@
                                                  class="next action-button"
                                                  style="vertical-align: middle; ">
                                             <input type="button" name="next" class="next action-button"
-                                                   value="التالي" />
+                                                   value="@localizer["Next"]" />
                                         </div>
                                         <div class="button-card">
                                             <input type="button" name="previous"
                                                    class="previous action-button-previous"
-                                                   value="السابق" />
+                                                   value="@localizer["Previous"]" />
                                             <img src="~/BranchSys/Pages/img/Vector.png" alt="Button Image"
                                                  class="previous action-button-previous"
                                                  style="vertical-align: middle; ">
@@ -675,128 +667,133 @@
                                         <div class="row data-col-Settl g-3">
                                             <div class="col-xl-4 data-col-Settl contract-Settl-row ">
                                                 <div class="col-auto ">
-                                                    <P>رقم العقد  </P>
+                                                    <P>@localizer["ContractNo"]  </P>
                                                 </div>
                                                 <div class="col-auto personal-data ">
-                                                    <P>23-1-60-5001-1020136</P>
+                                                    <P>@Model.ContractSettlement.CrCasRenterContractBasicNo</P>
                                                 </div>
                                                 <div class="col-md-8 col-lg-10 seacrh-icon-col1">
                                                     <div>
-
                                                         <img src="~/BranchSys/Pages/img/seacrh-icon.png" alt="seacrh-icon Image" id="contract-value-Settlement3">
                                                     </div>
                                                     <div class="dropdown-content" id="dropdown-content-Settlement3">
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>  : المستأجر </p>
+                                                                <p>  : @localizer["Renterr"] </p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>نايف هشام هشام المعمر</p>
+                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                                                                {
+                                                                    <p>@Model.ContractSettlement.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>@Model.ContractSettlement.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationArName</p>
+                                                                }
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : السيارة</p>
+                                                                <p>: @localizer["Car"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>مازدا - سي اكس 30 - سماوي - 2021-دددد</p>
+                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                                                                {
+                                                                    <p>@Model.ContractSettlement.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateEnName</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>@Model.ContractSettlement.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateArName</p>
+                                                                }
                                                             </div>
-
                                                         </div>
 
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>: بداية العقد</p>
+                                                                <p>: @localizer["StartContract"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  10:30 pm   2024/1/30</p>
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)</p>
                                                             </div>
-
                                                         </div>
 
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : نهاية العقد </p>
+                                                                <p>: @localizer["EndContract"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  11:30 am   2024/5/30</p>
+                                                                <p id="EndContract"></p>
                                                             </div>
-
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : عدد الأيام   </p>
+                                                                <p>: @localizer["DaysNo"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>3</p>
+                                                                <p id="DaysNoContract"></p>
                                                             </div>
-
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : نهاية التفويض</p>
+                                                                <p> : @localizer["EndAuth"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  10:30 pm   2024/6/30</p>
+                                                                <p>@Model.ContractSettlement.AuthEndDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</p>
                                                             </div>
-
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : نسبة الخصم</p>
+                                                                <p>: @localizer["DiscountRate"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p> 115 </p>
+                                                                <p>%@Model.ContractSettlement.CrCasRenterContractBasicUserDiscountRate?.ToString("N2")</p>
                                                             </div>
-
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :  نسبة القيمة المضافة</p>
+                                                                <p>: @localizer["TaxRate"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p> ۲۲٥.۷٥ </p>
+                                                                <p>%@Model.ContractSettlement.CrCasRenterContractBasicTaxRate?.ToString("N2") </p>
                                                             </div>
-
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : قيمة الساعة الاضافية</p>
+                                                                <p> : @localizer["ExtraHourValue"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p> ۱٥۰٥.۰۰ </p>
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicHourValue?.ToString("N2", CultureInfo.InvariantCulture) </p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : قيمة الكيلو  الاضافي  </p>
+                                                                <p> : @localizer["AdditionalKmValue"]  </p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p> ۱٥۰٥.۰۰ </p>
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicKmValue?.ToString("N2", CultureInfo.InvariantCulture) </p>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class=" col-md-auto col-lg-6 data-col-Settl flex-wrap Settlement-date">
                                                 <div class="col-auto ">
-                                                    <P> تاريخ التسوية</P>
+                                                    <P>@localizer["SettlementDate"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data ">
-                                                    <P>2020/11/29</P>
+                                                    <P>@DateTime.Now.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</P>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row data-col-Settl g-3">
                                             <div class=" col-xl-8 data-col-Settl flex-wrap ">
                                                 <div class="col-auto ">
-                                                    <P>قيمة العقد</P>
+                                                    <P>@localizer["ContractValue"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data ">
-                                                    <P>4,235.45</P>
+                                                    <P id="ContractValue">0.00</P>
                                                 </div>
                                                 <div class="col-md-6 col-lg-5 col-xl-5 seacrh-icon-col">
                                                     <div>
@@ -806,86 +803,85 @@
                                                     <div class="dropdown-content" id="dropdown-content-Settlement4">
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :الايجار </p>
+                                                                <p> :@localizer["RentalValue"] </p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>   </p>
+                                                                <p id="RentalValue">0.00</p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>: التفويض</p>
+                                                                <p>:@localizer["DelegationValue"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p></p>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="row dropdown-content-row">
-                                                            <div class="col-auto ">
-                                                                <p>:  المميزات الاضافية</p>
-                                                            </div>
-                                                            <div class="col personal-data">
-                                                                <p>  </p>
+                                                                <p id="DelegationValue">0.00</p>
                                                             </div>
 
                                                         </div>
 
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :السائق  الاضافي</p>
+                                                                <p>:@localizer["Features"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p> </p>
+                                                                <p id="Features">0.00</p>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> :@localizer["AdditionalDriver"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p id="AdditionalDriver">0.00</p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :السائق الخاص </p>
+                                                                <p> :@localizer["PrivateDriver"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p></p>
+                                                                <p id="PrivateDriver">0.00</p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :الخيارات  </p>
+                                                                <p> :@localizer["Choices"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  </p>
+                                                                <p id="Choices">0.00</p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :الاضافات  </p>
+                                                                <p> :@localizer["Additionals"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  </p>
+                                                                <p id="Additionals">0.00</p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :قيمة الساعات الاضافية   </p>
+                                                                <p> :@localizer["ExtraHoursValue"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  </p>
+                                                                <p id="ExtraHoursValue">0.00</p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :قيمة الكيلوات الاضافية  </p>
+                                                                <p> :@localizer["ExtraKMsValue"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  </p>
+                                                                <p id="ExtraKMsValue">0.00</p>
                                                             </div>
-
                                                         </div>
 
                                                     </div>
@@ -896,56 +892,56 @@
 
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p> قيمة العقد بعد الخصم </p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۱٥۰٥.۰۰</p></div>
+                                                    <div class="col-auto "><p>@localizer["ContractValueAfterDiscount"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="ContractValueAfterDiscount">0.00</p></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-auto">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p>قيمة الضريبة  </p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۲۲٥.۷٥</p></div>
+                                                    <div class="col-auto "><p>@localizer["TaxValue"] </p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="TaxValue">0.00</p></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row data-col-Settl g-3">
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p>إجمالي العقد   </p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۱٥۰٥.۰۰</p></div>
+                                                    <div class="col-auto "><p>@localizer["TotalContract"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="TotalContract">0.00</p></div>
                                                 </div>
 
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p> إجمالي المصروفات</p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۱٥۰٥.۰۰</p></div>
+                                                    <div class="col-auto "><p>@localizer["TotalExpenseValue"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="TotalExpenseValue">0.00</p></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-auto">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p>إجمالي التعويضات   </p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۱٥۰٥.۰۰</p></div>
+                                                    <div class="col-auto "><p>@localizer["TotalCompensationValue"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="TotalCompensationValue">0.00</p></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row data-col-Settl g-3">
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p>رصيد سابق    </p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۰۰.۹٦ </p></div>
+                                                    <div class="col-auto "><p>@localizer["PreviousBalance"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p>@Model.ContractSettlement.CrCasRenterContractBasic5.CrCasRenterLessorAvailableBalance?.ToString("N2")</p></div>
                                                 </div>
 
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p> المبلغ المطلوب </p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۱۷۲۹.۷۹</p></div>
+                                                    <div class="col-auto "><p>@localizer["AmountRequired"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="AmountRequired">۱۷۲۹.۷۹</p></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-auto">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p> الباقي على المستأجر</p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۱۷۳۰.۷٥</p></div>
+                                                    <div class="col-auto "><p id="RenterMoneyText">@localizer["RenterMoneyText1"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="RenterMoneyValue">0.00</p></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -953,17 +949,13 @@
                                             <div class="col-md-auto col-lg-4 data-col-Settl">
                                                 <div class="col-auto">
                                                     <label id="amount-paid" for="amount-paid-input">
-                                                        المبلغ المدفوع
+                                                        @localizer["AmountPaid"]
                                                     </label>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <input type="text" class="form-control form-control2"
-                                                           id="amount-paid-input" name="amount-paid" autocomplete="off"
-                                                           required>
+                                                    <input type="text" class="form-control form-control2" asp-for="ContractSettlement.AmountPayed" id="AmountPayed" oninput="handleAmountPayed(this)" name="amount-paid" autocomplete="off" required>
                                                     <div class="row requird-field-row-last">
-                                                        <div class="invalid-feedback" style="display: none;">
-                                                            هذا الحقل مطلوب
-                                                        </div>
+                                                        <p class="requird_field_AmountPayed"></p>
                                                     </div>
                                                 </div>
 
@@ -971,7 +963,7 @@
 
                                             <div class="col-md-auto col-lg-4 d-flex flex-nowrap data-col-Settl">
                                                 <div class="col-auto d-flex ps-0">
-                                                    <label id="payment-method" for="payment-method-select">طريقة الدفع</label>
+                                                    <label id="payment-method" for="payment-method-select">@localizer["PaymentMethod"]</label>
 
                                                 </div>
 
@@ -984,9 +976,7 @@
                                                             <option value="مدي"> مدي</option>
                                                             <option value="فيزا"> فيزا</option>
                                                             <option value="فيزا"> ماسترد كارد</option>
-
                                                         </select>
-
                                                         <div class="row requird-field-row-last">
                                                             <div class="invalid-feedback" style="display: none;">
                                                                 هذا الحقل مطلوب
@@ -997,12 +987,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-auto  data-col-Settl ">
-
                                                 <div class="col-auto d-flex ps-0 ">
-                                                    <label id="selling-point" for="selling-point-dropdown"> نقطة البيع </label>
-
+                                                    <label id="selling-point" for="selling-point-dropdown">@localizer["SalesPoint"]</label>
                                                 </div>
-
                                                 <div class="col-auto ">
                                                     <div class="offset">
                                                         <select class="form-select form-select-last"
@@ -1025,7 +1012,7 @@
                                         </div>
                                         <div class="row p-2" style="flex-direction:row-reverse">
                                             <div class="col-auto">
-                                                <label id="notes" for="FormControl-last-Textarea">ملاحظات</label>
+                                                <label id="notes" for="FormControl-last-Textarea">@localizer["Reasons"]</label>
                                             </div>
                                             <div class="col-sm-10 col-md-7 col-lg-7">
                                                 <textarea class="form-control textarea-inputs"
@@ -1039,12 +1026,12 @@
                                     <div class="row button-row align-items-center"
                                          style="padding: 6px 7px 0px 20px;">
                                         <div class="button-card  gap-2">
-                                            <button id="submitForm" class="btn btn-custom next">حفظ</button>
+                                            <button id="submitForm" class="btn btn-custom next">@localizer["Save"]</button>
 
                                         </div>
                                         <div class="button-card">
                                             <input type="button" name="previous"
-                                                   class="previous action-button-previous" value="السابق" />
+                                                   class="previous action-button-previous" value="@localizer["Previous"]" />
                                             <img src="~/BranchSys/Pages/img/Vector.png" alt="Button Image"
                                                  class="previous action-button-previous"
                                                  style="vertical-align: middle; margin-right: 10px;">
@@ -1144,6 +1131,16 @@
                 var diff = parseInt(diffHours) - parseInt(TotalFreeHours) - parseInt(MaxHours);
                 console.log("diff", diff);
                 $("#daysNo").text(diffDays);
+
+                //In PaymentPage
+                var endContractDate = new Date(startContractDate);
+                endContractDate.setDate(startContractDate.getDate() + diffDays);
+                // Formatting endContractDate as "yyyy/MM/dd HH:MM"
+                var formattedEndContractDate = endContractDate.getFullYear() + '/' +('0' + (endContractDate.getMonth() + 1)).slice(-2) + '/' +('0' + endContractDate.getDate()).slice(-2) + ' ' +
+                                              ('0' + endContractDate.getHours()).slice(-2) + ':' +('0' + endContractDate.getMinutes()).slice(-2) + ':00';
+                $("#DaysNoContract").text(diffDays);
+                $("#EndContract").text(formattedEndContractDate);
+                ////////////////////////////////////////////////////////////
                 if (diff >= 0 && diffMinutes >= 0) {
                     $("#diffHours").text(diff.toString().padStart(2, '0'));
                     $("#diffMinutes").text(diffMinutes.toString().padStart(2, '0'));
@@ -1191,6 +1188,62 @@
             $('#ThirdFieldset .upload__img-box').remove();
             console.log("compensationArray", compensationArray);
         }
+
+
+
+
+
+
+
+
+        // Function to calculate and update additional KM
+        function calculateAdditionalKM(enteredValue) {
+            var PreviousMeterInput = '@Model.ContractSettlement.CrCasRenterContractBasicCurrentReadingMeter';
+            var PreviousMeterValue = parseInt(PreviousMeterInput) || 0;
+            var AdditionalKmFreeDaily = '@Model.ContractSettlement.CrCasRenterContractBasicTotalDailyFreeKm';
+            var DaysNo = parseInt($("#daysNo").text());
+            var settlementMechanismValue = parseInt($("#Settlement-mechanism").val());
+            var totalDaysNo;
+            if (settlementMechanismValue == 0) {
+                totalDaysNo = DaysNo;
+            }
+            else if (settlementMechanismValue == 1) {
+                totalDaysNo = DaysNo + 1;
+            }
+            else if (settlementMechanismValue == 2) {
+                totalDaysNo = DaysNo + (1 / 2);
+            }
+            else {
+                totalDaysNo = DaysNo + (1 / 4);
+            }
+            var TotalAdditionalKM = parseFloat(totalDaysNo) * parseInt(AdditionalKmFreeDaily);
+            console.log("PreviousMeterValue", PreviousMeterValue)
+            console.log("AdditionalKmFreeDaily", AdditionalKmFreeDaily)
+            console.log("DaysNo", DaysNo)
+            console.log("totalDaysNo", totalDaysNo)
+            console.log("TotalAdditionalKM", TotalAdditionalKM)
+            if (enteredValue <= PreviousMeterValue) {
+                $("#Error_CurrentMeter").text("@localizer["requirdfieldCurrentMeter"]" + " " + PreviousMeterValue);
+            } else {
+                var Free = TotalAdditionalKM + PreviousMeterValue;
+                var Additional = enteredValue - Free;
+                console.log("Free", Free)
+                console.log("Additional", Additional)
+
+                if (Additional <= 0) {
+                    $("#AdditionalKM").text("0");
+                } else {
+                    $("#AdditionalKM").text(Additional.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+                }
+                $("#Error_CurrentMeter").text("");
+            }
+        }
+        var CurrentMeterInput = $("#CurrentMeter");
+        // Bind events to CurrentMeterInput
+        CurrentMeterInput.on("focusout", function () {
+            var enteredValue = parseFloat($(this).val()) || 0;
+            calculateAdditionalKM(enteredValue);
+        });
     </script>
     <script>
         // $("#Settlement-mechanism").change(function () {
@@ -1314,7 +1367,7 @@
                         });
 
                         // Check currentMeterSpan
-                        var currentMeterSpan = $("#requird_field_CurrentMeter");
+                        var currentMeterSpan = $("#Error_CurrentMeter");
                         if (currentMeterSpan.text().trim() === "") {
                             console.log("Span is empty");
                         } else {
@@ -1328,6 +1381,15 @@
                         } else {
                             imgs = false;
                             console.log("The div does not contain any img elements");
+                        }
+                        if (imgs && currentMeter && allChecked) {
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.style.display = "flex";
+                            current_fs.style.display = "none";
+                            CaculateContractSettelement();
+                        }
+                        else {
+                            $("#examinationError").text('@localizer["checkUpMessageRequired"]')
                         }
                     }
 
@@ -1377,5 +1439,52 @@
             });
         });
     </script>
-    
+    <script>
+        function CaculateContractSettelement() {
+            var daysNo = parseInt($("#daysNo").text());
+            var settlementMechanismValue = parseInt($("#Settlement-mechanism").val());
+            var totalDaysNo;
+            if (settlementMechanismValue == 0) {
+                totalDaysNo = daysNo;
+            }
+            else if (settlementMechanismValue == 1) {
+                totalDaysNo = daysNo + 1;
+            }
+            else if (settlementMechanismValue == 2) {
+                totalDaysNo = daysNo + (1 / 2);
+            }
+            else {
+                totalDaysNo = daysNo + (1 / 4);
+            }
+            console.log("daysNo", daysNo)
+            console.log("settlementMechanismValue", settlementMechanismValue)
+            console.log("totalDaysNo", totalDaysNo)
+
+        }
+    </script>
+    <script>
+        function handleAmountPayed(input) {
+            // Remove non-digit characters and additional decimal points
+            input.value = input.value.replace(/[^0-9\.]/g, '');
+            const decimalIndex = input.value.indexOf('.');
+            // Limit to 9 digits before and after the decimal point
+            if (decimalIndex !== -1) {
+                const digitsBeforeDecimal = input.value.substring(0, decimalIndex);
+                const digitsAfterDecimal = input.value.substring(decimalIndex + 1);
+
+                // Limit to 2 digits after the decimal point
+                input.value = digitsBeforeDecimal.substr(0, 7) + '.' + digitsAfterDecimal.substr(0, 2);
+
+                // Remove additional decimal points
+                if (input.value.indexOf('.', decimalIndex + 1) !== -1) {
+                    const lastValidIndex = input.value.lastIndexOf('.');
+                    input.value = input.value.substring(0, lastValidIndex) + input.value.substring(lastValidIndex + 1);
+                }
+            } else {
+                // Limit to 7 digits before the decimal point
+                input.value = input.value.substr(0, 7);
+            }
+        }
+    </script>
+
 }

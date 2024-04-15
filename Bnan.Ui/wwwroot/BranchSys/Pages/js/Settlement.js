@@ -315,7 +315,7 @@ function examinationImgUpload() {
                         $('.upload__img-close3').length +
                         "' data-file='" +
                         f.name +
-                        "' class='img-bg'><div class='upload__img-close3'><img class='close3' src='~/BranchSys/Pages/img/delete.png'></div></div></div>";
+                        "' class='img-bg'><div class='upload__img-close3'><img class='close3' src='/BranchSys/Pages/img/delete.png'></div></div></div>";
                     imgWrap.append(html);
                     examinationArray.push({
                         f, url: e.target.result

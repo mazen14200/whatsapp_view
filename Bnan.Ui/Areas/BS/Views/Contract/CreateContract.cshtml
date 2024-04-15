@@ -2935,7 +2935,6 @@ else
                             }
                             else {
                                 //Clear Data Of Driver And Add Driver To Return Check
-
                                 IsThereAdditionalDriver();
                                 clearDataDriver();
                                 clearDataAddDriver();
@@ -3052,6 +3051,7 @@ else
                                     NextField = "options";
                                 }
                                 else {
+                                    clearDataAddDriver();
                                     if (CarChoices.count == 0 && CarAdditionals.count == 0) {
                                         $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                                         next_fs = $(this).closest("fieldset").next().next();
@@ -3085,6 +3085,7 @@ else
                                 NextField = "options";
                             }
                             else {
+                                clearDataAddDriver();
                                 if (CarChoices.count == 0 && CarAdditionals.count == 0) {
                                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                                     next_fs = $(this).closest("fieldset").next().next();
