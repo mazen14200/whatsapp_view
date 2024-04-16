@@ -80,6 +80,8 @@ namespace Bnan.Ui.ViewModels.BS
         public string? TotalAmount { get; set; }
         public string? AccountNo { get; set; }
         public string? AdvantagesValue { get; set; }
+        public string? AdvantagesValueTotal { get; set; }
+        public string? ChoicesValue { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public string? SettlementMechanism { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
@@ -92,6 +94,8 @@ namespace Bnan.Ui.ViewModels.BS
         public string? CompensationReasons { get; set; }
         [Required(ErrorMessage = "requiredFiled")]
         public string? CurrentMeter { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? ActualEndContractDate { get; set; }
 
 
         public virtual CrCasRenterLessor? CrCasRenterContractBasic5 { get; set; }

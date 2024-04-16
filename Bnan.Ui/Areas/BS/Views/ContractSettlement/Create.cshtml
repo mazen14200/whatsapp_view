@@ -22,6 +22,11 @@
 {
     <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">
 }
+<style>
+    .form-select:disabled {
+        background-color: white;
+    }
+</style>
 <!-- MultiStep Form -->
 <div class="container-fluid" id="grad1">
     <section class="section-mainCard">
@@ -142,6 +147,22 @@
                                                                 <p>@Model.ContractSettlement.AuthEndDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</p>
                                                             </div>
                                                         </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : @localizer["FreeAdditionalHours"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicTotalFreeHours</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : @localizer["HourMax"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicHourMax</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -190,7 +211,7 @@
                                                                 <p>: @localizer["Features"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>@Model.ContractSettlement.AdvantagesValue</p>
+                                                                <p>@Model.ContractSettlement.AdvantagesValueTotal</p>
                                                             </div>
                                                         </div>
 
@@ -257,11 +278,9 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <input type="date" id="contract_real_endTime" class="form-control inputs" name="contract-end-date" aria-describedby="inputGroupPrepend" required>
+                                                    <input type="date" id="contract_real_endTime" class="form-control inputs" asp-for="ContractSettlement.ActualEndContractDate" aria-describedby="inputGroupPrepend" required>
                                                     <div class="row requird-field-row-last">
-                                                        <div class="invalid-feedback" style="display: none;">
-                                                            هذا الحقل مطلوب
-                                                        </div>
+                                                        <span class="requird-field" id="requird_field_SettlementMechanism" asp-validation-for="@Model.ContractSettlement.ActualEndContractDate"></span>
                                                     </div>
                                                 </div>
 
@@ -388,7 +407,7 @@
                                                         <label id="expensesValue" for="expensesValue-input">@localizer["ExpenseValue"]</label>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <input type="tel" class="form-control form-control1" style="width: 130px;" id="expensesValue-input" asp-for="ContractSettlement.ExpensesValue" aria-describedby="inputGroupPrepend" autocomplete="off" required>
+                                                        <input type="tel" class="form-control form-control1" style="width: 130px;" id="expensesValue-input" asp-for="ContractSettlement.ExpensesValue" oninput="handleAmountPayed(this)" aria-describedby="inputGroupPrepend" autocomplete="off" required>
                                                         <div class="row requird-field-row-last">
                                                             <span class="requird-field" id="requird_field_ExpensesValue" asp-validation-for="@Model.ContractSettlement.ExpensesValue"></span>
                                                         </div>
@@ -480,7 +499,7 @@
                                                     <label for="compensation-input">@localizer["CompensationValue"]</label>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <input type="tel" class="form-control form-control1" style="width: 130px;" id="compensation-input" asp-for="ContractSettlement.CompensationValue" aria-describedby="inputGroupPrepend" autocomplete="off" required>
+                                                    <input type="tel" class="form-control form-control1" style="width: 130px;" id="compensation-input" asp-for="ContractSettlement.CompensationValue" oninput="handleAmountPayed(this)" aria-describedby="inputGroupPrepend" autocomplete="off" required>
                                                     <div class="row requird-field-row-last">
                                                         <span class="requird-field" id="requird_field_CompensationValue" asp-validation-for="@Model.ContractSettlement.CompensationValue"></span>
                                                     </div>
@@ -747,7 +766,7 @@
                                                                 <p>: @localizer["DiscountRate"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>%@Model.ContractSettlement.CrCasRenterContractBasicUserDiscountRate?.ToString("N2")</p>
+                                                                <p>%@Model.ContractSettlement.CrCasRenterContractBasicUserDiscountRate?.ToString("N2", CultureInfo.InvariantCulture)</p>
                                                             </div>
                                                         </div>
                                                         <div class="row dropdown-content-row">
@@ -755,7 +774,7 @@
                                                                 <p>: @localizer["TaxRate"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>%@Model.ContractSettlement.CrCasRenterContractBasicTaxRate?.ToString("N2") </p>
+                                                                <p>%@Model.ContractSettlement.CrCasRenterContractBasicTaxRate?.ToString("N2", CultureInfo.InvariantCulture) </p>
                                                             </div>
                                                         </div>
                                                         <div class="row dropdown-content-row">
@@ -928,14 +947,14 @@
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
                                                     <div class="col-auto "><p>@localizer["PreviousBalance"]</p></div>
-                                                    <div class="col-auto personal-data p-0"><p>@Model.ContractSettlement.CrCasRenterContractBasic5.CrCasRenterLessorAvailableBalance?.ToString("N2")</p></div>
+                                                    <div class="col-auto personal-data p-0"><p>@Model.ContractSettlement.CrCasRenterContractBasic5.CrCasRenterLessorAvailableBalance?.ToString("N2", CultureInfo.InvariantCulture)</p></div>
                                                 </div>
 
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
                                                     <div class="col-auto "><p>@localizer["AmountRequired"]</p></div>
-                                                    <div class="col-auto personal-data p-0"><p id="AmountRequired">۱۷۲۹.۷۹</p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="AmountRequired">0.00</p></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-auto">
@@ -953,34 +972,50 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <input type="text" class="form-control form-control2" asp-for="ContractSettlement.AmountPayed" id="AmountPayed" oninput="handleAmountPayed(this)" name="amount-paid" autocomplete="off" required>
+                                                    <input type="text" class="form-control form-control2" asp-for="ContractSettlement.AmountPayed" id="AmountPayed" oninput="handleAmountPayed(this)" oninput="handleAmountPayed(this)" autocomplete="off" required>
                                                     <div class="row requird-field-row-last">
                                                         <p class="requird_field_AmountPayed"></p>
                                                     </div>
                                                 </div>
 
                                             </div>
-
+                                            @{
+                                                if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() == 0)
+                                                {
+                                                    Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "1");
+                                                }
+                                                else if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() > 0 && Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointBank != "00").Count() == 0)
+                                                {
+                                                    Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "3" || x.CrMasSupAccountPaymentMethodClassification == "1");
+                                                }
+                                                else if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() > 0 && Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointBank != "00").Count() > 0)
+                                                {
+                                                    Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "2" || x.CrMasSupAccountPaymentMethodClassification == "3" || x.CrMasSupAccountPaymentMethodClassification == "1");
+                                                }
+                                            }
                                             <div class="col-md-auto col-lg-4 d-flex flex-nowrap data-col-Settl">
                                                 <div class="col-auto d-flex ps-0">
                                                     <label id="payment-method" for="payment-method-select">@localizer["PaymentMethod"]</label>
 
                                                 </div>
-
                                                 <div class="col-auto ">
                                                     <div class="offset">
-                                                        <select class="form-select form-select-last" id="payment-method-select" name="payment-method" required>
-                                                            <option selected disabled>
-                                                            </option>
-                                                            <option value="نقدا"> نقدا</option>
-                                                            <option value="مدي"> مدي</option>
-                                                            <option value="فيزا"> فيزا</option>
-                                                            <option value="فيزا"> ماسترد كارد</option>
+                                                        <select class="form-select form-select-last" asp-for="ContractSettlement.PaymentMethod" disabled>
+                                                            <option selected disabled></option>
+                                                            @foreach (var payment in Model.PaymentMethods)
+                                                            {
+                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                                                {
+                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode">@payment.CrMasSupAccountPaymentMethodEnName</option>
+                                                                }
+                                                            }
                                                         </select>
                                                         <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
+                                                            <span class="requird-field" id="requird_field_PaymentMethod" asp-validation-for="@Model.ContractSettlement.PaymentMethod"></span>
                                                         </div>
                                                     </div>
 
@@ -992,32 +1027,21 @@
                                                 </div>
                                                 <div class="col-auto ">
                                                     <div class="offset">
-                                                        <select class="form-select form-select-last"
-                                                                id="selling-point-dropdown" name="selling-point" required>
-                                                            <option selected disabled>           </option>
-                                                            <option value=""> hghghghhfhfgfghdfdfgdgdcg           </option>
-                                                            <option value="">            </option>
-                                                            <option value="">             </option>
+                                                        <select class="form-select form-select-last" asp-for="ContractSettlement.SalesPoint" required>
                                                         </select>
                                                         <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
+                                                            <span class="requird-field" id="requird_field_SalesPoint" asp-validation-for="@Model.ContractSettlement.SalesPoint"></span>
                                                         </div>
                                                     </div>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                         <div class="row p-2" style="flex-direction:row-reverse">
                                             <div class="col-auto">
-                                                <label id="notes" for="FormControl-last-Textarea">@localizer["Reasons"]</label>
+                                                <label id="notes" for="FormControl-last-Textarea">@localizer["reasons"]</label>
                                             </div>
                                             <div class="col-sm-10 col-md-7 col-lg-7">
-                                                <textarea class="form-control textarea-inputs"
-                                                          rows="1"
-                                                          maxlength="100" name="notes"></textarea>
+                                                <textarea class="form-control textarea-inputs" rows="1" maxlength="100" asp-for="ContractSettlement.CrCasRenterContractBasicReasons"></textarea>
                                             </div>
 
                                         </div>
@@ -1067,18 +1091,32 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // const year = now.getFullYear().toString().padStart(4, '0');
+            // const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            // const day = now.getDate().toString().padStart(2, '0');
+            // const dateValue = `${year}-${month}-${day}`;
             const now = new Date();
-            const year = now.getFullYear().toString().padStart(4, '0');
-            const month = (now.getMonth() + 1).toString().padStart(2, '0');
-            const day = now.getDate().toString().padStart(2, '0');
-            const dateValue = `${year}-${month}-${day}`;
+            const endDateString = "@Model.ContractSettlement.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)";
+            const endDate = new Date(endDateString);
 
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const timeValue = `${hours}:${minutes}`;
-
-            document.getElementById("contract_real_endTime").value = dateValue;
-            document.getElementById("settlementTime").value = timeValue;
+            if (endDate < now) {
+                const year = now.getFullYear().toString().padStart(4, '0');
+                const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                const day = now.getDate().toString().padStart(2, '0');
+                const dateValue = `${year}-${month}-${day}`;
+                document.getElementById("contract_real_endTime").value = dateValue;
+            } else {
+                const year = endDate.getFullYear().toString().padStart(4, '0');
+                const month = (endDate.getMonth() + 1).toString().padStart(2, '0');
+                const day = endDate.getDate().toString().padStart(2, '0');
+                const dateValue = `${year}-${month}-${day}`;
+                document.getElementById("contract_real_endTime").value = dateValue;
+            }
+            document.getElementById("contract_real_endTime").min = now.toISOString().split('T')[0];
+            // const hours = now.getHours().toString().padStart(2, '0');
+            // const minutes = now.getMinutes().toString().padStart(2, '0');
+            // const timeValue = `${hours}:${minutes}`;
+            // document.getElementById("settlementTime").value = timeValue;
 
         });
         //To Hide mechanismSettlement..
@@ -1096,6 +1134,10 @@
         //     }
 
         // });
+        var diffMinutes = 0;
+        var diffHours = 0;
+        var diff = 0;
+        var totalDaysNo = 0;
 
         document.addEventListener("DOMContentLoaded", function () {
             const elementToHide = document.getElementById("mechanismSettlement");
@@ -1126,9 +1168,9 @@
 
                 const timeDiff = Math.abs(settlementDateTime.getTime() - startContractDate.getTime());
                 const diffDays = Math.floor(timeDiff / (1000 * 3600 * 24)); // Difference in days
-                const diffHours = Math.floor((timeDiff % (1000 * 3600 * 24)) / (1000 * 3600)); // Remaining difference in hours
-                const diffMinutes = Math.floor((timeDiff % (1000 * 3600)) / (1000 * 60)); // Remaining difference in minutes
-                var diff = parseInt(diffHours) - parseInt(TotalFreeHours) - parseInt(MaxHours);
+                diffHours = Math.floor((timeDiff % (1000 * 3600 * 24)) / (1000 * 3600)); // Remaining difference in hours
+                diffMinutes = Math.floor((timeDiff % (1000 * 3600)) / (1000 * 60)); // Remaining difference in minutes
+                diff = parseInt(diffHours) - parseInt(TotalFreeHours) - parseInt(MaxHours);
                 console.log("diff", diff);
                 $("#daysNo").text(diffDays);
 
@@ -1136,28 +1178,36 @@
                 var endContractDate = new Date(startContractDate);
                 endContractDate.setDate(startContractDate.getDate() + diffDays);
                 // Formatting endContractDate as "yyyy/MM/dd HH:MM"
-                var formattedEndContractDate = endContractDate.getFullYear() + '/' +('0' + (endContractDate.getMonth() + 1)).slice(-2) + '/' +('0' + endContractDate.getDate()).slice(-2) + ' ' +
-                                              ('0' + endContractDate.getHours()).slice(-2) + ':' +('0' + endContractDate.getMinutes()).slice(-2) + ':00';
+                var formattedEndContractDate = endContractDate.getFullYear() + '/' + ('0' + (endContractDate.getMonth() + 1)).slice(-2) + '/' + ('0' + endContractDate.getDate()).slice(-2) + ' ' +
+                    ('0' + endContractDate.getHours()).slice(-2) + ':' + ('0' + endContractDate.getMinutes()).slice(-2) + ':00';
                 $("#DaysNoContract").text(diffDays);
                 $("#EndContract").text(formattedEndContractDate);
                 ////////////////////////////////////////////////////////////
-                if (diff >= 0 && diffMinutes >= 0) {
+                if (diff > 0 || (diff === 0 && diffMinutes > 0)) {
                     $("#diffHours").text(diff.toString().padStart(2, '0'));
                     $("#diffMinutes").text(diffMinutes.toString().padStart(2, '0'));
-                    if (elementToHide) {
-                        elementToHide.style.display = "";
+                    if (SettelmentAuth.toLowerCase() === "false" || SettelmentAuth == null || SettelmentAuth == "") {
+                        $("#contract_real_endTime").prop('readonly', true).css('background-color', 'white');
+                    }
+                    else {
+                        if (elementToHide) {
+                            elementToHide.style.display = "";
+                        }
                     }
                 }
                 else {
+                    if (SettelmentAuth.toLowerCase() === "false" || SettelmentAuth == null || SettelmentAuth == "") {
+                        $("#contract_real_endTime").prop('readonly', true).css('background-color', 'white');
+                    }
                     $("#diffHours").text("00");
                     $("#diffMinutes").text("00");
                 }
-                if (SettelmentAuth.toLowerCase() === "false" || SettelmentAuth == null || SettelmentAuth == "") {
-                    $("#contract_real_endTime").prop('readonly', true).css('background-color', 'white');
-                }
+                
                 console.log("Difference in days:", diffDays);
                 console.log("Remaining difference in hours:", diffHours);
                 console.log("Remaining difference in minutes:", diffMinutes);
+                console.log("Remaining difference in timeDiff:", timeDiff);
+                CaculateTotalDaysNo();
             }
 
             document.getElementById("contract_real_endTime").addEventListener("change", calculateDifference);
@@ -1193,17 +1243,10 @@
 
 
 
-
-
-
-        // Function to calculate and update additional KM
-        function calculateAdditionalKM(enteredValue) {
-            var PreviousMeterInput = '@Model.ContractSettlement.CrCasRenterContractBasicCurrentReadingMeter';
-            var PreviousMeterValue = parseInt(PreviousMeterInput) || 0;
-            var AdditionalKmFreeDaily = '@Model.ContractSettlement.CrCasRenterContractBasicTotalDailyFreeKm';
+        function CaculateTotalDaysNo(){
             var DaysNo = parseInt($("#daysNo").text());
             var settlementMechanismValue = parseInt($("#Settlement-mechanism").val());
-            var totalDaysNo;
+            console.log("settlementMechanismValue", settlementMechanismValue)
             if (settlementMechanismValue == 0) {
                 totalDaysNo = DaysNo;
             }
@@ -1213,27 +1256,39 @@
             else if (settlementMechanismValue == 2) {
                 totalDaysNo = DaysNo + (1 / 2);
             }
-            else {
+            else if (settlementMechanismValue == 3) {
                 totalDaysNo = DaysNo + (1 / 4);
             }
-            var TotalAdditionalKM = parseFloat(totalDaysNo) * parseInt(AdditionalKmFreeDaily);
-            console.log("PreviousMeterValue", PreviousMeterValue)
-            console.log("AdditionalKmFreeDaily", AdditionalKmFreeDaily)
-            console.log("DaysNo", DaysNo)
+            else {
+                if (diff > 0 || (diff === 0 && diffMinutes > 0)) {
+                    totalDaysNo = DaysNo + 1;
+                }
+                else {
+                    totalDaysNo = DaysNo;
+                }
+            }
             console.log("totalDaysNo", totalDaysNo)
-            console.log("TotalAdditionalKM", TotalAdditionalKM)
+        }
+
+        var AdditionalKm = 0;
+        // Function to calculate and update additional KM
+        function calculateAdditionalKM(enteredValue) {
+            var PreviousMeterInput = '@Model.ContractSettlement.CrCasRenterContractBasicCurrentReadingMeter';
+            var PreviousMeterValue = parseInt(PreviousMeterInput) || 0;
+            var AdditionalKmFreeDaily = '@Model.ContractSettlement.CrCasRenterContractBasicTotalDailyFreeKm';
+            var TotalAdditionalKM = parseFloat(totalDaysNo) * parseInt(AdditionalKmFreeDaily);
             if (enteredValue <= PreviousMeterValue) {
                 $("#Error_CurrentMeter").text("@localizer["requirdfieldCurrentMeter"]" + " " + PreviousMeterValue);
             } else {
                 var Free = TotalAdditionalKM + PreviousMeterValue;
-                var Additional = enteredValue - Free;
+                AdditionalKm = enteredValue - Free;
                 console.log("Free", Free)
-                console.log("Additional", Additional)
+                console.log("Additional", AdditionalKm)
 
-                if (Additional <= 0) {
+                if (AdditionalKm <= 0) {
                     $("#AdditionalKM").text("0");
                 } else {
-                    $("#AdditionalKM").text(Additional.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+                    $("#AdditionalKM").text(AdditionalKm.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
                 }
                 $("#Error_CurrentMeter").text("");
             }
@@ -1259,15 +1314,11 @@
                 const CompensationCheckbox = document.getElementById('compensation-check');
                 const firsetfield = document.getElementById('firstFieldset');
                 const fieldsets = document.querySelectorAll("fieldset");
-                console.log("firsetfield", firsetfield);
-                console.log("SettlementForm", $("#SettlementForm").valid());
-
                 if ($("#SettlementForm").valid()) {
                     const current_fs = nextBtn.closest("fieldset");
                     let next_fs = current_fs.nextElementSibling;
-                    console.log("current_fs.id", current_fs.id);
+                    CaculateTotalDaysNo();
                     if (current_fs.id === 'firstFieldset') {
-
                         $("#ExpensesError").text('');
                         $("#requird_field_ExpensesValue").text('').css("color", "");
                         $("#requird_field_ExpensesReasons").text('').css("color", "");
@@ -1299,7 +1350,6 @@
                             current_fs.style.display = "none";
                         }
                     }
-
                     if (current_fs.id === 'SecondFieldset') {
                         $("#ExpensesError").text('');
                         var imgs = true;
@@ -1308,7 +1358,6 @@
                             console.log("The div contains at least one img element");
                         } else {
                             imgs = false;
-                            console.log("The div does not contain any img elements");
                         }
                         if (imgs) {
                             if (ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
@@ -1341,7 +1390,6 @@
                             console.log("The div contains at least one img element");
                         } else {
                             imgs = false;
-                            console.log("The div does not contain any img elements");
                         }
                         if (imgs) {
                             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
@@ -1372,7 +1420,6 @@
                             console.log("Span is empty");
                         } else {
                             currentMeter = false;
-                            console.log("Span is not empty");
                         }
 
                         // Check if the div contains at least one img element
@@ -1380,7 +1427,6 @@
                             console.log("The div contains at least one img element");
                         } else {
                             imgs = false;
-                            console.log("The div does not contain any img elements");
                         }
                         if (imgs && currentMeter && allChecked) {
                             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
@@ -1440,27 +1486,210 @@
         });
     </script>
     <script>
+        var rentValue = 0;
+        var FeesTammValue = 0;
+        var advantagesValueTotal = 0;
+        var AdditionalDriverValue = 0;
+        var PrivateDriverValueTotal = 0;
+        var ChoicesValueTotal = 0;
+        var AdditionalValue = 0;
+        var AdditionalHoursValueTotal = 0;
+        var AdditionalKMValueTotal = 0;
+        var ContractValue = 0;
+        var ContractValueAfterDiscount = 0;
+        var taxValue = 0;
+        var TotalContract = 0;
+        var ExpensesValue = 0;
+        var compensationValue = 0;
+        var AmountRequired = 0;
+        var somethingIsNotOkay = true;
         function CaculateContractSettelement() {
-            var daysNo = parseInt($("#daysNo").text());
-            var settlementMechanismValue = parseInt($("#Settlement-mechanism").val());
-            var totalDaysNo;
-            if (settlementMechanismValue == 0) {
-                totalDaysNo = daysNo;
+            
+            //Rental Price
+            var rentalPricePerDay = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicDailyRent));
+            rentValue = parseInt(totalDaysNo) * parseFloat(rentalPricePerDay);
+            document.getElementById('RentalValue').textContent = rentValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // FeesTamm
+            var FeesTamm = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicAuthorizationValue));
+            FeesTammValue = parseFloat(FeesTamm);
+            document.getElementById('DelegationValue').textContent = FeesTammValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Advantages
+            var AdvantagesValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.AdvantagesValue));
+            advantagesValueTotal = parseInt(totalDaysNo) * parseFloat(AdvantagesValue);
+            document.getElementById('Features').textContent = advantagesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            //AdditionalDriver
+            var AdditionalDriver = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicAdditionalDriverValue));
+            AdditionalDriverValue = parseFloat(AdditionalDriver);
+            document.getElementById('AdditionalDriver').textContent = AdditionalDriverValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            //PrivateDriver
+            var PrivateDriverValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicPrivateDriverValue));
+            PrivateDriverValueTotal = parseInt(totalDaysNo) * parseFloat(PrivateDriverValue);
+            document.getElementById('PrivateDriver').textContent = PrivateDriverValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Additionals
+            var Additionals = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicAdditionalValue));
+            AdditionalValue = parseFloat(Additionals);
+            document.getElementById('Additionals').textContent = AdditionalValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            //Choices
+            var ChoicesValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.ChoicesValue));
+            ChoicesValueTotal = parseInt(totalDaysNo) * parseFloat(ChoicesValue);
+            document.getElementById('Choices').textContent = ChoicesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Additional Hours Value Total
+            getAdditionalHoursValue();
+
+            // Additional KMs Value Total
+            if (AdditionalKm > 0 && AdditionalKm != null && AdditionalKm.toString() != "" && AdditionalKm!= undefined) {
+                getAdditionalKmValue();
             }
-            else if (settlementMechanismValue == 1) {
-                totalDaysNo = daysNo + 1;
+            //Get ContractValue
+
+            ContractValue = rentValue + FeesTammValue + advantagesValueTotal + AdditionalDriverValue + PrivateDriverValueTotal + AdditionalValue + ChoicesValueTotal + AdditionalHoursValueTotal + AdditionalKMValueTotal;
+            document.getElementById('ContractValue').textContent = ContractValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            // get ContractValueAfterDiscount
+            var discountRate = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicUserDiscountRate));
+            var discountValue = ContractValue * (parseFloat(discountRate) / 100);
+            ContractValueAfterDiscount = ContractValue - discountValue;
+            document.getElementById('ContractValueAfterDiscount').textContent = ContractValueAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // get Tax Value
+            var taxRate = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicTaxRate));
+            taxValue = ContractValueAfterDiscount * (parseFloat(taxRate) / 100);
+            document.getElementById('TaxValue').textContent = taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            // get TotalContract
+            TotalContract = ContractValueAfterDiscount + taxValue;
+            document.getElementById('TotalContract').textContent = TotalContract.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // expenses Value
+            var expensesInput = $("#expensesValue-input").val();
+            if (parseFloat(expensesInput) > 0) {
+                ExpensesValue = parseFloat(expensesInput);
+            } else {
+                ExpensesValue = 0;
             }
-            else if (settlementMechanismValue == 2) {
-                totalDaysNo = daysNo + (1 / 2);
+            document.getElementById('TotalExpenseValue').textContent = ExpensesValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // compensation Value
+            var compensationInput = $("#compensation-input").val();
+            if (parseFloat(compensationInput) > 0) {
+                compensationValue = parseFloat(compensationInput);
+            } else {
+                compensationValue = 0;
             }
-            else {
-                totalDaysNo = daysNo + (1 / 4);
-            }
-            console.log("daysNo", daysNo)
-            console.log("settlementMechanismValue", settlementMechanismValue)
-            console.log("totalDaysNo", totalDaysNo)
+            document.getElementById('TotalCompensationValue').textContent = compensationValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // AmountRequired
+            var previousBalance = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasic5.CrCasRenterLessorAvailableBalance));
+            AmountRequired = TotalContract - parseFloat(previousBalance) + compensationValue - ExpensesValue;
+            document.getElementById('AmountRequired').textContent = AmountRequired.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
         }
+
+        function getAdditionalHoursValue(){
+            // Additional Hours Value Total
+            const TotalFreeHours = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicTotalFreeHours));
+            var AdditionalHourValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicHourValue));
+            var AdditionalHour = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicHourMax));
+            if (AdditionalHour > 0) {
+                if (diff > 0 || (diff === 0 && diffMinutes > 0)) {
+                    AdditionalHoursValueTotal = parseInt(AdditionalHour) * parseFloat(AdditionalHourValue);
+                }
+                else {
+                    var HourAfterFreeHour = diffHours - TotalFreeHours;
+                    console.log("HourAfterFreeHour", HourAfterFreeHour)
+                    console.log("AdditionalHourValue", AdditionalHourValue)
+                    console.log("diffHours", diffHours)
+                    console.log("diffMinutes", diffMinutes)
+                    if (HourAfterFreeHour >= 0 && diffMinutes >0) {
+                        AdditionalHoursValueTotal = (parseInt(HourAfterFreeHour) * parseFloat(AdditionalHourValue)) + ( ((parseFloat(AdditionalHourValue) * parseInt(diffMinutes)) / 60) );
+                        console.log("AdditionalHoursValueTotal", AdditionalHoursValueTotal)
+                    }
+                }
+            }
+            document.getElementById('ExtraHoursValue').textContent = AdditionalHoursValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        function getAdditionalKmValue(){
+            const KMValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicKmValue));
+            AdditionalKMValueTotal = parseInt(AdditionalKm) * parseFloat(KMValue);
+            document.getElementById('ExtraKMsValue').textContent = AdditionalKMValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+    </script>
+    <script>
+
+        function CheckIfCanPayLessThanTotalAmount() {
+            var userAuthAmount = @Html.Raw(Json.Serialize(userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityLessContractValue));
+            var AmountPayed = document.getElementById("AmountPayed").value;
+            if (userAuthAmount == false && TotalAmount > AmountPayed) {
+                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                toastr.error('@localizer["DontHaveAuthPayLessThanTotalAmount"]');
+                $("#AmountPayed").css({ "border": "2px solid red" });    //This For last Check When i submit Form
+                somethingIsNotOkay = false;
+            }
+            else {
+                $("#AmountPayed").css({ "border": "2px solid #faa64d" }); //This For last Check When i submit Form
+                somethingIsNotOkay = true;
+            }
+        }
+        $(document).ready(function () {
+            $("#AmountPayed").focusout(function () {
+                var payed = document.getElementById('AmountPayed').value;
+                CheckIfCanPayLessThanTotalAmount();
+                console.log(somethingIsNotOkay);
+                if (parseFloat(payed) > 0 && somethingIsNotOkay) {
+                    document.getElementById('ContractSettlement_PaymentMethod').disabled = false;
+                    // document.getElementById('ContractSettlement_PaymentMethod').selectedIndex = 0;
+                    document.getElementById('ContractSettlement_SalesPoint').disabled = false;
+                    document.getElementById('ContractSettlement_SalesPoint').selectedIndex = 0;
+                } else {
+                    document.getElementById('ContractSettlement_PaymentMethod').disabled = true;
+                    document.getElementById('ContractSettlement_PaymentMethod').selectedIndex = 0;
+                    document.getElementById('ContractSettlement_SalesPoint').disabled = true;
+                    document.getElementById('ContractSettlement_SalesPoint').selectedIndex = 0;
+                    $("#ContractSettlement_SalesPoint").empty();
+                }
+            })
+        });
+        $(document).ready(function () {
+            $("#ContractSettlement_PaymentMethod").change(function () {
+                var PaymentMethod = $("#ContractSettlement_PaymentMethod").val();
+                var BranchCode = @Html.Raw(Json.Serialize(Model?.SelectedBranch));
+                console.log(PaymentMethod);
+                console.log("BranchCode",BranchCode);
+
+                $.get("/BS/ContractSettlement/GetSalesPoint", { PaymentMethod: PaymentMethod, BranchCode: BranchCode }, function (data) {
+                    $("#ContractSettlement_SalesPoint").empty();
+                    console.log(data);
+                    if (data.type == "1" && data.salesPoints != null) {
+                        $.each(data.salesPoints, function (index, row) {
+                            if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                                $("#ContractSettlement_SalesPoint").append("<option  value= '" + row.crCasAccountSalesPointCode + "'>" + row.crCasAccountSalesPointEnName + "</option>")
+                            }
+                            else {
+                                $("#ContractSettlement_SalesPoint").append("<option class='text-right' value= '" + row.crCasAccountSalesPointCode + "'>" + row.crCasAccountSalesPointArName + "</option>")
+                            }
+                        });
+                    }
+                    else if (data.type == "2" && data.accountBank != null) {
+                        $.each(data.accountBank, function (index, row) {
+                            if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+
+                                $("#ContractSettlement_SalesPoint").append("<option value= '" + row.crCasAccountBankCode + "'>" + row.crCasAccountBankEnName + "</option>")
+                            }
+                            else {
+                                $("#ContractSettlement_SalesPoint").append("<option class='text-right' value= '" + row.crCasAccountBankCode + "'>" + row.crCasAccountBankArName + "</option>")
+                            }
+                        });
+                    }
+
+                });
+            })
+        });
+
     </script>
     <script>
         function handleAmountPayed(input) {

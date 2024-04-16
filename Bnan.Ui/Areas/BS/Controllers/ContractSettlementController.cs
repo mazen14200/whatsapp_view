@@ -5,6 +5,7 @@ using Bnan.Core.Models;
 using Bnan.Inferastructure.Extensions;
 using Bnan.Ui.Areas.Base.Controllers;
 using Bnan.Ui.ViewModels.BS;
+using Bnan.Ui.ViewModels.CAS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -122,7 +123,10 @@ namespace Bnan.Ui.Areas.BS.Controllers
             contractMap.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
             contractMap.AuthType = authContract.CrCasRenterContractAuthorizationType;
             contractMap.CasRenterPreviousBalance = contract.CrCasRenterContractBasic5?.CrCasRenterLessorAvailableBalance;
-            contractMap.AdvantagesValue = (_unitOfWork.CrCasRenterContractAdvantage.FindAll(x => x.CrCasRenterContractAdvantagesNo == contract.CrCasRenterContractBasicNo).Sum(x=>x.CrCasContractAdvantagesValue)*contractMap.CrCasRenterContractBasicExpectedRentalDays)?.ToString("N2", CultureInfo.InvariantCulture);
+            var advantages = _unitOfWork.CrCasRenterContractAdvantage.FindAll(x => x.CrCasRenterContractAdvantagesNo == contract.CrCasRenterContractBasicNo).Sum(x => x.CrCasContractAdvantagesValue);
+            contractMap.AdvantagesValue = advantages?.ToString("N2", CultureInfo.InvariantCulture);
+            contractMap.AdvantagesValueTotal = (advantages*contract.CrCasRenterContractBasicExpectedRentalDays)?.ToString("N2", CultureInfo.InvariantCulture);
+            contractMap.ChoicesValue = _unitOfWork.CrCasRenterContractChoice.FindAll(x => x.CrCasRenterContractChoiceNo == contract.CrCasRenterContractBasicNo).Sum(x=>x.CrCasContractChoiceValue)?.ToString("N2", CultureInfo.InvariantCulture);
             bsLayoutVM.ContractSettlement = contractMap;
             bsLayoutVM.SalesPoint = SalesPoint;
             bsLayoutVM.PaymentMethods = PaymentMethod;
@@ -133,6 +137,80 @@ namespace Bnan.Ui.Areas.BS.Controllers
         public async Task<IActionResult> Create(ContractSettlementVM model)
         {
             return View(model);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetSalesPoint(string PaymentMethod, string BranchCode)
+        {
+            var userLogin = await _userManager.GetUserAsync(User);
+            var lessorCode = userLogin.CrMasUserInformationLessor;
+            List<SalesPointsVM> SalesPointVMList = new List<SalesPointsVM>();
+            List<AccountBankVM> AccountBankVMList = new List<AccountBankVM>();
+            var Type = "0";
+            if (PaymentMethod != null)
+            {
+                if (PaymentMethod == "10")
+                {
+                    var SalesPoints = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == lessorCode && x.CrCasAccountSalesPointBrn == BranchCode &&
+                                                                           x.CrCasAccountSalesPointStatus == Status.Active && x.CrCasAccountSalesPointBankStatus == Status.Active &&
+                                                                           x.CrCasAccountSalesPointBranchStatus == Status.Active && x.CrCasAccountSalesPointBank == "00").ToList();
+                    Type = "1";
+
+                    foreach (var item in SalesPoints)
+                    {
+                        SalesPointsVM SalesPointVM = new SalesPointsVM
+                        {
+                            CrCasAccountSalesPointNo = item.CrCasAccountSalesPointNo,
+                            CrCasAccountSalesPointCode = item.CrCasAccountSalesPointCode,
+                            CrCasAccountSalesPointArName = item.CrCasAccountSalesPointArName,
+                            CrCasAccountSalesPointEnName = item.CrCasAccountSalesPointEnName,
+                            CrCasAccountSalesPointBank = item.CrCasAccountSalesPointBank,
+                            CrCasAccountSalesPointAccountBank = item.CrCasAccountSalesPointAccountBank
+                        };
+                        SalesPointVMList.Add(SalesPointVM);
+                    }
+                }
+                else if (PaymentMethod == "20" || PaymentMethod == "22" || PaymentMethod == "21" || PaymentMethod == "23")
+                {
+                    var SalesPoints = _unitOfWork.CrCasAccountSalesPoint.FindAll(x => x.CrCasAccountSalesPointLessor == lessorCode && x.CrCasAccountSalesPointBrn == BranchCode &&
+                                                                           x.CrCasAccountSalesPointStatus == Status.Active && x.CrCasAccountSalesPointBankStatus == Status.Active &&
+                                                                           x.CrCasAccountSalesPointBranchStatus == Status.Active && x.CrCasAccountSalesPointBank != "00").ToList();
+                    Type = "1";
+                    foreach (var item in SalesPoints)
+                    {
+                        SalesPointsVM SalesPointVM = new SalesPointsVM
+                        {
+                            CrCasAccountSalesPointNo = item.CrCasAccountSalesPointNo,
+                            CrCasAccountSalesPointCode = item.CrCasAccountSalesPointCode,
+                            CrCasAccountSalesPointArName = item.CrCasAccountSalesPointArName,
+                            CrCasAccountSalesPointEnName = item.CrCasAccountSalesPointEnName,
+                            CrCasAccountSalesPointBank = item.CrCasAccountSalesPointBank,
+                            CrCasAccountSalesPointAccountBank = item.CrCasAccountSalesPointAccountBank
+                        };
+                        SalesPointVMList.Add(SalesPointVM);
+                    }
+                }
+                else
+                {
+                    var AccountBanks = _unitOfWork.CrCasAccountBank.FindAll(x => x.CrCasAccountBankLessor == lessorCode && x.CrCasAccountBankStatus == Status.Active &&
+                                                                         x.CrCasAccountBankNo != "00").ToList();
+                    Type = "2";
+                    foreach (var item in AccountBanks)
+                    {
+                        AccountBankVM AccountBankVM = new AccountBankVM
+                        {
+                            CrCasAccountBankNo = item.CrCasAccountBankNo,
+                            CrCasAccountBankArName = item.CrCasAccountBankArName,
+                            CrCasAccountBankEnName = item.CrCasAccountBankEnName,
+                            CrCasAccountBankCode = item.CrCasAccountBankCode,
+                        };
+                        AccountBankVMList.Add(AccountBankVM);
+                    }
+                }
+                return Json(new { SalesPoints = SalesPointVMList, AccountBank = AccountBankVMList, Type = Type });
+            }
+            return Json(null);
         }
 
     }
