@@ -34,6 +34,11 @@
     .selected {
         border: 3px solid #39629C; /* Add your desired border style for selected rows */
     }
+
+    .form-control[readonly] {
+        background-color: #ffffff !important;
+        opacity: 1;
+    }
 </style>
 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
 {
@@ -4889,7 +4894,7 @@ else
 
                     }
                     else if ("@requestCulture?.RequestCulture.UICulture.Name" == "ar-EG" && InputPdf == "PdfSaveAr") {
-                        if(InputPdf == "PdfSaveAr"){
+                        if (InputPdf == "PdfSaveAr") {
                             const formData = new FormData();
                             formData.append("number", phoneNumber); // Append the recipient's phone number
                             formData.append("message", message); // Append the message
@@ -4920,8 +4925,8 @@ else
                                     console.log("SendPDFError", error);
                                 });
                         }
-                        }
-                        
+                    }
+
 
                 };
 

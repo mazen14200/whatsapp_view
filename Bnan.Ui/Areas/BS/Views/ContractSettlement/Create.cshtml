@@ -152,7 +152,13 @@
                                                                 <p> : @localizer["FreeAdditionalHours"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicTotalFreeHours</p>
+                                                                <p>
+                                                                    @if (Model.ContractSettlement.CrCasRenterContractBasicUserFreeHours > 0)
+                                                                    {
+                                                                        <span>@Model.ContractSettlement.CrCasRenterContractBasicUserFreeHours + </span>
+                                                                    }
+                                                                    @Model.ContractSettlement.CrCasRenterContractBasicFreeHours
+                                                                </p>
                                                             </div>
                                                         </div>
                                                         <div class="row dropdown-content-row">
@@ -161,6 +167,20 @@
                                                             </div>
                                                             <div class="col personal-data">
                                                                 <p>@Model.ContractSettlement.CrCasRenterContractBasicHourMax</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : @localizer["DailyFreeKm"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>
+                                                                    @if (Model.ContractSettlement.CrCasRenterContractBasicDailyFreeKmUser > 0)
+                                                                    {
+                                                                        <span>@Model.ContractSettlement.CrCasRenterContractBasicDailyFreeKmUser + </span>
+                                                                    }
+                                                                    @Model.ContractSettlement.CrCasRenterContractBasicDailyFreeKm
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -953,16 +973,16 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p>@localizer["AmountRequired"]</p></div>
+                                                    <div class="col-auto "><p id="RenterMoneyText">@localizer["AmountRequired"]</p></div>
                                                     <div class="col-auto personal-data p-0"><p id="AmountRequired">0.00</p></div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-auto">
-                                                <div class="data-col-Settl">
-                                                    <div class="col-auto "><p id="RenterMoneyText">@localizer["RenterMoneyText1"]</p></div>
-                                                    <div class="col-auto personal-data p-0"><p id="RenterMoneyValue">0.00</p></div>
-                                                </div>
+                                            @* <div class="col-md-auto">
+                                            <div class="data-col-Settl">
+                                            <div class="col-auto "><p id="RenterMoneyText">@localizer["RenterMoneyText1"]</p></div>
+                                            <div class="col-auto personal-data p-0"><p id="RenterMoneyValue">0.00</p></div>
                                             </div>
+                                            </div> *@
                                         </div>
                                         <div class="row data-col-Settl g-3">
                                             <div class="col-md-auto col-lg-4 data-col-Settl">
@@ -1202,7 +1222,7 @@
                     $("#diffHours").text("00");
                     $("#diffMinutes").text("00");
                 }
-                
+
                 console.log("Difference in days:", diffDays);
                 console.log("Remaining difference in hours:", diffHours);
                 console.log("Remaining difference in minutes:", diffMinutes);
@@ -1239,11 +1259,20 @@
             console.log("compensationArray", compensationArray);
         }
 
+        function clearPaymentData() {
+            $("#AmountPayed").val('');
+            document.getElementById('ContractSettlement_PaymentMethod').disabled = true;
+            document.getElementById('ContractSettlement_PaymentMethod').selectedIndex = 0;
+            document.getElementById('ContractSettlement_SalesPoint').disabled = true;
+            document.getElementById('ContractSettlement_SalesPoint').selectedIndex = 0;
+            $("#ContractSettlement_SalesPoint").empty();
+        }
 
 
 
 
-        function CaculateTotalDaysNo(){
+
+        function CaculateTotalDaysNo() {
             var DaysNo = parseInt($("#daysNo").text());
             var settlementMechanismValue = parseInt($("#Settlement-mechanism").val());
             console.log("settlementMechanismValue", settlementMechanismValue)
@@ -1354,7 +1383,7 @@
                         $("#ExpensesError").text('');
                         var imgs = true;
                         // Check if the div contains at least one img element
-                        if ($('.upload__img-box img').length > 0) {
+                        if ($('.upload__img-box img.close1').length > 0) {
                             console.log("The div contains at least one img element");
                         } else {
                             imgs = false;
@@ -1432,6 +1461,7 @@
                             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                             next_fs.style.display = "flex";
                             current_fs.style.display = "none";
+                            clearPaymentData();
                             CaculateContractSettelement();
                         }
                         else {
@@ -1504,10 +1534,10 @@
         var AmountRequired = 0;
         var somethingIsNotOkay = true;
         function CaculateContractSettelement() {
-            
+
             //Rental Price
             var rentalPricePerDay = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicDailyRent));
-            rentValue = parseInt(totalDaysNo) * parseFloat(rentalPricePerDay);
+            rentValue = totalDaysNo * parseFloat(rentalPricePerDay);
             document.getElementById('RentalValue').textContent = rentValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
             // FeesTamm
@@ -1517,7 +1547,7 @@
 
             // Advantages
             var AdvantagesValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.AdvantagesValue));
-            advantagesValueTotal = parseInt(totalDaysNo) * parseFloat(AdvantagesValue);
+            advantagesValueTotal = totalDaysNo * parseFloat(AdvantagesValue);
             document.getElementById('Features').textContent = advantagesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
             //AdditionalDriver
@@ -1527,7 +1557,7 @@
 
             //PrivateDriver
             var PrivateDriverValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicPrivateDriverValue));
-            PrivateDriverValueTotal = parseInt(totalDaysNo) * parseFloat(PrivateDriverValue);
+            PrivateDriverValueTotal = totalDaysNo * parseFloat(PrivateDriverValue);
             document.getElementById('PrivateDriver').textContent = PrivateDriverValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
             // Additionals
@@ -1537,14 +1567,14 @@
 
             //Choices
             var ChoicesValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.ChoicesValue));
-            ChoicesValueTotal = parseInt(totalDaysNo) * parseFloat(ChoicesValue);
+            ChoicesValueTotal = totalDaysNo * parseFloat(ChoicesValue);
             document.getElementById('Choices').textContent = ChoicesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
             // Additional Hours Value Total
             getAdditionalHoursValue();
 
             // Additional KMs Value Total
-            if (AdditionalKm > 0 && AdditionalKm != null && AdditionalKm.toString() != "" && AdditionalKm!= undefined) {
+            if (AdditionalKm > 0 && AdditionalKm != null && AdditionalKm.toString() != "" && AdditionalKm != undefined) {
                 getAdditionalKmValue();
             }
             //Get ContractValue
@@ -1586,11 +1616,17 @@
             // AmountRequired
             var previousBalance = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasic5.CrCasRenterLessorAvailableBalance));
             AmountRequired = TotalContract - parseFloat(previousBalance) + compensationValue - ExpensesValue;
-            document.getElementById('AmountRequired').textContent = AmountRequired.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if (AmountRequired < 0) {
+                document.getElementById('RenterMoneyText').textContent = '@localizer["RenterMoneyText2"]'
+            }
+            else if (AmountRequired > 0) {
+                document.getElementById('RenterMoneyText').textContent = '@localizer["RenterMoneyText1"]'
+            }
+            document.getElementById('AmountRequired').textContent = Math.abs(AmountRequired).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
         }
 
-        function getAdditionalHoursValue(){
+        function getAdditionalHoursValue() {
             // Additional Hours Value Total
             const TotalFreeHours = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicTotalFreeHours));
             var AdditionalHourValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicHourValue));
@@ -1605,15 +1641,15 @@
                     console.log("AdditionalHourValue", AdditionalHourValue)
                     console.log("diffHours", diffHours)
                     console.log("diffMinutes", diffMinutes)
-                    if (HourAfterFreeHour >= 0 && diffMinutes >0) {
-                        AdditionalHoursValueTotal = (parseInt(HourAfterFreeHour) * parseFloat(AdditionalHourValue)) + ( ((parseFloat(AdditionalHourValue) * parseInt(diffMinutes)) / 60) );
+                    if (HourAfterFreeHour >= 0 && diffMinutes > 0) {
+                        AdditionalHoursValueTotal = (parseInt(HourAfterFreeHour) * parseFloat(AdditionalHourValue)) + (((parseFloat(AdditionalHourValue) * parseInt(diffMinutes)) / 60));
                         console.log("AdditionalHoursValueTotal", AdditionalHoursValueTotal)
                     }
                 }
             }
             document.getElementById('ExtraHoursValue').textContent = AdditionalHoursValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
-        function getAdditionalKmValue(){
+        function getAdditionalKmValue() {
             const KMValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicKmValue));
             AdditionalKMValueTotal = parseInt(AdditionalKm) * parseFloat(KMValue);
             document.getElementById('ExtraKMsValue').textContent = AdditionalKMValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -1622,11 +1658,15 @@
     <script>
 
         function CheckIfCanPayLessThanTotalAmount() {
-            var userAuthAmount = @Html.Raw(Json.Serialize(userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityLessContractValue));
+
+            var userCashBranchAmount = @Html.Raw(Json.Serialize(userInfo?.CrMasUserBranchValidities?.FirstOrDefault(x => x.CrMasUserBranchValidityBranch == Model?.SelectedBranch).CrMasUserBranchValidityBranchCashAvailable));
             var AmountPayed = document.getElementById("AmountPayed").value;
-            if (userAuthAmount == false && TotalAmount > AmountPayed) {
+            console.log("userCashBranchAmount", userCashBranchAmount)
+            console.log("AmountPayed", AmountPayed)
+            console.log("AmountRequired", AmountRequired)
+            if (parseFloat(userCashBranchAmount) < parseFloat(AmountPayed)) {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                toastr.error('@localizer["DontHaveAuthPayLessThanTotalAmount"]');
+                toastr.error('@localizer["UserDontHaveCashToPay"]');
                 $("#AmountPayed").css({ "border": "2px solid red" });    //This For last Check When i submit Form
                 somethingIsNotOkay = false;
             }
@@ -1638,14 +1678,23 @@
         $(document).ready(function () {
             $("#AmountPayed").focusout(function () {
                 var payed = document.getElementById('AmountPayed').value;
-                CheckIfCanPayLessThanTotalAmount();
-                console.log(somethingIsNotOkay);
-                if (parseFloat(payed) > 0 && somethingIsNotOkay) {
+                var BranchCode = @Html.Raw(Json.Serialize(Model?.SelectedBranch));
+                if (AmountRequired < 0) {
+                    CheckIfCanPayLessThanTotalAmount();
+                }
+                if (AmountRequired > 0 && parseFloat(payed) > 0 && somethingIsNotOkay) {
                     document.getElementById('ContractSettlement_PaymentMethod').disabled = false;
                     // document.getElementById('ContractSettlement_PaymentMethod').selectedIndex = 0;
                     document.getElementById('ContractSettlement_SalesPoint').disabled = false;
                     document.getElementById('ContractSettlement_SalesPoint').selectedIndex = 0;
-                } else {
+                }
+                else if (AmountRequired < 0 && parseFloat(payed) > 0 && somethingIsNotOkay) {
+                    CheckIfCanPayLessThanTotalAmount();
+                    getSalesPoint("10", BranchCode);
+                    document.getElementById('ContractSettlement_PaymentMethod').disabled = true;
+                    document.getElementById('ContractSettlement_PaymentMethod').value = "10";
+                }
+                else {
                     document.getElementById('ContractSettlement_PaymentMethod').disabled = true;
                     document.getElementById('ContractSettlement_PaymentMethod').selectedIndex = 0;
                     document.getElementById('ContractSettlement_SalesPoint').disabled = true;
@@ -1659,37 +1708,38 @@
                 var PaymentMethod = $("#ContractSettlement_PaymentMethod").val();
                 var BranchCode = @Html.Raw(Json.Serialize(Model?.SelectedBranch));
                 console.log(PaymentMethod);
-                console.log("BranchCode",BranchCode);
-
-                $.get("/BS/ContractSettlement/GetSalesPoint", { PaymentMethod: PaymentMethod, BranchCode: BranchCode }, function (data) {
-                    $("#ContractSettlement_SalesPoint").empty();
-                    console.log(data);
-                    if (data.type == "1" && data.salesPoints != null) {
-                        $.each(data.salesPoints, function (index, row) {
-                            if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
-                                $("#ContractSettlement_SalesPoint").append("<option  value= '" + row.crCasAccountSalesPointCode + "'>" + row.crCasAccountSalesPointEnName + "</option>")
-                            }
-                            else {
-                                $("#ContractSettlement_SalesPoint").append("<option class='text-right' value= '" + row.crCasAccountSalesPointCode + "'>" + row.crCasAccountSalesPointArName + "</option>")
-                            }
-                        });
-                    }
-                    else if (data.type == "2" && data.accountBank != null) {
-                        $.each(data.accountBank, function (index, row) {
-                            if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
-
-                                $("#ContractSettlement_SalesPoint").append("<option value= '" + row.crCasAccountBankCode + "'>" + row.crCasAccountBankEnName + "</option>")
-                            }
-                            else {
-                                $("#ContractSettlement_SalesPoint").append("<option class='text-right' value= '" + row.crCasAccountBankCode + "'>" + row.crCasAccountBankArName + "</option>")
-                            }
-                        });
-                    }
-
-                });
+                console.log("BranchCode", BranchCode);
+                getSalesPoint(PaymentMethod, BranchCode);
             })
         });
+        function getSalesPoint(PaymentMethod, BranchCode) {
+            $.get("/BS/ContractSettlement/GetSalesPoint", { PaymentMethod: PaymentMethod, BranchCode: BranchCode }, function (data) {
+                $("#ContractSettlement_SalesPoint").empty();
+                console.log(data);
+                if (data.type == "1" && data.salesPoints != null) {
+                    $.each(data.salesPoints, function (index, row) {
+                        if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                            $("#ContractSettlement_SalesPoint").append("<option  value= '" + row.crCasAccountSalesPointCode + "'>" + row.crCasAccountSalesPointEnName + "</option>")
+                        }
+                        else {
+                            $("#ContractSettlement_SalesPoint").append("<option class='text-right' value= '" + row.crCasAccountSalesPointCode + "'>" + row.crCasAccountSalesPointArName + "</option>")
+                        }
+                    });
+                }
+                else if (data.type == "2" && data.accountBank != null) {
+                    $.each(data.accountBank, function (index, row) {
+                        if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
 
+                            $("#ContractSettlement_SalesPoint").append("<option value= '" + row.crCasAccountBankCode + "'>" + row.crCasAccountBankEnName + "</option>")
+                        }
+                        else {
+                            $("#ContractSettlement_SalesPoint").append("<option class='text-right' value= '" + row.crCasAccountBankCode + "'>" + row.crCasAccountBankArName + "</option>")
+                        }
+                    });
+                }
+
+            });
+        }
     </script>
     <script>
         function handleAmountPayed(input) {

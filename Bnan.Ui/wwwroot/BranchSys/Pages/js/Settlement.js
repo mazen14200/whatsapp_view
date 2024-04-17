@@ -183,7 +183,7 @@ function ExpensesImgUpload() {
                         $('.upload__img-close1').length +
                         "' data-file='" +
                         f.name +
-                        "' class='img-bg'><div class='upload__img-close1'><img src='/BranchSys/Pages/img/delete.png'></div></div></div>";
+                        "' class='img-bg'><div class='upload__img-close1'><img class='close1' src='/BranchSys/Pages/img/delete.png'></div></div></div>";
                     imgWrap.append(html);
                     ExpensesArray.push({
                         f, url: e.target.result
