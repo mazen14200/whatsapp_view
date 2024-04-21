@@ -93,6 +93,7 @@ namespace Bnan.Core.Models
         public virtual DbSet<CrMasSysProbabilityMembership> CrMasSysProbabilityMemberships { get; set; } = null!;
         public virtual DbSet<CrMasSysProcedure> CrMasSysProcedures { get; set; } = null!;
         public virtual DbSet<CrMasSysProceduresTask> CrMasSysProceduresTasks { get; set; } = null!;
+        public virtual DbSet<CrMasSysQuestionsAnswer> CrMasSysQuestionsAnswers { get; set; } = null!;
         public virtual DbSet<CrMasSysStatus> CrMasSysStatuses { get; set; } = null!;
         public virtual DbSet<CrMasSysSubTask> CrMasSysSubTasks { get; set; } = null!;
         public virtual DbSet<CrMasSysSystem> CrMasSysSystems { get; set; } = null!;
@@ -104,6 +105,7 @@ namespace Bnan.Core.Models
         public virtual DbSet<CrMasUserMessage> CrMasUserMessages { get; set; } = null!;
         public virtual DbSet<CrMasUserProceduresValidation> CrMasUserProceduresValidations { get; set; } = null!;
         public virtual DbSet<CrMasUserSubValidation> CrMasUserSubValidations { get; set; } = null!;
+       
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -126,7 +128,6 @@ namespace Bnan.Core.Models
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
             modelBuilder.Entity<CrMasUserInformation>().Ignore(x => x.Email).Ignore(x => x.EmailConfirmed)
                 .Ignore(x => x.NormalizedEmail).Ignore(x => x.PhoneNumber).Ignore(x => x.PhoneNumberConfirmed);
-
             modelBuilder.Entity<CrCasAccountBank>(entity =>
             {
                 entity.HasKey(e => e.CrCasAccountBankCode);
@@ -6215,6 +6216,49 @@ namespace Bnan.Core.Models
                     .HasConstraintName("FK_CR_Mas_Sys_Procedures_Tasks_CR_Mas_Sys_System");
             });
 
+            modelBuilder.Entity<CrMasSysQuestionsAnswer>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("CR_Mas_Sys_Questions_Answer");
+
+                entity.Property(e => e.CrMasSysQuestionsAnswerArAnswer).HasColumnName("CR_Mas_Sys_Questions_Answer_Ar_Answer");
+
+                entity.Property(e => e.CrMasSysQuestionsAnswerArQuestions).HasColumnName("CR_Mas_Sys_Questions_Answer_Ar_Questions");
+
+                entity.Property(e => e.CrMasSysQuestionsAnswerEnAnswer).HasColumnName("CR_Mas_Sys_Questions_Answer_En_Answer");
+
+                entity.Property(e => e.CrMasSysQuestionsAnswerEnQuestions).HasColumnName("CR_Mas_Sys_Questions_Answer_En_Questions");
+
+                entity.Property(e => e.CrMasSysQuestionsAnswerMainTask)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Mas_Sys_Questions_Answer_Main_Task")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrMasSysQuestionsAnswerNo)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Mas_Sys_Questions_Answer_No")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrMasSysQuestionsAnswerReasons)
+                    .HasMaxLength(100)
+                    .HasColumnName("CR_Mas_Sys_Questions_Answer_Reasons");
+
+                entity.Property(e => e.CrMasSysQuestionsAnswerStatus)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Mas_Sys_Questions_Answer_Status")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CrMasSysQuestionsAnswerSystem)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CR_Mas_Sys_Questions_Answer_System")
+                    .IsFixedLength();
+            });
+
             modelBuilder.Entity<CrMasSysStatus>(entity =>
             {
                 entity.HasKey(e => e.CrMasSysStatusCode);
@@ -6526,7 +6570,7 @@ namespace Bnan.Core.Models
 
                 entity.HasIndex(e => e.CrMasUserInformationLessor, "IX_CR_Mas_User_Information_CR_Mas_User_Information_Lessor");
 
-               
+              
                 entity.Property(e => e.CrMasUserInformationCode)
                     .HasMaxLength(10)
                     .IsUnicode(false)
@@ -6663,6 +6707,8 @@ namespace Bnan.Core.Models
                     .HasColumnType("decimal(13, 2)")
                     .HasColumnName("CR_Mas_User_Information_Total_Balance")
                     .HasDefaultValueSql("((0))");
+
+               
 
                 entity.HasOne(d => d.CrMasUserInformationLessorNavigation)
                     .WithMany(p => p.CrMasUserInformations)
@@ -7022,6 +7068,7 @@ namespace Bnan.Core.Models
                     .HasConstraintName("FK_CR_Mas_User_Sub_Validation_CR_Mas_User_Information");
             });
 
+            
             OnModelCreatingPartial(modelBuilder);
         }
 

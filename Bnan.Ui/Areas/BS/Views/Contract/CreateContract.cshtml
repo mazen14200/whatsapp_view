@@ -1356,11 +1356,12 @@ else
                                                             {
                                                                 @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
                                                                 {
-                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
+                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode" data-ar="@payment.CrMasSupAccountPaymentMethodArName" data-en="@payment.CrMasSupAccountPaymentMethodEnName" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
+
                                                                 }
                                                                 else
                                                                 {
-                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode">@payment.CrMasSupAccountPaymentMethodEnName</option>
+                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode" data-ar="@payment.CrMasSupAccountPaymentMethodArName" data-en="@payment.CrMasSupAccountPaymentMethodEnName">@payment.CrMasSupAccountPaymentMethodEnName</option>
                                                                 }
                                                             }
                                                         </select>
@@ -4295,6 +4296,7 @@ else
             var selectedOption = selectElement.options[selectElement.selectedIndex];
             // Get the text of the selected option
             const selectedText = selectedOption.textContent || selectedOption.innerText;
+            var selectedArabicName = selectedOption.dataset.ar;
             //get Data Director lessor and branch and get renter and user
             var userName = decodeHTMLEntities("@user.CrMasUserInformationArName");
             var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorArName");
@@ -4350,7 +4352,7 @@ else
                 ctx.fillText(taxText, canvas.width - 367, 2573);
                 ctx.fillText(AmountRequired, canvas.width - 360, 2660);
                 ctx.fillText(AmountPayed, canvas.width - 360, 2750);
-                ctx.fillText(selectedText, canvas.width - 360, 2840);
+                ctx.fillText(selectedArabicName, canvas.width - 360, 2840);
                 ctx.fillText(reasonPayment, canvas.width - 360, 2930);
                 ctx.font = "bold 35px serif";
                 //Date and contract no
@@ -4556,6 +4558,7 @@ else
             var selectedOption = selectElement.options[selectElement.selectedIndex];
             // Get the text of the selected option
             const selectedText = selectedOption.textContent || selectedOption.innerText;
+            var selectedEnglishName = selectedOption.dataset.en;
             //get Data Director lessor and branch and get renter and user
             var userName = decodeHTMLEntities("@user.CrMasUserInformationEnName");
             var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorEnName");
@@ -4611,7 +4614,7 @@ else
                 ctx.fillText(taxText, canvas.width - 2180, 2573);
                 ctx.fillText(AmountRequired, canvas.width - 2020, 2660);
                 ctx.fillText(AmountPayed, canvas.width - 2100, 2750);
-                ctx.fillText(selectedText, canvas.width - 2010, 2840);
+                ctx.fillText(selectedEnglishName, canvas.width - 2010, 2840);
                 ctx.fillText(reasonPayment, canvas.width - 2170, 2920);
                 ctx.font = "bold 35px serif";
                 //Date and contract no
@@ -4753,10 +4756,11 @@ else
 
 
                 // director and renter and user
-                ctx.fillText(directorOfLessor, canvas.width - 2150, 3050);
-                ctx.fillText(userName, canvas.width - 1110, 3050);
-                ctx.fillText(directorOfBranch, canvas.width - 1150, 3180);
-                ctx.drawImage(signatureImg, canvas.width - 2200, 3125, 200, 100);
+                ctx.fillText(directorOfLessor, canvas.width - 1980, 3050);
+                ctx.fillText(directorOfBranch, canvas.width - 2020, 3180);
+
+                ctx.fillText(userName, canvas.width - 1275, 3050);
+                ctx.drawImage(signatureImg, canvas.width - 1250, 3125, 200, 100);
                 canvas.toBlob(async function (blob) {
                     formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
                     var message = `Dear / ${RenterName}, you can review the invoice by downloading the attached file.`
