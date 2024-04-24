@@ -16,6 +16,7 @@
       .Include(x => x.CrMasUserContractValidity)
       .Include(l => l.CrMasUserInformationLessorNavigation)
       .FirstOrDefaultAsync(l => l.UserName == user.UserName);
+    var lessorInfo = await userManager.Users.Include(l => l.CrMasUserInformationLessorNavigation).ThenInclude(l => l.CrMasLessorImage).FirstOrDefaultAsync(x => x.UserName == user.UserName);
 }
 <link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
 @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
@@ -52,6 +53,23 @@
                         <div class="col-md-11 mx-0 h-100">
 
                             <form id="SettlementForm" asp-area="BS" asp-controller="ContractSettlement" asp-action="Create" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                                <input hidden asp-for="ContractSettlement.CrCasRenterContractBasicNo" />
+                                <input hidden asp-for="SelectedBranch" />
+                                <input hidden asp-for="ContractSettlement.ActualDaysNo" />
+                                <input hidden asp-for="ContractSettlement.AdditionalKm" />
+                                <input hidden asp-for="ContractSettlement.TaxValue" />
+                                <input hidden asp-for="ContractSettlement.DiscountValue" />
+                                <input hidden asp-for="ContractSettlement.ContractValueAfterDiscount" />
+                                <input hidden asp-for="ContractSettlement.TotalContract" />
+                                <input hidden asp-for="ContractSettlement.ContractValue" />
+                                <input hidden asp-for="ContractSettlement.MaxHours" />
+                                <input hidden asp-for="ContractSettlement.MaxMinutes" />
+                                <input hidden asp-for="ContractSettlement.ExtraHoursValue" />
+                                <input hidden asp-for="ContractSettlement.ChoicesValueTotal" />
+                                <input hidden asp-for="ContractSettlement.PrivateDriverValueTotal" />
+                                <input hidden asp-for="ContractSettlement.PreviousBalance" />
+                                <input hidden asp-for="ContractSettlement.AmountRequired" />
+                                <input hidden id="language" name="language" />
                                 <div class=" ">
                                     <!-- progressbar -->
                                     <ul id="progressbar">
@@ -1047,7 +1065,7 @@
                                                 </div>
                                                 <div class="col-auto ">
                                                     <div class="offset">
-                                                        <select class="form-select form-select-last" asp-for="ContractSettlement.SalesPoint" required>
+                                                        <select class="form-select form-select-last " style="width: 250px" asp-for="ContractSettlement.SalesPoint" required>
                                                         </select>
                                                         <div class="row requird-field-row-last">
                                                             <span class="requird-field" id="requird_field_SalesPoint" asp-validation-for="@Model.ContractSettlement.SalesPoint"></span>
@@ -1092,6 +1110,18 @@
             </div>
         </div>
     </section>
+    <div class="main" style="display:none">
+        <div class="container1">
+            <div>   <img src="@Url.Content(lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo)" class="logo"></div>
+            <br>
+            <div class="container2">
+                <div class="dash uno"></div>
+                <div class="dash dos"></div>
+                <div class="dash tres"></div>
+                <div class="dash cuatro"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -1231,7 +1261,6 @@
             }
 
             document.getElementById("contract_real_endTime").addEventListener("change", calculateDifference);
-
             // Call calculateDifference function when the page loads
             calculateDifference();
         });
@@ -1297,6 +1326,7 @@
                 }
             }
             console.log("totalDaysNo", totalDaysNo)
+            $("#ContractSettlement_ActualDaysNo").val(totalDaysNo);
         }
 
         var AdditionalKm = 0;
@@ -1316,8 +1346,11 @@
 
                 if (AdditionalKm <= 0) {
                     $("#AdditionalKM").text("0");
+                    AdditionalKm = 0;
+                    console.log("Additional-----", AdditionalKm)
                 } else {
                     $("#AdditionalKM").text(AdditionalKm.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+                    console.log("Additional+++++", AdditionalKm)
                 }
                 $("#Error_CurrentMeter").text("");
             }
@@ -1327,6 +1360,7 @@
         CurrentMeterInput.on("focusout", function () {
             var enteredValue = parseFloat($(this).val()) || 0;
             calculateAdditionalKM(enteredValue);
+            $("#ContractSettlement_AdditionalKm").val(AdditionalKm);
         });
     </script>
     <script>
@@ -1559,6 +1593,7 @@
             var PrivateDriverValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicPrivateDriverValue));
             PrivateDriverValueTotal = totalDaysNo * parseFloat(PrivateDriverValue);
             document.getElementById('PrivateDriver').textContent = PrivateDriverValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#ContractSettlement_PrivateDriverValueTotal").val(PrivateDriverValueTotal);
 
             // Additionals
             var Additionals = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicAdditionalValue));
@@ -1569,30 +1604,40 @@
             var ChoicesValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.ChoicesValue));
             ChoicesValueTotal = totalDaysNo * parseFloat(ChoicesValue);
             document.getElementById('Choices').textContent = ChoicesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#ContractSettlement_ChoicesValueTotal").val(ChoicesValueTotal);
 
             // Additional Hours Value Total
             getAdditionalHoursValue();
 
             // Additional KMs Value Total
-            if (AdditionalKm > 0 && AdditionalKm != null && AdditionalKm.toString() != "" && AdditionalKm != undefined) {
+            if (AdditionalKm != null && AdditionalKm.toString() != "" && AdditionalKm != undefined) {
                 getAdditionalKmValue();
+                $("#ContractSettlement_AdditionalKm").val(AdditionalKm);
             }
             //Get ContractValue
 
             ContractValue = rentValue + FeesTammValue + advantagesValueTotal + AdditionalDriverValue + PrivateDriverValueTotal + AdditionalValue + ChoicesValueTotal + AdditionalHoursValueTotal + AdditionalKMValueTotal;
             document.getElementById('ContractValue').textContent = ContractValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#ContractSettlement_ContractValue").val(ContractValue);
+
             // get ContractValueAfterDiscount
             var discountRate = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicUserDiscountRate));
             var discountValue = ContractValue * (parseFloat(discountRate) / 100);
+            $("#ContractSettlement_DiscountValue").val(discountValue);
+
             ContractValueAfterDiscount = ContractValue - discountValue;
+            $("#ContractSettlement_ContractValueAfterDiscount").val(ContractValueAfterDiscount);
             document.getElementById('ContractValueAfterDiscount').textContent = ContractValueAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
             // get Tax Value
             var taxRate = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicTaxRate));
             taxValue = ContractValueAfterDiscount * (parseFloat(taxRate) / 100);
+            $("#ContractSettlement_TaxValue").val(taxValue);
+
             document.getElementById('TaxValue').textContent = taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             // get TotalContract
             TotalContract = ContractValueAfterDiscount + taxValue;
+            $("#ContractSettlement_TotalContract").val(TotalContract);
             document.getElementById('TotalContract').textContent = TotalContract.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
             // expenses Value
@@ -1615,17 +1660,17 @@
 
             // AmountRequired
             var previousBalance = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasic5.CrCasRenterLessorAvailableBalance));
-            AmountRequired = TotalContract - parseFloat(previousBalance) + compensationValue - ExpensesValue;
+            var previousTotalContract = @Html.Raw(Json.Serialize(Model?.ContractSettlement.CrCasRenterContractBasicExpectedTotal));
+            AmountRequired = TotalContract - parseFloat(previousTotalContract)  - parseFloat(previousBalance) + compensationValue - ExpensesValue;
             if (AmountRequired < 0) {
                 document.getElementById('RenterMoneyText').textContent = '@localizer["RenterMoneyText2"]'
             }
             else if (AmountRequired > 0) {
                 document.getElementById('RenterMoneyText').textContent = '@localizer["RenterMoneyText1"]'
             }
+            $("#ContractSettlement_AmountRequired").val(AmountRequired);
             document.getElementById('AmountRequired').textContent = Math.abs(AmountRequired).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
         }
-
         function getAdditionalHoursValue() {
             // Additional Hours Value Total
             const TotalFreeHours = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicTotalFreeHours));
@@ -1648,6 +1693,10 @@
                 }
             }
             document.getElementById('ExtraHoursValue').textContent = AdditionalHoursValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#ContractSettlement_MaxHours").val(AdditionalHour);
+            $("#ContractSettlement_MaxMinutes").val(diffMinutes);
+            $("#ContractSettlement_ExtraHoursValue").val(AdditionalHoursValueTotal);
+
         }
         function getAdditionalKmValue() {
             const KMValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicKmValue));
@@ -1658,17 +1707,22 @@
     <script>
 
         function CheckIfCanPayLessThanTotalAmount() {
-
             var userCashBranchAmount = @Html.Raw(Json.Serialize(userInfo?.CrMasUserBranchValidities?.FirstOrDefault(x => x.CrMasUserBranchValidityBranch == Model?.SelectedBranch).CrMasUserBranchValidityBranchCashAvailable));
             var AmountPayed = document.getElementById("AmountPayed").value;
             console.log("userCashBranchAmount", userCashBranchAmount)
             console.log("AmountPayed", AmountPayed)
             console.log("AmountRequired", AmountRequired)
-            if (parseFloat(userCashBranchAmount) < parseFloat(AmountPayed)) {
-                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                toastr.error('@localizer["UserDontHaveCashToPay"]');
-                $("#AmountPayed").css({ "border": "2px solid red" });    //This For last Check When i submit Form
-                somethingIsNotOkay = false;
+            if (AmountRequired < 0) {
+                if (parseFloat(userCashBranchAmount) < parseFloat(AmountPayed)) {
+                    toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                    toastr.error('@localizer["UserDontHaveCashToPay"]');
+                    $("#AmountPayed").css({ "border": "2px solid red" });    //This For last Check When i submit Form
+                    somethingIsNotOkay = false;
+                }
+                else {
+                    $("#AmountPayed").css({ "border": "2px solid #faa64d" }); //This For last Check When i submit Form
+                    somethingIsNotOkay = true;
+                }
             }
             else {
                 $("#AmountPayed").css({ "border": "2px solid #faa64d" }); //This For last Check When i submit Form
@@ -1691,8 +1745,9 @@
                 else if (AmountRequired < 0 && parseFloat(payed) > 0 && somethingIsNotOkay) {
                     CheckIfCanPayLessThanTotalAmount();
                     getSalesPoint("10", BranchCode);
-                    document.getElementById('ContractSettlement_PaymentMethod').disabled = true;
                     document.getElementById('ContractSettlement_PaymentMethod').value = "10";
+                    document.getElementById('ContractSettlement_PaymentMethod').disabled = true;
+
                 }
                 else {
                     document.getElementById('ContractSettlement_PaymentMethod').disabled = true;
@@ -1740,6 +1795,45 @@
 
             });
         }
+    </script>
+    <script>
+        // submit Form
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the form element
+            var form = document.getElementById('SettlementForm');
+
+            // Get the submit button
+            var submitButton = document.getElementById('submitForm');
+
+            // Add a click event listener to the submit button
+            submitButton.addEventListener('click', function (event) {
+                // Prevent the default form submission
+                event.preventDefault();
+
+                // Check if the form is valid and something is not okay
+                if ($("#SettlementForm").valid()) {
+                    // Submit the form
+                    CheckIfCanPayLessThanTotalAmount();
+                    if (somethingIsNotOkay) {
+                        $('.main').show(); // Show the main container with fade effect
+                        if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                            $("#language").val("en");
+                        }
+                        else {
+                            $("#language").val("ar");
+                        }
+                        setTimeout(function () {
+                            document.getElementById('ContractSettlement_PaymentMethod').disabled = false;
+                            document.getElementById('ContractSettlement_SalesPoint').disabled = false;
+                            form.submit();
+                        }, 5000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
+                    }
+                    else {
+                        CheckIfCanPayLessThanTotalAmount();
+                    }
+                }
+            });
+        });
     </script>
     <script>
         function handleAmountPayed(input) {
