@@ -166,6 +166,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             //sidebar Active
             ViewBag.id = "#sidebarAcount";
             ViewBag.no = "4";
+            var titles = await setTitle("205", "2204005", "2");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var (mainTask, subTask, system, currentUser) = await SetTrace("204", "2204005", "2");
 
             var AllTaxOwed = _unitOfWork.CrCasAccountContractTaxOwed.FindAll(x => currentUser.CrMasUserInformationLessor == x.CrCasAccountContractTaxOwedLessor).OrderByDescending(x => x.CrCasAccountContractTaxOwedDate).ToList();

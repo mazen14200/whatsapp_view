@@ -1,0 +1,26 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.CAS;
+@using Microsoft.AspNetCore.Identity;
+@using Newtonsoft.Json;
+﻿@using Microsoft.AspNetCore.Builder;
+@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Http.Features;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using System.Globalization;
+@model CasStatisticLayoutVM
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+
+}
+
+<div class="row" style="width:800px;">
+
+    @*<canvas id="barChart2" aria-label="chart" style="border: 15px solid #969696;"></canvas>*@
+    <canvas id="barChart2" aria-label="chart" style=""></canvas>
+</div>
+
+
+ 

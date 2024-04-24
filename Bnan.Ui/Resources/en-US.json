@@ -627,6 +627,44 @@
   "Edit FinancialTransactionOfEmployee Hint": "this page allows you to Display Details of Financial Transaction Of The Employee",
 
 
+  //CarStatistics --------
+  "CarStatistics Hint": "This page allows you to display Statistics of Cars",
+  "CarStatistics Data": "Statistics of Cars",
+  "Edit CarStatistics Data": "Details of Statistics of Cars",
+  "Edit CarStatistics Hint": "this page allows you to Display Details of Statistics of Cars",
+
+  "CarStatistics_Status": "Status",
+  "CarStatistics_Branches": "Branches",
+  "CarStatistics_Brand": "Brand",
+  "CarStatistics_year": "Made year",
+  "CarStatistics_Category": "Category",
+  "CarStatistics_count_Cars": "Cars Count",
+  "CarStatistics_Model": "Model",
+  "CarStatistics_City": "City",
+  "CarStatistics_Rigon": "Rigon",
+
+  "CarStatistics_Type": "Car Statistics By",
+  "CarStatistics_ID": "ID",
+  "CarStatistics_Name": "Name",
+  "CarStatistics_Count": "Count",
+  "CarStatistics_Percentage": "Percentage",
+
+  //RenterStatistics --------
+  "RenterStatistics Hint": "This page allows you to display Statistics of Renters",
+  "RenterStatistics Data": "Statistics of ٌRenters",
+
+  "RenterStatistics_Nationality": "Nationality",
+  "RenterStatistics_MemperShip": "MemperShip",
+  "RenterStatistics_profession": "profession",
+  "RenterStatistics_Rigon": "Rigon",
+  "RenterStatistics_City": "City",
+  "RenterStatistics_Age": "Age group",
+  "RenterStatistics_Traded": "group of traded amounts",
+  "RenterStatistics_Dealing_Mechanism": "Dealing Mechanism",
+  "RenterStatistics_Status": "Regestration Status",
+
+  "RenterStatistics_count_Renters": "Renters Count",
+  "RenterStatistics_Type": "Renter Statistics By",
 
   "FTR_CurrentBalance": "Current Balance",
   "FTR_TotalCreditor": "Total Creditor",

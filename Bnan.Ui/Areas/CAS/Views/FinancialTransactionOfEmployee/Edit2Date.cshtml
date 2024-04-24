@@ -421,7 +421,7 @@ else
 
                
                 @* Fitler Radio Button And Date *@
-                <div class="col-sm-12 col-md-14 " style="display:flex;justify-content:space-between;" id="status-filter">
+                <div class="col-sm-12 col-md-14 " style="display:flex;justify-content:space-between;height:65px;" id="status-filter">
                 @*DateTime Inputs*@
                 <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:45px;">
 
@@ -461,16 +461,19 @@ else
                     <label class="p-0" for="customRadioAll">@localizer["All"]</label>
                 </div>
                     <div style="display:flex; gap : 7px;">
+                    <input type="radio" id="FTE_status_Custody" name="customRadio" value="Custody" class="form-check-input">
+                    <label class="p-0" for="FTE_status_Custody">@localizer["FTE_status_Custody"]</label>
+                </div>
+                    <div style="display:flex; gap : 7px;">
+                    <input type="radio" id="FTE_status_Reserved" name="customRadio" value="Reserved" class="form-check-input">
+                    <label class="p-0" for="FTE_status_Reserved">@localizer["FTE_status_Reserved"]</label>
+                </div>
+
+                    <div style="display:flex; gap : 7px;">
                     <input type="radio" id="FTE_status_deported" name="customRadio" value="deported" class="form-check-input">
                     <label class="p-0" for="FTE_status_deported">@localizer["FTE_status_deported"]</label>
                 </div>
-                    <div style="display:flex; gap : 7px;">
-                        <input type="radio" id="FTE_status_Reserved" name="customRadio" value="Reserved" class="form-check-input">
-                    <label class="p-0" for="FTE_status_Reserved">@localizer["FTE_status_Reserved"]</label>
-                </div>
-                    <div style="display:flex; gap : 7px;">
-                        <input type="radio" id="FTE_status_Custody" name="customRadio" value="Custody" class="form-check-input">
-                    <label class="p-0" for="FTE_status_Custody">@localizer["FTE_status_Custody"]</label>
+                <div id="nnul" style="width:25px;">
                 </div>
                 </div>
 
@@ -529,7 +532,7 @@ else
 
                
                 @* Fitler Radio Button And Date *@
-                <div class="col-sm-12 col-md-14 " style="display:flex;justify-content:space-between;" id="status-filter">
+                <div class="col-sm-12 col-md-14 " style="display:flex;justify-content:space-between;height:65px;" id="status-filter">
                 @*DateTime Inputs*@
                 <div id="DateInputs" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:45px;">
 
@@ -569,16 +572,21 @@ else
                     <label class="p-0" for="customRadioAll">@localizer["All"]</label>
                 </div>
                     <div style="display:flex; gap : 7px;">
+                    <input type="radio" id="FTE_status_Custody" name="customRadio" value="Custody" class="form-check-input">
+                    <label class="p-0" for="FTE_status_Custody">@localizer["FTE_status_Custody"]</label>
+                </div>
+                    <div style="display:flex; gap : 7px;">
+                    <input type="radio" id="FTE_status_Reserved" name="customRadio" value="Reserved" class="form-check-input">
+                    <label class="p-0" for="FTE_status_Reserved">@localizer["FTE_status_Reserved"]</label>
+                </div>
+
+                    <div style="display:flex; gap : 7px;">
                     <input type="radio" id="FTE_status_deported" name="customRadio" value="deported" class="form-check-input">
                     <label class="p-0" for="FTE_status_deported">@localizer["FTE_status_deported"]</label>
                 </div>
-                    <div style="display:flex; gap : 7px;">
-                        <input type="radio" id="FTE_status_Reserved" name="customRadio" value="Reserved" class="form-check-input">
-                    <label class="p-0" for="FTE_status_Reserved">@localizer["FTE_status_Reserved"]</label>
-                </div>
-                    <div style="display:flex; gap : 7px;">
-                        <input type="radio" id="FTE_status_Custody" name="customRadio" value="Custody" class="form-check-input">
-                    <label class="p-0" for="FTE_status_Custody">@localizer["FTE_status_Custody"]</label>
+
+
+                <div id="nnul" style="width:25px;">
                 </div>
                 </div>
 
@@ -587,7 +595,7 @@ else
                 }
 
 
-            <div class="dataTable t_mar" id="ReportsData" style="height:380px;">
+            <div class="dataTable t_mar" id="ReportsData" style="height:370px;">
                     <partial name="_DataTable_Internal_Contract" />
                 </div>
                 @if (ViewBag.CountRecord == 0)

@@ -199,6 +199,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             //sidebar Active
             ViewBag.id = "#sidebarRenter";
             ViewBag.no = "0";
+            var titles = await setTitle("205", "2203001", "2");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203001", "2");
 
             var RenterLessorInformationAll = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == currentUser.CrMasUserInformationLessor, new[] { "CrCasRenterLessorNavigation.CrMasRenterPost" }).ToList();

@@ -13,7 +13,7 @@
 
     div.scroll {
         /*        background-color: #fed9ff;
-                width: 600px;*/
+                    width: 600px;*/
         /*height: 150px;*/
         overflow-x: hidden;
         overflow-y: auto;
@@ -21,37 +21,50 @@
         /*padding: 20px;*/
         position: relative;
         /*overflow: auto;*/
-        max-height: 35vh;
+        max-height: 40vh;
         width: 100%;
     }
 
 
     th.scroll_1 {
-        top: 0;
+        top: 0px;
         position: sticky;
-        background-color: #E4F3FC;
+        background-color: #E4F3F9;
     }
+
 
     ::-webkit-scrollbar {
-        width: 10px;
+        display: block;
+        width: 15px;
+        opacity: 0;
     }
 
-    /* Track */
-    ::-webkit-scrollbar-track {
-        /*box-shadow: inset 0 0 5px grey;*/
-        border-radius: 2px;
-    }
 
-    /* Handle */
     ::-webkit-scrollbar-thumb {
-        /*background: #b30000;*/
-        border-radius: 2px;
+        background-color: gray;
+        border-right: none;
+        border-left: none;
     }
 
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            /*background: #b30000;*/
-        }
+    ::-webkit-scrollbar-track {
+        /*box-shadow: inset 0 0 5px #CBD9DE;*/
+        /*border-radius: 2px;*/
+        /*background-color:transparent;*/
+        background-color: #E4F3F9;
+    }
+
+    ::-webkit-scrollbar-track-piece:end {
+        background: transparent;
+        background-color: lightgray;
+        margin-bottom: 0px;
+    }
+
+    ::-webkit-scrollbar-track-piece:start {
+        background: transparent;
+        background-color: lightgray;
+        margin-top: 50px;
+    }
+
 </style>
 <style>
     #_Nc {
@@ -97,7 +110,7 @@
                         <td id="_Nc">@item.CrCasAccountReceiptNo</td>
 
 
-                    <td style="text-align:start">@item.CrCasAccountReceiptDate?.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align:start">@item.CrCasAccountReceiptDate?.ToString("dd/MM/yyyy - h:mm tt")</td>
                     <td style="text-align:start">@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceEnName</td>
                     <td id="_Nc">@item.CrCasAccountReceiptPayment?.ToString("N2",CultureInfo.InvariantCulture)</td>
                         <td id="_Nc">@item.CrCasAccountReceiptReceipt?.ToString("N2",CultureInfo.InvariantCulture)</td>
@@ -167,7 +180,7 @@ else
 
                     <td id="_Nc">@item.CrCasAccountReceiptNo</td>
 
-                <td style="text-align:start">@item.CrCasAccountReceiptDate?.ToString("dd/MM/yyyy")</td>
+                <td style="text-align:start">@item.CrCasAccountReceiptDate?.ToString("dd/MM/yyyy - h:mm tt")</td>
                 <td style="text-align:start">@item.CrCasAccountReceiptReferenceTypeNavigation?.CrMasSupAccountReceiptReferenceArName</td>
                     <td id="_Nc">@item.CrCasAccountReceiptPayment?.ToString("N2",CultureInfo.InvariantCulture)</td>
                     <td id="_Nc">@item.CrCasAccountReceiptReceipt?.ToString("N2",CultureInfo.InvariantCulture)</td>

@@ -34,14 +34,14 @@ namespace Bnan.Ui.Areas.BS.Controllers
         {
             //To Set Title 
             var userLogin = await _userManager.GetUserAsync(User);
-            if (CultureInfo.CurrentUICulture.Name== "en-US") await ViewData.SetPageTitleAsync("Branches", "", "", "", "", userLogin.CrMasUserInformationEnName);
+            if (CultureInfo.CurrentUICulture.Name == "en-US") await ViewData.SetPageTitleAsync("Branches", "", "", "", "", userLogin.CrMasUserInformationEnName);
             else await ViewData.SetPageTitleAsync("الفروع", "", "", "", "", userLogin.CrMasUserInformationArName);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var bSLayoutVM = await GetBranchesAndLayout();
 
 
             var Cars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationStatus != Status.Deleted && x.CrCasCarInformationStatus != Status.Sold && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch, new[] { "CrCasCarInformationDistributionNavigation" }).ToList();
-            var carsRented = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch && x.CrCasCarInformationStatus == Status.Rented, new[] { "CrCasCarInformationDistributionNavigation","CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics" }).ToList();
+            var carsRented = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch && x.CrCasCarInformationStatus == Status.Rented, new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics" }).ToList();
 
             var carsAvailable = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == bSLayoutVM.SelectedBranch && x.CrCasCarInformationStatus == Status.Active &&
                                                                                 x.CrCasCarInformationPriceStatus == true && x.CrCasCarInformationBranchStatus == Status.Active &&
@@ -87,16 +87,16 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                 x.CrCasSysAdministrativeProceduresStatus == Status.Insert).Count();
 
             var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode && x.CrCasRenterContractBasicBranch == bSLayoutVM.SelectedBranch).ToList();
-            var AlertContract = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertLessor == lessorCode&& x.CrCasRenterContractAlertBranch== bSLayoutVM.SelectedBranch).ToList();
+            var AlertContract = _unitOfWork.CrCasRenterContractAlert.FindAll(x => x.CrCasRenterContractAlertLessor == lessorCode && x.CrCasRenterContractAlertBranch == bSLayoutVM.SelectedBranch).ToList();
 
-           //For Charts 
-           var AccountReceipt= _unitOfWork.CrCasAccountReceipt.FindAll(x=>x.CrCasAccountReceiptLessorCode==lessorCode&&x.CrCasAccountReceiptBranchCode== bSLayoutVM.SelectedBranch &&
-                                                                          x.CrCasAccountReceiptIsPassing=="1"&& x.CrCasAccountReceiptPaymentMethod!="30" ).ToList();
+            //For Charts 
+            var AccountReceipt = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == lessorCode && x.CrCasAccountReceiptBranchCode == bSLayoutVM.SelectedBranch &&
+                                                                           x.CrCasAccountReceiptIsPassing == "1" && x.CrCasAccountReceiptPaymentMethod != "30").ToList();
 
             var PaymentMethods = _unitOfWork.CrMasSupAccountPaymentMethod.FindAll(x => x.CrMasSupAccountPaymentMethodStatus == Status.Active &&
                                                                                        (x.CrMasSupAccountPaymentMethodClassification == "1" || x.CrMasSupAccountPaymentMethodClassification == "2")).ToList();
-           
-            List<PaymentMethodBranchDataVM> paymentMethodBranch= new List<PaymentMethodBranchDataVM>();
+
+            List<PaymentMethodBranchDataVM> paymentMethodBranch = new List<PaymentMethodBranchDataVM>();
             foreach (var paymentMethod in PaymentMethods)
             {
                 // Assuming you have properties for Arabic and English names in your CrMasSupAccountPaymentMethod model
@@ -181,26 +181,26 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
 
 
-            
+
 
             ViewBag.RenterLessorCount = _unitOfWork.CrCasRenterLessor.FindAll(x => x.CrCasRenterLessorCode == lessorCode).Count();
-            ViewBag.ContractForSettelment = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode&&(x.CrCasRenterContractBasicStatus==Status.Active||x.CrCasRenterContractBasicStatus==Status.Expire)).Count();
-            ViewBag.ContractForExtension = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode&&x.CrCasRenterContractBasicBranch== bSLayoutVM.SelectedBranch&&x.CrCasRenterContractBasicStatus==Status.Active).Count();
-           
+            ViewBag.ContractForSettelment = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode && (x.CrCasRenterContractBasicStatus == Status.Active || x.CrCasRenterContractBasicStatus == Status.Expire)).Count();
+            ViewBag.ContractForExtension = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicLessor == lessorCode && x.CrCasRenterContractBasicBranch == bSLayoutVM.SelectedBranch && x.CrCasRenterContractBasicStatus == Status.Active).Count();
+
             ViewBag.AcccountReceiptCount = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == lessorCode &&
-                                                                                     x.CrCasAccountReceiptBranchCode==bSLayoutVM.SelectedBranch).Count();
+                                                                                     x.CrCasAccountReceiptBranchCode == bSLayoutVM.SelectedBranch).Count();
 
 
-            
-            
+
+
             bSLayoutVM.RentedCars = null;
             bSLayoutVM.UnAvaliableCars = null;
             bSLayoutVM.AvaliableCars = null;
             bSLayoutVM.CrMasUserBranchValidity = branchValidity;
             bSLayoutVM.BasicContracts = Contracts;
             bSLayoutVM.AlertContract = AlertContract;
-            bSLayoutVM.PaymentMethodsBranch = paymentMethodBranch.OrderBy(x=>x.Code).ToList();
-            bSLayoutVM.PaymentMethodsUser = paymentMethodUser.OrderBy(x=>x.Code).ToList();
+            bSLayoutVM.PaymentMethodsBranch = paymentMethodBranch.OrderBy(x => x.Code).ToList();
+            bSLayoutVM.PaymentMethodsUser = paymentMethodUser.OrderBy(x => x.Code).ToList();
 
             return View(bSLayoutVM);
         }
@@ -222,7 +222,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var BranchCode = userLogin.CrMasUserInformationDefaultBranch;
             var RentedCars = _unitOfWork.CrCasCarInformation.FindAll(x => x.CrCasCarInformationLessor == lessorCode && x.CrCasCarInformationBranch == BranchCode && x.CrCasCarInformationStatus == Status.Rented,
-                                                                                 new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics" , "CrCasRenterContractBasics.CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasCarDocumentsMaintenances.CrCasCarDocumentsMaintenanceProceduresNavigation" }).ToList();
+                                                                                 new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics", "CrCasRenterContractBasics.CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasCarDocumentsMaintenances.CrCasCarDocumentsMaintenanceProceduresNavigation" }).ToList();
             var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode).ToList();
 
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
@@ -249,7 +249,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                           (x.CrCasCarInformationStatus == Status.Active && x.CrCasCarInformationForSaleStatus == Status.ForSale)),
                                                                                           new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics", "CrCasCarDocumentsMaintenances.CrCasCarDocumentsMaintenanceProceduresNavigation" }).ToList();
 
-            var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode&&x.CrCasBranchInformationStatus!=Status.Deleted).ToList();
+            var branches = _unitOfWork.CrCasBranchInformation.FindAll(x => x.CrCasBranchInformationLessor == lessorCode && x.CrCasBranchInformationStatus != Status.Deleted).ToList();
 
             BSLayoutVM bSLayoutVM = new BSLayoutVM()
             {
@@ -292,16 +292,16 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
             var documents = _unitOfWork.CrCasBranchDocument.FindAll(x => x.CrCasBranchDocumentsLessor == lessorCode && x.CrCasBranchDocumentsBranch == selectedBranch);
-            var documentNotActive = documents.Where(x=>x.CrCasBranchDocumentsStatus==Status.Renewed || x.CrCasBranchDocumentsStatus==Status.Expire).ToList();
+            var documentNotActive = documents.Where(x => x.CrCasBranchDocumentsStatus == Status.Renewed || x.CrCasBranchDocumentsStatus == Status.Expire).ToList();
             var userContractValidity = _unitOfWork.CrMasUserContractValidity.Find(x => x.CrMasUserContractValidityUserId == userLogin.Id);
             var check = "true";
-            foreach ( var document in documentNotActive )
+            foreach (var document in documentNotActive)
             {
-                if (document.CrCasBranchDocumentsProcedures=="100"&& userContractValidity.CrMasUserContractValidityRegister == false) check="100";
-                else if (document.CrCasBranchDocumentsProcedures=="101" && userContractValidity.CrMasUserContractValidityChamber == false) check = "101";
-                else if (document.CrCasBranchDocumentsProcedures == "102" && userContractValidity.CrMasUserContractValidityTransferPermission == false)check = "102";
-                else if (document.CrCasBranchDocumentsProcedures == "103" && userContractValidity.CrMasUserContractValidityLicenceMunicipale == false)check = "103";
-                else if (document.CrCasBranchDocumentsProcedures == "104" && userContractValidity.CrMasUserContractValidityCompanyAddress == false)check = "104";
+                if (document.CrCasBranchDocumentsProcedures == "100" && userContractValidity.CrMasUserContractValidityRegister == false) check = "100";
+                else if (document.CrCasBranchDocumentsProcedures == "101" && userContractValidity.CrMasUserContractValidityChamber == false) check = "101";
+                else if (document.CrCasBranchDocumentsProcedures == "102" && userContractValidity.CrMasUserContractValidityTransferPermission == false) check = "102";
+                else if (document.CrCasBranchDocumentsProcedures == "103" && userContractValidity.CrMasUserContractValidityLicenceMunicipale == false) check = "103";
+                else if (document.CrCasBranchDocumentsProcedures == "104" && userContractValidity.CrMasUserContractValidityCompanyAddress == false) check = "104";
                 else check = "true";
             }
             return Json(check);
