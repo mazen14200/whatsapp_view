@@ -80,6 +80,35 @@ namespace Bnan.Ui.ViewModels.BS
         public string? TotalAmount { get; set; }
         public string? AccountNo { get; set; }
         public string? AdvantagesValue { get; set; }
+        public string? AdvantagesValueTotal { get; set; }
+        public string? ChoicesValueTotal { get; set; }
+        public string? ChoicesValue { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? SettlementMechanism { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? ExpensesValue { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? ExpensesReasons { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? CompensationValue { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? CompensationReasons { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? CurrentMeter { get; set; }
+        [Required(ErrorMessage = "requiredFiled")]
+        public string? ActualEndContractDate { get; set; }
+        public string? ActualDaysNo { get; set; }
+        public string? AdditionalKm { get; set; }
+        public string? AdditionalHours { get; set; }
+        public string? ContractValue { get; set; }
+        public string? ContractValueAfterDiscount { get; set; }
+        public string? MaxHours { get; set; }
+        public string? MaxMinutes { get; set; }
+        public string? ExtraHoursValue { get; set; }
+        public string? PrivateDriverValueTotal { get; set; }
+        public string? PreviousBalance { get; set; }
+        public string? AmountRequired { get; set; }
+        public string? AccountReceiptNo { get; set; }
 
 
         public virtual CrCasRenterLessor? CrCasRenterContractBasic5 { get; set; }

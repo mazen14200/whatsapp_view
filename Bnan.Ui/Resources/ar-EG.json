@@ -1753,7 +1753,7 @@
   "DiscountValue": "قيمة الخصم",
   "PleaseChooseCar": "من فضلك اختر سيارة",
   //
-  "VerificationCode": "رمز التحقق",
+  "VerificationCode": " رمز التحقق",
   "ContractsExtension": "تمديد العقود",
   "Expenses": "المصروفات",
   "Compensations": "التعويضات",
@@ -1773,5 +1773,21 @@
   "EndOfSettlement": "نهاية التسوية",
   "SettlementTiming": "توقيت التسوية",
   "SettlementMechanism": "آلية التسوية",
-  "Total": "المجموع"
+  "Total": "المجموع",
+  "ExpensesMessageImageRequired": "يجب ادخال صورة واحدة على الاقل و اثنى عشر صورة كحد اقصي",
+  "ReadingBefore": "العداد عند التسليم",
+  "AgainstOthers": "ضد الغير",
+  "CompensationValue": "قيمة التعويضات",
+  "CompensationStatement": "بيان التعويضات",
+  "ExpenseValue": "قيمة المصروفات",
+  "ExpenseStatement": " بيان المصروفات",
+  "ExtraHoursValue": "قيمة الساعات الاضافية",
+  "ExtraKMsValue": "قيمة الكيلوات الاضافية",
+  "TotalExpenseValue": "إجمالي المصروفات",
+  "TotalCompensationValue": "إجمالي التعويضات",
+  "ContractValueAfterDiscount": "قيمة العقد بعد الخصم",
+  "RenterMoneyText1": "الباقي على المستأجر",
+  "RenterMoneyText2": "الباقي للمستأجر",
+  "UserDontHaveCashToPay": "عفوا ... ليس لديك رصيد كافي"
+
 }

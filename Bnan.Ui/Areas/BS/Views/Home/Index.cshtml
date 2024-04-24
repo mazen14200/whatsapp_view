@@ -663,9 +663,9 @@
                 labels: ['@localizer["ExpiredContract"]', '@localizer["ExpiresToday"]', '@localizer["ExpiresTomorrow"]', '@localizer["ExpiresLater"]'],
                 datasets: [{
                     data: [@Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractStatus == "E").Count(),
+        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "2" && x.CrCasRenterContractAlertContractStatus == "A").Count(),
         @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "0" && x.CrCasRenterContractAlertContractStatus == "A").Count(),
-        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "1" && x.CrCasRenterContractAlertContractStatus == "A").Count(),
-        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "2" && x.CrCasRenterContractAlertContractStatus == "A").Count()],
+        @Model.AlertContract?.FindAll(x => x.CrCasRenterContractAlertContractActiviteStatus == "1" && x.CrCasRenterContractAlertContractStatus == "A").Count()],
                     backgroundColor: ['rgba(242, 36, 36, 1)', '#9966FF', 'rgba(242, 143, 36, 1)', 'rgba(54, 162, 235, 1)']
                 }]
             };
@@ -1099,7 +1099,7 @@
     <!--Contract Settelment-->
     <script>
         document.getElementById('ContractSettlement').addEventListener('click', function () {
-            var SettelmentAuth = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityEnd";
+            // var SettelmentAuth = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityEnd";
             var userStatus = "@userInfo?.CrMasUserInformationStatus";
             var lessorStatus = "@userInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorInformationStatus";
             var BranchStatus = "@Model?.CrCasBranchInformation?.CrCasBranchInformationStatus";
@@ -1114,11 +1114,11 @@
                 toastr.error('@localizer["toastMessageExistContractsForSettelement"]');
                 return
             }
-            else if (SettelmentAuth.toLowerCase() === "false" || SettelmentAuth == null || SettelmentAuth == "") {
-                toastr.options = { "positionClass": '@localizer["toastPostion"]', };
-                toastr.error('@localizer["toastMessage"]');
-                return
-            }
+            // else if (SettelmentAuth.toLowerCase() === "false" || SettelmentAuth == null || SettelmentAuth == "") {
+            //     toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+            //     toastr.error('@localizer["toastMessage"]');
+            //     return
+            // }
             else if (userStatus !== "@Status.Active") {
                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                 toastr.error('@localizer["toastMessageUserHold"]');

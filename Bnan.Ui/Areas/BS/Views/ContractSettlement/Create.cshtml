@@ -1,15 +1,33 @@
 ﻿@using Bnan.Ui.ViewModels.BS;
+@using Microsoft.AspNetCore.Identity
 @model BSLayoutVM
 @inject IViewLocalizer localizer
+@using Microsoft.EntityFrameworkCore;
+@inject UserManager<CrMasUserInformation> userManager
+@inject SignInManager<CrMasUserInformation> signinManager
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    var user = await userManager.GetUserAsync(User);
+    var userInfo = await userManager.Users
+      .Include(l => l.CrMasUserMainValidations)
+      .Include(l => l.CrMasUserSubValidations)
+      .Include(x => x.CrMasUserBranchValidities)
+      .Include(x => x.CrMasUserContractValidity)
+      .Include(l => l.CrMasUserInformationLessorNavigation)
+      .FirstOrDefaultAsync(l => l.UserName == user.UserName);
+    var lessorInfo = await userManager.Users.Include(l => l.CrMasUserInformationLessorNavigation).ThenInclude(l => l.CrMasLessorImage).FirstOrDefaultAsync(x => x.UserName == user.UserName);
 }
 <link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
 @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
 {
     <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">
 }
+<style>
+    .form-select:disabled {
+        background-color: white;
+    }
+</style>
 <!-- MultiStep Form -->
 <div class="container-fluid" id="grad1">
     <section class="section-mainCard">
@@ -32,9 +50,26 @@
                     </div>
                     <div class="row justify-content-center content-row h-100">
 
-                        <div class="col-md-11 mx-0">
+                        <div class="col-md-11 mx-0 h-100">
 
-                            <form id="SettlementForm" class="needs-validation" novalidate>
+                            <form id="SettlementForm" asp-area="BS" asp-controller="ContractSettlement" asp-action="Create" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                                <input hidden asp-for="ContractSettlement.CrCasRenterContractBasicNo" />
+                                <input hidden asp-for="SelectedBranch" />
+                                <input hidden asp-for="ContractSettlement.ActualDaysNo" />
+                                <input hidden asp-for="ContractSettlement.AdditionalKm" />
+                                <input hidden asp-for="ContractSettlement.TaxValue" />
+                                <input hidden asp-for="ContractSettlement.DiscountValue" />
+                                <input hidden asp-for="ContractSettlement.ContractValueAfterDiscount" />
+                                <input hidden asp-for="ContractSettlement.TotalContract" />
+                                <input hidden asp-for="ContractSettlement.ContractValue" />
+                                <input hidden asp-for="ContractSettlement.MaxHours" />
+                                <input hidden asp-for="ContractSettlement.MaxMinutes" />
+                                <input hidden asp-for="ContractSettlement.ExtraHoursValue" />
+                                <input hidden asp-for="ContractSettlement.ChoicesValueTotal" />
+                                <input hidden asp-for="ContractSettlement.PrivateDriverValueTotal" />
+                                <input hidden asp-for="ContractSettlement.PreviousBalance" />
+                                <input hidden asp-for="ContractSettlement.AmountRequired" />
+                                <input hidden id="language" name="language" />
                                 <div class=" ">
                                     <!-- progressbar -->
                                     <ul id="progressbar">
@@ -43,8 +78,6 @@
                                         <li id="compensation">@localizer["Compensations"]</li>
                                         <li id="check">@localizer["VirtualInspection"]</li>
                                         <li id="payment">@localizer["Payment"]</li>
-
-
                                     </ul>
                                 </div>
                                 <fieldset id="firstFieldset">
@@ -101,7 +134,7 @@
                                                                 <p>: @localizer["StartContract"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)</p>
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture)</p>
                                                             </div>
 
                                                         </div>
@@ -111,7 +144,7 @@
                                                                 <p>: @localizer["ExpectedEndContract"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)</p>
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture)</p>
                                                             </div>
 
                                                         </div>
@@ -132,6 +165,42 @@
                                                                 <p>@Model.ContractSettlement.AuthEndDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</p>
                                                             </div>
                                                         </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : @localizer["FreeAdditionalHours"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>
+                                                                    @if (Model.ContractSettlement.CrCasRenterContractBasicUserFreeHours > 0)
+                                                                    {
+                                                                        <span>@Model.ContractSettlement.CrCasRenterContractBasicUserFreeHours + </span>
+                                                                    }
+                                                                    @Model.ContractSettlement.CrCasRenterContractBasicFreeHours
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : @localizer["HourMax"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicHourMax</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> : @localizer["DailyFreeKm"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p>
+                                                                    @if (Model.ContractSettlement.CrCasRenterContractBasicDailyFreeKmUser > 0)
+                                                                    {
+                                                                        <span>@Model.ContractSettlement.CrCasRenterContractBasicDailyFreeKmUser + </span>
+                                                                    }
+                                                                    @Model.ContractSettlement.CrCasRenterContractBasicDailyFreeKm
+                                                                </p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -150,7 +219,7 @@
                                                     <P>@localizer["ContractValue"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data ">
-                                                    <P>@Model.ContractSettlement.CrCasRenterContractBasicExpectedTotal</P>
+                                                    <P>@Model.ContractSettlement.CrCasRenterContractBasicExpectedTotal?.ToString("N2", CultureInfo.InvariantCulture)</P>
                                                 </div>
                                                 <div class="col-md-6 col-lg-5 col-xl-5 seacrh-icon-col">
                                                     <div>
@@ -180,7 +249,7 @@
                                                                 <p>: @localizer["Features"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>@Model.ContractSettlement.AdvantagesValue</p>
+                                                                <p>@Model.ContractSettlement.AdvantagesValueTotal</p>
                                                             </div>
                                                         </div>
 
@@ -247,33 +316,31 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <input type="date" id="contract_real_endTime" class="form-control inputs" name="contract-end-date" aria-describedby="inputGroupPrepend" required>
+                                                    <input type="date" id="contract_real_endTime" class="form-control inputs" asp-for="ContractSettlement.ActualEndContractDate" aria-describedby="inputGroupPrepend" required>
                                                     <div class="row requird-field-row-last">
-                                                        <div class="invalid-feedback" style="display: none;">
-                                                            هذا الحقل مطلوب
-                                                        </div>
+                                                        <span class="requird-field" id="requird_field_SettlementMechanism" asp-validation-for="@Model.ContractSettlement.ActualEndContractDate"></span>
                                                     </div>
                                                 </div>
 
                                             </div>
-                                            <div class="col-md-4 data-col-Settl col-SettlTime ">
+                                            <div class="col-md-auto col-lg-4  data-col-Settl flex-wrap">
                                                 <div class="col-auto">
-                                                    <label for="settlementTime">
-                                                        @localizer["SettlementTiming"]
-                                                    </label>
+                                                    <p>@localizer["ActualNumberOfDays"]</p>
                                                 </div>
                                                 <div class="col-auto personal-data">
-                                                    <div class="col-auto">
-                                                        <input type="time" class="form-control form-control2"
-                                                               id="settlementTime" name="settlementTime" autocomplete="off" style="border-top: none; width: 100%;"
-                                                               required>
-                                                        <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <P id="daysNo">0</P>
+                                                </div>
 
+                                            </div>
+                                        </div>
+                                        <div class="row data-row-Settl">
+
+                                            <div class="col-md-4 data-col-Settl ">
+                                                <div class="col-auto">
+                                                    <p>@localizer["AddHours"]</p>
+                                                </div>
+                                                <div class="col-auto personal-data">
+                                                    <span id="diffHours">00</span>:<span id="diffMinutes">00</span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-lg-4  data-col-Settl flex-wrap" id="mechanismSettlement" style="display:none">
@@ -284,7 +351,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="offset">
-                                                        <select class="form-select form-select-settel" id="Settlement-mechanism" name="Settlement mechanism" required>
+                                                        <select class="form-select form-select-settel" id="Settlement-mechanism" asp-for="ContractSettlement.SettlementMechanism">
                                                             <option selected disabled>
                                                             </option>
                                                             <option value="0">@localizer["Without"]</option>
@@ -294,33 +361,12 @@
                                                         </select>
 
                                                         <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
+                                                            <span class="requird-field" id="requird_field_SettlementMechanism" asp-validation-for="@Model.ContractSettlement.SettlementMechanism"></span>
                                                         </div>
                                                     </div>
 
                                                 </div>
 
-                                            </div>
-                                        </div>
-                                        <div class="row data-row-Settl">
-                                            <div class="col-md-auto col-lg-4  data-col-Settl flex-wrap">
-                                                <div class="col-auto">
-                                                    <p>@localizer["ActualNumberOfDays"]</p>
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <P id="daysNo">0</P>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-md-4 data-col-Settl ">
-                                                <div class="col-auto">
-                                                    <p>@localizer["AddHours"]</p>
-                                                </div>
-                                                <div class="col-auto personal-data">
-                                                    <span id="diffHours">00</span>:<span id="diffMinutes">00</span>
-                                                </div>
                                             </div>
                                         </div>
 
@@ -362,7 +408,7 @@
 
                                                 <div class="col-auto ">
                                                     <label class="form-check-label" for="expenses">@localizer["Expense"]</label>
-                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="expenses" name="checked-expenses">
+                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="expenses-check" name="checked-expenses">
 
                                                 </div>
 
@@ -396,14 +442,12 @@
                                             <div class="row">
                                                 <div class="expensesDiv align-items-baseline ">
                                                     <div class="col-auto">
-                                                        <label id="expensesValue" for="expensesValue-input">قيمة المصروفات</label>
+                                                        <label id="expensesValue" for="expensesValue-input">@localizer["ExpenseValue"]</label>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <input type="tel" class="form-control form-control1" style="width: 130px;" id="expensesValue-input" name="expensesValue-input" aria-describedby="inputGroupPrepend" autocomplete="off" required>
+                                                        <input type="tel" class="form-control form-control1" style="width: 130px;" id="expensesValue-input" asp-for="ContractSettlement.ExpensesValue" oninput="handleAmountPayed(this)" aria-describedby="inputGroupPrepend" autocomplete="off" required>
                                                         <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
+                                                            <span class="requird-field" id="requird_field_ExpensesValue" asp-validation-for="@Model.ContractSettlement.ExpensesValue"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -415,14 +459,12 @@
 
                                                 <div class="row expensesDiv expensesDiv-textarea ">
                                                     <div class="col-auto">
-                                                        <label id="Expense-statement" for="Expense-statement-input">بيان المصروفات</label>
+                                                        <label id="Expense-statement" for="Expense-statement-input">@localizer["ExpenseStatement"]</label>
                                                     </div>
                                                     <div class="col-lg-9" style="height: 100%;">
-                                                        <textarea class="form-control textarea-inputs h-100" cols="25" name="Expense-statement" id="Expense-statement-input" aria-describedby="inputGroupPrepend" required></textarea>
+                                                        <textarea class="form-control textarea-inputs h-100" cols="25" asp-for="ContractSettlement.ExpensesReasons" id="Expense-statement-input" aria-describedby="inputGroupPrepend"></textarea>
                                                         <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
+                                                            <span class="requird-field" id="requird_field_ExpensesReasons" asp-validation-for="@Model.ContractSettlement.ExpensesReasons"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -437,13 +479,8 @@
                                                         <div class="upload__btn-box" id="upload__btn-box">
                                                             <label class="upload__btn">
                                                                 <div class="upload-container-checking">
-                                                                    <img class="upload-icon"
-                                                                         src="~/BranchSys/Pages/img/Group (1).png"
-                                                                         alt="Upload Icon" id="addImage">
-                                                                    <input type="file" multiple
-                                                                           accept="image/*"
-                                                                           id="Expenses-images"
-                                                                           class="upload__inputfile ">
+                                                                    <img class="upload-icon" src="~/BranchSys/Pages/img/Group (1).png" alt="Upload Icon" id="addImage">
+                                                                    <input type="file" multiple accept="image/*" id="Expenses-images" class="upload__inputfile ">
                                                                 </div>
                                                             </label>
                                                         </div>
@@ -464,12 +501,12 @@
                                                  class="next action-button"
                                                  style="vertical-align: middle; ">
                                             <input type="button" name="next" class="next action-button"
-                                                   value="التالي" />
+                                                   value="@localizer["Next"]" />
                                         </div>
                                         <div class="button-card">
                                             <input type="button" name="previous"
                                                    class="previous action-button-previous"
-                                                   value="السابق" />
+                                                   value="@localizer["Previous"]" />
                                             <img src="~/BranchSys/Pages/img/Vector.png" alt="Button Image"
                                                  class="previous action-button-previous"
                                                  style="vertical-align: middle; ">
@@ -484,10 +521,10 @@
                                             <div class="row">
                                                 <div class="expensesDiv align-items-baseline ">
                                                     <div class="col-auto">
-                                                        <p> التأمين </p>
+                                                        <p> @localizer["CrMasUserContractValidityInsurance"] </p>
                                                     </div>
                                                     <div class="col-auto personal-data">
-                                                        <p>ضد الغير </p>
+                                                        <p>@localizer["AgainstOthers"] </p>
                                                     </div>
                                                 </div>
 
@@ -497,14 +534,12 @@
                                         <div class="row">
                                             <div class="compensation-Div align-items-baseline ">
                                                 <div class="col-auto">
-                                                    <label for="compensation-input">قيمة التعويضات </label>
+                                                    <label for="compensation-input">@localizer["CompensationValue"]</label>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <input type="tel" class="form-control form-control1" style="width: 130px;" id="compensation-input" name="compensation-input" aria-describedby="inputGroupPrepend" autocomplete="off" required>
+                                                    <input type="tel" class="form-control form-control1" style="width: 130px;" id="compensation-input" asp-for="ContractSettlement.CompensationValue" oninput="handleAmountPayed(this)" aria-describedby="inputGroupPrepend" autocomplete="off" required>
                                                     <div class="row requird-field-row-last">
-                                                        <div class="invalid-feedback" style="display: none;">
-                                                            هذا الحقل مطلوب
-                                                        </div>
+                                                        <span class="requird-field" id="requird_field_CompensationValue" asp-validation-for="@Model.ContractSettlement.CompensationValue"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -516,35 +551,26 @@
 
                                                 <div class="row compensation-Div compensation-Div-textarea ">
                                                     <div class="col-auto">
-                                                        <label for="compensation-statement-input">بيان التعويضات </label>
+                                                        <label for="compensation-statement-input">@localizer["CompensationStatement"]</label>
                                                     </div>
                                                     <div class="col-lg-9" style="height: 100%;">
-                                                        <textarea class="form-control textarea-inputs h-100" cols="25" name="compensation-statement" id="compensation-statement-input" aria-describedby="inputGroupPrepend" required></textarea>
+                                                        <textarea class="form-control textarea-inputs h-100" cols="25" asp-for="ContractSettlement.CompensationReasons" id="compensation-statement-input" aria-describedby="inputGroupPrepend" required></textarea>
                                                         <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
+                                                            <span class="requird-field" id="requird_field_CompensationReasons" asp-validation-for="@Model.ContractSettlement.CompensationReasons"></span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="upload__box d-flex">
-                                                    <div class="upload_img-wrap_inner" style="display: flex;
-                                                                  flex-wrap: wrap;
-                                                                  gap: 10px ">
+                                                    <div class="upload_img-wrap_inner" style="display: flex;flex-wrap: wrap; gap: 10px ">
                                                         <div class="upload__img-box " id="FirstUpload-img2">
                                                         </div>
                                                         <div class="upload__btn-box">
                                                             <label class="upload__btn">
                                                                 <div class="upload-container-checking">
-                                                                    <img class="upload-icon"
-                                                                         src="~/BranchSys/Pages/img/Group (1).png"
-                                                                         alt="Upload Icon" id="AddImageCompensation">
-                                                                    <input type="file" multiple
-                                                                           accept="image/*"
-                                                                           id="compensation-images"
-                                                                           class="upload__inputfile ">
+                                                                    <img class="upload-icon" src="~/BranchSys/Pages/img/Group (1).png" alt="Upload Icon" id="AddImageCompensation">
+                                                                    <input type="file" multiple accept="image/*" id="compensation-images" class="upload__inputfile ">
                                                                 </div>
                                                             </label>
                                                         </div>
@@ -561,16 +587,16 @@
                                     </div>
                                     <div class="row button-row">
                                         <div class="button-card">
-                                            <img src="img/Group.png" alt="Button Image"
+                                            <img src="~/BranchSys/Pages/img/Group.png" alt="Button Image"
                                                  class="next action-button"
                                                  style="vertical-align: middle; ">
                                             <input type="button" name="next" class="next action-button"
-                                                   value="التالي" />
+                                                   value="@localizer["Next"]" />
                                         </div>
                                         <div class="button-card">
                                             <input type="button" name="previous"
                                                    class="previous action-button-previous"
-                                                   value="السابق" />
+                                                   value="@localizer["Previous"]" />
                                             <img src="~/BranchSys/Pages/img/Vector.png" alt="Button Image"
                                                  class="previous action-button-previous"
                                                  style="vertical-align: middle; ">
@@ -586,18 +612,18 @@
                                                 <div class="row CurrentReadingg_row flex-row-reverse">
                                                     <div class="col-md-6 sett_checkField">
                                                         <div class="col-auto ">
-                                                            <p> العداد عند التسليم</p>
+                                                            <p> @localizer["ReadingBefore"]</p>
                                                         </div>
                                                         <div class="col personal-data">
-                                                            <p>43.950</p>
+                                                            <p id="PreviousKM">@Model.ContractSettlement.CrCasRenterContractBasicCurrentReadingMeter?.ToString("N0")</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 sett_checkField">
                                                         <div class="col-auto ">
-                                                            <p> الكيلات الاضافية </p>
+                                                            <p> @localizer["DailyFreeKm"] </p>
                                                         </div>
                                                         <div class="col personal-data">
-                                                            <p>161.00</p>
+                                                            <p id="FreeKM">@Model.ContractSettlement.CrCasRenterContractBasicTotalDailyFreeKm?.ToString("N0")</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -606,46 +632,39 @@
                                                         <div class="col-auto">
                                                             <label id="CurrentReadingg"
                                                                    for="CurrentReadingg-input">
-                                                                القراءة الحالية
+                                                                @localizer["CurrentMeter"]
                                                             </label>
                                                         </div>
-                                                        <div class="col-auto">
-                                                            <input type="tel" class="form-control form-control1"
-                                                                   style="width: 130px;"
-                                                                   id="CurrentReadingg-input"
-                                                                   name="CurrentReadingg-input" aria-describedby="inputGroupPrepend" autocomplete="off" required>
-                                                            <div class="row requird-field-row-last">
-                                                                <div class="invalid-feedback" style="display: none;">
-                                                                    هذا الحقل مطلوب
+                                                        <div class="col-lg-auto  d-flex flex-column align-items-end">
+                                                            <input type="text" class="form-control form-control1" style="width: 130px;" id="CurrentMeter" asp-for="ContractSettlement.CurrentMeter" aria-describedby="inputGroupPrepend" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off" maxlength="7">
+                                                            <div class="row requird-field-row-last mb-2" style="height: 52px;">
+                                                                <div class="col-12">
+                                                                    <span class="requird-field" style="font-size: .625rem;" id="requird_field_CurrentMeter" asp-validation-for="@Model.ContractSettlement.CurrentMeter"></span>
+                                                                    <div>
+                                                                        <span class="requird-field" id="Error_CurrentMeter" style="font-size: .625rem; color: red;"></span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 sett_checkField">
                                                         <div class="col-auto ">
-                                                            <p> الكيلات الاضافية </p>
+                                                            <p> @localizer["AdditionalKm"] </p>
                                                         </div>
                                                         <div class="col personal-data">
-                                                            <p>161.00</p>
+                                                            <p id="AdditionalKM">0</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="upload__box d-flex">
-                                                    <div class="upload_img-wrap_inner" style="display: flex;
-                                                                  flex-wrap: wrap;
-                                                                  gap: 10px ">
+                                                    <div class="upload_img-wrap_inner" style="display: flex; flex-wrap: wrap; gap: 10px ">
                                                         <div class="upload__img-box " id="FirstUpload-img3">
                                                         </div>
                                                         <div class="upload__btn-box">
                                                             <label class="upload__btn">
                                                                 <div class="upload-container-checking">
-                                                                    <img class="upload-icon"
-                                                                         src="~/BranchSys/Pages/img/Group (1).png"
-                                                                         alt="Upload Icon" id="">
-                                                                    <input type="file" multiple
-                                                                           accept="image/*"
-                                                                           id="examination-images"
-                                                                           class="upload__inputfile ">
+                                                                    <img class="upload-icon" src="~/BranchSys/Pages/img/Group (1).png" alt="Upload Icon" id="">
+                                                                    <input type="file" multiple accept="image/*" id="examination-images" class="upload__inputfile ">
                                                                 </div>
                                                             </label>
                                                         </div>
@@ -655,9 +674,7 @@
                                                 <div class="row">
                                                     <p style="color: red;" id="examinationError"> </p>
                                                 </div>
-
                                             </div>
-
                                             <div class="col-lg-6">
                                                 <div class="table-scroll " id="SettlementTable">
                                                     <table class="table table-bordered  table-hover">
@@ -665,142 +682,17 @@
                                                             <tr>
                                                                 <th scope="col"
                                                                     class="value-tabel-header">
-                                                                    ملاحظات
+                                                                    @localizer["reasons"]
                                                                 </th>
                                                                 <th scope="col"
                                                                     style='border-left: 1px solid #ff9626a3; width: 40%; '>
-                                                                    بنود الفحص
+                                                                    @localizer["CheckUpNames"]
                                                                 </th>
 
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="Tires-textarea"
-                                                                              maxlength="100"
-                                                                              name="Tires-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="tires">الإطارات</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="tires" name="checked-tires">
-
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="lights-textarea"
-                                                                              maxlength="100"
-                                                                              name="lights-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="lights">الأنوار</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="lights" name="checked-lights">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="Air_conditioner-textarea"
-                                                                              maxlength="100"
-                                                                              name="Air_conditioner-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="air_conditioner">المكيف</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="air_conditioner" name="checked-air_conditioner">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="Safety_Security-textarea"
-                                                                              maxlength="100"
-                                                                              name="Safety_Security-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="saftey"> الأمن والسلامة </label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="saftey" name="checked-saftey">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="wiper-textarea"
-                                                                              maxlength="100"
-                                                                              name="wiper-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="wipers"> المساحات</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="wipers" name="checked-wipers">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="signals-textarea"
-                                                                              maxlength="100"
-                                                                              name="signals-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="signals"> الإشارات</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="signals" name="checked-signals">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="cleanliness-textarea"
-                                                                              maxlength="100"
-                                                                              name="cleanliness-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="cleanliness"> النظافة</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="cleanliness" name="checked-cleanliness">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="Front_brake-textarea"
-                                                                              maxlength="100"
-                                                                              name="Front_brake-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="FrontBreak"> الفرامل الأمامية</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="FrontBreak" name="checked-FrontBreak">
-
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <textarea class="textarea_table"
-                                                                              id="Rear_brake-textarea"
-                                                                              maxlength="100"
-                                                                              name="Rear_brake-textarea"></textarea>
-                                                                </td>
-                                                                <td class="tabel-data-checkbox-td">
-                                                                    <label class="form-check-label" for="BackBrakes"> الفرامل الخلفية</label>
-                                                                    <input class="form-check-input Settlement-input-checkbox" type="checkbox" value="checked" id="BackBrakes" name="checked-BackBrakes">
-
-                                                                </td>
-
-                                                            </tr>
+                                                        <tbody id="CheckBody">
+                                                            <partial name="_CheckUpListSettlement" />
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -814,12 +706,12 @@
                                                  class="next action-button"
                                                  style="vertical-align: middle; ">
                                             <input type="button" name="next" class="next action-button"
-                                                   value="التالي" />
+                                                   value="@localizer["Next"]" />
                                         </div>
                                         <div class="button-card">
                                             <input type="button" name="previous"
                                                    class="previous action-button-previous"
-                                                   value="السابق" />
+                                                   value="@localizer["Previous"]" />
                                             <img src="~/BranchSys/Pages/img/Vector.png" alt="Button Image"
                                                  class="previous action-button-previous"
                                                  style="vertical-align: middle; ">
@@ -832,128 +724,133 @@
                                         <div class="row data-col-Settl g-3">
                                             <div class="col-xl-4 data-col-Settl contract-Settl-row ">
                                                 <div class="col-auto ">
-                                                    <P>رقم العقد  </P>
+                                                    <P>@localizer["ContractNo"]  </P>
                                                 </div>
                                                 <div class="col-auto personal-data ">
-                                                    <P>23-1-60-5001-1020136</P>
+                                                    <P>@Model.ContractSettlement.CrCasRenterContractBasicNo</P>
                                                 </div>
-                                                <div class="col-md-6 col-lg-6 seacrh-icon-col1">
+                                                <div class="col-md-8 col-lg-10 seacrh-icon-col1">
                                                     <div>
-
                                                         <img src="~/BranchSys/Pages/img/seacrh-icon.png" alt="seacrh-icon Image" id="contract-value-Settlement3">
                                                     </div>
                                                     <div class="dropdown-content" id="dropdown-content-Settlement3">
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>  : المستأجر </p>
+                                                                <p>  : @localizer["Renterr"] </p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>نايف هشام هشام  المعمر</p>
+                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                                                                {
+                                                                    <p>@Model.ContractSettlement.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationEnName</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>@Model.ContractSettlement.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation.CrMasRenterInformationArName</p>
+                                                                }
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : السيارة</p>
+                                                                <p>: @localizer["Car"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>مازدا - سي اكس 30 - سماوي - 2021-دددد</p>
+                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
+                                                                {
+                                                                    <p>@Model.ContractSettlement.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateEnName</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>@Model.ContractSettlement.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationConcatenateArName</p>
+                                                                }
                                                             </div>
-
                                                         </div>
 
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>: بداية العقد</p>
+                                                                <p>: @localizer["StartContract"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  10:30 pm   2024/1/30</p>
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture)</p>
                                                             </div>
-
                                                         </div>
 
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : نهاية العقد </p>
+                                                                <p>: @localizer["EndContract"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  11:30 am   2024/5/30</p>
+                                                                <p id="EndContract"></p>
                                                             </div>
-
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : عدد الأيام   </p>
+                                                                <p>: @localizer["DaysNo"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>3</p>
+                                                                <p id="DaysNoContract"></p>
                                                             </div>
-
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : نهاية التفويض</p>
+                                                                <p> : @localizer["EndAuth"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  10:30 pm   2024/6/30</p>
+                                                                <p>@Model.ContractSettlement.AuthEndDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</p>
                                                             </div>
-
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : نسبة الخصم</p>
+                                                                <p>: @localizer["DiscountRate"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p> 115 </p>
+                                                                <p>%@Model.ContractSettlement.CrCasRenterContractBasicUserDiscountRate?.ToString("N2", CultureInfo.InvariantCulture)</p>
                                                             </div>
-
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :  نسبة القيمة المضافة</p>
+                                                                <p>: @localizer["TaxRate"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p> ۲۲٥.۷٥ </p>
+                                                                <p>%@Model.ContractSettlement.CrCasRenterContractBasicTaxRate?.ToString("N2", CultureInfo.InvariantCulture) </p>
                                                             </div>
-
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : قيمة الساعة الاضافية</p>
+                                                                <p> : @localizer["ExtraHourValue"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p> ۱٥۰٥.۰۰ </p>
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicHourValue?.ToString("N2", CultureInfo.InvariantCulture) </p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> : قيمة الكيلو  الاضافي  </p>
+                                                                <p> : @localizer["AdditionalKmValue"]  </p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p> ۱٥۰٥.۰۰ </p>
+                                                                <p>@Model.ContractSettlement.CrCasRenterContractBasicKmValue?.ToString("N2", CultureInfo.InvariantCulture) </p>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class=" col-md-auto col-lg-6 data-col-Settl flex-wrap Settlement-date">
                                                 <div class="col-auto ">
-                                                    <P> تاريخ التسوية</P>
+                                                    <P>@localizer["SettlementDate"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data ">
-                                                    <P>2020/11/29</P>
+                                                    <P>@DateTime.Now.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</P>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row data-col-Settl g-3">
                                             <div class=" col-xl-8 data-col-Settl flex-wrap ">
                                                 <div class="col-auto ">
-                                                    <P>قيمة العقد</P>
+                                                    <P>@localizer["ContractValue"]</P>
                                                 </div>
                                                 <div class="col-auto personal-data ">
-                                                    <P>4,235.45</P>
+                                                    <P id="ContractValue">0.00</P>
                                                 </div>
                                                 <div class="col-md-6 col-lg-5 col-xl-5 seacrh-icon-col">
                                                     <div>
@@ -963,86 +860,85 @@
                                                     <div class="dropdown-content" id="dropdown-content-Settlement4">
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :الايجار </p>
+                                                                <p> :@localizer["RentalValue"] </p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>   </p>
+                                                                <p id="RentalValue">0.00</p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p>: التفويض</p>
+                                                                <p>:@localizer["DelegationValue"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p></p>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="row dropdown-content-row">
-                                                            <div class="col-auto ">
-                                                                <p>:  المميزات الاضافية</p>
-                                                            </div>
-                                                            <div class="col personal-data">
-                                                                <p>  </p>
+                                                                <p id="DelegationValue">0.00</p>
                                                             </div>
 
                                                         </div>
 
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :السائق  الاضافي</p>
+                                                                <p>:@localizer["Features"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p> </p>
+                                                                <p id="Features">0.00</p>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row dropdown-content-row">
+                                                            <div class="col-auto ">
+                                                                <p> :@localizer["AdditionalDriver"]</p>
+                                                            </div>
+                                                            <div class="col personal-data">
+                                                                <p id="AdditionalDriver">0.00</p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :السائق الخاص </p>
+                                                                <p> :@localizer["PrivateDriver"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p></p>
+                                                                <p id="PrivateDriver">0.00</p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :الخيارات  </p>
+                                                                <p> :@localizer["Choices"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  </p>
+                                                                <p id="Choices">0.00</p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :الاضافات  </p>
+                                                                <p> :@localizer["Additionals"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  </p>
+                                                                <p id="Additionals">0.00</p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :قيمة الساعات الاضافية   </p>
+                                                                <p> :@localizer["ExtraHoursValue"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  </p>
+                                                                <p id="ExtraHoursValue">0.00</p>
                                                             </div>
 
                                                         </div>
                                                         <div class="row dropdown-content-row">
                                                             <div class="col-auto ">
-                                                                <p> :قيمة الكيلوات الاضافية  </p>
+                                                                <p> :@localizer["ExtraKMsValue"]</p>
                                                             </div>
                                                             <div class="col personal-data">
-                                                                <p>  </p>
+                                                                <p id="ExtraKMsValue">0.00</p>
                                                             </div>
-
                                                         </div>
 
                                                     </div>
@@ -1053,141 +949,137 @@
 
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p> قيمة العقد بعد الخصم </p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۱٥۰٥.۰۰</p></div>
+                                                    <div class="col-auto "><p>@localizer["ContractValueAfterDiscount"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="ContractValueAfterDiscount">0.00</p></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-auto">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p>قيمة الضريبة  </p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۲۲٥.۷٥</p></div>
+                                                    <div class="col-auto "><p>@localizer["TaxValue"] </p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="TaxValue">0.00</p></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row data-col-Settl g-3">
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p>إجمالي العقد   </p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۱٥۰٥.۰۰</p></div>
+                                                    <div class="col-auto "><p>@localizer["TotalContract"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="TotalContract">0.00</p></div>
                                                 </div>
 
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p> إجمالي المصروفات</p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۱٥۰٥.۰۰</p></div>
+                                                    <div class="col-auto "><p>@localizer["TotalExpenseValue"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="TotalExpenseValue">0.00</p></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-auto">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p>إجمالي التعويضات   </p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۱٥۰٥.۰۰</p></div>
+                                                    <div class="col-auto "><p>@localizer["TotalCompensationValue"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="TotalCompensationValue">0.00</p></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row data-col-Settl g-3">
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p>رصيد سابق    </p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۰۰.۹٦ </p></div>
+                                                    <div class="col-auto "><p>@localizer["PreviousBalance"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p>@Model.ContractSettlement.CrCasRenterContractBasic5.CrCasRenterLessorAvailableBalance?.ToString("N2", CultureInfo.InvariantCulture)</p></div>
                                                 </div>
 
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="data-col-Settl">
-                                                    <div class="col-auto "><p> المبلغ المطلوب </p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۱۷۲۹.۷۹</p></div>
+                                                    <div class="col-auto "><p id="RenterMoneyText">@localizer["AmountRequired"]</p></div>
+                                                    <div class="col-auto personal-data p-0"><p id="AmountRequired">0.00</p></div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-auto">
-                                                <div class="data-col-Settl">
-                                                    <div class="col-auto "><p> الباقي على المستأجر</p></div>
-                                                    <div class="col-auto personal-data p-0"><p>۱۷۳۰.۷٥</p></div>
-                                                </div>
+                                            @* <div class="col-md-auto">
+                                            <div class="data-col-Settl">
+                                            <div class="col-auto "><p id="RenterMoneyText">@localizer["RenterMoneyText1"]</p></div>
+                                            <div class="col-auto personal-data p-0"><p id="RenterMoneyValue">0.00</p></div>
                                             </div>
+                                            </div> *@
                                         </div>
                                         <div class="row data-col-Settl g-3">
                                             <div class="col-md-auto col-lg-4 data-col-Settl">
                                                 <div class="col-auto">
                                                     <label id="amount-paid" for="amount-paid-input">
-                                                        المبلغ المدفوع
+                                                        @localizer["AmountPaid"]
                                                     </label>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <input type="text" class="form-control form-control2"
-                                                           id="amount-paid-input" name="amount-paid" autocomplete="off"
-                                                           required>
+                                                    <input type="text" class="form-control form-control2" asp-for="ContractSettlement.AmountPayed" id="AmountPayed" oninput="handleAmountPayed(this)" oninput="handleAmountPayed(this)" autocomplete="off" required>
                                                     <div class="row requird-field-row-last">
-                                                        <div class="invalid-feedback" style="display: none;">
-                                                            هذا الحقل مطلوب
-                                                        </div>
+                                                        <p class="requird_field_AmountPayed"></p>
                                                     </div>
                                                 </div>
 
                                             </div>
-
+                                            @{
+                                                if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() == 0)
+                                                {
+                                                    Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "1");
+                                                }
+                                                else if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() > 0 && Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointBank != "00").Count() == 0)
+                                                {
+                                                    Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "3" || x.CrMasSupAccountPaymentMethodClassification == "1");
+                                                }
+                                                else if (Model?.AccountBanks?.FindAll(x => x.CrCasAccountBankNo != "00").Count() > 0 && Model?.SalesPoint?.FindAll(x => x.CrCasAccountSalesPointBank != "00").Count() > 0)
+                                                {
+                                                    Model.PaymentMethods = Model?.PaymentMethods?.FindAll(x => x.CrMasSupAccountPaymentMethodClassification == "2" || x.CrMasSupAccountPaymentMethodClassification == "3" || x.CrMasSupAccountPaymentMethodClassification == "1");
+                                                }
+                                            }
                                             <div class="col-md-auto col-lg-4 d-flex flex-nowrap data-col-Settl">
                                                 <div class="col-auto d-flex ps-0">
-                                                    <label id="payment-method" for="payment-method-select">طريقة الدفع</label>
+                                                    <label id="payment-method" for="payment-method-select">@localizer["PaymentMethod"]</label>
 
                                                 </div>
-
                                                 <div class="col-auto ">
                                                     <div class="offset">
-                                                        <select class="form-select form-select-last" id="payment-method-select" name="payment-method" required>
-                                                            <option selected disabled>
-                                                            </option>
-                                                            <option value="نقدا"> نقدا</option>
-                                                            <option value="مدي"> مدي</option>
-                                                            <option value="فيزا"> فيزا</option>
-                                                            <option value="فيزا"> ماسترد كارد</option>
-
+                                                        <select class="form-select form-select-last" asp-for="ContractSettlement.PaymentMethod" disabled>
+                                                            <option selected disabled></option>
+                                                            @foreach (var payment in Model.PaymentMethods)
+                                                            {
+                                                                @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
+                                                                {
+                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode">@payment.CrMasSupAccountPaymentMethodEnName</option>
+                                                                }
+                                                            }
                                                         </select>
-
                                                         <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
+                                                            <span class="requird-field" id="requird_field_PaymentMethod" asp-validation-for="@Model.ContractSettlement.PaymentMethod"></span>
                                                         </div>
                                                     </div>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-auto  data-col-Settl ">
-
                                                 <div class="col-auto d-flex ps-0 ">
-                                                    <label id="selling-point" for="selling-point-dropdown"> نقطة البيع </label>
-
+                                                    <label id="selling-point" for="selling-point-dropdown">@localizer["SalesPoint"]</label>
                                                 </div>
-
                                                 <div class="col-auto ">
                                                     <div class="offset">
-                                                        <select class="form-select form-select-last"
-                                                                id="selling-point-dropdown" name="selling-point" required>
-                                                            <option selected disabled>           </option>
-                                                            <option value=""> hghghghhfhfgfghdfdfgdgdcg           </option>
-                                                            <option value="">            </option>
-                                                            <option value="">             </option>
+                                                        <select class="form-select form-select-last " style="width: 250px" asp-for="ContractSettlement.SalesPoint" required>
                                                         </select>
                                                         <div class="row requird-field-row-last">
-                                                            <div class="invalid-feedback" style="display: none;">
-                                                                هذا الحقل مطلوب
-                                                            </div>
+                                                            <span class="requird-field" id="requird_field_SalesPoint" asp-validation-for="@Model.ContractSettlement.SalesPoint"></span>
                                                         </div>
                                                     </div>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                         <div class="row p-2" style="flex-direction:row-reverse">
                                             <div class="col-auto">
-                                                <label id="notes" for="FormControl-last-Textarea">ملاحظات</label>
+                                                <label id="notes" for="FormControl-last-Textarea">@localizer["reasons"]</label>
                                             </div>
                                             <div class="col-sm-10 col-md-7 col-lg-7">
-                                                <textarea class="form-control textarea-inputs"
-                                                          rows="1"
-                                                          maxlength="100" name="notes"></textarea>
+                                                <textarea class="form-control textarea-inputs" rows="1" maxlength="100" asp-for="ContractSettlement.CrCasRenterContractBasicReasons"></textarea>
                                             </div>
 
                                         </div>
@@ -1196,12 +1088,12 @@
                                     <div class="row button-row align-items-center"
                                          style="padding: 6px 7px 0px 20px;">
                                         <div class="button-card  gap-2">
-                                            <button type="submit" class="btn btn-custom next">حفظ</button>
+                                            <button id="submitForm" class="btn btn-custom next">@localizer["Save"]</button>
 
                                         </div>
                                         <div class="button-card">
                                             <input type="button" name="previous"
-                                                   class="previous action-button-previous" value="السابق" />
+                                                   class="previous action-button-previous" value="@localizer["Previous"]" />
                                             <img src="~/BranchSys/Pages/img/Vector.png" alt="Button Image"
                                                  class="previous action-button-previous"
                                                  style="vertical-align: middle; margin-right: 10px;">
@@ -1218,6 +1110,18 @@
             </div>
         </div>
     </section>
+    <div class="main" style="display:none">
+        <div class="container1">
+            <div>   <img src="@Url.Content(lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo)" class="logo"></div>
+            <br>
+            <div class="container2">
+                <div class="dash uno"></div>
+                <div class="dash dos"></div>
+                <div class="dash tres"></div>
+                <div class="dash cuatro"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -1237,66 +1141,723 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // const year = now.getFullYear().toString().padStart(4, '0');
+            // const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            // const day = now.getDate().toString().padStart(2, '0');
+            // const dateValue = `${year}-${month}-${day}`;
             const now = new Date();
-            const year = now.getFullYear().toString().padStart(4, '0');
-            const month = (now.getMonth() + 1).toString().padStart(2, '0');
-            const day = now.getDate().toString().padStart(2, '0');
-            const dateValue = `${year}-${month}-${day}`;
+            const endDateString = "@Model.ContractSettlement.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)";
+            const endDate = new Date(endDateString);
 
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const timeValue = `${hours}:${minutes}`;
-
-            document.getElementById("contract_real_endTime").value = dateValue;
-            document.getElementById("settlementTime").value = timeValue;
+            if (endDate < now) {
+                const year = now.getFullYear().toString().padStart(4, '0');
+                const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                const day = now.getDate().toString().padStart(2, '0');
+                const dateValue = `${year}-${month}-${day}`;
+                document.getElementById("contract_real_endTime").value = dateValue;
+            } else {
+                const year = endDate.getFullYear().toString().padStart(4, '0');
+                const month = (endDate.getMonth() + 1).toString().padStart(2, '0');
+                const day = endDate.getDate().toString().padStart(2, '0');
+                const dateValue = `${year}-${month}-${day}`;
+                document.getElementById("contract_real_endTime").value = dateValue;
+            }
+            document.getElementById("contract_real_endTime").min = now.toISOString().split('T')[0];
+            // const hours = now.getHours().toString().padStart(2, '0');
+            // const minutes = now.getMinutes().toString().padStart(2, '0');
+            // const timeValue = `${hours}:${minutes}`;
+            // document.getElementById("settlementTime").value = timeValue;
 
         });
         //To Hide mechanismSettlement..
+        // document.addEventListener("DOMContentLoaded", function () {
+        //     const endDateString = "@Model.ContractSettlement.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)";
+        //     const endDate = new Date(endDateString);
+        //     const currentDate = new Date();
+        //     const elementToHide = document.getElementById("mechanismSettlement");
+        //     console.log("endDate", endDate)
+        //     console.log("currentDate", currentDate)
+        //     if (currentDate > endDate) {
+        //         if (elementToHide) {
+        //             elementToHide.style.display = "";
+        //         }
+        //     }
+
+        // });
+        var diffMinutes = 0;
+        var diffHours = 0;
+        var diff = 0;
+        var totalDaysNo = 0;
+
         document.addEventListener("DOMContentLoaded", function () {
-            const endDateString = "@Model.ContractSettlement.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)";
-            const endDate = new Date(endDateString);
-            const currentDate = new Date();
             const elementToHide = document.getElementById("mechanismSettlement");
-            console.log("endDate", endDate)
-            console.log("currentDate", currentDate)
-            if (currentDate > endDate) {
-                if (elementToHide) {
-                    elementToHide.style.display = "";
-                }
-            }
-
-        });
-
-        document.addEventListener("DOMContentLoaded", function () {
+            var SettelmentAuth = "@userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityEnd";
             const startContractDateString = "@Model.ContractSettlement.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture)";
+            const TotalFreeHours = "@Model.ContractSettlement.CrCasRenterContractBasicTotalFreeHours";
+            const MaxHours = "@Model.ContractSettlement.CrCasRenterContractBasicHourMax";
+            console.log("TotalFreeHours", TotalFreeHours);
+            console.log("MaxHours", MaxHours);
+            console.log("SettelmentAuth", SettelmentAuth);
+
             const startContractDate = new Date(startContractDateString);
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            const currentSecond = now.getSeconds();
+            // Convert hour, minute, and second to strings if needed
+            const hourString = currentHour.toString().padStart(2, '0'); // Pad with zero if single digit
+            const minuteString = currentMinute.toString().padStart(2, '0'); // Pad with zero if single digit
+            const secondString = currentSecond.toString().padStart(2, '0'); // Pad with zero if single digit
+            const timeString = `${hourString}:${minuteString}:${secondString}`;
 
             function calculateDifference() {
                 const settlementDateString = document.getElementById("contract_real_endTime").value;
-                const settlementTimeString = document.getElementById("settlementTime").value;
 
-                const settlementDateTimeString = settlementDateString + "T" + settlementTimeString;
+                const settlementDateTimeString = settlementDateString + "T" + timeString;
                 const settlementDateTime = new Date(settlementDateTimeString);
 
                 const timeDiff = Math.abs(settlementDateTime.getTime() - startContractDate.getTime());
                 const diffDays = Math.floor(timeDiff / (1000 * 3600 * 24)); // Difference in days
-                const diffHours = Math.floor((timeDiff % (1000 * 3600 * 24)) / (1000 * 3600)); // Remaining difference in hours
-                const diffMinutes = Math.floor((timeDiff % (1000 * 3600)) / (1000 * 60)); // Remaining difference in minutes
-
+                diffHours = Math.floor((timeDiff % (1000 * 3600 * 24)) / (1000 * 3600)); // Remaining difference in hours
+                diffMinutes = Math.floor((timeDiff % (1000 * 3600)) / (1000 * 60)); // Remaining difference in minutes
+                diff = parseInt(diffHours) - parseInt(TotalFreeHours) - parseInt(MaxHours);
+                console.log("diff", diff);
                 $("#daysNo").text(diffDays);
-                $("#diffHours").text(diffHours.toString().padStart(2, '0'));
-                $("#diffMinutes").text(diffMinutes.toString().padStart(2, '0'));
+
+                //In PaymentPage
+                var endContractDate = new Date(startContractDate);
+                endContractDate.setDate(startContractDate.getDate() + diffDays);
+                // Formatting endContractDate as "yyyy/MM/dd HH:MM"
+                var formattedEndContractDate = endContractDate.getFullYear() + '/' + ('0' + (endContractDate.getMonth() + 1)).slice(-2) + '/' + ('0' + endContractDate.getDate()).slice(-2) + ' ' +
+                    ('0' + endContractDate.getHours()).slice(-2) + ':' + ('0' + endContractDate.getMinutes()).slice(-2) + ':00';
+                $("#DaysNoContract").text(diffDays);
+                $("#EndContract").text(formattedEndContractDate);
+                ////////////////////////////////////////////////////////////
+                if (diff > 0 || (diff === 0 && diffMinutes > 0)) {
+                    $("#diffHours").text(diff.toString().padStart(2, '0'));
+                    $("#diffMinutes").text(diffMinutes.toString().padStart(2, '0'));
+                    if (SettelmentAuth.toLowerCase() === "false" || SettelmentAuth == null || SettelmentAuth == "") {
+                        $("#contract_real_endTime").prop('readonly', true).css('background-color', 'white');
+                    }
+                    else {
+                        if (elementToHide) {
+                            elementToHide.style.display = "";
+                        }
+                    }
+                }
+                else {
+                    if (SettelmentAuth.toLowerCase() === "false" || SettelmentAuth == null || SettelmentAuth == "") {
+                        $("#contract_real_endTime").prop('readonly', true).css('background-color', 'white');
+                    }
+                    $("#diffHours").text("00");
+                    $("#diffMinutes").text("00");
+                }
 
                 console.log("Difference in days:", diffDays);
                 console.log("Remaining difference in hours:", diffHours);
                 console.log("Remaining difference in minutes:", diffMinutes);
+                console.log("Remaining difference in timeDiff:", timeDiff);
+                CaculateTotalDaysNo();
             }
 
             document.getElementById("contract_real_endTime").addEventListener("change", calculateDifference);
-            document.getElementById("settlementTime").addEventListener("change", calculateDifference);
-
             // Call calculateDifference function when the page loads
             calculateDifference();
         });
     </script>
+    <script>
+        function clearExpensesData() {
+            $("#expensesValue-input").val('');
+            $("#Expense-statement-input").val('');
+            $("#requird_field_ExpensesValue").text('').css("color", "");
+            $("#requird_field_ExpensesReasons").text('').css("color", "");
+            $("#ExpensesError").text('');
+            ExpensesArray.splice(0, ExpensesArray.length);
+            $('#SecondFieldset .upload__img-box').remove();
+            console.log("ExpensesArray", ExpensesArray);
+        }
+
+        function clearCompensationData() {
+            $("#compensation-input").val('');
+            $("#compensation-statement-input").val('');
+            $("#requird_field_CompensationValue").text('').css("color", "");
+            $("#requird_field_CompensationReasons").text('').css("color", "");
+            $("#compensationError").text('');
+            compensationArray.splice(0, compensationArray.length);
+            $('#ThirdFieldset .upload__img-box').remove();
+            console.log("compensationArray", compensationArray);
+        }
+
+        function clearPaymentData() {
+            $("#AmountPayed").val('');
+            document.getElementById('ContractSettlement_PaymentMethod').disabled = true;
+            document.getElementById('ContractSettlement_PaymentMethod').selectedIndex = 0;
+            document.getElementById('ContractSettlement_SalesPoint').disabled = true;
+            document.getElementById('ContractSettlement_SalesPoint').selectedIndex = 0;
+            $("#ContractSettlement_SalesPoint").empty();
+        }
+
+
+
+
+
+        function CaculateTotalDaysNo() {
+            var DaysNo = parseInt($("#daysNo").text());
+            var settlementMechanismValue = parseInt($("#Settlement-mechanism").val());
+            console.log("settlementMechanismValue", settlementMechanismValue)
+            if (settlementMechanismValue == 0) {
+                totalDaysNo = DaysNo;
+            }
+            else if (settlementMechanismValue == 1) {
+                totalDaysNo = DaysNo + 1;
+            }
+            else if (settlementMechanismValue == 2) {
+                totalDaysNo = DaysNo + (1 / 2);
+            }
+            else if (settlementMechanismValue == 3) {
+                totalDaysNo = DaysNo + (1 / 4);
+            }
+            else {
+                if (diff > 0 || (diff === 0 && diffMinutes > 0)) {
+                    totalDaysNo = DaysNo + 1;
+                }
+                else {
+                    totalDaysNo = DaysNo;
+                }
+            }
+            console.log("totalDaysNo", totalDaysNo)
+            $("#ContractSettlement_ActualDaysNo").val(totalDaysNo);
+        }
+
+        var AdditionalKm = 0;
+        // Function to calculate and update additional KM
+        function calculateAdditionalKM(enteredValue) {
+            var PreviousMeterInput = '@Model.ContractSettlement.CrCasRenterContractBasicCurrentReadingMeter';
+            var PreviousMeterValue = parseInt(PreviousMeterInput) || 0;
+            var AdditionalKmFreeDaily = '@Model.ContractSettlement.CrCasRenterContractBasicTotalDailyFreeKm';
+            var TotalAdditionalKM = parseFloat(totalDaysNo) * parseInt(AdditionalKmFreeDaily);
+            if (enteredValue <= PreviousMeterValue) {
+                $("#Error_CurrentMeter").text("@localizer["requirdfieldCurrentMeter"]" + " " + PreviousMeterValue);
+            } else {
+                var Free = TotalAdditionalKM + PreviousMeterValue;
+                AdditionalKm = enteredValue - Free;
+                console.log("Free", Free)
+                console.log("Additional", AdditionalKm)
+
+                if (AdditionalKm <= 0) {
+                    $("#AdditionalKM").text("0");
+                    AdditionalKm = 0;
+                    console.log("Additional-----", AdditionalKm)
+                } else {
+                    $("#AdditionalKM").text(AdditionalKm.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+                    console.log("Additional+++++", AdditionalKm)
+                }
+                $("#Error_CurrentMeter").text("");
+            }
+        }
+        var CurrentMeterInput = $("#CurrentMeter");
+        // Bind events to CurrentMeterInput
+        CurrentMeterInput.on("focusout", function () {
+            var enteredValue = parseFloat($(this).val()) || 0;
+            calculateAdditionalKM(enteredValue);
+            $("#ContractSettlement_AdditionalKm").val(AdditionalKm);
+        });
+    </script>
+    <script>
+        // $("#Settlement-mechanism").change(function () {
+        //     console.log($("#SettlementForm"));
+        // })
+
+        const nextButtons = document.querySelectorAll(".next");
+
+        Array.from(nextButtons).forEach((nextBtn) => {
+            nextBtn.addEventListener("click", (event) => {
+                var field = nextBtn.closest("fieldset");
+                const ExpensesCheckbox = document.getElementById('expenses-check');
+                const CompensationCheckbox = document.getElementById('compensation-check');
+                const firsetfield = document.getElementById('firstFieldset');
+                const fieldsets = document.querySelectorAll("fieldset");
+                if ($("#SettlementForm").valid()) {
+                    const current_fs = nextBtn.closest("fieldset");
+                    let next_fs = current_fs.nextElementSibling;
+                    CaculateTotalDaysNo();
+                    if (current_fs.id === 'firstFieldset') {
+                        $("#ExpensesError").text('');
+                        $("#requird_field_ExpensesValue").text('').css("color", "");
+                        $("#requird_field_ExpensesReasons").text('').css("color", "");
+                        if (!ExpensesCheckbox.checked && CompensationCheckbox.checked) {
+                            clearExpensesData();
+                            $("#requird_field_CompensationValue").text('').css("color", "");
+                            $("#requird_field_CompensationReasons").text('').css("color", "");
+                            $("#compensationError").text('');
+                            next_fs = current_fs.nextElementSibling.nextElementSibling;
+                            $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.style.display = "flex";
+                            current_fs.style.display = "none";
+
+                        } else if (!ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
+                            clearExpensesData();
+                            clearCompensationData();
+                            next_fs = current_fs.nextElementSibling.nextElementSibling.nextElementSibling;
+                            $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
+                            $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling.nextElementSibling)).addClass("active");
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.style.display = "flex";
+                            current_fs.style.display = "none";
+                        }
+                        else {
+                            next_fs = current_fs.nextElementSibling;
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.style.display = "flex";
+                            current_fs.style.display = "none";
+                        }
+                    }
+                    if (current_fs.id === 'SecondFieldset') {
+                        $("#ExpensesError").text('');
+                        var imgs = true;
+                        // Check if the div contains at least one img element
+                        if ($('.upload__img-box img.close1').length > 0) {
+                            console.log("The div contains at least one img element");
+                        } else {
+                            imgs = false;
+                        }
+                        if (imgs) {
+                            if (ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
+                                clearCompensationData();
+                                next_fs = current_fs.nextElementSibling.nextElementSibling;
+                                $("#progressbar li").eq($("fieldset").index(current_fs.nextElementSibling)).addClass("active");
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs.style.display = "flex";
+                                current_fs.style.display = "none";
+                            }
+                            else {
+                                $("#requird_field_CompensationValue").text('').css("color", "");
+                                $("#requird_field_CompensationReasons").text('').css("color", "");
+                                $("#compensationError").text('');
+                                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                next_fs.style.display = "flex";
+                                current_fs.style.display = "none";
+                            }
+                        }
+                        else {
+                            $("#ExpensesError").text('@localizer["ExpensesMessageImageRequired"]');
+                        }
+
+                    }
+                    if (current_fs.id === 'ThirdFieldset') {
+                        $("#compensationError").text('');
+                        var imgs = true;
+                        // Check if the div contains at least one img element
+                        if ($('.upload__img-box img.close2').length > 0) {
+                            console.log("The div contains at least one img element");
+                        } else {
+                            imgs = false;
+                        }
+                        if (imgs) {
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.style.display = "flex";
+                            current_fs.style.display = "none";
+                        }
+                        else {
+                            $("#compensationError").text('@localizer["ExpensesMessageImageRequired"]');
+                        }
+
+                    }
+                    if (current_fs.id === 'FourthFieldset') {
+                        var allChecked = true;
+                        var currentMeter = true;
+                        var imgs = true;
+
+                        // Check checkboxes
+                        var checkboxes = document.querySelectorAll(".CheckUp");
+                        checkboxes.forEach(function (checkbox) {
+                            if (!checkbox.checked) {
+                                allChecked = false;
+                            }
+                        });
+
+                        // Check currentMeterSpan
+                        var currentMeterSpan = $("#Error_CurrentMeter");
+                        if (currentMeterSpan.text().trim() === "") {
+                            console.log("Span is empty");
+                        } else {
+                            currentMeter = false;
+                        }
+
+                        // Check if the div contains at least one img element
+                        if ($('.upload__img-box img.close3').length > 0) {
+                            console.log("The div contains at least one img element");
+                        } else {
+                            imgs = false;
+                        }
+                        if (imgs && currentMeter && allChecked) {
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            next_fs.style.display = "flex";
+                            current_fs.style.display = "none";
+                            clearPaymentData();
+                            CaculateContractSettelement();
+                        }
+                        else {
+                            $("#examinationError").text('@localizer["checkUpMessageRequired"]')
+                        }
+                    }
+
+                }
+            });
+        });
+
+        const previousButtons = document.querySelectorAll(".previous");
+
+        Array.from(previousButtons).forEach((prevBtn) => {
+            prevBtn.addEventListener("click", (event) => {
+                const ExpensesCheckbox = document.getElementById('expenses-check');
+                const CompensationCheckbox = document.getElementById('compensation-check');
+                const current_fs = prevBtn.closest("fieldset");
+                let previous_fs = current_fs.previousElementSibling;
+                if (current_fs.id === 'FourthFieldset') {
+
+                    if (ExpensesCheckbox.checked && CompensationCheckbox.checked) {
+                        previous_fs = current_fs.previousElementSibling;
+                    } else if (!ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
+                        previous_fs = current_fs.previousElementSibling.previousElementSibling.previousElementSibling;
+                        $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling)).removeClass("active");
+                        $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling.previousElementSibling)).removeClass("active");
+                    } else if (ExpensesCheckbox.checked && !CompensationCheckbox.checked) {
+                        previous_fs = current_fs.previousElementSibling.previousElementSibling;
+                        $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling)).removeClass("active");
+                    }
+                }
+
+                if (current_fs.id === 'ThirdFieldset') {
+
+                    if (!ExpensesCheckbox.checked && CompensationCheckbox.checked) {
+                        previous_fs = current_fs.previousElementSibling.previousElementSibling;
+                        $("#progressbar li").eq($("fieldset").index(current_fs.previousElementSibling)).removeClass("active");
+
+                    }
+                }
+                Array.from(previous_fs.elements).forEach((field) => {
+                    //field.addEventListener('input', () => {
+                    //    hideErrorMessage(field);
+                    //});
+                });
+                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+                previous_fs.style.display = "flex";
+                current_fs.style.display = "none";
+            });
+        });
+    </script>
+    <script>
+        var rentValue = 0;
+        var FeesTammValue = 0;
+        var advantagesValueTotal = 0;
+        var AdditionalDriverValue = 0;
+        var PrivateDriverValueTotal = 0;
+        var ChoicesValueTotal = 0;
+        var AdditionalValue = 0;
+        var AdditionalHoursValueTotal = 0;
+        var AdditionalKMValueTotal = 0;
+        var ContractValue = 0;
+        var ContractValueAfterDiscount = 0;
+        var taxValue = 0;
+        var TotalContract = 0;
+        var ExpensesValue = 0;
+        var compensationValue = 0;
+        var AmountRequired = 0;
+        var somethingIsNotOkay = true;
+        function CaculateContractSettelement() {
+
+            //Rental Price
+            var rentalPricePerDay = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicDailyRent));
+            rentValue = totalDaysNo * parseFloat(rentalPricePerDay);
+            document.getElementById('RentalValue').textContent = rentValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // FeesTamm
+            var FeesTamm = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicAuthorizationValue));
+            FeesTammValue = parseFloat(FeesTamm);
+            document.getElementById('DelegationValue').textContent = FeesTammValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Advantages
+            var AdvantagesValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.AdvantagesValue));
+            advantagesValueTotal = totalDaysNo * parseFloat(AdvantagesValue);
+            document.getElementById('Features').textContent = advantagesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            //AdditionalDriver
+            var AdditionalDriver = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicAdditionalDriverValue));
+            AdditionalDriverValue = parseFloat(AdditionalDriver);
+            document.getElementById('AdditionalDriver').textContent = AdditionalDriverValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            //PrivateDriver
+            var PrivateDriverValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicPrivateDriverValue));
+            PrivateDriverValueTotal = totalDaysNo * parseFloat(PrivateDriverValue);
+            document.getElementById('PrivateDriver').textContent = PrivateDriverValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#ContractSettlement_PrivateDriverValueTotal").val(PrivateDriverValueTotal);
+
+            // Additionals
+            var Additionals = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicAdditionalValue));
+            AdditionalValue = parseFloat(Additionals);
+            document.getElementById('Additionals').textContent = AdditionalValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            //Choices
+            var ChoicesValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.ChoicesValue));
+            ChoicesValueTotal = totalDaysNo * parseFloat(ChoicesValue);
+            document.getElementById('Choices').textContent = ChoicesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#ContractSettlement_ChoicesValueTotal").val(ChoicesValueTotal);
+
+            // Additional Hours Value Total
+            getAdditionalHoursValue();
+
+            // Additional KMs Value Total
+            if (AdditionalKm != null && AdditionalKm.toString() != "" && AdditionalKm != undefined) {
+                getAdditionalKmValue();
+                $("#ContractSettlement_AdditionalKm").val(AdditionalKm);
+            }
+            //Get ContractValue
+
+            ContractValue = rentValue + FeesTammValue + advantagesValueTotal + AdditionalDriverValue + PrivateDriverValueTotal + AdditionalValue + ChoicesValueTotal + AdditionalHoursValueTotal + AdditionalKMValueTotal;
+            document.getElementById('ContractValue').textContent = ContractValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#ContractSettlement_ContractValue").val(ContractValue);
+
+            // get ContractValueAfterDiscount
+            var discountRate = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicUserDiscountRate));
+            var discountValue = ContractValue * (parseFloat(discountRate) / 100);
+            $("#ContractSettlement_DiscountValue").val(discountValue);
+
+            ContractValueAfterDiscount = ContractValue - discountValue;
+            $("#ContractSettlement_ContractValueAfterDiscount").val(ContractValueAfterDiscount);
+            document.getElementById('ContractValueAfterDiscount').textContent = ContractValueAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // get Tax Value
+            var taxRate = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicTaxRate));
+            taxValue = ContractValueAfterDiscount * (parseFloat(taxRate) / 100);
+            $("#ContractSettlement_TaxValue").val(taxValue);
+
+            document.getElementById('TaxValue').textContent = taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            // get TotalContract
+            TotalContract = ContractValueAfterDiscount + taxValue;
+            $("#ContractSettlement_TotalContract").val(TotalContract);
+            document.getElementById('TotalContract').textContent = TotalContract.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // expenses Value
+            var expensesInput = $("#expensesValue-input").val();
+            if (parseFloat(expensesInput) > 0) {
+                ExpensesValue = parseFloat(expensesInput);
+            } else {
+                ExpensesValue = 0;
+            }
+            document.getElementById('TotalExpenseValue').textContent = ExpensesValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // compensation Value
+            var compensationInput = $("#compensation-input").val();
+            if (parseFloat(compensationInput) > 0) {
+                compensationValue = parseFloat(compensationInput);
+            } else {
+                compensationValue = 0;
+            }
+            document.getElementById('TotalCompensationValue').textContent = compensationValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // AmountRequired
+            var previousBalance = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasic5.CrCasRenterLessorAvailableBalance));
+            var previousTotalContract = @Html.Raw(Json.Serialize(Model?.ContractSettlement.CrCasRenterContractBasicExpectedTotal));
+            AmountRequired = TotalContract - parseFloat(previousTotalContract)  - parseFloat(previousBalance) + compensationValue - ExpensesValue;
+            if (AmountRequired < 0) {
+                document.getElementById('RenterMoneyText').textContent = '@localizer["RenterMoneyText2"]'
+            }
+            else if (AmountRequired > 0) {
+                document.getElementById('RenterMoneyText').textContent = '@localizer["RenterMoneyText1"]'
+            }
+            $("#ContractSettlement_AmountRequired").val(AmountRequired);
+            document.getElementById('AmountRequired').textContent = Math.abs(AmountRequired).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        function getAdditionalHoursValue() {
+            // Additional Hours Value Total
+            const TotalFreeHours = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicTotalFreeHours));
+            var AdditionalHourValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicHourValue));
+            var AdditionalHour = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicHourMax));
+            if (AdditionalHour > 0) {
+                if (diff > 0 || (diff === 0 && diffMinutes > 0)) {
+                    AdditionalHoursValueTotal = parseInt(AdditionalHour) * parseFloat(AdditionalHourValue);
+                }
+                else {
+                    var HourAfterFreeHour = diffHours - TotalFreeHours;
+                    console.log("HourAfterFreeHour", HourAfterFreeHour)
+                    console.log("AdditionalHourValue", AdditionalHourValue)
+                    console.log("diffHours", diffHours)
+                    console.log("diffMinutes", diffMinutes)
+                    if (HourAfterFreeHour >= 0 && diffMinutes > 0) {
+                        AdditionalHoursValueTotal = (parseInt(HourAfterFreeHour) * parseFloat(AdditionalHourValue)) + (((parseFloat(AdditionalHourValue) * parseInt(diffMinutes)) / 60));
+                        console.log("AdditionalHoursValueTotal", AdditionalHoursValueTotal)
+                    }
+                }
+            }
+            document.getElementById('ExtraHoursValue').textContent = AdditionalHoursValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#ContractSettlement_MaxHours").val(AdditionalHour);
+            $("#ContractSettlement_MaxMinutes").val(diffMinutes);
+            $("#ContractSettlement_ExtraHoursValue").val(AdditionalHoursValueTotal);
+
+        }
+        function getAdditionalKmValue() {
+            const KMValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicKmValue));
+            AdditionalKMValueTotal = parseInt(AdditionalKm) * parseFloat(KMValue);
+            document.getElementById('ExtraKMsValue').textContent = AdditionalKMValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+    </script>
+    <script>
+
+        function CheckIfCanPayLessThanTotalAmount() {
+            var userCashBranchAmount = @Html.Raw(Json.Serialize(userInfo?.CrMasUserBranchValidities?.FirstOrDefault(x => x.CrMasUserBranchValidityBranch == Model?.SelectedBranch).CrMasUserBranchValidityBranchCashAvailable));
+            var AmountPayed = document.getElementById("AmountPayed").value;
+            console.log("userCashBranchAmount", userCashBranchAmount)
+            console.log("AmountPayed", AmountPayed)
+            console.log("AmountRequired", AmountRequired)
+            if (AmountRequired < 0) {
+                if (parseFloat(userCashBranchAmount) < parseFloat(AmountPayed)) {
+                    toastr.options = { "positionClass": '@localizer["toastPostion"]', };
+                    toastr.error('@localizer["UserDontHaveCashToPay"]');
+                    $("#AmountPayed").css({ "border": "2px solid red" });    //This For last Check When i submit Form
+                    somethingIsNotOkay = false;
+                }
+                else {
+                    $("#AmountPayed").css({ "border": "2px solid #faa64d" }); //This For last Check When i submit Form
+                    somethingIsNotOkay = true;
+                }
+            }
+            else {
+                $("#AmountPayed").css({ "border": "2px solid #faa64d" }); //This For last Check When i submit Form
+                somethingIsNotOkay = true;
+            }
+        }
+        $(document).ready(function () {
+            $("#AmountPayed").focusout(function () {
+                var payed = document.getElementById('AmountPayed').value;
+                var BranchCode = @Html.Raw(Json.Serialize(Model?.SelectedBranch));
+                if (AmountRequired < 0) {
+                    CheckIfCanPayLessThanTotalAmount();
+                }
+                if (AmountRequired > 0 && parseFloat(payed) > 0 && somethingIsNotOkay) {
+                    document.getElementById('ContractSettlement_PaymentMethod').disabled = false;
+                    // document.getElementById('ContractSettlement_PaymentMethod').selectedIndex = 0;
+                    document.getElementById('ContractSettlement_SalesPoint').disabled = false;
+                    document.getElementById('ContractSettlement_SalesPoint').selectedIndex = 0;
+                }
+                else if (AmountRequired < 0 && parseFloat(payed) > 0 && somethingIsNotOkay) {
+                    CheckIfCanPayLessThanTotalAmount();
+                    getSalesPoint("10", BranchCode);
+                    document.getElementById('ContractSettlement_PaymentMethod').value = "10";
+                    document.getElementById('ContractSettlement_PaymentMethod').disabled = true;
+
+                }
+                else {
+                    document.getElementById('ContractSettlement_PaymentMethod').disabled = true;
+                    document.getElementById('ContractSettlement_PaymentMethod').selectedIndex = 0;
+                    document.getElementById('ContractSettlement_SalesPoint').disabled = true;
+                    document.getElementById('ContractSettlement_SalesPoint').selectedIndex = 0;
+                    $("#ContractSettlement_SalesPoint").empty();
+                }
+            })
+        });
+        $(document).ready(function () {
+            $("#ContractSettlement_PaymentMethod").change(function () {
+                var PaymentMethod = $("#ContractSettlement_PaymentMethod").val();
+                var BranchCode = @Html.Raw(Json.Serialize(Model?.SelectedBranch));
+                console.log(PaymentMethod);
+                console.log("BranchCode", BranchCode);
+                getSalesPoint(PaymentMethod, BranchCode);
+            })
+        });
+        function getSalesPoint(PaymentMethod, BranchCode) {
+            $.get("/BS/ContractSettlement/GetSalesPoint", { PaymentMethod: PaymentMethod, BranchCode: BranchCode }, function (data) {
+                $("#ContractSettlement_SalesPoint").empty();
+                console.log(data);
+                if (data.type == "1" && data.salesPoints != null) {
+                    $.each(data.salesPoints, function (index, row) {
+                        if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                            $("#ContractSettlement_SalesPoint").append("<option  value= '" + row.crCasAccountSalesPointCode + "'>" + row.crCasAccountSalesPointEnName + "</option>")
+                        }
+                        else {
+                            $("#ContractSettlement_SalesPoint").append("<option class='text-right' value= '" + row.crCasAccountSalesPointCode + "'>" + row.crCasAccountSalesPointArName + "</option>")
+                        }
+                    });
+                }
+                else if (data.type == "2" && data.accountBank != null) {
+                    $.each(data.accountBank, function (index, row) {
+                        if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+
+                            $("#ContractSettlement_SalesPoint").append("<option value= '" + row.crCasAccountBankCode + "'>" + row.crCasAccountBankEnName + "</option>")
+                        }
+                        else {
+                            $("#ContractSettlement_SalesPoint").append("<option class='text-right' value= '" + row.crCasAccountBankCode + "'>" + row.crCasAccountBankArName + "</option>")
+                        }
+                    });
+                }
+
+            });
+        }
+    </script>
+    <script>
+        // submit Form
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the form element
+            var form = document.getElementById('SettlementForm');
+
+            // Get the submit button
+            var submitButton = document.getElementById('submitForm');
+
+            // Add a click event listener to the submit button
+            submitButton.addEventListener('click', function (event) {
+                // Prevent the default form submission
+                event.preventDefault();
+
+                // Check if the form is valid and something is not okay
+                if ($("#SettlementForm").valid()) {
+                    // Submit the form
+                    CheckIfCanPayLessThanTotalAmount();
+                    if (somethingIsNotOkay) {
+                        $('.main').show(); // Show the main container with fade effect
+                        if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
+                            $("#language").val("en");
+                        }
+                        else {
+                            $("#language").val("ar");
+                        }
+                        setTimeout(function () {
+                            document.getElementById('ContractSettlement_PaymentMethod').disabled = false;
+                            document.getElementById('ContractSettlement_SalesPoint').disabled = false;
+                            form.submit();
+                        }, 5000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
+                    }
+                    else {
+                        CheckIfCanPayLessThanTotalAmount();
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        function handleAmountPayed(input) {
+            // Remove non-digit characters and additional decimal points
+            input.value = input.value.replace(/[^0-9\.]/g, '');
+            const decimalIndex = input.value.indexOf('.');
+            // Limit to 9 digits before and after the decimal point
+            if (decimalIndex !== -1) {
+                const digitsBeforeDecimal = input.value.substring(0, decimalIndex);
+                const digitsAfterDecimal = input.value.substring(decimalIndex + 1);
+
+                // Limit to 2 digits after the decimal point
+                input.value = digitsBeforeDecimal.substr(0, 7) + '.' + digitsAfterDecimal.substr(0, 2);
+
+                // Remove additional decimal points
+                if (input.value.indexOf('.', decimalIndex + 1) !== -1) {
+                    const lastValidIndex = input.value.lastIndexOf('.');
+                    input.value = input.value.substring(0, lastValidIndex) + input.value.substring(lastValidIndex + 1);
+                }
+            } else {
+                // Limit to 7 digits before the decimal point
+                input.value = input.value.substr(0, 7);
+            }
+        }
+    </script>
+
 }

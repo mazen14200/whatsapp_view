@@ -34,6 +34,11 @@
     .selected {
         border: 3px solid #39629C; /* Add your desired border style for selected rows */
     }
+
+    .form-control[readonly] {
+        background-color: #ffffff !important;
+        opacity: 1;
+    }
 </style>
 @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
 {
@@ -69,9 +74,10 @@ else
                         </div>
                     </div>
                     <div class="row justify-content-center h-100 content-row">
-                        <div class="col-md-11 mx-0">
+                        <div class="col-md-11 mx-0 h-100">
                             <form asp-area="BS" asp-action="CreateContract" asp-controller="Contract" id="msform" novalidate class="needs-validation" enctype="multipart/form-data">
-                                <input hidden id="PdfSave1" name="PdfSave1" />
+                                <input hidden id="PdfSaveAr" name="PdfSaveAr" />
+                                <input hidden id="PdfSaveEn" name="PdfSaveEn" />
                                 <input hidden asp-for="Contract.AccountReceiptNo" />
                                 <input hidden id="language" name="language" />
                                 <div class=" pe-4">
@@ -1350,11 +1356,12 @@ else
                                                             {
                                                                 @if (requestCulture?.RequestCulture.UICulture.Name != "en-US")
                                                                 {
-                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
+                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode" data-ar="@payment.CrMasSupAccountPaymentMethodArName" data-en="@payment.CrMasSupAccountPaymentMethodEnName" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
+
                                                                 }
                                                                 else
                                                                 {
-                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode">@payment.CrMasSupAccountPaymentMethodEnName</option>
+                                                                    <option value="@payment.CrMasSupAccountPaymentMethodCode" data-ar="@payment.CrMasSupAccountPaymentMethodArName" data-en="@payment.CrMasSupAccountPaymentMethodEnName">@payment.CrMasSupAccountPaymentMethodEnName</option>
                                                                 }
                                                             }
                                                         </select>
@@ -2934,7 +2941,6 @@ else
                             }
                             else {
                                 //Clear Data Of Driver And Add Driver To Return Check
-
                                 IsThereAdditionalDriver();
                                 clearDataDriver();
                                 clearDataAddDriver();
@@ -3051,6 +3057,7 @@ else
                                     NextField = "options";
                                 }
                                 else {
+                                    clearDataAddDriver();
                                     if (CarChoices.count == 0 && CarAdditionals.count == 0) {
                                         $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                                         next_fs = $(this).closest("fieldset").next().next();
@@ -3084,6 +3091,7 @@ else
                                 NextField = "options";
                             }
                             else {
+                                clearDataAddDriver();
                                 if (CarChoices.count == 0 && CarAdditionals.count == 0) {
                                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                                     next_fs = $(this).closest("fieldset").next().next();
@@ -3243,6 +3251,7 @@ else
                 }
                 else if (currentField === "check") {
                     // Initialize variables
+                    clearPaymentData();
                     var allChecked = true;
                     var currentMeter = true;
                     var imgs = true;
@@ -3570,13 +3579,14 @@ else
             optionsList.forEach(function (option) {
                 var nameLabel = "@requestCulture?.RequestCulture.UICulture.Name" === "en-US" ? option.enName : option.arName;
                 var row = $("<tr>");
-                row.append("<td class='text-center'>" + option.optionsValue + "</td>");
-                row.append("<td class='tabel-data-checkbox-td-Add'>" +
-                    "<label class='Delivery-to-another-branch' for='checkbox-" + option.optionsNo + "'>" +
-                    nameLabel + "</label>" +
-                    "<input class='Delivery-to-another-branch-input ChkChoicesList' type='checkbox' name='Additions' " +
-                    "value='" + option.optionsCode + "' data-val='" + option.optionsValue + "' id='checkbox - " + option.optionsNo + "'>" +
-                    "</td>");
+                var valueCell = $("<td class='text-center' data-value='" + option.optionsValue + "'>" + option.optionsValue + "</td>");
+                var optionsCol = $("<td class='tabel-data-checkbox-td-Add'>");
+                var optionsDiv = $("<div class='options-col'>");
+                optionsDiv.append("<label class='Delivery-to-another-branch' for='checkbox-" + option.optionsNo + "'>" + nameLabel + "</label>");
+                optionsDiv.append("<input class='Delivery-to-another-branch-input ChkChoicesList' type='checkbox' name='Additions' value='" + option.optionsCode + "' data-val='" + option.optionsValue + "' id='checkbox-" + option.optionsNo + "'>");
+                optionsCol.append(optionsDiv);
+                row.append(valueCell);
+                row.append(optionsCol);
                 tbodyContainer.append(row);
             });
 
@@ -3671,12 +3681,14 @@ else
             additionalList.forEach(function (add) {
                 var nameLabel = "@requestCulture?.RequestCulture.UICulture.Name" === "en-US" ? add.enName : add.arName;
                 var row = $("<tr>");
-                row.append("<td class='text-center'>" + add.addValue + "</td>");
-                row.append("<td class='tabel-data-checkbox-td-Add'>" +
-                    "<label class='Delivery-to-another-branch ' for='checkbox-" + add.AddNo + "'>" + nameLabel + "</label>"
-                    +
-                    "<input class='Delivery-to-another-branch-input ChkAddList' type='checkbox' name='Additions' " + "value='" + add.addCode + "' data-val='" + add.addValue + "' id='checkbox-" + add.addNo + "'>" +
-                    "</td>");
+                var valueCell = $("<td class='text-center'>" + add.addValue + "</td>");
+                var optionsCol = $("<td class='tabel-data-checkbox-td-Add'>");
+                var optionsDiv = $("<div class='options-col'>");
+                optionsDiv.append("<label class='Delivery-to-another-branch' for='checkbox-" + add.AddNo + "'>" + nameLabel + "</label>");
+                optionsDiv.append("<input class='Delivery-to-another-branch-input ChkAddList' type='checkbox' name='Additions' value='" + add.addCode + "' data-val='" + add.addValue + "' id='checkbox-" + add.addNo + "'>");
+                optionsCol.append(optionsDiv);
+                row.append(valueCell);
+                row.append(optionsCol);
                 tbodyContainer.append(row);
             });
 
@@ -4284,6 +4296,7 @@ else
             var selectedOption = selectElement.options[selectElement.selectedIndex];
             // Get the text of the selected option
             const selectedText = selectedOption.textContent || selectedOption.innerText;
+            var selectedArabicName = selectedOption.dataset.ar;
             //get Data Director lessor and branch and get renter and user
             var userName = decodeHTMLEntities("@user.CrMasUserInformationArName");
             var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorArName");
@@ -4339,7 +4352,7 @@ else
                 ctx.fillText(taxText, canvas.width - 367, 2573);
                 ctx.fillText(AmountRequired, canvas.width - 360, 2660);
                 ctx.fillText(AmountPayed, canvas.width - 360, 2750);
-                ctx.fillText(selectedText, canvas.width - 360, 2840);
+                ctx.fillText(selectedArabicName, canvas.width - 360, 2840);
                 ctx.fillText(reasonPayment, canvas.width - 360, 2930);
                 ctx.font = "bold 35px serif";
                 //Date and contract no
@@ -4489,7 +4502,7 @@ else
                 canvas.toBlob(async function (blob) {
                     formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
                     var message = ` عزيزي / ${RenterName} , يمكنك مراجعة الفاتورة عن طريق تحميل الملف المرفق `
-                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message);
+                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message, "PdfSaveAr");
                 }, 'image/png');
             };
             img.src = URL.createObjectURL(blob);
@@ -4545,6 +4558,7 @@ else
             var selectedOption = selectElement.options[selectElement.selectedIndex];
             // Get the text of the selected option
             const selectedText = selectedOption.textContent || selectedOption.innerText;
+            var selectedEnglishName = selectedOption.dataset.en;
             //get Data Director lessor and branch and get renter and user
             var userName = decodeHTMLEntities("@user.CrMasUserInformationEnName");
             var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorEnName");
@@ -4600,7 +4614,7 @@ else
                 ctx.fillText(taxText, canvas.width - 2180, 2573);
                 ctx.fillText(AmountRequired, canvas.width - 2020, 2660);
                 ctx.fillText(AmountPayed, canvas.width - 2100, 2750);
-                ctx.fillText(selectedText, canvas.width - 2010, 2840);
+                ctx.fillText(selectedEnglishName, canvas.width - 2010, 2840);
                 ctx.fillText(reasonPayment, canvas.width - 2170, 2920);
                 ctx.font = "bold 35px serif";
                 //Date and contract no
@@ -4742,14 +4756,15 @@ else
 
 
                 // director and renter and user
-                ctx.fillText(directorOfLessor, canvas.width - 2150, 3050);
-                ctx.fillText(userName, canvas.width - 1110, 3050);
-                ctx.fillText(directorOfBranch, canvas.width - 1150, 3180);
-                ctx.drawImage(signatureImg, canvas.width - 2200, 3125, 200, 100);
+                ctx.fillText(directorOfLessor, canvas.width - 1980, 3050);
+                ctx.fillText(directorOfBranch, canvas.width - 2020, 3180);
+
+                ctx.fillText(userName, canvas.width - 1275, 3050);
+                ctx.drawImage(signatureImg, canvas.width - 1250, 3125, 200, 100);
                 canvas.toBlob(async function (blob) {
                     formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
                     var message = `Dear / ${RenterName}, you can review the invoice by downloading the attached file.`
-                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message);
+                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message, "PdfSaveEn");
                 }, 'image/png');
             };
             img.src = URL.createObjectURL(blob);
@@ -4809,14 +4824,8 @@ else
                         $('.main').show(); // Show the main container with fade effect
                         sendStaticImageToWhatsApp();
                         if (parseFloat(AmountPayed) > 0) {
-                            if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
-                                $("#language").val("en");
-                                sendEnReceiptToWhatsApp();
-                            }
-                            else {
-                                $("#language").val("ar");
-                                sendArReceiptToWhatsApp();
-                            }
+                            sendEnReceiptToWhatsApp();
+                            sendArReceiptToWhatsApp();
                         }
                         setTimeout(function () {
                             form.submit();
@@ -4831,7 +4840,7 @@ else
 
     </script>
     <script type="text/javascript">
-        function createPdfAndSendToWhatsApp(receiptNo, phoneNumber, token, imageBlob, message) {
+        function createPdfAndSendToWhatsApp(receiptNo, phoneNumber, token, imageBlob, message, InputPdf) {
             var doc = new jsPDF('p', 'pt', 'a4', true);
             const pageWidth = doc.internal.pageSize.getWidth();
             const pageHeight = doc.internal.pageSize.getHeight();
@@ -4851,41 +4860,78 @@ else
                     const blobUrl = URL.createObjectURL(pdfBlob);
                     const pdfBase64 = doc.output('datauristring');
                     // Set the base64-encoded PDF to the hidden input field
-                    document.getElementById('PdfSave1').value = pdfBase64;
+                    document.getElementById(InputPdf).value = pdfBase64;
                     document.getElementById('Contract_AccountReceiptNo').value = receiptNo;
-                    console.log("pdfBase64", pdfBase64)
-                    console.log("receiptNo", receiptNo)
+
                     // window.open(blobUrl, '_blank');
                     // Prepare form data with PDF
-                    const formData = new FormData();
-                    formData.append("number", phoneNumber); // Append the recipient's phone number
-                    formData.append("message", message); // Append the message
-                    formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
+                    if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US" && InputPdf == "PdfSaveEn") {
+                        const formData = new FormData();
+                        formData.append("number", phoneNumber); // Append the recipient's phone number
+                        formData.append("message", message); // Append the message
+                        formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
 
-                    // Convert the PDF to a base64-encoded string
-                    const requestOptions = {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    };
-                    console.log("pdfBlob", pdfBlob);
-                    // Send the request to the API endpoint
-                    fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
-                        .then(response => {
-                            if (response.ok) {
-                                return response.json();
-                            } else {
-                                return response.text().then(error => Promise.reject(error));
+                        // Convert the PDF to a base64-encoded string
+                        const requestOptions = {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Authorization': `Bearer ${token}`
                             }
-                        })
-                        .then(result => {
-                            console.log("SendPDFResult", result);
-                        })
-                        .catch(error => {
-                            console.log("SendPDFError", error);
-                        });
+                        };
+                        console.log("pdfBlob", pdfBlob);
+                        // Send the request to the API endpoint
+                        fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
+                            .then(response => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else {
+                                    return response.text().then(error => Promise.reject(error));
+                                }
+                            })
+                            .then(result => {
+                                console.log("SendPDFResult", result);
+                            })
+                            .catch(error => {
+                                console.log("SendPDFError", error);
+                            });
+
+                    }
+                    else if ("@requestCulture?.RequestCulture.UICulture.Name" == "ar-EG" && InputPdf == "PdfSaveAr") {
+                        if (InputPdf == "PdfSaveAr") {
+                            const formData = new FormData();
+                            formData.append("number", phoneNumber); // Append the recipient's phone number
+                            formData.append("message", message); // Append the message
+                            formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
+
+                            // Convert the PDF to a base64-encoded string
+                            const requestOptions = {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'Authorization': `Bearer ${token}`
+                                }
+                            };
+                            console.log("pdfBlob", pdfBlob);
+                            // Send the request to the API endpoint
+                            fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
+                                .then(response => {
+                                    if (response.ok) {
+                                        return response.json();
+                                    } else {
+                                        return response.text().then(error => Promise.reject(error));
+                                    }
+                                })
+                                .then(result => {
+                                    console.log("SendPDFResult", result);
+                                })
+                                .catch(error => {
+                                    console.log("SendPDFError", error);
+                                });
+                        }
+                    }
+
+
                 };
 
                 reader.readAsDataURL(imageBlob); // Start reading the image blob

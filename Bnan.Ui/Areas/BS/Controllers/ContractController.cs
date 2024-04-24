@@ -97,7 +97,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             return View(bSLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateContract(BSLayoutVM bSLayoutVM, string ChoicesList, string AdditionalsList, Dictionary<string, string> Reasons, bool Contract_OutFeesTmm, string? PdfSave1,string? language)
+        public async Task<IActionResult> CreateContract(BSLayoutVM bSLayoutVM, string ChoicesList, string AdditionalsList, Dictionary<string, string> Reasons, bool Contract_OutFeesTmm, string? PdfSaveAr, string? PdfSaveEn)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -127,7 +127,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 //Account Receipt
                 var CheckAccountReceipt = true;
                 var passing = "";
-                var SavePdf = "";
+                var SavePdfAr = "";
+                var SavePdfEn = "";
                 if (BasicContract.CrCasRenterContractBasicAmountPaidAdvance > 0)
                 {
                    
@@ -139,11 +140,12 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     else {
                         passing = "1";
                     }
-                    if (!string.IsNullOrEmpty(PdfSave1)&& !string.IsNullOrEmpty(language)) SavePdf = await FileExtensions.SavePdf(_hostingEnvironment, PdfSave1, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, language);
+                    if (!string.IsNullOrEmpty(PdfSaveAr)) SavePdfAr = await FileExtensions.SavePdf(_hostingEnvironment, PdfSaveAr, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, "ar");
+                    if (!string.IsNullOrEmpty(PdfSaveEn)) SavePdfEn = await FileExtensions.SavePdf(_hostingEnvironment, PdfSaveEn, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, "en");
                     CheckAccountReceipt = await _ContractServices.AddAccountReceipt(BasicContract.CrCasRenterContractBasicNo, lessorCode, BasicContract.CrCasRenterContractBasicBranch,
                                                                                   ContractInfo.PaymentMethod, ContractInfo.AccountNo, BasicContract.CrCasRenterContractBasicCarSerailNo,
                                                                                   ContractInfo.SalesPoint,(decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance,
-                                                                                  BasicContract.CrCasRenterContractBasicRenterId,userLogin.CrMasUserInformationCode, passing, ContractInfo.PaymentReasons,SavePdf, language);
+                                                                                  BasicContract.CrCasRenterContractBasicRenterId,userLogin.CrMasUserInformationCode, passing, ContractInfo.PaymentReasons, SavePdfAr, SavePdfEn);
                 }
 
                 //Choices

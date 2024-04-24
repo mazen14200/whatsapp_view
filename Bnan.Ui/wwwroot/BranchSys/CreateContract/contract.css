@@ -14,6 +14,7 @@ body {
     height: 100vh;
     font-size: .875rem;
     letter-spacing: 0.28px;
+    position: relative;
 }
 
 .inputs,
@@ -38,8 +39,8 @@ body {
 .textarea-inputs {
     border-top: none;
     resize: none;
-/*    min-height: calc(3em + 0.75rem + calc(var(--bs-border-width)* 2)) !important;
-*/}
+    min-height: calc(3em + 0.75rem + calc(var(--bs-border-width)* 2)) !important;
+}
 
 .form-select-driver {
     border-top: none;
@@ -71,12 +72,12 @@ body {
 
 .content-row {
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .check-table-notes {
     border: none;
-    height: 41px;
+    height: 40px;
     resize: none;
     width: 100%;
     padding: 0 0.75rem;
@@ -101,6 +102,7 @@ nav {
     text-align: right;
     position: relative;
     /* margin-top: 10px; */
+    height: 97%;
 }
 
 .form-card {
@@ -114,6 +116,13 @@ nav {
     /* margin: 0 3% 20px 3%; */
     /*stacking fieldsets above each other*/
     position: relative;
+    height: 100%;
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .main-card {
@@ -127,25 +136,22 @@ nav {
 }
 
 #msform fieldset {
-    background: white;
+    background: rgba(255, 255, 255, 0);
     border: 0 none;
     border-radius: 0.5rem;
     box-sizing: border-box;
     width: 100%;
     margin: 0;
     position: relative;
+    height: 90%;
 }
 
-fieldset {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
-/* Hide all except first fieldset */
-#msform fieldset:not(:first-of-type) {
-    display: none;
-}
+
+    /* Hide all except first fieldset */
+    #msform fieldset:not(:first-of-type) {
+        display: none;
+    }
 
 .form-card input :not(.form-check.input) {
     border: 1px solid #FF9626;
@@ -462,9 +468,6 @@ input[type="number"]:nth-child(n+4) {
     background-color: white;
     font-size: 0.75rem;
 }
-#dropdown_content_Renter {
-    width: 290px;
-}
 
 .dropdown-content-row {
     flex-direction: row-reverse;
@@ -484,10 +487,7 @@ input[type="number"]:nth-child(n+4) {
     height: 37px;
 }
 
-.requird-field-row-data {
-    justify-content: flex-end;
-    height: 0;
-}
+
 
 
 
@@ -622,7 +622,7 @@ footer {
     z-index: -9999;
     background-color: #FF992E;
     width: 100%;
-    height: 240px;
+    height: 200px;
 }
 
 /* //////////////////////////////////////////////////////////// */
@@ -653,13 +653,7 @@ footer {
 }
 
 .tabel-data-checkbox-td {
-    width: 32%
-}
-.tabel-data-checkbox-td-Add {
-    width: 60%
-}
-.Delivery-to-another-branch {
-    margin-right: 10px
+    min-width: 30%
 }
 
 .table-bordered tr {
@@ -1064,10 +1058,7 @@ canvas {
     margin: 5px;
     border-radius: 8px;
 }
-.form-control:disabled, .form-control[readonly] {
-    background-color: white !important; 
-    opacity: 1;
-}
+
 /* /////////////////////media for the seacrh icon list on mobiles///////////////////////// */
 @media (max-width:575px) {
     .dropdown-content {
@@ -1137,6 +1128,30 @@ canvas {
 
 
 /***************************************************cards-media**************************************************/
+@media (max-height:550px) {
+    .form-card {
+        height: fit-content;
+    }
+
+    fieldset {
+        height: fit-content;
+    }
+
+    #msform {
+        height: fit-content;
+    }
+}
+
+@media (max-width: 430px) {
+    .table-scroll {
+        height: 270px;
+    }
+
+    #msform {
+        height: fit-content;
+    }
+}
+
 @media (min-height: 700px) {
 
     .form-card3,
@@ -1214,9 +1229,9 @@ canvas {
 @media (min-height: 890px) {
 
 
-    /*footer {
-        padding-bottom: 300px;
-    }*/
+    footer {
+        /* padding-bottom: 300px; */
+    }
 
     .form-card1 {
         padding: 40px 20px 17px 12px;
@@ -1269,7 +1284,7 @@ canvas {
     }
 
     .table-scroll {
-        height: 500px;
+        height: 400px;
     }
 
     .car-catogeries {
@@ -1309,4 +1324,13 @@ canvas {
     .modal-lg {
         max-width: 85%;
     }
+}
+
+
+/* ///////////////////// */
+.options-col {
+    gap: 5px;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
 }

@@ -139,9 +139,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 ViewBag.ContractsDetailed = companyContractDetailed;
             }
             ViewBag.SelectOption = activiation;
-            ViewBag.CrMasContractCompanyTaxRate = model.CrMasContractCompanyTaxRate;
-            ViewBag.CrMasContractCompanyDiscountRate = model.CrMasContractCompanyDiscountRate;
-            ViewBag.CrMasContractCompanyAnnualFees = model.CrMasContractCompanyAnnualFees;
+            ViewBag.CrMasContractCompanyTaxRate = model.CrMasContractCompanyTaxRate?.ToString("N2",CultureInfo.InvariantCulture);
+            ViewBag.CrMasContractCompanyDiscountRate = model.CrMasContractCompanyDiscountRate?.ToString("N2", CultureInfo.InvariantCulture);
+            ViewBag.CrMasContractCompanyAnnualFees = model.CrMasContractCompanyAnnualFees?.ToString("N2", CultureInfo.InvariantCulture);
             return View(model);
         }
         [HttpPost]

@@ -191,7 +191,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 if (status==Status.Accept)
                 {
                     CheckAddReceipt = await _Custody.AddAccountReceiptReceivedCustody(Adminstritive.CrCasSysAdministrativeProceduresNo,
-                                                                                  lessorCode, Adminstritive.CrCasSysAdministrativeProceduresBranch, custodyVM.TotalAmount,userLogin.CrMasUserInformationCode, Reasons);
+                                                                                  lessorCode, Adminstritive.CrCasSysAdministrativeProceduresBranch, custodyVM.TotalAmount, Adminstritive.CrCasSysAdministrativeProceduresTargeted, Reasons);
                 }
                 
 

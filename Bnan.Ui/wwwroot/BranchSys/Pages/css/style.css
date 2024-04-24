@@ -38,7 +38,7 @@ nav {
 
 .textarea-inputs {
     border-top: none;
-    min-height: calc(3em + 0.75rem + calc(var(--bs-border-width)* 2)) !important;
+    /* min-height: calc(3em + 0.75rem + calc(var(--bs-border-width)* 2)) !important; */
 }
 
 .inputs {
@@ -62,7 +62,7 @@ nav {
 
 .form-select-last {
     border-top: none;
-    width: 150px;
+    width: 100%;
     padding-bottom: 0;
 }
 
@@ -395,6 +395,7 @@ nav {
 
 .invalid-feedback {
     color: red;
+    font-size: .625rem;
 }
 
 .content-row {
@@ -404,7 +405,7 @@ nav {
 }
 
 .form-card {
-    background: rgb(255, 255, 255);
+    /* background: rgb(255, 255, 255); */
     border: 1px solid #39629c9c;
     border-radius: 7px;
     box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
@@ -425,33 +426,39 @@ nav {
     height: 85%;
 }
 
-.main-card {
-    box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important;
+#custody-form, #contract-extension2-form, #report-form, #tenant-form, #tenant-details-form, #myForm {
     height: 100%;
 }
 
-#SettlementForm fieldset {
-    background: white;
-    border: 0 none;
-    border-radius: 0.5rem;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0;
-    position: relative;
-    /* height: 88%; */
+.main-card {
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important;
+    height: 100%;
 }
 
 fieldset {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
+}
+
+
+#SettlementForm fieldset {
+    background: rgba(255, 255, 255, 0);
+    border: 0 none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    position: relative;
+    height: 90%;
 }
 
 .form-card {
     display: flex;
     flex-direction: column;
     color: black;
-    /* height: 100%; */
+    height: 100%;
 }
 
 
@@ -510,12 +517,12 @@ textarea {
 
 
 
-
+/* 
 .form-control:focus {
     border: 1px solid #FF9626;
     border-top: none;
     box-shadow: 3px 5px 5px rgba(255, 150, 38, .2);
-}
+} */
 
 .form-check-inline {
     display: inline-flex;
@@ -553,7 +560,7 @@ textarea {
 }
 
 #SettlementTable {
-    height: 260px;
+    /* height: 260px; */
     overflow: auto;
     direction: rtl;
     padding-left: 0;
@@ -594,7 +601,6 @@ textarea {
     background: rgba(255, 150, 38, 0.40);
     border-radius: 5px;
     height: 10px;
-    \
 }
 
 .table {
@@ -814,11 +820,11 @@ footer {
 
 .requird-field {
     /* margin-bottom: 0px; */
-    font-size: 10px;
+    font-size: 14px;
     color: red;
     width: fit-content;
-    display: none;
-}
+/*    display: none;
+*/}
 
 .requird-field-row-last {
     justify-content: flex-end;
@@ -880,6 +886,7 @@ footer {
     font-size: .75rem;
     box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
+
 /* =========================================================================Settlement ==================================================== */
 /* Hide all except first fieldset */
 #SettlementForm fieldset:not(:first-of-type) {
@@ -1058,7 +1065,7 @@ footer {
 }
 
 .expensesRow {
-    min-height: 30vh;
+    height: 100%;
 }
 
 .expensesDiv-textarea {
@@ -1074,8 +1081,7 @@ footer {
 }
 
 .compensation-Row {
-    min-height: 30vh;
-    /* gap: 40px */
+    height: 100%;
 }
 
 .compensation-Div-textarea {
@@ -1228,6 +1234,43 @@ flex-direction: row-reverse;
 
 /***************************************************cards-media**************************************************/
 
+@media (max-width: 320px) {
+
+    .Search-col {
+        padding: 0;
+    }
+}
+
+@media (max-width: 375px) {
+
+    .extra-small-mobile {
+        display: none;
+    }
+}
+
+@media (max-width: 425px) {
+
+    #progressbar li {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 646px) {
+
+    .hide-on-mobile {
+        display: none;
+    }
+
+    .on-mobile {
+        flex-direction: column-reverse;
+        padding-top: 16px;
+    }
+
+        .on-mobile p {
+            margin-left: 0px;
+        }
+}
+
 @media (min-height: 650px) {
     .extension2-card {
         gap: 1rem;
@@ -1332,9 +1375,25 @@ flex-direction: row-reverse;
 @media(min-width:1000px) {
 
     .dropdown-content-extension {
-        width: 140%;
+        width: 120%;
         left: -90px;
         right: 90px;
+    }
+}
+
+@media(min-width:1000px) {
+
+    #dropdown-content-Settlement, #dropdown-content-Settlement3 {
+        width: 100%;
+    }
+}
+
+@media(min-width:1200px) {
+
+    #dropdown-content-Settlement, #dropdown-content-Settlement3 {
+        width: 200%;
+        left: none;
+        right: 10px;
     }
 }
 
@@ -1359,6 +1418,27 @@ flex-direction: row-reverse;
 }
 
 /* ///////////////////////////////////////////////settlement////////////////////////////////////////////////////////////////////////// */
+@media (max-height:550px) {
+    .form-card {
+        height: fit-content;
+    }
+
+    #SettlementForm fieldset {
+        height: fit-content;
+    }
+}
+
+@media (max-height:650px) {
+
+    .SettlementCard1 {
+        gap: 10px
+    }
+
+    .form-card5-settl {
+        gap: 10px
+    }
+}
+
 @media (min-height:700px) {
     .data-row-Settl {
         padding-top: 1.1rem;
@@ -1477,7 +1557,14 @@ flex-direction: row-reverse;
         flex-wrap: wrap;
     }
 }
-/*======================================================================
+
+@media (max-width:425px) {
+    #SettlementTable {
+        height: 270px;
+    }
+}
+/*=
+=====================================================================
 //           ========================== account Media ==============================================================================================
 //          =====================================================================*/
 
@@ -1569,4 +1656,191 @@ flex-direction: row-reverse;
         gap: 3.5em
     }
 }
+/*======================================================================
+//           ==========================  loader ==============================================================================================
+//          =====================================================================*/
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    right: 50%
+}
 
+.container2 {
+    display: flex;
+}
+
+.dash {
+    margin: 0 15px;
+    width: 37px;
+    height: 10px;
+    border-radius: 8px;
+    background: #237cb3;
+    box-shadow: 0 0 10px 0 #237cb3;
+}
+
+.uno {
+    margin-right: -18px;
+    transform-origin: center left;
+    animation: spin 3s linear infinite;
+}
+
+.dos {
+    transform-origin: center right;
+    animation: spin2 3s linear infinite;
+    animation-delay: .2s;
+}
+
+.tres {
+    transform-origin: center right;
+    animation: spin3 3s linear infinite;
+    animation-delay: .3s;
+}
+
+.cuatro {
+    transform-origin: center right;
+    animation: spin4 3s linear infinite;
+    animation-delay: .4s;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(360deg);
+    }
+
+    30% {
+        transform: rotate(370deg);
+    }
+
+    35% {
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin2 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    20% {
+        transform: rotate(0deg);
+    }
+
+    30% {
+        transform: rotate(-180deg);
+    }
+
+    35% {
+        transform: rotate(-190deg);
+    }
+
+    40% {
+        transform: rotate(-180deg);
+    }
+
+    78% {
+        transform: rotate(-180deg);
+    }
+
+    95% {
+        transform: rotate(-360deg);
+    }
+
+    98% {
+        transform: rotate(-370deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes spin3 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    27% {
+        transform: rotate(0deg);
+    }
+
+    40% {
+        transform: rotate(180deg);
+    }
+
+    45% {
+        transform: rotate(190deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+
+    62% {
+        transform: rotate(180deg);
+    }
+
+    75% {
+        transform: rotate(360deg);
+    }
+
+    80% {
+        transform: rotate(370deg);
+    }
+
+    85% {
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin4 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    38% {
+        transform: rotate(0deg);
+    }
+
+    60% {
+        transform: rotate(-360deg);
+    }
+
+    65% {
+        transform: rotate(-370deg);
+    }
+
+    75% {
+        transform: rotate(-360deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+.container1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+.logo {
+    width: 200px;
+}

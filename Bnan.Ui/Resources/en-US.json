@@ -105,7 +105,7 @@
   "photo": "Pohto",
   "Documentphoto": "Document photo",
   "pdf": "Contract",
-  "ReceiptPdf": "Receipt Pdf",
+  "ReceiptPdf": "Receipt",
   "notfound": "not found",
 
 
@@ -204,7 +204,7 @@
   "Reference": "Reference",
   //RentalContracts
   "RentalContracts": "Rental Contracts",
-  "Additionals": "Price Of Car And Offers",
+  "Additionals": "Additionals",
   "Choices": "Choices",
   "VirtualInspection": "Virtual Inspection",
   //Services
@@ -1774,6 +1774,21 @@
   "EndOfSettlement": "End Of Settlement",
   "SettlementTiming": "Settlement Timing",
   "SettlementMechanism": "Settlement Mechanism",
-  "Total": "Total"
+  "Total": "Total",
+  "ExpensesMessageImageRequired": "One photo must be entered on the financial statement and more than ten photos must be entered on the financial statement",
+  "ReadingBefore": "Reading Before",
+  "AgainstOthers": "Against Others",
+  "CompensationValue": "Compensation Value",
+  "ExpenseValue": "Expense Value",
+  "CompensationStatement": "Compensation statement",
+  "ExpenseStatement": "Expenses statement",
+  "ExtraHoursValue": "Additional KMs Value",
+  "ExtraKMsValue": "Additional Hours Value",
+  "TotalExpenseValue": "Total Expenses",
+  "TotalCompensationValue": "Total Compensation",
+  "ContractValueAfterDiscount": "Contract Value After Discount",
+  "RenterMoneyText1": "The remaining From the tenant",
+  "RenterMoneyText2": "The remaining belongs to  the tenant",
+  "UserDontHaveCashToPay": "Sorry... you do not have enough cash balance"
 
 }
