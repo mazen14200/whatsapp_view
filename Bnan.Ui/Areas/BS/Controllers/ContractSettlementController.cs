@@ -171,7 +171,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 var CheckSalesPoint = true;
                 var CheckBranchValidity = true;
                 var CheckUserInformation = true;
-                if (UpdateSettlementContract!=null)
+                if (UpdateSettlementContract != null)
                 {
                     // Account Receipt
                     if (UpdateSettlementContract.CrCasRenterContractBasicAmountPaid > 0)
@@ -214,17 +214,17 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
                     }
 
-                    
+
 
                     // Renter Balance 
                     var CheckUpdateRenterBalance = true;
                     var ContractValue = UpdateSettlementContract.CrCasRenterContractBasicActualTotal - UpdateSettlementContract.CrCasRenterContractBasicExpensesValue + UpdateSettlementContract.CrCasRenterContractBasicCompensationValue;
                     CheckUpdateRenterBalance = await _contractSettlement.UpdateRenterLessor(UpdateSettlementContract.CrCasRenterContractBasicNo, (decimal)UpdateSettlementContract.CrCasRenterContractBasicActualAmountRequired,
-                                                                                           (decimal) UpdateSettlementContract.CrCasRenterContractBasicAmountPaid, (decimal)ContractValue);
+                                                                                           (decimal)UpdateSettlementContract.CrCasRenterContractBasicAmountPaid, (decimal)ContractValue);
                     // Account Contract Tax Owed 
 
                     var CheckAddAccountContractTaxOwed = true;
-                    CheckAddAccountContractTaxOwed = await _contractSettlement.AddAccountContractTaxOwed(UpdateSettlementContract.CrCasRenterContractBasicNo,(decimal)UpdateSettlementContract.CrCasRenterContractBasicActualTotal);
+                    CheckAddAccountContractTaxOwed = await _contractSettlement.AddAccountContractTaxOwed(UpdateSettlementContract.CrCasRenterContractBasicNo, (decimal)UpdateSettlementContract.CrCasRenterContractBasicActualTotal);
                     // Alert Contract
                     var CheckUpdateAlert = true;
                     CheckUpdateAlert = await _contractSettlement.UpdateAlert(UpdateSettlementContract.CrCasRenterContractBasicNo);
@@ -273,12 +273,18 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
                     // add Account Contract Company Owed
                     var ChechAddAccountContractCompanyOwed = true;
-                    ChechAddAccountContractCompanyOwed = await _contractSettlement.AddAccountContractCompanyOwed(UpdateSettlementContract.CrCasRenterContractBasicNo, ContractInfo.ActualDaysNo, (decimal)UpdateSettlementContract.CrCasRenterContractBasicActualDailyRent);
+                    var CompanyContract = await _unitOfWork.CrMasContractCompany.FindAsync(x => x.CrMasContractCompanyLessor == UpdateSettlementContract.CrCasRenterContractBasicLessor && x.CrMasContractCompanyProcedures == "112");//ForBnan Contract
+                    if (CompanyContract.CrMasContractCompanyActivation != "1")
+                    {
+                        ChechAddAccountContractCompanyOwed = await _contractSettlement.AddAccountContractCompanyOwed(UpdateSettlementContract.CrCasRenterContractBasicNo, ContractInfo.ActualDaysNo, (decimal)UpdateSettlementContract.CrCasRenterContractBasicActualDailyRent);
+                    }
 
-
+                    // add Account Contract Company Owed
+                    var ChechUpdateRenterStatistics = true;
+                    ChechUpdateRenterStatistics = await _contractSettlement.UpdateRenterStatistics(UpdateSettlementContract);
                     if (UpdateSettlementContract!=null && CheckAccountReceipt&& CheckBranch&& CheckSalesPoint&& CheckBranchValidity&& CheckUserInformation&&
                         CheckMasRenter && CheckUpdateAuthrization&& CheckUpdateAlert&& CheckAddAccountContractTaxOwed && CheckUpdateRenterBalance && CheckAddDriver&&
-                        CheckDriver&& CheckPrivateDriver&&!string.IsNullOrEmpty(CheckDocAndMaintainance)&& CheckCarInfo&& CheckCheckUpCar&& ChechAddAccountContractCompanyOwed )
+                        CheckDriver&& CheckPrivateDriver&&!string.IsNullOrEmpty(CheckDocAndMaintainance)&& CheckCarInfo&& CheckCheckUpCar&& ChechAddAccountContractCompanyOwed &&ChechUpdateRenterStatistics )
                     {
                         try
                         {

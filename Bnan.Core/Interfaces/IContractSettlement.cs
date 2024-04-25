@@ -32,6 +32,7 @@ namespace Bnan.Core.Interfaces
         Task<bool> UpdateCarInformation(string SerialNo, string LessorCode, string BranchCode, int CurrentMeter, string ExpireMaintainceCount);
         Task<string> UpdateCarDocMaintainance(string SerialNo, string LessorCode, string BranchCode, int CurrentMeter);
         Task<bool> UpdateRenterContractCheckUp(string LessorCode, string ContractNo, string SerialNo, string PriceNo, string CheckUpCode, string Reasons);
+        Task<bool> UpdateRenterStatistics(CrCasRenterContractBasic Contract);
 
     }
 }

@@ -28,7 +28,7 @@ namespace Bnan.Inferastructure.Repository
             crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedLessor = OldContract.CrCasRenterContractBasicLessor;
             crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedContractValue = ContractValue;
             crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedPercentage = OldContract.CrCasRenterContractBasicTaxRate;
-            crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedValue = crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedContractValue * OldContract.CrCasRenterContractBasicTaxRate;
+            crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedValue = crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedContractValue * OldContract.CrCasRenterContractBasicTaxRate/100;
             crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedDate = DateTime.Now.Date;
             crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedIsPaid = false;
 
@@ -155,7 +155,7 @@ namespace Bnan.Inferastructure.Repository
         public async Task<bool> UpdateBranchValidity(string BranchCode, string LessorCode, string UserId, string PaymentMethod, decimal AmountPaid, decimal AmountRequired)
         {
             var UserValidity = await _unitOfWork.CrMasUserBranchValidity.FindAsync(x => x.CrMasUserBranchValidityId == UserId && x.CrMasUserBranchValidityBranch == BranchCode && x.CrMasUserBranchValidityLessor == LessorCode);
-            if (UserValidity == null)
+            if (UserValidity != null)
             {
 
                 if (AmountRequired < 0) AmountPaid = -AmountPaid;
@@ -218,24 +218,29 @@ namespace Bnan.Inferastructure.Repository
 
             var ResevedAndAvaliableBalance = RenterLessor.CrCasRenterLessorAvailableBalance + RenterLessor.CrCasRenterLessorReservedBalance;
 
-            if (ResevedAndAvaliableBalance == TotalContractValue)
+            // In This Case , ReservedBalance equal Expected Total Contract , this have one contract
+            if (RenterLessor.CrCasRenterLessorReservedBalance== OldContract.CrCasRenterContractBasicExpectedTotal)
             {
-                RenterLessor.CrCasRenterLessorBalance = 0;
-                RenterLessor.CrCasRenterLessorReservedBalance = 0;
-                RenterLessor.CrCasRenterLessorAvailableBalance = 0;
+                if (ResevedAndAvaliableBalance == TotalContractValue)
+                {
+                    RenterLessor.CrCasRenterLessorBalance = 0;
+                    RenterLessor.CrCasRenterLessorReservedBalance = 0;
+                    RenterLessor.CrCasRenterLessorAvailableBalance = 0;
+                }
+                else if (TotalContractValue > ResevedAndAvaliableBalance)
+                {
+                    RenterLessor.CrCasRenterLessorBalance -= TotalContractValue - AmountPaid; // 400 > 400 + 100 - 497.9 = 2.10
+                    RenterLessor.CrCasRenterLessorReservedBalance = 0; // 397.9 > 397.9 + 100 - 500=2.10
+                    RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance; // 2.10 > -10-0=-10
+                }
+                else if (TotalContractValue < ResevedAndAvaliableBalance)
+                {
+                    RenterLessor.CrCasRenterLessorBalance -= TotalContractValue + AmountPaid; // 12.10 +397.9 =400-410=-10
+                    RenterLessor.CrCasRenterLessorReservedBalance = 0;  // 0
+                    RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance; // 0 > -10-0=-10
+                }
             }
-            else if (TotalContractValue > ResevedAndAvaliableBalance)
-            {
-                RenterLessor.CrCasRenterLessorBalance -= TotalContractValue - AmountPaid; // 400 > 400 + 100 - 497.9 = 2.10
-                RenterLessor.CrCasRenterLessorReservedBalance = 0; // 397.9 > 397.9 + 100 - 500=2.10
-                RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance; // 2.10 > -10-0=-10
-            }
-            else if (TotalContractValue < ResevedAndAvaliableBalance)
-            {
-                RenterLessor.CrCasRenterLessorBalance -= TotalContractValue + AmountPaid; // 12.10 +397.9 =400-410=-10
-                RenterLessor.CrCasRenterLessorReservedBalance = 0;  // 0
-                RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance; // 0 > -10-0=-10
-            }
+           
             //if (AmountPaid == 0 && AmountRequired == 0)
             //{
             //    RenterLessor.CrCasRenterLessorBalance = 0;
@@ -304,10 +309,11 @@ namespace Bnan.Inferastructure.Repository
             OldContract.CrCasRenterContractBasicActualFreeKm = int.Parse(ActualDaysNo) * OldContract.CrCasRenterContractBasicDailyFreeKm;
             OldContract.CrCasRenterContractBasicActualExtraKm = int.Parse(AdditionalKm);
             OldContract.CrCasRenterContractBasicActualDailyRent = OldContract.CrCasRenterContractBasicDailyRent;
-            OldContract.CrCasRenterContractBasicActualDailyRent = int.Parse(ActualDaysNo) * OldContract.CrCasRenterContractBasicDailyRent;
+            OldContract.CrCasRenterContractBasicActualRentValue = int.Parse(ActualDaysNo) * OldContract.CrCasRenterContractBasicDailyRent;
             OldContract.CrCasRenterContractBasicActualExtraHoursValue = int.Parse(MaxHours) * OldContract.CrCasRenterContractBasicHourValue;
             OldContract.CrCasRenterContractBasicActualExtraKmValue = int.Parse(AdditionalKm) * OldContract.CrCasRenterContractBasicKmValue;
             OldContract.CrCasRenterContractBasicActualPrivateDriverValue = decimal.Parse(PrivateDriverValueTotal, CultureInfo.InvariantCulture);
+            OldContract.CrCasRenterContractBasicActualOptionsValue = decimal.Parse(ChoicesValueTotal, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicActualValueBeforDiscount = decimal.Parse(ContractValue, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicActualDiscountValue = decimal.Parse(DiscountValue, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicActualValueAfterDiscount = decimal.Parse(ContractValueAfterDiscount, CultureInfo.InvariantCulture);
@@ -368,7 +374,7 @@ namespace Bnan.Inferastructure.Repository
             {
                 car.CrCasCarInformationStatus = Status.Active;
                 car.CrCasCarInformationCurrentMeter = CurrentMeter;
-                if (ExpireMaintainceCount != null && ExpireMaintainceCount != "0") car.CrCasCarInformationMaintenanceStatus = false;
+                if (ExpireMaintainceCount != null && ExpireMaintainceCount != "5") car.CrCasCarInformationMaintenanceStatus = false;
                 if (_unitOfWork.CrCasCarInformation.Update(car) != null) return true;
             }
             return false;
@@ -404,7 +410,7 @@ namespace Bnan.Inferastructure.Repository
                     if (CurrentMeter >= item.CrCasCarDocumentsMaintenanceKmAboutToFinish && CurrentMeter < item.CrCasCarDocumentsMaintenanceKmEndsAt) item.CrCasCarDocumentsMaintenanceStatus = Status.AboutToExpire;
                     _unitOfWork.CrCasCarDocumentsMaintenance.Update(item);
                 }
-                return CarDocMaintainances.Where(x => x.CrCasCarDocumentsMaintenanceProceduresClassification == "13").Count().ToString();
+                return CarDocMaintainances.Where(x => x.CrCasCarDocumentsMaintenanceProceduresClassification == "13" && x.CrCasCarDocumentsMaintenanceStatus != Status.Expire).Count().ToString();
             }
             return null;
         }
@@ -414,7 +420,7 @@ namespace Bnan.Inferastructure.Repository
             var CompanyContract = await _unitOfWork.CrMasContractCompany.FindAsync(x => x.CrMasContractCompanyLessor == OldContract.CrCasRenterContractBasicLessor && x.CrMasContractCompanyProcedures == "112");//ForBnan Contract
             var CompanyContractDetailed = _unitOfWork.CrMasContractCompanyDetailed.FindAll(x => x.CrMasContractCompanyDetailedNo == CompanyContract.CrMasContractCompanyNo);
             CrCasAccountContractCompanyOwed crCasAccountContractCompany = new CrCasAccountContractCompanyOwed();
-            if (CompanyContract.CrMasContractCompanyActivation != "1") // Subscribtion
+            if (CompanyContractDetailed!=null) // Subscribtion
             {
                 crCasAccountContractCompany.CrCasAccountContractCompanyOwedNo = OldContract.CrCasRenterContractBasicNo;
                 crCasAccountContractCompany.CrCasAccountContractCompanyOwedCompanyCode = OldContract.CrCasRenterContractBasicLessor;
@@ -440,9 +446,10 @@ namespace Bnan.Inferastructure.Repository
                 crCasAccountContractCompany.CrCasAccountContractCompanyOwedTaxValue = crCasAccountContractCompany.CrCasAccountContractCompanyOwedAfterAmount * CompanyContract.CrMasContractCompanyTaxRate / 100;
                 crCasAccountContractCompany.CrCasAccountContractCompanyOwedAmount = crCasAccountContractCompany.CrCasAccountContractCompanyOwedAfterAmount + crCasAccountContractCompany.CrCasAccountContractCompanyOwedTaxValue;
                 crCasAccountContractCompany.CrCasAccountContractCompanyOwedAccrualStatus = false;
+                if (await _unitOfWork.CrCasAccountContractCompanyOwed.AddAsync(crCasAccountContractCompany) != null) return true;
             }
-            if (await _unitOfWork.CrCasAccountContractCompanyOwed.AddAsync(crCasAccountContractCompany) != null) return true;
             return false;
+            
         }
 
         private CrCasAccountReceipt GetContractAccountReceipt(string LessorCode, string BranchCode, string Procedure)
@@ -467,6 +474,114 @@ namespace Bnan.Inferastructure.Repository
             return c;
         }
 
-        
+        public async Task<bool> UpdateRenterStatistics(CrCasRenterContractBasic Contract)
+        {
+            var Statistic = await _unitOfWork.CrCasRenterContractStatistic.FindAsync(x=>x.CrCasRenterContractStatisticsNo==Contract.CrCasRenterContractBasicNo);
+            if (Contract != null)
+            {
+                // H Month 
+                Statistic.CrCasRenterContractStatisticsDayCount = GetCountDaysCategory((int)Contract.CrCasRenterContractBasicActualDays);
+                //Contract Value Category
+                Statistic.CrCasRenterContractStatisticsValueNo = GetContractValueCategory((decimal)Contract.CrCasRenterContractBasicActualTotal);
+                // Data From Contract 
+                Statistic.CrCasRenterContractStatisicsDays = Contract.CrCasRenterContractBasicActualDays;
+                Statistic.CrCasRenterContractStatisticsRentValue = Contract.CrCasRenterContractBasicActualRentValue;
+                Statistic.CrCasRenterContractStatisticsAdditionsValue = Contract.CrCasRenterContractBasicAdditionalValue;
+                Statistic.CrCasRenterContractStatisticsOptionsValue = Contract.CrCasRenterContractBasicActualOptionsValue;
+                Statistic.CrCasRenterContractStatisticsAdditionsKmValue = Contract.CrCasRenterContractBasicActualExtraKmValue;
+                Statistic.CrCasRenterContractStatisticsAdditionsHourValue = Contract.CrCasRenterContractBasicActualExtraHoursValue;
+                Statistic.CrCasRenterContractStatisticsContractValue = Contract.CrCasRenterContractBasicActualValueBeforDiscount;
+                Statistic.CrCasRenterContractStatisticsDiscountValue = Contract.CrCasRenterContractBasicActualDiscountValue;
+                Statistic.CrCasRenterContractStatisticsContractAfterValue = Contract.CrCasRenterContractBasicActualValueAfterDiscount;
+                Statistic.CrCasRenterContractStatisticsTaxValue = Contract.CrCasRenterContractBasicActualTaxValue;
+                Statistic.CrCasRenterContractStatisticsExpensesValue = Contract.CrCasRenterContractBasicExpensesValue;
+                Statistic.CrCasRenterContractStatisticsCompensationValue = Contract.CrCasRenterContractBasicCompensationValue;
+                var CompanyContractBnan = await _unitOfWork.CrCasAccountContractCompanyOwed.FindAsync(x => x.CrCasAccountContractCompanyOwedNo == Contract.CrCasRenterContractBasicNo);
+                if (CompanyContractBnan != null) Statistic.CrCasRenterContractStatisticsBnanValue = CompanyContractBnan.CrCasAccountContractCompanyOwedAmount;
+                
+                if (_unitOfWork.CrCasRenterContractStatistic.Update(Statistic) != null) return true;
+                return false;
+            }
+            return false;
+        }
+
+        public string GetCountDaysCategory(int daysNo)
+        {
+            if (daysNo >= 1 && daysNo <= 3)
+            {
+                return "1"; // من 1 إلى 3
+            }
+            else if (daysNo >= 4 && daysNo <= 7)
+            {
+                return "2"; // من 4 إلى 7
+            }
+            else if (daysNo >= 8 && daysNo <= 10)
+            {
+                return "3"; // من 8 إلى 10
+            }
+            else if (daysNo >= 11 && daysNo <= 15)
+            {
+                return "4"; // من 11 إلى 15
+            }
+            else if (daysNo >= 16 && daysNo <= 20)
+            {
+                return "5"; // من 16 إلى 20
+            }
+            else if (daysNo >= 21 && daysNo <= 25)
+            {
+                return "6"; // من 21 إلى 25
+            }
+            else if (daysNo >= 26 && daysNo <= 30)
+            {
+                return "7"; // من 26 إلى 30
+            }
+            else if (daysNo > 30)
+            {
+                return "8"; // أكثر من 30
+            }
+            else
+            {
+                return "0";
+            }
+        }
+        public string GetContractValueCategory(decimal value)
+        {
+            if (value < 300)
+            {
+                return "1";
+            }
+            else if (value > 300 && value <= 500)
+            {
+                return "2";
+            }
+            else if (value > 500 && value <= 1000)
+            {
+                return "3";
+            }
+            else if (value > 1000 && value <= 1500)
+            {
+                return "4";
+            }
+            else if (value > 1500 && value <= 2000)
+            {
+                return "5";
+            }
+            else if (value > 2000 && value <= 2500)
+            {
+                return "6";
+            }
+            else if (value > 2500 && value <= 3000)
+            {
+                return "7";
+            }
+            else if (value > 3000 && value <= 3500)
+            {
+                return "8";
+            }
+            else
+            {
+                return "9"; // العمر أكثر من 60
+            }
+        }
     }
 }
