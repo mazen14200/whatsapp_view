@@ -1,0 +1,436 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.CAS;
+@using Microsoft.AspNetCore.Identity;
+@using Newtonsoft.Json;
+﻿@using Microsoft.AspNetCore.Builder;
+@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Http.Features;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.Extensions.Options;
+@using System.Globalization;
+@model CasStatisticLayoutVM
+@inject UserManager<CrMasUserInformation> userManager
+@inject SignInManager<CrMasUserInformation> signinManager
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = @localizer["CarStatistics Data"];
+    ViewData["Page-Hint"] = @localizer["CarStatistics Hint"];
+}
+    
+
+    <style>
+        .noti-icon-badge {
+            display: inline-block;
+            position: absolute;
+            top: 22px;
+            right: 6px;
+            border-radius: 50%;
+            height: 7px;
+            width: 7px;
+            background-color: #fa5c7c;
+        }
+
+        .alert {
+            color: #fff;
+            background-color: #FF992E;
+            flex-direction: row-reverse;
+            font-size: .7rem;
+            font-weight: 600;
+            margin-bottom: 0;
+            border: 1px solid #4e73df;
+            padding: 0.5rem 0.6rem;
+        }
+
+        .dropdown-item-custom {
+            display: flex;
+            flex-direction: row-reverse;
+            /*padding-bottom: 0.5rem;*/
+            border-bottom: 1px solid #e3e6f0;
+            border-color:#74D9EB;
+            font-size: .9rem;
+            flex-direction: row-reverse;
+        }
+        
+        .ended-Docs-Num {
+            color: red;
+        }
+
+        .Not-ended-Docs-Num {
+            color: #FF992E;
+        }
+    </style>
+
+
+    @*/////////////////////////////*@
+<style>
+    body {
+        overflow: hidden
+    }
+
+    @@media (max-width: 600px) {
+        #basic-datatable1_wrapper .row:first-child > div {
+            text-align: left;
+            overflow: scroll;
+            text-overflow: ellipsis;
+        }
+
+            #basic-datatable1_wrapper .row:first-child > div:last-child > * {
+                text-align: right;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+
+    /*     td,th {
+                text-align: center;
+            } */
+
+    #_Nc {
+        text-align: center;
+    }
+
+</style>
+
+
+
+<style>
+    .wrapper {
+        margin-bottom: 60px;
+        overflow: hidden;
+        background-image: url("~/Pictures/bg.jpg") !important;
+    }
+
+    .table-bordered td,
+    .table-bordered th {
+        border: none;
+    }
+</style>
+
+@if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+{
+    <style>
+            .arrow {
+            background: linear-gradient( -125deg, transparent 22px, #0488C7 22px) top left, linear-gradient( -55deg, transparent 22px, #0488C7 22px ) bottom left;
+            background-size: 100% 50%;
+                background-repeat: no-repeat;
+            }
+
+        .btn1 {
+            margin: 8px auto;
+            flex-shrink: 0;
+            width: 660px;
+            height: 64px;
+            text-align: left;
+            padding-left: 100px;
+        }
+    </style>
+    <style>
+        .arrow:hover {
+            background: linear-gradient( -125deg, transparent 22px, #04AA6D 22px ) top left, linear-gradient( -55deg, transparent 22px, #04AA6D 22px) bottom left;
+            background-size: 100% 50%;
+            background-repeat: no-repeat;
+        }
+
+        .arrow:focus {
+            background: linear-gradient( -125deg, transparent 22px, #04AA6D 22px ) top left, linear-gradient( -55deg, transparent 22px, #04AA6D 22px) bottom left;
+            background-size: 100% 50%;
+            background-repeat: no-repeat;
+        }
+    </style>
+
+    }
+    else
+    {
+    <style>
+        .arrow {
+            background: linear-gradient( 125deg, transparent 22px, #0488C7 22px ) top left, linear-gradient( 55deg, transparent 22px, #0488C7 22px) bottom left;
+            background-size: 100% 50%;
+            background-repeat: no-repeat;  
+        }
+
+        .btn1 {
+            margin: 8px auto;
+            flex-shrink: 0;
+            width: 660px;
+            height: 64px;
+            text-align: right;
+            padding-right: 100px;
+        }
+    </style>
+    <style>
+        .arrow:hover {
+            background: linear-gradient( 125deg, transparent 22px, #04AA6D 22px ) top left, linear-gradient( 55deg, transparent 22px, #04AA6D 22px) bottom left;
+            background-size: 100% 50%;
+            background-repeat: no-repeat;
+        }
+
+        .arrow:focus {
+            background: linear-gradient( 125deg, transparent 22px, #04AA6D 22px ) top left, linear-gradient( 55deg, transparent 22px, #04AA6D 22px) bottom left;
+            background-size: 100% 50%;
+            background-repeat: no-repeat;
+        }
+    </style>
+    }
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>*@
+@*<script type="text/javascript" src="jscript/graph.js"></script>*@
+
+<style>
+    .legend-item {
+        font-size: .7rem;
+        color: #000000;
+    }
+</style>
+
+
+<div class="sub-container" style="margin-top:-20px;">
+    <div class="container-fluid">
+        <div class="row">
+            @*filter*@
+            <div >
+                <div >
+                    <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="CAS" asp-controller="Home" asp-action="Index">
+                        <i class="mdi mdi-window-close"></i>
+                    </a>
+
+
+
+            <div class="row" id="second-row-of-charts" style="display:flex;justify-content:0;">
+
+
+                    <div class="" style="width:750px;">
+
+            <div style="margin-top:20px;">
+                @*<p class="form-label">@localizer["CarStatistics_count_Cars"] <span style="color:#A4ACF7">@ViewBag.count_Cars</span></p>*@
+                @*<p class="form-label">@localizer["CarStatistics_count_Cars"] <span style="color:red;margin-inline-start:95px;">@ViewBag.count_Cars</span></p>*@
+                <p class="form-label">@localizer["CarStatistics_count_Cars"] <span style="margin-inline-start:95px;">@ViewBag.count_Cars</span></p>
+            </div>
+
+                    <div class="Branch" style="display:flex;gap:10px;">
+                        <label for="brunch_name" style="padding-top:8px;width:160px;">@localizer["CarStatistics_Type"]</label>
+                        @*<select class="text-right form-select" id="SelectedType" onchange="getSelectedType(this)"  style="width:150px;border-color:#74D9EB;border-radius:5px;">*@
+                        <select class="text-right form-select" id="SelectedType" onchange="getSelectedType(this)"  style="width:150px;">
+                            <option id="0" value="0">@localizer["CarStatistics_Status"]</option>
+                            <option id="1" selected="selected" value="1">@localizer["CarStatistics_Branches"]</option>
+                            <option id="2" value="2">@localizer["CarStatistics_Brand"]</option>
+                            <option id="3" value="3">@localizer["CarStatistics_year"]</option>
+                            <option id="4" value="4">@localizer["CarStatistics_Category"]</option>
+                            <option id="5" value="5">@localizer["CarStatistics_Model"]</option>
+                            <option id="6" value="6">@localizer["CarStatistics_City"]</option>
+                            <option id="7" value="7">@localizer["CarStatistics_Rigon"]</option>
+                        </select>                                
+                    </div>
+
+                    <div class="partial" style="width:550px;margin-top:10px;">
+                        <partial name="_PartialDatatable" />
+                    </div>
+
+                </div>
+
+
+
+                <div class="partial row" style="width:800px;margin-top:85px">
+                    <partial name="_PartialChartData" />
+                </div>
+
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    <!--Charts-->
+
+    
+
+    <script>
+        function GetAllByType(Type,listDrop,singleNo) {
+            //console.log("Mazzen1")
+            if (Type != null && Type != "" & Type != undefined) {
+                //console.log("Mazzen2")
+                location.href = '@Url.Action("GetAllByType", "CarStatistics")?Type=' + Type + '&listDrop=' + listDrop + '&singleNo=' + singleNo;
+            }
+        }
+    </script>
+    
+
+    <script>
+
+
+        $(document).ready(function () {
+            // Bar Chart 2
+            //Branch
+            //DrawChart("response");
+            var paymentMethodsBranchData = @Html.Raw(Json.Serialize(Model.ChartBranchDataVM));
+            //console.log(paymentMethodsBranchData);
+            var labelsBranch;
+            if ('@requestCulture?.RequestCulture.UICulture.Name' == "en-US") {
+
+                labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
+                    return paymentMethod.enName;
+                });
+            }
+            else {
+                labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
+                    return paymentMethod.arName;
+                });
+            }
+
+
+            var data = paymentMethodsBranchData.map(function (paymentMethod) {
+                return paymentMethod.value;
+            });
+
+            var barChart2 = document.getElementById("barChart2").getContext("2d");
+            var myChart = new Chart(barChart2, {
+                type: "bar",
+                data: {
+                    labels: labelsBranch,
+                    datasets: [
+                        {
+                            data: data,
+                            backgroundColor: [
+                                "rgba(255, 99, 132, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(255, 206, 86, 1)",
+                                "rgba(75, 192, 192, 1)",
+                                "rgba(75, 110, 192, 1)",
+                                "rgba(153, 102, 255, 1)",
+                                "rgba(255, 99, 132, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(255, 206, 86, 1)",
+                                "rgba(75, 192, 192, 1)",
+                            ],
+
+                        }
+                    ]
+                },
+                options: {
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        }
+
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                font: {
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 16,
+                                    // Change the font size
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,                      
+                            ticks: {
+                                font: {
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 16,
+                                    // Change the font size
+                                }
+                            }
+                        }
+
+                    }
+                }
+            });
+
+        });
+
+    </script>
+
+    <script>
+        //onchange="getSelectedType(this)"
+        function getSelectedType(selectObject) {
+            var single = selectObject.value; 
+            var type = "";  
+            switch (single) {
+              case "0":
+                type = "Status";
+                break;
+              case "1":
+                type = "Branches";
+                break;
+            case "2":
+                type = "Brand";
+                break;
+            case "3":
+                type = "year";
+                break;
+            case "4":
+                type = "Category";
+                break;
+            case "5":
+                type = "Model";
+                break;
+            case "6":
+                type = "City";
+                break;
+            case "7":
+                type = "Rigon";
+                break;
+              default:
+                type = "Branches";
+            }
+            var listDrop ="@ViewBag.concate_DropDown";
+            //console.log(single);
+            GetAllByType(type,listDrop,single);
+        };
+    </script>
+
+
+
+    <script>
+        $(document).ready(function () {
+        var string ="@ViewBag.concate_DropDown";
+        const usingSpread = [...string];
+        const usingArrayFrom = Array.from(string);
+        //console.log(usingArrayFrom);
+
+        var list_dropdown = ['0','1','2','3','4','5','6','7'];
+
+        list_dropdown.forEach(myFunction_hide);
+
+        usingArrayFrom.forEach(myFunction_show);
+ 
+        function myFunction_hide(item, index) {
+          var xitemId = "#"+item;
+          //console.log(xitemId);
+          document.getElementById(item).style.display='none';
+        }
+
+        function myFunction_show(item, index) {
+          var xitemId = "#"+item;
+          //console.log(xitemId);
+          document.getElementById(item).style.display='inline';
+        }
+
+        });
+    </script>
+    
+}
+

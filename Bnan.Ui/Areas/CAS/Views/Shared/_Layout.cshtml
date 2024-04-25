@@ -405,14 +405,14 @@
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205013")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
-                                                                    <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["CarStatistics"]</a>
+                                                                    <li b-9ts1qywrdg="">                                                                       
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="CarStatistics" asp-action="Index">@localizer["CarStatistics"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205014")?.CrMasUserSubValidationAuthorization == true)
                                                                 {
                                                                     <li b-9ts1qywrdg="">
-                                                                        <a b-9ts1qywrdg="">@localizer["TenantStatistics"]</a>
+                                                                        <a b-9ts1qywrdg="" asp-area="CAS" asp-controller="RenterStatistics" asp-action="Index">@localizer["TenantStatistics"]</a>
                                                                     </li>
                                                                 }
                                                                 @if (userInfo?.CrMasUserSubValidations.FirstOrDefault(l => l.CrMasUserSubValidationSubTasks == "2205015")?.CrMasUserSubValidationAuthorization == true)

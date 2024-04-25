@@ -223,6 +223,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             //sidebar Active
             ViewBag.id = "#sidebarReport";
             ViewBag.no = "7";
+            var titles = await setTitle("205", "2205008", "2");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var (mainTask, subTask, system, currentCar) = await SetTrace("205", "2205008", "2");
 
             var CarContractAll = _unitOfWork.CrCasRenterContractBasic.FindAll(x => currentCar.CrMasUserInformationLessor == x.CrCasRenterContractBasicLessor && x.CrCasRenterContractBasicStatus != Status.Extension, new[] { "CrCasRenterContractBasic1", "CrCasRenterContractBasic2", "CrCasRenterContractBasic3", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasicNavigation", "CrCasRenterContractBasic4" }).OrderByDescending(x => x.CrCasRenterContractBasicExpectedTotal).ToList();

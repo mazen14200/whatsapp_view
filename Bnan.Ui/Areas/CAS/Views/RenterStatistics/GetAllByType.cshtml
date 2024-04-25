@@ -1,0 +1,572 @@
+﻿@using Bnan.Core.Extensions;
+@using Bnan.Ui.ViewModels.CAS;
+@using Microsoft.AspNetCore.Identity;
+@using Newtonsoft.Json;
+﻿@using Microsoft.AspNetCore.Builder;
+@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Http.Features;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.Extensions.Options;
+@using System.Globalization;
+@model CasStatisticLayoutVM
+@inject UserManager<CrMasUserInformation> userManager
+@inject SignInManager<CrMasUserInformation> signinManager
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    ViewData["Page-title"] = @localizer["RenterStatistics Data"];
+    ViewData["Page-Hint"] = @localizer["RenterStatistics Hint"];
+}
+<style>
+    body {
+        overflow: hidden
+    }
+
+    @@media (max-width: 600px) {
+        #basic-datatable1_wrapper .row:first-child > div {
+            text-align: left;
+            overflow: scroll;
+            text-overflow: ellipsis;
+        }
+
+            #basic-datatable1_wrapper .row:first-child > div:last-child > * {
+                text-align: right;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+
+
+
+    #_Nc {
+        text-align: center;
+    }
+
+</style>
+
+
+<style>
+    .wrapper {
+        margin-bottom: 60px;
+        overflow: hidden;
+        background-image: url("~/Pictures/bg.jpg") !important;
+    }
+
+    .table-bordered td,
+    .table-bordered th {
+        border: none;
+    }
+</style>
+
+@if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+{
+    <style>
+            .arrow {
+            background: linear-gradient( -125deg, transparent 22px, #0488C7 22px) top left, linear-gradient( -55deg, transparent 22px, #0488C7 22px ) bottom left;
+            background-size: 100% 50%;
+                background-repeat: no-repeat;
+            }
+
+        .btn1 {
+            margin: 8px auto;
+            flex-shrink: 0;
+            width: 660px;
+            height: 64px;
+            text-align: left;
+            padding-left: 100px;
+        }
+    </style>
+    <style>
+        .arrow:hover {
+            background: linear-gradient( -125deg, transparent 22px, #04AA6D 22px ) top left, linear-gradient( -55deg, transparent 22px, #04AA6D 22px) bottom left;
+            background-size: 100% 50%;
+            background-repeat: no-repeat;
+        }
+
+        .arrow:focus {
+            background: linear-gradient( -125deg, transparent 22px, #04AA6D 22px ) top left, linear-gradient( -55deg, transparent 22px, #04AA6D 22px) bottom left;
+            background-size: 100% 50%;
+            background-repeat: no-repeat;
+        }
+    </style>
+
+    }
+    else
+    {
+    <style>
+        .arrow {
+            background: linear-gradient( 125deg, transparent 22px, #0488C7 22px ) top left, linear-gradient( 55deg, transparent 22px, #0488C7 22px) bottom left;
+            background-size: 100% 50%;
+            background-repeat: no-repeat;  
+        }
+
+        .btn1 {
+            margin: 8px auto;
+            flex-shrink: 0;
+            width: 660px;
+            height: 64px;
+            text-align: right;
+            padding-right: 100px;
+        }
+    </style>
+    <style>
+        .arrow:hover {
+            background: linear-gradient( 125deg, transparent 22px, #04AA6D 22px ) top left, linear-gradient( 55deg, transparent 22px, #04AA6D 22px) bottom left;
+            background-size: 100% 50%;
+            background-repeat: no-repeat;
+        }
+
+        .arrow:focus {
+            background: linear-gradient( 125deg, transparent 22px, #04AA6D 22px ) top left, linear-gradient( 55deg, transparent 22px, #04AA6D 22px) bottom left;
+            background-size: 100% 50%;
+            background-repeat: no-repeat;
+        }
+    </style>
+    }
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>*@
+@*<script type="text/javascript" src="jscript/graph.js"></script>*@
+
+<style>
+    .legend-item {
+        font-size: .7rem;
+        color: #000000;
+    }
+</style>
+
+
+<div class="sub-container" style="margin-top:-20px;">
+    <div class="container-fluid">
+        <div class="row">
+            @*filter*@
+            <div >
+                <div >
+                    <a type="button" class="btn btn-danger" title="@localizer["Back"]" asp-area="CAS" asp-controller="Home" asp-action="Index">
+                        <i class="mdi mdi-window-close"></i>
+                    </a>
+
+
+
+
+                    <div class="row" id="second-row-of-charts" style="display:flex;justify-content:0;">
+
+
+                        <div class="" style="width:750px;">
+
+                        <div style="margin-top:20px;">
+                            <p class="form-label">@localizer["RenterStatistics_count_Renters"] <span style="margin-inline-start:75px;">@ViewBag.count_Renters</span></p>
+                        </div>
+
+                                <div class="Branch" style="display:flex;gap:10px;">
+                                    <label for="brunch_name" style="padding-top:8px;width:160px;">@localizer["RenterStatistics_Type"]</label>
+                                    <select class="text-right form-select" id="SelectedType" onchange="getSelectedType(this)"  style="width:150px;">
+                                        <option id="0" value="0">@localizer["RenterStatistics_Nationality"]</option>
+                                        <option id="1" selected="selected" value="1">@localizer["RenterStatistics_MemperShip"]</option>
+                                        <option id="2" value="2">@localizer["RenterStatistics_profession"]</option>
+                                        <option id="3" value="3">@localizer["RenterStatistics_Rigon"]</option>
+                                        <option id="4" value="4">@localizer["RenterStatistics_City"]</option>
+                                        <option id="5" value="5">@localizer["RenterStatistics_Age"]</option>
+                                        <option id="6" value="6">@localizer["RenterStatistics_Traded"]</option>
+                                        <option id="7" value="7">@localizer["RenterStatistics_Dealing_Mechanism"]</option>
+                                        <option id="8" value="8">@localizer["RenterStatistics_Status"]</option>
+                                    </select>                                
+                                </div>
+
+                            <div class="partial" style="width:550px;margin-top:10px;">
+                                <partial name="_PartialDatatable" />
+                            </div>
+
+                           
+                        </div>
+
+
+
+                        <div class="partial row" style="width:800px;margin-top:85px">
+                            <partial name="_PartialChartData" />
+                        </div>
+
+
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    <!--Charts-->
+   
+    
+        <script>
+ 
+
+
+        function DrawChart() {
+            // Bar Chart 2
+            //Branch
+            let paymentMethodsBranchData = @Html.Raw(Json.Serialize(Model.ChartBranchDataVM));
+            //console.log(paymentMethodsBranchData);
+            let labelsBranch;
+            if ('@requestCulture?.RequestCulture.UICulture.Name' == "en-US") {
+
+                labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
+                    return paymentMethod.enName;
+                });
+            }
+            else {
+                labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
+                    return paymentMethod.arName;
+                });
+            }
+
+
+            let data = paymentMethodsBranchData.map(function (paymentMethod) {
+                return paymentMethod.value;
+            });
+
+            
+
+            //var barChart2 = document.getElementById("barChart2").style.visibility = "hidden";
+
+            let chartStatus = Chart.getChart("barChart2"); // <canvas> id
+            if (chartStatus != undefined) {
+                chartStatus.destroy();
+            }
+
+            let barChart2 = document.getElementById("barChart2").getContext("2d");
+            let myChart = new Chart(barChart2, {
+                type: "bar",
+                data: {
+                    labels: labelsBranch,
+                    datasets: [
+                        {
+                            data: data,
+                            backgroundColor: [
+                                "rgba(255, 99, 132, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(255, 206, 86, 1)",
+                                "rgba(75, 192, 192, 1)",
+                                "rgba(75, 110, 192, 1)",
+                                "rgba(153, 102, 255, 1)",
+                                "rgba(255, 99, 132, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(255, 206, 86, 1)",
+                                "rgba(75, 192, 192, 1)"
+                            ],
+
+                        }
+                    ]
+                },
+                options: {
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        }
+
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                font: {
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 10,
+                                    // Change the font size
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,                      
+                            ticks: {
+                                font: {
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 10,
+                                    // Change the font size
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+        });
+        myChart.destroy();
+
+        myChart = new Chart(barChart2, {
+                type: "bar",
+                data: {
+                    labels: labelsBranch,
+                    datasets: [
+                        {
+                            data: data,
+                            backgroundColor: [
+                                "rgba(255, 99, 132, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(255, 206, 86, 1)",
+                                "rgba(75, 192, 192, 1)",
+                                "rgba(75, 110, 192, 1)",
+                                "rgba(153, 102, 255, 1)",
+                                "rgba(255, 99, 132, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(255, 206, 86, 1)",
+                                "rgba(75, 192, 192, 1)"
+                            ],
+
+                        }
+                    ]
+                },
+                options: {
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        }
+
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                font: {
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 10,
+                                    // Change the font size
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,                      
+                            ticks: {
+                                font: {
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 10,
+                                    // Change the font size
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+        });
+
+            };
+
+    </script>
+
+
+    <script>
+        function GetAllByType(Type,listDrop,singleNo) {
+            //console.log("Mazzen1")
+            if (Type != null && Type != "" & Type != undefined) {
+                //console.log("Mazzen2")
+                location.href = '@Url.Action("GetAllByType", "RenterStatistics")?Type=' + Type + '&listDrop=' + listDrop + '&singleNo=' + singleNo;
+            }
+        }
+    </script>
+
+    <script>
+
+
+        $(document).ready(function () {
+            // Bar Chart 2
+            //Branch
+            //DrawChart("response");
+            var paymentMethodsBranchData = @Html.Raw(Json.Serialize(Model.ChartBranchDataVM));
+            //console.log(paymentMethodsBranchData);
+            var labelsBranch;
+            if ('@requestCulture?.RequestCulture.UICulture.Name' == "en-US") {
+
+                labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
+                    return paymentMethod.enName;
+                });
+            }
+            else {
+                labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
+                    return paymentMethod.arName;
+                });
+            }
+
+
+            var data = paymentMethodsBranchData.map(function (paymentMethod) {
+                return paymentMethod.value;
+            });
+
+            var barChart2 = document.getElementById("barChart2").getContext("2d");
+            var myChart = new Chart(barChart2, {
+                type: "bar",
+                data: {
+                    labels: labelsBranch,
+                    datasets: [
+                        {
+                            data: data,
+                            backgroundColor: [
+                                "rgba(255, 99, 132, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(255, 206, 86, 1)",
+                                "rgba(75, 192, 192, 1)",
+                                "rgba(75, 110, 192, 1)",
+                                "rgba(153, 102, 255, 1)",
+                                "rgba(255, 99, 132, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(255, 206, 86, 1)",
+                                "rgba(75, 192, 192, 1)"
+                            ],
+
+                        }
+                    ]
+                },
+                options: {
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        }
+
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                font: {
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 16,
+                                    // Change the font size
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,                      
+                            ticks: {
+                                font: {
+                                    family: 'Cairo, sans-serif', // Change the font family
+                                    size: 16,
+                                    // Change the font size
+                                }
+                            }
+                        }
+
+                    }
+                }
+            });
+
+        });
+
+    </script>
+    
+
+        <script>
+            //onchange="getSelectedType(this)"
+            function getSelectedType(selectObject) {
+                var single = selectObject.value;
+                var type = "";
+                switch (single) {
+                    case "0":
+                        type = "Nationality";
+                        break;
+                    case "1":
+                        type = "MemperShip";
+                        break;
+                    case "2":
+                        type = "profession";
+                        break;
+                    case "3":
+                        type = "Rigon";
+                        break;
+                    case "4":
+                        type = "City";
+                        break;
+                    case "5":
+                        type = "Age";
+                        break;
+                    case "6":
+                        type = "Traded";
+                        break;
+                    case "7":
+                        type = "Dealing_Mechanism";
+                        break;
+                    case "8":
+                        type = "Status";
+                        break;
+                    default:
+                        type = "Nationality";
+            }
+                var listDrop ="@ViewBag.concate_DropDown";
+                //console.log(single);
+                GetAllByType(type,listDrop,single);
+            };
+        </script>
+
+    <script>
+        $(document).ready(function () {
+        var string ="@ViewBag.concate_DropDown";
+        const usingSpread = [...string];
+        const usingArrayFrom = Array.from(string);
+        //console.log(usingArrayFrom);
+
+        var list_dropdown = ['0','1','2','3','4','5','6','7','8'];
+
+        list_dropdown.forEach(myFunction_hide);
+
+        usingArrayFrom.forEach(myFunction_show);
+ 
+        function myFunction_hide(item, index) {
+          var xitemId = "#"+item;
+          //console.log(xitemId);
+          document.getElementById(item).style.display='none';
+        }
+
+        function myFunction_show(item, index) {
+          var xitemId = "#"+item;
+          //console.log(xitemId);
+          document.getElementById(item).style.display='inline';
+        }
+
+        
+
+        });
+    </script>
+
+    <script>
+        function SetSelectedType()
+        {
+
+            document.getElementById("SelectedType").value = "3";
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var singleType ="@ViewBag.singleType";
+
+            $("#SelectedType")
+              // .find("[value!='" + e.target.value + "']")
+              .find("option")
+              .prop("selected", false);
+
+            $("#SelectedType")
+              .find("[value='" + singleType + "']")
+              .prop("selected", true);
+        });
+    </script>
+    
+}
+

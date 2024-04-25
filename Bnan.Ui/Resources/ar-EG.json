@@ -640,6 +640,45 @@
   "Edit FinancialTransactionOfEmployee Hint": "تمكنك هذه الصفحة من البحث والإطلاع على تفاصيل القيود للموظف",
 
 
+  //CarStatistics --------
+  "CarStatistics Hint": "تمكنك الصفحة من الإطلاع على المؤشرات الإحصائية للسيارات",
+  "CarStatistics Data": "مؤشر إحصائيات السيارات",
+  "Edit CarStatistics Data": "البيانات التفصيلية للمؤشرات الإحصائية للسيارات",
+  "Edit CarStatistics Hint": "تمكنك الصفحة من الإطلاع على تفاصيل المؤشرات الإحصائية للسيارات",
+
+  "CarStatistics_Status": "الحالة",
+  "CarStatistics_Branches": "الفروع",
+  "CarStatistics_Brand": "الماركة",
+  "CarStatistics_year": "سنة الصنع",
+  "CarStatistics_Category": "الفئة",
+  "CarStatistics_count_Cars": "عدد السيارات",
+  "CarStatistics_Model": "الطراز",
+  "CarStatistics_City": "المدينة",
+  "CarStatistics_Rigon": "المنطقة",
+
+  "CarStatistics_Type": "توزيع السيارات حسب",
+  "CarStatistics_ID": "المعرف",
+  "CarStatistics_Name": "الأسم",
+  "CarStatistics_Count": "العدد",
+  "CarStatistics_Percentage": "النسبة",
+
+  //RenterStatistics --------
+  "RenterStatistics Hint": "تمكنك الصفحة من الإطلاع على المؤشرات الإحصائية للمستأجرين",
+  "RenterStatistics Data": "مؤشر إحصائيات المستأجرين",
+
+  "RenterStatistics_Nationality": "الجنسية",
+  "RenterStatistics_MemperShip": "العضوية",
+  "RenterStatistics_profession": "المهنة",
+  "RenterStatistics_Rigon": "المنطقة",
+  "RenterStatistics_City": "المدينة",
+  "RenterStatistics_Age": "الفئة العمرية",
+  "RenterStatistics_Traded": "فئة المبالغ المتداولة",
+  "RenterStatistics_Dealing_Mechanism": "ألية التعامل",
+  "RenterStatistics_Status": "حالة التسجيل",
+
+  "RenterStatistics_count_Renters": "عدد المستأجرين",
+  "RenterStatistics_Type": "توزيع المستأجرين حسب",
+
 
   "FTR_CurrentBalance": "الرصيد الحالي",
   "FTR_TotalCreditor": "مجموع الدائن",

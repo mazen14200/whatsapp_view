@@ -289,6 +289,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             //sidebar Active
             ViewBag.id = "#sidebarRenter";
             ViewBag.no = "2";
+            var titles = await setTitle("205", "2203003", "2");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var (mainTask, subTask, system, currentUser) = await SetTrace("203", "2203003", "2");
 
             var AllRenterLessor = _unitOfWork.CrCasRenterLessor.FindAll(x => currentUser.CrMasUserInformationLessor == x.CrCasRenterLessorCode && x.CrCasRenterLessorAvailableBalance != 0 && x.CrCasRenterLessorStatus != "R").ToList();

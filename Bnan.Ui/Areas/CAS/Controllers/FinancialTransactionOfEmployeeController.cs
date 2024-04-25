@@ -120,7 +120,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var titles = await setTitle("205", "2205012", "2");
             await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "تعديل", "Edit", titles[3]);
 
-            var FinancialTransactionOfEmployeeAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && (x.CrCasAccountReceiptType == "301" || x.CrCasAccountReceiptType == "302"), new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptUserNavigation" }).Where(x=> id == x.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
+            var FinancialTransactionOfEmployeeAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && (x.CrCasAccountReceiptType == "301" || x.CrCasAccountReceiptType == "302"), new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptUserNavigation", "CrCasAccountReceiptNavigation" }).Where(x=> id == x.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
 
 
             FinancialTransactionOfEmployeeVM FT_EmployeeVM = new FinancialTransactionOfEmployeeVM();
@@ -174,7 +174,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             if (!string.IsNullOrEmpty(_max) && !string.IsNullOrEmpty(_mini) && _max.Length > 0)
             {
                 _max = DateTime.Parse(_max).Date.AddDays(1).ToString("yyyy-MM-dd");
-                var FinancialTransactionOfEmployeeAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptDate < DateTime.Parse(_max).Date && x.CrCasAccountReceiptDate >= DateTime.Parse(_mini).Date && currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && (x.CrCasAccountReceiptType == "301" || x.CrCasAccountReceiptType == "302"), new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptUserNavigation" }).Where(x => id == x.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
+                var FinancialTransactionOfEmployeeAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptDate < DateTime.Parse(_max).Date && x.CrCasAccountReceiptDate >= DateTime.Parse(_mini).Date && currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && (x.CrCasAccountReceiptType == "301" || x.CrCasAccountReceiptType == "302"), new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptUserNavigation", "CrCasAccountReceiptNavigation" }).Where(x => id == x.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
 
 
 
@@ -239,7 +239,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             if (!string.IsNullOrEmpty(_max) && !string.IsNullOrEmpty(_mini) && _max.Length > 0)
             {
                 _max = DateTime.Parse(_max).Date.AddDays(1).ToString("yyyy-MM-dd");
-                var FinancialTransactionOfEmployeeAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptDate < DateTime.Parse(_max).Date && x.CrCasAccountReceiptDate >= DateTime.Parse(_mini).Date && currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && (x.CrCasAccountReceiptType == "301" || x.CrCasAccountReceiptType == "302"), new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptUserNavigation" }).Where(x=> id == x.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
+                var FinancialTransactionOfEmployeeAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptDate < DateTime.Parse(_max).Date && x.CrCasAccountReceiptDate >= DateTime.Parse(_mini).Date && currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && (x.CrCasAccountReceiptType == "301" || x.CrCasAccountReceiptType == "302"), new[] { "CrCasAccountReceiptReferenceTypeNavigation", "CrCasAccountReceiptUserNavigation", "CrCasAccountReceiptNavigation" }).Where(x=> id == x.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
 
                 FinancialTransactionOfEmployeeVM FT_EmployeeVM = new FinancialTransactionOfEmployeeVM();
                 FT_EmployeeVM.crCasAccountReceipt = FinancialTransactionOfEmployeeAll;
@@ -277,6 +277,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             //sidebar Active
             ViewBag.id = "#sidebarReport";
             ViewBag.no = "11";
+            var titles = await setTitle("205", "2205012", "2");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205012", "2");
 
             var FinancialTransactionOfEmployeeAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && (x.CrCasAccountReceiptType == "301" || x.CrCasAccountReceiptType == "302"), new[] { "CrCasAccountReceiptUserNavigation" }).Where(x => x.CrCasAccountReceiptUserNavigation?.CrMasUserInformationCode != null).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();

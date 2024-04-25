@@ -136,6 +136,10 @@ namespace Bnan.Inferastructure
             CreateMap<CrCasRenterContractBasic, ContractSettlementVM>();
             CreateMap<ContractSettlementVM, CrCasRenterContractBasic>();
 
+            CreateMap<CasStatisticLayout_model, CasStatisticLayoutVM>().ReverseMap();
+
+            
+
         }
 
     }

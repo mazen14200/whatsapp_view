@@ -233,6 +233,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             //sidebar Active
             ViewBag.id = "#sidebarReport";
             ViewBag.no = "10";
+            var titles = await setTitle("205", "2205011", "2");
+            await ViewData.SetPageTitleAsync(titles[0], titles[1], titles[2], "", "", titles[3]);
             var (mainTask, subTask, system, currentUser) = await SetTrace("205", "2205011", "2");
 
             var FinancialTransactionOfSalesPointAll = _unitOfWork.CrCasAccountReceipt.FindAll(x => currentUser.CrMasUserInformationLessor == x.CrCasAccountReceiptLessorCode && (x.CrCasAccountReceiptType == "301" || x.CrCasAccountReceiptType == "302"), new[] { "CrCasAccountReceiptSalesPointNavigation", "CrCasAccountReceiptNavigation" }).Where(x=> x.CrCasAccountReceiptSalesPointNavigation?.CrCasAccountSalesPointNo != null).OrderByDescending(x => x.CrCasAccountReceiptDate).ToList();
