@@ -69,6 +69,7 @@
                                 <input hidden asp-for="ContractSettlement.PrivateDriverValueTotal" />
                                 <input hidden asp-for="ContractSettlement.PreviousBalance" />
                                 <input hidden asp-for="ContractSettlement.AmountRequired" />
+                                <input hidden asp-for="ContractSettlement.AdvantagesValueTotal" />
                                 <input hidden id="language" name="language" />
                                 <div class=" ">
                                     <!-- progressbar -->
@@ -1583,6 +1584,7 @@
             var AdvantagesValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.AdvantagesValue));
             advantagesValueTotal = totalDaysNo * parseFloat(AdvantagesValue);
             document.getElementById('Features').textContent = advantagesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#ContractSettlement_AdvantagesValueTotal").val(advantagesValueTotal);
 
             //AdditionalDriver
             var AdditionalDriver = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicAdditionalDriverValue));

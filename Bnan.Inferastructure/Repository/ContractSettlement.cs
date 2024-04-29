@@ -295,7 +295,7 @@ namespace Bnan.Inferastructure.Repository
 
         public async Task<CrCasRenterContractBasic> UpdateRenterSettlementContract(string ContractNo, string UserInsert, string ActualDaysNo, string Mechanizm, string CurrentMeter, string AdditionalKm,
                                                                               string TaxValue, string DiscountValue, string RequiredValue, string AmountPaid, string ExpensesValue, string ExpensesReasons, string CompensationValue,
-                                                                             string CompensationReasons, string MaxHours, string MaxMinutes, string ExtraValueHours, string PrivateDriverValueTotal, string ChoicesValueTotal, string ContractValue,
+                                                                             string CompensationReasons, string MaxHours, string MaxMinutes, string ExtraValueHours, string PrivateDriverValueTotal, string ChoicesValueTotal,string AdvantagesValueTotal, string ContractValue,
                                                                              string ContractValueAfterDiscount, string TotalContract, decimal PreviousBalance)
         {
             var OldContract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == ContractNo).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();
@@ -317,6 +317,7 @@ namespace Bnan.Inferastructure.Repository
             OldContract.CrCasRenterContractBasicActualExtraKmValue = int.Parse(AdditionalKm) * OldContract.CrCasRenterContractBasicKmValue;
             OldContract.CrCasRenterContractBasicActualPrivateDriverValue = decimal.Parse(PrivateDriverValueTotal, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicActualOptionsValue = decimal.Parse(ChoicesValueTotal, CultureInfo.InvariantCulture);
+            OldContract.CrCasRenterContractBasicActualAdvantagesValue = decimal.Parse(AdvantagesValueTotal, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicActualValueBeforDiscount = decimal.Parse(ContractValue, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicActualDiscountValue = decimal.Parse(DiscountValue, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicActualValueAfterDiscount = decimal.Parse(ContractValueAfterDiscount, CultureInfo.InvariantCulture);
