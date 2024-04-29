@@ -515,6 +515,7 @@ namespace Bnan.Inferastructure.Repository
             if (Driver != null)
             {
                 Driver.CrCasRenterLessorStatus = Status.Rented;
+                Driver.CrCasRenterLessorDateLastContractual = DateTime.Now;
                 Driver.CrCasRenterLessorReasons = Reasons;
                 if (_unitOfWork.CrCasRenterLessor.Update(Driver) != null) return true;
             }

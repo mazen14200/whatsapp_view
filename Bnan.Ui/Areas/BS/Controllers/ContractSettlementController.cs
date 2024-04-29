@@ -218,9 +218,9 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
                     // Renter Balance 
                     var CheckUpdateRenterBalance = true;
-                    var ContractValue = UpdateSettlementContract.CrCasRenterContractBasicActualTotal - UpdateSettlementContract.CrCasRenterContractBasicExpensesValue + UpdateSettlementContract.CrCasRenterContractBasicCompensationValue;
+                    var TotalContractValue = UpdateSettlementContract.CrCasRenterContractBasicActualTotal - UpdateSettlementContract.CrCasRenterContractBasicExpensesValue + UpdateSettlementContract.CrCasRenterContractBasicCompensationValue;
                     CheckUpdateRenterBalance = await _contractSettlement.UpdateRenterLessor(UpdateSettlementContract.CrCasRenterContractBasicNo, (decimal)UpdateSettlementContract.CrCasRenterContractBasicActualAmountRequired,
-                                                                                           (decimal)UpdateSettlementContract.CrCasRenterContractBasicAmountPaid, (decimal)ContractValue);
+                                                                                           (decimal)UpdateSettlementContract.CrCasRenterContractBasicAmountPaid, (decimal)UpdateSettlementContract.CrCasRenterContractBasicActualTotal, (decimal)TotalContractValue, (int)UpdateSettlementContract.CrCasRenterContractBasicActualDays);
                     // Account Contract Tax Owed 
 
                     var CheckAddAccountContractTaxOwed = true;

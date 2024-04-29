@@ -211,7 +211,7 @@ namespace Bnan.Inferastructure.Repository
             return false;
         }
 
-        public async Task<bool> UpdateRenterLessor(string ContractNo, decimal AmountRequired, decimal AmountPaid, decimal TotalContractValue)
+        public async Task<bool> UpdateRenterLessor(string ContractNo, decimal AmountRequired, decimal AmountPaid,decimal ContractValue ,decimal TotalContractValue,int DaysNo)
         {
             var OldContract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == ContractNo).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();
             var RenterLessor = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == OldContract.CrCasRenterContractBasicRenterId && x.CrCasRenterLessorCode == OldContract.CrCasRenterContractBasicLessor);
@@ -221,26 +221,23 @@ namespace Bnan.Inferastructure.Repository
             // In This Case , ReservedBalance equal Expected Total Contract , this have one contract
             if (RenterLessor.CrCasRenterLessorReservedBalance== OldContract.CrCasRenterContractBasicExpectedTotal)
             {
+
                 if (ResevedAndAvaliableBalance == TotalContractValue)
                 {
                     RenterLessor.CrCasRenterLessorBalance = 0;
-                    RenterLessor.CrCasRenterLessorReservedBalance = 0;
-                    RenterLessor.CrCasRenterLessorAvailableBalance = 0;
                 }
                 else if (TotalContractValue > ResevedAndAvaliableBalance)
                 {
                     RenterLessor.CrCasRenterLessorBalance -= TotalContractValue - AmountPaid; // 400 > 400 + 100 - 497.9 = 2.10
-                    RenterLessor.CrCasRenterLessorReservedBalance = 0; // 397.9 > 397.9 + 100 - 500=2.10
-                    RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance; // 2.10 > -10-0=-10
                 }
                 else if (TotalContractValue < ResevedAndAvaliableBalance)
                 {
                     RenterLessor.CrCasRenterLessorBalance -= TotalContractValue + AmountPaid; // 12.10 +397.9 =400-410=-10
-                    RenterLessor.CrCasRenterLessorReservedBalance = 0;  // 0
-                    RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance; // 0 > -10-0=-10
                 }
+                RenterLessor.CrCasRenterLessorReservedBalance = 0;  // 0
+                RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance; 
             }
-           
+
             //if (AmountPaid == 0 && AmountRequired == 0)
             //{
             //    RenterLessor.CrCasRenterLessorBalance = 0;
@@ -286,7 +283,11 @@ namespace Bnan.Inferastructure.Repository
             //    RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance; // 2.10 > -10-0=-10
             //}
 
-
+            if (RenterLessor.CrCasRenterLessorContractDays == null) RenterLessor.CrCasRenterLessorContractDays = 0;
+            RenterLessor.CrCasRenterLessorContractDays += DaysNo;
+            if (RenterLessor.CrCasRenterLessorContractTradedAmount == null) RenterLessor.CrCasRenterLessorContractTradedAmount = 0;
+            RenterLessor.CrCasRenterLessorContractTradedAmount += TotalContractValue;
+            RenterLessor.CrCasRenterLessorStatus = Status.Active;
 
             if (_unitOfWork.CrCasRenterLessor.Update(RenterLessor) != null) return true;
             return false;
@@ -299,7 +300,9 @@ namespace Bnan.Inferastructure.Repository
         {
             var OldContract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == ContractNo).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();
             var User = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == UserInsert);
-
+            if (string.IsNullOrEmpty(CompensationValue)) CompensationValue = "0";
+            if (string.IsNullOrEmpty(ExpensesValue)) ExpensesValue = "0";
+            if (string.IsNullOrEmpty(AmountPaid)) AmountPaid = "0";
             OldContract.CrCasRenterContractBasicActualCloseDateTime = OldContract.CrCasRenterContractBasicExpectedStartDate?.AddDays(int.Parse(ActualDaysNo));
             OldContract.CrCasRenterContractBasicDelayMechanism = Mechanizm;
             double actualDays = Convert.ToDouble(ActualDaysNo);
@@ -320,8 +323,7 @@ namespace Bnan.Inferastructure.Repository
             OldContract.CrCasRenterContractBasicActualTaxValue = decimal.Parse(TaxValue, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicActualTotal = decimal.Parse(TotalContract, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicClosePreviousBalance = PreviousBalance;
-            if (string.IsNullOrEmpty(CompensationValue)) CompensationValue = "0";
-            if (string.IsNullOrEmpty(ExpensesValue)) ExpensesValue = "0";
+            
             OldContract.CrCasRenterContractBasicCompensationValue = decimal.Parse(CompensationValue, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicExpensesValue = decimal.Parse(ExpensesValue, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicCompensationDescription = CompensationReasons;
@@ -369,7 +371,7 @@ namespace Bnan.Inferastructure.Repository
 
         public async Task<bool> UpdateCarInformation(string SerialNo, string LessorCode, string BranchCode, int CurrentMeter, string ExpireMaintainceCount)
         {
-            var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo && x.CrCasCarInformationLessor == LessorCode && x.CrCasCarInformationBranch == BranchCode);
+            var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo && x.CrCasCarInformationLessor == LessorCode);
             if (car != null)
             {
                 car.CrCasCarInformationStatus = Status.Active;
@@ -391,9 +393,9 @@ namespace Bnan.Inferastructure.Repository
         }
         public async Task<string> UpdateCarDocMaintainance(string SerialNo, string LessorCode, string BranchCode, int CurrentMeter)
         {
-            var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo && x.CrCasCarInformationLessor == LessorCode && x.CrCasCarInformationBranch == BranchCode);
+            var car = await _unitOfWork.CrCasCarInformation.FindAsync(x => x.CrCasCarInformationSerailNo == SerialNo && x.CrCasCarInformationLessor == LessorCode);
             var CarDocMaintainances = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceSerailNo == car.CrCasCarInformationSerailNo && x.CrCasCarDocumentsMaintenanceLessor == LessorCode &&
-                                                                                            x.CrCasCarDocumentsMaintenanceBranch == BranchCode && x.CrCasCarDocumentsMaintenanceStatus == Status.Active).ToList();
+                                                                                            x.CrCasCarDocumentsMaintenanceStatus == Status.Active).ToList();
 
             if (CarDocMaintainances != null)
             {

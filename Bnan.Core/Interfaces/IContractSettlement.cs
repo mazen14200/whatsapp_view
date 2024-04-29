@@ -21,7 +21,7 @@ namespace Bnan.Core.Interfaces
         Task<bool> AddAccountContractCompanyOwed(string ContractNo,string DaysNo,decimal DailyRentValue);
         Task<bool> UpdateAuthrization(string ContractNo);
         Task<bool> UpdateAlert(string ContractNo);
-        Task<bool> UpdateRenterLessor(string ContractNo,decimal AmountRequired , decimal AmountPaid, decimal TotalContractValue);
+        Task<bool> UpdateRenterLessor(string ContractNo,decimal AmountRequired , decimal AmountPaid, decimal ContractValue, decimal TotalContractValue, int DaysNo);
         Task<bool> UpdateBranchBalance(string BranchCode, string LessorCode, decimal AmountPaid,decimal AmountRequired);
         Task<bool> UpdateSalesPointBalance(string BranchCode, string LessorCode, string SalesPointCode, decimal AmountPaid, decimal AmountRequired);
         Task<bool> UpdateBranchValidity(string BranchCode, string LessorCode, string UserId, string PaymentMethod, decimal AmountPaid, decimal AmountRequired);

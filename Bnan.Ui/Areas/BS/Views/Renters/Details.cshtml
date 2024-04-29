@@ -248,7 +248,8 @@
                                                                     <th scope="col" class="text-left">@localizer["Status"]</th>
 
                                                                 }
-                                                                <th scope="col">@localizer["ContractValue"]</th>
+                                                                <th scope="col">@localizer["ActualContractValue"]</th>
+                                                                <th scope="col">@localizer["FirstContractValue"]</th>
                                                                 @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                                                 {
                                                                     <th scope="col" class="text-right">@localizer["Car"]</th>
@@ -327,7 +328,7 @@
                                                                         </td>
                                                                     }
 
-
+                                                                    <td>@item.CrCasRenterContractBasicActualTotal?.ToString("N2", CultureInfo.InvariantCulture)</td>
                                                                     <td>@item.CrCasRenterContractBasicExpectedTotal?.ToString("N2", CultureInfo.InvariantCulture)</td>
 
                                                                     @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
