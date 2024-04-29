@@ -9,6 +9,7 @@ namespace Bnan.Core.Models
         public CrMasUserInformation()
         {
             CrCasAccountContractTaxOweds = new HashSet<CrCasAccountContractTaxOwed>();
+            CrCasAccountInvoices = new HashSet<CrCasAccountInvoice>();
             CrCasAccountReceipts = new HashSet<CrCasAccountReceipt>();
             CrCasRenterContractStatisticCrCasRenterContractStatisticsUserCloseNavigations = new HashSet<CrCasRenterContractStatistic>();
             CrCasRenterContractStatisticCrCasRenterContractStatisticsUserOpenNavigations = new HashSet<CrCasRenterContractStatistic>();
@@ -59,10 +60,11 @@ namespace Bnan.Core.Models
         public bool? CrMasUserInformationOperationStatus { get; set; }
         public string? CrMasUserInformationStatus { get; set; }
         public string? CrMasUserInformationReasons { get; set; }
-        
+       
         public virtual CrMasLessorInformation? CrMasUserInformationLessorNavigation { get; set; }
         public virtual CrMasUserContractValidity CrMasUserContractValidity { get; set; } = null!;
         public virtual ICollection<CrCasAccountContractTaxOwed> CrCasAccountContractTaxOweds { get; set; }
+        public virtual ICollection<CrCasAccountInvoice> CrCasAccountInvoices { get; set; }
         public virtual ICollection<CrCasAccountReceipt> CrCasAccountReceipts { get; set; }
         public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatisticCrCasRenterContractStatisticsUserCloseNavigations { get; set; }
         public virtual ICollection<CrCasRenterContractStatistic> CrCasRenterContractStatisticCrCasRenterContractStatisticsUserOpenNavigations { get; set; }

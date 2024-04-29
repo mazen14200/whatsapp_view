@@ -726,19 +726,19 @@
                     </div>
                 }
 
-                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArCatchReceipt))
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArInitialInvoice))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.ArCatchReceipt').trigger('click')">@localizer["ArCatchReceipt"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ArInitialInvoice').trigger('click')">@localizer["ArInitialInvoice"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input ArCatchReceipt" type="file" onchange="readURL(this, 'ArCatchReceipt');" accept="image/*" id="ArCatchReceipt" name="ArCatchReceipt" />
+                                <input class="file-upload-input ArInitialInvoice" type="file" onchange="readURL(this, 'ArInitialInvoice');" accept="image/*" id="ArInitialInvoice" name="ArInitialInvoice" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content ArCatchReceipt" style="display:block">
-                                <img class="file-upload-image ArCatchReceipt" src="@Url.Content(Model.CrMasLessorImageArCatchReceipt?.ToString())" alt="uploaded image" />
+                            <div class="file-upload-content ArInitialInvoice" style="display:block">
+                                <img class="file-upload-image ArInitialInvoice" src="@Url.Content(Model.CrMasLessorImageArInitialInvoice?.ToString())" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -750,15 +750,15 @@
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.ArCatchReceipt').trigger('click')">@localizer["ArCatchReceipt"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ArInitialInvoice').trigger('click')">@localizer["ArInitialInvoice"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input ArCatchReceipt" type="file" onchange="readURL(this, 'ArCatchReceipt');" accept="image/*" id="ArCatchReceipt" name="ArCatchReceipt" />
+                                <input class="file-upload-input ArInitialInvoice" type="file" onchange="readURL(this, 'ArInitialInvoice');" accept="image/*" id="ArInitialInvoice" name="ArInitialInvoice" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content ArCatchReceipt" style="display:none">
-                                <img class="file-upload-image ArCatchReceipt" src="#" alt="uploaded image" />
+                            <div class="file-upload-content ArInitialInvoice" style="display:none">
+                                <img class="file-upload-image ArInitialInvoice" src="#" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -767,19 +767,19 @@
                     </div>
                 }
 
-                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArBillExchange))
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArActualInvoice))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.ArBillExchange').trigger('click')">@localizer["ArBillExchange"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ArActualInvoice').trigger('click')">@localizer["ArActualInvoice"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input ArBillExchange" type="file" onchange="readURL(this, 'ArBillExchange');" accept="image/*" id="ArBillExchange" name="ArBillExchange" />
+                                <input class="file-upload-input ArActualInvoice" type="file" onchange="readURL(this, 'ArActualInvoice');" accept="image/*" id="ArActualInvoice" name="ArActualInvoice" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content ArBillExchange" style="display:block">
-                                <img class="file-upload-image ArBillExchange" src="@Url.Content(Model.CrMasLessorImageArBillExchange?.ToString())" alt="uploaded image" />
+                            <div class="file-upload-content ArActualInvoice" style="display:block">
+                                <img class="file-upload-image ArActualInvoice" src="@Url.Content(Model.CrMasLessorImageArActualInvoice?.ToString())" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -791,15 +791,15 @@
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.ArBillExchange').trigger('click')">@localizer["ArBillExchange"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ArActualInvoice').trigger('click')">@localizer["ArActualInvoice"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input ArBillExchange" type="file" onchange="readURL(this, 'ArBillExchange');" accept="image/*" id="ArBillExchange" name="ArBillExchange" />
+                                <input class="file-upload-input ArActualInvoice" type="file" onchange="readURL(this, 'ArActualInvoice');" accept="image/*" id="ArActualInvoice" name="ArActualInvoice" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content ArBillExchange" style="display:none">
-                                <img class="file-upload-image ArBillExchange" src="#" alt="uploaded image" />
+                            <div class="file-upload-content ArActualInvoice" style="display:none">
+                                <img class="file-upload-image ArActualInvoice" src="#" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -808,19 +808,19 @@
                     </div>
                 }
 
-                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArBoxFeeding))
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArExternalCatchReceipt))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.ArBoxFeeding').trigger('click')">@localizer["ArBoxFeeding"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ArExternalCatchReceipt').trigger('click')">@localizer["ArExternalCatchReceipt"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input ArBoxFeeding" type="file" onchange="readURL(this, 'ArBoxFeeding');" accept="image/*" id="ArBoxFeeding" name="ArBoxFeeding" />
+                                <input class="file-upload-input ArExternalCatchReceipt" type="file" onchange="readURL(this, 'ArExternalCatchReceipt');" accept="image/*" id="ArExternalCatchReceipt" name="ArExternalCatchReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content ArBoxFeeding" style="display:block">
-                                <img class="file-upload-image ArBoxFeeding" src="@Url.Content(Model.CrMasLessorImageArBoxFeeding?.ToString())" alt="uploaded image" />
+                            <div class="file-upload-content ArExternalCatchReceipt" style="display:block">
+                                <img class="file-upload-image ArExternalCatchReceipt" src="@Url.Content(Model.CrMasLessorImageArExternalCatchReceipt?.ToString())" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -832,15 +832,15 @@
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.ArBoxFeeding').trigger('click')">@localizer["ArBoxFeeding"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ArExternalCatchReceipt').trigger('click')">@localizer["ArExternalCatchReceipt"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input ArBoxFeeding " type="file" onchange="readURL(this, 'ArBoxFeeding');" accept="image/*" id="ArBoxFeeding" name="ArBoxFeeding" />
+                                <input class="file-upload-input ArExternalCatchReceipt " type="file" onchange="readURL(this, 'ArExternalCatchReceipt');" accept="image/*" id="ArExternalCatchReceipt" name="ArExternalCatchReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content ArBoxFeeding" style="display:none">
-                                <img class="file-upload-image ArBoxFeeding" src="#" alt="uploaded image" />
+                            <div class="file-upload-content ArExternalCatchReceipt" style="display:none">
+                                <img class="file-upload-image ArExternalCatchReceipt" src="#" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -850,19 +850,19 @@
                 }
 
 
-                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArDeliveryCustody))
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArExternalBillExchangeReceipt))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.ArDeliveryCustody').trigger('click')">@localizer["ArDeliveryCustody"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ArExternalBillExchangeReceipt').trigger('click')">@localizer["ArExternalBillExchangeReceipt"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input ArDeliveryCustody" type="file" onchange="readURL(this, 'ArDeliveryCustody');" accept="image/*" id="ArDeliveryCustody" name="ArDeliveryCustody" />
+                                <input class="file-upload-input ArExternalBillExchangeReceipt" type="file" onchange="readURL(this, 'ArExternalBillExchangeReceipt');" accept="image/*" id="ArExternalBillExchangeReceipt" name="ArExternalBillExchangeReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content ArDeliveryCustody" style="display:block">
-                                <img class="file-upload-image ArDeliveryCustody" src="@Url.Content(Model.CrMasLessorImageArDeliveryCustody?.ToString())" alt="uploaded image" />
+                            <div class="file-upload-content ArExternalBillExchangeReceipt" style="display:block">
+                                <img class="file-upload-image ArExternalBillExchangeReceipt" src="@Url.Content(Model.CrMasLessorImageArExternalBillExchangeReceipt?.ToString())" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -874,15 +874,15 @@
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.ArDeliveryCustody').trigger('click')">@localizer["ArDeliveryCustody"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ArExternalBillExchangeReceipt').trigger('click')">@localizer["ArExternalBillExchangeReceipt"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input ArDeliveryCustody" type="file" onchange="readURL(this, 'ArDeliveryCustody');" accept="image/*" id="ArDeliveryCustody" name="ArDeliveryCustody" />
+                                <input class="file-upload-input ArExternalBillExchangeReceipt" type="file" onchange="readURL(this, 'ArExternalBillExchangeReceipt');" accept="image/*" id="ArExternalBillExchangeReceipt" name="ArExternalBillExchangeReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content ArDeliveryCustody" style="display:none">
-                                <img class="file-upload-image ArDeliveryCustody" src="#" alt="uploaded image" />
+                            <div class="file-upload-content ArExternalBillExchangeReceipt" style="display:none">
+                                <img class="file-upload-image ArExternalBillExchangeReceipt" src="#" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -891,19 +891,19 @@
                     </div>
                 }
 
-                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArTransferFtenant))
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArInternalCatchReceipt))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.ArTransferFtenant').trigger('click')">@localizer["ArTransferFtenant"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ArInternalCatchReceipt').trigger('click')">@localizer["ArInternalCatchReceipt"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input ArTransferFtenant" type="file" onchange="readURL(this, 'ArTransferFtenant');" accept="image/*" id="ArTransferFtenant" name="ArTransferFtenant" />
+                                <input class="file-upload-input ArInternalCatchReceipt" type="file" onchange="readURL(this, 'ArInternalCatchReceipt');" accept="image/*" id="ArInternalCatchReceipt" name="ArInternalCatchReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content ArTransferFtenant" style="display:block">
-                                <img class="file-upload-image ArTransferFtenant" src="@Url.Content(Model.CrMasLessorImageArTransferFtenant?.ToString())" alt="uploaded image" />
+                            <div class="file-upload-content ArInternalCatchReceipt" style="display:block">
+                                <img class="file-upload-image ArInternalCatchReceipt" src="@Url.Content(Model.CrMasLessorImageArInternalCatchReceipt?.ToString())" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -915,15 +915,15 @@
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.ArTransferFtenant').trigger('click')">@localizer["ArTransferFtenant"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ArInternalCatchReceipt').trigger('click')">@localizer["ArInternalCatchReceipt"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input ArTransferFtenant" type="file" onchange="readURL(this, 'ArTransferFtenant');" accept="image/*" id="ArTransferFtenant" name="ArTransferFtenant" />
+                                <input class="file-upload-input ArInternalCatchReceipt" type="file" onchange="readURL(this, 'ArInternalCatchReceipt');" accept="image/*" id="ArInternalCatchReceipt" name="ArInternalCatchReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content ArTransferFtenant" style="display:none">
-                                <img class="file-upload-image ArTransferFtenant" src="#" alt="uploaded image" />
+                            <div class="file-upload-content ArInternalCatchReceipt" style="display:none">
+                                <img class="file-upload-image ArInternalCatchReceipt" src="#" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -933,19 +933,19 @@
                 }
 
 
-                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArTransferTtenant))
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageArInternalBillExchangeReceipt))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.ArTransferTtenant').trigger('click')">@localizer["ArTransferTtenant"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ArInternalBillExchangeReceipt').trigger('click')">@localizer["ArInternalBillExchangeReceipt"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input ArTransferTtenant" type="file" onchange="readURL(this, 'ArTransferTtenant');" accept="image/*" id="ArTransferTtenant" name="ArTransferTtenant" />
+                                <input class="file-upload-input ArInternalBillExchangeReceipt" type="file" onchange="readURL(this, 'ArInternalBillExchangeReceipt');" accept="image/*" id="ArInternalBillExchangeReceipt" name="ArInternalBillExchangeReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content ArTransferTtenant" style="display:block">
-                                <img class="file-upload-image ArTransferTtenant" src="@Url.Content(Model.CrMasLessorImageArTransferTtenant?.ToString())" alt="uploaded image" />
+                            <div class="file-upload-content ArInternalBillExchangeReceipt" style="display:block">
+                                <img class="file-upload-image ArInternalBillExchangeReceipt" src="@Url.Content(Model.CrMasLessorImageArInternalBillExchangeReceipt?.ToString())" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -957,15 +957,15 @@
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.ArTransferTtenant').trigger('click')">@localizer["ArTransferTtenant"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.ArInternalBillExchangeReceipt').trigger('click')">@localizer["ArInternalBillExchangeReceipt"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input ArTransferTtenant" type="file" onchange="readURL(this, 'ArTransferTtenant');" accept="image/*" id="ArTransferTtenant" name="ArTransferTtenant" />
+                                <input class="file-upload-input ArInternalBillExchangeReceipt" type="file" onchange="readURL(this, 'ArInternalBillExchangeReceipt');" accept="image/*" id="ArInternalBillExchangeReceipt" name="ArInternalBillExchangeReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content ArTransferTtenant" style="display:none">
-                                <img class="file-upload-image ArTransferTtenant" src="#" alt="uploaded image" />
+                            <div class="file-upload-content ArInternalBillExchangeReceipt" style="display:none">
+                                <img class="file-upload-image ArInternalBillExchangeReceipt" src="#" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -974,19 +974,19 @@
                     </div>
                 }
 
-                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnCatchReceipt))
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnInitialInvoice))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.EnCatchReceipt').trigger('click')">@localizer["EnCatchReceipt"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.EnInitialInvoice').trigger('click')">@localizer["EnInitialInvoice"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input EnCatchReceipt" type="file" onchange="readURL(this, 'EnCatchReceipt');" accept="image/*" id="EnCatchReceipt" name="EnCatchReceipt" />
+                                <input class="file-upload-input EnInitialInvoice" type="file" onchange="readURL(this, 'EnInitialInvoice');" accept="image/*" id="EnInitialInvoice" name="EnInitialInvoice" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content EnCatchReceipt" style="display:block">
-                                <img class="file-upload-image EnCatchReceipt" src="@Url.Content(Model.CrMasLessorImageEnCatchReceipt?.ToString())" alt="uploaded image" />
+                            <div class="file-upload-content EnInitialInvoice" style="display:block">
+                                <img class="file-upload-image EnInitialInvoice" src="@Url.Content(Model.CrMasLessorImageEnInitialInvoice?.ToString())" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -998,15 +998,15 @@
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.EnCatchReceipt').trigger('click')">@localizer["EnCatchReceipt"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.EnInitialInvoice').trigger('click')">@localizer["EnInitialInvoice"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input EnCatchReceipt" type="file" onchange="readURL(this, 'EnCatchReceipt');" accept="image/*" id="EnCatchReceipt" name="EnCatchReceipt" />
+                                <input class="file-upload-input EnInitialInvoice" type="file" onchange="readURL(this, 'EnInitialInvoice');" accept="image/*" id="EnInitialInvoice" name="EnInitialInvoice" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content EnCatchReceipt" style="display:none">
-                                <img class="file-upload-image EnCatchReceipt" src="#" alt="uploaded image" />
+                            <div class="file-upload-content EnInitialInvoice" style="display:none">
+                                <img class="file-upload-image EnInitialInvoice" src="#" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -1015,19 +1015,19 @@
                     </div>
                 }
 
-                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnBillExchange))
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnActualInvoice))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.EnBillExchange').trigger('click')">@localizer["EnBillExchange"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.EnActualInvoice').trigger('click')">@localizer["EnActualInvoice"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input EnBillExchange " type="file" onchange="readURL(this, 'EnBillExchange');" accept="image/*" id="EnBillExchange" name="EnBillExchange" />
+                                <input class="file-upload-input EnActualInvoice " type="file" onchange="readURL(this, 'EnActualInvoice');" accept="image/*" id="EnActualInvoice" name="EnActualInvoice" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content EnBillExchange" style="display:block">
-                                <img class="file-upload-image EnBillExchange" src="@Url.Content(Model.CrMasLessorImageEnBillExchange?.ToString())" alt="uploaded image" />
+                            <div class="file-upload-content EnActualInvoice" style="display:block">
+                                <img class="file-upload-image EnActualInvoice" src="@Url.Content(Model.CrMasLessorImageEnActualInvoice?.ToString())" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -1039,15 +1039,15 @@
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.EnBillExchange').trigger('click')">@localizer["EnBillExchange"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.EnActualInvoice').trigger('click')">@localizer["EnActualInvoice"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input EnBillExchange" type="file" onchange="readURL(this, 'EnBillExchange');" accept="image/*" id="EnBillExchange" name="EnBillExchange" />
+                                <input class="file-upload-input EnActualInvoice" type="file" onchange="readURL(this, 'EnActualInvoice');" accept="image/*" id="EnActualInvoice" name="EnActualInvoice" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content EnBillExchange" style="display:none">
-                                <img class="file-upload-image EnBillExchange" src="#" alt="uploaded image" />
+                            <div class="file-upload-content EnActualInvoice" style="display:none">
+                                <img class="file-upload-image EnActualInvoice" src="#" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -1056,19 +1056,19 @@
                     </div>
                 }
 
-                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnBoxFeeding))
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnExternalCatchReceipt))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.EnBoxFeeding').trigger('click')">@localizer["EnBoxFeeding"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.EnExternalCatchReceipt').trigger('click')">@localizer["EnExternalCatchReceipt"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input EnBoxFeeding" type="file" onchange="readURL(this, 'EnBoxFeeding');" accept="image/*" id="EnBoxFeeding" name="EnBoxFeeding" />
+                                <input class="file-upload-input EnExternalCatchReceipt" type="file" onchange="readURL(this, 'EnExternalCatchReceipt');" accept="image/*" id="EnExternalCatchReceipt" name="EnExternalCatchReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content EnBoxFeeding" style="display:block">
-                                <img class="file-upload-image EnBoxFeeding" src="@Url.Content(Model.CrMasLessorImageEnBoxFeeding?.ToString())" alt="uploaded image" />
+                            <div class="file-upload-content EnExternalCatchReceipt" style="display:block">
+                                <img class="file-upload-image EnExternalCatchReceipt" src="@Url.Content(Model.CrMasLessorImageEnExternalCatchReceipt?.ToString())" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -1080,15 +1080,15 @@
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.EnBoxFeeding').trigger('click')">@localizer["EnBoxFeeding"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.EnExternalCatchReceipt').trigger('click')">@localizer["EnExternalCatchReceipt"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input EnBoxFeeding" type="file" onchange="readURL(this, 'EnBoxFeeding');" accept="image/*" id="EnBoxFeeding" name="EnBoxFeeding" />
+                                <input class="file-upload-input EnExternalCatchReceipt" type="file" onchange="readURL(this, 'EnExternalCatchReceipt');" accept="image/*" id="EnExternalCatchReceipt" name="EnExternalCatchReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content EnBoxFeeding" style="display:none">
-                                <img class="file-upload-image EnBoxFeeding" src="#" alt="uploaded image" />
+                            <div class="file-upload-content EnExternalCatchReceipt" style="display:none">
+                                <img class="file-upload-image EnExternalCatchReceipt" src="#" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -1097,19 +1097,19 @@
                     </div>
                 }
 
-                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnDeliveryCustody))
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnExternalBillExchangeReceipt))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.EnDeliveryCustody').trigger('click')">@localizer["EnDeliveryCustody"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.EnExternalBillExchangeReceipt').trigger('click')">@localizer["EnExternalBillExchangeReceipt"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input EnDeliveryCustody" type="file" onchange="readURL(this, 'EnDeliveryCustody');" accept="image/*" id="EnDeliveryCustody" name="EnDeliveryCustody" />
+                                <input class="file-upload-input EnExternalBillExchangeReceipt" type="file" onchange="readURL(this, 'EnExternalBillExchangeReceipt');" accept="image/*" id="EnExternalBillExchangeReceipt" name="EnExternalBillExchangeReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content EnDeliveryCustody" style="display:block">
-                                <img class="file-upload-image EnDeliveryCustody" src="@Url.Content(Model.CrMasLessorImageEnDeliveryCustody?.ToString())" alt="uploaded image" />
+                            <div class="file-upload-content EnExternalBillExchangeReceipt" style="display:block">
+                                <img class="file-upload-image EnExternalBillExchangeReceipt" src="@Url.Content(Model.CrMasLessorImageEnExternalBillExchangeReceipt?.ToString())" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -1121,15 +1121,15 @@
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.EnDeliveryCustody').trigger('click')">@localizer["EnDeliveryCustody"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.EnExternalBillExchangeReceipt').trigger('click')">@localizer["EnExternalBillExchangeReceipt"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input EnDeliveryCustody" type="file" onchange="readURL(this, 'EnDeliveryCustody');" accept="image/*" id="EnDeliveryCustody" name="EnDeliveryCustody" />
+                                <input class="file-upload-input EnExternalBillExchangeReceipt" type="file" onchange="readURL(this, 'EnExternalBillExchangeReceipt');" accept="image/*" id="EnExternalBillExchangeReceipt" name="EnExternalBillExchangeReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content EnDeliveryCustody" style="display:none">
-                                <img class="file-upload-image EnDeliveryCustody" src="#" alt="uploaded image" />
+                            <div class="file-upload-content EnExternalBillExchangeReceipt" style="display:none">
+                                <img class="file-upload-image EnExternalBillExchangeReceipt" src="#" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -1138,19 +1138,19 @@
                     </div>
                 }
 
-                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnTransferFtenant))
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnInternalCatchReceipt))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.EnTransferFtenant').trigger('click')">@localizer["EnTransferFtenant"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.EnInternalCatchReceipt').trigger('click')">@localizer["EnInternalCatchReceipt"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input EnTransferFtenant" type="file" onchange="readURL(this, 'EnTransferFtenant');" accept="image/*" id="EnTransferFtenant" name="EnTransferFtenant" />
+                                <input class="file-upload-input EnInternalCatchReceipt" type="file" onchange="readURL(this, 'EnInternalCatchReceipt');" accept="image/*" id="EnInternalCatchReceipt" name="EnInternalCatchReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content EnTransferFtenant" style="display:block">
-                                <img class="file-upload-image EnTransferFtenant" src="@Url.Content(Model.CrMasLessorImageEnTransferFtenant?.ToString())" alt="uploaded image" />
+                            <div class="file-upload-content EnInternalCatchReceipt" style="display:block">
+                                <img class="file-upload-image EnInternalCatchReceipt" src="@Url.Content(Model.CrMasLessorImageEnInternalCatchReceipt?.ToString())" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -1162,15 +1162,15 @@
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.EnTransferFtenant').trigger('click')">@localizer["EnTransferFtenant"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.EnInternalCatchReceipt').trigger('click')">@localizer["EnInternalCatchReceipt"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input EnTransferFtenant" type="file" onchange="readURL(this, 'EnTransferFtenant');" accept="image/*" id="EnTransferFtenant" name="EnTransferFtenant" />
+                                <input class="file-upload-input EnInternalCatchReceipt" type="file" onchange="readURL(this, 'EnInternalCatchReceipt');" accept="image/*" id="EnInternalCatchReceipt" name="EnInternalCatchReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content EnTransferFtenant" style="display:none">
-                                <img class="file-upload-image EnTransferFtenant" src="#" alt="uploaded image" />
+                            <div class="file-upload-content EnInternalCatchReceipt" style="display:none">
+                                <img class="file-upload-image EnInternalCatchReceipt" src="#" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -1179,19 +1179,19 @@
                     </div>
                 }
 
-                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnTransferTtenant))
+                @if (!string.IsNullOrEmpty(Model.CrMasLessorImageEnInternalBillExchangeReceipt))
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.EnTransferTtenant').trigger('click')">@localizer["EnTransferTtenant"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.EnInternalBillExchangeReceipt').trigger('click')">@localizer["EnInternalBillExchangeReceipt"]</button>
                             <div class="image-upload-wrap" style="display:none">
-                                <input class="file-upload-input EnTransferTtenant" type="file" onchange="readURL(this, 'EnTransferTtenant');" accept="image/*" id="EnTransferTtenant" name="EnTransferTtenant" />
+                                <input class="file-upload-input EnInternalBillExchangeReceipt" type="file" onchange="readURL(this, 'EnInternalBillExchangeReceipt');" accept="image/*" id="EnInternalBillExchangeReceipt" name="EnInternalBillExchangeReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content EnTransferTtenant" style="display:block">
-                                <img class="file-upload-image EnTransferTtenant" src="@Url.Content(Model.CrMasLessorImageEnTransferTtenant?.ToString())" alt="uploaded image" />
+                            <div class="file-upload-content EnInternalBillExchangeReceipt" style="display:block">
+                                <img class="file-upload-image EnInternalBillExchangeReceipt" src="@Url.Content(Model.CrMasLessorImageEnInternalBillExchangeReceipt?.ToString())" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>
@@ -1203,15 +1203,15 @@
                 {
                     <div class="col-md-3 col-sm-4 col-6 mt-1">
                         <div class="file-upload">
-                            <button class="file-upload-btn" type="button" onclick="$('.EnTransferTtenant').trigger('click')">@localizer["EnTransferTtenant"]</button>
+                            <button class="file-upload-btn" type="button" onclick="$('.EnInternalBillExchangeReceipt').trigger('click')">@localizer["EnInternalBillExchangeReceipt"]</button>
                             <div class="image-upload-wrap" style="display:block">
-                                <input class="file-upload-input EnTransferTtenant" type="file" onchange="readURL(this, 'EnTransferTtenant');" accept="image/*" id="EnTransferTtenant" name="EnTransferTtenant" />
+                                <input class="file-upload-input EnInternalBillExchangeReceipt" type="file" onchange="readURL(this, 'EnInternalBillExchangeReceipt');" accept="image/*" id="EnInternalBillExchangeReceipt" name="EnInternalBillExchangeReceipt" />
                                 <div class="drag-text">
                                     <h3>@localizer["DragAndDrop"]</h3>
                                 </div>
                             </div>
-                            <div class="file-upload-content EnTransferTtenant" style="display:none">
-                                <img class="file-upload-image EnTransferTtenant" src="#" alt="uploaded image" />
+                            <div class="file-upload-content EnInternalBillExchangeReceipt" style="display:none">
+                                <img class="file-upload-image EnInternalBillExchangeReceipt" src="#" alt="uploaded image" />
                                 <div class="image-title-wrap">
                                     <button type="button" onclick="removeUpload(this)" class="remove-image">@localizer["Remove"]</button>
                                 </div>

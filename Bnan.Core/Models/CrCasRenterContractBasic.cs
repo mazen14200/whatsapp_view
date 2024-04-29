@@ -66,6 +66,7 @@ namespace Bnan.Core.Models
         public decimal? CrCasRenterContractBasicActualExtraHoursValue { get; set; }
         public decimal? CrCasRenterContractBasicActualExtraKmValue { get; set; }
         public decimal? CrCasRenterContractBasicActualOptionsValue { get; set; }
+        public decimal? CrCasRenterContractBasicActualAdvantagesValue { get; set; }
         public decimal? CrCasRenterContractBasicActualPrivateDriverValue { get; set; }
         public decimal? CrCasRenterContractBasicActualValueBeforDiscount { get; set; }
         public decimal? CrCasRenterContractBasicActualDiscountValue { get; set; }
