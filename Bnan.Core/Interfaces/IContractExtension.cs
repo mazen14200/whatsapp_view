@@ -17,7 +17,9 @@ namespace Bnan.Core.Interfaces
         Task<bool> UpdateSalesPointBalance(string BranchCode, string LessorCode, string SalesPointCode, decimal AmountPaid);
         Task<bool> UpdateBranchValidity(string BranchCode, string LessorCode, string UserId, string PaymentMethod, decimal AmountPaid);
         Task<bool> UpdateUserBalance(string BranchCode, string LessorCode, string UserId, string PaymentMethod, decimal AmountPaid);
-        Task<bool> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo,
-                                     decimal TotalPayed, string RenterId, string UserId, string PassingType, string Reasons,string SavePdf,string language);
+        Task<CrCasAccountReceipt> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo,
+                                     decimal TotalPayed, string RenterId, string UserId, string PassingType, string Reasons,string SavePdfAr,string SavePdfEn);
+        Task<bool> AddAccountInvoice(string ContractNo, string RenterId, string LessorCode, string BranchCode, string UserId, string AccountReceiptNo, string pdfPathAr, string pdfPathEn);
+
     }
 }

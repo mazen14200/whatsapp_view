@@ -4398,7 +4398,7 @@ else
                 // ctx.fillText(RenterName, canvas.width - 1140, 3200);
                 ctx.drawImage(signatureImg, canvas.width - 1350, 3125, 200, 100);
                 canvas.toBlob(async function (blob) {
-                    formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
+                    formData.append("file", blob, "Ar_Invoice_Receipt.png"); // Append the modified image blob with a filename
                     var message = ` عزيزي / ${RenterName} , يمكنك مراجعة الفاتورة عن طريق تحميل الملف المرفق `
                     createPdfAndSendToWhatsApp(null, InvoiceAccountNo, phoneNumber, token, blob, message, "SavePdfArInvoice", "ar");
                 }, 'image/png');
@@ -4987,8 +4987,7 @@ else
                     const pdfBase64 = doc.output('datauristring');
                     // Set the base64-encoded PDF to the hidden input field
                     document.getElementById(InputPdf).value = pdfBase64;
-                    console.log("InputPdf", InputPdf);
-                    // window.open(blobUrl, '_blank');
+
                     // Prepare form data with PDF
                     if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US" && InputPdf != "" && InputPdf != null && language == "en") {
                         const formData = new FormData();

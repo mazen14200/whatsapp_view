@@ -82,6 +82,7 @@ namespace Bnan.Ui.ViewModels.BS
         public string? ChoicesValue { get; set; }
         public string? AccountNo { get; set; }
         public string? AccountReceiptNo { get; set; }
+        public string? InitialInvoiceNo { get; set; }
 
 
         public virtual CrCasRenterLessor? CrCasRenterContractBasic5 { get; set; }

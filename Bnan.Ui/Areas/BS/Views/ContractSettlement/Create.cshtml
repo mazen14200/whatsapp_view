@@ -19,6 +19,7 @@
     var lessorInfo = await userManager.Users.Include(l => l.CrMasUserInformationLessorNavigation).ThenInclude(l => l.CrMasLessorImage).FirstOrDefaultAsync(x => x.UserName == user.UserName);
 }
 <link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
+<link href="~/BranchSys/css/loader.css" rel="styleSheet">
 @if (requestCulture?.RequestCulture.UICulture.Name != "ar-EG")
 {
     <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">

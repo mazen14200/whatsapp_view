@@ -72,8 +72,12 @@
                                     <input hidden asp-for="ExtensionContract.RentValue" />
                                     <input hidden asp-for="ExtensionContract.DaysNo" />
                                     <input hidden id="ExtensionValue" name="ExtensionValue" />
-                                    <input hidden id="PdfSave1" name="PdfSave1" />
+                                    <input hidden id="SavePdfArInvoice" name="SavePdfArInvoice" />
+                                    <input hidden id="SavePdfEnInvoice" name="SavePdfEnInvoice" />
+                                    <input hidden id="SavePdfArReceipt" name="SavePdfArReceipt" />
+                                    <input hidden id="SavePdfEnReceipt" name="SavePdfEnReceipt" />
                                     <input hidden asp-for="ExtensionContract.AccountReceiptNo" />
+                                    <input hidden asp-for="ExtensionContract.InitialInvoiceNo" />
                                     <input hidden id="language" name="language" />
                                     <fieldset>
                                         <div class="form-card extension2-card">
@@ -498,7 +502,7 @@
                 var advantages = parseFloat('@Model.ExtensionContract.AdvatagesValue');
                 advantagesValueTotal = advantages * parseInt(ExpectedDaysNo);
                 var totalRental = parseInt(ExpectedDaysNo) * parseFloat(RentalDayPrice);
-                rentValue = parseFloat(totalRental) + parseFloat(choicesValue) + parseFloat(privateDriverValue) + parseFloat(advantagesValueTotal)+parseFloat(additionalDriverValue)+parseFloat(FeesTammValue)+parseFloat(additionalValue);
+                rentValue = parseFloat(totalRental) + parseFloat(choicesValue) + parseFloat(privateDriverValue) + parseFloat(advantagesValueTotal) + parseFloat(additionalDriverValue) + parseFloat(FeesTammValue) + parseFloat(additionalValue);
 
 
 
@@ -575,7 +579,7 @@
             console.log("TaxPercent", TaxPercent);
 
             if (TaxPercent != null && TaxPercent != "" && TaxPercent != undefined && TaxPercent != 0) {
-                taxValue = (rentValue-discountValue) * (TaxPercent / 100);
+                taxValue = (rentValue - discountValue) * (TaxPercent / 100);
             }
             else {
                 taxValue = 0;
@@ -591,7 +595,7 @@
             var PreviousTotalContract = '@Model.ExtensionContract.CrCasRenterContractBasicExpectedTotal?.ToString("N2", CultureInfo.InvariantCulture)'
             RenterBalance = RenterBalance.replace(/,/g, '');
             PreviousTotalContract = PreviousTotalContract.replace(/,/g, '');
-            totalContract =parseFloat(rentValue)- parseFloat(discountValue) + parseFloat(taxValue);
+            totalContract = parseFloat(rentValue) - parseFloat(discountValue) + parseFloat(taxValue);
             console.log("totalContract", totalContract);
             console.log("RenterBalance", RenterBalance);
             console.log("rentValue", rentValue);
@@ -803,7 +807,7 @@
         };
 
         // Function to send an image and Ar PDF to WhatsApp
-        const sendArReceiptToWhatsApp = async () => {
+        const sendArInvoiceToWhatsApp = async () => {
             const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArInitialInvoice";
             const imagePath = imageLessor.replace('~', '');
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
@@ -824,13 +828,14 @@
             // First In Page
             const contractNo = "@Model.ExtensionContract.CrCasRenterContractBasicNo";
             const AccountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const InvoiceAccountNo = "@ViewBag.InvoiceAccount";
             const referenceType = "تمديد عقد";
             const RenterName = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationArName)';
             const CarName = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationDistributionNavigation?.CrMasSupCarDistributionConcatenateArName)';
 
             // last in page
             const balanceR = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorAvailableBalance)';
-            const balance =parseFloat(balanceR);
+            const balance = parseFloat(balanceR);
             console.log("balanceR", balanceR)
             console.log("balance", balance)
 
@@ -879,7 +884,7 @@
                 ctx.textAlign = "right";
                 ctx.fillStyle = "black";
                 // Receipt and type and renter and car name
-                ctx.fillText(AccountReceiptNo, canvas.width - 110, 610);
+                ctx.fillText(InvoiceAccountNo, canvas.width - 110, 610);
                 ctx.fillText(RenterName, canvas.width - 125, 1075);
                 ctx.fillText(CarName, canvas.width - 125, 1175);
 
@@ -919,47 +924,11 @@
                     YHeight = calculateAndDrawAr(ctx, canvas, "الايجار", Rent, daysNo, DiscountInput, TaxPercent, YHeight);
                 }
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
-
-
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Auth
-                // var FeesTamm = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicAuthorizationValue)';
-                // var FeesTammValue = 0;
-                // if (parseFloat(FeesTamm) != null) {
-                //     FeesTammValue = parseFloat(FeesTamm);
-                // }
-                // else {
-                //     FeesTammValue = 0;
-                // }
-
-
-
-
-                // if (parseFloat(FeesTammValue) > 0) {
-                //     YHeight = calculateAndDrawAr(ctx, canvas, "التفويض", FeesTammValue, 1, DiscountInput, TaxPercent, YHeight);
-                // }
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Auth
-
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Advantages
                 var AdvantagesValue = parseFloat('@Model.ExtensionContract.AdvatagesValue');
                 if (AdvantagesValue > 0) {
                     YHeight = calculateAndDrawAr(ctx, canvas, "المميزات الاضافية", AdvantagesValue, daysNo, DiscountInput, TaxPercent, YHeight);
                 }
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Advantages
-
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Additional Driver
-                // var additionalDriverValue = 0;
-                // var AddDriverValue = '@Model.ExtensionContract.CrCasRenterContractBasicAdditionalDriverValue';
-                // if (parseFloat(AddDriverValue) != null) {
-                //     additionalDriverValue = parseFloat(AddDriverValue);
-                // }
-                // else {
-                //     additionalDriverValue = 0;
-                // }
-
-                // if (additionalDriverValue > 0) {
-                //     YHeight = calculateAndDrawAr(ctx, canvas, "سائق اضافي", additionalDriverValue, 1, DiscountInput, TaxPercent, YHeight);
-                // }
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Additional Driver
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Private Driver
                 var privateDriverValue = 0;
@@ -990,22 +959,6 @@
                 }
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////TotalChoices
 
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// TotalAdditional
-
-                // var TotalAdditionals = parseFloat('@Model.ExtensionContract.CrCasRenterContractBasicAdditionalValue');
-                // var additionalValue = 0;
-                // if (TotalAdditionals != null && TotalAdditionals != 0 && TotalAdditionals != "" && TotalAdditionals != undefined) {
-                //     additionalValue = parseFloat(TotalAdditionals);
-                // }
-                // else {
-                //     additionalValue = 0;
-                // }
-                // if (additionalValue > 0) {
-                //     YHeight = calculateAndDrawAr(ctx, canvas, "الاضافات", additionalValue, 1, DiscountInput, TaxPercent, YHeight);
-                // }
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// TotalAdditional
-
-
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
                 var tTotal = calculateTotalAmountPerDay(parseFloat('@Model.ExtensionContract.CrCasRenterContractBasicDailyRent'), parseFloat(AdvantagesValue), parseFloat(privateDriverValue), parseFloat(choicesValue), daysNo);
                 var tTotalDiscount = calculateTotalDiscountAmount(tTotal, DiscountInput);
@@ -1026,9 +979,9 @@
                 ctx.fillText(directorOfBranch, canvas.width - 340, 3190);
                 ctx.drawImage(signatureImg, canvas.width - 1350, 3125, 200, 100);
                 canvas.toBlob(async function (blob) {
-                    formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
+                    formData.append("file", blob, "Ar_Invoice_Receipt.png"); // Append the modified image blob with a filename
                     var message = ` عزيزي / ${RenterName} , يمكنك مراجعة الفاتورة عن طريق تحميل الملف المرفق `
-                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message);
+                    createPdfAndSendToWhatsApp(null, InvoiceAccountNo, phoneNumber, token, blob, message, "SavePdfArInvoice", "ar");
                 }, 'image/png');
             };
             img.src = URL.createObjectURL(blob);
@@ -1052,14 +1005,213 @@
         }
 
 
+        // Function to send an image and En PDF to WhatsApp
+        const sendEnInvoiceToWhatsApp = async () => {
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageEnInitialInvoice";
+            const imagePath = imageLessor.replace('~', '');
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
+            const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
+            const mobileNo = '@user.CrMasUserInformationMobileNo';     // Assuming this variable contains the mobile number.
+            const phoneNumber = callingKey + mobileNo;
+            //Data Receipt
+            // Gregorian (Miladi) Date
+            const miladiDate = new Date();
+            const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).split('/').join('/');
+            console.log("miladiDateString", miladiDateString)
+
+            // Hijri Date
+            // const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+            const hijriDateString = formatHijriEnDate(miladiDate);
+
+            // First In Page
+            const contractNo = "@Model.ExtensionContract.CrCasRenterContractBasicNo";
+            const AccountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const InvoiceAccountNo = "@ViewBag.InvoiceAccount";
+            const referenceType = "Extension Contract";
+            const RenterName = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName)';
+            const CarName = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicCarSerailNoNavigation?.CrCasCarInformationDistributionNavigation?.CrMasSupCarDistributionConcatenateEnName)';
+
+            // last in page
+            const balanceR = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorAvailableBalance)';
+            const balance = parseFloat(balanceR);
+            console.log("balanceR", balanceR)
+            console.log("balance", balance)
+
+            var DiscountInput = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicUserDiscountRate)';
+            var TaxRateInput = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicTaxRate)';
+            var AmountPayedInput = document.getElementById("ExtensionContract_AmountPayed").value;
+            const discountRate = parseFloat(DiscountInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const TaxPercent = parseFloat(TaxRateInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const AmountRequired = $("#TotalAmount").text().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            var selectElement = document.getElementById("ExtensionContract_PaymentMethod");
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            // Get the text of the selected option
+            const selectedText = selectedOption.textContent || selectedOption.innerText;
+            //get Data Director lessor and branch and get renter and user
+            var userName = decodeHTMLEntities("@user.CrMasUserInformationEnName");
+            var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorEnName");
+            var directorOfBranch = decodeHTMLEntities("@Model.CrCasBranchInformation.CrCasBranchInformationDirectorEnName");
+            var reasonPayment = document.getElementById("reasons").value;
+            // Signture Image
+            var signture = "@user.CrMasUserInformationSignature";
+            const signturePath = signture.replace('~', '');
+            var signatureImg = new Image();
+            signatureImg.src = signturePath;
+            // Get Image And Text On
+            // Read the image file as a Blob
+            const responseImage = await fetch(imagePath);
+            const blob = await responseImage.blob();
+            // Prepare form data
+            const formData = new FormData();
+            formData.append("number", phoneNumber); // Append the recipient's phone number
+            formData.append("message", " "); // Append the message
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                ctx.drawImage(img, 0, 0);
+                ctx.font = "bold 50px serif";
+                ctx.textAlign = "left";
+                ctx.fillStyle = "black";
+                // Receipt and type and renter and car name
+                ctx.fillText(InvoiceAccountNo, canvas.width - 2370, 610);
+                ctx.fillText(RenterName, canvas.width - 2360, 1070);
+                ctx.fillText(CarName, canvas.width - 2360, 1180);
+
+                ctx.font = "bold 42px serif";
+                ctx.fillText(referenceType, canvas.width - 2160, 895);
+                ctx.fillText(contractNo, canvas.width - 2000, 980);
+
+
+                // The Table
+                var YHeight = 1380;
+                var daysNo = document.getElementById('dayNo').value;
+                // The payed Information
+                const discountText = '%' + discountRate.toString();
+                const taxText = '%' + TaxPercent.toString();
+
+                ctx.fillText(balanceR.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 2040, 2392);
+                ctx.fillText(discountText, canvas.width - 2090, 2485);
+                ctx.fillText(taxText, canvas.width - 2180, 2573);
+                ctx.fillText(AmountRequired, canvas.width - 2020, 2660);
+                ctx.fillText(AmountPayed, canvas.width - 2100, 2750);
+                ctx.fillText(selectedText, canvas.width - 2010, 2840);
+                ctx.fillText(reasonPayment, canvas.width - 2170, 2930);
+                ctx.font = "bold 35px serif";
+                //Date and contract no
+                ctx.fillText(hijriDateString, canvas.width - 2300, 668);
+                ctx.fillText(miladiDateString, canvas.width - 2270, 722);
+                /////////////////////////ForTest/////////////////
+                const hours = miladiDate.getHours().toString().padStart(2, '0');
+                const minutes = miladiDate.getMinutes().toString().padStart(2, '0');
+                const seconds = miladiDate.getSeconds().toString().padStart(2, '0');
+                const timeString = `${hours}:${minutes}:${seconds}`;
+                ctx.fillText(timeString, canvas.width - 2270, 760);
+                //////////////////////////////////////////////////////
+                var Rent = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicDailyRent)'
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
+                if (parseFloat(Rent) > 0) {
+                    console.log("Rent", Rent)
+                    YHeight = calculateAndDrawEn(ctx, canvas, "Rent", Rent, daysNo, DiscountInput, TaxPercent, YHeight);
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Advantages
+                var AdvantagesValue = parseFloat('@Model.ExtensionContract.AdvatagesValue');
+                if (AdvantagesValue > 0) {
+                    YHeight = calculateAndDrawEn(ctx, canvas, "Features", AdvantagesValue, daysNo, DiscountInput, TaxPercent, YHeight);
+                }
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Private Driver
+                var privateDriverValue = 0;
+                var privateDriver = '@Model.ExtensionContract.CrCasRenterContractBasicPrivateDriverValue';
+                if (parseFloat(privateDriver) != null) {
+                    privateDriverValue = parseFloat(privateDriver);
+                }
+                else {
+                    privateDriverValue = 0;
+                }
+
+                if (privateDriverValue > 0) {
+                    YHeight = calculateAndDrawEn(ctx, canvas, "Private Driver", privateDriverValue, daysNo, DiscountInput, TaxPercent, YHeight);
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Private Driver
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// TotalChoices
+                var TotalChoices = parseFloat('@Model.ExtensionContract.ChoicesValue');
+                var choicesValue = 0;
+                if (TotalChoices != null && TotalChoices != 0 && TotalChoices != "" && TotalChoices != undefined) {
+                    choicesValue = parseFloat(TotalChoices);
+                }
+                else {
+                    choicesValue = 0;
+                }
+                if (choicesValue > 0) {
+                    YHeight = calculateAndDrawEn(ctx, canvas, "Options", choicesValue, daysNo, DiscountInput, TaxPercent, YHeight);
+                }
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////TotalChoices
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
+                var tTotal = calculateTotalAmountPerDay(parseFloat('@Model.ExtensionContract.CrCasRenterContractBasicDailyRent'), parseFloat(AdvantagesValue), parseFloat(privateDriverValue), parseFloat(choicesValue), daysNo);
+                var tTotalDiscount = calculateTotalDiscountAmount(tTotal, DiscountInput);
+                var tTotalAfterDiscount = tTotal - tTotalDiscount;
+                var tTotalTax = (tTotalAfterDiscount) * (TaxPercent / 100);
+                var TotalAmountMinisPerviousBalance = tTotalTax + tTotalAfterDiscount;
+                // // الاجمالي
+                ctx.fillText(tTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1510, 2250);
+                ctx.fillText(tTotalDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1200, 2250);
+                ctx.fillText(tTotalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 910, 2250);
+                ctx.fillText(tTotalTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 620, 2250);
+                ctx.fillText(TotalAmountMinisPerviousBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 310, 2250);
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
+
+
+
+
+
+                // director and renter and user
+                ctx.fillText(directorOfLessor, canvas.width - 1980, 3050);
+                ctx.fillText(directorOfBranch, canvas.width - 2020, 3180);
+
+                ctx.fillText(userName, canvas.width - 1275, 3050);
+                ctx.drawImage(signatureImg, canvas.width - 1250, 3125, 200, 100);
+                canvas.toBlob(async function (blob) {
+                    formData.append("file", blob, "En_Invoice_Receipt.png"); // Append the modified image blob with a filename
+                    var message = `Dear / ${RenterName}, you can review the invoice by downloading the attached file.`
+                    createPdfAndSendToWhatsApp(null, InvoiceAccountNo, phoneNumber, token, blob, message, "SavePdfEnInvoice", "en");
+                }, 'image/png');
+            };
+            img.src = URL.createObjectURL(blob);
+        };
+        function calculateAndDrawEn(ctx, canvas, itemName, itemValue, days, discountInput, taxPercent, yHeight) {
+            var itemTotal = parseFloat(itemValue) * parseInt(days);
+            var discountValue = itemTotal * (parseFloat(discountInput) / 100);
+            var totalAfterDiscount = itemTotal - discountValue;
+            var taxValue = totalAfterDiscount * (taxPercent / 100);
+            var totalActual = parseFloat(totalAfterDiscount) + parseFloat(taxValue);
+            ctx.fillText(itemName, canvas.width - 2300, yHeight);
+            ctx.fillText(itemValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1950, yHeight);
+            ctx.fillText(days, canvas.width - 1700, yHeight);
+            ctx.fillText(itemTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1510, yHeight);
+            ctx.fillText(discountValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1200, yHeight);
+            ctx.fillText(totalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 910, yHeight);
+            ctx.fillText(taxValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 620, yHeight);
+            ctx.fillText(totalActual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 310, yHeight);
+
+            return yHeight + 88; // Update yHeight for the next item
+        }
 
 
 
 
 
 
-
-         function calculateTotalAmountPerDay(rent, feature, privateDriver, choices, days) {
+        function calculateTotalAmountPerDay(rent, feature, privateDriver, choices, days) {
             var daysNo = parseInt(days);
             var total = (rent * daysNo) + (feature * daysNo) + (privateDriver * daysNo) + (choices * daysNo);
             return total;
@@ -1090,16 +1242,11 @@
                     if (somethingIsNotOkay) {
                         $('.main').show(); // Show the main container with fade effect
                         sendStaticImageToWhatsApp();
-                        if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
-                                $("#language").val("en");
-                            }
-                            else {
-                                $("#language").val("ar");
-                                sendArReceiptToWhatsApp();
-                            }
-                        setTimeout(function () {
-                            form.submit();
-                        }, 5000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
+                        sendArInvoiceToWhatsApp();
+                        sendEnInvoiceToWhatsApp();
+                        // setTimeout(function () {
+                        //     form.submit();
+                        // }, 5000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();
@@ -1110,7 +1257,7 @@
 
     </script>
     <script type="text/javascript">
-        function createPdfAndSendToWhatsApp(receiptNo, phoneNumber, token, imageBlob, message) {
+        function createPdfAndSendToWhatsApp(receiptNo, invoiceNo, phoneNumber, token, imageBlob, message, InputPdf, language) {
             var doc = new jsPDF('p', 'pt', 'a4', true);
             const pageWidth = doc.internal.pageSize.getWidth();
             const pageHeight = doc.internal.pageSize.getHeight();
@@ -1130,41 +1277,83 @@
                     const blobUrl = URL.createObjectURL(pdfBlob);
                     const pdfBase64 = doc.output('datauristring');
                     // Set the base64-encoded PDF to the hidden input field
-                    document.getElementById('PdfSave1').value = pdfBase64;
-                    document.getElementById('ExtensionContract_AccountReceiptNo').value = receiptNo;
-                    console.log("pdfBase64", pdfBase64)
-                    console.log("receiptNo", receiptNo)
-                    // window.open(blobUrl, '_blank');
+                    document.getElementById(InputPdf).value = pdfBase64;
                     // Prepare form data with PDF
-                    const formData = new FormData();
-                    formData.append("number", phoneNumber); // Append the recipient's phone number
-                    formData.append("message", message); // Append the message
-                    formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
-
-                    // Convert the PDF to a base64-encoded string
-                    const requestOptions = {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Authorization': `Bearer ${token}`
+                    if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US" && InputPdf != "" && InputPdf != null && language == "en") {
+                        const formData = new FormData();
+                        formData.append("number", phoneNumber); // Append the recipient's phone number
+                        formData.append("message", message); // Append the message
+                        if (InputPdf == "SavePdfEnInvoice") {
+                            formData.append("file", pdfBlob, `${invoiceNo}.pdf`); // Append the PDF blob with a filename
+                            document.getElementById('ExtensionContract_InitialInvoiceNo').value = invoiceNo;
                         }
-                    };
-                    console.log("pdfBlob", pdfBlob);
-                    // Send the request to the API endpoint
-                    fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
-                        .then(response => {
-                            if (response.ok) {
-                                return response.json();
-                            } else {
-                                return response.text().then(error => Promise.reject(error));
+                        else {
+                            document.getElementById('ExtensionContract_AccountReceiptNo').value = receiptNo;
+                            formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
+                        }
+                        // Convert the PDF to a base64-encoded string
+                        const requestOptions = {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Authorization': `Bearer ${token}`
                             }
-                        })
-                        .then(result => {
-                            console.log("SendPDFResult", result);
-                        })
-                        .catch(error => {
-                            console.log("SendPDFError", error);
-                        });
+                        };
+                        console.log("pdfBlob", pdfBlob);
+                        // Send the request to the API endpoint
+                        fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
+                            .then(response => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else {
+                                    return response.text().then(error => Promise.reject(error));
+                                }
+                            })
+                            .then(result => {
+                                console.log("SendPDFResult", result);
+                            })
+                            .catch(error => {
+                                console.log("SendPDFError", error);
+                            });
+
+                    }
+                    else if ("@requestCulture?.RequestCulture.UICulture.Name" == "ar-EG" && InputPdf != "" && InputPdf != null && language == "ar") {
+                        const formData = new FormData();
+                        formData.append("number", phoneNumber); // Append the recipient's phone number
+                        formData.append("message", message); // Append the message
+                        if (InputPdf == "SavePdfArInvoice") {
+                            document.getElementById('ExtensionContract_InitialInvoiceNo').value = invoiceNo;
+                            formData.append("file", pdfBlob, `${invoiceNo}.pdf`); // Append the PDF blob with a filename
+                        }
+                        else {
+                            document.getElementById('ExtensionContract_AccountReceiptNo').value = receiptNo;
+                            formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
+                        }
+
+                        // Convert the PDF to a base64-encoded string
+                        const requestOptions = {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        };
+                        // Send the request to the API endpoint
+                        fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
+                            .then(response => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else {
+                                    return response.text().then(error => Promise.reject(error));
+                                }
+                            })
+                            .then(result => {
+                                console.log("SendPDFResult", result);
+                            })
+                            .catch(error => {
+                                console.log("SendPDFError", error);
+                            });
+                    }
                 };
 
                 reader.readAsDataURL(imageBlob); // Start reading the image blob
@@ -1179,11 +1368,15 @@
             const options = { weekday: 'long', day: 'numeric', year: 'numeric', month: 'long', calendar: 'islamic-umalqura' };
             return date.toLocaleDateString('ar-SA', options).replace(/هـ/g, ''); // Remove "هـ" suffix
         }
-         // To decode some string
+        // To decode some string
         function decodeHTMLEntities(text) {
             var textArea = document.createElement("textarea");
             textArea.innerHTML = text;
             return textArea.value;
+        }
+        function formatHijriEnDate(date) {
+            const options = { weekday: 'long', day: 'numeric', year: 'numeric', month: 'long', calendar: 'islamic-umalqura' };
+            return date.toLocaleDateString('en-US-u-ca-islamic-umalqura', options).replace(/AH/g, ''); // Remove "AH" suffix
         }
     </script>
 }

@@ -1664,8 +1664,8 @@ flex-direction: row-reverse;
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 50%;
-    right: 50%
+    /*top: 50%;
+    right: 50%*/
 }
 
 .container2 {
