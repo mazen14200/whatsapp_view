@@ -56,8 +56,16 @@ namespace Bnan.Ui.Areas.BS.Controllers
             {
                 var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode &&
                 x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);
+                var ArInvoice = _unitOfWork.CrCasAccountInvoice.FindAll(x => x.CrCasAccountInvoiceReferenceContract == contract.CrCasRenterContractBasicNo).LastOrDefault().CrCasAccountInvoiceArPdfFile;
+                var EnInvoice = _unitOfWork.CrCasAccountInvoice.FindAll(x => x.CrCasAccountInvoiceReferenceContract == contract.CrCasRenterContractBasicNo).LastOrDefault().CrCasAccountInvoiceEnPdfFile;
+                contract.InvoiceArPdfPath = ArInvoice;
+                contract.InvoiceEnPdfPath = EnInvoice;
                 if (authContract != null) contract.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
+
             }
+
+
+
             bsLayoutVM.ContractSettlements = contractMap.Where(x => x.AuthEndDate > DateTime.Now).ToList();
             return View(bsLayoutVM);
         }

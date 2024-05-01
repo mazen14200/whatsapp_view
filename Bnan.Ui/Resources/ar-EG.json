@@ -938,7 +938,7 @@
   "ContractClosed": "اغلاق العقداً",
   "ContractFinished": "انتهاء العقد",
   "ContractCancelled": "الغاء العقد",
-
+  "Invoice": "الفاتورة",
   "ArInitialInvoice": "الفاتورة الاولية عربي",
   "ArActualInvoice": "الفاتورة الفعلية عربي",
   "ArExternalCatchReceipt": "سند قبض خارجي عربي",
@@ -980,6 +980,7 @@
   "OnExpired": "علي وشك الانتهاء",
   "OnExpiredd": "علي وشك",
   "Expired": "منتهي",
+  "ExpiredAndRenewed": "منتهي او لم يسجل",
   "NotRegister": "لم يسجل",
   "CompanyContractNo": "رقم العقد",
   "EditContractCompany Data": "تحديث بيانات العقد",
