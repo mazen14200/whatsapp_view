@@ -61,7 +61,8 @@ namespace Bnan.Ui.ViewModels.BS
         public List<ContractSettlementVM>? ContractSettlements { get; set; }
         public ContractSettlementVM? ContractSettlement { get; set; }
         public string? SelectedBranch { get; set; }
-
+        // Alerts 
+        public AlertsVM? Alerts { get; set; }
 
     }
 }

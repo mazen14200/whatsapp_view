@@ -76,9 +76,12 @@ else
                     <div class="row justify-content-center h-100 content-row">
                         <div class="col-md-11 mx-0 h-100">
                             <form asp-area="BS" asp-action="CreateContract" asp-controller="Contract" id="msform" novalidate class="needs-validation" enctype="multipart/form-data">
-                                <input hidden id="PdfSaveAr" name="PdfSaveAr" />
-                                <input hidden id="PdfSaveEn" name="PdfSaveEn" />
+                                <input hidden id="SavePdfArInvoice" name="SavePdfArInvoice" />
+                                <input hidden id="SavePdfEnInvoice" name="SavePdfEnInvoice" />
+                                <input hidden id="SavePdfArReceipt" name="SavePdfArReceipt" />
+                                <input hidden id="SavePdfEnReceipt" name="SavePdfEnReceipt" />
                                 <input hidden asp-for="Contract.AccountReceiptNo" />
+                                <input hidden asp-for="Contract.InitialInvoiceNo" />
                                 <input hidden id="language" name="language" />
                                 <div class=" pe-4">
                                     <!-- progressbar -->
@@ -1730,10 +1733,6 @@ else
             const imageUpload = document.getElementById('imageUpload');
             const imageSubmitBtn = document.getElementById('image-submit-Btn');
             var imgeURL;
-            console.log("uploadContainer", uploadContainer)
-            console.log("imageUpload", imageUpload)
-            console.log("imageSubmitBtn", imageSubmitBtn)
-
             const uploadedImg = null;
             uploadContainer.addEventListener('click', function () {
                 imageUpload.click();
@@ -1763,7 +1762,6 @@ else
                     uploadContainer.innerHTML = '';
                     uploadContainer.classList.remove('previewing');
                     uploadContainer.innerHTML = ' <img class="upload-icon" src="img/Rectangle 144.png" alt="Upload Icon"><p>ارفق صورة التوقيع</p>';
-                    console.log(imgeURL)
                 }
                 $('#PicsignatureModal').modal('hide');
 
@@ -1834,7 +1832,6 @@ else
                 });
 
                 RenterInformation = data;
-                console.log(data);
                 if (data != null) {
                     return true; // Renter exists
                 }
@@ -1894,7 +1891,6 @@ else
             try {
                 const response = await fetch(url, { method: 'GET' });
                 const result = await response.json();
-                console.log("result Whatsup", result); // Log the result of the API call
             } catch (error) {
                 console.error('Error sending message:', error);
             }
@@ -1928,9 +1924,7 @@ else
                         // Send the message to WhatsApp
                         // Phone number For test
                         randomNumberRenter = generateRandomNumber();
-                        console.log("randomNumber", randomNumberRenter);
                         var phoneNumber = '@user.CrMasUserInformationCallingKey' + '@user.CrMasUserInformationMobileNo';
-                        console.log("phoneNumber", phoneNumber);
                         await sendMessageToWhatsApp(randomNumberRenter, phoneNumber);
                     } else {
                         $('#requird-field_RenterID').text('@localizer["RenterIdWrong"]');
@@ -1955,7 +1949,6 @@ else
             setTimeout(function () {
                 // $('#thirdPopupModal').modal('hide');
                 $('.main').hide(); // Show the main container
-                console.log(RenterInformation);
                 var firstCharacterFromID = RenterInformation.renterID.charAt(0);
                 var currentDate = new Date();
                 var ExpiryIdDate = new Date(RenterInformation.expiryIdDate);
@@ -2072,7 +2065,6 @@ else
 
                 if (isNaN(numericValue)) {
                     // Input value is not a number or is empty
-                    console.log('Input value:', numericValue);
                     return;
                 }
                 // Gather values from input fields
@@ -2085,7 +2077,6 @@ else
 
                 // Concatenate values into a single string
                 var concatenatedCode = otc1 + otc2 + otc3 + otc4 + otc5 + otc6;
-                console.log('Input value:', concatenatedCode);
                 if (concatenatedCode === randomNumberRenter || concatenatedCode === '111111') {
                     openThirdPopup();
                 }
@@ -2142,8 +2133,6 @@ else
                 });
 
                 DriverInformation = data;
-                console.log("data", data)
-                console.log("DriverInformation", DriverInformation)
                 if (data != null) {
                     return true; // Renter exists
                 }
@@ -2193,8 +2182,6 @@ else
                 var RenterId = $('#Contract_RenterId').val();
                 if ($("#msform").valid()) {
                     CheckIfDriverIdExist = await GetDriverInformation(DriverId);
-                    console.log(DriverInformation)
-                    console.log(CheckIfDriverIdExist)
                     //Check Renter ID Is Not the same ID Driver
                     if (CheckIfDriverIdExist) {
                         if (DriverId != RenterId) {
@@ -2212,9 +2199,7 @@ else
                             // Send the message to WhatsApp
                             // Phone number For test
                             randomNumberDriver = generateRandomNumber();
-                            console.log("randomNumberDriver", randomNumberDriver);
                             var phoneNumber = '@user.CrMasUserInformationCallingKey' + '@user.CrMasUserInformationMobileNo';
-                            console.log("phoneNumber", phoneNumber);
                             await sendMessageToWhatsApp(randomNumberDriver, phoneNumber);
                         }
                         else {
@@ -2239,9 +2224,6 @@ else
             setTimeout(function () {
                 // $('#thirdPopupModal').modal('hide');
                 $('.main').hide(); // Show the main container
-
-                console.log(DriverInformation);
-
                 // Assuming RenterInformation is an object with properties lastVisit and lastContract
                 var lastVisitDate = new Date(DriverInformation.lastVisit);
                 var lastContractDate = new Date(DriverInformation.lastContract);
@@ -2366,7 +2348,6 @@ else
 
                 if (isNaN(numericValue)) {
                     // Input value is not a number or is empty
-                    console.log('Input value:', numericValue);
                     return;
                 }
                 // Gather values from input fields
@@ -2379,7 +2360,6 @@ else
 
                 // Concatenate values into a single string
                 var concatenatedCode = otc1 + otc2 + otc3 + otc4 + otc5 + otc6;
-                console.log('Input value:', concatenatedCode);
                 if (concatenatedCode === randomNumberDriver || concatenatedCode === '111111') {
                     openThirdPopupDriver();
                 }
@@ -2481,7 +2461,6 @@ else
                 var AddDriverId = $('#Contract_AdditionalDriverId').val();
                 if ($("#msform").valid()) {
                     CheckIfAddDriverIdExist = await GetAddDriverInformation(AddDriverId);
-                    console.log(AddDriverInformation);
                     //Check Renter ID Is Not the same ID Driver
                     if (CheckIfAddDriverIdExist) {
                         if (AddDriverId != RenterId && AddDriverId != DriverId) {
@@ -2498,9 +2477,7 @@ else
                             // Send the message to WhatsApp
                             // Phone number For test
                             randomNumberAddDriver = generateRandomNumber();
-                            console.log("randomNumberAddDriver", randomNumberAddDriver);
                             var phoneNumber = '@user.CrMasUserInformationCallingKey' + '@user.CrMasUserInformationMobileNo';
-                            console.log("phoneNumber", phoneNumber);
                             await sendMessageToWhatsApp(randomNumberAddDriver, phoneNumber);
                         }
                         else {
@@ -2531,9 +2508,6 @@ else
                     var birthdate = birthdateformat.getFullYear() + '/' + (birthdateformat.getMonth() + 1).toString().padStart(2, '0') + '/' + birthdateformat.getDate().toString().padStart(2, '0');
                     var licenseExpiryDate = AddDriverInformation.licenseExpiryDate ? AddDriverInformation.licenseExpiryDate.split('T')[0] : null;
                     var licenseIssuedDate = AddDriverInformation.licenseIssuedDate ? AddDriverInformation.licenseIssuedDate.split('T')[0] : null;
-                    console.log(AddDriverInformation.personalArName);
-                    console.log(AddDriverInformation);
-
                     // Assuming RenterInformation is an object with properties lastVisit and lastContract
                     var lastVisitDate = new Date(AddDriverInformation.lastVisit);
                     var lastContractDate = new Date(AddDriverInformation.lastContract);
@@ -2650,7 +2624,6 @@ else
 
                 if (isNaN(numericValue)) {
                     // Input value is not a number or is empty
-                    console.log('Input value:', numericValue);
                     return;
                 }
                 // Gather values from input fields
@@ -2663,7 +2636,6 @@ else
 
                 // Concatenate values into a single string
                 var concatenatedCode = otc1 + otc2 + otc3 + otc4 + otc5 + otc6;
-                console.log('Input value:', concatenatedCode);
                 if (concatenatedCode === randomNumberAddDriver || concatenatedCode === '111111') {
                     openThirdPopupAddDriver();
                 }
@@ -2724,7 +2696,6 @@ else
             NextField = $("#progressbar li").eq($("fieldset").index(next_fs))[0].id;
             PreviousField = $("#progressbar li").eq($("fieldset").index(next_fs))[0].id;
             if ($("#msform").valid()) {
-                console.log("Tab", currentField);
                 if (currentField === "tenant") {
                     if (renterName != null && renterName != "") {
                         var currentDate = new Date();
@@ -2806,9 +2777,6 @@ else
                     PriceNumberOfCar = $(this).find('td').data("price-number");
                     $("#Contract_SerialNo").val(SerialNumberOfCar);
                     $("#Contract_PriceNo").val(PriceNumberOfCar);
-                    console.log("SerialNumberOfCar", SerialNumberOfCar);
-                    console.log("PriceNumberOfCar", PriceNumberOfCar);
-
                     GetAdvantages(PriceNumberOfCar);
                     // Use Promises to ensure data is available before proceeding
                     Promise.all([getCarChoices(PriceNumberOfCar), getCarAdditional(PriceNumberOfCar), GetCarInfo(SerialNumberOfCar)])
@@ -2831,7 +2799,6 @@ else
                                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                                     next_fs.show();
                                     current_fs.hide();
-                                    console.log(55555)
                                 }
                                 else {
                                     currentField = "options";
@@ -2959,10 +2926,8 @@ else
 
 
                     //////////////////////////////////////////
-                    console.log("Tab Car", currentField);
                 }
                 else if (currentField === "driver") {
-                    console.log("Tab Driver", currentField);
                     var driverName = $("#DriverName").text();
                     if (driverName != null && driverName != "") {
 
@@ -3011,41 +2976,30 @@ else
                         var check = "";
                         var Authrize = true;
                         if (!(id && address && license && isAgeInRange && employer)) {
-                            console.log("First")
-                            console.log("id", id, "@user.CrMasUserContractValidity.CrMasUserContractValidityId")
-                            console.log("address", address, "@user.CrMasUserContractValidity.CrMasUserContractValidityRenterAddress")
-                            console.log("license", license, "@user.CrMasUserContractValidity.CrMasUserContractValidityDrivingLicense")
-                            console.log("isAgeInRange", isAgeInRange, "@user.CrMasUserContractValidity.CrMasUserContractValidityAge")
-                            console.log("employer", employer, "@user.CrMasUserContractValidity.CrMasUserContractValidityEmployer")
-
+                           
                             if (id == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityId" == "False") {
                                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                 toastr.error('@localizer["IdIsExpriredAndYouNotAuth"]');
-                                console.log("Iddddd")
                                 return;
                             }
                             else if (address == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityRenterAddress" == "False") {
                                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                 toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
-                                console.log("address")
                                 return
                             }
                             else if (license == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityDrivingLicense" == "False") {
                                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                 toastr.error('@localizer["LicenseIsExpriredAndYouNotAuth"]');
-                                console.log("license")
                                 return
                             }
                             else if (isAgeInRange == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityAge" == "False") {
                                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                 toastr.error('@localizer["AgeIsExpriredAndYouNotAuth"]');
-                                console.log("isAgeInRange")
                                 return
                             }
                             else if (employer == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityEmployer" == "False") {
                                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                 toastr.error('@localizer["EmployerIsExpriredAndYouNotAuth"]');
-                                console.log("employer")
                                 return
                             }
                             else {
@@ -3077,7 +3031,6 @@ else
                                         current_fs.hide();
                                         currentField = "options";
                                         NextField = "check";
-                                        console.log("xxxxxxxx2")
                                     }
                                 }
                             }
@@ -3111,7 +3064,6 @@ else
                                     current_fs.hide();
                                     currentField = "options";
                                     NextField = "check";
-                                    console.log("xxxxxxxx222")
                                 }
                             }
                         }
@@ -3119,8 +3071,6 @@ else
                     else {
                         $('#requird_field_DriverID').text('@localizer["PleaseCheckYourID"]');
                     }
-                    console.log("Last1", currentField);
-
                 }
                 else if (currentField === "add-driver") {
                     var addDriverName = $("#AddDriverName").text();
@@ -3171,31 +3121,26 @@ else
                             if (id == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityId" == "False") {
                                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                 toastr.error('@localizer["IdIsExpriredAndYouNotAuth"]');
-                                console.log("Iddddd")
                                 return;
                             }
                             else if (address == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityRenterAddress" == "False") {
                                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                 toastr.error('@localizer["AddressIsExpriredAndYouNotAuth"]');
-                                console.log("address")
                                 return
                             }
                             else if (license == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityDrivingLicense" == "False") {
                                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                 toastr.error('@localizer["LicenseIsExpriredAndYouNotAuth"]');
-                                console.log("license")
                                 return
                             }
                             else if (isAgeInRange == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityAge" == "False") {
                                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                 toastr.error('@localizer["AgeIsExpriredAndYouNotAuth"]');
-                                console.log("isAgeInRange")
                                 return
                             }
                             else if (employer == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityEmployer" == "False") {
                                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                 toastr.error('@localizer["EmployerIsExpriredAndYouNotAuth"]');
-                                console.log("employer")
                                 return
                             }
                             else {
@@ -3246,8 +3191,6 @@ else
                     current_fs.hide();
                     currentField = "check";
                     NextField = "payment";
-                    console.log("A7a555555");
-
                 }
                 else if (currentField === "check") {
                     // Initialize variables
@@ -3267,18 +3210,14 @@ else
                     // Check currentMeterSpan
                     var currentMeterSpan = $("#requird_field_CurrentMeter");
                     if (currentMeterSpan.text().trim() === "") {
-                        console.log("Span is empty");
                     } else {
                         currentMeter = false;
-                        console.log("Span is not empty");
                     }
 
                     // Check if the div contains at least one img element
                     if ($('.upload__img-box img').length > 0) {
-                        console.log("The div contains at least one img element");
                     } else {
                         imgs = false;
-                        console.log("The div does not contain any img elements");
                     }
 
                     // Final check
@@ -3306,7 +3245,6 @@ else
                 //     next_fs.show();
                 //     current_fs.hide();
                 // }
-                console.log("Last", currentField);
             }
         });
         $(".previous").click(function () {
@@ -3314,10 +3252,8 @@ else
             previous_fs = $(this).closest("fieldset").prev();
             var additionalDriver = document.getElementById("addational-driver");
             var privateDriverRadio1 = document.getElementById("PrivateDriver");
-            console.log(currentField);
 
             if (currentField === "options") {
-                console.log(5555);
 
                 // This Check to If Renter Need Private Driver Or not
                 if (privateDriverRadio1.checked) {
@@ -3347,7 +3283,6 @@ else
                     previous_fs.show();
                     currentField = "driver"
                     current_fs.hide();
-                    console.log(55555);
                 }
             }
             else if (currentField === "check") {
@@ -3367,7 +3302,6 @@ else
                         current_fs.hide();
                         currentField = "car";
                         PreviousField = "tenant"
-                        console.log(3)
                     }
                     else {
                         $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
@@ -3375,7 +3309,6 @@ else
                         current_fs.hide();
                         currentField = "options";
                         PreviousField = "car"
-                        console.log(4)
                     }
                 }
                 else if (additionalDriver.checked) {
@@ -3420,8 +3353,6 @@ else
                 previous_fs.show();
                 current_fs.hide();
             }
-            console.log(currentField);
-
         });
 
         function clearDataDriver() {
@@ -3470,18 +3401,14 @@ else
             console.log(additionalDriver);
             if (additionalDriver == false) {
                 $("#addationalDriverDiv").addClass("hideElement");
-                console.log("Hide");
             }
             else {
                 $("#addationalDriverDiv").removeClass("hideElement");
-                console.log("Appear");
             }
         }
 
         function GetCodeCategory(categoryCode) {
             var selectedBranch = "@Model.SelectedBranch";
-            console.log(categoryCode);
-            console.log(selectedBranch);
             $.ajax({
                 url: "/BS/Contract/GetCarsByCategory", // Replace YourController with your actual controller name
                 type: "GET",
@@ -3508,7 +3435,6 @@ else
                     success: function (data) {
                         resolve(data);
                         CarInformation = data;
-                        console.log(data)
                         $("#Contract_CurrentMeter").val(CarInformation.carInformation.crCasCarInformationCurrentMeter);
                         handleCurrentMeterInput();
 
@@ -3522,14 +3448,12 @@ else
 
 
         function GetAdvantages(priceNumber) {
-            console.log(priceNumber);
             $.ajax({
                 url: "/BS/Contract/GetAdvantages",
                 type: "GET",
                 data: { priceNumber: priceNumber },
                 success: function (data) {
                     AdvantagesValue = data;
-                    console.log("AdvantagesValue1", AdvantagesValue)
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.error("Error loading data:", textStatus, errorThrown);
@@ -3645,7 +3569,6 @@ else
                     var dataVal = $(this).attr('data-val');
                     selectedChoices.push($(this).val());
                     s += parseFloat(dataVal) || 0;
-                    console.log("selectedChoices", selectedChoices);
                 });
                 $("#ChoicesList").val(selectedChoices.join(','));
                 if (s > 0) {
@@ -3726,17 +3649,15 @@ else
             $(document).on("change", ".ChkAddList", function () {
                 var checkedValue = $(this).val();
 
-                // if (checkedValue >= '5100000002' && checkedValue <= '5100000005') {
-                //     var isChecked = $(this).prop("checked");
-                //     if (isChecked) {
-                //         $(".ChkChoicesList[value='5100000002'], .ChkChoicesList[value='5100000003'], .ChkChoicesList[value='5100000004'], .ChkChoicesList[value='5100000005']").not(this).prop("checked", false).prop("disabled", true);
-                //     }
-                //     else {
-                //         $(".ChkChoicesList[value='5100000002'], .ChkChoicesList[value='5100000003'], .ChkChoicesList[value='5100000004'], .ChkChoicesList[value='5100000005']").not(this).prop("checked", false).prop("disabled", false);
-                //     }
-                //     // Uncheck and disable all checkboxes with values from 5100000002 to 5100000005
-                // }
-
+                if (checkedValue >= '5000000003' && checkedValue <= '5000000004') {
+                    var isChecked = $(this).prop("checked");
+                    if (isChecked) {
+                        $(".ChkAddList[value='5000000003'], .ChkAddList[value='5000000004']").not(this).prop("checked", false).prop("disabled", true);
+                    }
+                    else {
+                        $(".ChkAddList[value='5000000003'], .ChkAddList[value='5000000004']").not(this).prop("checked", false).prop("disabled", false);
+                    }
+                }
                 updateTotal();
             });
 
@@ -3748,7 +3669,6 @@ else
                     var dataVal = $(this).attr('data-val');
                     selectedAdditionals.push($(this).val());
                     s += parseFloat(dataVal) || 0;
-                    console.log("selectedAdditionals", selectedAdditionals);
                 });
                 $("#AdditionalsList").val(selectedAdditionals.join(','));
                 if (s > 0) {
@@ -3766,7 +3686,6 @@ else
                 cache: false,
                 success: function (data) {
                     CarCheckUp = data;
-                    console.log(data);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.error("Error loading data:", textStatus, errorThrown);
@@ -3810,8 +3729,6 @@ else
             var daysNo = document.getElementById('dayNo').value;
             var today = new Date();
             var RentalDayPrice = CarInformation.carPrice.crCasPriceCarBasicDailyRent;
-            console.log("daysNo", daysNo);
-            console.log("RentalDayPrice", RentalDayPrice);
             if (parseInt(daysNo) > 0) {
                 var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
                 var formattedstartDate = today.toLocaleDateString('ja-JP', options);
@@ -3832,7 +3749,6 @@ else
                     document.getElementById('ChoicesValue').textContent = "0.00";
                     choicesValue = 0;
                 }
-                console.log("choicesValue", choicesValue);
                 $("#Contract_OptionTotal").val(choicesValue);
 
                 var TotalAdditionals = $("#TotalAdditionals").text();
@@ -3847,11 +3763,7 @@ else
                     additionalValue = 0;
                 }
                 $("#Contract_AdditionalTotal").val(additionalValue);
-                console.log("additionalValue", additionalValue);
                 var AdvatagesTotalValue = parseFloat(AdvantagesValue);
-                console.log("AdvantagesValue", AdvantagesValue);
-                console.log("AdvatagesTotalValue", AdvatagesTotalValue);
-
                 if (AdvatagesTotalValue != null && AdvatagesTotalValue != "") {
                     advantagesValueTotal = AdvatagesTotalValue * parseInt(daysNo);
                     document.getElementById('AdvatagesValue').textContent = advantagesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -3861,7 +3773,6 @@ else
                     advantagesValueTotal = 0;
                 }
                 $("#Contract_AdvantagesTotalValue").val(advantagesValueTotal);
-                console.log("advantagesValueTotal", advantagesValueTotal);
 
 
                 var additionalDriver = document.getElementById("addational-driver");
@@ -3880,14 +3791,10 @@ else
 
                 var privateDriverRadio1 = document.getElementById("PrivateDriver");
                 var privateDriverID = $("#driver-dropdown").val();
-                console.log("privateDriverRadio1", privateDriverRadio1)
-                console.log("privateDriverRadio1.Checked", privateDriverRadio1.checked)
-                console.log("privateDriverID", privateDriverID)
-
+               
                 if (privateDriverRadio1.checked && privateDriverID != null) {
                     var privateDriver = CarInformation.carPrice.crCasPriceCarBasicPrivateDriverValue;
-                    console.log("privateDriver", privateDriver)
-                    console.log("parseInt(privateDriver)", parseInt(privateDriver))
+                    
                     if (privateDriver != null) {
                         privateDriverValue = parseFloat(privateDriver) * parseInt(daysNo);
                         document.getElementById('PrivateDriverValue').textContent = privateDriverValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -4072,7 +3979,6 @@ else
 
             // Retrieve userDiscount from the model
             var userDiscount = @Html.Raw(Json.Serialize(userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityDiscountRate));
-            console.log("userDiscount", userDiscount);
 
             // Ensure the value is between 0 and 100
             const numericValue = parseFloat(input.value);
@@ -4086,7 +3992,6 @@ else
             inputElement.value = inputElement.value.replace(/[^0-9]/g, '');
             // Retrieve userDiscount from the model
             var userAdditionalHours = @Html.Raw(Json.Serialize(userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityHour));
-            console.log("userAdditionalHours", userAdditionalHours);
             // Ensure the value is between 0 and 100
             const numericValue = parseInt(inputElement.value);
             if (isNaN(numericValue) || isNaN(userAdditionalHours)) {
@@ -4100,7 +4005,6 @@ else
             inputElement.value = inputElement.value.replace(/[^0-9]/g, '');
             // Retrieve userDiscount from the model
             var userAdditionalKilos = @Html.Raw(Json.Serialize(userInfo?.CrMasUserContractValidity?.CrMasUserContractValidityKm));
-            console.log("userAdditionalKilos", userAdditionalKilos);
             // Ensure the value is between 0 and 100
             const numericValue = parseInt(inputElement.value);
             if (isNaN(numericValue) || isNaN(userAdditionalKilos)) {
@@ -4153,7 +4057,6 @@ else
             $("#AmountPayed").focusout(function () {
                 var payed = document.getElementById('AmountPayed').value;
                 CheckIfCanPayLessThanTotalAmount();
-                console.log(somethingIsNotOkay);
                 if (parseFloat(payed) > 0 && somethingIsNotOkay) {
                     document.getElementById('Contract_PaymentMethod').disabled = false;
                     // document.getElementById('Contract_PaymentMethod').selectedIndex = 0;
@@ -4211,7 +4114,6 @@ else
                     const endDate = new Date($("#EndDate").text());
                     const startHijriDate = formatHijriDate(startDate);
                     const endHijriDate = formatHijriDate(endDate);
-                    console.log(startHijriDate);
                     const branch = '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchPost.CrCasBranchPostCityNavigation.CrMasSupPostCityConcatenateArName)' + ' - ' + '@Html.Raw(Model.CrCasBranchInformation?.CrCasBranchInformationArShortName)';
                     // Define text properties
                     ctx.font = "bold 25px serif";
@@ -4258,8 +4160,8 @@ else
         };
 
         // Function to send an image and Ar PDF to WhatsApp
-        const sendArReceiptToWhatsApp = async () => {
-            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArCatchReceipt";
+        const sendArInvoiceToWhatsApp = async () => {
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArInitialInvoice";
             const imagePath = imageLessor.replace('~', '');
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
             const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
@@ -4270,7 +4172,6 @@ else
             const miladiDate = new Date();
             const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
             const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).split('/').join('/');
-            console.log("miladiDateString", miladiDateString)
 
             // Hijri Date
             // const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -4278,13 +4179,12 @@ else
 
             // First In Page
             const contractNo = "@ViewBag.ContractNo";
-            const AccountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const InvoiceAccountNo = "@ViewBag.InvoiceAccount";
             const referenceType = "انشاء عقد";
             const RenterName = decodeHTMLEntities(RenterInformation.personalArName);
             const CarName = CarInformation.carInformation.crCasCarInformationConcatenateArName;
             // last in page
             const balance = RenterInformation.availableBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            console.log("balance", balance)
 
             var DiscountInput = document.getElementById("Discount_Input").value;
             var AmountPayedInput = document.getElementById("AmountPayed").value;
@@ -4331,7 +4231,7 @@ else
                 ctx.textAlign = "right";
                 ctx.fillStyle = "black";
                 // Receipt and type and renter and car name
-                ctx.fillText(AccountReceiptNo, canvas.width - 110, 610);
+                ctx.fillText(InvoiceAccountNo, canvas.width - 110, 610);
                 ctx.fillText(RenterName, canvas.width - 125, 1075);
                 ctx.fillText(CarName, canvas.width - 125, 1175);
 
@@ -4366,10 +4266,8 @@ else
                 ctx.fillText(timeString, canvas.width - 228, 760);
                 ///////////////////////////
 
-                console.log("CarInformation.carPrice.crCasPriceCarBasicDailyRent", CarInformation.carPrice.crCasPriceCarBasicDailyRent)
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
                 if (parseFloat(CarInformation.carPrice.crCasPriceCarBasicDailyRent) > 0) {
-                    console.log("CarInformation.carPrice.crCasPriceCarBasicDailyRent", CarInformation.carPrice.crCasPriceCarBasicDailyRent)
                     YHeight = calculateAndDrawAr(ctx, canvas, "الايجار", CarInformation.carPrice.crCasPriceCarBasicDailyRent, daysNo, DiscountInput, TaxPercent, YHeight);
                 }
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
@@ -4502,7 +4400,7 @@ else
                 canvas.toBlob(async function (blob) {
                     formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
                     var message = ` عزيزي / ${RenterName} , يمكنك مراجعة الفاتورة عن طريق تحميل الملف المرفق `
-                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message, "PdfSaveAr");
+                    createPdfAndSendToWhatsApp(null, InvoiceAccountNo, phoneNumber, token, blob, message, "SavePdfArInvoice", "ar");
                 }, 'image/png');
             };
             img.src = URL.createObjectURL(blob);
@@ -4524,10 +4422,9 @@ else
 
             return yHeight + 88; // Update yHeight for the next item
         }
-
         // Function to send an image and En PDF to WhatsApp
-        const sendEnReceiptToWhatsApp = async () => {
-            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageEnCatchReceipt";
+        const sendEnInvoiceToWhatsApp = async () => {
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageEnInitialInvoice";
             const imagePath = imageLessor.replace('~', '');
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
             const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
@@ -4542,7 +4439,7 @@ else
 
             // First In Page
             const contractNo = "@ViewBag.ContractNo";
-            const AccountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const InvoiceAccountNo = "@ViewBag.InvoiceAccount";
             const referenceType = "Create Contract";
             const RenterName = decodeHTMLEntities(RenterInformation.personalEnName);
             const CarName = CarInformation.carInformation.crCasCarInformationConcatenateEnName;
@@ -4593,7 +4490,7 @@ else
                 ctx.textAlign = "left";
                 ctx.fillStyle = "black";
                 // Receipt and type and renter and car name
-                ctx.fillText(AccountReceiptNo, canvas.width - 2370, 610);
+                ctx.fillText(InvoiceAccountNo, canvas.width - 2370, 610);
                 ctx.fillText(RenterName, canvas.width - 2360, 1070);
                 ctx.fillText(CarName, canvas.width - 2360, 1180);
 
@@ -4628,10 +4525,8 @@ else
                 ctx.fillText(timeString, canvas.width - 2270, 760);
                 ///////////////////////////
 
-                console.log("CarInformation.carPrice.crCasPriceCarBasicDailyRent", CarInformation.carPrice.crCasPriceCarBasicDailyRent)
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
                 if (parseFloat(CarInformation.carPrice.crCasPriceCarBasicDailyRent) > 0) {
-                    console.log("CarInformation.carPrice.crCasPriceCarBasicDailyRent", CarInformation.carPrice.crCasPriceCarBasicDailyRent)
                     YHeight = calculateAndDrawEn(ctx, canvas, "Rent", CarInformation.carPrice.crCasPriceCarBasicDailyRent, daysNo, DiscountInput, TaxPercent, YHeight);
                 }
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rent
@@ -4762,9 +4657,9 @@ else
                 ctx.fillText(userName, canvas.width - 1275, 3050);
                 ctx.drawImage(signatureImg, canvas.width - 1250, 3125, 200, 100);
                 canvas.toBlob(async function (blob) {
-                    formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
+                    formData.append("file", blob, "En_Invoice_Receipt.png"); // Append the modified image blob with a filename
                     var message = `Dear / ${RenterName}, you can review the invoice by downloading the attached file.`
-                    createPdfAndSendToWhatsApp(AccountReceiptNo, phoneNumber, token, blob, message, "PdfSaveEn");
+                    createPdfAndSendToWhatsApp(null, InvoiceAccountNo, phoneNumber, token, blob, message, "SavePdfEnInvoice", "en");
                 }, 'image/png');
             };
             img.src = URL.createObjectURL(blob);
@@ -4788,8 +4683,237 @@ else
         }
 
 
+        const sendArReceiptToWhatsApp = async () => {
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArExternalCatchReceipt";
+            const imagePath = imageLessor.replace('~', '');
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
+            const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
+            const mobileNo = '@user.CrMasUserInformationMobileNo';     // Assuming this variable contains the mobile number.
+            const phoneNumber = callingKey + mobileNo;
+            //Data Receipt
+            // Gregorian (Miladi) Date
+            const miladiDate = new Date();
+            const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).split('/').join('/');
+
+            // Hijri Date
+            // const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+            const hijriDateString = formatHijriDate(miladiDate);
+
+            // First In Page
+            const contractNo = "@ViewBag.ContractNo";
+            const accountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const RenterName = decodeHTMLEntities(RenterInformation.personalArName);
+
+            var selectElement = document.getElementById("Contract_PaymentMethod");
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            // Get the text of the selected option
+            const selectedText = selectedOption.textContent || selectedOption.innerText;
+            var selectedArabicName = selectedOption.dataset.ar;
+            //get Data Director lessor and branch and get renter and user
+            var userName = decodeHTMLEntities("@user.CrMasUserInformationArName");
+            var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorArName");
+            var directorOfBranch = decodeHTMLEntities("@Model.CrCasBranchInformation.CrCasBranchInformationDirectorArName");
+            var reasonPayment = document.getElementById("FormControl-last-Textarea").value;
+            var AmountPayedInput = document.getElementById("AmountPayed").value;
+            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Signture Image
+            var signture = "@user.CrMasUserInformationSignature";
+            const signturePath = signture.replace('~', '');
+            var signatureImg = new Image();
+            signatureImg.src = signturePath;
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+            // Get Image And Text On
+            // Read the image file as a Blob
+            const responseImage = await fetch(imagePath);
+            const blob = await responseImage.blob();
+            // Prepare form data
+            const formData = new FormData();
+            formData.append("number", phoneNumber); // Append the recipient's phone number
+            formData.append("message", " "); // Append the message
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                ctx.drawImage(img, 0, 0);
+                ctx.font = "bold 35px serif";
+                ctx.textAlign = "right";
+                ctx.fillStyle = "black";
+                ctx.fillText(hijriDateString, canvas.width - 280, 672);
+                ctx.fillText(miladiDateString, canvas.width - 270, 606);
+
+                ctx.font = "bold 50px serif";
+               
+
+                ctx.fillText(accountReceiptNo, canvas.width - 1860, 580);
+
+
+
+                let cleanedValueString = AmountPayed.replace(/,/g, "");
+
+                // Split the cleaned string by the decimal point
+                let parts = cleanedValueString.split('.');
+
+                // Extract the number before the decimal point
+                let beforeDecimal = parts[0];
+
+                // Extract the number after the decimal point
+                let afterDecimal = parts.length > 1 ? parts[1] : "0";
+
+                // Convert the extracted strings back to integers if needed
+                let beforeDecimalNumber = parseInt(beforeDecimal);
+                let afterDecimalNumber = parseInt(afterDecimal);
+                // Assuming `ctx` is your canvas context
+                ctx.fillText(afterDecimalNumber, canvas.width - 1960, 680);
+                ctx.fillText(beforeDecimalNumber, canvas.width - 2050, 680);
+
+                ctx.fillText(RenterName, canvas.width - 560, 872);
+                ctx.fillText(AmountPayed, canvas.width - 420, 1000);
+                ctx.fillText(selectedArabicName, canvas.width - 435, 1125);
+
+                // //Total
+                ctx.fillText("انشاء عقد", canvas.width - 400, 1265);
+
+
+                ctx.fillText(directorOfLessor, canvas.width - 340, 1510);
+                ctx.drawImage(signatureImg, canvas.width - 1400, 1580, 200, 100);
+                ctx.fillText(userName, canvas.width - 1150, 1510);
+                ctx.fillText(directorOfBranch, canvas.width - 330, 1645);
+
+
+                canvas.toBlob(async function (blob) {
+                    formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
+                    var message = ` عزيزي / ${RenterName} , يمكنك مراجعة سند القبض عن طريق تحميل الملف المرفق `
+                    createPdfAndSendToWhatsApp(accountReceiptNo, null, phoneNumber, token, blob, message, "SavePdfArReceipt", "ar");
+                }, 'image/png');
+            };
+            img.src = URL.createObjectURL(blob);
+        };
+
+        const sendEnReceiptToWhatsApp = async () => {
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageEnExternalCatchReceipt";
+            const imagePath = imageLessor.replace('~', '');
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
+            const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
+            const mobileNo = '@user.CrMasUserInformationMobileNo';     // Assuming this variable contains the mobile number.
+            const phoneNumber = callingKey + mobileNo;
+            //Data Receipt
+            // Gregorian (Miladi) Date
+            const miladiDate = new Date();
+            const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).split('/').join('/');
+            console.log("miladiDateString", miladiDateString)
+
+            // Hijri Date
+            // const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+            const hijriDateString = formatHijriEnDate(miladiDate);
+
+            // First In Page
+            const contractNo = "@ViewBag.ContractNo";
+            const accountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const RenterName = decodeHTMLEntities(RenterInformation.personalEnName);
+
+            var selectElement = document.getElementById("Contract_PaymentMethod");
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            // Get the text of the selected option
+            const selectedText = selectedOption.textContent || selectedOption.innerText;
+            var selectedArabicName = selectedOption.dataset.en;
+            //get Data Director lessor and branch and get renter and user
+            var userName = decodeHTMLEntities("@user.CrMasUserInformationEnName");
+            var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorEnName");
+            var directorOfBranch = decodeHTMLEntities("@Model.CrCasBranchInformation.CrCasBranchInformationDirectorEnName");
+            var reasonPayment = document.getElementById("FormControl-last-Textarea").value;
+            var AmountPayedInput = document.getElementById("AmountPayed").value;
+            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Signture Image
+            var signture = "@user.CrMasUserInformationSignature";
+            const signturePath = signture.replace('~', '');
+            var signatureImg = new Image();
+            signatureImg.src = signturePath;
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            // Get Image And Text On
+            // Read the image file as a Blob
+            const responseImage = await fetch(imagePath);
+            const blob = await responseImage.blob();
+            // Prepare form data
+            const formData = new FormData();
+            formData.append("number", phoneNumber); // Append the recipient's phone number
+            formData.append("message", " "); // Append the message
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                ctx.drawImage(img, 0, 0);
+                ctx.font = "bold 35px serif";
+                ctx.textAlign = "left";
+                ctx.fillStyle = "black";
+
+
+                ctx.fillText(hijriDateString, canvas.width - 2250, 700);
+                ctx.fillText(miladiDateString, canvas.width - 2270, 630);
+
+                ctx.font = "bold 50px serif";
+                ctx.fillText(accountReceiptNo, canvas.width - 620, 625);
+
+                let cleanedValueString = AmountPayed.replace(/,/g, "");
+
+                // Split the cleaned string by the decimal point
+                let parts = cleanedValueString.split('.');
+
+                // Extract the number before the decimal point
+                let beforeDecimal = parts[0];
+
+                // Extract the number after the decimal point
+                let afterDecimal = parts.length > 1 ? parts[1] : "0";
+
+                // Convert the extracted strings back to integers if needed
+                let beforeDecimalNumber = parseInt(beforeDecimal);
+                let afterDecimalNumber = parseInt(afterDecimal);
+
+                // Output the extracted numbers
+                console.log("Number before decimal point: " + beforeDecimalNumber);
+                console.log("Number after decimal point: " + afterDecimalNumber);
+
+                // Assuming `ctx` is your canvas context
+                ctx.fillText(beforeDecimalNumber, canvas.width - 450, 720);
+                ctx.fillText(afterDecimalNumber, canvas.width - 270, 720);
+
+                ctx.fillText(RenterName, canvas.width - 2050, 900);
+                ctx.fillText(AmountPayed, canvas.width - 2100, 1030);
+                ctx.fillText(selectedArabicName, canvas.width - 2000, 1160);
+
+                // //Total
+                ctx.fillText("Create Contract", canvas.width - 2250, 1290);
+
+
+                ctx.fillText(directorOfLessor, canvas.width - 1990, 1525);
+                ctx.drawImage(signatureImg, canvas.width - 1360, 1580, 200, 100);
+                ctx.fillText(userName, canvas.width - 1300, 1525);
+                ctx.fillText(directorOfBranch, canvas.width - 2020, 1655);
+
+
+                canvas.toBlob(async function (blob) {
+                    formData.append("file", blob, "En_Catch_Receipt.png"); // Append the modified image blob with a filename
+                    var message = `Dear / ${RenterName}, you can review the catch receipt by downloading the attached file.`
+                    createPdfAndSendToWhatsApp(accountReceiptNo, null, phoneNumber, token, blob, message, "SavePdfEnReceipt", "en");
+                }, 'image/png');
+            };
+            img.src = URL.createObjectURL(blob);
+        };
 
 
 
@@ -4823,13 +4947,15 @@ else
                     if (somethingIsNotOkay) {
                         $('.main').show(); // Show the main container with fade effect
                         sendStaticImageToWhatsApp();
+                        sendArInvoiceToWhatsApp();
+                        sendEnInvoiceToWhatsApp();
                         if (parseFloat(AmountPayed) > 0) {
-                            sendEnReceiptToWhatsApp();
                             sendArReceiptToWhatsApp();
+                            sendEnReceiptToWhatsApp();
                         }
-                        setTimeout(function () {
-                            form.submit();
-                        }, 5000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
+                        // setTimeout(function () {
+                        //     form.submit();
+                        // }, 6000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();
@@ -4840,7 +4966,7 @@ else
 
     </script>
     <script type="text/javascript">
-        function createPdfAndSendToWhatsApp(receiptNo, phoneNumber, token, imageBlob, message, InputPdf) {
+        function createPdfAndSendToWhatsApp(receiptNo, invoiceNo, phoneNumber, token, imageBlob, message, InputPdf, language) {
             var doc = new jsPDF('p', 'pt', 'a4', true);
             const pageWidth = doc.internal.pageSize.getWidth();
             const pageHeight = doc.internal.pageSize.getHeight();
@@ -4861,16 +4987,21 @@ else
                     const pdfBase64 = doc.output('datauristring');
                     // Set the base64-encoded PDF to the hidden input field
                     document.getElementById(InputPdf).value = pdfBase64;
-                    document.getElementById('Contract_AccountReceiptNo').value = receiptNo;
-
+                    console.log("InputPdf", InputPdf);
                     // window.open(blobUrl, '_blank');
                     // Prepare form data with PDF
-                    if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US" && InputPdf == "PdfSaveEn") {
+                    if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US" && InputPdf != "" && InputPdf != null && language == "en") {
                         const formData = new FormData();
                         formData.append("number", phoneNumber); // Append the recipient's phone number
                         formData.append("message", message); // Append the message
-                        formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
-
+                        if (InputPdf == "SavePdfEnInvoice") {
+                            formData.append("file", pdfBlob, `${invoiceNo}.pdf`); // Append the PDF blob with a filename
+                            document.getElementById('Contract_InitialInvoiceNo').value = invoiceNo;
+                        }
+                        else {
+                            document.getElementById('Contract_AccountReceiptNo').value = receiptNo;
+                            formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
+                        }
                         // Convert the PDF to a base64-encoded string
                         const requestOptions = {
                             method: 'POST',
@@ -4897,38 +5028,42 @@ else
                             });
 
                     }
-                    else if ("@requestCulture?.RequestCulture.UICulture.Name" == "ar-EG" && InputPdf == "PdfSaveAr") {
-                        if (InputPdf == "PdfSaveAr") {
-                            const formData = new FormData();
-                            formData.append("number", phoneNumber); // Append the recipient's phone number
-                            formData.append("message", message); // Append the message
-                            formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
-
-                            // Convert the PDF to a base64-encoded string
-                            const requestOptions = {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    'Authorization': `Bearer ${token}`
-                                }
-                            };
-                            console.log("pdfBlob", pdfBlob);
-                            // Send the request to the API endpoint
-                            fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
-                                .then(response => {
-                                    if (response.ok) {
-                                        return response.json();
-                                    } else {
-                                        return response.text().then(error => Promise.reject(error));
-                                    }
-                                })
-                                .then(result => {
-                                    console.log("SendPDFResult", result);
-                                })
-                                .catch(error => {
-                                    console.log("SendPDFError", error);
-                                });
+                    else if ("@requestCulture?.RequestCulture.UICulture.Name" == "ar-EG" && InputPdf != "" && InputPdf != null && language == "ar") {
+                        const formData = new FormData();
+                        formData.append("number", phoneNumber); // Append the recipient's phone number
+                        formData.append("message", message); // Append the message
+                        if (InputPdf == "SavePdfArInvoice") {
+                            document.getElementById('Contract_InitialInvoiceNo').value = invoiceNo;
+                            formData.append("file", pdfBlob, `${invoiceNo}.pdf`); // Append the PDF blob with a filename
                         }
+                        else {
+                            document.getElementById('Contract_AccountReceiptNo').value = receiptNo;
+                            formData.append("file", pdfBlob, `${receiptNo}.pdf`); // Append the PDF blob with a filename
+                        }
+
+                        // Convert the PDF to a base64-encoded string
+                        const requestOptions = {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        };
+                        // Send the request to the API endpoint
+                        fetch("https://business.enjazatik.com/api/v1/send-media", requestOptions)
+                            .then(response => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else {
+                                    return response.text().then(error => Promise.reject(error));
+                                }
+                            })
+                            .then(result => {
+                                console.log("SendPDFResult", result);
+                            })
+                            .catch(error => {
+                                console.log("SendPDFError", error);
+                            });
                     }
 
 
@@ -4945,12 +5080,8 @@ else
             $("#Contract_PaymentMethod").change(function () {
                 var PaymentMethod = $("#Contract_PaymentMethod").val();
                 var BranchCode = $("#SelectedBranch").val();
-                console.log(PaymentMethod);
-                console.log(BranchCode);
-
                 $.get("/BS/Contract/GetSalesPoint", { PaymentMethod: PaymentMethod, BranchCode: BranchCode }, function (data) {
                     $("#Contract_SalesPoint").empty();
-                    console.log(data);
                     if (data.type == "1" && data.salesPoints != null) {
                         $.each(data.salesPoints, function (index, row) {
                             if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US") {
@@ -4984,7 +5115,6 @@ else
             const imagePayRenter = document.getElementById("seacrh_icon_Renter");
             const dropdownPayRenter = document.getElementById("dropdown_content_Renter");
             imagePayRenter.addEventListener('click', function () {
-                console.log(5555555)
                 if (dropdownPayRenter.style.display === 'block') {
                     dropdownPayRenter.style.display = 'none';
                 } else {

@@ -5,6 +5,11 @@ namespace Bnan.Core.Models
 {
     public partial class CrCasAccountReceipt
     {
+        public CrCasAccountReceipt()
+        {
+            CrCasAccountInvoices = new HashSet<CrCasAccountInvoice>();
+        }
+
         public string CrCasAccountReceiptNo { get; set; } = null!;
         public string? CrCasAccountReceiptYear { get; set; }
         public string? CrCasAccountReceiptType { get; set; }
@@ -43,5 +48,6 @@ namespace Bnan.Core.Models
         public virtual CrMasRenterInformation? CrCasAccountReceiptRenter { get; set; }
         public virtual CrCasAccountSalesPoint? CrCasAccountReceiptSalesPointNavigation { get; set; }
         public virtual CrMasUserInformation? CrCasAccountReceiptUserNavigation { get; set; }
+        public virtual ICollection<CrCasAccountInvoice> CrCasAccountInvoices { get; set; }
     }
 }

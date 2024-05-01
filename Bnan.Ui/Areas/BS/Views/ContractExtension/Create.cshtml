@@ -804,7 +804,7 @@
 
         // Function to send an image and Ar PDF to WhatsApp
         const sendArReceiptToWhatsApp = async () => {
-            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArCatchReceipt";
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArInitialInvoice";
             const imagePath = imageLessor.replace('~', '');
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
             const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.

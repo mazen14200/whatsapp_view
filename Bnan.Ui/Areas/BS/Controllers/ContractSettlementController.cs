@@ -56,8 +56,16 @@ namespace Bnan.Ui.Areas.BS.Controllers
             {
                 var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode &&
                 x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);
+                var ArInvoice = _unitOfWork.CrCasAccountInvoice.FindAll(x => x.CrCasAccountInvoiceReferenceContract == contract.CrCasRenterContractBasicNo).LastOrDefault().CrCasAccountInvoiceArPdfFile;
+                var EnInvoice = _unitOfWork.CrCasAccountInvoice.FindAll(x => x.CrCasAccountInvoiceReferenceContract == contract.CrCasRenterContractBasicNo).LastOrDefault().CrCasAccountInvoiceEnPdfFile;
+                contract.InvoiceArPdfPath = ArInvoice;
+                contract.InvoiceEnPdfPath = EnInvoice;
                 if (authContract != null) contract.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
+
             }
+
+
+
             bsLayoutVM.ContractSettlements = contractMap.Where(x => x.AuthEndDate > DateTime.Now).ToList();
             return View(bsLayoutVM);
         }
@@ -160,7 +168,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             {
               var  UpdateSettlementContract = await _contractSettlement.UpdateRenterSettlementContract(OldContract.CrCasRenterContractBasicNo, userLogin.CrMasUserInformationCode, ContractInfo.ActualDaysNo, ContractInfo.SettlementMechanism, ContractInfo.CurrentMeter, ContractInfo.AdditionalKm,
                                                                                                      ContractInfo.TaxValue, ContractInfo.DiscountValue, ContractInfo.AmountRequired, ContractInfo.AmountPayed, ContractInfo.ExpensesValue, ContractInfo.ExpensesReasons, ContractInfo.CompensationValue,
-                                                                                                     ContractInfo.CompensationReasons, ContractInfo.MaxHours, ContractInfo.MaxMinutes, ContractInfo.ExtraHoursValue, ContractInfo.PrivateDriverValueTotal, ContractInfo.ChoicesValueTotal,
+                                                                                                     ContractInfo.CompensationReasons, ContractInfo.MaxHours, ContractInfo.MaxMinutes, ContractInfo.ExtraHoursValue, ContractInfo.PrivateDriverValueTotal, ContractInfo.ChoicesValueTotal, ContractInfo.AdvantagesValueTotal,
                                                                                                      ContractInfo.ContractValue, ContractInfo.ContractValueAfterDiscount, ContractInfo.TotalContract, (decimal)RenterLessor.CrCasRenterLessorAvailableBalance);
                 //Account Receipt
                 var CheckAccountReceipt = true;
@@ -171,7 +179,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 var CheckSalesPoint = true;
                 var CheckBranchValidity = true;
                 var CheckUserInformation = true;
-                if (UpdateSettlementContract!=null)
+                if (UpdateSettlementContract != null)
                 {
                     // Account Receipt
                     if (UpdateSettlementContract.CrCasRenterContractBasicAmountPaid > 0)
@@ -214,17 +222,17 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
                     }
 
-                    
+
 
                     // Renter Balance 
                     var CheckUpdateRenterBalance = true;
-                    var ContractValue = UpdateSettlementContract.CrCasRenterContractBasicActualTotal - UpdateSettlementContract.CrCasRenterContractBasicExpensesValue + UpdateSettlementContract.CrCasRenterContractBasicCompensationValue;
+                    var TotalContractValue = UpdateSettlementContract.CrCasRenterContractBasicActualTotal - UpdateSettlementContract.CrCasRenterContractBasicExpensesValue + UpdateSettlementContract.CrCasRenterContractBasicCompensationValue;
                     CheckUpdateRenterBalance = await _contractSettlement.UpdateRenterLessor(UpdateSettlementContract.CrCasRenterContractBasicNo, (decimal)UpdateSettlementContract.CrCasRenterContractBasicActualAmountRequired,
-                                                                                           (decimal) UpdateSettlementContract.CrCasRenterContractBasicAmountPaid, (decimal)ContractValue);
+                                                                                           (decimal)UpdateSettlementContract.CrCasRenterContractBasicAmountPaid, (decimal)UpdateSettlementContract.CrCasRenterContractBasicActualTotal, (decimal)TotalContractValue, (int)UpdateSettlementContract.CrCasRenterContractBasicActualDays);
                     // Account Contract Tax Owed 
 
                     var CheckAddAccountContractTaxOwed = true;
-                    CheckAddAccountContractTaxOwed = await _contractSettlement.AddAccountContractTaxOwed(UpdateSettlementContract.CrCasRenterContractBasicNo,(decimal)UpdateSettlementContract.CrCasRenterContractBasicActualTotal);
+                    CheckAddAccountContractTaxOwed = await _contractSettlement.AddAccountContractTaxOwed(UpdateSettlementContract.CrCasRenterContractBasicNo, (decimal)UpdateSettlementContract.CrCasRenterContractBasicActualTotal);
                     // Alert Contract
                     var CheckUpdateAlert = true;
                     CheckUpdateAlert = await _contractSettlement.UpdateAlert(UpdateSettlementContract.CrCasRenterContractBasicNo);
@@ -273,12 +281,18 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
                     // add Account Contract Company Owed
                     var ChechAddAccountContractCompanyOwed = true;
-                    ChechAddAccountContractCompanyOwed = await _contractSettlement.AddAccountContractCompanyOwed(UpdateSettlementContract.CrCasRenterContractBasicNo, ContractInfo.ActualDaysNo, (decimal)UpdateSettlementContract.CrCasRenterContractBasicActualDailyRent);
+                    var CompanyContract = await _unitOfWork.CrMasContractCompany.FindAsync(x => x.CrMasContractCompanyLessor == UpdateSettlementContract.CrCasRenterContractBasicLessor && x.CrMasContractCompanyProcedures == "112");//ForBnan Contract
+                    if (CompanyContract.CrMasContractCompanyActivation != "1")
+                    {
+                        ChechAddAccountContractCompanyOwed = await _contractSettlement.AddAccountContractCompanyOwed(UpdateSettlementContract.CrCasRenterContractBasicNo, ContractInfo.ActualDaysNo, (decimal)UpdateSettlementContract.CrCasRenterContractBasicActualDailyRent);
+                    }
 
-
+                    // add Account Contract Company Owed
+                    var ChechUpdateRenterStatistics = true;
+                    ChechUpdateRenterStatistics = await _contractSettlement.UpdateRenterStatistics(UpdateSettlementContract);
                     if (UpdateSettlementContract!=null && CheckAccountReceipt&& CheckBranch&& CheckSalesPoint&& CheckBranchValidity&& CheckUserInformation&&
                         CheckMasRenter && CheckUpdateAuthrization&& CheckUpdateAlert&& CheckAddAccountContractTaxOwed && CheckUpdateRenterBalance && CheckAddDriver&&
-                        CheckDriver&& CheckPrivateDriver&&!string.IsNullOrEmpty(CheckDocAndMaintainance)&& CheckCarInfo&& CheckCheckUpCar&& ChechAddAccountContractCompanyOwed )
+                        CheckDriver&& CheckPrivateDriver&&!string.IsNullOrEmpty(CheckDocAndMaintainance)&& CheckCarInfo&& CheckCheckUpCar&& ChechAddAccountContractCompanyOwed &&ChechUpdateRenterStatistics )
                     {
                         try
                         {

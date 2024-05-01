@@ -19,18 +19,18 @@ namespace Bnan.Core.Models
         public string? CrMasLessorImageContractFinished { get; set; }
         public string? CrMasLessorImageContractClosed { get; set; }
         public string? CrMasLessorImageContractCancelled { get; set; }
-        public string? CrMasLessorImageArCatchReceipt { get; set; }
-        public string? CrMasLessorImageArBillExchange { get; set; }
-        public string? CrMasLessorImageArBoxFeeding { get; set; }
-        public string? CrMasLessorImageArDeliveryCustody { get; set; }
-        public string? CrMasLessorImageArTransferFtenant { get; set; }
-        public string? CrMasLessorImageArTransferTtenant { get; set; }
-        public string? CrMasLessorImageEnCatchReceipt { get; set; }
-        public string? CrMasLessorImageEnBillExchange { get; set; }
-        public string? CrMasLessorImageEnBoxFeeding { get; set; }
-        public string? CrMasLessorImageEnDeliveryCustody { get; set; }
-        public string? CrMasLessorImageEnTransferFtenant { get; set; }
-        public string? CrMasLessorImageEnTransferTtenant { get; set; }
+        public string? CrMasLessorImageArInitialInvoice { get; set; }
+        public string? CrMasLessorImageArActualInvoice { get; set; }
+        public string? CrMasLessorImageArExternalCatchReceipt { get; set; }
+        public string? CrMasLessorImageArExternalBillExchangeReceipt { get; set; }
+        public string? CrMasLessorImageArInternalCatchReceipt { get; set; }
+        public string? CrMasLessorImageArInternalBillExchangeReceipt { get; set; }
+        public string? CrMasLessorImageEnInitialInvoice { get; set; }
+        public string? CrMasLessorImageEnActualInvoice { get; set; }
+        public string? CrMasLessorImageEnExternalCatchReceipt { get; set; }
+        public string? CrMasLessorImageEnExternalBillExchangeReceipt { get; set; }
+        public string? CrMasLessorImageEnInternalCatchReceipt { get; set; }
+        public string? CrMasLessorImageEnInternalBillExchangeReceipt { get; set; }
         public string? CrMasLessorImageArContractPage1 { get; set; }
         public string? CrMasLessorImageArContractPage2 { get; set; }
         public string? CrMasLessorImageArContractPage3 { get; set; }

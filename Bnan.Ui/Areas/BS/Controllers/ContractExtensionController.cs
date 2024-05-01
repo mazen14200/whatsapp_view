@@ -171,7 +171,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         {
                             passing = "1";
                         }
-                        if (!string.IsNullOrEmpty(PdfSave1) && !string.IsNullOrEmpty(language)) SavePdf = await FileExtensions.SavePdf(_hostingEnvironment, PdfSave1, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, language);
+                        //if (!string.IsNullOrEmpty(PdfSave1) && !string.IsNullOrEmpty(language)) SavePdf = await FileExtensions.SavePdf(_hostingEnvironment, PdfSave1, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, language);
                         CheckAccountReceipt = await _contractExtension.AddAccountReceipt(NewContract.CrCasRenterContractBasicNo, lessorCode, NewContract.CrCasRenterContractBasicBranch,
                                                                                       ContractInfo.PaymentMethod, ContractInfo.AccountNo, NewContract.CrCasRenterContractBasicCarSerailNo,
                                                                                       ContractInfo.SalesPoint, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture),

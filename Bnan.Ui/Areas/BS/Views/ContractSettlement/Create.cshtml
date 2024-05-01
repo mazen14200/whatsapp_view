@@ -24,8 +24,8 @@
     <link href="~/BranchSys/Pages/css/English_style.css" rel="styleSheet">
 }
 <style>
-    .form-select:disabled {
-        background-color: white;
+    *:disabled {
+        background-color: white !important;
     }
 </style>
 <!-- MultiStep Form -->
@@ -69,6 +69,7 @@
                                 <input hidden asp-for="ContractSettlement.PrivateDriverValueTotal" />
                                 <input hidden asp-for="ContractSettlement.PreviousBalance" />
                                 <input hidden asp-for="ContractSettlement.AmountRequired" />
+                                <input hidden asp-for="ContractSettlement.AdvantagesValueTotal" />
                                 <input hidden id="language" name="language" />
                                 <div class=" ">
                                     <!-- progressbar -->
@@ -1583,6 +1584,7 @@
             var AdvantagesValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.AdvantagesValue));
             advantagesValueTotal = totalDaysNo * parseFloat(AdvantagesValue);
             document.getElementById('Features').textContent = advantagesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#ContractSettlement_AdvantagesValueTotal").val(advantagesValueTotal);
 
             //AdditionalDriver
             var AdditionalDriver = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasicAdditionalDriverValue));
@@ -1604,6 +1606,7 @@
             var ChoicesValue = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.ChoicesValue));
             ChoicesValueTotal = totalDaysNo * parseFloat(ChoicesValue);
             document.getElementById('Choices').textContent = ChoicesValueTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $("#ContractSettlement_ChoicesValueTotal").val(ChoicesValueTotal);
             $("#ContractSettlement_ChoicesValueTotal").val(ChoicesValueTotal);
 
             // Additional Hours Value Total
@@ -1662,12 +1665,20 @@
             var previousBalance = @Html.Raw(Json.Serialize(Model?.ContractSettlement?.CrCasRenterContractBasic5.CrCasRenterLessorAvailableBalance));
             var previousTotalContract = @Html.Raw(Json.Serialize(Model?.ContractSettlement.CrCasRenterContractBasicExpectedTotal));
             AmountRequired = TotalContract - parseFloat(previousTotalContract)  - parseFloat(previousBalance) + compensationValue - ExpensesValue;
+            console.log("AmountRequired", AmountRequired)
             if (AmountRequired < 0) {
                 document.getElementById('RenterMoneyText').textContent = '@localizer["RenterMoneyText2"]'
+                document.getElementById('AmountPayed').disabled = false;
             }
             else if (AmountRequired > 0) {
                 document.getElementById('RenterMoneyText').textContent = '@localizer["RenterMoneyText1"]'
+                document.getElementById('AmountPayed').disabled = false;
             }
+            else{
+                document.getElementById('AmountPayed').disabled = true;
+            }
+            console.log("AmountPayed", document.getElementById('AmountPayed').disabled)
+
             $("#ContractSettlement_AmountRequired").val(AmountRequired);
             document.getElementById('AmountRequired').textContent = Math.abs(AmountRequired).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }

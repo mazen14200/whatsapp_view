@@ -53,33 +53,13 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                 x.CrCasCarInformationBranchStatus != Status.Active || x.CrCasCarInformationOwnerStatus != Status.Active ||
                                                                                (x.CrCasCarInformationStatus == Status.Active && x.CrCasCarInformationForSaleStatus == Status.ForSale)),
                                                                                new[] { "CrCasCarInformationDistributionNavigation", "CrCasCarInformationDistributionNavigation.CrCasPriceCarBasics" }).ToList();
-            var documentsMaintenance = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == bSLayoutVM.SelectedBranch, new[] { "CrCasCarDocumentsMaintenanceProceduresNavigation" }).ToList();
+            //var documentsMaintenance = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == bSLayoutVM.SelectedBranch, new[] { "CrCasCarDocumentsMaintenanceProceduresNavigation" }).ToList();
             ViewBag.carCount = Cars.Count();
             ViewBag.AvaliableCars = carsAvailable.Count();
             ViewBag.UnAvaliableCars = carsUnAvailable.Count();
             ViewBag.RentedCars = carsRented.Count();
             var userInfo = _unitOfWork.CrMasUserInformation.Find(x => x.CrMasUserInformationCode == userLogin.CrMasUserInformationCode, new[] { "CrMasUserBranchValidities" });
             var branchValidity = userInfo.CrMasUserBranchValidities.FirstOrDefault(x => x.CrMasUserBranchValidityBranch == bSLayoutVM.SelectedBranch);
-
-            var Documents = _unitOfWork.CrCasBranchDocument.FindAll(x => x.CrCasBranchDocumentsLessor == lessorCode && x.CrCasBranchDocumentsBranch == bSLayoutVM.SelectedBranch).ToList();
-            ViewBag.CompanyDocumentsRenewedBS = Documents.Where(x => x.CrCasBranchDocumentsStatus == Status.Renewed).Count();
-            ViewBag.CompanyDocumentsAboutExpireBS = Documents.Where(x => x.CrCasBranchDocumentsStatus == Status.AboutToExpire).Count();
-            ViewBag.CompanyDocumentsExpiredBS = Documents.Where(x => x.CrCasBranchDocumentsStatus == Status.Expire).Count();
-
-            var DocumentsCar = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == bSLayoutVM.SelectedBranch && x.CrCasCarDocumentsMaintenanceProceduresClassification == "12").ToList();
-            ViewBag.CompanyDocumentsCarRenewedBS = DocumentsCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.Renewed).Count();
-            ViewBag.CompanyDocumentsCarAboutExpireBS = DocumentsCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire).Count();
-            ViewBag.CompanyDocumentsCarExpiredBS = DocumentsCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.Expire).Count();
-
-            var MaintainceCar = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == bSLayoutVM.SelectedBranch && x.CrCasCarDocumentsMaintenanceProceduresClassification == "13").ToList();
-            ViewBag.CompanyMaintainceCarRenewedBS = MaintainceCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.Renewed).Count();
-            ViewBag.CompanyMaintainceCarAboutExpireBS = MaintainceCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire).Count();
-            ViewBag.CompanyMaintainceCarExpiredBS = MaintainceCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.Expire).Count();
-
-            var PriceCar = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicLessorCode == lessorCode).ToList();
-            ViewBag.PriceCarRenewedBS = PriceCar.Where(x => x.CrCasPriceCarBasicStatus == Status.Renewed).Count();
-            ViewBag.PriceCarAboutExpireBS = PriceCar.Where(x => x.CrCasPriceCarBasicStatus == Status.AboutToExpire).Count();
-            ViewBag.PriceCarExpiredBS = PriceCar.Where(x => x.CrCasPriceCarBasicStatus == Status.Expire).Count();
 
             ViewBag.Adminstritive = _unitOfWork.CrCasSysAdministrativeProcedure.FindAll(x => x.CrCasSysAdministrativeProceduresLessor == lessorCode &&
                                                                                 x.CrCasSysAdministrativeProceduresTargeted == userLogin.CrMasUserInformationCode &&

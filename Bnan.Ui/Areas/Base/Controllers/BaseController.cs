@@ -3,6 +3,8 @@ using Bnan.Core.Extensions;
 using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using Bnan.Ui.ViewModels.BS;
+using Bnan.Ui.ViewModels.CAS;
+using Bnan.Ui.ViewModels.MAS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -158,13 +160,31 @@ namespace Bnan.Ui.Areas.Base.Controllers
 
             var branch = _unitOfWork.CrCasBranchInformation.Find(x => x.CrCasBranchInformationCode == selectBranch && x.CrCasBranchInformationLessor == lessorCode, new[] { "CrCasBranchPost.CrCasBranchPostCityNavigation" });
 
-            return new BSLayoutVM
-            {
-                CrCasBranchInformations = branches,
-                SelectedBranch = selectBranch,
-                CrCasBranchInformation = branch,
-                UserInformation = userInformation,
-            };
+
+
+            var Documents = _unitOfWork.CrCasBranchDocument.FindAll(x => x.CrCasBranchDocumentsLessor == lessorCode && x.CrCasBranchDocumentsBranch == branch.CrCasBranchInformationCode).ToList();
+            var DocumentsCar = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == branch.CrCasBranchInformationCode && x.CrCasCarDocumentsMaintenanceProceduresClassification == "12").ToList();
+            var MaintainceCar = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == branch.CrCasBranchInformationCode && x.CrCasCarDocumentsMaintenanceProceduresClassification == "13").ToList();
+            var PriceCar = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicLessorCode == lessorCode || x.CrCasPriceCarBasicBrandCode== branch.CrCasBranchInformationCode).ToList();
+            var c = Documents.Where(x => x.CrCasBranchDocumentsStatus == Status.AboutToExpire).Count();
+            var BsLayoutVM = new BSLayoutVM();
+            BsLayoutVM.CrCasBranchInformations = branches;
+            BsLayoutVM.SelectedBranch = selectBranch;
+            BsLayoutVM.CrCasBranchInformation = branch;
+            BsLayoutVM.UserInformation = userInformation;
+            BsLayoutVM.Alerts = BsLayoutVM.Alerts ?? new AlertsVM(); // Ensure AlertsVM is initialized
+            BsLayoutVM.Alerts.BranchDocumentsAboutExpire= Documents.Where(x => x.CrCasBranchDocumentsStatus == Status.AboutToExpire).Count();
+            BsLayoutVM.Alerts.BranchDocumentsExpireAndRenewed= Documents.Where(x => x.CrCasBranchDocumentsStatus == Status.Expire || x.CrCasBranchDocumentsStatus == Status.Renewed).Count();
+            BsLayoutVM.Alerts.DocumentsCarsAboutExpire = DocumentsCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire).Count();
+            BsLayoutVM.Alerts.DocumentsCarExpiredAndRenewed= DocumentsCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.Expire || x.CrCasCarDocumentsMaintenanceStatus == Status.Renewed).Count();
+            BsLayoutVM.Alerts.MaintainceCarAboutExpire= MaintainceCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.AboutToExpire).Count();
+            BsLayoutVM.Alerts.MaintainceCarExpireAndRenewed= MaintainceCar.Where(x => x.CrCasCarDocumentsMaintenanceStatus == Status.Expire || x.CrCasCarDocumentsMaintenanceStatus == Status.Renewed).Count();
+            BsLayoutVM.Alerts.PriceCarAboutExpire = PriceCar.Where(x => x.CrCasPriceCarBasicStatus == Status.AboutToExpire).Count();
+            BsLayoutVM.Alerts.PriceCarExpireAndRenewed = PriceCar.Where(x => x.CrCasPriceCarBasicStatus == Status.Expire || x.CrCasPriceCarBasicStatus == Status.Renewed).Count();
+            var TotalCount = BsLayoutVM.Alerts.BranchDocumentsAboutExpire + BsLayoutVM.Alerts.BranchDocumentsExpireAndRenewed + BsLayoutVM.Alerts.DocumentsCarsAboutExpire + BsLayoutVM.Alerts.DocumentsCarExpiredAndRenewed 
+                             + BsLayoutVM.Alerts.MaintainceCarAboutExpire + BsLayoutVM.Alerts.MaintainceCarExpireAndRenewed + BsLayoutVM.Alerts.PriceCarAboutExpire + BsLayoutVM.Alerts.PriceCarExpireAndRenewed;
+            BsLayoutVM.Alerts.AlertOrNot = TotalCount;
+            return BsLayoutVM;
         }
     }
 }

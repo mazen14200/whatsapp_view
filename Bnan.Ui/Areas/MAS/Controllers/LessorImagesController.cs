@@ -113,18 +113,18 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                         if (Name == "ContractFinished") lessorImages.CrMasLessorImageContractFinished = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageContractFinished);
                         if (Name == "ContractClosed") lessorImages.CrMasLessorImageContractClosed = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageContractClosed);
                         if (Name == "ContractCancelled") lessorImages.CrMasLessorImageContractCancelled = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageContractCancelled);
-                        if (Name == "ArCatchReceipt") lessorImages.CrMasLessorImageArCatchReceipt = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageArCatchReceipt);
-                        if (Name == "ArBillExchange") lessorImages.CrMasLessorImageArBillExchange = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageArBillExchange);
-                        if (Name == "ArBoxFeeding") lessorImages.CrMasLessorImageArBoxFeeding = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageArBoxFeeding);
-                        if (Name == "ArDeliveryCustody") lessorImages.CrMasLessorImageArDeliveryCustody = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageArDeliveryCustody);
-                        if (Name == "ArTransferFtenant") lessorImages.CrMasLessorImageArTransferFtenant = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageArTransferFtenant);
-                        if (Name == "ArTransferTtenant") lessorImages.CrMasLessorImageArTransferTtenant = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageArTransferTtenant);
-                        if (Name == "EnCatchReceipt") lessorImages.CrMasLessorImageEnCatchReceipt = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEnCatchReceipt);
-                        if (Name == "EnBillExchange") lessorImages.CrMasLessorImageEnBillExchange = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEnBillExchange);
-                        if (Name == "EnBoxFeeding") lessorImages.CrMasLessorImageEnBoxFeeding = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEnBoxFeeding);
-                        if (Name == "EnDeliveryCustody") lessorImages.CrMasLessorImageEnDeliveryCustody = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEnDeliveryCustody);
-                        if (Name == "EnTransferFtenant") lessorImages.CrMasLessorImageEnTransferFtenant = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEnTransferFtenant);
-                        if (Name == "EnTransferTtenant") lessorImages.CrMasLessorImageEnTransferTtenant = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEnTransferTtenant);
+                        if (Name == "ArInitialInvoice") lessorImages.CrMasLessorImageArInitialInvoice = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageArInitialInvoice);
+                        if (Name == "ArActualInvoice") lessorImages.CrMasLessorImageArActualInvoice = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageArActualInvoice);
+                        if (Name == "ArExternalCatchReceipt") lessorImages.CrMasLessorImageArExternalCatchReceipt = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageArExternalCatchReceipt);
+                        if (Name == "ArExternalBillExchangeReceipt") lessorImages.CrMasLessorImageArExternalBillExchangeReceipt = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageArExternalBillExchangeReceipt);
+                        if (Name == "ArInternalCatchReceipt") lessorImages.CrMasLessorImageArInternalCatchReceipt = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageArInternalCatchReceipt);
+                        if (Name == "ArInternalBillExchangeReceipt") lessorImages.CrMasLessorImageArInternalBillExchangeReceipt = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageArInternalBillExchangeReceipt);
+                        if (Name == "EnInitialInvoice") lessorImages.CrMasLessorImageEnInitialInvoice = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEnInitialInvoice);
+                        if (Name == "EnActualInvoice") lessorImages.CrMasLessorImageEnActualInvoice = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEnActualInvoice);
+                        if (Name == "EnExternalCatchReceipt") lessorImages.CrMasLessorImageEnExternalCatchReceipt = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEnExternalCatchReceipt);
+                        if (Name == "EnExternalBillExchangeReceipt") lessorImages.CrMasLessorImageEnExternalBillExchangeReceipt = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEnExternalBillExchangeReceipt);
+                        if (Name == "EnInternalCatchReceipt") lessorImages.CrMasLessorImageEnInternalCatchReceipt = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEnInternalCatchReceipt);
+                        if (Name == "EnInternalBillExchangeReceipt") lessorImages.CrMasLessorImageEnInternalBillExchangeReceipt = await file.SaveImageAsync(_webHostEnvironment, foldername, NewName, ".png", lessorImages.CrMasLessorImageEnInternalBillExchangeReceipt);
 
 
                     }
@@ -218,61 +218,61 @@ namespace Bnan.Ui.Areas.MAS.Controllers
                                 var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageContractCancelled);
                                 if (Tr == true) lessorImages.CrMasLessorImageContractCancelled = null;
                             }
-                            if (id == "ArCatchReceipt")
+                            if (id == "ArInitialInvoice")
                             {
-                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageArCatchReceipt);
-                                if (Tr == true) lessorImages.CrMasLessorImageArCatchReceipt = null;
+                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageArInitialInvoice);
+                                if (Tr == true) lessorImages.CrMasLessorImageArInitialInvoice = null;
                             }
-                            if (id == "ArBillExchange")
+                            if (id == "ArActualInvoice")
                             {
-                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageArBillExchange);
-                                if (Tr == true) lessorImages.CrMasLessorImageArBillExchange = null;
+                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageArActualInvoice);
+                                if (Tr == true) lessorImages.CrMasLessorImageArActualInvoice = null;
                             }
 
-                            if (id == "ArBoxFeeding")
+                            if (id == "ArExternalCatchReceipt")
                             {
-                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageArBoxFeeding);
-                                if (Tr == true) lessorImages.CrMasLessorImageArBoxFeeding = null;
+                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageArExternalCatchReceipt);
+                                if (Tr == true) lessorImages.CrMasLessorImageArExternalCatchReceipt = null;
                             }
-                            if (id == "ArDeliveryCustody")
+                            if (id == "ArExternalBillExchangeReceipt")
                             {
-                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageArDeliveryCustody);
-                                if (Tr == true) lessorImages.CrMasLessorImageArDeliveryCustody = null;
+                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageArExternalBillExchangeReceipt);
+                                if (Tr == true) lessorImages.CrMasLessorImageArExternalBillExchangeReceipt = null;
                             }
-                            if (id == "ArTransferFtenant")
+                            if (id == "ArInternalCatchReceipt")
                             {
-                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageArTransferFtenant);
-                                if (Tr == true) lessorImages.CrMasLessorImageArTransferFtenant = null;
+                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageArInternalCatchReceipt);
+                                if (Tr == true) lessorImages.CrMasLessorImageArInternalCatchReceipt = null;
                             }
-                            if (id == "ArTransferTtenant") 
+                            if (id == "ArInternalBillExchangeReceipt") 
                             { 
-                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageArTransferTtenant);
-                                if (Tr == true) lessorImages.CrMasLessorImageArTransferTtenant = null;
+                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageArInternalBillExchangeReceipt);
+                                if (Tr == true) lessorImages.CrMasLessorImageArInternalBillExchangeReceipt = null;
                             }
-                            if (id == "EnCatchReceipt")
+                            if (id == "EnInitialInvoice")
                             {
-                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageEnCatchReceipt);
-                                if (Tr == true) lessorImages.CrMasLessorImageEnCatchReceipt = null;
+                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageEnInitialInvoice);
+                                if (Tr == true) lessorImages.CrMasLessorImageEnInitialInvoice = null;
                             }
-                            if (id == "EnBillExchange") { 
-                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageEnBillExchange);
-                                if (Tr == true) lessorImages.CrMasLessorImageEnBillExchange = null;
+                            if (id == "EnActualInvoice") { 
+                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageEnActualInvoice);
+                                if (Tr == true) lessorImages.CrMasLessorImageEnActualInvoice = null;
                             }
-                            if (id == "EnBoxFeeding") {
-                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageEnBoxFeeding);
-                                if (Tr == true) lessorImages.CrMasLessorImageEnBoxFeeding = null;
+                            if (id == "EnExternalCatchReceipt") {
+                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageEnExternalCatchReceipt);
+                                if (Tr == true) lessorImages.CrMasLessorImageEnExternalCatchReceipt = null;
                             }
-                            if (id == "EnDeliveryCustody") { 
-                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageEnDeliveryCustody);
-                                if (Tr == true) lessorImages.CrMasLessorImageEnDeliveryCustody = null;
+                            if (id == "EnExternalBillExchangeReceipt") { 
+                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageEnExternalBillExchangeReceipt);
+                                if (Tr == true) lessorImages.CrMasLessorImageEnExternalBillExchangeReceipt = null;
                             }
-                            if (id == "EnTransferFtenant") {
-                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageEnTransferFtenant);
-                                if (Tr == true) lessorImages.CrMasLessorImageEnTransferFtenant = null;
+                            if (id == "EnInternalCatchReceipt") {
+                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageEnInternalCatchReceipt);
+                                if (Tr == true) lessorImages.CrMasLessorImageEnInternalCatchReceipt = null;
                             }
-                            if (id == "EnTransferTtenant") {
-                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageEnTransferTtenant);
-                                if (Tr == true) lessorImages.CrMasLessorImageEnTransferTtenant = null;
+                            if (id == "EnInternalBillExchangeReceipt") {
+                                var Tr = await FileExtensions.RemoveImage(_webHostEnvironment, lessorImages.CrMasLessorImageEnInternalBillExchangeReceipt);
+                                if (Tr == true) lessorImages.CrMasLessorImageEnInternalBillExchangeReceipt = null;
                             }
 
                             _unitOfWork.CrMasLessorImage.Update(lessorImages);

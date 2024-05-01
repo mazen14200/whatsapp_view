@@ -28,8 +28,10 @@ namespace Bnan.Core.Interfaces
         Task<bool> UpdateMasRenter(string RenterId);
         Task<bool> UpdateDriverStatus(string DriverId, string LessorCode,string Reasons);
         Task<bool> UpdatePrivateDriverStatus(string PrivateDriverId, string LessorCode);
-        Task<bool> AddAccountReceipt(string ContractNo, string LessorCode,string BranchCode,string PaymentMethod,string Account,string SerialNo,string SalesPointNo,
+        Task<CrCasAccountReceipt> AddAccountReceipt(string ContractNo, string LessorCode,string BranchCode,string PaymentMethod,string Account,string SerialNo,string SalesPointNo,
                                      decimal TotalPayed,string RenterId,string UserId, string PassingType,string Reasons,string pdfPathAr,string pdfPathEn);
+
+        Task<bool> AddAccountInvoice(string ContractNo,string RenterId, string LessorCode, string BranchCode, string UserId, string AccountReceiptNo, string pdfPathAr, string pdfPathEn);
         Task<bool> UpdateBranchBalance(string BranchCode, string LessorCode, decimal AmountPaid);
         Task<bool> UpdateSalesPointBalance(string BranchCode, string LessorCode,string SalesPointCode, decimal AmountPaid);
         Task<bool> UpdateBranchValidity(string BranchCode, string LessorCode,string UserId,string PaymentMethod, decimal AmountPaid);

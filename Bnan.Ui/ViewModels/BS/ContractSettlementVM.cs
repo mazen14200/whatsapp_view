@@ -63,6 +63,8 @@ namespace Bnan.Ui.ViewModels.BS
         public string? CrCasRenterContractBasicUserInsert { get; set; }
         public string? CrCasRenterContractBasicStatus { get; set; }
         public string? CrCasRenterContractBasicReasons { get; set; }
+        public string? InvoiceArPdfPath { get; set; }
+        public string? InvoiceEnPdfPath { get; set; }
         public DateTime? AuthEndDate { get; set; }
         public bool? AuthType { get; set; }
         [Required(ErrorMessage = "requiredFiled")]

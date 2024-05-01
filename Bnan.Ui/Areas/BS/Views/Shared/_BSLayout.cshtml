@@ -99,7 +99,23 @@
             color: #FF992E;
         }
     </style>
-
+    @if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+    {
+        <style>
+            .ended-Docs-Num {
+                text-align: center !important;
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+           
+            .Not-ended-Docs-Num {
+                text-align: center !important;
+            }
+        </style>
+    }
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -176,7 +192,7 @@
                         </div>
                     </li>
                     <!-- Nav Item - Messages -->
-                    <li class="nav-item dropdown no-arrow mx-1">
+                   @*  <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="dripicons-message noti-icon" style="font-size: 22px;vertical-align: middle;line-height: 70px;color: #7a7272;"></i>
@@ -244,14 +260,17 @@
                             </a>
                             <a class="dropdown-item text-center small text-dark-600" href="#">Read More Messages</a>
                         </div>
-                    </li>
+                    </li> *@
                     <!-- Nav Item - Alerts -->
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="dripicons-bell noti-icon" style="font-size: 22px;vertical-align: middle;line-height: 70px;color: #7a7272;"></i>
                             <!-- Counter - Alerts -->
-                            <span class="noti-icon-badge"></span>
+                            @if (Model.Alerts.AlertOrNot > 0)
+                            {
+                                <span class="noti-icon-badge"></span>
+                            }
                         </a>
                         <!-- Dropdown - Alerts -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in" aria-labelledby="alertsDropdown">
@@ -260,56 +279,56 @@
                                     @localizer["Notifications"]
                                 </div>
 
-                                <div class="col-4">
+                                <div class="col-3">
                                     @localizer["OnExpiredd"]
                                 </div>
-                                <div class="col-2">
-                                    @localizer["Expired"]
+                                <div class="col-3">
+                                    @localizer["ExpiredAndRenewed"]
                                 </div>
                             </div>
                             <a class="dropdown-item dropdown-item-custom ">
-                                <div class="col-md-7 p-0" style="text-align:end;">
+                                <div class="col-md-6 p-0" style="text-align:end;">
                                     @localizer["ContractBranch"]
                                 </div>
-                                <div class="col-md-3 Not-ended-Docs-Num">
-                                    @ViewBag.CompanyDocumentsExpiredBS
+                                <div class="col-md-3 Not-ended-Docs-Num text-center">
+                                    @Model.Alerts.BranchDocumentsAboutExpire
                                 </div>
-                                <div class="col-md-2 ended-Docs-Num">
-                                    @ViewBag.CompanyDocumentsAboutExpireBS
+                                <div class="col-md-3 ended-Docs-Num">
+                                    @Model.Alerts.BranchDocumentsExpireAndRenewed
                                 </div>
                             </a>
                             <a class="dropdown-item dropdown-item-custom ">
-                                <div class="col-md-7 p-0" style="text-align:end;">
+                                <div class="col-md-6 p-0" style="text-align:end;">
                                     @localizer["CarsDocuments"]
                                 </div>
-                                <div class="col-md-3 Not-ended-Docs-Num">
-                                    @ViewBag.CompanyDocumentsCarExpiredBS
+                                <div class="col-md-3 Not-ended-Docs-Num text-center">
+                                    @Model.Alerts.DocumentsCarsAboutExpire
                                 </div>
-                                <div class="col-md-2 ended-Docs-Num">
-                                    @ViewBag.CompanyDocumentsCarAboutExpireBS
+                                <div class="col-md-3 ended-Docs-Num">
+                                    @Model.Alerts.DocumentsCarExpiredAndRenewed
                                 </div>
                             </a>
                             <a class="dropdown-item dropdown-item-custom ">
-                                <div class="col-md-7 p-0" style="text-align:end;">
+                                <div class="col-md-6 p-0" style="text-align:end;">
                                     @localizer["CarsFixed"]
                                 </div>
-                                <div class="col-md-3 Not-ended-Docs-Num">
-                                    @ViewBag.CompanyMaintainceCarExpiredBS
+                                <div class="col-md-3 Not-ended-Docs-Num text-center">
+                                    @Model.Alerts.MaintainceCarAboutExpire
                                 </div>
-                                <div class="col-md-2 ended-Docs-Num">
-                                    @ViewBag.CompanyMaintainceCarAboutExpireBS
+                                <div class="col-md-3 ended-Docs-Num">
+                                    @Model.Alerts.MaintainceCarExpireAndRenewed
                                 </div>
                             </a>
                             <a class="dropdown-item dropdown-item-custom ">
-                                <div class="col-md-7 p-0" style="text-align:end;">
+                                <div class="col-md-6 p-0" style="text-align:end;">
                                     @localizer["CarPrice"]
                                 </div>
 
-                                <div class="col-md-3 Not-ended-Docs-Num">
-                                    @ViewBag.PriceCarExpiredBS
+                                <div class="col-md-3 Not-ended-Docs-Num text-center">
+                                    @Model.Alerts.PriceCarAboutExpire
                                 </div>
-                                <div class="col-md-2 ended-Docs-Num">
-                                    @ViewBag.PriceCarAboutExpireBS
+                                <div class="col-md-3 ended-Docs-Num">
+                                    @Model.Alerts.PriceCarExpireAndRenewed
                                 </div>
                             </a>
                         </div>
