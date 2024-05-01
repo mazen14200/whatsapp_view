@@ -210,10 +210,10 @@
 
 
 
-            <div class="row" id="second-row-of-charts" style="display:flex;justify-content:0;">
+                <div class="row" id="second-row-of-charts" style="display:flex;justify-content:0;justify-content: space-between;">
 
 
-                    <div class="" style="width:750px;">
+                    <div class="" style="width:550px;">
 
             <div style="margin-top:20px;">
                 @*<p class="form-label">@localizer["CarStatistics_count_Cars"] <span style="color:#A4ACF7">@ViewBag.count_Cars</span></p>*@
@@ -225,18 +225,18 @@
                         <label for="brunch_name" style="padding-top:8px;width:160px;">@localizer["CarStatistics_Type"]</label>
                         @*<select class="text-right form-select" id="SelectedType" onchange="getSelectedType(this)"  style="width:150px;border-color:#74D9EB;border-radius:5px;">*@
                         <select class="text-right form-select" id="SelectedType" onchange="getSelectedType(this)"  style="width:150px;">
-                            <option id="0" value="0">@localizer["CarStatistics_Status"]</option>
                             <option id="1" selected="selected" value="1">@localizer["CarStatistics_Branches"]</option>
-                            <option id="2" value="2">@localizer["CarStatistics_Brand"]</option>
-                            <option id="3" value="3">@localizer["CarStatistics_year"]</option>
-                            <option id="4" value="4">@localizer["CarStatistics_Category"]</option>
-                            <option id="5" value="5">@localizer["CarStatistics_Model"]</option>
-                            <option id="6" value="6">@localizer["CarStatistics_City"]</option>
                             <option id="7" value="7">@localizer["CarStatistics_Rigon"]</option>
+                            <option id="6" value="6">@localizer["CarStatistics_City"]</option>
+                            <option id="2" value="2">@localizer["CarStatistics_Brand"]</option>
+                            <option id="5" value="5">@localizer["CarStatistics_Model"]</option>
+                            <option id="4" value="4">@localizer["CarStatistics_Category"]</option>
+                            <option id="3" value="3">@localizer["CarStatistics_year"]</option>
+                            <option id="0" value="0">@localizer["CarStatistics_Status"]</option>
                         </select>                                
                     </div>
 
-                    <div class="partial" style="width:550px;margin-top:10px;">
+                    <div class="partial" style="width:500px;margin-top:10px;">
                         <partial name="_PartialDatatable" />
                     </div>
 
@@ -244,7 +244,7 @@
 
 
 
-                <div class="partial row" style="width:800px;margin-top:85px">
+                <div class="partial row" style="width:1100px;margin-top:75px">
                     <partial name="_PartialChartData" />
                 </div>
 
@@ -321,6 +321,7 @@
                                 "rgba(255, 206, 86, 1)",
                                 "rgba(75, 192, 192, 1)",
                             ],
+                            barThickness: 42, //Width of each Bar
 
                         }
                     ]

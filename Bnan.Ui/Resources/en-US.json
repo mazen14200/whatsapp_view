@@ -643,15 +643,35 @@
   "CarStatistics_City": "City",
   "CarStatistics_Rigon": "Rigon",
 
-  "CarStatistics_Type": "Car Statistics By",
+  "CarStatistics_Type": "Statistics By",
   "CarStatistics_ID": "ID",
   "CarStatistics_Name": "Name",
   "CarStatistics_Count": "Count",
   "CarStatistics_Percentage": "Percentage",
 
+  "CarContractStatistics_ContractCount": "Count of Car Contracts",
+
+  "RenterContractStatistics_ContractCount": "Count of Renter Contracts",
+
+  "ContractStatistics_ContractCount": "Contracts Count",
+
+
+
   //RenterStatistics --------
   "RenterStatistics Hint": "This page allows you to display Statistics of Renters",
   "RenterStatistics Data": "Statistics of ٌRenters",
+
+  //ContractStatistics --------
+  "ContractStatistics Hint": "This page allows you to display Statistics of The Contracts",
+  "ContractStatistics Data": "Statistics of ٌThe Contracts",
+
+  //CarContractStatistics --------
+  "CarContractStatistics Hint": "This page allows you to display Statistics of Car Contracts",
+  "CarContractStatistics Data": "Statistics of ٌCar Contracts",
+
+  //RenterContractStatistics --------
+  "RenterContractStatistics Hint": "This page allows you to display Statistics of Renter Contracts",
+  "RenterContractStatistics Data": "Statistics of ٌRenter Contracts",
 
   "RenterStatistics_Nationality": "Nationality",
   "RenterStatistics_MemperShip": "MemperShip",
@@ -661,10 +681,19 @@
   "RenterStatistics_Age": "Age group",
   "RenterStatistics_Traded": "group of traded amounts",
   "RenterStatistics_Dealing_Mechanism": "Dealing Mechanism",
-  "RenterStatistics_Status": "Regestration Status",
+  "RenterStatistics_Status": "Renter Status",
 
   "RenterStatistics_count_Renters": "Renters Count",
   "RenterStatistics_Type": "Renter Statistics By",
+
+  "ContractStatistics_Branch": "Branches",
+  "ContractStatistics_Day_Create": "Day",
+  "ContractStatistics_Time_Create": "Time",
+  "ContractStatistics_Day_Count": "Days",
+  "ContractStatistics_Value_No": "Value",
+  "ContractStatistics_KM": "Kilo Meters",
+  "ContractStatistics_Days": "Days",
+
 
   "FTR_CurrentBalance": "Current Balance",
   "FTR_TotalCreditor": "Total Creditor",

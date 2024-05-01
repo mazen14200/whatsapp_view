@@ -162,10 +162,10 @@
 
 
 
-                    <div class="row" id="second-row-of-charts" style="display:flex;justify-content:0;">
+                <div class="row" id="second-row-of-charts" style="display:flex;justify-content:0;justify-content: space-between;">
 
 
-                        <div class="" style="width:750px;">
+                        <div class="" style="width:550px;">
 
                         <div style="margin-top:20px;">
                             <p class="form-label">@localizer["RenterStatistics_count_Renters"] <span style="margin-inline-start:75px;">@ViewBag.count_Renters</span></p>
@@ -182,22 +182,22 @@
                                         <option id="5" value="5">@localizer["RenterStatistics_Age"]</option>
                                         <option id="6" value="6">@localizer["RenterStatistics_Traded"]</option>
                                         <option id="7" value="7">@localizer["RenterStatistics_Dealing_Mechanism"]</option>
-                                        <option id="8" value="8">@localizer["RenterStatistics_Status"]</option>
+                                        @*<option id="8" value="8">@localizer["RenterStatistics_Status"]</option>*@
                                     </select>                                
                                 </div>
 
-                            <div class="partial" style="width:550px;margin-top:10px;">
-                                <partial name="_PartialDatatable" />
-                            </div>
 
-                           
+                        <div class="partial" style="width:500px;margin-top:10px;">
+                            <partial name="_PartialDatatable" />
                         </div>
 
+                    </div>
 
 
-                        <div class="partial row" style="width:800px;margin-top:85px">
-                            <partial name="_PartialChartData" />
-                        </div>
+
+                    <div class="partial row" style="width:1100px;margin-top:75px">
+                        <partial name="_PartialChartData" />
+                    </div>
 
 
         </div>
@@ -329,7 +329,7 @@
                                 "rgba(255, 206, 86, 1)",
                                 "rgba(75, 192, 192, 1)"
                             ],
-
+                            barThickness: 42, //Width of each Bar
                         }
                     ]
                 },
@@ -387,86 +387,172 @@
 
 
         $(document).ready(function () {
-            // Bar Chart 2
-            //Branch
-            //DrawChart("response");
-            var paymentMethodsBranchData = @Html.Raw(Json.Serialize(Model.ChartBranchDataVM));
-            //console.log(paymentMethodsBranchData);
-            var labelsBranch;
-            if ('@requestCulture?.RequestCulture.UICulture.Name' == "en-US") {
+            var counter_renter = '@ViewBag.count_Renters';
+            if(counter_renter == 0){
+                    // Bar Chart 2
+                    //Branch
+                    //DrawChart("response");
+                    var paymentMethodsBranchData = @Html.Raw(Json.Serialize(Model.ChartBranchDataVM));
+                    //console.log(paymentMethodsBranchData);
+                    var labelsBranch;
+                    if ('@requestCulture?.RequestCulture.UICulture.Name' == "en-US") {
 
-                labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
-                    return paymentMethod.enName;
-                });
-            }
-            else {
-                labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
-                    return paymentMethod.arName;
-                });
-            }
-
-
-            var data = paymentMethodsBranchData.map(function (paymentMethod) {
-                return paymentMethod.value;
-            });
-
-            var barChart2 = document.getElementById("barChart2").getContext("2d");
-            var myChart = new Chart(barChart2, {
-                type: "bar",
-                data: {
-                    labels: labelsBranch,
-                    datasets: [
-                        {
-                            data: data,
-                            backgroundColor: [
-                                "rgba(255, 99, 132, 1)",
-                                "rgba(54, 162, 235, 1)",
-                                "rgba(255, 206, 86, 1)",
-                                "rgba(75, 192, 192, 1)",
-                                "rgba(75, 110, 192, 1)",
-                                "rgba(153, 102, 255, 1)",
-                                "rgba(255, 99, 132, 1)",
-                                "rgba(54, 162, 235, 1)",
-                                "rgba(255, 206, 86, 1)",
-                                "rgba(75, 192, 192, 1)"
-                            ],
-
-                        }
-                    ]
-                },
-                options: {
-                    plugins: {
-
-                        legend: {
-                            display: false
-                        }
-
-                    },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            ticks: {
-                                font: {
-                                    family: 'Cairo, sans-serif', // Change the font family
-                                    size: 16,
-                                    // Change the font size
-                                }
-                            }
-                        },
-                        y: {
-                            beginAtZero: true,                      
-                            ticks: {
-                                font: {
-                                    family: 'Cairo, sans-serif', // Change the font family
-                                    size: 16,
-                                    // Change the font size
-                                }
-                            }
-                        }
-
+                        labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
+                            return paymentMethod.enName;
+                        });
                     }
-                }
-            });
+                    else {
+                        labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
+                            return paymentMethod.arName;
+                        });
+                    }
+
+
+                    var data = paymentMethodsBranchData.map(function (paymentMethod) {
+                        return paymentMethod.value;
+                    });
+
+                    var barChart2 = document.getElementById("barChart2").getContext("2d");
+                    var myChart = new Chart(barChart2, {
+                        type: "bar",
+                        data: {
+                            labels: labelsBranch,
+                            datasets: [
+                                {
+                                    data: data,
+                                    backgroundColor: [
+                                        "rgba(255, 99, 132, 1)",
+                                        "rgba(54, 162, 235, 1)",
+                                        "rgba(255, 206, 86, 1)",
+                                        "rgba(75, 192, 192, 1)",
+                                        "rgba(75, 110, 192, 1)",
+                                        "rgba(153, 102, 255, 1)",
+                                        "rgba(255, 99, 132, 1)",
+                                        "rgba(54, 162, 235, 1)",
+                                        "rgba(255, 206, 86, 1)",
+                                        "rgba(75, 192, 192, 1)"
+                                    ],
+                                    barThickness: 82, //Width of each Bar
+                                }
+                            ]
+                        },
+                        options: {
+                            plugins: {
+
+                                legend: {
+                                    display: false
+                                }
+
+                            },
+                            scales: {
+                                x: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        font: {
+                                            family: 'Cairo, sans-serif', // Change the font family
+                                            size: 16,
+                                            // Change the font size
+                                        }
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        font: {
+                                            family: 'Cairo, sans-serif', // Change the font family
+                                            size: 16,
+                                            // Change the font size
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    });
+            }
+            else{
+                    // Bar Chart 2
+                    //Branch
+                    //DrawChart("response");
+                    var paymentMethodsBranchData = @Html.Raw(Json.Serialize(Model.ChartBranchDataVM));
+                    //console.log(paymentMethodsBranchData);
+                    var labelsBranch;
+                    if ('@requestCulture?.RequestCulture.UICulture.Name' == "en-US") {
+
+                        labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
+                            return paymentMethod.enName;
+                        });
+                    }
+                    else {
+                        labelsBranch = paymentMethodsBranchData.map(function (paymentMethod) {
+                            return paymentMethod.arName;
+                        });
+                    }
+
+
+                    var data = paymentMethodsBranchData.map(function (paymentMethod) {
+                        return paymentMethod.value;
+                    });
+
+                    var barChart2 = document.getElementById("barChart2").getContext("2d");
+                    var myChart = new Chart(barChart2, {
+                        type: "bar",
+                        data: {
+                            labels: labelsBranch,
+                            datasets: [
+                                {
+                                    data: data,
+                                    backgroundColor: [
+                                        "rgba(255, 99, 132, 1)",
+                                        "rgba(54, 162, 235, 1)",
+                                        "rgba(255, 206, 86, 1)",
+                                        "rgba(75, 192, 192, 1)",
+                                        "rgba(75, 110, 192, 1)",
+                                        "rgba(153, 102, 255, 1)",
+                                        "rgba(255, 99, 132, 1)",
+                                        "rgba(54, 162, 235, 1)",
+                                        "rgba(255, 206, 86, 1)",
+                                        "rgba(75, 192, 192, 1)"
+                                    ],
+                                    barThickness: 42, //Width of each Bar
+                                }
+                            ]
+                        },
+                        options: {
+                            plugins: {
+
+                                legend: {
+                                    display: false
+                                }
+
+                            },
+                            scales: {
+                                x: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        font: {
+                                            family: 'Cairo, sans-serif', // Change the font family
+                                            size: 16,
+                                            // Change the font size
+                                        }
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        font: {
+                                            family: 'Cairo, sans-serif', // Change the font family
+                                            size: 16,
+                                            // Change the font size
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    });
+            }
+            
 
         });
 
@@ -522,7 +608,7 @@
         const usingArrayFrom = Array.from(string);
         //console.log(usingArrayFrom);
 
-        var list_dropdown = ['0','1','2','3','4','5','6','7','8'];
+        var list_dropdown = ['0','1','2','3','4','5','6','7'];
 
         list_dropdown.forEach(myFunction_hide);
 

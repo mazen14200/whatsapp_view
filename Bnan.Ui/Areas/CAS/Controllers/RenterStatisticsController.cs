@@ -189,6 +189,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllByType(string Type ,string listDrop ,string singleNo)
         {
+            if (listDrop == "" || listDrop == null)
+            {
+                return RedirectToAction("FailedMessageReport_NoData");
+            }
             //sidebar Active
             ViewBag.id = "#sidebarReport";
             ViewBag.no = "13";
@@ -479,6 +483,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
             List<ChartBranchDataVM> chartBranchDataVMs_2 = new List<ChartBranchDataVM>(chartBranchDataVMs);
             int counter_For_max_Colomn = 0;
+
             foreach (var branch_1 in chartBranchDataVMs_2)
             {
                 counter_For_max_Colomn++;
@@ -490,10 +495,14 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
                     branch_1.IsTrue = false;
                 }
-                if ((int)branch_1.Value <= max1 * (Static_Percentage_rate + (double)Type_Avarage_percentage) || (int)branch_1.Value <= max1 * (double)Type_Avarage_percentage)
+                if (chartBranchDataVMs_2.Count() > 5)
                 {
-                    branch_1.IsTrue = false;
+                    if ((int)branch_1.Value <= max1 * (Static_Percentage_rate + (double)Type_Avarage_percentage) || (int)branch_1.Value <= max1 * (double)Type_Avarage_percentage)
+                    {
+                        branch_1.IsTrue = false;
+                    }
                 }
+
             }
             foreach (var branch_1 in chartBranchDataVMs_2)
             {

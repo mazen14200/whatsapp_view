@@ -143,7 +143,7 @@ switch (type)
 
     <div class="col-sm-12 scroll">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable2" class="table table-bordered dt-responsive nowrap w-100  no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable2_info" style="position: relative; width: 1166px; ">
 
             <div>
                 <tr role="row">
@@ -182,7 +182,7 @@ switch (type)
                     @{
                         var percentage = (double)item.Value/(double)CarsCount *100;
                     }
-                    <td style="text-align:center">@percentage.ToString("N1",CultureInfo.InvariantCulture) %</td>
+                    <td style="text-align:center">@percentage.ToString("N2",CultureInfo.InvariantCulture) %</td>
 
 
 
@@ -202,7 +202,7 @@ else
 {
     <div class="col-sm-12 scroll ">
         @* For-scrolling *@
-        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable_info" style="position: relative; width: 1166px; ">
+        <table id="basic-datatable2" class="table table-bordered dt-responsive nowrap w-100  no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable2_info" style="position: relative; width: 1166px; ">
             <div >
                 <tr role="row">
                 <th class="scroll_1" id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
@@ -244,7 +244,7 @@ else
                     @{
                         var percentage = (double)item.Value/(double)CarsCount *100;
                     }
-                    <td style="text-align:center">@percentage.ToString("N1",CultureInfo.InvariantCulture) %</td>
+                    <td style="text-align:center">@percentage.ToString("N2",CultureInfo.InvariantCulture) %</td>
 
 
 

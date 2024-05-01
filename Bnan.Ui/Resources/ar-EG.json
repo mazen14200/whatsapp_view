@@ -656,15 +656,33 @@
   "CarStatistics_City": "المدينة",
   "CarStatistics_Rigon": "المنطقة",
 
-  "CarStatistics_Type": "توزيع السيارات حسب",
+  //"CarStatistics_Type": "توزيع السيارات حسب",
+  "CarStatistics_Type": "المؤشر الإحصائي حسب",
   "CarStatistics_ID": "المعرف",
   "CarStatistics_Name": "الأسم",
   "CarStatistics_Count": "العدد",
   "CarStatistics_Percentage": "النسبة",
 
+  "CarContractStatistics_ContractCount": "عدد عقود السيارات",
+
+  "RenterContractStatistics_ContractCount": "عدد عقود المستأجرين",
+
+  "ContractStatistics_ContractCount": "عدد العقود",
   //RenterStatistics --------
   "RenterStatistics Hint": "تمكنك الصفحة من الإطلاع على المؤشرات الإحصائية للمستأجرين",
   "RenterStatistics Data": "مؤشر إحصائيات المستأجرين",
+
+  //ContractStatistics --------
+  "ContractStatistics Hint": "تمكنك الصفحة من الإطلاع على المؤشرات الإحصائية للعقود",
+  "ContractStatistics Data": "مؤشر إحصائيات العقود",
+
+  //CarContractStatistics --------
+  "CarContractStatistics Hint": "تمكنك الصفحة من الإطلاع على المؤشرات الإحصائية لعقود السيارات",
+  "CarContractStatistics Data": "مؤشر إحصائيات عقود السيارات",
+
+  //RenterContractStatistics --------
+  "RenterContractStatistics Hint": "تمكنك الصفحة من الإطلاع على المؤشرات الإحصائية لعقود المستأجرين",
+  "RenterContractStatistics Data": "مؤشر إحصائيات عقود المستأجرين",
 
   "RenterStatistics_Nationality": "الجنسية",
   "RenterStatistics_MemperShip": "العضوية",
@@ -674,11 +692,19 @@
   "RenterStatistics_Age": "الفئة العمرية",
   "RenterStatistics_Traded": "فئة المبالغ المتداولة",
   "RenterStatistics_Dealing_Mechanism": "ألية التعامل",
-  "RenterStatistics_Status": "حالة التسجيل",
+  "RenterStatistics_Status": "حالة المستأجر",
 
   "RenterStatistics_count_Renters": "عدد المستأجرين",
-  "RenterStatistics_Type": "توزيع المستأجرين حسب",
+  //"RenterStatistics_Type": "توزيع المستأجرين حسب",
+  "RenterStatistics_Type": "المؤشر الإحصائي حسب",
 
+  "ContractStatistics_Branch": "الفروع",
+  "ContractStatistics_Day_Create": "اليوم",
+  "ContractStatistics_Time_Create": "الوقت",
+  "ContractStatistics_Day_Count": "الأيام",
+  "ContractStatistics_Value_No": "القيمة",
+  "ContractStatistics_KM": "المسافة المقطوعة",
+  "ContractStatistics_Days": "الأيام",
 
   "FTR_CurrentBalance": "الرصيد الحالي",
   "FTR_TotalCreditor": "مجموع الدائن",
