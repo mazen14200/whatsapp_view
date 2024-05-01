@@ -1,6 +1,6 @@
 ﻿namespace Bnan.Ui.ViewModels.CAS
 {
-    public class ChartBranchData_model
+    public class ChartBranchDataVM
     {
         public string? Code { get; set; }
         public string? ArName { get; set; }

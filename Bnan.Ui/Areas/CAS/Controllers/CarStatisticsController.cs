@@ -183,11 +183,16 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllByType(string Type ,string listDrop ,string singleNo)
         {
+            if (listDrop == "" || listDrop == null)
+            {
+                return RedirectToAction("FailedMessageReport_NoData");
+            }
             //sidebar Active
             ViewBag.id = "#sidebarReport";
             ViewBag.no = "12";
             ViewBag.concate_DropDown = listDrop;
             ViewBag.singleType = singleNo;
+
 
 
             var (mainTask, subTask, system, currentCar) = await SetTrace("205", "2205013", "2");
@@ -338,12 +343,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
 
                     if (single.CrCasCarInformationStatus == "H" || single.CrCasCarInformationOwnerStatus == "H" || single.CrCasCarInformationBranchStatus == "H" )
                     {
-                        chartBranchDataVM_All.ArName = "موقوف";
+                        chartBranchDataVM_All.ArName = "موقوفة";
                         chartBranchDataVM_All.EnName = "Hold";
                     }
                     else if (single.CrCasCarInformationStatus == "A" && single.CrCasCarInformationForSaleStatus == "A" && single.CrCasCarInformationOwnerStatus == "A" && single.CrCasCarInformationBranchStatus == "A" && single.CrCasCarInformationPriceStatus == true)
                     {
-                        chartBranchDataVM_All.ArName = "نشط";
+                        chartBranchDataVM_All.ArName = "نشطة";
                         chartBranchDataVM_All.EnName = "Active";
                     }
                     else if (single.CrCasCarInformationStatus == "A" && (single.CrCasCarInformationForSaleStatus == "T" || single.CrCasCarInformationForSaleStatus == "V"))
@@ -423,11 +428,15 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
                     branch_1.IsTrue = false;
                 }
-                if ((int)branch_1.Value <= max1 * (Static_Percentage_rate + (double)Type_Avarage_percentage) || (int)branch_1.Value <= max1 * (double)Type_Avarage_percentage)
+                if (chartBranchDataVMs_2.Count() > 5)
                 {
-                    branch_1.IsTrue = false;
-                }
+                    if ((int)branch_1.Value <= max1 * (Static_Percentage_rate + (double)Type_Avarage_percentage) || (int)branch_1.Value <= max1 * (double)Type_Avarage_percentage)
+                    {
+                        branch_1.IsTrue = false;
+                    }
+                } 
             }
+            
             foreach (var branch_1 in chartBranchDataVMs_2)
             {
                 if (branch_1.IsTrue == false)
@@ -449,6 +458,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             casStatisticLayoutVM.ChartBranchDataVM = chartBranchDataVMs;
             //casStatisticLayoutVM.ChartBranchDataVM_2ForAll = chartBranchDataVMs_2;
             casStatisticLayoutVM.ChartBranchDataVM_2ForAll = chartBranchDataVMs;
+            var count_bar = 0;
+            count_bar = chartBranchDataVMs.Count();
+            var WidthChart = (count_bar * 50) + 200;
+            ViewBag.WidthChart = WidthChart;
+            ViewBag.Width_bar = WidthChart / count_bar ;
 
             return View(casStatisticLayoutVM);
         }

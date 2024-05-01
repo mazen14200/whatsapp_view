@@ -17,8 +17,8 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    ViewData["Page-title"] = @localizer["RenterStatistics Data"];
-    ViewData["Page-Hint"] = @localizer["RenterStatistics Hint"];
+    ViewData["Page-title"] = @localizer["ContractStatistics Data"];
+    ViewData["Page-Hint"] = @localizer["ContractStatistics Hint"];
 }
     
 
@@ -146,6 +146,11 @@
             background-size: 100% 50%;
             background-repeat: no-repeat;
         }
+
+        #Date_cusor1, #Date_cusor2 {
+            margin-right: 13px;
+            direction: rtl;
+        }
     </style>
 
     }
@@ -179,8 +184,14 @@
             background-size: 100% 50%;
             background-repeat: no-repeat;
         }
+
+        #Date_cusor1, #Date_cusor2 {
+            margin-left: 13px;
+            direction: ltr;
+        }
     </style>
     }
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -213,26 +224,66 @@
                     <div class="" style="width:550px;">
 
             <div style="margin-top:20px;">
-                <p class="form-label">@localizer["RenterStatistics_count_Renters"] <span style="margin-inline-start:75px;">@ViewBag.count_Renters</span></p>
+                                @if (requestCulture.RequestCulture.UICulture.Name == "en-US")
+                                {
+                                    <p class="form-label">@localizer["ContractStatistics_ContractCount"] <span style="margin-inline-start:45px;">@ViewBag.count_Renters</span></p>
+
+                                }
+                                else
+                                {
+                                    <p class="form-label">@localizer["ContractStatistics_ContractCount"] <span style="margin-inline-start:97px;">@ViewBag.count_Renters</span></p>
+
+                                }
             </div>
 
-                    <div class="Branch" style="display:flex;gap:10px;">
-                        <label for="brunch_name" style="padding-top:8px;width:160px;">@localizer["RenterStatistics_Type"]</label>
+
+                    <div class="Branch" style="display:flex;gap:10px;margin-top:10px">
+                        <label for="brunch_name" style="padding-top:8px;width:160px;">@localizer["CarStatistics_Type"]</label>
                         <select class="text-right form-select" id="SelectedType" onchange="getSelectedType(this)"  style="width:150px;">
-                                    <option id="0" selected="selected" value="0">@localizer["RenterStatistics_Nationality"]</option>
-                            <option id="1" value="1">@localizer["RenterStatistics_MemperShip"]</option>
-                            <option id="2" value="2">@localizer["RenterStatistics_profession"]</option>
-                            <option id="3" value="3">@localizer["RenterStatistics_Rigon"]</option>
-                            <option id="4" value="4">@localizer["RenterStatistics_City"]</option>
-                            <option id="5" value="5">@localizer["RenterStatistics_Age"]</option>
-                            <option id="6" value="6">@localizer["RenterStatistics_Traded"]</option>
-                            <option id="7" value="7">@localizer["RenterStatistics_Dealing_Mechanism"]</option>
-                            @*<option id="8" value="8">@localizer["RenterStatistics_Status"]</option>*@
-                        </select>                                
+                            <option id="0" selected="selected" value="0">@localizer["ContractStatistics_Branch"]</option>
+                            <option id="1" value="1">@localizer["ContractStatistics_Day_Create"]</option>
+                            <option id="2" value="2">@localizer["ContractStatistics_Time_Create"]</option>
+                            <option id="3" value="3">@localizer["ContractStatistics_Day_Count"]</option>
+                            <option id="4" value="4">@localizer["ContractStatistics_Value_No"]</option>
+                            <option id="5" value="5">@localizer["ContractStatistics_KM"]</option>
+                            @*<option id="6" value="6">@localizer["ContractStatistics_Days"]</option>*@
+                        </select>
                     </div>
 
 
-                    <div class="partial" style="width:500px;margin-top:10px;">
+                <div class="" style="display:flex;gap: 15px;-webkit-flex-item-align:center;height:45px;margin-top:5px">
+
+                    <!-- Autoclose -->
+                    <div style="width:30px;margin-top:7px;">
+                        <label class="form-label " style="">@localizer["StartDate_from"]</label>
+                    </div>
+                    @*<div class="dateRelative" style="width:180px;">
+                    <input type="date" class="form-control dateInput" max="2024-02-15" value="@ViewBag.StartDate" id="startDateInput" />
+                    </div>*@
+                    <div class="dateRelative " style="display:grid;width:220px;height:40px;">
+                        <input type="text" class="form-control " id="startDateInput" name="startDateInput" style="grid-column: 1;grid-row: 1;width:220px;" />
+                        <i class="dripicons-calendar" id="Date_cusor1" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px;"></i>
+                    </div>
+
+                    <!-- Autoclose -->
+                    <div style="width:50px;margin-top:7px;">
+                        <label class="form-label p-0 mt-0">@localizer["EndDate_to"]</label>
+                    </div>
+                    @*                    <div class="dateRelative" style="width:180px;">
+                    <input type="date" class="form-control dateInput" max="2024-02-15" value="@ViewBag.EndDate" id="endDateInput" style="background-color:white" />
+                    </div>*@
+                    <div class="dateRelative " style="display:grid;width:185px;height:40px;">
+                        <input type="text" class="form-control " id="endDateInput" name="endDateInput" style="grid-column: 1;grid-row: 1;width:185px;" />
+                        <i class="dripicons-calendar" id="Date_cusor2" style="cursor:pointer; grid-column: 1;grid-row: 1;  margin-top:10px;"></i>
+                    </div>
+                    <div style="width:50px;">
+                        <a class="btn btn-primary" onclick="GetReportFitlerDate('All')">
+                            <i class="mdi mdi-search-web"></i>
+                        </a>
+                    </div>
+                </div>
+
+                    <div class="partial" style="width:550px;margin-top:10px;">
                         <partial name="_PartialDatatable" />
                     </div>
 
@@ -240,7 +291,7 @@
 
 
 
-                <div class="partial row" style="width:1100px;margin-top:75px">
+                <div class="partial row" style="width:1075px;margin-top:125px">
                     <partial name="_PartialChartData" />
                 </div>
 
@@ -258,12 +309,12 @@
 @section Scripts {
     <!--Charts-->
 
-    <script>
-        function GetAllByType(Type,listDrop,singleNo) {
+        <script>
+            function GetAllByType(Type, listDrop, singleNo, startDate, endDate) {
             //console.log("Mazzen1")
             if (Type != null && Type != "" & Type != undefined) {
                 //console.log("Mazzen2")
-                location.href = '@Url.Action("GetAllByType", "RenterStatistics")?Type=' + Type + '&listDrop=' + listDrop + '&singleNo=' + singleNo;
+                    location.href = '@Url.Action("GetAllByType", "ContractStatistics")?Type=' + Type + '&listDrop=' + listDrop + '&singleNo=' + singleNo + '&startDate=' + startDate + '&endDate=' + endDate;
             }
         }
     </script>
@@ -364,40 +415,41 @@
             var single = selectObject.value; 
             var type = "";  
             switch (single) {
-              case "0":
-                type = "Nationality";
-                break;
-              case "1":
-                type = "MemperShip";
-                break;
-            case "2":
-                type = "profession";
-                break;
-            case "3":
-                type = "Rigon";
-                break;
-            case "4":
-                type = "City";
-                break;
-            case "5":
-                type = "Age";
-                break;
-            case "6":
-                type = "Traded";
-                break;
-            case "7":
-                type = "Dealing_Mechanism";
-                break;
-            case "8":
-                type = "Status";
-                break;
-              default:
-                    type = "Nationality";
+                    case "0":
+                        type = "Branch";
+                        break;
+                    case "1":
+                        type = "Day_Create";
+                        break;
+                    case "2":
+                        type = "Time_Create";
+                        break;
+                    case "3":
+                        type = "Day_Count";
+                        break;
+                    case "4":
+                        type = "Value_No";
+                        break;
+                    case "5":
+                        type = "KM";
+                        break;
+                    case "6":
+                        type = "Days";
+                        break;
+                    default:
+                        type = "Branch";
             }
             var listDrop ="@ViewBag.concate_DropDown";
             console.log(single);
-            GetAllByType(type,listDrop,single);
-        };
+
+            var startDate = $("#startDateInput").val();
+            var endDate = $("#endDateInput").val();
+
+            console.log(startDate)
+            console.log(endDate)
+
+            GetAllByType(type, listDrop, single, startDate, endDate);
+            };
     </script>
 
 
@@ -409,7 +461,7 @@
         const usingArrayFrom = Array.from(string);
         console.log(usingArrayFrom);
 
-        var list_dropdown = ['0','1','2','3','4','5','6','7'];
+        var list_dropdown = ['0','1','2','3','4','5'];
 
         list_dropdown.forEach(myFunction_hide);
 
@@ -429,6 +481,130 @@
 
         });
     </script>
+
+
+        @*Get AccountBank Using filter*@
+        <script>
+            $(document).ready(function () {
+                var today = new Date();
+                var startDate = new Date();
+                var EndDate = new Date();
+                startDate.setDate(today.getDate() - 30);
+
+                var StartformattedDate = new Date('@ViewBag.StartDate');
+
+                var EndformattedDate = new Date('@ViewBag.EndDate');
+
+                var x_date = document.getElementById("startDateInput").value;
+                var First_formattedDate = new Date(x_date);
+
+
+                if (!StartformattedDate || StartformattedDate === "") {
+                    StartformattedDate = today; // Set date to today if it's empty or null
+                }
+                if (!EndformattedDate || EndformattedDate === "") {
+                    EndformattedDate = today; // Set date to today if it's empty or null
+                }
+
+
+
+
+                $("#startDateInput").datepicker({
+                    dateFormat: 'yy/mm/dd',
+                    defaultDate: StartformattedDate, // Set the minimum date to today
+                    maxDate: today,
+                }).datepicker("widget").addClass("datepicker-widget");
+                $("#startDateInput").datepicker("setDate", StartformattedDate);
+                $("#startDateInput").click(function () {
+                    $(this).datepicker("show");
+                });
+
+                var First_formattedDate = $("#startDateInput").val();
+                console.log(First_formattedDate);
+
+
+                $("#endDateInput").datepicker({
+                    dateFormat: 'yy/mm/dd',
+                    defaultDate: EndformattedDate,// Set the minimum date to today
+                    minDate: First_formattedDate,
+                    maxDate: today,
+                }).datepicker("widget").addClass("datepicker-widget");
+                $("#endDateInput").datepicker("setDate", EndformattedDate);
+                $("#endDateInput").click(function () {
+                    $(this).datepicker("show");
+                });
+
+                //on Change StartDate set min of lastDate
+                $('#startDateInput').datepicker().on('change', function (ev) {
+                    var firstDate1 = $(this).val();
+                    //alert(firstDate1);
+                    $('#endDateInput').datepicker('option', {
+                        minDate: new Date(firstDate1)
+                    });
+                });
+
+
+                $("#Date_cusor1").click(function () {
+                    $(this).prevAll('input').datepicker("show");
+                });
+
+                $("#Date_cusor2").click(function () {
+                    $(this).prevAll('input').datepicker("show");
+                });
+
+            });
+        </script>
+
+        <script>
+            //get AccountBank By Status function
+            function GetReportFitlerDate() {
+                var selectObject = document.getElementById("SelectedType");
+                var value = selectObject.value;
+                //var text = e.options[e.selectedIndex].text;
+                var single = selectObject.value;
+                var type = "";
+                switch (single) {
+                    case "0":
+                        type = "Branch";
+                        break;
+                    case "1":
+                        type = "Day_Create";
+                        break;
+                    case "2":
+                        type = "Time_Create";
+                        break;
+                    case "3":
+                        type = "Day_Count";
+                        break;
+                    case "4":
+                        type = "Value_No";
+                        break;
+                    case "5":
+                        type = "KM";
+                        break;
+                    case "6":
+                        type = "Days";
+                        break;
+                    default:
+                        type = "Branch";
+                }
+                var listDrop = "@ViewBag.concate_DropDown";
+                console.log(single);
+
+
+                var startDate = $("#startDateInput").val();
+                var endDate = $("#endDateInput").val();
+
+                console.log(startDate)
+                console.log(endDate)
+
+                GetAllByType(type, listDrop, single, startDate, endDate);
+
+
+            }
+
+
+        </script>
     
 }
 
