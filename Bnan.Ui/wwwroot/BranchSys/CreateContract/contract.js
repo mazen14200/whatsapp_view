@@ -128,20 +128,20 @@ ins.forEach(function (input) {
 		}
 	});
 
-	input.addEventListener('focus', function (e) {
-		if (this === in1) return;
+	//input.addEventListener('focus', function (e) {
+	//	if (this === in1) return;
 
-		if (in1.value == '') {
-			in1.focus();
-		}
-		if (this.previousElementSibling.value == '') {
-			this.previousElementSibling.focus();
-		}
-	});
-	const B = document.querySelector('.check-btn.check');
+	//	if (in1.value == '' ) {
+	//		in1.focus();
+	//	}
+	//	if (this.previousElementSibling.value == '') {
+	//		this.previousElementSibling.focus();
+	//	}
+	//});
+	//const B = document.querySelector('.check-btn.check');
 
 });
-in1.addEventListener('input', splitNumber);
+//in1.addEventListener('input', splitNumber);
 
 
 // // //////////////////////choose-adriver-display////////////////

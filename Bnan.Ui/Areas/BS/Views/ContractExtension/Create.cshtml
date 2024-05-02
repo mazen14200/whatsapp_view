@@ -351,11 +351,11 @@
                                                                 {
                                                                     if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                                                     {
-                                                                        <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
+                                                                        <option value="@payment.CrMasSupAccountPaymentMethodCode" data-ar="@payment.CrMasSupAccountPaymentMethodArName" data-en="@payment.CrMasSupAccountPaymentMethodEnName" class="text-right">@payment.CrMasSupAccountPaymentMethodArName</option>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <option value="@payment.CrMasSupAccountPaymentMethodCode" class="text-left">@payment.CrMasSupAccountPaymentMethodEnName</option>
+                                                                        <option value="@payment.CrMasSupAccountPaymentMethodCode" data-ar="@payment.CrMasSupAccountPaymentMethodArName" data-en="@payment.CrMasSupAccountPaymentMethodEnName" class="text-left">@payment.CrMasSupAccountPaymentMethodEnName</option>
                                                                     }
                                                                 }
                                                             </select>
@@ -836,20 +836,25 @@
             // last in page
             const balanceR = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorAvailableBalance)';
             const balance = parseFloat(balanceR);
-            console.log("balanceR", balanceR)
-            console.log("balance", balance)
-
             var DiscountInput = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicUserDiscountRate)';
             var TaxRateInput = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicTaxRate)';
             var AmountPayedInput = document.getElementById("ExtensionContract_AmountPayed").value;
             const discountRate = parseFloat(DiscountInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const TaxPercent = parseFloat(TaxRateInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
             const AmountRequired = $("#TotalAmount").text().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            var AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if (AmountPayed == "" || AmountPayed == undefined || AmountPayed || NaN) {
+                AmountPayed = "0.00";
+            }
+           
             var selectElement = document.getElementById("ExtensionContract_PaymentMethod");
             var selectedOption = selectElement.options[selectElement.selectedIndex];
             // Get the text of the selected option
-            const selectedText = selectedOption.textContent || selectedOption.innerText;
+            var selectedText = selectedOption.textContent || selectedOption.innerText;
+            if (selectedText == "" || selectedText == undefined || selectedText || NaN) {
+                selectedText = "";
+            }
             //get Data Director lessor and branch and get renter and user
             var userName = decodeHTMLEntities("@user.CrMasUserInformationArName");
             var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorArName");
@@ -1003,8 +1008,6 @@
 
             return yHeight + 88; // Update yHeight for the next item
         }
-
-
         // Function to send an image and En PDF to WhatsApp
         const sendEnInvoiceToWhatsApp = async () => {
             const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageEnInitialInvoice";
@@ -1035,20 +1038,25 @@
             // last in page
             const balanceR = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorAvailableBalance)';
             const balance = parseFloat(balanceR);
-            console.log("balanceR", balanceR)
-            console.log("balance", balance)
-
             var DiscountInput = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicUserDiscountRate)';
             var TaxRateInput = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasicTaxRate)';
             var AmountPayedInput = document.getElementById("ExtensionContract_AmountPayed").value;
             const discountRate = parseFloat(DiscountInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const TaxPercent = parseFloat(TaxRateInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const AmountRequired = $("#TotalAmount").text().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            var AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if (AmountPayed == "" || AmountPayed == undefined || AmountPayed || NaN) {
+                AmountPayed = "0.00";
+            }
+
             var selectElement = document.getElementById("ExtensionContract_PaymentMethod");
             var selectedOption = selectElement.options[selectElement.selectedIndex];
             // Get the text of the selected option
-            const selectedText = selectedOption.textContent || selectedOption.innerText;
+            var selectedText = selectedOption.textContent || selectedOption.innerText;
+            if (selectedText == "" || selectedText == undefined || selectedText || NaN) {
+                selectedText = "";
+            }
             //get Data Director lessor and branch and get renter and user
             var userName = decodeHTMLEntities("@user.CrMasUserInformationEnName");
             var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorEnName");
@@ -1205,12 +1213,6 @@
 
             return yHeight + 88; // Update yHeight for the next item
         }
-
-
-
-
-
-
         function calculateTotalAmountPerDay(rent, feature, privateDriver, choices, days) {
             var daysNo = parseInt(days);
             var total = (rent * daysNo) + (feature * daysNo) + (privateDriver * daysNo) + (choices * daysNo);
@@ -1222,17 +1224,235 @@
             return totalDiscount;
         }
 
+        const sendArReceiptToWhatsApp = async () => {
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArExternalCatchReceipt";
+            const imagePath = imageLessor.replace('~', '');
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
+            const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
+            const mobileNo = '@user.CrMasUserInformationMobileNo';     // Assuming this variable contains the mobile number.
+            const phoneNumber = callingKey + mobileNo;
+            //Data Receipt
+            // Gregorian (Miladi) Date
+            const miladiDate = new Date();
+            const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).split('/').join('/');
+
+            // Hijri Date
+            // const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+            const hijriDateString = formatHijriDate(miladiDate);
+
+            // First In Page
+            const contractNo = "@ViewBag.ContractNo";
+            const accountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const RenterName = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationArName)';
+
+            var selectElement = document.getElementById("ExtensionContract_PaymentMethod");
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            // Get the text of the selected option
+            const selectedText = selectedOption.textContent || selectedOption.innerText;
+            var selectedArabicName = selectedOption.dataset.ar;
+            //get Data Director lessor and branch and get renter and user
+            var userName = decodeHTMLEntities("@user.CrMasUserInformationArName");
+            var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorArName");
+            var directorOfBranch = decodeHTMLEntities("@Model.CrCasBranchInformation.CrCasBranchInformationDirectorArName");
+            var reasonPayment = document.getElementById("reasons").value;
+            var AmountPayedInput = document.getElementById("ExtensionContract_AmountPayed").value;
+            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Signture Image
+            var signture = "@user.CrMasUserInformationSignature";
+            const signturePath = signture.replace('~', '');
+            var signatureImg = new Image();
+            signatureImg.src = signturePath;
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            // Get Image And Text On
+            // Read the image file as a Blob
+            const responseImage = await fetch(imagePath);
+            const blob = await responseImage.blob();
+            // Prepare form data
+            const formData = new FormData();
+            formData.append("number", phoneNumber); // Append the recipient's phone number
+            formData.append("message", " "); // Append the message
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                ctx.drawImage(img, 0, 0);
+                ctx.font = "bold 35px serif";
+                ctx.textAlign = "right";
+                ctx.fillStyle = "black";
+                ctx.fillText(hijriDateString, canvas.width - 260, 712);
+                ctx.fillText(miladiDateString, canvas.width - 250, 646);
+
+                ctx.font = "bold 50px serif";
+
+
+                ctx.fillText(accountReceiptNo, canvas.width - 1840, 620);
+
+
+
+                let cleanedValueString = AmountPayed.replace(/,/g, "");
+
+                // Split the cleaned string by the decimal point
+                let parts = cleanedValueString.split('.');
+
+                // Extract the number before the decimal point
+                let beforeDecimal = parts[0];
+
+                // Extract the number after the decimal point
+                let afterDecimal = parts.length > 1 ? parts[1] : "0";
+
+                // Convert the extracted strings back to integers if needed
+                let beforeDecimalNumber = parseInt(beforeDecimal);
+                let afterDecimalNumber = parseInt(afterDecimal);
+                // Assuming `ctx` is your canvas context
+                ctx.fillText(afterDecimalNumber, canvas.width - 1925, 720);
+                ctx.fillText(beforeDecimalNumber, canvas.width - 2030, 720);
+
+                ctx.fillText(RenterName, canvas.width - 530, 912);
+                ctx.fillText(AmountPayed, canvas.width - 400, 1040);
+                ctx.fillText(selectedArabicName, canvas.width - 415, 1165);
+
+                // //Total
+                ctx.fillText("تمديد عقد", canvas.width - 390, 1305);
+
+                ctx.font = "bold 40px serif";
+                ctx.fillText(directorOfLessor, canvas.width - 320, 1550);
+                ctx.drawImage(signatureImg, canvas.width - 1380, 1620, 200, 100);
+                ctx.fillText(userName, canvas.width - 1130, 1550);
+                ctx.fillText(directorOfBranch, canvas.width - 310, 1685);
+
+
+                canvas.toBlob(async function (blob) {
+                    formData.append("file", blob, "Ar_Catch_Receipt.png"); // Append the modified image blob with a filename
+                    var message = ` عزيزي / ${RenterName} , يمكنك مراجعة سند القبض عن طريق تحميل الملف المرفق `
+                    createPdfAndSendToWhatsApp(accountReceiptNo, null, phoneNumber, token, blob, message, "SavePdfArReceipt", "ar");
+                }, 'image/png');
+            };
+            img.src = URL.createObjectURL(blob);
+        };
+
+        const sendEnReceiptToWhatsApp = async () => {
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageEnExternalCatchReceipt";
+            const imagePath = imageLessor.replace('~', '');
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJKYXNlcjExIiwic2VyaWFsIjoiMTk5ZmUzYjFlYjc2MjNlIiwiaWF0IjoxNzA3NzMxNjI4LCJleHAiOjE3OTQxMzE2Mjh9.O_4RW4vYAays1ZL7D-OlOQh6C5P5xVYrT3pZ2Oi9Yak"; // Your WhatsApp API token
+            const callingKey = '@user.CrMasUserInformationCallingKey'; // Assuming this variable contains the calling key.
+            const mobileNo = '@user.CrMasUserInformationMobileNo';     // Assuming this variable contains the mobile number.
+            const phoneNumber = callingKey + mobileNo;
+            //Data Receipt
+            // Gregorian (Miladi) Date
+            const miladiDate = new Date();
+            const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).split('/').join('/');
+            console.log("miladiDateString", miladiDateString)
+
+            // Hijri Date
+            // const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+            const hijriDateString = formatHijriEnDate(miladiDate);
+
+            // First In Page
+            const contractNo = "@ViewBag.ContractNo";
+            const accountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const RenterName = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName)';
+
+            var selectElement = document.getElementById("ExtensionContract_PaymentMethod");
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            // Get the text of the selected option
+            const selectedText = selectedOption.textContent || selectedOption.innerText;
+            var selectedArabicName = selectedOption.dataset.en;
+            //get Data Director lessor and branch and get renter and user
+            var userName = decodeHTMLEntities("@user.CrMasUserInformationEnName");
+            var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorEnName");
+            var directorOfBranch = decodeHTMLEntities("@Model.CrCasBranchInformation.CrCasBranchInformationDirectorEnName");
+            var reasonPayment = document.getElementById("reasons").value;
+            var AmountPayedInput = document.getElementById("ExtensionContract_AmountPayed").value;
+            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Signture Image
+            var signture = "@user.CrMasUserInformationSignature";
+            const signturePath = signture.replace('~', '');
+            var signatureImg = new Image();
+            signatureImg.src = signturePath;
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            // Get Image And Text On
+            // Read the image file as a Blob
+            const responseImage = await fetch(imagePath);
+            const blob = await responseImage.blob();
+            // Prepare form data
+            const formData = new FormData();
+            formData.append("number", phoneNumber); // Append the recipient's phone number
+            formData.append("message", " "); // Append the message
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                ctx.font = "bold 35px serif";
+                ctx.textAlign = "left";
+                ctx.fillStyle = "black";
+                ctx.fillText(hijriDateString, canvas.width - 2250, 700);
+                ctx.fillText(miladiDateString, canvas.width - 2270, 630);
+                ctx.font = "bold 50px serif";
+                ctx.fillText(accountReceiptNo, canvas.width - 620, 625);
+                let cleanedValueString = AmountPayed.replace(/,/g, "");
+                // Split the cleaned string by the decimal point
+                let parts = cleanedValueString.split('.');
+                // Extract the number before the decimal point
+                let beforeDecimal = parts[0];
+                // Extract the number after the decimal point
+                let afterDecimal = parts.length > 1 ? parts[1] : "0";
+                // Convert the extracted strings back to integers if needed
+                let beforeDecimalNumber = parseInt(beforeDecimal);
+                let afterDecimalNumber = parseInt(afterDecimal);
+                // Assuming `ctx` is your canvas context
+                ctx.fillText(beforeDecimalNumber, canvas.width - 450, 720);
+                ctx.fillText(afterDecimalNumber, canvas.width - 270, 720);
+
+                ctx.fillText(RenterName, canvas.width - 2050, 900);
+                ctx.fillText(AmountPayed, canvas.width - 2100, 1030);
+                ctx.fillText(selectedArabicName, canvas.width - 2000, 1160);
+
+                // //Total
+                ctx.fillText("Extension Contract", canvas.width - 2250, 1290);
+
+                ctx.font = "bold 40px serif";
+                ctx.fillText(directorOfLessor, canvas.width - 1990, 1525);
+                ctx.drawImage(signatureImg, canvas.width - 1360, 1580, 200, 100);
+                ctx.fillText(userName, canvas.width - 1300, 1525);
+                ctx.fillText(directorOfBranch, canvas.width - 2020, 1655);
+
+
+                canvas.toBlob(async function (blob) {
+                    formData.append("file", blob, "En_Catch_Receipt.png"); // Append the modified image blob with a filename
+                    var message = `Dear / ${RenterName}, you can review the catch receipt by downloading the attached file.`
+                    createPdfAndSendToWhatsApp(accountReceiptNo, null, phoneNumber, token, blob, message, "SavePdfEnReceipt", "en");
+                }, 'image/png');
+            };
+            img.src = URL.createObjectURL(blob);
+        };
+
         // submit Form
         document.addEventListener('DOMContentLoaded', function () {
             // Get the form element
             var form = document.getElementById('msform');
-
             // Get the submit button
             var submitButton = document.getElementById('submitForm');
-
             // Add a click event listener to the submit button
             submitButton.addEventListener('click', function (event) {
                 // Prevent the default form submission
+                var AmountPayed = document.getElementById("ExtensionContract_AmountPayed").value;
+
                 event.preventDefault();
 
                 // Check if the form is valid and something is not okay
@@ -1244,9 +1464,13 @@
                         sendStaticImageToWhatsApp();
                         sendArInvoiceToWhatsApp();
                         sendEnInvoiceToWhatsApp();
-                        // setTimeout(function () {
-                        //     form.submit();
-                        // }, 5000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
+                        if (parseFloat(AmountPayed) > 0) {
+                            sendArReceiptToWhatsApp();
+                            sendEnReceiptToWhatsApp();
+                        }
+                        setTimeout(function () {
+                            form.submit();
+                        }, 10000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();

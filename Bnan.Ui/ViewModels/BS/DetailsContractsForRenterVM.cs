@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Bnan.Core.Models;
 
-namespace Bnan.Core.Models
+namespace Bnan.Ui.ViewModels.BS
 {
-    public partial class CrCasRenterContractBasic
+    public class DetailsContractsForRenterVM
     {
         public string CrCasRenterContractBasicNo { get; set; } = null!;
         public int CrCasRenterContractBasicCopy { get; set; }
@@ -90,6 +89,8 @@ namespace Bnan.Core.Models
         public string? CrCasRenterContractBasicUserInsert { get; set; }
         public string? CrCasRenterContractBasicStatus { get; set; }
         public string? CrCasRenterContractBasicReasons { get; set; }
+        public string? InvoiceArReceipt { get; set; }
+        public string? InvoiceEnReceipt { get; set; }
         public virtual CrCasBranchInformation? CrCasRenterContractBasic1 { get; set; }
         public virtual CrCasRenterLessor? CrCasRenterContractBasic2 { get; set; }
         public virtual CrCasOwner? CrCasRenterContractBasic3 { get; set; }

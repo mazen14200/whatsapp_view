@@ -2653,7 +2653,7 @@ else
         var interval3;
         function TimerFunctionAddDriver(reset) {
             if (reset || !interval3) {
-                if (interval) {
+                if (interval3) {
                     clearInterval(interval3);
                 }
 
@@ -4191,12 +4191,19 @@ else
             const discountRate = parseFloat(DiscountInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const TaxPercent = parseFloat(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const AmountRequired = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            var AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if (AmountPayed == "" || AmountPayed == undefined || AmountPayed || NaN) {
+                AmountPayed = "0.00";
+            }
             var selectElement = document.getElementById("Contract_PaymentMethod");
             var selectedOption = selectElement.options[selectElement.selectedIndex];
             // Get the text of the selected option
-            const selectedText = selectedOption.textContent || selectedOption.innerText;
+            var selectedText = selectedOption.textContent || selectedOption.innerText;
             var selectedArabicName = selectedOption.dataset.ar;
+            if (selectedArabicName == "" || selectedArabicName == undefined || selectedArabicName || NaN) {
+                selectedArabicName = "";
+            }
             //get Data Director lessor and branch and get renter and user
             var userName = decodeHTMLEntities("@user.CrMasUserInformationArName");
             var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorArName");
@@ -4450,12 +4457,18 @@ else
             const discountRate = parseFloat(DiscountInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const TaxPercent = parseFloat(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const AmountRequired = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            var AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if (AmountPayed == "" || AmountPayed == undefined || AmountPayed || NaN) {
+                AmountPayed = "0.00";
+            }
             var selectElement = document.getElementById("Contract_PaymentMethod");
             var selectedOption = selectElement.options[selectElement.selectedIndex];
             // Get the text of the selected option
-            const selectedText = selectedOption.textContent || selectedOption.innerText;
+            var selectedText = selectedOption.textContent || selectedOption.innerText;
             var selectedEnglishName = selectedOption.dataset.en;
+            if (selectedEnglishName == "" || selectedEnglishName == undefined || selectedEnglishName || NaN) {
+                selectedEnglishName = "";
+            }
             //get Data Director lessor and branch and get renter and user
             var userName = decodeHTMLEntities("@user.CrMasUserInformationEnName");
             var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorEnName");
@@ -4746,13 +4759,13 @@ else
                 ctx.font = "bold 35px serif";
                 ctx.textAlign = "right";
                 ctx.fillStyle = "black";
-                ctx.fillText(hijriDateString, canvas.width - 280, 672);
-                ctx.fillText(miladiDateString, canvas.width - 270, 606);
+                ctx.fillText(hijriDateString, canvas.width - 260, 712);
+                ctx.fillText(miladiDateString, canvas.width - 250, 646);
 
                 ctx.font = "bold 50px serif";
-               
 
-                ctx.fillText(accountReceiptNo, canvas.width - 1860, 580);
+
+                ctx.fillText(accountReceiptNo, canvas.width - 1840, 620);
 
 
 
@@ -4771,21 +4784,21 @@ else
                 let beforeDecimalNumber = parseInt(beforeDecimal);
                 let afterDecimalNumber = parseInt(afterDecimal);
                 // Assuming `ctx` is your canvas context
-                ctx.fillText(afterDecimalNumber, canvas.width - 1960, 680);
-                ctx.fillText(beforeDecimalNumber, canvas.width - 2050, 680);
+                ctx.fillText(afterDecimalNumber, canvas.width - 1925, 720);
+                ctx.fillText(beforeDecimalNumber, canvas.width - 2030, 720);
 
-                ctx.fillText(RenterName, canvas.width - 560, 872);
-                ctx.fillText(AmountPayed, canvas.width - 420, 1000);
-                ctx.fillText(selectedArabicName, canvas.width - 435, 1125);
+                ctx.fillText(RenterName, canvas.width - 530, 912);
+                ctx.fillText(AmountPayed, canvas.width - 400, 1040);
+                ctx.fillText(selectedArabicName, canvas.width - 415, 1165);
 
                 // //Total
-                ctx.fillText("انشاء عقد", canvas.width - 400, 1265);
+                ctx.fillText("انشاء عقد", canvas.width - 390, 1305);
 
-
-                ctx.fillText(directorOfLessor, canvas.width - 340, 1510);
-                ctx.drawImage(signatureImg, canvas.width - 1400, 1580, 200, 100);
-                ctx.fillText(userName, canvas.width - 1150, 1510);
-                ctx.fillText(directorOfBranch, canvas.width - 330, 1645);
+                ctx.font = "bold 40px serif";
+                ctx.fillText(directorOfLessor, canvas.width - 320, 1550);
+                ctx.drawImage(signatureImg, canvas.width - 1380, 1620, 200, 100);
+                ctx.fillText(userName, canvas.width - 1130, 1550);
+                ctx.fillText(directorOfBranch, canvas.width - 310, 1685);
 
 
                 canvas.toBlob(async function (blob) {
@@ -4899,7 +4912,7 @@ else
                 // //Total
                 ctx.fillText("Create Contract", canvas.width - 2250, 1290);
 
-
+                ctx.font = "bold 40px serif";
                 ctx.fillText(directorOfLessor, canvas.width - 1990, 1525);
                 ctx.drawImage(signatureImg, canvas.width - 1360, 1580, 200, 100);
                 ctx.fillText(userName, canvas.width - 1300, 1525);
@@ -4955,7 +4968,7 @@ else
                         }
                         // setTimeout(function () {
                         //     form.submit();
-                        // }, 6000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
+                        // }, 10000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();

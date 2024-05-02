@@ -89,10 +89,33 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 return RedirectToAction("Index");
             }
-            var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicRenterId == id && x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation" }).ToList();
+            var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicRenterId == id && x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation" }).Distinct().ToList();
+            var ContractsVM = _mapper.Map<List<DetailsContractsForRenterVM>>(Contracts);
+            foreach (var Contract in ContractsVM)
+            {
+                var invoices = _unitOfWork.CrCasAccountInvoice.FindAll(x => x.CrCasAccountInvoiceReferenceContract == Contract.CrCasRenterContractBasicNo);
+
+                if (invoices.Count() > 0)
+                {
+                    int copyValue = Contract.CrCasRenterContractBasicCopy;
+
+                    if (copyValue >= 1 && copyValue <= invoices.Count())
+                    {
+                        var invoice = invoices.Skip(copyValue).FirstOrDefault(); // Skip the appropriate number of invoices
+                        Contract.InvoiceArReceipt = invoice?.CrCasAccountInvoiceArPdfFile;
+                        Contract.InvoiceEnReceipt = invoice?.CrCasAccountInvoiceEnPdfFile;
+                    }
+                    else
+                    {
+                        var invoice = invoices.FirstOrDefault(); // Default to the first invoice
+                        Contract.InvoiceArReceipt = invoice?.CrCasAccountInvoiceArPdfFile;
+                        Contract.InvoiceEnReceipt = invoice?.CrCasAccountInvoiceEnPdfFile;
+                    }
+                }
+            }
             var bSLayoutVM = await GetBranchesAndLayout();
             bSLayoutVM.Renter = Renter;
-            bSLayoutVM.RenterContracts = Contracts;
+            bSLayoutVM.RenterContracts = ContractsVM;
             return View(bSLayoutVM);
         }
     }

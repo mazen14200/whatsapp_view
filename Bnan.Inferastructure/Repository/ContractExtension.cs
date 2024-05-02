@@ -292,7 +292,7 @@ namespace Bnan.Inferastructure.Repository
             crCasAccountInvoice.CrCasAccountInvoiceLessorCode = LessorCode;
             crCasAccountInvoice.CrCasAccountInvoiceBranchCode = BranchCode;
             crCasAccountInvoice.CrCasAccountInvoiceDate = DateTime.Now;
-            crCasAccountInvoice.CrCasAccountInvoiceType = "11"; // Extension Contract
+            crCasAccountInvoice.CrCasAccountInvoiceType = "308"; // Extension Contract
             crCasAccountInvoice.CrCasAccountInvoiceReferenceContract = ContractNo;
             crCasAccountInvoice.CrCasAccountInvoiceReferenceReceipt = AccountReceiptNo;
             crCasAccountInvoice.CrCasAccountInvoiceUserCode = UserId;

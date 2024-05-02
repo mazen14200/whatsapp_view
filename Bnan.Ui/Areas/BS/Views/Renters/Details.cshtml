@@ -238,7 +238,7 @@
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">@localizer["File"] </th>
-
+                                                                <th scope="col">@localizer["ReceiptPdf"] </th>
                                                                 @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                                                 {
                                                                     <th scope="col" class="text-right">@localizer["Status"]</th>
@@ -248,8 +248,7 @@
                                                                     <th scope="col" class="text-left">@localizer["Status"]</th>
 
                                                                 }
-                                                                <th scope="col">@localizer["ActualContractValue"]</th>
-                                                                <th scope="col">@localizer["FirstContractValue"]</th>
+                                                                <th scope="col">@localizer["ContractValue"]</th>
                                                                 @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                                                 {
                                                                     <th scope="col" class="text-right">@localizer["Car"]</th>
@@ -276,6 +275,16 @@
                                                                         <a href="#">
                                                                             <img src="~/BranchSys/Pages/img/Rectangle 193.png" alt="pdf">
                                                                         </a>
+                                                                    </td>
+                                                                    <td>
+                                                                        @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                                                        {
+                                                                            <a href="@Url.Content(item.InvoiceArReceipt?.ToString())" target="_blank" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="pdf file link"></a>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <a href="@Url.Content(item.InvoiceEnReceipt?.ToString())" target="_blank" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="pdf file link"></a>
+                                                                        }
                                                                     </td>
                                                                     @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                                                     {
@@ -327,9 +336,14 @@
                                                                             }
                                                                         </td>
                                                                     }
-
-                                                                    <td>@item.CrCasRenterContractBasicActualTotal?.ToString("N2", CultureInfo.InvariantCulture)</td>
-                                                                    <td>@item.CrCasRenterContractBasicExpectedTotal?.ToString("N2", CultureInfo.InvariantCulture)</td>
+                                                                    @if (item.CrCasRenterContractBasicStatus==Status.Closed)
+                                                                    {
+                                                                        <td>@item.CrCasRenterContractBasicActualTotal?.ToString("N2", CultureInfo.InvariantCulture)</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>@item.CrCasRenterContractBasicExpectedTotal?.ToString("N2", CultureInfo.InvariantCulture)</td>
+                                                                    }
 
                                                                     @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                                                     {
@@ -345,7 +359,13 @@
                                                                     }
                                                                     <td>@item.CrCasRenterContractBasicExpectedEndDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</td>
                                                                     <td>@item.CrCasRenterContractBasicExpectedStartDate?.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)</td>
-                                                                    <td>@item.CrCasRenterContractBasicNo</td>
+                                                                    <td>
+                                                                        @item.CrCasRenterContractBasicNo
+                                                                        @if (item.CrCasRenterContractBasicCopy > 0)
+                                                                        {
+                                                                            <span class="text-danger">(@item.CrCasRenterContractBasicCopy)</span>
+                                                                        }
+                                                                    </td>
                                                                     <td scope="row">@no</td>
                                                                 </tr>
                                                                 no++;

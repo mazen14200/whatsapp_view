@@ -27,7 +27,7 @@ namespace Bnan.Ui.ViewModels.BS
         //Renter Lessor PAge
         public List<CrCasRenterLessor>? RentersLessor { get; set; }
         public CrCasRenterLessor? Renter { get; set; }
-        public List<CrCasRenterContractBasic>? RenterContracts { get; set; }
+        public List<DetailsContractsForRenterVM>? RenterContracts { get; set; }
         public List<CrMasSysEvaluation>? Evaluations { get; set; }
 
         //Report PAge
