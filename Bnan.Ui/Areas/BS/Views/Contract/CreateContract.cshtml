@@ -1401,11 +1401,11 @@ else
                                             @*                                         <button type="submit" class=" check-btn payment-button">@localizer["Save"]</button>
                                             *@                                        <button type="button" class=" check-btn payment-button"
                                                                                               data-bs-toggle="modal" href="#paymentPopupModal">
-                                                @localizer["Delegation"]
+                                                @localizer["Unifiedcontract"]
                                             </button>
                                             <button type="button" class=" check-btn payment-button"
                                                     data-bs-toggle="modal" href="#signaturePopupModal">
-                                                @localizer["SignatureTenant"]
+                                                @localizer["Shemos"]
                                             </button>
                                         </div>
                                         <div class="button-card">
@@ -4791,8 +4791,9 @@ else
                 ctx.fillText(AmountPayed, canvas.width - 400, 1040);
                 ctx.fillText(selectedArabicName, canvas.width - 415, 1165);
 
-                // //Total
-                ctx.fillText("انشاء عقد", canvas.width - 390, 1305);
+                //
+                var phaseFor = ` ( ${contractNo} ) دفعة تحت الحساب لعقد ايجار السيارة لعقد`;
+                ctx.fillText(phaseFor, canvas.width - 390, 1305);
 
                 ctx.font = "bold 40px serif";
                 ctx.fillText(directorOfLessor, canvas.width - 320, 1550);
@@ -4910,7 +4911,8 @@ else
                 ctx.fillText(selectedArabicName, canvas.width - 2000, 1160);
 
                 // //Total
-                ctx.fillText("Create Contract", canvas.width - 2250, 1290);
+                var phaseFor = `Payment to extend the car rental contract ( ${contractNo} )`;
+                ctx.fillText(phaseFor, canvas.width - 2250, 1290);
 
                 ctx.font = "bold 40px serif";
                 ctx.fillText(directorOfLessor, canvas.width - 1990, 1525);
@@ -4966,9 +4968,9 @@ else
                             sendArReceiptToWhatsApp();
                             sendEnReceiptToWhatsApp();
                         }
-                        // setTimeout(function () {
-                        //     form.submit();
-                        // }, 10000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
+                        setTimeout(function () {
+                            form.submit();
+                        }, 10000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
                     }
                     else {
                         CheckIfCanPayLessThanTotalAmount();

@@ -91,6 +91,8 @@ namespace Bnan.Ui.ViewModels.BS
         public string? CrCasRenterContractBasicReasons { get; set; }
         public string? InvoiceArReceipt { get; set; }
         public string? InvoiceEnReceipt { get; set; }
+        public string? ArReceipt { get; set; }
+        public string? EnReceipt { get; set; }
         public virtual CrCasBranchInformation? CrCasRenterContractBasic1 { get; set; }
         public virtual CrCasRenterLessor? CrCasRenterContractBasic2 { get; set; }
         public virtual CrCasOwner? CrCasRenterContractBasic3 { get; set; }

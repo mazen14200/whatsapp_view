@@ -239,6 +239,7 @@
                                                             <tr>
                                                                 <th scope="col">@localizer["File"] </th>
                                                                 <th scope="col">@localizer["ReceiptPdf"] </th>
+                                                                <th scope="col">@localizer["Invoice"] </th>
                                                                 @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
                                                                 {
                                                                     <th scope="col" class="text-right">@localizer["Status"]</th>
@@ -275,6 +276,23 @@
                                                                         <a href="#">
                                                                             <img src="~/BranchSys/Pages/img/Rectangle 193.png" alt="pdf">
                                                                         </a>
+                                                                    </td>
+                                                                    <td>
+
+                                                                        @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")
+                                                                        {
+                                                                            if (!string.IsNullOrEmpty(item.ArReceipt))
+                                                                            {
+                                                                                <a href="@Url.Content(item.ArReceipt?.ToString())" target="_blank" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="pdf file link"></a>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            if (!string.IsNullOrEmpty(item.EnReceipt))
+                                                                            {
+                                                                                <a href="@Url.Content(item.EnReceipt?.ToString())" target="_blank" class="pdf-link"><img src="/BranchSys/Pages/img/Rectangle 193.png" alt="pdf file link"></a>
+                                                                            }
+                                                                        }
                                                                     </td>
                                                                     <td>
                                                                         @if (requestCulture?.RequestCulture.UICulture.Name == "ar-EG")

@@ -1242,7 +1242,7 @@
             const hijriDateString = formatHijriDate(miladiDate);
 
             // First In Page
-            const contractNo = "@ViewBag.ContractNo";
+            const contractNo = "@Model.ExtensionContract.CrCasRenterContractBasicNo";
             const accountReceiptNo = "@ViewBag.AccountReceiptNo";
             const RenterName = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationArName)';
 
@@ -1320,7 +1320,9 @@
                 ctx.fillText(selectedArabicName, canvas.width - 415, 1165);
 
                 // //Total
-                ctx.fillText("تمديد عقد", canvas.width - 390, 1305);
+                //
+                var phaseFor = ` ${contractNo} دفعة تحت الحساب لتمديد عقد ايجار سيارة لعقد`;
+                ctx.fillText(phaseFor, canvas.width - 390, 1305);
 
                 ctx.font = "bold 40px serif";
                 ctx.fillText(directorOfLessor, canvas.width - 320, 1550);
@@ -1424,7 +1426,8 @@
                 ctx.fillText(selectedArabicName, canvas.width - 2000, 1160);
 
                 // //Total
-                ctx.fillText("Extension Contract", canvas.width - 2250, 1290);
+                var phaseFor = `Payment for the car rental contract (${contractNo})`;
+                ctx.fillText(phaseFor, canvas.width - 2250, 1290);
 
                 ctx.font = "bold 40px serif";
                 ctx.fillText(directorOfLessor, canvas.width - 1990, 1525);

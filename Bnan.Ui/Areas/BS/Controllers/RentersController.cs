@@ -94,11 +94,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
             foreach (var Contract in ContractsVM)
             {
                 var invoices = _unitOfWork.CrCasAccountInvoice.FindAll(x => x.CrCasAccountInvoiceReferenceContract == Contract.CrCasRenterContractBasicNo);
+                var receipts = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptReferenceNo == Contract.CrCasRenterContractBasicNo);
+                int copyValue = Contract.CrCasRenterContractBasicCopy;
 
                 if (invoices.Count() > 0)
                 {
-                    int copyValue = Contract.CrCasRenterContractBasicCopy;
-
                     if (copyValue >= 1 && copyValue <= invoices.Count())
                     {
                         var invoice = invoices.Skip(copyValue).FirstOrDefault(); // Skip the appropriate number of invoices
@@ -110,6 +110,21 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         var invoice = invoices.FirstOrDefault(); // Default to the first invoice
                         Contract.InvoiceArReceipt = invoice?.CrCasAccountInvoiceArPdfFile;
                         Contract.InvoiceEnReceipt = invoice?.CrCasAccountInvoiceEnPdfFile;
+                    }
+                }
+                if (receipts.Count() > 0)
+                {
+                    if (copyValue >= 1 && copyValue <= receipts.Count())
+                    {
+                        var receipt = receipts.Skip(copyValue).FirstOrDefault(); // Skip the appropriate number of invoices
+                        Contract.ArReceipt = receipt?.CrCasAccountReceiptArPdfFile;
+                        Contract.EnReceipt = receipt?.CrCasAccountReceiptEnPdfFile;
+                    }
+                    else
+                    {
+                        var receipt = receipts.FirstOrDefault(); // Default to the first invoice
+                        Contract.ArReceipt = receipt?.CrCasAccountReceiptArPdfFile;
+                        Contract.EnReceipt = receipt?.CrCasAccountReceiptEnPdfFile;
                     }
                 }
             }
