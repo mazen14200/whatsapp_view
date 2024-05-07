@@ -210,8 +210,8 @@ namespace Bnan.Inferastructure.Repository
             }
             return false;
         }
-        public async Task<bool> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo,
-                                                  decimal TotalPayed, string RenterId, string UserId, string PassingType, string Reasons, string SavePdf, string language)
+        public async Task<CrCasAccountReceipt> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo,
+                                                  decimal TotalPayed, string RenterId, string UserId, string PassingType, string Reasons, string SavePdfAr, string SavePdfEn)
         {
             CrCasAccountReceipt crCasAccountReceipt = new CrCasAccountReceipt();
             var User = await _unitOfWork.CrMasUserInformation.FindAsync(x => x.CrMasUserInformationCode == UserId && x.CrMasUserInformationLessor == LessorCode);
@@ -268,13 +268,38 @@ namespace Bnan.Inferastructure.Repository
             crCasAccountReceipt.CrCasAccountReceiptReceipt = 0;
             crCasAccountReceipt.CrCasAccountReceiptIsPassing = PassingType;
             crCasAccountReceipt.CrCasAccountReceiptReasons = Reasons;
-            if (!string.IsNullOrEmpty(language))
-            {
-                if (language == "ar") crCasAccountReceipt.CrCasAccountReceiptArPdfFile = SavePdf;
-                else crCasAccountReceipt.CrCasAccountReceiptEnPdfFile = SavePdf;
-            }
+            crCasAccountReceipt.CrCasAccountReceiptArPdfFile = SavePdfAr;
+            crCasAccountReceipt.CrCasAccountReceiptEnPdfFile = SavePdfEn;
 
-            if (await _unitOfWork.CrCasAccountReceipt.AddAsync(crCasAccountReceipt) != null) return true;
+            if (await _unitOfWork.CrCasAccountReceipt.AddAsync(crCasAccountReceipt) != null) return crCasAccountReceipt;
+            return null;
+        }
+
+        public async Task<bool> AddAccountInvoice(string ContractNo, string RenterId, string LessorCode, string BranchCode, string UserId, string AccountReceiptNo, string pdfPathAr, string pdfPathEn)
+        {
+            CrCasAccountInvoice crCasAccountInvoice = new CrCasAccountInvoice();
+            var Renter = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == RenterId && x.CrCasRenterLessorCode == LessorCode);
+
+            //Get ContractCode
+            DateTime now = DateTime.Now;
+            var y = now.ToString("yy");
+            var sector = Renter.CrCasRenterLessorSector;
+            var autoinc = GetAccountInvoice(LessorCode, BranchCode).CrCasAccountInvoiceNo;
+            var AccountInvoiceNo = y + "-" + sector + "308" + "-" + LessorCode + BranchCode + "-" + autoinc;
+
+            crCasAccountInvoice.CrCasAccountInvoiceNo = AccountInvoiceNo;
+            crCasAccountInvoice.CrCasAccountInvoiceYear = y;
+            crCasAccountInvoice.CrCasAccountInvoiceLessorCode = LessorCode;
+            crCasAccountInvoice.CrCasAccountInvoiceBranchCode = BranchCode;
+            crCasAccountInvoice.CrCasAccountInvoiceDate = DateTime.Now;
+            crCasAccountInvoice.CrCasAccountInvoiceType = "308"; // Extension Contract
+            crCasAccountInvoice.CrCasAccountInvoiceReferenceContract = ContractNo;
+            crCasAccountInvoice.CrCasAccountInvoiceReferenceReceipt = AccountReceiptNo;
+            crCasAccountInvoice.CrCasAccountInvoiceUserCode = UserId;
+            crCasAccountInvoice.CrCasAccountInvoiceArPdfFile = pdfPathAr;
+            crCasAccountInvoice.CrCasAccountInvoiceEnPdfFile = pdfPathEn;
+
+            if (await _unitOfWork.CrCasAccountInvoice.AddAsync(crCasAccountInvoice) != null) return true;
             return false;
         }
         private CrCasAccountReceipt GetContractAccountReceipt(string LessorCode, string BranchCode)
@@ -294,6 +319,27 @@ namespace Bnan.Inferastructure.Repository
             else
             {
                 c.CrCasAccountReceiptNo = "000001";
+            }
+
+            return c;
+        }
+        private CrCasAccountInvoice GetAccountInvoice(string LessorCode, string BranchCode)
+        {
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var Lrecord = _unitOfWork.CrCasAccountInvoice.FindAll(x => x.CrCasAccountInvoiceLessorCode == LessorCode &&
+                                                                       x.CrCasAccountInvoiceYear == y && x.CrCasAccountInvoiceBranchCode == BranchCode)
+                                                             .Max(x => x.CrCasAccountInvoiceNo.Substring(x.CrCasAccountInvoiceNo.Length - 6, 6));
+
+            CrCasAccountInvoice c = new CrCasAccountInvoice();
+            if (Lrecord != null)
+            {
+                Int64 val = Int64.Parse(Lrecord) + 1;
+                c.CrCasAccountInvoiceNo = val.ToString("000000");
+            }
+            else
+            {
+                c.CrCasAccountInvoiceNo = "000001";
             }
 
             return c;

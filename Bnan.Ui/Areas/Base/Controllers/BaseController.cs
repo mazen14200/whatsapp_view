@@ -165,7 +165,7 @@ namespace Bnan.Ui.Areas.Base.Controllers
             var Documents = _unitOfWork.CrCasBranchDocument.FindAll(x => x.CrCasBranchDocumentsLessor == lessorCode && x.CrCasBranchDocumentsBranch == branch.CrCasBranchInformationCode).ToList();
             var DocumentsCar = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == branch.CrCasBranchInformationCode && x.CrCasCarDocumentsMaintenanceProceduresClassification == "12").ToList();
             var MaintainceCar = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceLessor == lessorCode && x.CrCasCarDocumentsMaintenanceBranch == branch.CrCasBranchInformationCode && x.CrCasCarDocumentsMaintenanceProceduresClassification == "13").ToList();
-            var PriceCar = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicLessorCode == lessorCode || x.CrCasPriceCarBasicBrandCode== branch.CrCasBranchInformationCode).ToList();
+            var PriceCar = _unitOfWork.CrCasPriceCarBasic.FindAll(x => x.CrCasPriceCarBasicLessorCode == lessorCode).ToList();
             var c = Documents.Where(x => x.CrCasBranchDocumentsStatus == Status.AboutToExpire).Count();
             var BsLayoutVM = new BSLayoutVM();
             BsLayoutVM.CrCasBranchInformations = branches;

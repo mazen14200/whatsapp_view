@@ -121,7 +121,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var contract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == id,
                                                                                      new[] { "CrCasRenterContractBasic5.CrCasRenterLessorNavigation",
                                                                                              "CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarAdvantages",
-                                                                                             "CrCasRenterContractBasic1"}).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();
+                                                                                             "CrCasRenterContractBasic1","CrCasRenterContractBasicCarSerailNoNavigation.CrCasCarInformationDistributionNavigation"}).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();
             var CheckupCars = _unitOfWork.CrMasSupContractCarCheckup.FindAll(x => x.CrMasSupContractCarCheckupStatus == Status.Active).ToList();
             var authContract = _unitOfWork.CrCasRenterContractAuthorization.Find(x => x.CrCasRenterContractAuthorizationLessor == lessorCode && x.CrCasRenterContractAuthorizationContractNo == contract.CrCasRenterContractBasicNo);
             var contractMap = _mapper.Map<ContractSettlementVM>(contract);
@@ -137,10 +137,19 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var autoinc1 = GetContractAccountReceipt(lessorCode, bsLayoutVM.SelectedBranch).CrCasAccountReceiptNo;
             var AccountReceiptNo = y + "-" + "1" + "301" + "-" + lessorCode + bsLayoutVM.SelectedBranch + "-" + autoinc1;
             ViewBag.AccountReceiptNo = AccountReceiptNo;
+            ///////////////////////////////////
+            //var sector = Renter.CrCasRenterLessorSector;
+            var autoinc2 = GetInvoiceAccount(lessorCode, bsLayoutVM.SelectedBranch).CrCasAccountInvoiceNo;
+            var InvoiceAccount = y + "-" + "1" + "308" + "-" + lessorCode + bsLayoutVM.SelectedBranch + "-" + autoinc2;
+            ViewBag.InvoiceAccount = InvoiceAccount;
+            /////////////////////////////
+            ///
             contractMap.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
             contractMap.AuthType = authContract.CrCasRenterContractAuthorizationType;
             contractMap.CasRenterPreviousBalance = contract.CrCasRenterContractBasic5?.CrCasRenterLessorAvailableBalance;
             var advantages = _unitOfWork.CrCasRenterContractAdvantage.FindAll(x => x.CrCasRenterContractAdvantagesNo == contract.CrCasRenterContractBasicNo).Sum(x => x.CrCasContractAdvantagesValue);
+
+
             contractMap.AdvantagesValue = advantages?.ToString("N2", CultureInfo.InvariantCulture);
             contractMap.AdvantagesValueTotal = (advantages * contract.CrCasRenterContractBasicExpectedRentalDays)?.ToString("N2", CultureInfo.InvariantCulture);
             contractMap.ChoicesValue = _unitOfWork.CrCasRenterContractChoice.FindAll(x => x.CrCasRenterContractChoiceNo == contract.CrCasRenterContractBasicNo).Sum(x => x.CrCasContractChoiceValue)?.ToString("N2", CultureInfo.InvariantCulture);
@@ -405,6 +414,27 @@ namespace Bnan.Ui.Areas.BS.Controllers
             else
             {
                 c.CrCasAccountReceiptNo = "000001";
+            }
+
+            return c;
+        }
+        private CrCasAccountInvoice GetInvoiceAccount(string LessorCode, string BranchCode)
+        {
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var Lrecord = _unitOfWork.CrCasAccountInvoice.FindAll(x => x.CrCasAccountInvoiceLessorCode == LessorCode &&
+                                                                       x.CrCasAccountInvoiceYear == y && x.CrCasAccountInvoiceBranchCode == BranchCode)
+                                                             .Max(x => x.CrCasAccountInvoiceNo.Substring(x.CrCasAccountInvoiceNo.Length - 6, 6));
+
+            CrCasAccountInvoice c = new CrCasAccountInvoice();
+            if (Lrecord != null)
+            {
+                Int64 val = Int64.Parse(Lrecord) + 1;
+                c.CrCasAccountInvoiceNo = val.ToString("000000");
+            }
+            else
+            {
+                c.CrCasAccountInvoiceNo = "000001";
             }
 
             return c;

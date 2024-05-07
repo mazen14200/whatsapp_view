@@ -1,22 +1,22 @@
-﻿@using Bnan.Ui.ViewModels.BS;
+﻿@using Bnan.Core.Extensions
+@using Bnan.Ui.ViewModels.BS;
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.EntityFrameworkCore;
 @model BSLayoutVM
 @inject UserManager<CrMasUserInformation> userManager
 @inject SignInManager<CrMasUserInformation> signinManager
 @inject IViewLocalizer localizer
-
 @{
+    var user = await userManager.GetUserAsync(User);
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-    ViewData["Title"] = "Index";
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    // var user = await userManager.GetUserAsync(User);
-    // var userInfo = await userManager.Users
-    //   .Include(l => l.CrMasUserMainValidations)
-    //   .Include(l => l.CrMasUserSubValidations)
-    //   .Include(x => x.CrMasUserBranchValidities)
-    //   .Include(l => l.CrMasUserInformationLessorNavigation)
-    //   .FirstOrDefaultAsync(l => l.UserName == user.UserName);
+    var userInfo = await userManager.Users
+          .Include(l => l.CrMasUserMainValidations)
+          .Include(l => l.CrMasUserSubValidations)
+          .Include(l => l.CrMasUserInformationLessorNavigation)
+          .Include(l => l.CrMasUserContractValidity)
+          .FirstOrDefaultAsync(l => l.UserName == user.UserName);
+    var lessorInfo = await userManager.Users.Include(l => l.CrMasUserInformationLessorNavigation).ThenInclude(l => l.CrMasLessorImage).FirstOrDefaultAsync(x => x.UserName == user.UserName);
 }
 
 <link href="~/BranchSys/Pages/css/style.css" rel="styleSheet">
@@ -54,6 +54,10 @@
                                 <form id="msform" asp-action="AcceptOrNot" asp-controller="FeedBox" asp-area="BS">
                                     <input hidden name="AdministrativeNo" asp-for="@Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresNo">
                                     <input hidden id="status" name="status">
+                                    <input hidden id="SavePdfArReceipt" name="SavePdfArReceipt">
+                                    <input hidden id="SavePdfEnReceipt" name="SavePdfEnReceipt">
+                                    <input hidden id="AccountReceiptNo" name="AccountReceiptNo">
+                                    <input hidden id="branch" name="branch">
                                     <fieldset>
                                         <div class="form-card  px-lg-5 py-lg-5 feed-card">
                                             <div class="row data-row">
@@ -136,6 +140,18 @@
         </div>
 
     </section>
+    <div class="main" style="display:none;top: 50%;left: 50%;">
+        <div class="container1">
+            <div>   <img src="@Url.Content(lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage?.CrMasLessorImageLogo)" class="logo"></div>
+            <br>
+            <div class="container2">
+                <div class="dash uno"></div>
+                <div class="dash dos"></div>
+                <div class="dash tres"></div>
+                <div class="dash cuatro"></div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Footer -->
 <footer class="fixed-bottom-xl">
@@ -150,29 +166,272 @@
 <!-- Footer-->
 
 @section Scripts {
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
     <script>
-        // function AcceptOrNot(status) {
-        //     var reasons = $("#exampleFormControlTextarea1").val();
-        //     $.ajax({
-        //         url: "/BS/FeedBox/AcceptOrNot", // Update with your controller and action
-        //         type: "POST",
-        //         data: { status: status, reasons: reasons },
-        //         success: function (result) {
-        //             window.location.href = "/BS/FeedBox/SuccesssMessageForFeedBox";
-        //         },
-        //         error: function () {
-        //             // Handle errors if necessary
-        //             console.log("Error occurred");
-        //         }
-        //     });
-        // }
+        const ArReceipt = async () => {
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArInternalCatchReceipt";
+            const imagePath = imageLessor.replace('~', '');
+            // Gregorian (Miladi) Date
+            const miladiDate = new Date();
+            const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).split('/').join('/');
+
+            // Hijri Date
+            // const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+            const hijriDateString = formatHijriDate(miladiDate);
+
+            // First In Page
+            var arBranch = decodeHTMLEntities("@Model.CrCasBranchInformation?.CrCasBranchInformationArShortName");
+            const accountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const RenterName = '@Html.Raw(userManager.FindByIdAsync(Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresUserInsert).Result.CrMasUserInformationArName)';
+
+            var ArabicNamePayment = "نقدا";
+            //get Data Director lessor and branch and get renter and user
+            var userName = decodeHTMLEntities("@user.CrMasUserInformationArName");
+            var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation?.CrMasLessorInformationDirectorArName");
+            var directorOfBranch = decodeHTMLEntities("@Model.CrCasBranchInformation?.CrCasBranchInformationDirectorArName");
+            var reasonPayment = document.getElementById("reasons").value;
+            var AmountPayedInput = '@Html.Raw(Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresDebit)';
+            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Signture Image
+            var signture = "@user.CrMasUserInformationSignature";
+            const signturePath = signture.replace('~', '');
+            var signatureImg = new Image();
+            signatureImg.src = signturePath;
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            // Get Image And Text On
+            // Read the image file as a Blob
+            const responseImage = await fetch(imagePath);
+            const blob = await responseImage.blob();
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                ctx.drawImage(img, 0, 0);
+                ctx.font = "bold 35px serif";
+                ctx.textAlign = "right";
+                ctx.fillStyle = "black";
+                ctx.fillText(hijriDateString, canvas.width - 260, 712);
+                ctx.fillText(miladiDateString, canvas.width - 250, 646);
+
+                ctx.font = "bold 50px serif";
+
+
+                ctx.fillText(accountReceiptNo, canvas.width - 1840, 620);
+
+
+
+                let cleanedValueString = AmountPayed.replace(/,/g, "");
+
+                // Split the cleaned string by the decimal point
+                let parts = cleanedValueString.split('.');
+
+                // Extract the number before the decimal point
+                let beforeDecimal = parts[0];
+
+                // Extract the number after the decimal point
+                let afterDecimal = parts.length > 1 ? parts[1] : "0";
+
+                // Convert the extracted strings back to integers if needed
+                let beforeDecimalNumber = parseInt(beforeDecimal);
+                let afterDecimalNumber = parseInt(afterDecimal);
+                // Assuming `ctx` is your canvas context
+                ctx.fillText(afterDecimalNumber, canvas.width - 1925, 720);
+                ctx.fillText(beforeDecimalNumber, canvas.width - 2030, 720);
+
+                ctx.fillText(RenterName, canvas.width - 530, 912);
+                ctx.fillText(AmountPayed, canvas.width - 400, 1040);
+                ctx.fillText(ArabicNamePayment, canvas.width - 415, 1165);
+
+                // //Total
+                //
+                var phaseFor = `تغذية صندوق فرع ${arBranch}`;
+                ctx.fillText(phaseFor, canvas.width - 390, 1305);
+
+                ctx.font = "bold 40px serif";
+                ctx.fillText(directorOfLessor, canvas.width - 320, 1550);
+                ctx.drawImage(signatureImg, canvas.width - 1380, 1620, 200, 100);
+                ctx.fillText(userName, canvas.width - 1130, 1550);
+                ctx.fillText(directorOfBranch, canvas.width - 310, 1685);
+
+
+                canvas.toBlob(async function (blob) {
+                    createPdf(accountReceiptNo, blob, "SavePdfArReceipt", "ar");
+                }, 'image/png');
+            };
+            img.src = URL.createObjectURL(blob);
+        };
+        const EnReceipt = async () => {
+            const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageEnInternalCatchReceipt";
+            const imagePath = imageLessor.replace('~', '');
+            
+            //Data Receipt
+            // Gregorian (Miladi) Date
+            const miladiDate = new Date();
+            const miladiOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const miladiDateString = miladiDate.toLocaleDateString('en-US', miladiOptions).split('/').join('/');
+
+            // Hijri Date
+            // const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+            const hijriDateString = formatHijriEnDate(miladiDate);
+
+            var enBranch = decodeHTMLEntities("@Model.CrCasBranchInformation?.CrCasBranchInformationEnShortName");
+            const accountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const RenterName = '@Html.Raw(userManager.FindByIdAsync(Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresUserInsert).Result.CrMasUserInformationEnName)';
+            var EnNamePayment = "Cash";            
+            var userName = decodeHTMLEntities("@user.CrMasUserInformationEnName");
+            var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorEnName");
+            var directorOfBranch = decodeHTMLEntities("@Model.CrCasBranchInformation.CrCasBranchInformationDirectorEnName");
+            var reasonPayment = document.getElementById("reasons").value;
+            var AmountPayedInput = '@Html.Raw(Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresDebit)';
+            const AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Signture Image
+            var signture = "@user.CrMasUserInformationSignature";
+            const signturePath = signture.replace('~', '');
+            var signatureImg = new Image();
+            signatureImg.src = signturePath;
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            // Get Image And Text On
+            // Read the image file as a Blob
+            const responseImage = await fetch(imagePath);
+            const blob = await responseImage.blob();
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                ctx.font = "bold 35px serif";
+                ctx.textAlign = "left";
+                ctx.fillStyle = "black";
+                ctx.fillText(hijriDateString, canvas.width - 2250, 700);
+                ctx.fillText(miladiDateString, canvas.width - 2270, 630);
+                ctx.font = "bold 50px serif";
+                ctx.fillText(accountReceiptNo, canvas.width - 620, 625);
+                let cleanedValueString = AmountPayed.replace(/,/g, "");
+                // Split the cleaned string by the decimal point
+                let parts = cleanedValueString.split('.');
+                // Extract the number before the decimal point
+                let beforeDecimal = parts[0];
+                // Extract the number after the decimal point
+                let afterDecimal = parts.length > 1 ? parts[1] : "0";
+                // Convert the extracted strings back to integers if needed
+                let beforeDecimalNumber = parseInt(beforeDecimal);
+                let afterDecimalNumber = parseInt(afterDecimal);
+                // Assuming `ctx` is your canvas context
+                ctx.fillText(beforeDecimalNumber, canvas.width - 450, 720);
+                ctx.fillText(afterDecimalNumber, canvas.width - 270, 720);
+
+                ctx.fillText(RenterName, canvas.width - 2050, 900);
+                ctx.fillText(AmountPayed, canvas.width - 2100, 1030);
+                ctx.fillText(EnNamePayment, canvas.width - 2000, 1160);
+
+                // //Total
+                var phaseFor = `Feed box for ${enBranch} Branch`;
+                ctx.fillText(phaseFor, canvas.width - 2250, 1290);
+
+                ctx.font = "bold 40px serif";
+                ctx.fillText(directorOfLessor, canvas.width - 1990, 1525);
+                ctx.drawImage(signatureImg, canvas.width - 1360, 1580, 200, 100);
+                ctx.fillText(userName, canvas.width - 1300, 1525);
+                ctx.fillText(directorOfBranch, canvas.width - 2020, 1655);
+
+
+                canvas.toBlob(async function (blob) {
+                    createPdf(accountReceiptNo, blob, "SavePdfEnReceipt", "en");
+                }, 'image/png');
+            };
+            img.src = URL.createObjectURL(blob);
+        };
         function AcceptOrNot(status) {
+            var form = document.getElementById('msform');
             // Set the value of the hidden input field
             document.getElementById('status').value = status;
+            document.getElementById('branch').value = '@Model.SelectedBranch';
+            $('.main').show(); // Show the main container with fade effect
 
+            if (status=="@Status.Accept") {
+                ArReceipt();
+                EnReceipt();
+            }
             // Submit the form
-            document.getElementById('msform').submit();
+            setTimeout(function () {
+                form.submit();
+            }, 5000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
+        }
+    </script>
+
+
+
+
+    <script>
+        function createPdf(receiptNo, imageBlob, InputPdf, language) {
+            var doc = new jsPDF('p', 'pt', 'a4', true);
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            try {
+                // Convert the image blob to a base64 DataURL
+                const reader = new FileReader();
+                reader.onload = function () {
+                    const imageDataUrl = reader.result;
+                    // Add the image to the PDF
+                    const imgWidth = pageWidth; // Width of the image in the PDF
+                    const imgHeight = pageHeight; // Height of the image in the PDF
+                    const imgXPos = 0; // X position of the image (left edge)
+                    const imgYPos = 0; // Y position of the image (top edge)
+                    doc.addImage(imageDataUrl, 'PNG', imgXPos, imgYPos, imgWidth, imgHeight, '', 'FAST');
+                    // Convert the PDF to a blob
+                    const pdfBlob = doc.output('blob');
+                    const blobUrl = URL.createObjectURL(pdfBlob);
+                    const pdfBase64 = doc.output('datauristring');
+                    // Set the base64-encoded PDF to the hidden input field
+                    document.getElementById(InputPdf).value = pdfBase64;
+                    // Prepare form data with PDF
+                    if ("@requestCulture?.RequestCulture.UICulture.Name" == "en-US" && InputPdf != "" && InputPdf != null && language == "en") {
+                            document.getElementById('AccountReceiptNo').value = receiptNo;
+                    }
+
+                    else if ("@requestCulture?.RequestCulture.UICulture.Name" == "ar-EG" && InputPdf != "" && InputPdf != null && language == "ar") {
+                       
+                            document.getElementById('AccountReceiptNo').value = receiptNo;
+                    }
+                };
+
+                reader.readAsDataURL(imageBlob); // Start reading the image blob
+            } catch (error) {
+                console.error('Error adding image to PDF:', error);
+            }
+        }
+    </script>
+    <script>
+        // Function to format Hijri date
+        function formatHijriDate(date) {
+            const options = { weekday: 'long', day: 'numeric', year: 'numeric', month: 'long', calendar: 'islamic-umalqura' };
+            return date.toLocaleDateString('ar-SA', options).replace(/هـ/g, ''); // Remove "هـ" suffix
+        }
+        // To decode some string
+        function decodeHTMLEntities(text) {
+            var textArea = document.createElement("textarea");
+            textArea.innerHTML = text;
+            return textArea.value;
+        }
+        function formatHijriEnDate(date) {
+            const options = { weekday: 'long', day: 'numeric', year: 'numeric', month: 'long', calendar: 'islamic-umalqura' };
+            return date.toLocaleDateString('en-US-u-ca-islamic-umalqura', options).replace(/AH/g, ''); // Remove "AH" suffix
         }
     </script>
 }

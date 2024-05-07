@@ -20,11 +20,14 @@ namespace Bnan.Ui.Areas.BS.Controllers
         private readonly IToastNotification _toastNotification;
         private readonly IFeedBoxBS _feedBox;
         private readonly IStringLocalizer<FeedBoxController> _localizer;
-        public FeedBoxController(IStringLocalizer<FeedBoxController> localizer, IUnitOfWork unitOfWork, UserManager<CrMasUserInformation> userManager, IMapper mapper, IToastNotification toastNotification, IFeedBoxBS feedBox) : base(userManager, unitOfWork, mapper)
+        private readonly IWebHostEnvironment _hostingEnvironment;
+
+        public FeedBoxController(IStringLocalizer<FeedBoxController> localizer, IUnitOfWork unitOfWork, UserManager<CrMasUserInformation> userManager, IMapper mapper, IToastNotification toastNotification, IFeedBoxBS feedBox, IWebHostEnvironment hostingEnvironment) : base(userManager, unitOfWork, mapper)
         {
             _localizer = localizer;
             _toastNotification = toastNotification;
             _feedBox = feedBox;
+            _hostingEnvironment = hostingEnvironment;
         }
         public async Task<IActionResult> Index()
         {
@@ -41,11 +44,18 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                  x.CrCasSysAdministrativeProceduresTargeted == userLogin.CrMasUserInformationCode &&
                                                                                  x.CrCasSysAdministrativeProceduresCode == "303" &&
                                                                                  x.CrCasSysAdministrativeProceduresStatus == Status.Insert);
+            //Get ACcount Receipt
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var autoinc1 = GetFeedBoxAccountReceipt(lessorCode, bSLayoutVM.SelectedBranch,"301").CrCasAccountReceiptNo;
+            var AccountReceiptNo = y + "-" + "1" + "301" + "-" + lessorCode + bSLayoutVM.SelectedBranch + "-" + autoinc1;
+            ViewBag.AccountReceiptNo = AccountReceiptNo;
+
             bSLayoutVM.CrCasSysAdministrativeProcedure = adminstrive;
             return View(bSLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> AcceptOrNot(string AdministrativeNo, string status, string reasons)
+        public async Task<IActionResult> AcceptOrNot(string AdministrativeNo, string status,string branch, string reasons, string AccountReceiptNo, string SavePdfArReceipt, string SavePdfEnReceipt)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -60,12 +70,15 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var CheckUpdateBranch = true;
             var CheckUpdateSalesPoint = true;
             var CheckUpdateBranchValidity = true;
-
+            var PdfArReceipt = "";
+            var PdfEnReceipt = "";
             CheckUpdateAdminstrive = await _feedBox.UpdateAdminstritive(adminstrive.CrCasSysAdministrativeProceduresNo, userLogin.CrMasUserInformationCode, status, reasons);
             if (status == Status.Accept)
             {
+                if (!string.IsNullOrEmpty(SavePdfArReceipt)) PdfArReceipt = await FileExtensions.SavePdf(_hostingEnvironment, SavePdfArReceipt, lessorCode, branch, AccountReceiptNo, "ar", "Receipt");
+                if (!string.IsNullOrEmpty(SavePdfEnReceipt)) PdfEnReceipt = await FileExtensions.SavePdf(_hostingEnvironment, SavePdfEnReceipt, lessorCode, branch, AccountReceiptNo, "en", "Receipt");
                 CheckAddReceipt = await _feedBox.AddAccountReceipt(adminstrive.CrCasSysAdministrativeProceduresNo, lessorCode, userLogin.CrMasUserInformationCode,
-                                                                   userLogin.CrMasUserInformationDefaultBranch, (decimal)adminstrive.CrCasSysAdministrativeProceduresDebit, reasons);
+                                                                   userLogin.CrMasUserInformationDefaultBranch, (decimal)adminstrive.CrCasSysAdministrativeProceduresDebit, reasons, PdfArReceipt, PdfEnReceipt);
 
                 CheckUpdateUser = await _feedBox.UpdateUserInfo(userLogin.CrMasUserInformationCode, lessorCode, (decimal)adminstrive.CrCasSysAdministrativeProceduresDebit);
 
@@ -86,6 +99,27 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
             return RedirectToAction("Index", "Home");
 
+        }
+        private CrCasAccountReceipt GetFeedBoxAccountReceipt(string LessorCode, string BranchCode,string procedure)
+        {
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var Lrecord = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == LessorCode &&
+                                                                       x.CrCasAccountReceiptYear == y && x.CrCasAccountReceiptBranchCode == BranchCode&&x.CrCasAccountReceiptType==procedure)
+                                                             .Max(x => x.CrCasAccountReceiptNo.Substring(x.CrCasAccountReceiptNo.Length - 6, 6));
+
+            CrCasAccountReceipt c = new CrCasAccountReceipt();
+            if (Lrecord != null)
+            {
+                Int64 val = Int64.Parse(Lrecord) + 1;
+                c.CrCasAccountReceiptNo = val.ToString("000000");
+            }
+            else
+            {
+                c.CrCasAccountReceiptNo = "000001";
+            }
+
+            return c;
         }
 
         public IActionResult SuccesssMessageForFeedBox()

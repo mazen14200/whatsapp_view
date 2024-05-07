@@ -132,6 +132,10 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 //Account Receipt
                 var CheckAccountReceipt = new CrCasAccountReceipt();
                 var passing = "";
+                var CheckBranchValidity = true;
+                var CheckBranch = true;
+                var CheckUserInformation = true;
+                var CheckSalesPoint = true;
                 var PdfArReceipt = "";
                 var PdfEnReceipt = "";
                 if (BasicContract.CrCasRenterContractBasicAmountPaidAdvance > 0)
@@ -152,6 +156,14 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                   ContractInfo.PaymentMethod, ContractInfo.AccountNo, BasicContract.CrCasRenterContractBasicCarSerailNo,
                                                                                   ContractInfo.SalesPoint, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance,
                                                                                   BasicContract.CrCasRenterContractBasicRenterId, userLogin.CrMasUserInformationCode, passing, ContractInfo.PaymentReasons, PdfArReceipt, PdfEnReceipt);
+                    //Update Branch Balance , But first Check if passing equal 4 or not 
+                    if (passing != "4") CheckBranch = await _ContractServices.UpdateBranchBalance(Branch.CrCasBranchInformationCode, lessorCode, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
+                    //Update SalesPoint Balance , But first Check if passing equal 4 or not 
+                    if (!string.IsNullOrEmpty(ContractInfo.SalesPoint) && passing != "4") CheckSalesPoint = await _ContractServices.UpdateSalesPointBalance(Branch.CrCasBranchInformationCode, lessorCode, ContractInfo.SalesPoint, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
+                    // UpdateBranchValidity
+                    if (passing != "4") CheckBranchValidity = await _ContractServices.UpdateBranchValidity(Branch.CrCasBranchInformationCode, lessorCode, userLogin.CrMasUserInformationCode, ContractInfo.PaymentMethod, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
+                    // UpdateUserBalance
+                    if (passing != "4") CheckUserInformation = await _ContractServices.UpdateUserBalance(Branch.CrCasBranchInformationCode, lessorCode, userLogin.CrMasUserInformationCode, ContractInfo.PaymentMethod, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
                 }
 
 
@@ -239,22 +251,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     if (!string.IsNullOrEmpty(ContractInfo.AdditionalDriverId)) CheckAddDriver = await _ContractServices.UpdateDriverStatus(ContractInfo.DriverId, lessorCode, ContractInfo.AddDriverReasons);
                 }
 
-                //Update Branch Balance , But first Check if passing equal 4 or not 
-                var CheckBranch = true;
-                if (passing != "4") CheckBranch = await _ContractServices.UpdateBranchBalance(Branch.CrCasBranchInformationCode, lessorCode, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
-
-                //Update SalesPoint Balance , But first Check if passing equal 4 or not 
-                var CheckSalesPoint = true;
-                if (!string.IsNullOrEmpty(ContractInfo.SalesPoint) && passing != "4") CheckSalesPoint = await _ContractServices.UpdateSalesPointBalance(Branch.CrCasBranchInformationCode, lessorCode, ContractInfo.SalesPoint, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
-
-                // UpdateBranchValidity
-                var CheckBranchValidity = true;
-                if (passing != "4") CheckBranchValidity = await _ContractServices.UpdateBranchValidity(Branch.CrCasBranchInformationCode, lessorCode, userLogin.CrMasUserInformationCode, ContractInfo.PaymentMethod, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
-
-
-                // UpdateUserBalance
-                var CheckUserInformation = true;
-                if (passing != "4") CheckUserInformation = await _ContractServices.UpdateUserBalance(Branch.CrCasBranchInformationCode, lessorCode, userLogin.CrMasUserInformationCode, ContractInfo.PaymentMethod, (decimal)BasicContract.CrCasRenterContractBasicAmountPaidAdvance);
+                
 
                 // Add Renter Alert
                 var CheckRenterAlert = true;

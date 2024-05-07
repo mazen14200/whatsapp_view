@@ -117,6 +117,11 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var autoinc1 = GetContractAccountReceipt(lessorCode, bsLayoutVM.SelectedBranch).CrCasAccountReceiptNo;
             var AccountReceiptNo = y + "-" + "1" + "301" + "-" + lessorCode + bsLayoutVM.SelectedBranch + "-" + autoinc1;
             ViewBag.AccountReceiptNo = AccountReceiptNo;
+            ///////////////////////////////////
+            //var sector = Renter.CrCasRenterLessorSector;
+            var autoinc2 = GetInvoiceAccount(lessorCode, bsLayoutVM.SelectedBranch).CrCasAccountInvoiceNo;
+            var InvoiceAccount = y + "-" + "1" + "308" + "-" + lessorCode + bsLayoutVM.SelectedBranch + "-" + autoinc2;
+            ViewBag.InvoiceAccount = InvoiceAccount;
             //////////////////////////////////
             contractMap.AuthEndDate = authContract.CrCasRenterContractAuthorizationEndDate;
             contractMap.AuthType = authContract.CrCasRenterContractAuthorizationType;
@@ -129,7 +134,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             return View(bsLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(BSLayoutVM bSLayoutVM, string ExtensionValue, string reasons, string? PdfSave1, string? language)
+        public async Task<IActionResult> Create(BSLayoutVM bSLayoutVM, string ExtensionValue, string reasons, string? SavePdfArInvoice, string? SavePdfEnInvoice, string? SavePdfArReceipt, string? SavePdfEnReceipt)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -150,7 +155,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     CheckUpdateContractStatus = await _contractExtension.UpdateStatusOldContract(Contract.CrCasRenterContractBasicNo);
 
                     //Account Receipt
-                    var CheckAccountReceipt = true;
+                    var CheckAccountReceipt = new CrCasAccountReceipt();
                     var CheckRenterLessor = true;
                     var CheckBranch = true;
                     var CheckSalesPoint = true;
@@ -158,7 +163,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     var CheckUserInformation = true;
 
                     var passing = "";
-                    var SavePdf = "";
+                    var PdfArReceipt = "";
+                    var PdfEnReceipt = "";
                     if (decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture) !=null&& decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture) > 0)
                     {
 
@@ -171,11 +177,12 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         {
                             passing = "1";
                         }
-                        //if (!string.IsNullOrEmpty(PdfSave1) && !string.IsNullOrEmpty(language)) SavePdf = await FileExtensions.SavePdf(_hostingEnvironment, PdfSave1, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, language);
+                        if (!string.IsNullOrEmpty(SavePdfArReceipt)) PdfArReceipt = await FileExtensions.SavePdf(_hostingEnvironment, SavePdfArReceipt, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, "ar", "Receipt");
+                        if (!string.IsNullOrEmpty(SavePdfEnReceipt)) PdfEnReceipt = await FileExtensions.SavePdf(_hostingEnvironment, SavePdfEnReceipt, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, "en", "Receipt");
                         CheckAccountReceipt = await _contractExtension.AddAccountReceipt(NewContract.CrCasRenterContractBasicNo, lessorCode, NewContract.CrCasRenterContractBasicBranch,
                                                                                       ContractInfo.PaymentMethod, ContractInfo.AccountNo, NewContract.CrCasRenterContractBasicCarSerailNo,
                                                                                       ContractInfo.SalesPoint, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture),
-                                                                                      NewContract.CrCasRenterContractBasicRenterId, userLogin.CrMasUserInformationCode, passing, reasons,SavePdf,language);
+                                                                                      NewContract.CrCasRenterContractBasicRenterId, userLogin.CrMasUserInformationCode, passing, reasons, PdfArReceipt, PdfEnReceipt);
                         //Update Branch Balance , But first Check if passing equal 4 or not 
                         if (passing != "4") CheckBranch = await _contractExtension.UpdateBranchBalance(Branch.CrCasBranchInformationCode, lessorCode, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture));
                         //Update SalesPoint Balance , But first Check if passing equal 4 or not 
@@ -185,6 +192,18 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         // UpdateUserBalance
                         if (passing != "4") CheckUserInformation = await _contractExtension.UpdateUserBalance(Branch.CrCasBranchInformationCode, lessorCode, userLogin.CrMasUserInformationCode, ContractInfo.PaymentMethod, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture));
                     }
+
+
+                    // Invoice 
+                    var CheckAccountInvoice = true;
+                    var PdfArInvoice = "";
+                    var PdfEnInvoice = "";
+                    if (!string.IsNullOrEmpty(SavePdfArInvoice)) PdfArInvoice = await FileExtensions.SavePdf(_hostingEnvironment, SavePdfArInvoice, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.InitialInvoiceNo, "ar", "Invoice");
+                    if (!string.IsNullOrEmpty(SavePdfEnInvoice)) PdfEnInvoice = await FileExtensions.SavePdf(_hostingEnvironment, SavePdfEnInvoice, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.InitialInvoiceNo, "en", "Invoice");
+                    CheckAccountInvoice = await _contractExtension.AddAccountInvoice(NewContract.CrCasRenterContractBasicNo, NewContract.CrCasRenterContractBasicRenterId, lessorCode, Branch.CrCasBranchInformationCode, NewContract.CrCasRenterContractBasicUserInsert, CheckAccountReceipt.CrCasAccountReceiptNo, PdfArInvoice, PdfEnInvoice);
+
+
+
                     //Update RenterLessor Of Car Renter
                     CheckRenterLessor = await _contractExtension.UpdateRenterLessor(NewContract.CrCasRenterContractBasicRenterId, lessorCode, decimal.Parse(ContractInfo.AmountPayed, CultureInfo.InvariantCulture), decimal.Parse(ExtensionValue, CultureInfo.InvariantCulture));
 
@@ -192,8 +211,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     var CheckRenterAlert = true;
                     CheckRenterAlert = await _contractExtension.UpdateAlertContract(NewContract.CrCasRenterContractBasicNo);
 
-                    if (NewContract != null && CheckUpdateContractStatus && CheckRenterLessor && CheckAccountReceipt && CheckBranch && CheckSalesPoint &&
-                        CheckUserInformation && CheckBranchValidity && CheckRenterAlert)
+                    if (NewContract != null && CheckUpdateContractStatus && CheckRenterLessor && CheckAccountReceipt!=null && CheckBranch && CheckSalesPoint &&
+                        CheckUserInformation && CheckBranchValidity && CheckRenterAlert &&CheckAccountInvoice)
                     {
                         try
                         {
@@ -305,6 +324,27 @@ namespace Bnan.Ui.Areas.BS.Controllers
             else
             {
                 c.CrCasAccountReceiptNo = "000001";
+            }
+
+            return c;
+        }
+        private CrCasAccountInvoice GetInvoiceAccount(string LessorCode, string BranchCode)
+        {
+            DateTime year = DateTime.Now;
+            var y = year.ToString("yy");
+            var Lrecord = _unitOfWork.CrCasAccountInvoice.FindAll(x => x.CrCasAccountInvoiceLessorCode == LessorCode &&
+                                                                       x.CrCasAccountInvoiceYear == y && x.CrCasAccountInvoiceBranchCode == BranchCode)
+                                                             .Max(x => x.CrCasAccountInvoiceNo.Substring(x.CrCasAccountInvoiceNo.Length - 6, 6));
+
+            CrCasAccountInvoice c = new CrCasAccountInvoice();
+            if (Lrecord != null)
+            {
+                Int64 val = Int64.Parse(Lrecord) + 1;
+                c.CrCasAccountInvoiceNo = val.ToString("000000");
+            }
+            else
+            {
+                c.CrCasAccountInvoiceNo = "000001";
             }
 
             return c;
