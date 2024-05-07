@@ -108,6 +108,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         [HttpPost]
         public async Task<IActionResult> OfferCarForSale(CarsInforamtionVM carsInforamtionVM)
         {
+            var sAr = "";
+            var sEn = "";
+
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
 
@@ -125,9 +128,22 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     await _userLoginsService.SaveTracing(currentUserr.CrMasUserInformationCode, "عرض للبيع", "Offer For Sale", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
+                    if (carModel.CrCasCarInformationStatus == Status.Active && carModel.CrCasCarInformationForSaleStatus == null)
+                    {
+                        sAr = "للبيع فقط";
+                        sEn = "For Sale";
+                    }
+                    else if (carModel.CrCasCarInformationStatus == Status.Active && carModel.CrCasCarInformationForSaleStatus == "true")
+                    {
+                        sAr = "للبيع والإيجار";
+                        sEn = "For Sale And Rent";
+                    }
+
                     // Save Adminstrive Procedures
                     await _adminstritiveProcedures.SaveAdminstritive(currentUserr.CrMasUserInformationCode, "1", "217", "20", currentUserr.CrMasUserInformationLessor, "100",
-                        car.CrCasCarInformationSerailNo, null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
+                        car.CrCasCarInformationSerailNo, null, null, null, null, null, null, null, null, sAr, sEn, "U", null);
                     _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                     return RedirectToAction("CarsForSale");
                 };
@@ -146,7 +162,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             {
                 if (status == Status.Save)
                 {
-                    sAr = "الغاء العرض";
+                    sAr = "الغاء البيع";
                     sEn = "Cancel offer";
                     car.CrCasCarInformationForSaleStatus = Status.Active;
                     car.CrCasCarInformationOfferValueSale = 0;
@@ -156,7 +172,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 }
                 if (status == Status.Hold)
                 {
-                    sAr = "تنفيذ العرض";
+                    sAr = "تنفيذ البيع";
                     sEn = "Confirm Offer";
                     car.CrCasCarInformationStatus = Status.Sold;
                     car.CrCasCarInformationSoldDate = DateTime.Now.Date;

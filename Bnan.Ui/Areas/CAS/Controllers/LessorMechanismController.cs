@@ -22,10 +22,15 @@ namespace Bnan.Ui.Areas.CAS.Controllers
     {
         private readonly IToastNotification _toastNotification;
         private readonly IStringLocalizer<LessorMechanismController> _localizer;
-        public LessorMechanismController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork, IMapper mapper, IToastNotification toastNotification, IStringLocalizer<LessorMechanismController> localizer) : base(userManager, unitOfWork, mapper)
+        private readonly IAdminstritiveProcedures _adminstritiveProcedures;
+        private readonly IUserLoginsService _userLoginsService ;
+
+        public LessorMechanismController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork, IMapper mapper, IAdminstritiveProcedures AdminstritiveProcedures, IToastNotification toastNotification, IUserLoginsService userLoginsService, IStringLocalizer<LessorMechanismController> localizer) : base(userManager, unitOfWork, mapper)
         {
             _toastNotification = toastNotification;
             _localizer = localizer;
+            _adminstritiveProcedures = AdminstritiveProcedures;
+            _userLoginsService = userLoginsService;
         }
 
         public async Task<IActionResult> Mechanism()
@@ -38,6 +43,13 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var lessorMechanisms = _unitOfWork.CrCasLessorMechanism.FindAll(x => x.CrCasLessorMechanismCode == currentUser.CrMasUserInformationLessor,
                 new[] { "CrCasLessorMechanismCodeNavigation", "CrCasLessorMechanismProceduresNavigation" });
             var model = _mapper.Map<List<MechanismVM>>(lessorMechanisms);
+
+            // SaveTracing
+            var (mainTask, subTask, system, currentUser1) = await SetTrace("201", "2201005", "2");
+
+            await _userLoginsService.SaveTracing(currentUser1.CrMasUserInformationCode, "عرض بيانات", "View Informations", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
             return View(model);
         }
@@ -114,7 +126,20 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     _unitOfWork.CrCasLessorMechanism.Update(mechanism);
                 }
             }
-            await _unitOfWork.CompleteAsync();
+            //await _unitOfWork.CompleteAsync();
+            if (await _unitOfWork.CompleteAsync() > 0)
+            {
+                // Save Adminstrive Procedures
+                await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "241", "20", currentUser.CrMasUserInformationLessor, "100",
+                "", null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
+
+                // SaveTracing
+                var (mainTask, subTask, system, currentUser1) = await SetTrace("201", "2201005", "2");
+                await _userLoginsService.SaveTracing(currentUser1.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
+                subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+                subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+            }
             UpdateMechanism();
             return Json(new { success = true });
         }

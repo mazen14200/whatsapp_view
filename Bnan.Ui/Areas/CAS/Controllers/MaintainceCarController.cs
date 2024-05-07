@@ -178,7 +178,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         // Save Adminstrive Procedures
                         await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "213", "20", currentUser.CrMasUserInformationLessor, "100",
                             CarDocument.CrCasCarDocumentsMaintenanceNo, null, null, CarDocument.CrCasCarDocumentsMaintenanceNo, CarDocument.CrCasCarDocumentsMaintenanceDate, CarDocument.CrCasCarDocumentsMaintenanceStartDate, CarDocument.CrCasCarDocumentsMaintenanceEndDate,
-                            null, null, "تعديل", "Edit", "U", null);
+                            null, null, sAr, sEn, "U", null);
 
                         return true;
                     }

@@ -179,6 +179,11 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 var CheckAdminstritive = true;
                 CheckAdminstritive = await _Custody.UpdateAdminstritive(Adminstritive.CrCasSysAdministrativeProceduresNo, userLogin.CrMasUserInformationCode, status, Reasons);
 
+                //save Tracing
+                var (mainTask, subTask, system, currentUser) = await SetTrace("204", "2204002", "2");
+                await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
+                subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+                subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
                 var CheckAddReceipt = true;
                 var CheckUpdateBranch = true;

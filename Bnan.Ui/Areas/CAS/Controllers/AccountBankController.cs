@@ -204,7 +204,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("207", "2207003", "2");
 
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل بيانات", "Edit information", mainTask.CrMasSysMainTasksCode,
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                     // Save Adminstrive Procedures
@@ -265,7 +265,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                     // Save Adminstrive Procedures
                     await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "243", "20", currentUser.CrMasUserInformationLessor, "100",
-                   bank.CrCasAccountBankCode, null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
+                   bank.CrCasAccountBankCode, null, null, null, null, null, null, null, null, sAr, sEn, "U", null);
                     return RedirectToAction("Index", "AccountBank");
                 }
             }

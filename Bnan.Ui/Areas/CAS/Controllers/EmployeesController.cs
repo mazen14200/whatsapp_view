@@ -344,7 +344,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     await _userService.UpdateAsync(user);
                     //SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("206", "2206001", "2");
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل بيانات", "Edit information", mainTask.CrMasSysMainTasksCode,
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                     // Save Adminstrive Procedures
@@ -369,19 +369,19 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             {
                 if (status == Status.Hold)
                 {
-                    sAr = "ايقاف موظف";
+                    sAr = "ايقاف";
                     sEn = "Hold Employee";
                     user.CrMasUserInformationStatus = Status.Hold;
                 }
                 else if (status == Status.Deleted)
                 {
-                    sAr = "حذف موظف";
+                    sAr = "حذف";
                     sEn = "Remove Employee";
                     user.CrMasUserInformationStatus = Status.Deleted;
                 }
                 else if (status == Status.Active)
                 {
-                    sAr = "استرجاع موظف";
+                    sAr = "استرجاع";
                     sEn = "Retrive Employee";
                     user.CrMasUserInformationStatus = Status.Active;
                 }

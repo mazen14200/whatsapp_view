@@ -396,7 +396,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     // SaveTracing
                     var (mainTask, subTask, system, currentUser) = await SetTrace("207", "2207005", "2");
 
-                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل بيانات", "Edit information", mainTask.CrMasSysMainTasksCode,
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                     // Save Adminstrive Procedures
@@ -481,7 +481,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                     // Save Adminstrive Procedures
                     await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "246", "20", currentUser.CrMasUserInformationLessor, "100",
-                        RenterDriver.CrCasRenterPrivateDriverInformationId, null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
+                        RenterDriver.CrCasRenterPrivateDriverInformationId, null, null, null, null, null, null, null, null, sAr, sEn, "U", null);
                     _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                     return RedirectToAction("Index", "AccountRenterDriver");
                 }

@@ -210,46 +210,46 @@ namespace Bnan.Ui.Areas.MAS.Controllers
 
         }
 
-            [HttpPost]
-        public async Task<IActionResult> Edit(string CompanyContractCode, string DateContract, string StartDateContract, string EndDateContract, string ContractCompanyAnnualFees,
-            string ContractCompanyTaxRate, string ContractCompanyDiscountRate, string SelectedOption, List<ContractDetailedVM>? data)
-        {
-            var activiation = "";
-            if (SelectedOption == "Subscribtion") activiation = "1";
-            if (SelectedOption == "Value") activiation = "2";
-            if (SelectedOption == "Rate") activiation = "3";
-            try
-            {
-                await _compnayContract.UpdateCompanyContract(CompanyContractCode, DateContract, StartDateContract, EndDateContract, ContractCompanyAnnualFees, ContractCompanyTaxRate, ContractCompanyDiscountRate, activiation);
-                if (SelectedOption != "Subscribtion" && data != null)
-                {
-                    int serial = 0;
-                    foreach (var item in data)
-                    {
-                        if (item.To != null && item.To != "" && item.Value != null && item.Value != "")
-                        {
-                            serial++;
-                            await _compnayContract.AddCompanyContractDetailed(CompanyContractCode, item.From, item.To, item.Value, serial);
-                        }
-                    }
-                }
-                await _unitOfWork.CompleteAsync();
+        //    [HttpPost]
+        //public async Task<IActionResult> Edit(string CompanyContractCode, string DateContract, string StartDateContract, string EndDateContract, string ContractCompanyAnnualFees,
+        //    string ContractCompanyTaxRate, string ContractCompanyDiscountRate, string SelectedOption, List<ContractDetailedVM>? data)
+        //{
+        //    var activiation = "";
+        //    if (SelectedOption == "Subscribtion") activiation = "1";
+        //    if (SelectedOption == "Value") activiation = "2";
+        //    if (SelectedOption == "Rate") activiation = "3";
+        //    try
+        //    {
+        //        await _compnayContract.UpdateCompanyContract(CompanyContractCode, DateContract, StartDateContract, EndDateContract, ContractCompanyAnnualFees, ContractCompanyTaxRate, ContractCompanyDiscountRate, activiation);
+        //        if (SelectedOption != "Subscribtion" && data != null)
+        //        {
+        //            int serial = 0;
+        //            foreach (var item in data)
+        //            {
+        //                if (item.To != null && item.To != "" && item.Value != null && item.Value != "")
+        //                {
+        //                    serial++;
+        //                    await _compnayContract.AddCompanyContractDetailed(CompanyContractCode, item.From, item.To, item.Value, serial);
+        //                }
+        //            }
+        //        }
+        //        await _unitOfWork.CompleteAsync();
 
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
 
 
-            // SaveTracing
-            var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101003", "1");
-            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
-            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
-            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+        //    // SaveTracing
+        //    var (mainTask, subTask, system, currentUser) = await SetTrace("101", "1101003", "1");
+        //    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
+        //    subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+        //    subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
-            return Json(new { success = true });
-        }
+        //    return Json(new { success = true });
+        //}
 
 
             //[HttpGet]

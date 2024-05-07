@@ -100,6 +100,13 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 await _adminstritiveProcedures.SaveAdminstritiveForRepairCar(userLogin.CrMasUserInformationCode, lessorCode, car.CrCasCarInformationBranch,
                                                                             car.CrCasCarInformationSerailNo, date, "اضافة", "Insert", "I",
                                                                             reasons);
+
+                // SaveTracing
+                var (mainTask, subTask, system, currentUserr) = await SetTrace("202", "2202004", "2");
+                await _userLoginsService.SaveTracing(currentUserr.CrMasUserInformationCode, "اضافة", "Add", mainTask.CrMasSysMainTasksCode,
+                subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+                subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
                 var docAndMain = _unitOfWork.CrCasCarDocumentsMaintenance.FindAll(x => x.CrCasCarDocumentsMaintenanceSerailNo == car.CrCasCarInformationSerailNo &&
                                                                                x.CrCasCarDocumentsMaintenanceLessor == lessorCode &&
                                                                                x.CrCasCarDocumentsMaintenanceBranch == car.CrCasCarInformationBranch);
@@ -146,7 +153,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                 // Save Adminstrive Procedures
                 await _adminstritiveProcedures.SaveAdminstritive(currentUserr.CrMasUserInformationCode, "1", "214", "20", currentUserr.CrMasUserInformationLessor, "100",
-                    car.CrCasCarInformationSerailNo, null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
+                    car.CrCasCarInformationSerailNo, null, null, null, null, null, null, null, null, sAr,  sEn, "U", null);
                 return RedirectToAction("CarsForRepair");
             }
             _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });

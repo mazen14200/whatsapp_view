@@ -271,7 +271,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                     // Save Adminstrive Procedures
                     await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "244", "20", currentUser.CrMasUserInformationLessor, "100",
-                        salesPoint.CrCasAccountSalesPointCode, null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
+                        salesPoint.CrCasAccountSalesPointCode, null, null, null, null, null, null, null, null, sAr, sEn, "U", null);
                     _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                     return RedirectToAction("SalesPoints", "SalesPoints");
                 }

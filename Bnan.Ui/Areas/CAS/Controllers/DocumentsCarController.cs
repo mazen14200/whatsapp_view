@@ -175,8 +175,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         string foldername = $"{"images\\Company"}\\{CarDocument.CrCasCarDocumentsMaintenanceLessor}\\{"Cars"}\\{CarDocument.CrCasCarDocumentsMaintenanceSerailNo}";
                         var sysProcedure = _unitOfWork.CrMasSysProcedure.Find(x => x.CrMasSysProceduresClassification == "12" && x.CrMasSysProceduresCode == CarDocument.CrCasCarDocumentsMaintenanceProcedures);
                         string fileNameImg = sysProcedure.CrMasSysProceduresEnName;
-                        sAr = "حذف المستند";
-                        sEn = "Remove Document";
+                        sAr = "حذف";
+                        sEn = "Remove";
                         CarDocument.CrCasCarDocumentsMaintenanceStatus = Status.Renewed;
                         CarDocument.CrCasCarDocumentsMaintenanceDate = null;
                         CarDocument.CrCasCarDocumentsMaintenanceStartDate = null;
@@ -198,7 +198,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     // Save Adminstrive Procedures
                     await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "212", "20", currentUser.CrMasUserInformationLessor, "100",
                         CarDocument.CrCasCarDocumentsMaintenanceNo, null, null, CarDocument.CrCasCarDocumentsMaintenanceNo, CarDocument.CrCasCarDocumentsMaintenanceDate, CarDocument.CrCasCarDocumentsMaintenanceStartDate, CarDocument.CrCasCarDocumentsMaintenanceEndDate,
-                        null, null, "تعديل", "Edit", "U", null);
+                        null, null, sAr, sEn, "U", null);
 
                     return true;
                 }
