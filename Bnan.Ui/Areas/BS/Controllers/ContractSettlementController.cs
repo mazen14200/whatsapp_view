@@ -160,7 +160,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             return View(bsLayoutVM);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(BSLayoutVM bSLayoutVM, string language,string? PdfSaveAr, string? PdfSaveEn,Dictionary<string, string> ReasonsCheckUp)
+        public async Task<IActionResult> Create(BSLayoutVM bSLayoutVM, string? SavePdfArInvoice, string? SavePdfEnInvoice, string? SavePdfArReceipt, string? SavePdfEnReceipt, Dictionary<string, string> ReasonsCheckUp)
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var lessorCode = userLogin.CrMasUserInformationLessor;
@@ -323,8 +323,6 @@ namespace Bnan.Ui.Areas.BS.Controllers
             _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
             return RedirectToAction("Index", "Home");
         }
-
-
         [HttpGet]
         public async Task<IActionResult> GetSalesPoint(string PaymentMethod, string BranchCode)
         {

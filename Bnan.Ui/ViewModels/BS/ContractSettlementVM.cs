@@ -111,6 +111,7 @@ namespace Bnan.Ui.ViewModels.BS
         public string? PreviousBalance { get; set; }
         public string? AmountRequired { get; set; }
         public string? AccountReceiptNo { get; set; }
+        public string? InitialInvoiceNo { get; set; }
 
 
         public virtual CrCasRenterLessor? CrCasRenterContractBasic5 { get; set; }

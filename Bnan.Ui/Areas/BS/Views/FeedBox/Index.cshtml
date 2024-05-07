@@ -185,6 +185,8 @@
             // First In Page
             var arBranch = decodeHTMLEntities("@Model.CrCasBranchInformation?.CrCasBranchInformationArShortName");
             const accountReceiptNo = "@ViewBag.AccountReceiptNo";
+            const ReferenceNo = '@ViewBag.ReferenceNo';
+            var reverseReferenceNo = reverseParts(ReferenceNo);
             const RenterName = '@Html.Raw(userManager.FindByIdAsync(Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresUserInsert).Result.CrMasUserInformationArName)';
 
             var ArabicNamePayment = "نقدا";
@@ -220,8 +222,8 @@
                 ctx.font = "bold 35px serif";
                 ctx.textAlign = "right";
                 ctx.fillStyle = "black";
-                ctx.fillText(hijriDateString, canvas.width - 260, 712);
-                ctx.fillText(miladiDateString, canvas.width - 250, 646);
+                ctx.fillText(miladiDateString, canvas.width - 260, 712);
+                ctx.fillText( hijriDateString, canvas.width - 250, 646);
 
                 ctx.font = "bold 50px serif";
 
@@ -238,12 +240,19 @@
                 // Extract the number before the decimal point
                 let beforeDecimal = parts[0];
 
-                // Extract the number after the decimal point
-                let afterDecimal = parts.length > 1 ? parts[1] : "0";
+                let afterDecimal = parts.length > 1 ? parts[1] : "";
+
+                // If no decimal part, set it to "00"
+                if (afterDecimal === "") {
+                    afterDecimal = "00";
+                } else {
+                    // Convert the extracted strings back to integers if needed
+                    afterDecimal = parseInt(afterDecimal).toString().padEnd(2, '0');
+                }
 
                 // Convert the extracted strings back to integers if needed
                 let beforeDecimalNumber = parseInt(beforeDecimal);
-                let afterDecimalNumber = parseInt(afterDecimal);
+                let afterDecimalNumber = afterDecimal;
                 // Assuming `ctx` is your canvas context
                 ctx.fillText(afterDecimalNumber, canvas.width - 1925, 720);
                 ctx.fillText(beforeDecimalNumber, canvas.width - 2030, 720);
@@ -254,7 +263,7 @@
 
                 // //Total
                 //
-                var phaseFor = `تغذية صندوق فرع ${arBranch}`;
+                var phaseFor = `تغذية صندوق فرع ${arBranch} , رقم المرجع ${reverseReferenceNo} `;
                 ctx.fillText(phaseFor, canvas.width - 390, 1305);
 
                 ctx.font = "bold 40px serif";
@@ -287,6 +296,7 @@
             var enBranch = decodeHTMLEntities("@Model.CrCasBranchInformation?.CrCasBranchInformationEnShortName");
             const accountReceiptNo = "@ViewBag.AccountReceiptNo";
             const RenterName = '@Html.Raw(userManager.FindByIdAsync(Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresUserInsert).Result.CrMasUserInformationEnName)';
+            const ReferenceNo = '@Html.Raw(@Model.CrCasSysAdministrativeProcedure.CrCasSysAdministrativeProceduresNo)';
             var EnNamePayment = "Cash";            
             var userName = decodeHTMLEntities("@user.CrMasUserInformationEnName");
             var directorOfLessor = decodeHTMLEntities("@user.CrMasUserInformationLessorNavigation.CrMasLessorInformationDirectorEnName");
@@ -318,8 +328,8 @@
                 ctx.font = "bold 35px serif";
                 ctx.textAlign = "left";
                 ctx.fillStyle = "black";
-                ctx.fillText(hijriDateString, canvas.width - 2250, 700);
-                ctx.fillText(miladiDateString, canvas.width - 2270, 630);
+                ctx.fillText(miladiDateString, canvas.width - 2250, 700);
+                ctx.fillText(hijriDateString, canvas.width - 2270, 630);
                 ctx.font = "bold 50px serif";
                 ctx.fillText(accountReceiptNo, canvas.width - 620, 625);
                 let cleanedValueString = AmountPayed.replace(/,/g, "");
@@ -328,10 +338,18 @@
                 // Extract the number before the decimal point
                 let beforeDecimal = parts[0];
                 // Extract the number after the decimal point
-                let afterDecimal = parts.length > 1 ? parts[1] : "0";
+                let afterDecimal = parts.length > 1 ? parts[1] : "";
+
+                // If no decimal part, set it to "00"
+                if (afterDecimal === "") {
+                    afterDecimal = "00";
+                } else {
+                    // Convert the extracted strings back to integers if needed
+                    afterDecimal = parseInt(afterDecimal).toString().padEnd(2, '0');
+                }
                 // Convert the extracted strings back to integers if needed
                 let beforeDecimalNumber = parseInt(beforeDecimal);
-                let afterDecimalNumber = parseInt(afterDecimal);
+                let afterDecimalNumber = afterDecimal;
                 // Assuming `ctx` is your canvas context
                 ctx.fillText(beforeDecimalNumber, canvas.width - 450, 720);
                 ctx.fillText(afterDecimalNumber, canvas.width - 270, 720);
@@ -341,7 +359,7 @@
                 ctx.fillText(EnNamePayment, canvas.width - 2000, 1160);
 
                 // //Total
-                var phaseFor = `Feed box for ${enBranch} Branch`;
+                var phaseFor = `Feed box for ${enBranch} Branch ,Reference No. ${ReferenceNo}`;
                 ctx.fillText(phaseFor, canvas.width - 2250, 1290);
 
                 ctx.font = "bold 40px serif";
@@ -371,7 +389,7 @@
             // Submit the form
             setTimeout(function () {
                 form.submit();
-            }, 5000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
+            }, 2000); // Adjust delay as needed (2000 milliseconds = 2 seconds)
         }
     </script>
 
@@ -432,6 +450,11 @@
         function formatHijriEnDate(date) {
             const options = { weekday: 'long', day: 'numeric', year: 'numeric', month: 'long', calendar: 'islamic-umalqura' };
             return date.toLocaleDateString('en-US-u-ca-islamic-umalqura', options).replace(/AH/g, ''); // Remove "AH" suffix
+        }
+        function reverseParts(input) {
+            let parts = input.split('-');
+            parts.reverse();
+            return parts.join("-");
         }
     </script>
 }

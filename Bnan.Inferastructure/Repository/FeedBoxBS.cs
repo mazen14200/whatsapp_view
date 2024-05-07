@@ -61,7 +61,17 @@ namespace Bnan.Inferastructure.Repository
             if (Adminstritive != null)
             {
                 Adminstritive.CrCasSysAdministrativeProceduresStatus = status;
-
+                if (status==Status.Accept)
+                {
+                    Adminstritive.CrCasSysAdministrativeProceduresArDescription = "قبول تغذية الصندوق";
+                    Adminstritive.CrCasSysAdministrativeProceduresEnDescription = "Accept box feeding";
+                }
+                else
+                {
+                    Adminstritive.CrCasSysAdministrativeProceduresArDescription = "رفض تغذية الصندوق";
+                    Adminstritive.CrCasSysAdministrativeProceduresEnDescription = "Refuse box feeding";
+                }
+                
                 Adminstritive.CrCasSysAdministrativeProceduresReasons = Reasons;
 
                 if (_unitOfWork.CrCasSysAdministrativeProcedure.Update(Adminstritive) != null) return true;

@@ -28,7 +28,7 @@ namespace Bnan.Inferastructure.Repository
             crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedLessor = OldContract.CrCasRenterContractBasicLessor;
             crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedContractValue = ContractValue;
             crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedPercentage = OldContract.CrCasRenterContractBasicTaxRate;
-            crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedValue = crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedContractValue * OldContract.CrCasRenterContractBasicTaxRate/100;
+            crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedValue = crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedContractValue * OldContract.CrCasRenterContractBasicTaxRate / 100;
             crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedDate = DateTime.Now.Date;
             crCasAccountContractTaxOwed.CrCasAccountContractTaxOwedIsPaid = false;
 
@@ -211,7 +211,7 @@ namespace Bnan.Inferastructure.Repository
             return false;
         }
 
-        public async Task<bool> UpdateRenterLessor(string ContractNo, decimal AmountRequired, decimal AmountPaid,decimal ContractValue ,decimal TotalContractValue,int DaysNo)
+        public async Task<bool> UpdateRenterLessor(string ContractNo, decimal AmountRequired, decimal AmountPaid, decimal ContractValue, decimal TotalContractValue, int DaysNo)
         {
             var OldContract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == ContractNo).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();
             var RenterLessor = await _unitOfWork.CrCasRenterLessor.FindAsync(x => x.CrCasRenterLessorId == OldContract.CrCasRenterContractBasicRenterId && x.CrCasRenterLessorCode == OldContract.CrCasRenterContractBasicLessor);
@@ -219,7 +219,7 @@ namespace Bnan.Inferastructure.Repository
             var ResevedAndAvaliableBalance = RenterLessor.CrCasRenterLessorAvailableBalance + RenterLessor.CrCasRenterLessorReservedBalance;
 
             // In This Case , ReservedBalance equal Expected Total Contract , this have one contract
-            if (RenterLessor.CrCasRenterLessorReservedBalance== OldContract.CrCasRenterContractBasicExpectedTotal)
+            if (RenterLessor.CrCasRenterLessorReservedBalance == OldContract?.CrCasRenterContractBasicExpectedTotal)
             {
 
                 if (ResevedAndAvaliableBalance == TotalContractValue)
@@ -228,61 +228,23 @@ namespace Bnan.Inferastructure.Repository
                 }
                 else if (TotalContractValue > ResevedAndAvaliableBalance)
                 {
-                    RenterLessor.CrCasRenterLessorBalance -= TotalContractValue - AmountPaid; // 400 > 400 + 100 - 497.9 = 2.10
+                    RenterLessor.CrCasRenterLessorBalance -= TotalContractValue - AmountPaid; 
                 }
                 else if (TotalContractValue < ResevedAndAvaliableBalance)
                 {
-                    RenterLessor.CrCasRenterLessorBalance -= TotalContractValue + AmountPaid; // 12.10 +397.9 =400-410=-10
+                    RenterLessor.CrCasRenterLessorBalance -= TotalContractValue + AmountPaid;
                 }
                 RenterLessor.CrCasRenterLessorReservedBalance = 0;  // 0
-                RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance; 
+                RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance;
             }
-
-            //if (AmountPaid == 0 && AmountRequired == 0)
-            //{
-            //    RenterLessor.CrCasRenterLessorBalance = 0;
-            //    RenterLessor.CrCasRenterLessorReservedBalance = 0; 
-            //    RenterLessor.CrCasRenterLessorAvailableBalance = 0; 
-            //}
-            //// AmountRequired = "-2.10";
-            //// AmountPaid ="0";
-            //// var totalBalance = "400";
-            //// var ResevedBalance = "397.9";
-            //// var AvaBalance = "2.10";
-            //// له فلوس ومدفعناش 
-            //else if (AmountPaid == 0 && AmountRequired < 0)
-            //{
-            //    RenterLessor.CrCasRenterLessorBalance -= TotalContractValue; // 2.10
-            //    RenterLessor.CrCasRenterLessorReservedBalance = 0;  // 0
-            //    RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance; // 2.10
-            //}
-            //// AmountRequired = "-2.10";
-            //// AmountPaid = "2.10";
-            //// var totalBalance = "400";
-            //// var ResevedBalance = "397.9";
-            //// var AvaBalance = "2.10";
-            //// له فلوس او ملوش ودفعناله 
-            //else if (AmountPaid >= 0 && AmountRequired <= 0)
-            //{
-            //    RenterLessor.CrCasRenterLessorBalance = TotalContractValue - AmountPaid; // 12.10 +397.9 =400-410=-10
-            //    RenterLessor.CrCasRenterLessorReservedBalance = 0;  // 0
-            //    RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance; // 0 > -10-0=-10
-            //}
-            //// AmountRequired = "-2.10";
-            //// AmountPaid = "2.10";
-            //// var totalBalance = "400";
-            //// var ResevedBalance = "397.9";
-            //// var AvaBalance = "2.10";
-            //// var AmountRequired = "100";
-            //// var TotalContractValue = "497.9";
-            //// عليه فلوس ودفع 
-            //else if (AmountPaid > 0 && AmountRequired > 0)
-            //{
-            //    RenterLessor.CrCasRenterLessorBalance = AmountRequired - AmountPaid; // 400 > 400 + 100 - 497.9 = 2.10
-            //    RenterLessor.CrCasRenterLessorReservedBalance = 0; // 397.9 > 397.9 + 100 - 500=2.10
-            //    RenterLessor.CrCasRenterLessorAvailableBalance = RenterLessor.CrCasRenterLessorBalance; // 2.10 > -10-0=-10
-            //}
-
+            //Have greater than 1 Contract
+            else
+            {
+                RenterLessor.CrCasRenterLessorReservedBalance -= OldContract?.CrCasRenterContractBasicExpectedTotal;
+                if (AmountRequired >= 0 && AmountPaid >= 0) RenterLessor.CrCasRenterLessorAvailableBalance -= (TotalContractValue - OldContract?.CrCasRenterContractBasicExpectedTotal) - AmountPaid;
+                else RenterLessor.CrCasRenterLessorAvailableBalance -= (TotalContractValue - OldContract?.CrCasRenterContractBasicExpectedTotal) + AmountPaid;
+                RenterLessor.CrCasRenterLessorBalance = RenterLessor.CrCasRenterLessorReservedBalance + RenterLessor.CrCasRenterLessorAvailableBalance;
+            }
             if (RenterLessor.CrCasRenterLessorContractDays == null) RenterLessor.CrCasRenterLessorContractDays = 0;
             RenterLessor.CrCasRenterLessorContractDays += DaysNo;
             if (RenterLessor.CrCasRenterLessorContractTradedAmount == null) RenterLessor.CrCasRenterLessorContractTradedAmount = 0;
@@ -295,7 +257,7 @@ namespace Bnan.Inferastructure.Repository
 
         public async Task<CrCasRenterContractBasic> UpdateRenterSettlementContract(string ContractNo, string UserInsert, string ActualDaysNo, string Mechanizm, string CurrentMeter, string AdditionalKm,
                                                                               string TaxValue, string DiscountValue, string RequiredValue, string AmountPaid, string ExpensesValue, string ExpensesReasons, string CompensationValue,
-                                                                             string CompensationReasons, string MaxHours, string MaxMinutes, string ExtraValueHours, string PrivateDriverValueTotal, string ChoicesValueTotal,string AdvantagesValueTotal, string ContractValue,
+                                                                             string CompensationReasons, string MaxHours, string MaxMinutes, string ExtraValueHours, string PrivateDriverValueTotal, string ChoicesValueTotal, string AdvantagesValueTotal, string ContractValue,
                                                                              string ContractValueAfterDiscount, string TotalContract, decimal PreviousBalance)
         {
             var OldContract = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicNo == ContractNo).OrderByDescending(x => x.CrCasRenterContractBasicCopy).FirstOrDefault();
@@ -324,7 +286,7 @@ namespace Bnan.Inferastructure.Repository
             OldContract.CrCasRenterContractBasicActualTaxValue = decimal.Parse(TaxValue, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicActualTotal = decimal.Parse(TotalContract, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicClosePreviousBalance = PreviousBalance;
-            
+
             OldContract.CrCasRenterContractBasicCompensationValue = decimal.Parse(CompensationValue, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicExpensesValue = decimal.Parse(ExpensesValue, CultureInfo.InvariantCulture);
             OldContract.CrCasRenterContractBasicCompensationDescription = CompensationReasons;
@@ -423,7 +385,7 @@ namespace Bnan.Inferastructure.Repository
             var CompanyContract = await _unitOfWork.CrMasContractCompany.FindAsync(x => x.CrMasContractCompanyLessor == OldContract.CrCasRenterContractBasicLessor && x.CrMasContractCompanyProcedures == "112");//ForBnan Contract
             var CompanyContractDetailed = _unitOfWork.CrMasContractCompanyDetailed.FindAll(x => x.CrMasContractCompanyDetailedNo == CompanyContract.CrMasContractCompanyNo);
             CrCasAccountContractCompanyOwed crCasAccountContractCompany = new CrCasAccountContractCompanyOwed();
-            if (CompanyContractDetailed!=null) // Subscribtion
+            if (CompanyContractDetailed != null) // Subscribtion
             {
                 crCasAccountContractCompany.CrCasAccountContractCompanyOwedNo = OldContract.CrCasRenterContractBasicNo;
                 crCasAccountContractCompany.CrCasAccountContractCompanyOwedCompanyCode = OldContract.CrCasRenterContractBasicLessor;
@@ -452,7 +414,7 @@ namespace Bnan.Inferastructure.Repository
                 if (await _unitOfWork.CrCasAccountContractCompanyOwed.AddAsync(crCasAccountContractCompany) != null) return true;
             }
             return false;
-            
+
         }
 
         private CrCasAccountReceipt GetContractAccountReceipt(string LessorCode, string BranchCode, string Procedure)
@@ -479,7 +441,7 @@ namespace Bnan.Inferastructure.Repository
 
         public async Task<bool> UpdateRenterStatistics(CrCasRenterContractBasic Contract)
         {
-            var Statistic = await _unitOfWork.CrCasRenterContractStatistic.FindAsync(x=>x.CrCasRenterContractStatisticsNo==Contract.CrCasRenterContractBasicNo);
+            var Statistic = await _unitOfWork.CrCasRenterContractStatistic.FindAsync(x => x.CrCasRenterContractStatisticsNo == Contract.CrCasRenterContractBasicNo);
             if (Contract != null)
             {
                 // H Month 
@@ -501,7 +463,7 @@ namespace Bnan.Inferastructure.Repository
                 Statistic.CrCasRenterContractStatisticsCompensationValue = Contract.CrCasRenterContractBasicCompensationValue;
                 var CompanyContractBnan = await _unitOfWork.CrCasAccountContractCompanyOwed.FindAsync(x => x.CrCasAccountContractCompanyOwedNo == Contract.CrCasRenterContractBasicNo);
                 if (CompanyContractBnan != null) Statistic.CrCasRenterContractStatisticsBnanValue = CompanyContractBnan.CrCasAccountContractCompanyOwedAmount;
-                
+
                 if (_unitOfWork.CrCasRenterContractStatistic.Update(Statistic) != null) return true;
                 return false;
             }

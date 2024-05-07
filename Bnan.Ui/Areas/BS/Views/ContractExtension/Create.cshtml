@@ -1053,9 +1053,9 @@
             var selectElement = document.getElementById("ExtensionContract_PaymentMethod");
             var selectedOption = selectElement.options[selectElement.selectedIndex];
             // Get the text of the selected option
-            var selectedText = selectedOption.textContent || selectedOption.innerText;
-            if (selectedText == "" || selectedText == undefined || selectedText || NaN) {
-                selectedText = "";
+            var selectedArabicName = selectedOption.dataset.ar;
+            if (selectedArabicName == "" || selectedArabicName == undefined || selectedArabicName == NaN) {
+                selectedArabicName = "";
             }
             //get Data Director lessor and branch and get renter and user
             var userName = decodeHTMLEntities("@user.CrMasUserInformationEnName");
@@ -1109,7 +1109,7 @@
                 ctx.fillText(taxText, canvas.width - 2180, 2573);
                 ctx.fillText(AmountRequired, canvas.width - 2020, 2660);
                 ctx.fillText(AmountPayed, canvas.width - 2100, 2750);
-                ctx.fillText(selectedText, canvas.width - 2010, 2840);
+                ctx.fillText(selectedArabicName, canvas.width - 2010, 2840);
                 ctx.fillText(reasonPayment, canvas.width - 2170, 2930);
                 ctx.font = "bold 35px serif";
                 //Date and contract no
@@ -1223,7 +1223,6 @@
             var totalDiscount = total * discountValue;
             return totalDiscount;
         }
-
         const sendArReceiptToWhatsApp = async () => {
             const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArExternalCatchReceipt";
             const imagePath = imageLessor.replace('~', '');
@@ -1287,8 +1286,8 @@
                 ctx.font = "bold 35px serif";
                 ctx.textAlign = "right";
                 ctx.fillStyle = "black";
-                ctx.fillText(hijriDateString, canvas.width - 260, 712);
-                ctx.fillText(miladiDateString, canvas.width - 250, 646);
+                ctx.fillText(miladiDateString, canvas.width - 260, 712);
+                ctx.fillText(hijriDateString, canvas.width - 250, 646);
 
                 ctx.font = "bold 50px serif";
 
@@ -1306,11 +1305,19 @@
                 let beforeDecimal = parts[0];
 
                 // Extract the number after the decimal point
-                let afterDecimal = parts.length > 1 ? parts[1] : "0";
+                let afterDecimal = parts.length > 1 ? parts[1] : "";
+
+                // If no decimal part, set it to "00"
+                if (afterDecimal === "") {
+                    afterDecimal = "00";
+                } else {
+                    // Convert the extracted strings back to integers if needed
+                    afterDecimal = parseInt(afterDecimal).toString().padEnd(2, '0');
+                }
 
                 // Convert the extracted strings back to integers if needed
                 let beforeDecimalNumber = parseInt(beforeDecimal);
-                let afterDecimalNumber = parseInt(afterDecimal);
+                let afterDecimalNumber = afterDecimal;
                 // Assuming `ctx` is your canvas context
                 ctx.fillText(afterDecimalNumber, canvas.width - 1925, 720);
                 ctx.fillText(beforeDecimalNumber, canvas.width - 2030, 720);
@@ -1339,7 +1346,6 @@
             };
             img.src = URL.createObjectURL(blob);
         };
-
         const sendEnReceiptToWhatsApp = async () => {
             const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageEnExternalCatchReceipt";
             const imagePath = imageLessor.replace('~', '');
@@ -1359,7 +1365,7 @@
             const hijriDateString = formatHijriEnDate(miladiDate);
 
             // First In Page
-            const contractNo = "@ViewBag.ContractNo";
+            const contractNo = "@Model.ExtensionContract.CrCasRenterContractBasicNo";
             const accountReceiptNo = "@ViewBag.AccountReceiptNo";
             const RenterName = '@Html.Raw(Model.ExtensionContract?.CrCasRenterContractBasic5?.CrCasRenterLessorNavigation?.CrMasRenterInformationEnName)';
 
@@ -1403,8 +1409,8 @@
                 ctx.font = "bold 35px serif";
                 ctx.textAlign = "left";
                 ctx.fillStyle = "black";
-                ctx.fillText(hijriDateString, canvas.width - 2250, 700);
-                ctx.fillText(miladiDateString, canvas.width - 2270, 630);
+                ctx.fillText(miladiDateString, canvas.width - 2250, 700);
+                ctx.fillText(hijriDateString, canvas.width - 2270, 630);
                 ctx.font = "bold 50px serif";
                 ctx.fillText(accountReceiptNo, canvas.width - 620, 625);
                 let cleanedValueString = AmountPayed.replace(/,/g, "");
@@ -1413,10 +1419,19 @@
                 // Extract the number before the decimal point
                 let beforeDecimal = parts[0];
                 // Extract the number after the decimal point
-                let afterDecimal = parts.length > 1 ? parts[1] : "0";
+                let afterDecimal = parts.length > 1 ? parts[1] : "";
+
+                // If no decimal part, set it to "00"
+                if (afterDecimal === "") {
+                    afterDecimal = "00";
+                } else {
+                    // Convert the extracted strings back to integers if needed
+                    afterDecimal = parseInt(afterDecimal).toString().padEnd(2, '0');
+                }
+
                 // Convert the extracted strings back to integers if needed
                 let beforeDecimalNumber = parseInt(beforeDecimal);
-                let afterDecimalNumber = parseInt(afterDecimal);
+                let afterDecimalNumber = afterDecimal;
                 // Assuming `ctx` is your canvas context
                 ctx.fillText(beforeDecimalNumber, canvas.width - 450, 720);
                 ctx.fillText(afterDecimalNumber, canvas.width - 270, 720);
@@ -1426,7 +1441,7 @@
                 ctx.fillText(selectedArabicName, canvas.width - 2000, 1160);
 
                 // //Total
-                var phaseFor = `Payment for the car rental contract (${contractNo})`;
+                var phaseFor = `Payment for the car rental contract ${contractNo}`;
                 ctx.fillText(phaseFor, canvas.width - 2250, 1290);
 
                 ctx.font = "bold 40px serif";
@@ -1444,7 +1459,6 @@
             };
             img.src = URL.createObjectURL(blob);
         };
-
         // submit Form
         document.addEventListener('DOMContentLoaded', function () {
             // Get the form element

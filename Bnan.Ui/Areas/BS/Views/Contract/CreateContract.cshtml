@@ -2976,7 +2976,7 @@ else
                         var check = "";
                         var Authrize = true;
                         if (!(id && address && license && isAgeInRange && employer)) {
-                           
+
                             if (id == false && "@user.CrMasUserContractValidity.CrMasUserContractValidityId" == "False") {
                                 toastr.options = { "positionClass": '@localizer["toastPostion"]', };
                                 toastr.error('@localizer["IdIsExpriredAndYouNotAuth"]');
@@ -3791,10 +3791,10 @@ else
 
                 var privateDriverRadio1 = document.getElementById("PrivateDriver");
                 var privateDriverID = $("#driver-dropdown").val();
-               
+
                 if (privateDriverRadio1.checked && privateDriverID != null) {
                     var privateDriver = CarInformation.carPrice.crCasPriceCarBasicPrivateDriverValue;
-                    
+
                     if (privateDriver != null) {
                         privateDriverValue = parseFloat(privateDriver) * parseInt(daysNo);
                         document.getElementById('PrivateDriverValue').textContent = privateDriverValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -4184,24 +4184,28 @@ else
             const RenterName = decodeHTMLEntities(RenterInformation.personalArName);
             const CarName = CarInformation.carInformation.crCasCarInformationConcatenateArName;
             // last in page
-            const balance = RenterInformation.availableBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
             var DiscountInput = document.getElementById("Discount_Input").value;
-            var AmountPayedInput = document.getElementById("AmountPayed").value;
             const discountRate = parseFloat(DiscountInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const TaxPercent = parseFloat(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            const balance = RenterInformation.availableBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const AmountRequired = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-            var AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            if (AmountPayed == "" || AmountPayed == undefined || AmountPayed || NaN) {
-                AmountPayed = "0.00";
+            var AmountPayedInput = document.getElementById("AmountPayed").value;
+            let AmountPayed = parseFloat(AmountPayedInput);
+
+            // Check if AmountPayed is null, NaN, or empty
+            if (isNaN(AmountPayed) || !AmountPayedInput.trim()) {
+                AmountPayed = "0.00"; // Setting it as a string
+            } else {
+                // Convert to formatted string with 2 decimal places
+                AmountPayed = AmountPayed.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             }
             var selectElement = document.getElementById("Contract_PaymentMethod");
             var selectedOption = selectElement.options[selectElement.selectedIndex];
             // Get the text of the selected option
-            var selectedText = selectedOption.textContent || selectedOption.innerText;
             var selectedArabicName = selectedOption.dataset.ar;
-            if (selectedArabicName == "" || selectedArabicName == undefined || selectedArabicName || NaN) {
+            if (selectedArabicName == "" || selectedArabicName == undefined || selectedArabicName == NaN) {
                 selectedArabicName = "";
             }
             //get Data Director lessor and branch and get renter and user
@@ -4385,13 +4389,13 @@ else
                 var tTotalDiscount = calculateTotalDiscountAmount(tTotal, DiscountInput);
                 var tTotalAfterDiscount = tTotal - tTotalDiscount;
                 var tTotalTax = (tTotalAfterDiscount) * (TaxPercent / 100);
-                var TotalAmountMinisPerviousBalance = parseFloat(TotalAmount) + parseFloat(RenterInformation.availableBalance);
+                var TotalAmount = parseFloat(TotalActualContract)
                 // // الاجمالي
                 ctx.fillText(tTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 970, 2250);
                 ctx.fillText(tTotalDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1270, 2250);
                 ctx.fillText(tTotalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1560, 2250);
                 ctx.fillText(tTotalTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1880, 2250);
-                ctx.fillText(TotalAmountMinisPerviousBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 2180, 2250);
+                ctx.fillText(TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 2180, 2250);
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
 
 
@@ -4453,20 +4457,25 @@ else
             // last in page
             const balance = RenterInformation.availableBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             var DiscountInput = document.getElementById("Discount_Input").value;
-            var AmountPayedInput = document.getElementById("AmountPayed").value;
             const discountRate = parseFloat(DiscountInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const TaxPercent = parseFloat(CarInformation.carPrice.crCasPriceCarBasicRentalTaxRate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const AmountRequired = TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            var AmountPayed = parseFloat(AmountPayedInput).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            if (AmountPayed == "" || AmountPayed == undefined || AmountPayed || NaN) {
-                AmountPayed = "0.00";
+            var AmountPayedInput = document.getElementById("AmountPayed").value;
+            let AmountPayed = parseFloat(AmountPayedInput);
+
+            // Check if AmountPayed is null, NaN, or empty
+            if (isNaN(AmountPayed) || !AmountPayedInput.trim()) {
+                AmountPayed = "0.00"; // Setting it as a string
+            } else {
+                // Convert to formatted string with 2 decimal places
+                AmountPayed = AmountPayed.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             }
             var selectElement = document.getElementById("Contract_PaymentMethod");
             var selectedOption = selectElement.options[selectElement.selectedIndex];
             // Get the text of the selected option
             var selectedText = selectedOption.textContent || selectedOption.innerText;
             var selectedEnglishName = selectedOption.dataset.en;
-            if (selectedEnglishName == "" || selectedEnglishName == undefined || selectedEnglishName || NaN) {
+            if (selectedEnglishName == "" || selectedEnglishName == undefined || selectedEnglishName == NaN) {
                 selectedEnglishName = "";
             }
             //get Data Director lessor and branch and get renter and user
@@ -4650,13 +4659,13 @@ else
                 var tTotalDiscount = calculateTotalDiscountAmount(tTotal, DiscountInput);
                 var tTotalAfterDiscount = tTotal - tTotalDiscount;
                 var tTotalTax = (tTotalAfterDiscount) * (TaxPercent / 100);
-                var TotalAmountMinisPerviousBalance = parseFloat(TotalAmount) + parseFloat(RenterInformation.availableBalance);
+                var TotalAmount = parseFloat(TotalActualContract)
                 // // الاجمالي
                 ctx.fillText(tTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1510, 2250);
                 ctx.fillText(tTotalDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 1200, 2250);
                 ctx.fillText(tTotalAfterDiscount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 910, 2250);
                 ctx.fillText(tTotalTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 620, 2250);
-                ctx.fillText(TotalAmountMinisPerviousBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 310, 2250);
+                ctx.fillText(TotalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), canvas.width - 310, 2250);
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Total
 
 
@@ -4694,8 +4703,6 @@ else
 
             return yHeight + 88; // Update yHeight for the next item
         }
-
-
         const sendArReceiptToWhatsApp = async () => {
             const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageArExternalCatchReceipt";
             const imagePath = imageLessor.replace('~', '');
@@ -4759,8 +4766,8 @@ else
                 ctx.font = "bold 35px serif";
                 ctx.textAlign = "right";
                 ctx.fillStyle = "black";
-                ctx.fillText(hijriDateString, canvas.width - 260, 712);
-                ctx.fillText(miladiDateString, canvas.width - 250, 646);
+                ctx.fillText(miladiDateString, canvas.width - 260, 712);
+                ctx.fillText(hijriDateString, canvas.width - 250, 646);
 
                 ctx.font = "bold 50px serif";
 
@@ -4778,11 +4785,19 @@ else
                 let beforeDecimal = parts[0];
 
                 // Extract the number after the decimal point
-                let afterDecimal = parts.length > 1 ? parts[1] : "0";
+                let afterDecimal = parts.length > 1 ? parts[1] : "";
+
+                // If no decimal part, set it to "00"
+                if (afterDecimal === "") {
+                    afterDecimal = "00";
+                } else {
+                    // Convert the extracted strings back to integers if needed
+                    afterDecimal = parseInt(afterDecimal).toString().padEnd(2, '0');
+                }
 
                 // Convert the extracted strings back to integers if needed
                 let beforeDecimalNumber = parseInt(beforeDecimal);
-                let afterDecimalNumber = parseInt(afterDecimal);
+                let afterDecimalNumber = afterDecimal;
                 // Assuming `ctx` is your canvas context
                 ctx.fillText(afterDecimalNumber, canvas.width - 1925, 720);
                 ctx.fillText(beforeDecimalNumber, canvas.width - 2030, 720);
@@ -4792,7 +4807,7 @@ else
                 ctx.fillText(selectedArabicName, canvas.width - 415, 1165);
 
                 //
-                var phaseFor = ` ( ${contractNo} ) دفعة تحت الحساب لعقد ايجار السيارة لعقد`;
+                var phaseFor = `${contractNo}  دفعة تحت الحساب لعقد ايجار السيارة لعقد`;
                 ctx.fillText(phaseFor, canvas.width - 390, 1305);
 
                 ctx.font = "bold 40px serif";
@@ -4810,7 +4825,6 @@ else
             };
             img.src = URL.createObjectURL(blob);
         };
-
         const sendEnReceiptToWhatsApp = async () => {
             const imageLessor = "@lessorInfo?.CrMasUserInformationLessorNavigation?.CrMasLessorImage.CrMasLessorImageEnExternalCatchReceipt";
             const imagePath = imageLessor.replace('~', '');
@@ -4877,8 +4891,8 @@ else
                 ctx.fillStyle = "black";
 
 
-                ctx.fillText(hijriDateString, canvas.width - 2250, 700);
-                ctx.fillText(miladiDateString, canvas.width - 2270, 630);
+                ctx.fillText(miladiDateString, canvas.width - 2250, 700);
+                ctx.fillText(hijriDateString, canvas.width - 2270, 630);
 
                 ctx.font = "bold 50px serif";
                 ctx.fillText(accountReceiptNo, canvas.width - 620, 625);
@@ -4892,15 +4906,19 @@ else
                 let beforeDecimal = parts[0];
 
                 // Extract the number after the decimal point
-                let afterDecimal = parts.length > 1 ? parts[1] : "0";
+                let afterDecimal = parts.length > 1 ? parts[1] : "";
+
+                // If no decimal part, set it to "00"
+                if (afterDecimal === "") {
+                    afterDecimal = "00";
+                } else {
+                    // Convert the extracted strings back to integers if needed
+                    afterDecimal = parseInt(afterDecimal).toString().padEnd(2, '0');
+                }
 
                 // Convert the extracted strings back to integers if needed
                 let beforeDecimalNumber = parseInt(beforeDecimal);
-                let afterDecimalNumber = parseInt(afterDecimal);
-
-                // Output the extracted numbers
-                console.log("Number before decimal point: " + beforeDecimalNumber);
-                console.log("Number after decimal point: " + afterDecimalNumber);
+                let afterDecimalNumber = afterDecimal;
 
                 // Assuming `ctx` is your canvas context
                 ctx.fillText(beforeDecimalNumber, canvas.width - 450, 720);
@@ -4911,7 +4929,7 @@ else
                 ctx.fillText(selectedArabicName, canvas.width - 2000, 1160);
 
                 // //Total
-                var phaseFor = `Payment to extend the car rental contract ( ${contractNo} )`;
+                var phaseFor = `Payment to extend the car rental contract ${contractNo}`;
                 ctx.fillText(phaseFor, canvas.width - 2250, 1290);
 
                 ctx.font = "bold 40px serif";
@@ -4929,9 +4947,6 @@ else
             };
             img.src = URL.createObjectURL(blob);
         };
-
-
-
         function calculateTotalAmountPerDay(rent, auth, feature, privateDriver, additionalDriver, additionals, choices, days) {
             var daysNo = parseInt(days);
             var total = (rent * daysNo) + (auth) + (feature * daysNo) + (additionalDriver) + (privateDriver * daysNo) + (additionals) + (choices * daysNo);
@@ -4943,6 +4958,14 @@ else
             return totalDiscount;
         }
 
+       
+
+    </script>
+    <!--Create Contract Pdf-->
+    <script>
+
+    </script>
+    <script>
         // submit Form
         document.addEventListener('DOMContentLoaded', function () {
             // Get the form element
@@ -4978,6 +5001,7 @@ else
                 }
             });
         });
+
 
     </script>
     <script type="text/javascript">

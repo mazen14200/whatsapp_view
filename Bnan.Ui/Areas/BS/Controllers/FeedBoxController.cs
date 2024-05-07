@@ -50,6 +50,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var autoinc1 = GetFeedBoxAccountReceipt(lessorCode, bSLayoutVM.SelectedBranch,"301").CrCasAccountReceiptNo;
             var AccountReceiptNo = y + "-" + "1" + "301" + "-" + lessorCode + bSLayoutVM.SelectedBranch + "-" + autoinc1;
             ViewBag.AccountReceiptNo = AccountReceiptNo;
+            ViewBag.ReferenceNo = adminstrive.CrCasSysAdministrativeProceduresNo;
 
             bSLayoutVM.CrCasSysAdministrativeProcedure = adminstrive;
             return View(bSLayoutVM);

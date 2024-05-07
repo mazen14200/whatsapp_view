@@ -139,9 +139,17 @@ namespace Bnan.Inferastructure.Repository
             {
                 Adminstritive.CrCasSysAdministrativeProceduresStatus = status;
                 Adminstritive.CrCasSysAdministrativeProceduresUserInsert = UserCode;
+                if (!string.IsNullOrEmpty(Reasons)) Adminstritive.CrCasSysAdministrativeProceduresReasons = Reasons;
                 if (status==Status.Reject)
                 {
-                    if (!string.IsNullOrEmpty(Reasons)) Adminstritive.CrCasSysAdministrativeProceduresReasons = Reasons;
+                    Adminstritive.CrCasSysAdministrativeProceduresArDescription = "تم رفض استلام العهدة";
+                    Adminstritive.CrCasSysAdministrativeProceduresEnDescription = "Receipt of custody was refused";
+
+                }
+                else
+                {
+                    Adminstritive.CrCasSysAdministrativeProceduresArDescription = "تم قبول استلام العهدة";
+                    Adminstritive.CrCasSysAdministrativeProceduresEnDescription = "Receipt of custody was accepted";
                 }
                 if (_unitOfWork.CrCasSysAdministrativeProcedure.Update(Adminstritive) != null) return true;
             }
