@@ -2,6 +2,7 @@
 using Bnan.Core.Interfaces;
 using Bnan.Core.Models;
 using Bnan.Inferastructure.Extensions;
+using Bnan.Inferastructure.Repository;
 using Bnan.Ui.Areas.Base.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -52,6 +53,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var lessorMemberships = _unitOfWork.CrCasLessorMembership.FindAll(x => x.CrCasLessorMembershipConditionsLessor == userLogin.CrMasUserInformationLessor &&
                                                                                    x.CrCasLessorMembershipConditions != "1600000006", new[] { "CrCasLessorMembershipConditionsNavigation" })
                                                            .OrderBy(x => x.CrCasLessorMembershipConditions).ToList();
+
+
             return View(lessorMemberships);
         }
         [HttpGet]
@@ -113,6 +116,17 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 }
                 if (await _unitOfWork.CompleteAsync() > 0)
                 {
+                    // Save Adminstrive Procedures
+                    await _adminstritiveProcedures.SaveAdminstritive(userLogin.CrMasUserInformationCode, "1", "242", "20", userLogin.CrMasUserInformationLessor, "100",
+                    "", null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
+
+                    //save Tracing
+                    var (mainTask, subTask, system, currentUser) = await SetTrace("207", "2207002", "2");
+
+                    await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
+                    subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+                    subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
                     _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                     return RedirectToAction("LessorMembership");
                 }

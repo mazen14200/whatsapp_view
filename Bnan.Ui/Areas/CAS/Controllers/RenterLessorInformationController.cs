@@ -35,11 +35,12 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         private readonly IToastNotification _toastNotification;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IStringLocalizer<RenterLessorInformationController> _localizer;
+        private readonly IAdminstritiveProcedures _adminstritiveProcedures;
 
 
         public RenterLessorInformationController(UserManager<CrMasUserInformation> userManager, IUnitOfWork unitOfWork,
-            IMapper mapper, IUserService userService, IRenterLessorInformation RenterLessorInformation,
-            IUserLoginsService userLoginsService, IToastNotification toastNotification, IWebHostEnvironment webHostEnvironment, IStringLocalizer<RenterLessorInformationController> localizer) : base(userManager, unitOfWork, mapper)
+            IMapper mapper, IUserService userService, IRenterLessorInformation RenterLessorInformation, IAdminstritiveProcedures AdminstritiveProcedures,
+        IUserLoginsService userLoginsService, IToastNotification toastNotification, IWebHostEnvironment webHostEnvironment, IStringLocalizer<RenterLessorInformationController> localizer) : base(userManager, unitOfWork, mapper)
         {
             this.userManager = userManager;
             this.unitOfWork = unitOfWork;
@@ -50,6 +51,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             _toastNotification = toastNotification;
             _webHostEnvironment = webHostEnvironment;
             _localizer = localizer;
+            _adminstritiveProcedures = AdminstritiveProcedures;
         }
 
         [HttpGet]
@@ -184,6 +186,10 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, RecordAr, RecordEn, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+                    // Save Adminstrive Procedures
+                    await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "247", "20", currentUser.CrMasUserInformationLessor, "100",
+                    model.CrCasRenterLessorId, null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
 
                     _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
 

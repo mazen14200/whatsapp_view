@@ -146,8 +146,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
 
                 // Save Adminstrive Procedures
-                await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "202", "20", currentUser.CrMasUserInformationLessor, "100",
-                branchDocument.CrCasBranchDocumentsNo, null, null, branchDocument.CrCasBranchDocumentsNo, branchDocument.CrCasBranchDocumentsDate, branchDocument.CrCasBranchDocumentsStartDate, branchDocument.CrCasBranchDocumentsEndDate,
+                await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", branchDocument.CrCasBranchDocumentsProcedures, "10", currentUser.CrMasUserInformationLessor, "100",
+                branchDocument.CrCasBranchDocumentsBranch, null, null, branchDocument.CrCasBranchDocumentsNo, branchDocument.CrCasBranchDocumentsDate, branchDocument.CrCasBranchDocumentsStartDate, branchDocument.CrCasBranchDocumentsEndDate,
                 null, null, "اضافة","Insert", "I", null);
                 _toastNotification.AddSuccessToastMessage(_localizer["ToastEdit"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
             }
@@ -194,8 +194,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                         string foldername = $"{"images\\Company"}\\{branchDocument.CrCasBranchDocumentsLessor}\\{"Branches"}\\{branchDocument.CrCasBranchDocumentsBranch}\\{"Documentions"}";
                         var sysProcedure = _unitOfWork.CrMasSysProcedure.Find(x => x.CrMasSysProceduresClassification == "10" && x.CrMasSysProceduresCode == branchDocument.CrCasBranchDocumentsProcedures);
                         string fileNameImg = sysProcedure.CrMasSysProceduresEnName;
-                        sAr = "حذف المستند";
-                        sEn = "Remove Document";
+                        sAr = "حذف";
+                        sEn = "Remove";
                         branchDocument.CrCasBranchDocumentsStatus = Status.Deleted;
                         await _BranchDocument.UpdateBranchDocument(branchDocument);
                         await FileExtensions.RemoveImage(_webHostEnvironment, foldername, fileNameImg, ".png");
@@ -208,9 +208,9 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                     // Save Adminstrive Procedures
-                    await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "202", "20", currentUser.CrMasUserInformationLessor, "100",
-                        branchDocument.CrCasBranchDocumentsNo, null, null, branchDocument.CrCasBranchDocumentsNo, branchDocument.CrCasBranchDocumentsDate, branchDocument.CrCasBranchDocumentsStartDate, branchDocument.CrCasBranchDocumentsEndDate,
-                        null, null, "تعديل", "Edit", "U", null);
+                    await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", branchDocument.CrCasBranchDocumentsProcedures, "10", currentUser.CrMasUserInformationLessor, "100",
+                branchDocument.CrCasBranchDocumentsBranch, null, null, branchDocument.CrCasBranchDocumentsNo, branchDocument.CrCasBranchDocumentsDate, branchDocument.CrCasBranchDocumentsStartDate, branchDocument.CrCasBranchDocumentsEndDate,
+                null, null, sAr, sEn, "U", null);
 
                     return true;
                 }

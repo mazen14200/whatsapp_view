@@ -120,6 +120,15 @@ namespace Bnan.Ui.Areas.CAS.Controllers
             var AddAdminstritive = await _tranferToRenter.SaveAdminstritiveTransferRenter(renterLessorVM.AdminstritiveNo, userLogin.CrMasUserInformationCode, "306", "30", lessorCode, Renter.CrCasRenterLessorId,
                                                                                    0, decimal.Parse(renterLessorVM.Amount, CultureInfo.InvariantCulture), renterLessorVM.Reasons);
 
+
+            //save Tracing
+            var (mainTask, subTask, system, currentUser) = await SetTrace("204", "2204004", "2");
+
+            await _userLoginsService.SaveTracing(currentUser.CrMasUserInformationCode, "تعديل", "Edit", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
             var CheckAddReceipt = true;
             CheckAddReceipt = await _tranferToRenter.AddAccountReceiptTransferToRenter(AddAdminstritive.CrCasSysAdministrativeProceduresNo, Renter.CrCasRenterLessorId, userLogin.CrMasUserInformationCode, "302","16", lessorCode,
                                                                                         renterLessorVM.FromBank, renterLessorVM.FromAccountBankSelected,"0", renterLessorVM.Amount,

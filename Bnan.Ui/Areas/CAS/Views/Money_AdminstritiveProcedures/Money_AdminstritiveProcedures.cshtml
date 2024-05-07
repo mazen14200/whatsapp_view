@@ -6,8 +6,8 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    ViewData["Page-title"] = @localizer["AdministrativeProcedure Data"];
-    ViewData["Page-Hint"] = @localizer["AdministrativeProcedure Hint"];
+    ViewData["Page-title"] = @localizer["Money_AdministrativeProcedure Data"];
+    ViewData["Page-Hint"] = @localizer["Money_AdministrativeProcedure Hint"];
 }
 <style>
     body {
@@ -105,7 +105,7 @@
 
         </div>
         <div class=dataTable>
-            <partial name="_DataTableAdminstritiveProcedures" />
+            <partial name="_DataTableMoney_AdminstritiveProcedures" />
         </div>
     </div>
 </div>
@@ -186,7 +186,7 @@
                     startDate: startDate,
                     EndDate: endDate,
                 },
-                url: "@Url.Action("AdminstritiveProceduresFilterDate", "AdminstritiveProcedures", new { Area = "CAS" })",
+                url: "@Url.Action("Money_AdminstritiveProceduresFilterDate", "Money_AdminstritiveProcedures", new { Area = "CAS" })",
                 success: function (response) {
                     $(".dataTable").html(response);
                     set_basic_datatable();

@@ -329,8 +329,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                 {
                     if (status == Status.Hold)
                     {
-                        sAr = "ايقاف فرع";
-                        sEn = "Hold Branch";
+                        sAr = "ايقاف";
+                        sEn = "Hold";
                         branch.CrCasBranchInformationStatus = Status.Hold;
                         foreach (var doc in docs) doc.CrCasBranchDocumentsBranchStatus = Status.Hold;
                         foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Hold;
@@ -339,8 +339,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     }
                     else if (status == Status.Deleted)
                     {
-                        sAr = "حذف فرع";
-                        sEn = "Remove Branch";
+                        sAr = "حذف";
+                        sEn = "Remove";
                         branch.CrCasBranchInformationStatus = Status.Deleted;
                         foreach (var doc in docs) doc.CrCasBranchDocumentsBranchStatus = Status.Deleted;
                         foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Deleted;
@@ -349,8 +349,8 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     }
                     else if (status == Status.Active)
                     {
-                        sAr = "استرجاع فرع";
-                        sEn = "Retrive Branch";
+                        sAr = "استرجاع";
+                        sEn = "Retrive";
                         branch.CrCasBranchInformationStatus = Status.Active;
                         foreach (var doc in docs) doc.CrCasBranchDocumentsBranchStatus = Status.Active;
                         foreach (var salesPoint in salesPoints) salesPoint.CrCasAccountSalesPointBranchStatus = Status.Active;
@@ -366,7 +366,7 @@ namespace Bnan.Ui.Areas.CAS.Controllers
                     subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
                     // Save Adminstrive Procedures
                     await _adminstritiveProcedures.SaveAdminstritive(currentUser.CrMasUserInformationCode, "1", "201", "20", currentUser.CrMasUserInformationLessor, "100",
-                   branch.CrCasBranchInformationCode, null, null, null, null, null, null, null, null, "تعديل", "Edit", "U", null);
+                   branch.CrCasBranchInformationCode, null, null, null, null, null, null, null, null, sAr,  sEn, "U", null);
 
                     return RedirectToAction("Index", "LessorsKSA");
                 }

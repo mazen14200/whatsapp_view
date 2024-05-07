@@ -109,7 +109,15 @@ namespace Bnan.Ui.Areas.CAS.Controllers
         {
             var userLogin = await _userManager.GetUserAsync(User);
             var result = await _adminstritiveProcedures.SaveAdminstritive(userLogin.CrMasUserInformationCode, "1", "303", "30", userLogin.CrMasUserInformationLessor, "100",
-            Model.CrMasUserInformationCode, decimal.Parse(FeedValue, CultureInfo.InvariantCulture), null, null, null, null, null, null, null, "تغذية صندوق", "Feed Box", "I", Reasons);
+            Model.CrMasUserInformationCode, decimal.Parse(FeedValue, CultureInfo.InvariantCulture), null, null, null, null, null, null, null, "تحت الإجراء", "Under Proccessing", "I", Reasons);
+
+            // SaveTracing
+            var (mainTask, subTask, system, currentUserr) = await SetTrace("204", "2204001", "2");
+            await _userLoginsService.SaveTracing(currentUserr.CrMasUserInformationCode, "تحت الإجراء", "Under Proccessing", mainTask.CrMasSysMainTasksCode,
+            subTask.CrMasSysSubTasksCode, mainTask.CrMasSysMainTasksArName, subTask.CrMasSysSubTasksArName, mainTask.CrMasSysMainTasksEnName,
+            subTask.CrMasSysSubTasksEnName, system.CrMasSysSystemCode, system.CrMasSysSystemArName, system.CrMasSysSystemEnName);
+
+
             if (result) _toastNotification.AddSuccessToastMessage(_localizer["ToastSave"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
             else _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
             return RedirectToAction("FeedBox");
