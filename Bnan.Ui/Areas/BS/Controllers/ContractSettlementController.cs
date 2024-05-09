@@ -43,7 +43,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
             var contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => (x.CrCasRenterContractBasicStatus == Status.Active || x.CrCasRenterContractBasicStatus == Status.Expire) &&
                                                                                x.CrCasRenterContractBasicLessor == lessorCode && x.CrCasRenterContractBasicBranch == bsLayoutVM.SelectedBranch,
                                                                                new[] { "CrCasRenterContractBasicCarSerailNoNavigation", "CrCasRenterContractBasic5.CrCasRenterLessorNavigation", "CrCasRenterContractBasic1" }).ToList();
-            var contractReceivingTheCarFromAnotherBranch = _unitOfWork.CrCasRenterContractAdditional.FindAll(x => x.CrCasRenterContractAdditionalCode == "5000000003").ToList();
+            var contractReceivingTheCarFromAnotherBranch = _unitOfWork.CrCasRenterContractAdditional.FindAll(x => x.CrCasRenterContractAdditionalCode == "5000000003"||x.CrCasRenterContractAdditionalCode== "5000000004").ToList();
             foreach (var item in contractReceivingTheCarFromAnotherBranch)
             {
                 var contract2 = _unitOfWork.CrCasRenterContractBasic.Find(x => x.CrCasRenterContractBasicNo == item.CrCasRenterContractAdditionalNo && (x.CrCasRenterContractBasicStatus == Status.Active || x.CrCasRenterContractBasicStatus == Status.Expire) &&
@@ -131,12 +131,18 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                              x.CrCasAccountSalesPointBankStatus == Status.Active &&
                                                                              x.CrCasAccountSalesPointStatus == Status.Active &&
                                                                              x.CrCasAccountSalesPointBranchStatus == Status.Active).ToList();
-            //Get ACcount Receipt
+            //Get ACcount Catch Receipt
             DateTime year = DateTime.Now;
             var y = year.ToString("yy");
-            var autoinc1 = GetContractAccountReceipt(lessorCode, bsLayoutVM.SelectedBranch).CrCasAccountReceiptNo;
-            var AccountReceiptNo = y + "-" + "1" + "301" + "-" + lessorCode + bsLayoutVM.SelectedBranch + "-" + autoinc1;
-            ViewBag.AccountReceiptNo = AccountReceiptNo;
+            var ProcedureCatch = "301";
+            var ProcedurePayment = "302";
+            var autoincCatch = GetContractAccountReceipt(lessorCode, bsLayoutVM.SelectedBranch, ProcedureCatch).CrCasAccountReceiptNo;
+            var AccountCatchReceiptNo = y + "-" + "1" + ProcedureCatch + "-" + lessorCode + bsLayoutVM.SelectedBranch + "-" + autoincCatch;
+            ViewBag.AccountCatchReceiptNo = AccountCatchReceiptNo;
+
+            var autoincPayment = GetContractAccountReceipt(lessorCode, bsLayoutVM.SelectedBranch, ProcedurePayment).CrCasAccountReceiptNo;
+            var AccountPaymentReceiptNo = y + "-" + "1" + ProcedurePayment + "-" + lessorCode + bsLayoutVM.SelectedBranch + "-" + autoincPayment;
+            ViewBag.AccountPaymentReceiptNo = AccountPaymentReceiptNo;
             ///////////////////////////////////
             //var sector = Renter.CrCasRenterLessorSector;
             var autoinc2 = GetInvoiceAccount(lessorCode, bsLayoutVM.SelectedBranch).CrCasAccountInvoiceNo;
@@ -180,7 +186,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                                                                                                      ContractInfo.CompensationReasons, ContractInfo.MaxHours, ContractInfo.MaxMinutes, ContractInfo.ExtraHoursValue, ContractInfo.PrivateDriverValueTotal, ContractInfo.ChoicesValueTotal, ContractInfo.AdvantagesValueTotal,
                                                                                                      ContractInfo.ContractValue, ContractInfo.ContractValueAfterDiscount, ContractInfo.TotalContract, (decimal)RenterLessor.CrCasRenterLessorAvailableBalance);
                 //Account Receipt
-                var CheckAccountReceipt = true;
+                var CheckAccountReceipt = new CrCasAccountReceipt();
                 var passing = "";
                 var SavePdfAr = "";
                 var SavePdfEn = "";
@@ -205,8 +211,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         // Catch Receipt سند قبض
                         if (UpdateSettlementContract.CrCasRenterContractBasicActualAmountRequired > 0)
                         {
-                            //if (!string.IsNullOrEmpty(PdfSaveAr)) SavePdfAr = await FileExtensions.SavePdf(_hostingEnvironment, PdfSaveAr, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, "ar");
-                            //if (!string.IsNullOrEmpty(PdfSaveEn)) SavePdfEn = await FileExtensions.SavePdf(_hostingEnvironment, PdfSaveEn, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, "en");
+                            if (!string.IsNullOrEmpty(SavePdfArReceipt)) SavePdfAr = await FileExtensions.SavePdf(_hostingEnvironment, SavePdfArReceipt, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, "ar","Receipt");
+                            if (!string.IsNullOrEmpty(SavePdfEnReceipt)) SavePdfEn = await FileExtensions.SavePdf(_hostingEnvironment, SavePdfEnReceipt, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, "en","Receipt");
                             CheckAccountReceipt = await _contractSettlement.AddAccountReceipt(UpdateSettlementContract.CrCasRenterContractBasicNo, lessorCode, Branch.CrCasBranchInformationCode,
                                                                                       ContractInfo.PaymentMethod, ContractInfo.AccountNo, UpdateSettlementContract.CrCasRenterContractBasicCarSerailNo,
                                                                                       ContractInfo.SalesPoint, (decimal)UpdateSettlementContract.CrCasRenterContractBasicAmountPaid,
@@ -215,6 +221,8 @@ namespace Bnan.Ui.Areas.BS.Controllers
                         // Receipt سند صرف
                         else if (UpdateSettlementContract.CrCasRenterContractBasicActualAmountRequired < 0)
                         {
+                            if (!string.IsNullOrEmpty(SavePdfArReceipt)) SavePdfAr = await FileExtensions.SavePdf(_hostingEnvironment, SavePdfArReceipt, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, "ar", "Receipt");
+                            if (!string.IsNullOrEmpty(SavePdfEnReceipt)) SavePdfEn = await FileExtensions.SavePdf(_hostingEnvironment, SavePdfEnReceipt, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.AccountReceiptNo, "en", "Receipt");
                             CheckAccountReceipt = await _contractSettlement.AddAccountReceipt(UpdateSettlementContract.CrCasRenterContractBasicNo, lessorCode, Branch.CrCasBranchInformationCode,
                                                                                       ContractInfo.PaymentMethod, ContractInfo.AccountNo, UpdateSettlementContract.CrCasRenterContractBasicCarSerailNo,
                                                                                       ContractInfo.SalesPoint, (decimal)UpdateSettlementContract.CrCasRenterContractBasicAmountPaid,
@@ -231,7 +239,13 @@ namespace Bnan.Ui.Areas.BS.Controllers
 
                     }
 
-
+                    // Invoice 
+                    var CheckAccountInvoice = true;
+                    var PdfArInvoice = "";
+                    var PdfEnInvoice = "";
+                    if (!string.IsNullOrEmpty(SavePdfArInvoice)) PdfArInvoice = await FileExtensions.SavePdf(_hostingEnvironment, SavePdfArInvoice, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.InitialInvoiceNo, "ar", "Invoice");
+                    if (!string.IsNullOrEmpty(SavePdfEnInvoice)) PdfEnInvoice = await FileExtensions.SavePdf(_hostingEnvironment, SavePdfEnInvoice, lessorCode, Branch.CrCasBranchInformationCode, ContractInfo.InitialInvoiceNo, "en", "Invoice");
+                    CheckAccountInvoice = await _contractSettlement.AddAccountInvoice(UpdateSettlementContract.CrCasRenterContractBasicNo, UpdateSettlementContract.CrCasRenterContractBasicRenterId, lessorCode, Branch.CrCasBranchInformationCode, UpdateSettlementContract.CrCasRenterContractBasicUserInsert, CheckAccountReceipt.CrCasAccountReceiptNo, PdfArInvoice, PdfEnInvoice);
 
                     // Renter Balance 
                     var CheckUpdateRenterBalance = true;
@@ -299,7 +313,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                     // add Account Contract Company Owed
                     var ChechUpdateRenterStatistics = true;
                     ChechUpdateRenterStatistics = await _contractSettlement.UpdateRenterStatistics(UpdateSettlementContract);
-                    if (UpdateSettlementContract!=null && CheckAccountReceipt&& CheckBranch&& CheckSalesPoint&& CheckBranchValidity&& CheckUserInformation&&
+                    if (UpdateSettlementContract!=null && CheckAccountReceipt!=null&& CheckBranch&& CheckSalesPoint&& CheckBranchValidity&& CheckUserInformation&&
                         CheckMasRenter && CheckUpdateAuthrization&& CheckUpdateAlert&& CheckAddAccountContractTaxOwed && CheckUpdateRenterBalance && CheckAddDriver&&
                         CheckDriver&& CheckPrivateDriver&&!string.IsNullOrEmpty(CheckDocAndMaintainance)&& CheckCarInfo&& CheckCheckUpCar&& ChechAddAccountContractCompanyOwed &&ChechUpdateRenterStatistics )
                     {
@@ -395,12 +409,12 @@ namespace Bnan.Ui.Areas.BS.Controllers
             }
             return Json(null);
         }
-         private CrCasAccountReceipt GetContractAccountReceipt(string LessorCode, string BranchCode)
+         private CrCasAccountReceipt GetContractAccountReceipt(string LessorCode, string BranchCode,string Procedure)
         {
             DateTime year = DateTime.Now;
             var y = year.ToString("yy");
             var Lrecord = _unitOfWork.CrCasAccountReceipt.FindAll(x => x.CrCasAccountReceiptLessorCode == LessorCode &&
-                                                                       x.CrCasAccountReceiptYear == y && x.CrCasAccountReceiptBranchCode == BranchCode)
+                                                                       x.CrCasAccountReceiptYear == y && x.CrCasAccountReceiptBranchCode == BranchCode&&x.CrCasAccountReceiptType== Procedure)
                                                              .Max(x => x.CrCasAccountReceiptNo.Substring(x.CrCasAccountReceiptNo.Length - 6, 6));
 
             CrCasAccountReceipt c = new CrCasAccountReceipt();

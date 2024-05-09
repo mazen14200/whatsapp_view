@@ -89,7 +89,7 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 _toastNotification.AddErrorToastMessage(_localizer["ToastFailed"], new ToastrOptions { PositionClass = _localizer["toastPostion"] });
                 return RedirectToAction("Index");
             }
-            var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicRenterId == id && x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation" }).Distinct().ToList();
+            var Contracts = _unitOfWork.CrCasRenterContractBasic.FindAll(x => x.CrCasRenterContractBasicRenterId == id && x.CrCasRenterContractBasicLessor == lessorCode, new[] { "CrCasRenterContractBasicCarSerailNoNavigation" }).ToList();
             var ContractsVM = _mapper.Map<List<DetailsContractsForRenterVM>>(Contracts);
             foreach (var Contract in ContractsVM)
             {
@@ -101,30 +101,70 @@ namespace Bnan.Ui.Areas.BS.Controllers
                 {
                     if (copyValue >= 1 && copyValue <= invoices.Count())
                     {
-                        var invoice = invoices.Skip(copyValue).FirstOrDefault(); // Skip the appropriate number of invoices
-                        Contract.InvoiceArReceipt = invoice?.CrCasAccountInvoiceArPdfFile;
-                        Contract.InvoiceEnReceipt = invoice?.CrCasAccountInvoiceEnPdfFile;
+                        if (Contract == ContractsVM.Last())
+                        {
+                            var invoice = invoices.OrderByDescending(x => x.CrCasAccountInvoiceDate).FirstOrDefault(); // Default to the first invoice
+                            Contract.InvoiceArReceipt = invoice?.CrCasAccountInvoiceArPdfFile;
+                            Contract.InvoiceEnReceipt = invoice?.CrCasAccountInvoiceEnPdfFile;
+                        }
+                        else
+                        {
+                            var invoice = invoices.Skip(copyValue).FirstOrDefault(); // Skip the appropriate number of invoices
+                            Contract.InvoiceArReceipt = invoice?.CrCasAccountInvoiceArPdfFile;
+                            Contract.InvoiceEnReceipt = invoice?.CrCasAccountInvoiceEnPdfFile;
+                        }
+                        
                     }
                     else
                     {
-                        var invoice = invoices.FirstOrDefault(); // Default to the first invoice
-                        Contract.InvoiceArReceipt = invoice?.CrCasAccountInvoiceArPdfFile;
-                        Contract.InvoiceEnReceipt = invoice?.CrCasAccountInvoiceEnPdfFile;
+                        if (ContractsVM.Count()==1&&invoices.Count()==2)
+                        {
+                            var invoice = invoices.OrderByDescending(x => x.CrCasAccountInvoiceDate).FirstOrDefault(); // Default to the first invoice
+                            Contract.InvoiceArReceipt = invoice?.CrCasAccountInvoiceArPdfFile;
+                            Contract.InvoiceEnReceipt = invoice?.CrCasAccountInvoiceEnPdfFile;
+                        }
+                        else
+                        {
+                            var invoice = invoices.FirstOrDefault(); // Default to the first invoice
+                            Contract.InvoiceArReceipt = invoice?.CrCasAccountInvoiceArPdfFile;
+                            Contract.InvoiceEnReceipt = invoice?.CrCasAccountInvoiceEnPdfFile;
+                        }
+                        
                     }
                 }
                 if (receipts.Count() > 0)
                 {
                     if (copyValue >= 1 && copyValue <= receipts.Count())
                     {
-                        var receipt = receipts.Skip(copyValue).FirstOrDefault(); // Skip the appropriate number of invoices
-                        Contract.ArReceipt = receipt?.CrCasAccountReceiptArPdfFile;
-                        Contract.EnReceipt = receipt?.CrCasAccountReceiptEnPdfFile;
+                        
+                        if (Contract == ContractsVM.Last())
+                        {
+                            var receipt = receipts.OrderByDescending(x => x.CrCasAccountReceiptDate).FirstOrDefault(); // Default to the first invoice
+                            Contract.ArReceipt = receipt?.CrCasAccountReceiptArPdfFile;
+                            Contract.EnReceipt = receipt?.CrCasAccountReceiptEnPdfFile;
+                        }
+                        else
+                        {
+                            var receipt = receipts.Skip(copyValue).FirstOrDefault(); // Skip the appropriate number of invoices
+                            Contract.ArReceipt = receipt?.CrCasAccountReceiptArPdfFile;
+                            Contract.EnReceipt = receipt?.CrCasAccountReceiptEnPdfFile;
+                        }
                     }
                     else
                     {
-                        var receipt = receipts.FirstOrDefault(); // Default to the first invoice
-                        Contract.ArReceipt = receipt?.CrCasAccountReceiptArPdfFile;
-                        Contract.EnReceipt = receipt?.CrCasAccountReceiptEnPdfFile;
+                        if (ContractsVM.Count() == 1 && receipts.Count() == 2)
+                        {
+                            var receipt = receipts.OrderByDescending(x => x.CrCasAccountReceiptDate).FirstOrDefault(); // Default to the first invoice
+                            Contract.ArReceipt = receipt?.CrCasAccountReceiptArPdfFile;
+                            Contract.EnReceipt = receipt?.CrCasAccountReceiptEnPdfFile;
+                        }
+                        else
+                        {
+                            var receipt = receipts.FirstOrDefault(); // Default to the first invoice
+                            Contract.ArReceipt = receipt?.CrCasAccountReceiptArPdfFile;
+                            Contract.EnReceipt = receipt?.CrCasAccountReceiptEnPdfFile;
+                        }
+                            
                     }
                 }
             }

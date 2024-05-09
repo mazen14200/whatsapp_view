@@ -82,6 +82,10 @@
                     {
                         <span class="text-danger">(@item.CrCasRenterContractBasicCopy)</span>
                     }
+                    @if (item.CrCasRenterContractBasicBranch != Model.SelectedBranch)
+                    {
+                        <span class="text-danger" style="font-size:15px;font-weight:bold">*</span>
+                    }
                 </td>
                 <td scope="row">@no</td>
 
