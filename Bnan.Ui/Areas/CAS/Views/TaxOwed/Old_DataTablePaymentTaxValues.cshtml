@@ -1,0 +1,127 @@
+﻿@using Bnan.Core.Extensions
+@using Bnan.Ui.ViewModels.CAS
+
+@model TaxOwed_VM
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+@* 
+  "EmployeeInformationCode": "Code",
+  "CarContractId": "ID",
+  "EmployeeInformationNationality": "Nationality",
+ 
+ *@
+ <style>
+    #_Nc{
+        text-align: center;
+    }
+ </style>
+<style>
+    ._Tr_black {
+        border-image:fill;
+    }
+
+    ._Tr_red {
+        color:red;
+    }
+</style>
+
+@{
+    var class_color_black = "_Tr_black";
+    var class_color_red = "_Tr_red";
+    var color_tr = "";
+
+}
+
+@if (requestCulture?.RequestCulture.UICulture.Name == "en-US")
+{
+    
+       <div class="col-sm-12">
+        @* For-scrolling *@
+        <table id="basic-datatable22" class="table table-bordered dt-responsive nowrap  no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable22_info" style="position: relative; width: 1166px; ">
+
+            <thead>
+                <tr role="row">
+                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["TaxOwed_pay_Contract_No"]</th>
+                    <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["TaxOwed_pay_Contract_Date"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["TaxOwed_pay_Dues_Contract_Value"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["TaxOwed_pay_Percentage"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["TaxOwed_pay_Tax_Value"]</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model.CrCasAccountContractTaxOwed)
+                {
+
+                        color_tr = class_color_black;
+                    @*<tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasEmployeeContractBasic4.CrCasEmployeePrivateCarInformationId })'" style="cursor:pointer;color:red">*@
+                    <tr class="@color_tr" >
+                        <td id="_Nc"><input type="checkbox" id="@item.CrCasAccountContractTaxOwedContractValue" name="Contracts_checked" value="@item.CrCasAccountContractTaxOwedContractNo?.Trim()" onclick=" CheckBoxClicked(this)"> @no</td>
+                        <td id="_Nc">@item.CrCasAccountContractTaxOwedContractNo?.Trim()</td>
+                        @{
+                            <td style="text-align:start">@item.CrCasAccountContractTaxOwedDate?.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@item.CrCasAccountContractTaxOwedContractValue?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@item.CrCasAccountContractTaxOwedPercentage?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@item.CrCasAccountContractTaxOwedValue?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                        }
+                        </tr>
+                    
+                    
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="col-sm-12">
+        @* For-scrolling *@
+        <table id="basic-datatable22" class="table table-bordered dt-responsive nowrap  no-footer dtr-inline table-hover" role="grid" aria-describedby="basic-datatable22_info" style="position: relative; width: 1166px; ">
+            <thead>
+                <tr role="row">
+                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["No"]</th>
+                    <th id="_Nc" aria-sort="ascending" aria-label="Name: activate to sort column descending">@localizer["TaxOwed_pay_Contract_No"]</th>
+                    <th style="text-align:start" aria-label="Position: activate to sort column ascending">@localizer["TaxOwed_pay_Contract_Date"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["TaxOwed_pay_Dues_Contract_Value"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["TaxOwed_pay_Percentage"]</th>
+                    <th id="_Nc" aria-label="Position: activate to sort column ascending">@localizer["TaxOwed_pay_Tax_Value"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int no = 1;
+                }
+                @foreach (var item in Model.CrCasAccountContractTaxOwed)
+                {
+                        color_tr = class_color_black;
+
+                    @*<tr onclick="location.href='@Url.Action("Edit", "CarContract", new { id = item.CrCasEmployeeContractBasic4.CrCasEmployeePrivateCarInformationId })'" style="cursor:pointer;color:red">*@
+                    <tr class="@color_tr" >
+                        <td id="_Nc"><input type="checkbox" id="@item.CrCasAccountContractTaxOwedContractValue" name="Contracts_checked" value="@item.CrCasAccountContractTaxOwedContractNo?.Trim()" onclick="CheckBoxClicked(this)"> @no</td>
+                        <td id="_Nc">@item.CrCasAccountContractTaxOwedContractNo?.Trim()</td>
+                        @{
+                            <td style="text-align:start">@item.CrCasAccountContractTaxOwedDate?.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@item.CrCasAccountContractTaxOwedContractValue?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@item.CrCasAccountContractTaxOwedPercentage?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                            <td id="_Nc">@item.CrCasAccountContractTaxOwedValue?.ToString("N2",CultureInfo.InvariantCulture)</td>
+                        }
+                    </tr>
+
+
+                    no++;
+                }
+            </tbody>
+        </table>
+    </div>
+}

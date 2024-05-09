@@ -762,6 +762,30 @@
   "status_Not_Paid": "غير مسدد",
 
 
+  //TaxOwed --------
+  "TaxValues_Owed Hint": "تمكنك الصفحة من عرض والبحث عن بيانات تسديد القيمة المضافة للعقود وإلغائها",
+  "TaxValues_Owed Data": "تسديد القيمة المضافة",
+  "TaxValues_Dues Data": "مستحقات القيمة المضافة",
+  "TaxValues_Dues Hint": "تمكنك الصفحة من عرض جميع العقود التي لم تسدد مستحقات القيمة المضافة, كذلك بإمكانك اختيار العقود التي ترغب بتسديدها",
+
+  "TaxOwed_pay_no": "رقم التسديد",
+  "TaxOwed_pay_Date": "تاريخ التسديد",
+  "TaxOwed_pay_Contract_Value": "القيمة",
+  "TaxOwed_pay_Contract_Count": "عدد العقود",
+  "TaxOwed_pay_User": "المنفذ",
+  "TaxOwed_pay_Reasons": "الملاحظات",
+  "TaxOwed_pay_Contract_Date": "تاريخ الاستحقاق",
+  "TaxOwed_pay_Contract_No": "رقم العقد",
+  "TaxOwed_pay_Dues_Contract_Value": "قيمة العقد",
+  "TaxOwed_pay_Percentage": "النسبة",
+  "TaxOwed_pay_Tax_Value": "القيمة",
+  "TaxOwed_pay_Percentage_Tax": "نسبة القيمة المضافة",
+  "TaxOwed_pay_Value_Tax": "القيمة المضافة",
+  "TaxOwed_pay_pay_Tax_no": "رقم تسديد القيمة المضافة",
+  "TaxOwed_pay_pay_Tax_Total_Value": "المبلغ المسدد",
+  "TaxOwed_Add": "تسديد القيمة المضافة",
+
+
   //RenterIdTypes------
   "RenterIdTypes Hint": ".تمكنك هذه الصفحة من عرض وإضافة وتعديل نوع الهوية",
   "RenterIdTypes Data": "عرض انواع الهوية",

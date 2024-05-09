@@ -751,6 +751,29 @@
   "status_Is_Paid": "Is Paid",
   "status_Not_Paid": "Not Paid",
 
+  //TaxOwed --------
+  "TaxValues_Owed Hint": "The page enables you to view and search for Owed Tax Values and cancel it",
+  "TaxValues_Owed Data": "Payment Tax Value",
+  "TaxValues_Dues Data": "Tax Value Dues",
+  "TaxValues_Dues Hint": "The page enables you to view all contracts that have not paid Tax value ,as well as you can choose the contracts you wish to pay",
+
+  "TaxOwed_pay_no": "Pay No",
+  "TaxOwed_pay_Date": "pay Date",
+  "TaxOwed_pay_Contract_Value": "Value",
+  "TaxOwed_pay_Contract_Count": "Contracts Count",
+  "TaxOwed_pay_User": "User",
+  "TaxOwed_pay_Reasons": "Reasons",
+  "TaxOwed_pay_Contract_Date": "Dues Date",
+  "TaxOwed_pay_Contract_No": "Contract No",
+  "TaxOwed_pay_Dues_Contract_Value": "Contract Value",
+  "TaxOwed_pay_Percentage": "Percentage",
+  "TaxOwed_pay_Tax_Value": "Value",
+  "TaxOwed_pay_Percentage_Tax": "ratio of Tax Value",
+  "TaxOwed_pay_Value_Tax": "Tax Value",
+  "TaxOwed_pay_pay_Tax_no": "Pay No oF Tax Value",
+  "TaxOwed_pay_pay_Tax_Total_Value": "amount paid",
+  "TaxOwed_Add": "Payment Tax Value",
+
 
   //RenterIdType------
   "RenterIdTypes Hint": "The page allows you to display, add, and modify  Id Types data.",

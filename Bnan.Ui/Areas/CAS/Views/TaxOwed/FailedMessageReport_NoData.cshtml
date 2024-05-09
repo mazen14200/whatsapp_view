@@ -1,0 +1,76 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+
+@*<a href='javascript:history.go(-1)' > Return to client detail < /a>*@
+<button onclick="ToasterData()" id="ggg" hidden> Return to client detail  </button>
+    
+    @section scripts{
+    <script>
+        //var logMe = function Back() {
+        //    history.go(-1);
+        //};
+        ////var logMe = function () {
+        ////    console.log('I will run after 2 seconds');
+        ////};
+
+        //setTimeout(logMe, 2000);
+        window.onload = function () {
+            var hangoutButton = document.getElementById('ggg');
+                hangoutButton.click(); // this will trigger the click event
+
+        };
+    </script>
+
+    
+    <script>
+        var cultureInfo_ = '@System.Globalization.CultureInfo.CurrentCulture.Name'; // OK Done OK OK
+
+        //$('#ggg').click(function () {
+        function ToasterData () {
+            let cc = '@ViewBag.Data';
+            console.log(cc);
+            console.log(cultureInfo_);
+            if (cc === '0') {
+                if (cultureInfo_ == "en-US") {
+                    console.log(cc);
+                    toastr.options.timeOut = 7000; // 7s
+                    toastr.options.positionClass = 'toast-top-right';
+                    toastr.error("Sorry No Data To Show");
+                }
+                //else if (cultureInfo_ == "ar-EG") {
+                else {
+                    console.log(cc);
+                    toastr.options.timeOut = 7000; // 7s
+                    toastr.options.positionClass = 'toast-top-left';
+                    toastr.error("عفواً لا توجد بيانات لعرضها");
+                }
+            }
+
+            var logMe = function Back() {
+                //history.go(-1);
+                console.log("No Data");
+            };
+            //var logMe = function () {
+            //    console.log('I will run after 2 seconds');
+            //};
+
+            setTimeout(logMe, 2000);
+            
+        };
+
+    </script>
+
+
+    }
+
+
