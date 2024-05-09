@@ -15,8 +15,9 @@ namespace Bnan.Core.Interfaces
                                                                              string ContractValueAfterDiscount, string TotalContract, decimal PreviousBalance);
 
 
-        Task<bool> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo,
+        Task<CrCasAccountReceipt> AddAccountReceipt(string ContractNo, string LessorCode, string BranchCode, string PaymentMethod, string Account, string SerialNo, string SalesPointNo,
                                     decimal TotalPayed, string RenterId, string UserId, string PassingType, string Reasons, string pdfPathAr, string pdfPathEn, string procedureCode);
+        Task<bool> AddAccountInvoice(string ContractNo, string RenterId, string LessorCode, string BranchCode, string UserId, string AccountReceiptNo, string pdfPathAr, string pdfPathEn);
         Task<bool> AddAccountContractTaxOwed(string ContractNo,decimal ContractValue);
         Task<bool> AddAccountContractCompanyOwed(string ContractNo,string DaysNo,decimal DailyRentValue);
         Task<bool> UpdateAuthrization(string ContractNo);
