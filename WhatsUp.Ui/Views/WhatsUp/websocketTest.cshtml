@@ -1,0 +1,119 @@
+﻿@using Microsoft.AspNetCore.Builder;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Http.Features;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using Microsoft.Extensions.Options;
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Http.Extensions;
+@using WhatsUp.Core.Models; 
+@using Microsoft.AspNetCore.SignalR;
+
+@model WhatsUpVM
+
+
+<h1 style="display:flex;justify-content:space-around;"> اشتراك WebSocket Test</h1>
+
+<style>
+/* Style inputs with type="text", select elements and textareas */
+input[type=text], select, textarea {
+  width: 100%; /* Full width */
+  padding: 12px; /* Some padding */
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 16px; /* Bottom margin */
+  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/* Style the submit button with a specific background color etc */
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+/* Add a background color and some padding around the form */
+.container {
+  border-radius: 5px;
+  background-color: white;
+  padding: 20px;
+  direction : rtl;
+}
+</style>
+
+
+<div class="container">
+
+    <div style="overflow-y: hidden; height:700px;">
+
+        <div style="justify-items:0;justify-content:0;display:flex;gap:20px;">
+            <textarea class="form-control ArName" id="message_txt" name="message_txt" style="direction:rtl;height:58px;"></textarea>
+            @*<button onclick="location.href='@Url.Action("SendMessage_Page", "WhatsUp", new { id = item.CrCasRenterLessorId })'" class="btn">send Messages</button>*@
+            <input type="button" class="form-control ArName"  value="ارسال" id="SendButton"></input>
+        </div>
+    <div id="messages"> </div>
+</div>
+
+
+@section Scripts
+{
+        <script>
+            const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+            const repeatedGreetings = async () => {
+                //await sleep(4500)
+                //GetAll()
+                //generateQrCode()
+                //await sleep(5000)
+                
+
+                //await get_Exist_Single_Channel_Data("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibWF6ZW5CbmFuIiwicGFzc3dvcmQiOiJiV0Y2Wlc1Q2JtRnUiLCJpYXQiOjE3MjA0MjU2NzksImV4cCI6MTcyMDg1NzY3OX0.JSueh8HII6K_j-Mtc-owdJgmamRHJOBvBXJKh4KjcnY", "99509afb9306c0a")
+            
+            }
+
+            $(document).ready(async function () {
+                //repeatedGreetings();
+                console.log("hello");
+            });
+        </script>
+        <script src="~/lib/signalr/dist/browser/signalr.js" ></script>
+
+        <script>
+            "use strict";
+            let connection = new signalR.HubConnectionBuilder()
+                .withUrl("/messages")
+                .build();
+
+            connection.on("ReceiveMessage", function (message) {
+                var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                var div = document.createElement("div");
+                div.innerHTML = msg + "<hr/>";
+                document.getElementById("messages").appendChild(div);
+            });
+
+            connection.start().catch(function(err){
+                return console.error(err.toString());
+            });
+
+            document.getElementById("SendButton").addEventListener("click", function (event) {
+                var message = document.getElementById("message_txt").value;
+                connection.invoke("sendMessageToAll",message).catch(function(err){
+                    return console.error(err.toString());
+                });
+                event.preventDefault();
+            });
+        </script>
+
+       
+}
+    

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ws-Client": {
+      "commandName": "Project",
+      "hotReloadEnabled": true,
+      "remoteDebugEnabled": false,
+      "remoteDebugMachine": "localhost:6969"
+    }
+  }
+}

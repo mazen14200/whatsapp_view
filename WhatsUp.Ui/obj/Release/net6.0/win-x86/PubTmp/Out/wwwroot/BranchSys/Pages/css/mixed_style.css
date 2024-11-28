@@ -1,0 +1,1560 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+/*Background color*/
+body {
+    font-family: cairo;
+    font-weight: 400;
+    height: 100vh;
+    font-size: .875rem;
+    letter-spacing: 0.28px;
+}
+
+nav {
+    background-color: rgba(255, 206, 148, 1);
+    padding: .5rem 1rem !important;
+}
+
+.notes_box {
+    direction: rtl;
+}
+
+.inputs, .form-control1, .form-control2, .form-select-last, .form-select-selling, .textarea-inputs {
+    border-radius: 8px;
+    border: 2px solid #faa64d;
+    resize: none;
+    font-size: .875rem;
+}
+
+.textarea-inputs {
+    border-top: none;
+/*    min-height: calc(3em + 0.75rem + calc(var(--bs-border-width)* 2)) !important;
+*/}
+
+.inputs {
+    height: 32px;
+    border-top: none;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+}
+
+.form-control1 {
+    height: 32px;
+    width: 90px;
+    text-align: center;
+}
+
+.form-control2 {
+    text-align: center;
+    height: 32px;
+    width: 92px;
+}
+
+.form-select-last {
+    border-top: none;
+    width: 150px;
+    padding-bottom: 0;
+}
+
+.form-select-selling {
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    color: black;
+    background-color: white;
+    background-image: var(--bs-form-select-bg-img), var(--bs-form-select-bg-icon, none);
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    border-top: 0px;
+    height: 28px;
+}
+
+.form-control:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #ff9626;
+    box-shadow: 0px 9px 20px 0rem #ff962610;
+    border-top: none;
+}
+
+/*======================================================================
+//           ========================== account style ==============================================================================================
+//          =====================================================================*/
+.account-dropdown {
+    text-align: center;
+}
+
+.card-title {
+    color: #FF9626;
+    text-shadow: 1px 4px 4px rgb(187 187 187 / 68%);
+    font-size: 1rem;
+    letter-spacing: 0.32px;
+}
+
+.account-modal-header {
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    border-bottom: none;
+    padding: 0;
+}
+
+    .account-modal-header .close {
+        padding: 1rem;
+        padding-left: .1rem;
+        margin: -1rem -1rem -2.5rem auto;
+        direction: rtl;
+    }
+
+.account-modal-rows {
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+    font-weight: 500;
+}
+
+.personal-data {
+    color: #39629C;
+    letter-spacing: 0.28px;
+    font-weight: 400;
+}
+
+
+
+.account-titles {
+    text-align: end;
+}
+
+.account-select {
+    border-radius: 8px;
+    border: 2px solid #FF9626;
+    text-align: center;
+    color: #39629C;
+    width: 100%;
+    direction: rtl;
+    height: 32px;
+    padding: 0;
+    font-size: .75rem;
+}
+
+
+#phone {
+    padding-left: 70px;
+    position: relative;
+}
+
+#country-code {
+    width: fit-content;
+    color: #39629C;
+    position: absolute;
+    top: 2px;
+    /* bottom: 4px; */
+    left: 23px;
+    border: none;
+    z-index: 2;
+}
+
+.save-button-row {
+    border: none;
+    flex-direction: row-reverse;
+    padding-left: 40px;
+}
+
+#passowrd-save {
+    padding-left: 25px;
+}
+
+.btn-custom {
+    color: #fff !important;
+    background-color: #FF9626 !important;
+    border-color: #FF9626 !important;
+    padding-top: 0 !important;
+    padding-bottom: 1px !important;
+    padding-right: 15px !important;
+    border-radius: 8px !important;
+    padding-left: 15px !important;
+}
+
+    .btn-custom:hover {
+        background-color: #fff !important;
+        color: #FF9626 !important;
+        box-shadow: none !important;
+    }
+
+.pass-titles {
+    text-align: end;
+}
+
+.profile-image-col {
+    margin: auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-Image-div {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.profileImage {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.upload_Icon_div {
+    height: 35px;
+    width: 35px;
+    border: 2px solid #39629C;
+    border-radius: 50%;
+    position: absolute;
+    right: 30px;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.profile-badge {
+    font-family: 'cairo';
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid #39629C;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 12px;
+    font-weight: 500;
+    position: relative;
+    margin: 0px 10px;
+}
+
+
+
+.profile-pic {
+    border: 1px solid #F69726;
+    height: 120px;
+    width: 120px;
+    left: 50%;
+    padding: 10px;
+    fill: #F69726;
+    box-shadow: 1px 1px 3px 0px rgba(244, 149, 38, 0.90) inset, -1px -1px 2px 0px rgba(248, 153, 38, 0.90) inset, 1px -1px 2px 0px rgba(244, 149, 38, 0.20) inset, -1px 1px 2px 0px rgba(244, 149, 38, 0.20) inset;
+    filter: drop-shadow(1px 1px 2px rgba(248, 153, 38, 0.30));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.preview {
+    cursor: pointer;
+}
+
+.remove_profile {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.upload-modal {
+    align-items: center;
+    justify-content: center;
+}
+
+.Password-container {
+    padding: 24px;
+}
+
+.svg-path {
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.svg-container:hover .svg-path {
+    fill-opacity: 1;
+}
+
+.signature-modal-content {
+    border-radius: 8px;
+    border: 2px solid #FF9626;
+    background: #FFF;
+    backdrop-filter: blur(10px);
+}
+
+.signature-modal-header {
+    flex-direction: column-reverse;
+    background-color: #FCFCFC;
+}
+
+.title_signture {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+}
+
+.signture_close {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.anchors {
+    gap: 10px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem;
+    padding-bottom: 0rem;
+    font-size: 16px;
+}
+
+    .anchors a {
+        color: black;
+        text-decoration: none;
+    }
+
+.activee {
+    border-bottom: 2px solid #39629C;
+}
+
+.canvas_signture {
+    border-bottom: 1px solid #727272;
+    margin-bottom: 15px;
+}
+
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+    .upload-btn-wrapper input[type=file] {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        height: 100%;
+        width: 100%;
+    }
+
+.signture_pen {
+    height: 60px;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 12px
+}
+
+.account_close {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+/*===========================================================================================================================================*/
+
+
+/*form styles*/
+#SettlementForm {
+    text-align: end;
+    position: relative;
+    /* margin-top: 10px; */
+}
+
+.content-row {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-card {
+    background: rgb(255, 255, 255);
+    border: 1px solid #39629c9c;
+    border-radius: 7px;
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+    padding: 20px 10px 10px 10px;
+    box-sizing: border-box;
+    width: 94%;
+    position: relative;
+    margin: 5px;
+}
+
+.layout-row {
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+}
+
+.custody-layout-row {
+    height: 85%;
+}
+
+.main-card {
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important;
+    height: 100%;
+}
+
+#SettlementForm fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    position: relative;
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-card {
+    display: flex;
+    flex-direction: column;
+    color: black;
+}
+
+
+
+
+/*The background card*/
+.card {
+    z-index: 0;
+    border: none;
+    border-radius: 0px;
+    position: relative;
+}
+
+.card-title {
+    color: #FF9626;
+    text-shadow: 1px 4px 4px rgb(187 187 187 / 68%);
+    font-size: 1.2rem;
+}
+
+.invalid-feedback {
+    text-align: end;
+}
+
+textarea {
+    direction: rtl;
+}
+/* /////////////////////////////////////// */
+
+.form-outline {
+    position: relative;
+    color: rgba(0, 0, 0, 0.32);
+}
+
+.form-outline {
+    display: inline-block;
+}
+
+
+    .form-outline input {
+        text-indent: 32px;
+        width: 300px;
+    }
+
+    .form-outline .fa-search {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: fit-content;
+    }
+
+.custom {
+    width: 16px;
+    height: 16px;
+    border: 1px solid black
+}
+
+
+
+
+.form-control:focus {
+    border: 1px solid #FF9626;
+    border-top: none;
+    box-shadow: 3px 5px 5px rgba(255, 150, 38, .2);
+}
+
+.form-check-inline {
+    display: inline-flex;
+    margin-right: 0rem;
+    flex-direction: row-reverse;
+    gap: 30px;
+}
+
+.data-row {
+    flex-direction: row-reverse;
+}
+
+.label-data-col {
+    justify-content: flex-end;
+}
+
+.personal-data {
+    color: #39629C;
+}
+
+.payment-button {
+    height: fit-content;
+    font-weight: 700 !important;
+    padding: 0px 6px !important;
+}
+
+/* For webkit-based browsers (Chrome, Safari) */
+
+/*.table-scroll {
+    height: 350px;
+    overflow: auto;
+    direction: rtl;
+    padding-left: 0;
+    display: block;
+}
+
+#SettlementTable {
+    height: 260px;
+    overflow: auto;
+    direction: rtl;
+    padding-left: 0;
+    display: block;
+}
+
+#myTable {
+    direction: ltr;
+}
+
+#reportTable {
+    direction: ltr;
+}
+
+#SettlementTable {
+    direction: ltr;
+}
+
+#extensionTable {
+    direction: ltr;
+}
+
+.table-row {
+    padding-left: 10px;
+}
+
+.table-scroll::-webkit-scrollbar {
+    width: 10px;
+    height: 5px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 150, 38, 0.16);
+    border-radius: 5px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 150, 38, 0.40);
+    border-radius: 5px;
+    height: 10px;
+}
+
+.table {
+    --bs-table-hover-bg: #fff7de;
+    width: 100%;
+}*/
+
+/* options fieldset table style */
+/*.table-bordered thead th {
+    border-bottom-width: 1px;
+    border: 1px solid rgba(255, 150, 38, 0.64);
+    text-align: center;
+}
+
+.table-bordered td,
+.table-bordered th {
+    border: 1px solid rgba(255, 150, 38, 0.64);
+}
+
+.table th {
+    color: #000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    position: sticky;
+    top: 0;*/
+    /* /// background-color:rgba(223, 221, 221, 0.274);*/
+/*}
+
+.table td {
+    color: #39629C;
+}
+
+.table tbody tr {
+    cursor: pointer;
+}*/
+
+/* /////////////global////////////// */
+.container-fluid {
+    height: 85%;
+}
+
+.section-mainCard {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#content-wrapper {
+    height: 100%;
+}
+
+#content {
+    height: 100%;
+}
+
+
+.cancle-icon {
+    width: 15px;
+    height: 15px;
+    margin-left: 25px;
+}
+
+
+/* STYLING BEFORE FOOTER WIDGET */
+.before-footer-widget {
+    height: 100px;
+    background-image: linear-gradient(2.71deg, #FF9626 64.81%, rgba(255, 150, 38, 0.18) 153.13%);
+    font-size: 0;
+}
+
+footer {
+    position: fixed;
+    bottom: 0%;
+    z-index: -9999;
+    background-color: #FF992E;
+    width: 100%;
+    height: 240px;
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+.alert {
+    color: #fff;
+    background-color: #FF992E;
+    flex-direction: row-reverse;
+    font-size: .7rem;
+    font-weight: 600;
+    margin-bottom: 0;
+    border: 1px solid #4e73df;
+    padding: 0.5rem 0.6rem;
+}
+
+.dropdown-item-custom {
+    display: flex;
+    flex-direction: row-reverse;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e3e6f0;
+    font-size: .7rem;
+    flex-direction: row-reverse;
+}
+
+.ended-Docs-Num {
+    color: red;
+}
+
+.Not-ended-Docs-Num {
+    color: #FF992E;
+}
+/* /////////////////////////////////////////////////tenant-details-css//////////////////////////////////////////////////// */
+.personal-data {
+    color: #39629C;
+}
+
+.data-col {
+    flex-direction: row-reverse;
+}
+
+/* .details-card{
+ gap:15px; 
+
+} */
+.table-scroll-details {
+    height: 180px;
+}
+
+#Table-details {
+    direction: ltr;
+}
+
+.button-row {
+    justify-content: space-between;
+    margin-right: 0px;
+    margin-left: 0px;
+    width: 97%;
+}
+
+.btn-custom {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #FF9626;
+    --bs-btn-border-color: #FF9626;
+    --bs-btn-hover-color: #FF9626;
+    --bs-btn-hover-bg: #ffffff;
+    --bs-btn-hover-border-color: #FF9626;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #FF9626;
+    --bs-btn-active-border-color: #FF9626;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #FF9626;
+    --bs-btn-disabled-border-color: #FF9626;
+    padding-top: 0;
+    padding-bottom: 1px;
+}
+
+.button-card55 {
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+}
+
+/* ////////////////////////////////custody///////////////////////////////////////////////// */
+
+
+.custody-input {
+    --bs-form-check-bg: var(--bs-body-bg);
+    width: 1.1em;
+    height: 1.1em;
+    margin-top: 0.25em;
+    vertical-align: top;
+    background-color: white;
+    background-image: var(--bs-form-check-bg-image);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid #39629C;
+    border-radius: 0px !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: static;
+    margin-left: 10px;
+}
+
+/* ///////////////////////////////////////////extension1////////////////////////////////////// */
+#extensionTable tr {
+    cursor: auto;
+}
+
+    #extensionTable tr .name {
+        cursor: pointer;
+    }
+
+
+
+/* ////////////////////////////////////////extension2////////////// */
+
+.dropdown-content {
+    display: none;
+    border: 1px solid #FF9626;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 10px;
+    position: absolute;
+    z-index: 9999;
+    background-color: white;
+    padding: 10px;
+    font-size: 0.75rem;
+}
+
+.dropdown-content-row {
+    flex-direction: row-reverse;
+    text-align: end;
+}
+
+.requird-field {
+    /* margin-bottom: 0px; */
+    font-size: 10px;
+    color: red;
+    width: fit-content;
+    display: none;
+}
+
+.requird-field-row-last {
+    justify-content: flex-end;
+    height: 20px;
+}
+
+
+.button-row {
+    justify-content: space-between;
+    margin-right: 0px;
+    margin-left: 0px;
+    width: 100%;
+}
+
+.button-card {
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+}
+
+.pdf_img {
+    width: 60px;
+    position: absolute;
+    left: 70px;
+}
+
+#hover-image-extension2 {
+    cursor: pointer;
+}
+
+.pdf-anchor {
+    width: fit-content;
+}
+
+/* //////////////////////////////report/////////////////////////////////////////// */
+.report_table {
+    height: 250px;
+}
+
+.modal-header .close {
+    padding: 0;
+    margin: 0;
+}
+
+.report-modal-content {
+    border: 3px solid #FF9626
+}
+
+.close {
+    color: #FF9626
+}
+
+.data-details {
+    border: 1px solid #39629C;
+    margin: 4px;
+    border-radius: 8px;
+    margin: 20px;
+    padding: 8px;
+    font-size: .75rem;
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================================================================Settlement ==================================================== */
+/* Hide all except first fieldset */
+#SettlementForm fieldset:not(:first-of-type) {
+    display: none;
+}
+
+#progressbar {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+
+/* action Buttons*/
+#SettlementForm .action-button {
+    width: fit-content;
+    background: transparent;
+    font-weight: bold;
+    color: #FF9626;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+
+
+
+/*Previous Buttons*/
+#SettlementForm .action-button-previous {
+    width: fit-content;
+    background: transparent;
+    font-weight: bold;
+    color: #FF9626;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+
+/*progressbar*/
+#progressbar {
+    margin-bottom: 20px;
+    overflow: hidden;
+    color: lightgrey;
+    padding-left: 0;
+    text-align: center;
+}
+
+    #progressbar .active {
+        color: #000000;
+    }
+
+    #progressbar li {
+        list-style-type: none;
+        font-size: 12px;
+        width: 100%;
+        float: right;
+        position: relative;
+    }
+
+    /*Icons in the ProgressBar*/
+    #progressbar #Rental_terms:before {
+        content: "";
+        box-shadow: 2px 2px 2px #00000052;
+    }
+
+    #progressbar #Expenses:before {
+        content: "";
+        box-shadow: 2px 2px 2px #00000052;
+    }
+
+    #progressbar #compensation:before {
+        content: "";
+        box-shadow: 2px 2px 2px #00000052;
+    }
+
+    #progressbar #check:before {
+        content: "";
+        box-shadow: 2px 2px 2px #00000052;
+    }
+
+    #progressbar #payment:before {
+        content: "";
+        box-shadow: 2px 2px 2px #00000052;
+    }
+
+
+    /*ProgressBar before any progress*/
+    #progressbar li:before {
+        width: 30px;
+        height: 30px;
+        line-height: 45px;
+        display: block;
+        font-size: 18px;
+        color: #ffffff;
+        background: #FFE4C6;
+        border-radius: 50%;
+        margin: 0 auto 10px auto;
+        padding: 2px;
+    }
+
+    /*ProgressBar connectors*/
+    #progressbar li:after {
+        content: '';
+        width: 100%;
+        height: 1px;
+        background: lightgray;
+        position: absolute;
+        left: 0;
+        top: 16px;
+        z-index: -1;
+    }
+
+    #progressbar #Rental_terms:after {
+        width: 50%;
+    }
+
+    #progressbar #payment:after {
+        width: 65%;
+        left: 50%;
+    }
+
+    /*Color number of the step and the connector before it*/
+    #progressbar li.active:before,
+    #progressbar li.active:after {
+        background: #FF9626;
+    }
+
+/* /////////////////////////////////////SettlementCard1//////////////////////////////////// */
+.SettlementCard1 {
+    gap: 10px
+}
+
+.data-row-Settl {
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    padding-top: .3rem;
+}
+
+.data-col-Settl {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.Settlement-input-checkbox {
+    --bs-form-check-bg: var(--bs-body-bg);
+    width: 1.3em;
+    height: 1.3em;
+    vertical-align: middle;
+    background-color: white;
+    border: 1px solid #39629C;
+    border-radius: 0px !important;
+    position: static;
+    margin-left: 10px;
+}
+
+#hover-image-Settlement {
+    cursor: pointer;
+}
+
+/* .form-card5-settl{
+    gap:15px;
+} */
+/* /////////////////////////////////////SettlementCard2//////////////////////////////////// */
+.expensesDiv {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+}
+
+.expensesRow {
+    min-height: 30vh;
+    gap: 20px;
+}
+
+.expensesDiv-textarea {
+    height: 80%;
+}
+
+/* /////////////////////////////////////SettlementCard3//////////////////////////////////// */
+.compensation-Div {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+}
+
+.compensation-Row {
+    min-height: 30vh;
+    gap: 20px
+}
+
+.compensation-Div-textarea {
+    height: 80%;
+}
+
+/* /////////////////////////الفحص الظاهري///////////////////////////////// */
+.upload__box {
+    display: flex !important;
+    justify-content: flex-end;
+}
+
+.upload__box2 {
+    display: flex !important;
+    justify-content: flex-end;
+}
+
+.upload__inputfile {
+    width: .1px;
+    height: .1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.upload__inputfile2 {
+    width: .1px;
+    height: .1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.upload__btn-box {
+    order: 1;
+}
+
+.upload__btn-box2 {
+    order: 1;
+}
+
+/* .upload__img-wrap {
+display: flex;
+gap: 10px;
+flex-direction: row-reverse;
+ 
+} */
+.upload_img-wrap_inner {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+}
+
+.upload__img-box {
+    width: 79px;
+    height: 97px;
+    background-color: rgba(217, 217, 217, 0.32);
+    display: inline-block;
+}
+
+.upload__img-close {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    text-align: center;
+    line-height: 24px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.textarea_table {
+    border: none;
+    height: 24px;
+    resize: none;
+}
+
+
+
+.img-bg {
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    padding-bottom: 100%;
+    width: 100%;
+    height: 100%;
+}
+
+.upload-container-checking {
+    position: relative;
+    width: 79px;
+    height: 97px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: rgba(217, 217, 217, 0.32);
+}
+
+
+
+
+.preview-image {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.upload-container.previewing .upload-icon {
+    opacity: 1;
+}
+
+
+
+.CurrentReadingg_row {
+    padding-bottom: .25rem;
+}
+
+.sett_checkField {
+    display: flex;
+    align-items: baseline;
+    flex-direction: row-reverse;
+}
+
+#SettlementTable .form-check-label {
+    color: #000;
+}
+
+/***************************************************SettlementCard5**************************************************/
+.payment-input {
+    border: 1px solid #faa64d;
+}
+
+.form-select-style {
+    border-radius: 8px;
+    border: 1px solid #faa64d;
+    border-top: none;
+    padding-bottom: 0;
+}
+
+/***************************************************cards-media**************************************************/
+
+@media (max-width: 320px) {
+
+    .Search-col {
+        padding: 0;
+    }
+}
+
+@media (max-width: 375px) {
+
+    .extra-small-mobile {
+        display: none;
+    }
+}
+
+@media (max-width: 425px) {
+
+    #progressbar li {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 646px) {
+
+    .hide-on-mobile {
+        display: none;
+    }
+
+    .on-mobile {
+        flex-direction: column-reverse;
+        padding-top: 16px;
+    }
+
+        .on-mobile p {
+            margin-left: 0px;
+        }
+}
+
+@media (min-height: 650px) {
+    .extension2-card {
+        gap: 1rem;
+    }
+
+    .form-card5-settl {
+        gap: .2rem;
+    }
+}
+
+@media(min-height:700px) {
+
+    .table-scroll {
+        height: 400px;
+        overflow-y: auto;
+    }
+
+    #SettlementTable {
+        height: 350px;
+    }
+
+    .table-scroll-details {
+        height: 240px;
+    }
+
+    .report_table {
+        height: 330px
+    }
+
+    .seacrh-row {
+        padding-top: 20px;
+    }
+
+    .extension2-card {
+        gap: 1.4rem;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .table-row {
+        margin-right: 1px;
+    }
+}
+
+@media(min-height:990px) {
+
+    footer {
+        width: 100%;
+        padding-bottom: 240px;
+    }
+}
+
+/*  */
+
+@media(min-height:800px) {
+
+    .table-scroll {
+        height: 450px;
+        overflow-y: auto;
+    }
+
+    .table-scroll-details {
+        height: 300px;
+    }
+
+    .report_table {
+        height: 350px
+    }
+
+    .seacrh-row {
+        padding-top: 20px;
+    }
+
+    .extension2-card {
+        gap: 2.6rem;
+    }
+}
+
+@media(min-height:900px) {
+    .table-scroll {
+        height: 500px;
+        overflow-y: auto;
+    }
+
+    .table-scroll-details {
+        height: 370px;
+    }
+
+    .report_table {
+        height: 430px
+    }
+}
+
+@media(max-width:430px) {
+
+    .form-outline input {
+        width: auto;
+    }
+}
+
+@media(min-width:1000px) {
+
+    .dropdown-content-extension {
+        width: 140%;
+        left: -90px;
+        right: 90px;
+    }
+}
+
+@media (max-width:960px) {
+    .pdf_img {
+        top: 80px;
+        width: 50px;
+        left: 10px;
+    }
+}
+
+@media (max-width:770px) {
+    .pdf_img {
+        position: static;
+    }
+}
+
+@media (max-width:350px) {
+    .form-select-last {
+        width: 100px;
+    }
+}
+
+/* ///////////////////////////////////////////////settlement////////////////////////////////////////////////////////////////////////// */
+@media (min-height:700px) {
+    .data-row-Settl {
+        padding-top: 1.1rem;
+    }
+
+    .expensesRow {
+        min-height: 40vh;
+    }
+
+    .compensation-Row {
+        min-height: 35vh;
+    }
+
+    .form-card5-settl {
+        gap: .6rem;
+    }
+}
+
+@media (min-height:750px) {
+    .data-row-Settl {
+        padding-top: 1.5rem;
+    }
+
+    .expensesRow {
+        min-height: 45vh;
+    }
+
+    .compensation-Row {
+        min-height: 40vh;
+    }
+
+    .form-card5-settl {
+        gap: 1rem;
+    }
+
+    #SettlementTable {
+        height: 385px;
+    }
+}
+
+@media (min-height:800px) {
+    .data-row-Settl {
+        padding-top: 2rem;
+    }
+
+    .form-card5-settl {
+        gap: 1.5rem;
+    }
+
+    #SettlementTable {
+        height: 432px;
+    }
+}
+
+@media (min-height:850px) {
+    .data-row-Settl {
+        padding-top: 2.3rem;
+    }
+
+    .expensesRow {
+        min-height: 48vh;
+    }
+
+    .compensation-Row {
+        min-height: 44vh;
+    }
+
+    .form-card5-settl {
+        gap: 1.8rem;
+    }
+
+    #SettlementTable {
+        height: 465px;
+    }
+}
+
+@media (min-height:900px) {
+    .data-row-Settl {
+        padding-top: 2.7rem;
+    }
+
+    .expensesRow {
+        min-height: 50vh;
+    }
+
+    .compensation-Row {
+        min-height: 45vh;
+    }
+
+    .form-card5-settl {
+        gap: 2rem;
+    }
+
+    #SettlementTable {
+        height: 500px;
+    }
+}
+
+@media (max-width:1000px) {
+    .expensesRow {
+        gap: 20px
+    }
+}
+/*======================================================================
+//           ========================== account Media ==============================================================================================
+//          =====================================================================*/
+
+@media (min-width: 1024px) {
+    .signture_pen {
+        height: 150px;
+    }
+}
+
+@media (min-height: 700px) {
+    .account-modal-rows {
+        padding: 5px;
+    }
+}
+
+@media (min-height: 800px) {
+    .account-modal-rows {
+        padding: 8px;
+    }
+}
+
+@media (min-height: 850px) {
+    .account-modal-rows {
+        padding: 11px;
+    }
+}
+
+@media (min-height: 900px) {
+    .account-modal-rows {
+        padding: 16px;
+    }
+}
+
+@media (min-height: 1000px) {
+    .account-modal-rows {
+        padding: 18px;
+    }
+}
+/*===========================================================================================================================================*/
+/*======================================================================
+//           ========================== feed style ==============================================================================================
+//          =====================================================================*/
+
+.data-row {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+}
+/*======================================================================
+//           ========================== feed media ==============================================================================================
+//          =====================================================================*/
+@media (max-height:700px) {
+    .feed-card {
+        gap: 1rem
+    }
+}
+
+@media (min-height:700px) {
+    .feed-card {
+        gap: 1rem
+    }
+}
+
+@media (min-height:750px) {
+    .feed-card {
+        gap: 1.5rem
+    }
+}
+
+@media (min-height:800px) {
+    .feed-card {
+        gap: 1rem
+    }
+}
+
+@media (min-height:850px) {
+    .feed-card {
+        gap: 2.5rem
+    }
+}
+
+@media (min-height:900px) {
+    .feed-card {
+        gap: 3rem
+    }
+}
+
+@media (max-width:1000px) {
+    .feed-card {
+        gap: 3.5em
+    }
+}

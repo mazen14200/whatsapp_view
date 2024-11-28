@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Builder;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Http.Features;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using Microsoft.Extensions.Options;
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Http.Extensions;
+@using WhatsUp.Core.Models; 
+@*@model WhatsUp.Ui.ViewModels.MAS.RenterIdTypeVM*@
+
+
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> options
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    ViewData["returnUrl"] = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+
+}
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<button class="btn btn-primary" onclick="ChangeLanguage()">Click me to Change </button>
+
+<h1>@localizer["Data Car"]</h1>
+
+
+<script>
+    function ChangeLanguage(){
+        var cultureInfo_ = '@System.Globalization.CultureInfo.CurrentCulture.Name'; // OK Done OK OK
+
+        if (cultureInfo_ == "ar-EG") {
+            console.log(cultureInfo_);
+            //'@System.Globalization.CultureInfo.CurrentCulture.Name' = "en-US";
+        }
+        else if (cultureInfo_ == "en-US") {
+            console.log(cultureInfo_);
+            //'@System.Globalization.CultureInfo.CurrentCulture.Name' = "ar-EG";
+        }
+    }
+
+</script>

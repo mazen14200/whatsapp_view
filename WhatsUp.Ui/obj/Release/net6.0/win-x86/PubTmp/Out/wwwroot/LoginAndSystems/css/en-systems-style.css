@@ -1,0 +1,21 @@
+nav input[type="checkbox"] {
+    display: none;
+}
+
+.mode-btn input[type="checkbox"]:checked+label .english {
+    display: none;
+}
+
+.mode-btn input[type="checkbox"]:not(input[type="checkbox"]:checked)+label .Arabic {
+    display: none;
+}
+:has(#switch-mode:checked) body{
+    direction: rtl;
+}
+:has(#switch-mode:checked) .exit img {
+    transform: rotate(180deg);    
+}
+:has(#switch-mode:checked) .system-card img {
+    transform: rotatey(180deg);    
+}
+

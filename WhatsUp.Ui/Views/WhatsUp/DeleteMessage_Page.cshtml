@@ -1,0 +1,848 @@
+﻿@using Microsoft.AspNetCore.Builder;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Http.Features;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using Microsoft.Extensions.Options;
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Http.Extensions;
+@using WhatsUp.Core.Models; 
+
+@model WhatsUpVM
+
+
+<h1 style="display:flex;justify-content:space-around;">رسائل للمستأجرين</h1>
+
+<style>
+input[type=text], select, textarea {
+  width: 100%; 
+  padding: 12px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: border-box; 
+  margin-top: 6px; 
+  margin-bottom: 16px; 
+  resize: vertical 
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: white;
+  padding: 20px;
+  direction : rtl;
+}
+</style>
+
+
+<div class="container">
+
+    <div style="overflow-y: hidden; height:600px;">
+
+        <div class="Branch" style="display:flex;gap:10px;">
+            <label for="brunch_name" style="padding-top:23px;width:220px;font-size:21px;">الشركة</label>
+            <select class="text-right form-select" id="Select_Connect" onchange="getSelectedConnect(this)" style="width:350px;margin-inline-start:-105px;">
+                @foreach (var item in Model.Company_List)
+                {
+                    <option id="@item.companyId" value="@item.companyId">@item.companyId + @item.companyName</option>
+                }
+               
+            </select>
+            <input readonly class="form-control ArName" value=".غير مشترك." id="Connect_Status_txt" name="Connect_Status_txt" style="direction:rtl;height:40px;width:200px;font-size:22px;margin-top:18px;"></input>
+            <textarea readonly class="form-control ArName" hidden value="..." id="ApiToken_txt" name="ApiToken_txt" style="direction:rtl;height:58px;"></textarea>
+            <textarea readonly class="form-control ArName" hidden value="..." id="device_serial_txt" name="device_serial_txt" style="direction:rtl;height:58px;"></textarea>
+    </div>
+        <div class="Branch" style="display:flex;gap:10px;" >
+            <label for="brunch_name" style="padding-top:23px;width:160px;font-size:21px;margin-top:-15px;">المرسل إليه</label>
+            <div style="width:350px;margin-inline-start:-55px">
+                <select class="text-right form-select" id="Select_Renter" onchange="getSelectedRenter(this)" style="width:350px;margin-inline-start:10px">
+                    @foreach (var item in Model.Renter_List)
+                    {
+                        <option id="@item.RenterId" value="@item.RentercountryKey@item.RenterPhoneNumber">@item.RenterPersonArName</option>
+                    }
+
+                </select>
+                <div class="Branch" style="display:flex;gap:10px;justify-content:0;">
+                    <label for="brunch_name" style="width:160px;font-size:19px;margin-top:7px;margin-inline-start:-115px;">جوال المرسل إليه</label>
+                    <input readonly class="form-control ArName" value="." id="phoneNumber_txt" name="phoneNumber_txt" style="direction:rtl;height:40px;"></input>
+                </div>
+            </div>
+            <input readonly class="form-control ArName" value=".غير مشترك." id="Renter_Status_txt" name="Renter_Status_txt" style="direction:rtl;height:40px;width:200px;font-size:20px;margin-top:6px;"></input>
+        </div>
+
+        <div class="Branch" style="display:flex;gap:10px;" hidden>
+            <label for="brunch_name" style="padding-top:23px;width:160px;font-size:21px;margin-top:-15px;">نوع الرسالة</label>
+            <div style="width:350px;margin-inline-start:-55px">
+                <select class="text-right form-select" id="Select_Type_Message" style="width:350px;margin-inline-start:10px">
+                        <option id="T" value="T">تحقق</option>
+                        <option id="F" value="F">فاتورة</option>
+                        <option id="C" value="C">عقد</option>
+                        <option id="S" value="S">مستند</option>                   
+                </select>
+                </div>
+        </div>
+        <div class="Branch" style="display:flex;gap:10px;">
+            <label for="brunch_name" style="padding-top:23px;width:160px;font-size:21px;margin-top:12px;">الرسالة</label>
+            <textarea class="form-control ArName" value="." id="Message_txt" name="Message_txt" style="direction:rtl;height:90px;margin-inline-start:-20px;"></textarea>
+            <button onclick="SendTextMessage()" class="btn btn-primary" style="width:160px;height:80px;font-size:18px;margin-top:10px;">ارسال</button>
+            @*<button onclick="Send_ListText_Message()" class="btn btn-primary" style="width:160px;height:80px;font-size:18px;margin-top:10px;">ارسال قائمة</button>*@
+        </div>
+        <div style="display:flex;justify-content:center:0;gap:10px;">
+           @* <div>
+                <div class="Branch" style="display:flex;gap:10px;">
+
+                    <div class="file-upload">
+                        <button class="file-upload-btn btn btn-primary" type="button" style="padding-top:10px;width:120px;font-size:21px;margin-top:12px;background-color:#072;" onclick="$('.file-upload-input-signature').trigger('click')">اختر صورة</button>
+                        <input class="file-upload-input-signature" type="file" onchange="readURL(this, 'signature');" accept="image/*" id="Img_" name="Img_" hidden />
+                        <img class="file-upload-image signature" id="image_For_send" name="image_For_send" src="@Url.Content(Model.ImageForSend)" style="height:135px;" />
+                        <button onclick="Send_Image()" class="btn btn-primary" style="width:160px;height:80px;font-size:18px;margin-top:10px;">ارسال الصورة</button>
+                    </div>
+
+                    <div class="file-upload" style="margin-top:20px;">
+                        <button class="file-upload-btn btn btn-primary" type="button" style="padding-top:10px;width:120px;font-size:21px;margin-top:12px;background-color:#072;" onclick="$('.file-upload-input-signature22').trigger('click')">اختر ملف</button>
+                        <input class="file-upload-input-signature22" type="file" onchange="readURL(this, 'signature33');" accept="image/*" id="file_" name="file_" hidden />
+                        <input type="text" readonly class="file-upload-image signature33" id="file_For_send" name="file_For_send" src="@Url.Content(Model.FileForSend)" style="width:200px;padding-bottom:25px;" />
+                        <button onclick="Send_File()" class="btn btn-primary" style="width:160px;height:80px;font-size:18px;margin-top:10px;">ارسال الملف</button>
+                    </div>
+                </div>
+
+                <div class="file-upload" style="margin-top:20px; display:flex;justify-content:0;gap:10px;">
+                    <button onclick="Check_isNumber_Registered()" class="btn btn-primary" style="width:160px;height:80px;font-size:18px;margin-top:10px;">هل الرقم مسجل بالواتس اب</button>
+                    <button onclick="Query_Connect_Status()" class="btn btn-primary" style="width:160px;height:80px;font-size:18px;margin-top:10px;">استفسار عن حالة المصدر</button>
+                    <div class="Branch" style="display:flex;gap:10px;margin-top:10px;">
+                        <label for="brunch_name" style="padding-top:23px;width:100px;font-size:21px;margin-top:0px;">اختر الرسالة</label>
+                        <select class="text-right form-select" id="Select_Message" onchange="getSelectedMessage(this)" style="width:350px;">
+                            @foreach (var item in Model.Message_List)
+                            {
+                                <option id="@item.MessageId" value="@item.MessageId">@item.MessagePhoneNumberFull - @item.MessageText</option>
+                            }
+
+                        </select>
+                        <input hidden class="form-control ArName" value="." id="MessageId_txt" name="MessageId_txt" style="direction:rtl;height:40px;"></input>
+                    </div>
+                    <button onclick="Delete_Message()" class="btn btn-primary" style="width:160px;height:80px;font-size:18px;margin-top:5px;">حذف الرسالة</button>
+                </div>
+            </div>*@
+            <div>
+                <input readonly class="form-control ArName" value="تم ارسال الرسالة" id="Message_Status_Send_txt" name="Message_Status_Send_txt" style="direction:rtl;height:40px;font-size:18px;color:#900;visibility:hidden;"></input>
+                <input readonly class="form-control ArName" value="تم استلام الرسالة" id="Message_Status_Reseved_txt" name="Message_Status_Reseved_txt" style="direction:rtl;height:40px;font-size:18px;color:#900;visibility:hidden;"></input>
+                <input readonly class="form-control ArName" value="تم قراءة الرسالة" id="Message_Status_Read_txt" name="Message_Status_Read_txt" style="direction:rtl;height:40px;font-size:18px;color:#900;visibility:hidden;"></input>
+
+            </div>
+        </div>
+        @*<div class="Branch" style="display:flex;gap:10px;" hidden>
+            <label for="brunch_name" style="padding-top:23px;width:160px;font-size:21px;margin-top:12px;">حالة رسالة</label>
+            <textarea class="form-control ArName" value="." id="Message_Ids_txt" name="Message_Ids_txt" style="direction:rtl;height:90px;margin-inline-start:-20px;"></textarea>
+            <textarea hidden class="form-control ArName" value="." id="Message_last_status_txt" name="Message_last_status_txt" style="direction:rtl;height:90px;margin-inline-start:-20px;"></textarea>
+            <button onclick="GetMessage_Status()" id="Message_status_btn" class="btn btn-primary" style="width:160px;height:80px;font-size:18px;margin-top:10px;">استعلام</button>
+        </div>
+        <button onclick="Get_messages_for_Check_status_from_DB()" id="Message_status_btn" class="btn btn-primary" style="width:160px;height:80px;font-size:18px;margin-top:10px;">حالات استعلام</button>
+        *@
+
+        @*<img src="" id="image_QrCode" name="image_QrCode" style="width:300px;" />*@
+        <input hidden class="form-control ArName" id="ConnectId_txt" name="ConnectId_txt" asp-for="@Model.Single_connect_id" style="direction:rtl;height:40px;"/>
+@*        <label for="ert" style="padding-top:23px;width:660px;font-size:21px;">1 حالة المرسل اليه (متصل - غير متصل)</label>
+        <label for="ert" style="padding-top:13px;width:660px;font-size:21px;">2 حالة الرسالة (تم الاستلام - تم القراءة)</label>*@
+        
+        @*<div class="Branch" style="display:flex;gap:10px;">
+            <label for="brunch_name" style="padding-top:23px;width:160px;font-size:21px;margin-top:-15px;">حذف رسالة</label>
+            <div style="width:350px;margin-inline-start:-55px">
+                <select class="text-right form-select" id="Select_Message" style="width:350px;margin-inline-start:10px">
+                    @foreach (var item in Model.Message_List)
+                    {
+                        <option id="@item.MessageId" value="@item.MessagePhoneNumberFull">@item.MessagePhoneNumberFull - @item.MessageText - @item.MessageStatus</option>
+                    }
+                </select>
+            </div>
+            <button onclick="Delete_This_Message('AA')" id="Message_Delete_btn" class="btn btn-primary" style="width:160px;height:80px;font-size:18px;margin-top:10px;">حذف</button>
+
+        </div>*@
+</div>
+
+
+@section Scripts
+{
+
+        <script>
+
+            function readURL(input, type) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var container = $(input).closest('.file-upload');
+                        console.log(input.files[0].name);
+
+                        if (type == "signature33") {
+                            container.find('.file-upload-image.' + type).attr('value', input.files[0].name);
+                            container.find('.file-upload-image.' + type).attr('src', e.target.result);
+                        }
+                        else
+                        {
+                            container.find('.file-upload-image.' + type).attr('src', e.target.result);
+                        }                        
+                        container.find('.file-upload-content.' + type).show();
+                        container.find('.image-title.' + type).html(input.files[0].name);
+                        container.find('.image-upload-wrap').hide();
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    removeUpload(input);
+                }
+            }
+        </script>
+
+        <script>
+            var rootName = $('#rootName').val();
+
+            async function send_textMessage() {
+                let type = $('#Select_Type_Message').val();
+                let Renter_id = $('#Select_Renter').find(':selected').attr('id');
+                let connect_id = $('#Select_Connect').val();
+                let phoneNumber = $('#Select_Renter').find(':selected').val();
+                $('#Message_Status_Send_txt').val("تم ارسال الرسالة");
+                $('#Message_Status_Reseved_txt').val("لم يتم استلام الرسالة");
+                $('#Message_Status_Read_txt').val("لم يتم قراءة الرسالة");
+                $('#Message_Status_Send_txt').css({ "color": "#900", "visibility": "visible" });
+                $('#Message_Status_Reseved_txt').css({ "color": "#900", "visibility": "visible" });
+                $('#Message_Status_Read_txt').css({ "color": "#900", "visibility": "visible" });
+                const toNumber = $('#phoneNumber_txt').val(); // The recipient's phone number
+                //const ApiToken = $('#ApiToken_txt').val(); // Your WhatsApp API token
+                const messageText = $('#Message_txt').val(); // The message text with the random code
+                //var apiToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJtYXplbkJuYW4iLCJzZXJpYWwiOiJjOWU0MWUyOWZmMTQ5YjgiLCJpYXQiOjE3MjAxMDAzODIsImV4cCI6MTgwNjUwMDM4Mn0.Kdt77_5LyoZ93dJPGGTXar7VFRivMTzb6t2CNHQfc1U";
+                var settings = {
+                    url: "http://" + rootName + "/api/sendMessage_text?" + "phone=" + toNumber + "&message=" + messageText + "&apiToken=Bnan_fgfghgfhnbbbmhhjhgmghhgghhgj" + "&id=" + connect_id,
+                    //url: "http://localhost:3000/api/sendMessage_text?" + "phone=" + toNumber + "&message=" + messageText + "&apiToken=Bnan_fgfghgfhnbbbmhhjhgmghhgghhgj" + "&id=" + connect_id,
+                    method: "post",
+                    timeout: 50000, // sets timeout to 50 seconds
+                    contentType: "application/json",
+                    headers: { 
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+                    },
+
+                    success: function (result) {
+                        //do something
+                        console.log(result);
+                        if (result.status == "true") {
+                            let message_Id = result.response.messageId;
+                            let message_text = result.response.message;
+                            //let benefectorPhone = result.response.message;
+                            $('#Message_Status_Send_txt').val("تم ارسال الرسالة");
+                            $('#Message_Status_Send_txt').css({ "color": "#090", "visibility": "visible" });
+                            if (type == "T") {
+                                console.log({ message_Id, message_text, type, Renter_id, connect_id, phoneNumber });
+                                save_Message(message_Id, message_text, type, Renter_id, connect_id, phoneNumber);
+                                $('#Message_Ids_txt').val(message_Id);
+                                //var last_status =await GetMessage_Status();
+                                //GetMessage_Status();
+                                //wait(7000);  //7 seconds in milliseconds
+                            }
+
+                        }
+                        else {
+                            $('#Message_Status_Send_txt').val("لم يتم ارسال الرسالة");
+                            $('#Message_Status_Send_txt').css({ "color": "#900", "visibility": "visible" });
+                            $('#Message_Status_Reseved_txt').css({ "color": "#900", "visibility": "hidden" });
+                            $('#Message_Status_Read_txt').css({ "color": "#900", "visibility": "hidden" });
+                        }
+                    },
+                    error: function (xhr) {
+                        //document.getElementById('output').innerHTML = "Sorry Error Server Connection";
+
+                        console.error('Error sending message:', xhr);
+                        $('#Message_Status_Send_txt').val("لم يتم ارسال الرسالة");
+                        $('#Message_Status_Send_txt').css({ "color": "#900", "visibility": "visible" });
+                        $('#Message_Status_Reseved_txt').css({ "color": "#900", "visibility": "hidden" });
+                        $('#Message_Status_Read_txt').css({ "color": "#900", "visibility": "hidden" });
+
+                        //alert(xhr.status + " :" + xhr.responseText);
+                        //if (xhr.status == "301") {
+
+                        //}
+                        //else if (xhr.status == "503") {
+
+                        //}
+                        //else {
+                        //    document.getElementById('output').innerHTML = "Sorry Error Server Connection";
+
+                        //}
+                    }
+                };
+
+                try {
+                    $.ajax(settings).then(await function (response) {
+
+                        console.log(response);
+                        //if (response.status == "true") {
+                            
+                        //}
+                    });
+                } catch (err) {
+                    alert(err);
+                }
+            }
+        </script>
+
+        //////////////////
+        /////////////////
+        ////////////////////
+
+    <script>
+        function dataChanged(NumData_field) {
+            // find by name attribute
+            let ID = NumData_field.id;
+            let index = NumData_field.id;
+            let ID_ = '#' + NumData_field.id + 'A';
+            let div_form = document.getElementsByName(ID)[0];
+            console.log(ID_);
+            console.log({ index });
+
+            var our_No = $(ID_).find('input').eq(0).val();
+
+            $.ajax({
+                type: "GET",
+                data: {
+                    our_No: our_No,
+                },
+                //@*url: "@Url.Action("Get_ConvertedNumber_Action", "WhatsUp", new { Area = "MAS" })*@",
+                url: "@Url.Action("Get_ConvertedNumber_Action", "WhatsUp", new { Area = "" })",
+                success: function (response) {
+                    console.log(response.ar_concatenate);
+                    console.log(response.en_concatenate);
+
+                    $(ID_).find('textarea').eq(0).val(response.ar_concatenate);
+                    $(ID_).find('textarea').eq(1).val(response.en_concatenate);
+
+                },
+            })
+
+            let selector = ID_ + ' input:nth-of-type(2)';
+
+        }
+
+    </script>
+    <script>
+            function Delete_message_inDB(message_Id) {
+                //var message_Id = $('#').val();
+                var connect_id = $('#Select_Connect').find(':selected').val();
+                $.ajax({
+                    type: "PUT",
+                    data: {
+                        message_Id: message_Id,
+                        connect_id: connect_id,
+                    },
+                    //@*url: "@Url.Action("Get_ConvertedNumber_Action", "WhatsUp", new { Area = "MAS" })*@",
+                    url: "@Url.Action("Update_Message_status_Delete_Action", "WhatsUp", new { Area = "" })",
+                    success: function (response) {
+                        if (response.code === 1) {
+                            console.log("Delete is Updated in DB succesfully");
+
+                        }
+                        else{
+                            console.log("This Message Not Found in DB To Delete");
+
+                        }
+
+                    },
+                })
+            }
+
+    </script>
+
+        <script>
+            function Get_messages_for_Check_status_from_DB() {
+                //var message_Id = $('#').val();
+                var connect_id = $('#Select_Connect').find(':selected').val();
+                $.ajax({
+                    type: "GET",
+                    data: {
+                        connect_id: connect_id
+                    },
+                    //@*url: "@Url.Action("Get_ConvertedNumber_Action", "WhatsUp", new { Area = "MAS" })*@",
+                    url: "@Url.Action("Get_MessagesList_status_Action", "WhatsUp", new { Area = "" })",
+                    success: function (response) {
+                        if (response.code === 1) {
+                            console.log("Get_MessagesList_status From DB succesfully");
+                            Get_All_Message_Status(response.existing_messages);
+                        }
+                        else {
+                            console.log("No Data Get_MessagesList_status From DB");
+                        }
+
+                    },
+                })
+            }
+
+        </script>
+        
+        <script>
+            function Update_message_status_inDB(messagesVM) {
+                //var message_Id = $('#').val();
+                console.log(messagesVM);
+                var connect_id = $('#Select_Connect').find(':selected').val();
+                $.ajax({
+                    type: "PUT",
+                    data: {
+                        messagesVM: messagesVM,
+                        connect_id: connect_id,
+                    },
+                    //@*url: "@Url.Action("Get_ConvertedNumber_Action", "WhatsUp", new { Area = "MAS" })*@",
+                    url: "@Url.Action("Update_Message_status_Action", "WhatsUp", new { Area = "" })",
+                    success: function (response) {
+                        if (response.code === 1) {
+                            console.log("Update_message_status_inDB succesfully");
+
+                        }
+                        else {
+                            console.log("Error : Update_message_status_inDB");
+
+                        }
+
+                    },
+                })
+            }
+
+        </script>
+
+
+    <script>
+
+            const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+            const repeatedGreetings = async () => {
+                await sleep(1000)
+                //getSelectedConnect("obj")
+                //await sleep(3000)
+                //getSelectedRenter('An')
+                //await sleep(3000)
+
+            }
+
+        $(document).ready(async function () {
+            //getSelectedConnect("obj");
+            repeatedGreetings();
+            //var api_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiJtYXplbkJuYW4iLCJzZXJpYWwiOiI1YjM4ZjVhZjFjZDU1YmQiLCJpYXQiOjE3MTk3Mjc5MTgsImV4cCI6MTgwNjEyNzkxOH0.knMzg5bZS-yfxUfkK9YAWb6Phwbtc4voC-FHECHzKlc";
+            //var api_token = $('#ApiToken_txt').val();
+            //getSelectedRenter('An');
+            //await Login_in_injazatek();
+            //await GetAll();
+        });
+
+        async function getSelectedRenter(selectedOpject)
+        {
+            var Select_Renter_Phone = $('#Select_Renter').find(':selected').val();
+            //var Select_Renter_ID = $('#Select_Renter').find(":selected").attr('id');
+            $('#phoneNumber_txt').val(Select_Renter_Phone);
+            console.log(Select_Renter_Phone);
+            var api_token1 = $('#ApiToken_txt').val();
+            $('#Message_Status_Send_txt').css({ "color": "#900", "visibility": "hidden" });
+            $('#Message_Status_Reseved_txt').css({ "color": "#900", "visibility": "hidden" });
+            $('#Message_Status_Read_txt').css({ "color": "#900", "visibility": "hidden" });
+            $('#Message_txt').val("");
+            await CheckRegisted_OnWhatsUp(Select_Renter_Phone, api_token1);
+
+        }
+
+            async function getSelectedConnect(selectedOpject) {
+                var select_Connect_id = "00";
+                select_Connect_id = $('#Select_Connect').find(":selected").attr('id');
+                console.log(select_Connect_id);
+
+                $.ajax({
+                    type: "Get",
+                    data: { connect_id: select_Connect_id },
+                    url: "@Url.Action("Get_Connect_Api_Token_and_DeviceSerial", "WhatsUp", new { })",
+                    success: await function (response) {
+                        console.log(response);
+                        console.log("response success");
+                        $("#ApiToken_txt").val(response.api_Token);
+                        $("#device_serial_txt").val(response.device_serial);
+                        console.log($("#ApiToken_txt").val());
+
+                        $('#Select_Renter').empty();
+                        var dropdown_Renter = $('#Select_Renter');
+                        var ind = 0;
+                        for (var i in response.renters){
+                            // console.log(response.renters[i].renterPhoneNumber); // renterId, renterPersonArName, renterPersonEnName
+                            $("<option />", {
+                                val: response.renters[i].rentercountryKey + response.renters[i].renterPhoneNumber,
+                                text: response.renters[i].renterPersonArName,
+                                id: response.renters[i].renterId
+                            }).appendTo(dropdown_Renter);
+                        }
+                        //New Message For this Connect
+                        $('#Select_Message').empty();
+                        var dropdown_Messages = $('#Select_Message');
+                        var ind = 0;
+                        for (var i in response.messageList) {
+                            // console.log(response.renters[i].renterPhoneNumber); // renterId, renterPersonArName, renterPersonEnName
+                            $("<option />", {
+                                val: response.messageList[i].messagePhoneNumberFull,
+                                text: response.messageList[i].messagePhoneNumberFull + " - " + response.messageStatus[i] + " - " + response.messageList[i].messageText,
+                                id: response.messageList[i].messageId
+                            }).appendTo(dropdown_Messages);
+                        }
+                        Check_Connect_Status(response.api_Token);
+                    },
+                })
+            }
+
+
+
+            function SendTextMessage(){
+              //sendMessageToWhatsApp();
+              send_textMessage();
+            }
+
+    </script>
+
+    <script>
+        function save_Message(message_Id,message_text,type,Renter_id,connect_id,phoneNumber) {
+
+            $.ajax({
+                type: "Post",
+                data: {
+                        message_Id: message_Id,
+                        message_text: message_text,
+                        type: type,
+                        Renter_id: Renter_id,
+                        connect_id:connect_id,
+                        phoneNumber: phoneNumber,
+                },
+                //@*url: "@Url.Action("Get_ConvertedNumber_Action", "WhatsUp", new { Area = "MAS" })*@",
+                    url: "@Url.Action("save_Message_Action", "WhatsUp", new { Area = "" })",
+            success: function (response) {
+                console.log(response.code);
+                if (response.code==1)
+                {
+                    console.log("Message save succesful in Database");
+                }
+                else
+                {
+                    console.log("Error in saving Message in Database");
+                }
+
+            },
+        })
+        }
+
+            //data: form
+
+            async function create_new_Chanel(name, relay, api_Token) {
+                var form = new FormData();
+                form.append("name", name);
+                form.append("relay", relay);
+                var settings = {
+                    url: "https://business.enjazatik.com/api/v1/device/create",
+                    method: "Post",
+                    timeout: 0,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    contentType: false,
+                    crossDomain: true,
+                    //data: {
+                    //    name: name,
+                    //    relay: relay,
+                    //},
+                    data: form,
+                    headers: { "Authorization": "Bearer " + api_Token }
+                };
+                try{
+                    $.ajax(settings).then(await function (response) {
+                        const result = JSON.parse(response);
+                        console.log(response);
+                        console.log(result);
+                        console.log(result.data.token);
+
+                    });
+                }catch(err){
+                    alert(err);
+                    //alert(err.status + " :" + err.responseText);
+                }
+
+                //.success(await function (result) {
+                //    //do something
+                //    console.log(response);
+                //})
+                //    .error(await function (xhr) {
+                //    alert(xhr.status + " :" + xhr.responseText);
+                //});
+            }
+
+</script>
+<script>
+    async function Send_ListText_Message(){
+                $('#Message_Status_Send_txt').val("تم ارسال الرسالة");
+                $('#Message_Status_Send_txt').css({ "color": "#900", "visibility": "visible" });
+                $('#Message_Status_Reseved_txt').css({ "color": "#900", "visibility": "visible" });
+                $('#Message_Status_Read_txt').css({ "color": "#900", "visibility": "visible" });
+
+                var apiToken = $('#ApiToken_txt').val();
+                var phoneNumber = $('#phoneNumber_txt').val();
+                let headers = new Headers()
+                headers.append("Authorization", "Bearer " + apiToken)
+                //var form ={                               
+                //    "number": phoneNumber,
+                //    "content": {
+                //    "buttonText": "services",
+                //        "text": "مرحباً بكم, لقد تم انشاء عقدكم بنجاح",
+                //            "title": "Welcome, your contract has been successfully created",
+                //                "description": "Contact us",
+                //                    "sections": [
+                //                        {
+                //                            "title": "الخدمات",
+                //                            "rows": [
+                //                                {
+                //                                    "title": "عقد عربي PDF",
+                //                                    "description": "لتحميل نسخة من العقد عربي خاصة بك",
+                //                                    "rowId": "string"
+                //                                },
+                //                                {
+                //                                    "title": "English Contract pdf",
+                //                                    "description": "To Download a copy of your English contract",
+                //                                    "rowId": "string"
+                //                                },
+                //                                {
+                //                                    "title": "فاتورة عربي PDF",
+                //                                    "description": "لتحميل نسخة من الفاتورة عربي خاصة بك",
+                //                                    "rowId": "string"
+                //                                },
+                //                                {
+                //                                    "title": "English Invoice pdf",
+                //                                    "description": "To Download a copy of your English Invoice",
+                //                                    "rowId": "string"
+                //                                }
+                //                            ]
+                //                        }
+                //                    ],
+                //                        "listType": 1
+                //},
+                //"type": "list"                
+                //};
+                var form = {
+                    "number": phoneNumber,
+                    "content": {
+                        "text": " ",
+                        "title": " ",
+                        "description": " ",
+                    },
+                    "type": "list"
+                };
+                //var form = {
+                //    "number": phoneNumber,
+                //    "content": {
+                //        "buttonText": " ",
+                //        "text": " ",
+                //        "title": " ",
+                //        "description": " ",
+                //        "sections": [
+                //            {
+
+                //            }
+                //        ],
+                //        "listType": 0
+                //    },
+                //    "type": "list"
+                //};
+                
+                var settings = {
+                    url: "https://business.enjazatik.com/api/v1/send-template?token=" + apiToken,
+                    method: "POST",
+                    timeout: 0,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    contentType: "application/json",
+                    data: JSON.stringify(form),
+                    headers: headers,
+                    success: function (response) {
+                        //do something
+                        console.log(response);
+                        const result = JSON.parse(response);
+                        console.log(result);
+                        if (result.status == true) {
+                            $('#Message_Status_Send_txt').val("تم ارسال الرسالة");
+                            $('#Message_Status_Send_txt').css({ "color": "#090", "visibility": "visible" });
+                            console.log(result.messageId);
+                            $('#Message_Ids_txt').val(result.messageId);
+                            //Status_of_Renter_con();// set timer and send and delete message service
+                            console.log("Message_status_btn runned");
+                            jQuery('#Message_status_btn').trigger('click');
+
+                            //await delay(9000);
+                            var message_id = $('#Message_Ids_txt').val();
+                            setTimeout(Delete_This_Message, 11000, message_id); //  after 11 sec run this function
+                            console.log("Waited 9s");
+
+                            //console.log("Message_Delete_btn runned");
+                            //jQuery('#Message_Delete_btn').trigger('click');
+                        }
+                        else {
+                            $('#Message_Status_Send_txt').val("لم يتم ارسال الرسالة");
+                            $('#Message_Status_Send_txt').css({ "color": "#900", "visibility": "visible" });
+                            $('#Message_Status_Reseved_txt').css({ "color": "#900", "visibility": "hidden" });
+                            $('#Message_Status_Read_txt').css({ "color": "#900", "visibility": "hidden" });
+                            }
+                    },
+                    error: function (xhr) {
+                        alert(xhr.status + " :" + xhr.responseText);
+                        //if (xhr.status == "503") {
+                        //    alert("هذا الجهاز غير متصل , برجاء التحقق من الأتصال");
+                        //}
+                        //else if (xhr.status == "401") {
+                        //    alert("هذه الشركة غير مشتركة بالواتس اب , برجاء الأشتراك أولا");
+                        //}
+                    }
+                };
+
+                $.ajax(settings).done(await function (response) {
+                    console.log(response);
+                });
+    }
+
+</script>
+
+<script>
+            async function GetMessage_Status(){
+                $('#Message_last_status_txt').val(0);
+                var apiToken = $('#ApiToken_txt').val();
+                var MessageIds = $('#Message_Ids_txt').val();
+
+                var str_array = MessageIds.split(',');
+                var arr1 = [];
+                for (var i = 0; i < str_array.length; i++) {
+                    // Trim the excess whitespace.
+                    str_array[i] =  str_array[i].replace(/^\s*/, "").replace(/\s*$/, "") ;
+                    //arr1.push(str_array[i]);
+                    // Add additional code here, such as:
+                }
+                //alert(str_array);
+                //alert(arr1);
+                
+                var settings = {
+                    url: "https://business.enjazatik.com/api/v1/messages-info?token=" + apiToken,
+                    method: "Post",
+                    //contentType: "application/json",
+                    timeout: 0,
+                    data: { messageIds: str_array },
+                    headers: { "Authorization": "Bearer " + apiToken }
+                };
+                try {
+                    console.log(apiToken);
+                    $.ajax(settings).then(await function (response) {
+                        console.log("Message_Status_got");
+                        console.log(response);
+                        if (response.status == true) {
+                            //$('#Renter_Status_txt').val("تمام");
+                            var all_messages = response.messages;
+                            $('#Message_last_status_txt').val(all_messages[0].receipt);
+                            for (var x = 0; x < all_messages.length; x++) {
+                                console.log(all_messages[x].message);
+                                console.log(all_messages[x].message_id);
+                                console.log(all_messages[x].receipt);
+                                if (all_messages[x].receipt == 1) {
+                                    console.log("حدث خطأ في الارسال");
+                                    $('#Message_Status_Send_txt').val("خطأ في ارسال الرسالة");
+                                    $('#Message_Status_Send_txt').css({ "color": "#900", "visibility": "visible" });
+                                    $('#Message_Status_Reseved_txt').css({ "color": "#900", "visibility": "hidden" });
+                                    $('#Message_Status_Read_txt').css({ "color": "#900", "visibility": "hidden" });
+                                }
+                                else if (all_messages[x].receipt == 2) {
+                                    console.log("ارسلت");
+                                    $('#Renter_Status_txt').val("غير متصل");
+                                }
+                                else if (all_messages[x].receipt == 3) {
+                                    console.log("استلمت");
+                                    $('#Renter_Status_txt').val("متصل");
+                                    $('#Message_Status_Reseved_txt').val("تم استلام الرسالة");
+                                    $('#Message_Status_Reseved_txt').css({ "color": "#090", "visibility": "visible" });
+                                }
+                                else if (all_messages[x].receipt == 4) {
+                                    console.log("قرءت");
+                                    $('#Renter_Status_txt').val("متصل");
+                                    $('#Message_Status_Reseved_txt').val("تم استلام الرسالة");
+                                    $('#Message_Status_Read_txt').val("تم قراءة الرسالة");
+                                    $('#Message_Status_Reseved_txt').css({ "color": "#090", "visibility": "visible" });
+                                    $('#Message_Status_Read_txt').css({ "color": "#090", "visibility": "visible" });
+                                }
+                                console.log(all_messages[x].type);
+                            }
+                        }
+                        else {
+                            $('#Renter_Status_txt').val("الحالة لا تعمل");
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error sending message:', error);
+                }
+                var last_status = $('#Message_last_status_txt').val();
+                return last_status;
+            }
+</script>
+
+<script>
+            async function Delete_This_Message(messageId) {
+                var apiToken = $('#ApiToken_txt').val();
+                let message_id = $('#Select_Message').find(':selected').attr('id');
+                if (messageId!="AA") {
+                    message_id = messageId;
+                }
+                let phoneNumber = $('#Select_Message').find(':selected').val();
+                console.log({ message_id, phoneNumber });
+                var data_delete = {
+                        "messageId": message_id,
+                        "number": phoneNumber,
+                        "deleteFromMe": false,
+                    };
+
+                var settings = {
+                    url: "https://business.enjazatik.com/api/v1/delete-message",
+                    method: "Post",
+                    //mimeType: "multipart/form-data",
+                    contentType: "application/json",
+                    timeout: 0,
+                    data: JSON.stringify(data_delete),
+                    headers: { "Authorization": "Bearer " + apiToken }
+                };
+                try {
+                    console.log(apiToken);
+                    $.ajax(settings).then(await function (response) {
+                        console.log("Message_Delete Run");
+                        console.log(response);
+                        if (response.status == true) {
+                            console.log("Message_Deleted");
+                            Delete_message_inDB(message_id);
+                            console.log("تم حذف الرسالة بنجاح");
+                            $('#Message_Status_Send_txt').val("تم حذف الرسالة بنجاح");
+                            $('#Message_Status_Send_txt').css({ "color": "#900", "visibility": "visible" });
+                            $('#Message_Status_Reseved_txt').css({ "color": "#900", "visibility": "hidden" });
+                            $('#Message_Status_Read_txt').css({ "color": "#900", "visibility": "hidden" });
+
+                        }
+                        else {
+                            console.log("لم يتم حذف الرسالة");
+                            $('#Message_Status_Send_txt').val("لم يتم حذف الرسالة");
+                            $('#Message_Status_Send_txt').css({ "color": "#900", "visibility": "visible" });
+                            $('#Message_Status_Reseved_txt').css({ "color": "#900", "visibility": "hidden" });
+                            $('#Message_Status_Read_txt').css({ "color": "#900", "visibility": "hidden" });
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error sending message:', error);
+                }
+
+            }
+
+</script>
+}

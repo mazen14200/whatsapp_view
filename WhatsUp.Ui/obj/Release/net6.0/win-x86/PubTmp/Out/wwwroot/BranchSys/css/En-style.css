@@ -1,0 +1,70 @@
+
+body {
+    direction: rtl;
+}
+
+.pieChart-data,
+.employee-chart-data,
+.branch-chart-data {
+    padding: 0;
+}
+
+.pieChart-data {
+    padding-left: 5px;
+}
+
+.Branch-car-canvas-row,
+.branch-row,
+.employee-row {
+    flex-direction: row-reverse;
+}
+
+.employee-col,
+.pieChart-col {
+    border-left: none;
+}
+
+.branch-col,
+.Branch-car-col {
+    border-left: 1px solid #cc7110;
+}
+
+.on-mobile p {
+    text-align: end;
+}
+
+.products-collapse-buttons-img {
+    transform: rotate(180deg);
+}
+
+.mode-btn {
+    padding-right: 15px;
+    cursor: pointer;
+}
+
+.faq-toggle {
+    right: 10px;
+}
+
+.tabs {
+    text-align: end;
+}
+
+#brunch_name {
+    direction: ltr;
+}
+
+.Branch {
+    text-align: end;
+}
+
+.scroll-faq-text {
+    height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    direction: ltr;
+}
+
+.inner-scroll-faq-text {
+    direction: rtl;
+}

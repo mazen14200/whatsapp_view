@@ -1,0 +1,216 @@
+/* //////////////////////////////////////////////////////////////////
+[ RESTYLE TAG ]*/
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: "cairo";
+  background-color: #FEF8E8;
+  letter-spacing: .0175rem;
+
+}
+
+/*---------------------------------------------*/
+
+/*---------------------------------------------*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  display: inline;
+  color: #39629C;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #39629C;
+  margin: 0px;
+  font-weight: 700;
+}
+
+ul,
+li {
+  margin: 0px;
+  list-style-type: none;
+}
+
+.brand {
+  text-align: end;
+}
+
+.exit {
+  padding-left: 18px;
+}
+.logo{
+  width: 150px;
+}
+/*---------------------------------------------*/
+input {
+  outline: none;
+  border: none;
+}
+
+textarea {
+  outline: none;
+  border: none;
+}
+
+
+
+
+/*//////////////////////////////////////////////////////////////////
+[ login ]*/
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ////////////////////////////////// */
+nav {
+  flex-direction: row-reverse;
+}
+
+/* /////////////////////////////////// */
+.container-Systems {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+
+}
+
+.owners {
+  color: #4B6FB5;
+
+}
+
+.branches {
+  color: #1D9CA1;
+}
+
+.Administration {
+  color: #153962;
+}
+
+.card-name1,
+.card-name2,
+.card-name3 {
+  justify-content: center;
+  background-color: #Ffff;
+}
+
+.system-card {
+  border: 2px solid #FF9626;
+  transition: all .5s ease-in-out;
+
+}
+.card1, .card2 , .card3{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.card1 .system-card:hover {
+  border: 2px solid #4B6FB5;
+  box-shadow: 0px 2px 20px 5px #4b6eb577;
+}
+.card2 .system-card:hover {
+  border: 2px solid #1D9CA1;
+  box-shadow: 0px 2px 20px 5px #1d9da196;
+
+}
+.card3 .system-card:hover {
+  border: 2px solid #4B6FB5;
+  box-shadow: 0px 2px 20px 5px #4b6eb577;
+
+}
+/*------------------------------------------------------------------
+[  ]*/
+
+.img-hover-zoom {
+  overflow: hidden;
+}
+
+.system-card img {
+  transition: transform .5s ease;
+}
+
+.system-card:hover img {
+  transform: scale(1.2);
+
+}
+
+
+.system-card:hover .card-name1 {
+  background-color: #4B6FB5;
+}
+
+.system-card:hover .card-name2 {
+  background-color: #1C9BA0;
+}
+
+.system-card:hover .card-name3 {
+  background-color: #153962;
+}
+
+.system-card:hover .owners,
+.system-card:hover .Administration,
+.system-card:hover .branches {
+  color: #ffffff;
+}
+
+/*---------------------------------------------*/
+
+/*------------------------------------------------------------------
+/* ///////////////////////////// */
+footer {
+  background-color: #FF9626;
+  height: 140px;
+}
+
+/*------------------------------------------------------------------
+[ Responsive ]*/
+
+/* ///////////////////// */
+.before-footer-widget {
+  background-image: linear-gradient(2.71deg, #FF9626 64.81%, rgba(255, 150, 38, 0.18) 153.13%);
+  font-size: 0;
+}
+
+/*------------------------------------------------------------------*/
+
+
+@media (min-width: 992px) and (min-height :845px) {
+  .system-card{
+    width: 265px;
+  }
+}
+/* footer media */
+
+
+@media (max-width:425px) {
+  .navbar-brand h1{
+    font-size: 1rem;
+  }
+}
+@media  (min-height:866px) {
+  footer {
+   height: 200px;
+  }
+}
+
+
+

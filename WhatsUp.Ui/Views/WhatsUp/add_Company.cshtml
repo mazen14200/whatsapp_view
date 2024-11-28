@@ -1,0 +1,204 @@
+﻿@using Microsoft.AspNetCore.Builder;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Http.Features;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using Microsoft.Extensions.Options;
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Http.Extensions;
+@using WhatsUp.Core.Models; 
+
+@model WhatsUpVM
+
+
+<h1 style="display:flex;justify-content:space-around;">إضافة شركة للواتس اب</h1>
+
+<style>
+/* Style inputs with type="text", select elements and textareas */
+input[type=text], select, textarea {
+  width: 100%; /* Full width */
+  padding: 12px; /* Some padding */
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 16px; /* Bottom margin */
+  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/* Style the submit button with a specific background color etc */
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+/* Add a background color and some padding around the form */
+.container {
+  border-radius: 5px;
+  background-color: white;
+  padding: 20px;
+  direction : rtl;
+}
+</style>
+
+
+<div class="container">
+
+
+    <div style="overflow-y: hidden; height:700px;">
+
+        <div class="Branch" style="display:flex;gap:10px;">
+            <label for="brunch_name" style="padding-top:23px;width:170px;font-size:21px;">رقم الشركة</label>
+
+            <input class=" ArName" value="" id="Connectid" name="Connectid" style="margin-top:13px;direction:rtl;height:40px;font-size:18px;color:#900;" ></input>
+      </div>
+
+        <div class="Branch" style="display:flex;gap:10px;">
+            <label for="ConnectName" style="padding-top:23px;width:170px;font-size:21px;">اسم الشركة</label>
+
+            <input class=" ArName" value="" id="ConnectName" name="ConnectName" style="margin-top:13px;direction:rtl;height:40px;font-size:18px;color:#900;" ></input>
+            <button onclick="addNew_Device()" class="btn btn-primary" style="width:160px;height:40px;font-size:18px;margin-top:13px;">إضافة</button>
+        </div>
+      
+            <input readonly class=" ArName" value="" id="ConnectPhone" name="ConnectPhone" style="margin-top:13px;direction:rtl;height:40px;width:400px;font-size:18px;color:#900;visibility:hidden;"></input>
+            <div id="output">
+                <img id="QrCode_image" name="QrCode_image" src="" />
+            </div>
+            <div id="output2">
+            </div>
+
+    </div>
+        <div style="justify-items:center;justify-content:center">
+            <img src="" id="image_QrCode" name="image_QrCode" style="width:300px;" />
+
+        </div>
+
+
+
+</div>
+
+@section Scripts
+{
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+        
+
+        <script>
+
+            var rootName = $('#rootName').val();
+
+            function sleep_new(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+            const repeatedGreetings = async () => {
+                await sleep(4000)
+            }
+
+            $(document).ready( function () {
+                repeatedGreetings();
+            });
+        </script>
+
+        <script>
+            function readURL(input, type) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var container = $(input).closest('.file-upload');
+                        console.log(input.files[0].name);
+                        container.find('.file-upload-image.' + type).attr('src', e.target.result);
+                        container.find('.file-upload-content.' + type).show();
+                        container.find('.image-title.' + type).html(input.files[0].name);
+                        container.find('.image-upload-wrap').hide();
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    removeUpload(input);
+                }
+            }
+        </script>
+
+        <script>
+            function getSelectedoption_settings(obj) {
+                var selected_option_setting = $('#Select_option_settings').find(':selected').val();
+                if (selected_option_setting=="1") 
+                {
+                    $('.change_Name_setting_cls').css({ "display": "block", "display": "flex" });
+                    $('.change_logo_setting_cls').css({ "display": "none" });
+                }
+                else if (selected_option_setting == "2") 
+                {
+                    $('.change_logo_setting_cls').css({ "display": "block", "display": "flex" });
+                    $('.change_Name_setting_cls').css({ "display": "none" });
+                }
+                else
+                {
+                    $('.change_Name_setting_cls').css({ "display": "none" });
+                    $('.change_logo_setting_cls').css({ "display": "none" });
+                }
+            }
+        </script>
+
+
+        <script>
+            async function addNew_Device() {
+
+                select_Connect_id = $('#Connectid').val();
+                connectName = $('#ConnectName').val();
+                //url: "http://localhost:3000/api/generateQrCode",
+                //url: "https://bnanko.com/api/generateQrCode",
+                //url: "http://62.84.187.79:3000/api/generateQrCodeNew",
+                //url: "http://bnanko.store/api/generateQrCodeNew",
+
+                var settings = {
+                url: "http://" + rootName + "/api/addNew_Device?id=" + select_Connect_id + "&name=" + connectName,
+                //url: "http://62.84.187.79:3000/api/addNew_Device?id=" + select_Connect_id + "&name=" + connectName,
+                method: "GET",
+                    timeout: 20000, // sets timeout to 20 seconds
+                    contentType: "application/json",
+                    headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept" },
+
+                    success: function (result) {
+                        //do something
+                        console.log(result);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
+                    }
+                };
+                try {
+                    $.ajax(settings).then(await function (result) {
+
+                        console.log(result);
+                        if (result.status === true) {
+                            $('#ConnectPhone').val(result.response);
+                            $('#ConnectPhone').css({ "color": "#900", "visibility": "visible" });
+                        }
+                        else {
+                            $('#ConnectPhone').val("هناك مشكلة قد تكون بسبب وجود هذه الشركة مسجلة من قبل");
+                            $('#ConnectPhone').css({ "color": "#900", "visibility": "visible" });    
+                        }
+
+                    });
+                } catch (err) {
+                    alert(err);
+                }
+                
+            }
+        </script>
+
+}
+    

@@ -1,0 +1,121 @@
+body {
+    direction: rtl;
+}
+
+.form-card7 {
+    padding: 20px 10px 10px 1px;
+}
+
+.form-check label {
+    margin-left: 20px;
+}
+
+.radio-style {
+    text-align: center;
+}
+
+#progressbar #tenant:after {
+    left: 50%
+}
+
+#progressbar #payment:after {
+    width: 60%;
+    left: 0%;
+}
+
+.cancle-icon {
+    margin-right: 25px;
+}
+
+.button-card img {
+    transform: rotateY(180deg);
+}
+
+.radio-style {
+    padding-left: 45px;
+    padding-right: 0px;
+}
+
+.col-7 {
+    justify-content: flex-end;
+    display: flex;
+    padding-left: 20px;
+}
+
+.car-catogeries {
+    padding-right: 30px;
+    padding-left: 0px;
+}
+
+.scrollable-content {
+    padding-right: 20px !important;
+}
+
+.table-bordered thead .value-tabel-header {
+    border-left: 1px solid #ff9626a3
+}
+
+textarea {
+    direction: ltr;
+}
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  */
+/* /////////////////////media for the seacrh icon list on mobiles///////////////////////// */
+@media (max-width:575px) {
+
+    .dropdown-content {
+        left: 50%;
+        right: 0%;
+        transform: translateX(90%);
+    }
+
+    .payment-dropdown-content {
+        right: 180px;
+        transform: translateX(90%);
+    }
+}
+
+@media (max-width: 320px) {
+    .payment-dropdown-content {
+        right: 220px;
+        transform: translateX(90%);
+    }
+}
+
+/* ****************media****************** */
+@media (max-width: 320px) {
+
+    .form-select-last {
+        width: 95px;
+    }
+}
+
+@media (max-width: 375px) {
+
+    .extra-small-mobile {
+        display: none;
+    }
+}
+
+@media (max-width: 646px) {
+
+    .hide-on-mobile {
+        display: none;
+    }
+
+    .on-mobile {
+        flex-direction: column-reverse;
+        padding-top: 16px;
+    }
+
+        .on-mobile p {
+            margin-left: 0px;
+        }
+}
+
+@media(min-height:990px) {
+
+    footer {
+        width: 100%;
+        padding-bottom: 240px;
+    }
+}

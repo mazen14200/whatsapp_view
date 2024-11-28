@@ -1,0 +1,296 @@
+﻿@using Microsoft.AspNetCore.Builder;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Http.Features;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using Microsoft.Extensions.Options;
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Http.Extensions;
+@using WhatsUp.Core.Models; 
+
+@model WhatsUpVM
+
+
+<h1 style="display:flex;justify-content:space-around;">تحديث الجدول</h1>
+
+<style>
+input[type=text], select, textarea {
+  width: 100%; 
+  padding: 12px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: border-box; 
+  margin-top: 6px; 
+  margin-bottom: 16px; 
+  resize: vertical 
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: white;
+  padding: 20px;
+  direction : rtl;
+}
+
+    table, th, td {
+        border: 1px solid white;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        background-color: #FFA4CC;
+        align-items:center;
+        text-align:center;
+        padding: 0 15px;
+    }
+</style>
+
+
+<div class="container">
+
+    <div style="overflow-y: hidden; height:650px;width:1500px;">
+
+        <div style="display:flex;justify-content:center:0;gap:10px;">
+
+            <button onclick="update_datatable_regions()" class="btn btn-primary" id="button_send_file" style="width:160px;height:80px;font-size:18px;margin-top:10px;">تحديث</button>
+            <input readonly class="form-control ArName" value="تم تحديث البيانات" id="data_status_txt" name="data_status_txt" style="direction:rtl;height:40px;font-size:18px;color:#900;visibility:hidden;width:200px;"></input>
+        </div>
+
+        <div style="display:flex;justify-content:center:0;gap:10px;">
+
+            <div style="overflow-y: scroll;overflow-x: hidden;max-height:450px;">
+            <table id="old_Table" border="8" >
+                    <thead style="position: sticky; top: 0;">
+                    <tr>
+                            <th>Serial</th>
+                            <th>Code</th>
+                            <th>Ar_Name</th>
+                            <th>En_Name</th>
+                            <th>Location</th>
+                            <th>Longitude</th>
+                            <th>Latitude</th>
+                            <th>Status</th>
+                            <th>Reasons</th>
+                        </tr>
+                </thead>
+                <tbody>
+                        @{
+                            var counter = 0;
+                        }
+                        @foreach(var item in Model.postRegion_old)
+                        {
+                            counter++;
+                            <tr>
+                                <td>@counter </td>
+                                <td>@item.CrMasSupPostRegionsCode </td>
+                                <td>@item.CrMasSupPostRegionsArName </td>
+                                <td>@item.CrMasSupPostRegionsEnName </td>
+                                <td>@item.CrMasSupPostRegionsLocation </td>
+                                <td>@item.CrMasSupPostRegionsLongitude </td>
+                                <td>@item.CrMasSupPostRegionsLatitude </td>
+                                <td>@item.CrMasSupPostRegionsStatus </td>
+                                <td>@item.CrMasSupPostRegionsReasons </td>
+                            </tr>
+                        }
+
+                    <!-- البيانات ستضاف هنا ديناميكياً -->
+                </tbody>
+            </table>
+            </div>
+
+            <!-- ====== -->
+
+            <div style="overflow-y: scroll;overflow-x: hidden;max-height:450px;">
+                <table id="updated_Table" border="8">
+                    <thead style="position: sticky; top: 0;">
+                        <tr>
+                            <th>Serial</th>
+                            <th>Code</th>
+                            <th>Ar_Name</th>
+                            <th>En_Name</th>
+                            <th>Location</th>
+                            <th>Longitude</th>
+                            <th>Latitude</th>
+                            <th>Status</th>
+                            <th>Reasons</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{counter=0;}
+                        @foreach (var item in Model.postRegion_updated)
+                        {
+                            counter++;
+                            <tr>
+                                <td>@counter </td>
+                                <td>@item.CrMasSupPostRegionsCode </td>
+                                <td>@item.CrMasSupPostRegionsArName </td>
+                                <td>@item.CrMasSupPostRegionsEnName </td>
+                                <td>@item.CrMasSupPostRegionsLocation </td>
+                                <td>@item.CrMasSupPostRegionsLongitude </td>
+                                <td>@item.CrMasSupPostRegionsLatitude </td>
+                                <td>@item.CrMasSupPostRegionsStatus </td>
+                                <td>@item.CrMasSupPostRegionsReasons </td>
+                            </tr>
+                        }
+                        <!-- البيانات ستضاف هنا ديناميكياً -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <input hidden class="form-control ArName" id="ConnectId_txt" name="ConnectId_txt" asp-for="@Model.Single_connect_id" style="direction:rtl;height:40px;"/>
+        <div id="div_img" name="div_img" hidden />
+        <input id="img_name" name="img_name" value="hh.png" readonly hidden />
+        <div id="div_file" name="div_file" hidden />
+        <input id="file_name" name="file_name" value="hh.png" readonly hidden />
+</div>
+
+
+@section Scripts
+{
+
+        <script>
+            $(document).ready(function () {
+                getSelectedRenter("changed");
+
+                //$('#image_For_send').trigger('change', (e) => {
+                //    console.log(new URL(e.target.src).pathname)
+                //});
+                ////var Select_Renter_Phone = $('#Select_Renter').find(':selected').val();
+                ////$('#phoneNumber_txt').val(Select_Renter_Phone);
+                ////console.log(Select_Renter_Phone);
+            });
+        </script>
+
+
+
+        <script>
+            function update_datatable_regions() {
+                $('#data_status_txt').css({ "color": "#090", "visibility": "hidden" });
+                $.ajax({
+                    type: "Get",
+                    data: {},
+                    //@*url: "@Url.Action("Get_ConvertedNumber_Action", "WhatsUp", new { Area = "MAS" })*@",
+                    url: "@Url.Action("get_Regions_updated_Totable_Action", "WhatsUp", new { Area = "" })",
+                    success: function (response) {
+                        if (response.code === 1) {
+                            console.log("Data updated succesfully");
+                            $('#data_status_txt').css({ "color": "#090", "visibility": "visible" });
+                            $('#data_status_txt').val("تم التحديث بنجاح");
+                            console.log("Featched table succesfully");
+                            if (response.postRegion_old && response.postRegion_old.length > 0) {
+                                $("#old_Table tbody tr").remove();
+                                // تكرار العناصر وإضافتها إلى tbody
+                                $.each(response.postRegion_old, function (index, oneItem) {
+                                    var row = "<tr>" +
+                                        "<td>" + oneItem.serial + "</td>" +
+                                        "<td>" + oneItem.code + "</td>" +
+                                        "<td>" + oneItem.arName + "</td>" +
+                                        "<td>" + oneItem.enName + "</td>" +
+                                        "<td>" + oneItem.location + "</td>" +
+                                        "<td>" + oneItem.longitude + "</td>" +
+                                        "<td>" + oneItem.latitude + "</td>" +
+                                        "<td>" + oneItem.status + "</td>" +
+                                        "<td>" + oneItem.reasons + "</td>" +
+                                        "</tr>";
+                                    $("#old_Table tbody").append(row);
+                                });
+                            } else {
+                                $("#old_Table tbody tr").remove();
+                                // عرض رسالة إذا كانت القائمة فارغة
+                                $("#old_Table tbody").append("<tr><td colspan='3'>No data available</td></tr>");
+                            }
+                        }
+                        else {
+                            console.log("Error :Data Not Updated");
+                            $('#data_status_txt').css({ "color": "#900", "visibility": "visible" });
+                            $('#data_status_txt').val("فشل التحديث");
+                        }
+
+                    },
+                })
+            }
+
+        </script>
+
+        @*<script>
+            function get_data_regions_Totable() {
+                $.ajax({
+                    type: "Get",
+                    data: {},
+                    url: "@Url.Action("get_Regions_Totable_Action", "WhatsUp", new { Area = "" })",
+                    success: function (response) {
+                        if (response.code === 1) {
+                            console.log("Featched table succesfully");
+                            if (response.postRegion_old && response.postRegion_old.length > 0) {
+                                $("#old_Table tbody tr").remove();
+                                // تكرار العناصر وإضافتها إلى tbody
+                                $.each(response.postRegion_old, function (index, oneItem) {
+                                    var row = "<tr>" +
+                                        "<td>" + oneItem.serial + "</td>" +
+                                        "<td>" + oneItem.code + "</td>" +
+                                        "<td>" + oneItem.arName + "</td>" +
+                                        "<td>" + oneItem.enName + "</td>" +
+                                        "<td>" + oneItem.location + "</td>" +
+                                        "<td>" + oneItem.longitude + "</td>" +
+                                        "<td>" + oneItem.latitude + "</td>" +
+                                        "<td>" + oneItem.status + "</td>" +
+                                        "<td>" + oneItem.reasons + "</td>" +
+                                        "</tr>";
+                                    $("#old_Table tbody").append(row);
+                                });
+                            } else {
+                                $("#old_Table tbody tr").remove();
+                                // عرض رسالة إذا كانت القائمة فارغة
+                                $("#old_Table tbody").append("<tr><td colspan='3'>No data available</td></tr>");
+                            }
+
+                            //if (response.renamedList && response.renamedList.length > 0) {
+                            //    $("#updated_Table tbody tr").remove();
+                            //    // تكرار العناصر وإضافتها إلى tbody
+                            //    $.each(response.renamedList, function (index, receipt) {
+                            //        var row = "<tr>" +
+                            //            "<td>" + receipt.serial + "</td>" +
+                            //            "<td>" + receipt.receipt_No + "</td>" +
+                            //            "<td>" + receipt.dateTime + "</td>" +
+                            //            "<td>" + receipt.reference_No + "</td>" +
+                            //            "<td>" + receipt.debit + "</td>" +
+                            //            "<td>" + receipt.credit + "</td>" +
+                            //            "</tr>";
+                            //        $("#updated_Table tbody").append(row);
+                            //    });
+                            //} else {
+                            //    $("#updated_Table tbody tr").remove();
+                            //    // عرض رسالة إذا كانت القائمة فارغة
+                            //    $("#updated_Table tbody").append("<tr><td colspan='3'>No data available</td></tr>");
+                            //}
+
+                        }
+                        else {
+                            console.log("Error : File Excel Not Created");
+                        }
+
+                    },
+                })
+            }
+            
+        </script>*@
+
+
+
+
+}

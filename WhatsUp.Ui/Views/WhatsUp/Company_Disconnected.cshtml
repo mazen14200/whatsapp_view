@@ -1,0 +1,413 @@
+﻿@using Microsoft.AspNetCore.Builder;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Http.Features;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using Microsoft.Extensions.Options;
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Http.Extensions;
+@using WhatsUp.Core.Models; 
+
+@model WhatsUpVM
+
+
+<h1 style="display:flex;justify-content:space-around;">قطع اتصال الشركة</h1>
+
+<style>
+/* Style inputs with type="text", select elements and textareas */
+input[type=text], select, textarea {
+  width: 100%; /* Full width */
+  padding: 12px; /* Some padding */
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 16px; /* Bottom margin */
+  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/* Style the submit button with a specific background color etc */
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+/* Add a background color and some padding around the form */
+.container {
+  border-radius: 5px;
+  background-color: white;
+  padding: 20px;
+  direction : rtl;
+}
+</style>
+
+
+<div class="container">
+
+
+    <div style="overflow-y: hidden; height:700px;">
+
+        <div class="Branch" style="display:flex;gap:10px;">
+            <label for="brunch_name" style="padding-top:23px;width:170px;font-size:21px;">اختر الشركة</label>
+            <select class="text-right form-select" id="Select_Connect" name="Select_Connect" onchange="getSelectedConnect(this)" style="width:180px;margin-top:15px;height:40px;">
+                @foreach (var item in Model.Company_List)
+                {
+                    <option id="@item.companyId " value="@item.companyId">@item.companyId + @item.companyName</option>
+                }
+               
+            </select>
+            <input readonly class=" ArName" value="" id="ConnectName" name="ConnectName" style="margin-top:13px;direction:rtl;height:40px;font-size:18px;color:#900;visibility:hidden;"></input>
+            <input readonly class=" ArName" value="" id="ConnectPhone" name="ConnectPhone" style="margin-top:13px;direction:rtl;height:40px;font-size:18px;color:#900;visibility:hidden;"></input>
+            <div>
+                <input readonly class=" ArName" value="" id="ConnectDeviceType" name="ConnectDeviceType" style="margin-top:13px;direction:rtl;height:40px;font-size:18px;color:#900;visibility:hidden;"></input>
+                <input readonly class=" ArName" value="" id="IsBussines" name="IsBussines" style="margin-top:13px;direction:rtl;height:40px;font-size:18px;color:#900;visibility:hidden;"></input>
+            </div>
+            <input readonly class="form-control ArName" hidden value="..." id="QRCode_Status_txt" name="QRCode_Status_txt" style="margin-top:13px;direction:rtl;height:40px;font-size:18px;color:#900;visibility:hidden;"></input>
+            <textarea readonly class="form-control ArName" hidden value="..." id="ApiToken_txt" name="ApiToken_txt" style="direction:rtl;height:58px;"></textarea>
+            <textarea readonly class="form-control ArName" hidden value="..." id="device_serial_txt" name="device_serial_txt" style="direction:rtl;height:58px;"></textarea>
+
+
+
+            <div id="output">
+                <img id="QrCode_image" name="QrCode_image" src="" />
+            </div>
+            <div id="output2">
+            </div>
+
+    </div>
+
+        <div>
+            <button onclick="Disconnect()" class="btn btn-primary" id="button_Disconnect_text" style="width:160px;height:80px;font-size:18px;margin-top:10px;">قطع الاتصال</button>
+        </div>
+
+        <div>
+            <img id="img_client" name="img_client" style="max-width:300px;" src="." />
+        </div>
+
+        <div style="justify-items:center;justify-content:center">
+            <img src="" id="image_QrCode" name="image_QrCode" style="width:300px;" />
+
+        </div>
+
+
+
+</div>
+
+@section Scripts
+{
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+        <script>
+            var rootName = $('#rootName').val();
+
+            function createImageQrCode(){
+                var qrCode_text = $('#QRCode_Status_txt').val();
+                document.getElementById('output2').innerHTML = "";
+                $('#output').qrcode(qrCode_text);
+
+            }
+        </script>
+
+        <script>
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        </script>
+
+    
+    <script>
+        async function generateQrCode() {
+
+            select_Connect_id = $('#Select_Connect').val();
+            //url: "http://localhost:3000/api/generateQrCode",
+            //url: "https://bnanko.com/api/generateQrCode",
+            //url: "http://62.84.187.79:3000/api/generateQrCodeNew",
+            //url: "http://bnanko.store/api/generateQrCodeNew",
+
+            var settings = {
+                    url: "http://" + rootName + "/api/generateQrCodeNew2/" + select_Connect_id,
+                    
+                method: "GET",
+                timeout: 50000, // sets timeout to 50 seconds
+                contentType: "application/json",
+                headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept" },
+
+                success: function (result) {
+                    //do something
+                    console.log(result);
+                    if (result.status !== "false"){
+                            var qrCodeText = $('#QRCode_Status_txt').val(result.response.qr);
+                            $('#ConnectName').val("._");
+                            $('#ConnectPhone').val("._");
+                            $('#ConnectDeviceType').val("._");
+                            $('#IsBussines').val("._");
+                            $('#ConnectName').css({ "visibility": "hidden" });
+                            $('#ConnectPhone').css({ "visibility": "hidden" });
+                            $('#ConnectDeviceType').css({ "visibility": "hidden" });
+                            $('#IsBussines').css({ "visibility": "hidden" });
+                            document.getElementById('output').innerHTML = "''";
+                            createImageQrCode();
+                    }
+
+                },
+                error: function (xhr) {
+
+                    if (xhr.status == "301") {
+                        //alert("هذا الجهاز متصل ");
+                            document.getElementById('output2').innerHTML = "هذا الجهاز متصل";
+                        console.log(xhr.responseJSON.name);
+                        console.log(xhr.responseJSON.mobile);
+                            $('#ConnectName').val(xhr.responseJSON.name);
+                            $('#ConnectName').css({ "color": "#900", "visibility": "visible" });
+                            $('#ConnectPhone').val(xhr.responseJSON.mobile);
+                            $('#ConnectPhone').css({ "color": "#900", "visibility": "visible" });
+                            $('#ConnectDeviceType').val(xhr.responseJSON.deviceType);
+                            $('#ConnectDeviceType').css({ "color": "#900", "visibility": "visible" });
+                            $('#IsBussines').val(xhr.responseJSON.isBussenis);
+                            $('#IsBussines').css({ "color": "#900", "visibility": "visible" });
+                    }
+                    else if (xhr.status == "503") {
+                    }
+                    else {
+                            document.getElementById('output2').innerHTML = "Sorry Error Server Connection";
+                    }
+                }
+            };
+
+            try {
+                $.ajax(settings).then(await function (response) {
+
+                    console.log(response);
+                    if (response.status == true) {
+                        if (response.message == "ready") {
+                            //alert("ًالجهاز متصل مسبقا");
+                            $('#QRCode_Status_txt').val("الجهاز متصل مسبقاً");
+                            $('#QRCode_Status_txt').css({ "color": "#083", "visibility": "visible" });
+                            var image_QrCode = document.getElementById("image_QrCode");
+                            image_QrCode.src = "";
+                        }
+                        else if (response.message == "qr") {
+                            var image_QrCode = document.getElementById("image_QrCode");
+                            image_QrCode.src = response.src;
+                            $('#QRCode_Status_txt').css({ "color": "#083", "visibility": "hidden" });
+
+                        }
+                    }
+                });
+            } catch (err) {
+                alert(err);
+            }
+        }
+    </script>
+
+        <script>
+            async function isDeviceConnected() {
+
+                select_Connect_id = $('#Select_Connect').val();
+                var settings = {
+                    url: "http://" + rootName + "/api/isClientReady_data/" + select_Connect_id,
+                    method: "GET",
+                    timeout: 20000, // sets timeout to 20 seconds
+                    contentType: "application/json",
+                    headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept" },
+
+                    success: function (result) {
+                        //do something
+                        console.log(result);
+                    },
+                    error: function (xhr) {
+                        
+                        if (xhr.status == "301") {
+                            //alert("هذا الجهاز متصل ");
+                            document.getElementById('output2').innerHTML = "هذا الجهاز متصل";
+                            console.log(xhr.responseJSON.name);
+                            console.log(xhr.responseJSON.mobile);
+                            $('#ConnectName').val(xhr.responseJSON.name);
+                            $('#ConnectName').css({ "color": "#900", "visibility": "visible" });
+                            $('#ConnectPhone').val(xhr.responseJSON.mobile);
+                            $('#ConnectPhone').css({ "color": "#900", "visibility": "visible" });
+                            $('#ConnectDeviceType').val(xhr.responseJSON.deviceType);
+                            $('#ConnectDeviceType').css({ "color": "#900", "visibility": "visible" });
+                            $('#IsBussines').val(xhr.responseJSON.isBussenis);
+                            $('#IsBussines').css({ "color": "#900", "visibility": "visible" });
+                        }
+                        else if (xhr.status == "503") {
+                            
+                        }
+                        else {
+                            document.getElementById('output2').innerHTML = "Sorry Error Server Connection";
+
+                        }
+                    }
+                };
+                try {
+                    $.ajax(settings).then(await function (result) {
+
+                        console.log(result);
+                        if (result.status === true) {
+                            $('#ConnectName').val(result.data.name);
+                            $('#ConnectName').css({ "color": "#900", "visibility": "visible" });
+                            $('#ConnectPhone').val(result.data.mobile);
+                            $('#ConnectPhone').css({ "color": "#900", "visibility": "visible" });
+                            $('#ConnectDeviceType').val(result.data.deviceType);
+                            $('#ConnectDeviceType').css({ "color": "#900", "visibility": "visible" });
+                            $('#IsBussines').val(result.data.isBussenis);
+                            $('#IsBussines').css({ "color": "#900", "visibility": "visible" });
+                            document.getElementById('output2').innerHTML = "هذا الجهاز متصل";
+                            document.getElementById('output').innerHTML = "'";
+                        }
+                        else {
+                            $('#ConnectName').val("._");
+                            $('#ConnectPhone').val("._");
+                            $('#ConnectName').css({ "visibility": "hidden" });
+                            $('#ConnectPhone').css({ "visibility": "hidden" });
+                            $('#IsBussines').val("._");
+                            $('#ConnectDeviceType').val("._");
+                            $('#IsBussines').css({ "visibility": "hidden" });
+                            $('#ConnectDeviceType').css({ "visibility": "hidden" });
+                            document.getElementById('output2').innerHTML = "''";
+                            generateQrCode();
+                        }
+
+                    });
+                } catch (err) {
+                    alert(err);
+                }
+                
+            }
+        </script>
+
+    <script>
+            async function getSelectedConnect(selectedOpject) {
+            var select_Connect_id = "00";
+            select_Connect_id = $('#Select_Connect').val();
+            console.log(select_Connect_id);
+            $('#ConnectName').val("._");
+            $('#ConnectPhone').val("._");
+            $('#ConnectName').css({ "visibility": "hidden" });
+            $('#ConnectPhone').css({ "visibility": "hidden" });
+            document.getElementById('output2').innerHTML = "''";
+            isDeviceConnected();
+                await sleep(10000);
+            
+            var connectName = $('#ConnectName').val();
+            console.log(connectName);
+            var runGenerateQr = setTimeout(getSelectedConnect, 20000, "ff");
+            if (connectName === "._") {
+                console.log("repeate");
+            }
+            else {
+                getThisImage();
+                clearTimeout(runGenerateQr);
+            }
+            
+        }
+    </script>
+
+    <script>
+        function disconected(){
+                $('#ConnectName').val("._");
+                $('#ConnectPhone').val("._");
+                $('#ConnectName').css({ "visibility": "hidden" });
+                $('#ConnectPhone').css({ "visibility": "hidden" });
+                $('#IsBussines').val("._");
+                $('#ConnectDeviceType').val("._");
+                $('#IsBussines').css({ "visibility": "hidden" });
+                $('#ConnectDeviceType').css({ "visibility": "hidden" });
+                document.getElementById('output2').innerHTML = "تم قطع الاتصال";
+        }
+    </script>
+
+
+        <script>
+            async function Disconnect() {
+
+                select_Connect_id = $('#Select_Connect').val();
+                var settings = {
+                    url: "http://" + rootName + "/api/logout_whats/" + select_Connect_id,
+                    method: "GET",
+                    timeout: 30000, // sets timeout to 20 seconds
+                    contentType: "application/json",
+                    headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept" },
+
+                    success: function (result) {
+                        //do something
+                        console.log(result);
+                    },
+                    error: function (xhr) {
+
+                    }
+                };
+                try {
+                    $.ajax(settings).then(await function (results) {
+                        let result = results;
+                        console.log(result);
+                        if (result.status === true || result.status == "true") {
+                            setTimeout(disconected, 20000);
+                        }
+
+                    });
+                } catch (err) {
+                    alert(err);
+                }
+
+            }
+        </script>
+
+
+        <script>
+            async function getThisImage() {
+
+                select_Connect_id = $('#Select_Connect').val();
+                var settings = {
+                    url: "http://" + rootName + "/api/getThisImage/" + select_Connect_id,
+                    method: "GET",
+                    timeout: 20000, // sets timeout to 20 seconds
+                    contentType: "application/json",
+                    headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept" },
+
+                    success: function (result) {
+                        //do something
+                        console.log(result);
+                    },
+                    error: function (xhr) {
+
+                    }
+                };
+                try {
+                    $.ajax(settings).then(await function (result) {
+
+                        console.log(result);
+                        if (result.status === true) {
+                            document.getElementById('img_client').src = result.image;
+                            $('#img_client').css({ "visibility": "visible" });
+                            //$("#button_Disconnect_text").prop("disabled", true);
+                        }
+                        else {
+                            document.getElementById('img_client').src = '.';
+                            $('#img_client').css({ "visibility": "hidden" });
+
+                        }
+
+                    });
+                } catch (err) {
+                    alert(err);
+                }
+
+            }
+        </script>
+    
+   
+    
+}
+    
